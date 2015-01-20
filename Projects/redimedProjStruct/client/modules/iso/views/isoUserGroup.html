@@ -1,0 +1,249 @@
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-users"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">ISO USER GROUPS</span>
+        </div>
+
+    </div>
+
+	<div>
+		<button type="button" class="btn btn-success" ng-click="showActionContentPopup(actions.addGroup.name);">
+			<i class="fa fa-plus"></i>
+			Add Group
+		</button>
+	</div>
+	
+	<div class="table-responsive">
+
+		<table class="table table-bordered table-hover ">
+			<tr>
+				<th>Group name</th>
+				<th style="text-align:center">Enable</th>
+				<th style="text-align:center">
+
+				</th>
+			</tr>
+			<tr ng-repeat='item in userGroupList' ng-click='setSelectedGroup(item)'>
+				<td>
+					{{item.GROUP_NAME}}
+				</td>
+				<td style="text-align:center">
+					<input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
+		                   ng-checked="item.ISENABLE==1"
+		                   ng-model="item.ISENABLE"/>
+				</td>
+				<td style="text-align:center">
+					<button type='button' 
+							class='btn btn-primary btn-xs' 
+							ng-click="showActionContentPopup(actions.editGroup.name);">
+						<i class="fa fa-pencil"></i>
+						Edit
+					</button>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	
+	<div>
+		<button type="button" class="btn btn-success" ng-click="showActionContentPopup(actions.addUser.name);">
+			<i class="fa fa-plus"></i>
+			Add User
+		</button>
+	</div>
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover ">
+			<tr>
+				<th>User Name</th>
+				<th style="text-align:center">Enable</th>
+				<th style="text-align:center">
+
+				</th>
+			</tr>
+			<tr ng-repeat='item in userList' ng-click="setSelectedGroupItem(item)">
+				<td>
+					{{item.user_name}}
+				</td>
+				<td style="text-align:center">
+					<input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
+		                   ng-checked="item.ISENABLE==1"
+		                   ng-model="item.ISENABLE"/>
+				</td>
+				<td style="text-align:center">
+					<button type='button' 
+							class='btn btn-primary btn-xs' 
+							ng-click="showActionContentPopup(actions.editUser.name);">
+
+						<i class="fa fa-pencil"></i>
+						Edit
+					</button>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+<div  id="iso-user-group-content-popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{currentAction.header}}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include='currentAction.url'>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="iso_user_group_edit_template.html">
+	<form>
+		<div class="form-group">
+			<label for="groupName">Group name:</label>
+			<input type="text" class="form-control" id="groupName" ng-model="groupUpdateInfo.GROUP_NAME">
+		</div>
+		<div class="form-group">
+			<label>
+				<input type="checkbox" 
+					ng-true-value="1" ng-false-value="0"
+                    ng-checked="groupUpdateInfo.ISENABLE==1"
+                    ng-model="groupUpdateInfo.ISENABLE"> 
+                    Enable
+			</label>
+		</div>
+		<button type="button" class="btn btn-primary" ng-click='updateGroupInfo();'>{{currentAction.buttonLabel}}</button>
+	</form>
+</script>
+
+<script type="text/ng-template" id="iso_user_group_add_template.html">
+    <form>
+		<div class="form-group">
+			<label for="groupName">Group name:</label>
+			<input type="text" class="form-control" id="groupName" ng-model="newGroupInfo.GROUP_NAME">
+		</div>
+		<div class="form-group">
+			<label>
+				<input type="checkbox" 
+					ng-true-value="1" ng-false-value="0"
+                    ng-checked="newGroupInfo.ISENABLE==1"
+                    ng-model="newGroupInfo.ISENABLE"> 
+                    Enable
+			</label>
+		</div>
+		<button type="button" class="btn btn-primary" ng-click='addGroup();'>{{currentAction.buttonLabel}}</button>
+	</form>
+</script>
+
+<script type="text/ng-template" id="iso_user_group_edit_user_template.html">
+	<form>
+		<div class="form-group">
+			<label for="groupName">User name:<span class="label label-info">{{groupItemUpdateInfo.user_name}}</span></label>
+			<a class='iso-add-user-permission-btn' ng-click="showSelectionUser=!showSelectionUser">
+				{{showSelectionUser?'Cancel':'Choose other user'}}
+			</a>
+			<iso-selection-user-name show='showSelectionUser' selected-user-name="newUserSelected"></iso-selection-user-name>
+		</div>
+
+		<div class="form-group">
+			<label>
+				<input type="checkbox" 
+					ng-true-value="1" ng-false-value="0"
+                    ng-checked="groupItemUpdateInfo.ISENABLE==1"
+                    ng-model="groupItemUpdateInfo.ISENABLE"> 
+                    Enable
+			</label>
+		</div>
+		<button type="button" class="btn btn-primary" ng-click='updateGroupItemInfo();'>{{currentAction.buttonLabel}}</button>
+	</form>
+</script>
+
+<script type="text/ng-template" id="iso_user_group_edit_user_template.html">
+	<form>
+		<div class="form-group">
+			<label for="groupName">User name:<span class="label label-info">{{groupItemUpdateInfo.user_name}}</span></label>
+			<a class='iso-add-user-permission-btn' ng-click="showSelectionUser=!showSelectionUser">
+				{{showSelectionUser?'Cancel':'Choose other user'}}
+			</a>
+			<iso-selection-user-name show='showSelectionUser' selected-user-name="newUserSelected"></iso-selection-user-name>
+		</div>
+
+		<div class="form-group">
+			<label>
+				<input type="checkbox" 
+					ng-true-value="1" ng-false-value="0"
+                    ng-checked="groupItemUpdateInfo.ISENABLE==1"
+                    ng-model="groupItemUpdateInfo.ISENABLE"> 
+                    Enable
+			</label>
+		</div>
+		<button type="button" class="btn btn-primary" ng-click='updateGroupItemInfo();'>{{currentAction.buttonLabel}}</button>
+	</form>
+</script>
+
+<script type="text/ng-template" id="iso_user_group_add_user_template.html">
+	<form>
+		<div class="form-group">
+			<label for="groupName">User name:<span class="label label-info">{{newGroupItemInfo.user_name}}</span></label>
+			<a class='iso-add-user-permission-btn' ng-click="showSelectionUserForItem=!showSelectionUserForItem">
+				{{showSelectionUserForItem?'Cancel':'Choose other user'}}
+			</a>
+			<iso-selection-user-name show='showSelectionUserForItem' selected-user-name="newUserSelectedForItem"></iso-selection-user-name>
+		</div>
+
+		<div class="form-group">
+			<label>
+				<input type="checkbox" 
+					ng-true-value="1" ng-false-value="0"
+                    ng-checked="newGroupItemInfo.ISENABLE==1"
+                    ng-model="newGroupItemInfo.ISENABLE"> 
+                    Enable
+			</label>
+		</div>
+		<button type="button" class="btn btn-primary" ng-click='addGroupItem();'>{{currentAction.buttonLabel}}</button>
+	</form>
+</script>
+
+
+<div id="iso-global-msg-popup" class="modal fade">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><div class="iso-global-msg-popup-header"></div></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+
+                        <!--<span  class="label" ng-class="{'label-success':status=='success','label-warning':status=='fail'}">-->
+                            <!--{{msg}}-->
+                        <!--</span>-->
+                        
+                        <div  class="alert alert-success iso-global-msg-popup-success" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                        <div class="alert alert-danger iso-global-msg-popup-error" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>

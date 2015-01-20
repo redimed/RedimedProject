@@ -91,9 +91,12 @@ module.exports =
         var nodeId=req.body.nodeId?req.body.nodeId:'';
         var groupValue=req.body.groupValue?req.body.groupValue:'';
         var sql=
-            " SELECT u.`id`,u.`user_name`,`treeUser`.`NODE_ID`,treeUser.`PERMISSION`,treeUser.`ROOT_PERMISSION_NODE`   "+
-            " FROM users u INNER JOIN `iso_tree_users` treeUser ON u.`id`=`treeUser`.`ACCESSIBLE_USER_ID`              "+
-            " WHERE treeUser.`NODE_ID`=? AND treeUser.`PERMISSION`=? AND treeUser.`ISENABLE`=1                         ";
+            " SELECT u.`id`,u.`user_name`,`treeUser`.`NODE_ID`,treeUser.`PERMISSION`,treeUser.`ROOT_PERMISSION_NODE`,   "+
+            " treeUser.GROUP_ID,userGroup.`GROUP_NAME`                                                                  "+
+            " FROM users u INNER JOIN `iso_tree_users` treeUser ON u.`id`=`treeUser`.`ACCESSIBLE_USER_ID`               "+
+            " LEFT JOIN `iso_user_group` userGroup ON treeUser.`GROUP_ID`=userGroup.`GROUP_ID`                          "+
+            " WHERE treeUser.`NODE_ID`=? AND treeUser.`PERMISSION`=? AND treeUser.`ISENABLE`=1                          "+
+            " ORDER BY userGroup.`GROUP_NAME` ASC ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[nodeId,groupValue],function(err,rows)
@@ -178,6 +181,82 @@ module.exports =
             isoUtil.exlog(query.sql);
         });    
 
+    },
+
+    /**
+     * VO DUC GIap
+     * MiddleWare Check Admin
+     */
+    checkAdminIsoSystem:function(req,res,next){
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var sql = 
+            "SELECT * FROM `iso_admin` "+
+            "WHERE `ADMIN_ID` = ? AND `ISENABLE` = 1 ";
+
+        var query = connection.query(sql,userId,function(err,rows)
+        {
+            if(err)
+            {
+                isoUtil.exlog({status:'fail',msg:err});
+                res.json({status:'fail'});
+            }
+            else
+            {
+                if(rows.length>0)
+                {            
+
+                    if(isoUtil.haveData(req.body))
+                    {
+                        req.body.isAdminIsoSystem=1;
+                    }
+                    if(isoUtil.haveData(req.query))
+                    {
+                        req.query.isAdminIsoSystem=1;
+                    }    
+                    next();
+                }
+                else
+                {
+                    isoUtil.exlog("Error,You can not be right");
+                    res.json({status:'fail'});
+                }
+                    
+            }
+        });
+    },
+	/**
+	     * phan quoc chien
+	     * MiddleWare Check Admin
+	     */
+    checkAdminIsoSystemMaster:function(req,res,next){
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var sql = 
+            "SELECT * FROM `iso_admin` "+
+            "WHERE `ADMIN_ID` = ? AND `ISENABLE` = 1 AND `ROLE` ='master' ";
+
+        var query = connection.query(sql,userId,function(err,rows)
+        {
+            if(err)
+            {
+                isoUtil.exlog({status:'fail',msg:err});
+                res.json({status:'fail'});
+            }
+            else
+            {
+                if(rows.length>0)
+                {                      
+                    next();
+                }
+                else
+                {
+                    isoUtil.exlog("Error,You can not be right");
+                    res.json({status:'fail'});
+                }
+                    
+            }
+        });
     }
 
 }

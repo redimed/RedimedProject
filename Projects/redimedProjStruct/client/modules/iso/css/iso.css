@@ -93,3 +93,11 @@ tannv.dts@gmail.com
 .iso_node_deleted span{
     color:#B90000;
 }
+
+.selection-user-name-box{
+    border:1px solid #5bc0de;
+}
+
+.iso_user_in_group{
+    background-color: #f0ad4e!important;
+}

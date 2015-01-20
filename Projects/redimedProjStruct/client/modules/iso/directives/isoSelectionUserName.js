@@ -1,4 +1,3 @@
-
 angular.module("app.loggedIn.iso.selectionUserName.directive", [])
 	.directive('isoSelectionUserName', function() {
         return {

@@ -10,8 +10,12 @@ angular.module('app.loggedIn.iso',
         ,'app.loggedIn.iso.service'
         ,'app.loggedIn.iso.directive'
         ,'app.loggedIn.iso.selectionUserName.directive'
+        ,'app.loggedIn.iso.selectionGroupUser.directive'
         ,'app.loggedIn.iso.grantUserPermission.directive'        
-        ,'app.loggedIn.isoSubmitStatusPendingController.controller'])
+        ,'app.loggedIn.isoSubmitStatusPendingController.controller'
+        ,'app.loggedIn.iso.userGroup.controller'
+        ,'app.loggedIn.iso.isoApproverListController.controller'
+        ,'app.loggedIn.iso.isoAdminController.controller'])
     .config(function($stateProvider){
         $stateProvider
             .state("loggedIn.iso",{
@@ -31,9 +35,27 @@ angular.module('app.loggedIn.iso',
 //                templateUrl: "modules/rediLegalOnlineBooking/views/booking.html",
 //                controller: 'rlob_bookingController'
 //            })
+
             .state("loggedIn.iso.isoSubmitStatusPending",{
                 url:'/isoSubmitStatusPending',
                 templateUrl:"modules/iso/views/isoSubmitStatusPending.html",
                 controller:"isoSubmitStatusPendingController"
+            })
+
+            .state("loggedIn.iso.userGroup",{
+                url:'/user-group',
+                templateUrl:"modules/iso/views/isoUserGroup.html",
+                controller:"isoUserGroupController"
+            })
+
+            .state("loggedIn.iso.isoApproverList",{
+                url:'/isoApproverList',
+                templateUrl:"modules/iso/views/isoApproverList.html",
+                controller:"isoApproverListController"
+            })
+            .state("loggedIn.iso.isoAdminList",{
+                url:'/isoAdminList',
+                templateUrl:"modules/iso/views/isoAdminList.html",
+                controller:"isoAdminController"
             })
     });

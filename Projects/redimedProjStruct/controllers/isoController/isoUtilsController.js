@@ -121,6 +121,7 @@ module.exports =
         if(userLoginPermission>permissionCanExecute)
         {
             //res.json({status:'fail'});
+            exlog('user login permission:'+userLoginPermission);
             exlog("User cannot execute function!");
             return false;
         }

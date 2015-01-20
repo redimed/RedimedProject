@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 12/2/2014.
  */
-var isoTest=false;
+var isoTest=true;
 var isoConst={
 	nodeType:{
 		folder:'FOLDER',

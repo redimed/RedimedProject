@@ -36,52 +36,31 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
 
                     });
                     //Lay danh sach cac user co quyen create tren node
-                    $scope.createUserList={};
+                    $scope.createUserList=[];
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.create)
                     .then(function(data){
                         if(data.status=='success'){
-                            for(var i=0;i<data.data.length;i++)
-                            {
-                                if(!$scope.createUserList[data.data[i].GROUP_NAME])
-                                {
-                                    $scope.createUserList[data.data[i].GROUP_NAME]=[];                                    
-                                }
-                                $scope.createUserList[data.data[i].GROUP_NAME].push(data.data[i]);
-                            }
+                            $scope.createUserList=data.data;
                         }
                     },function(err){
 
                     });
                     //Lay danh sach cac user co quyen update tren node
-                    $scope.updateUserList={};
+                    $scope.updateUserList=[];
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.update)
                     .then(function(data){
                         if(data.status=='success'){
-                            for(var i=0;i<data.data.length;i++)
-                            {
-                                if(!$scope.updateUserList[data.data[i].GROUP_NAME])
-                                {
-                                    $scope.updateUserList[data.data[i].GROUP_NAME]=[];                                    
-                                }
-                                $scope.updateUserList[data.data[i].GROUP_NAME].push(data.data[i]);
-                            }
+                            $scope.updateUserList=data.data;
                         }
                     },function(err){
 
                     });
                     //Lay danh sach cac user co quyen read tren node
-                    $scope.readUserList={};
+                    $scope.readUserList=[];
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.read)
                     .then(function(data){
                         if(data.status=='success'){
-                            for(var i=0;i<data.data.length;i++)
-                            {
-                                if(!$scope.readUserList[data.data[i].GROUP_NAME])
-                                {
-                                    $scope.readUserList[data.data[i].GROUP_NAME]=[];                                    
-                                }
-                                $scope.readUserList[data.data[i].GROUP_NAME].push(data.data[i]);
-                            }
+                            $scope.readUserList=data.data;
                         }
                     },function(err){
 

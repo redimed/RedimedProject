@@ -4,6 +4,8 @@ var isoCheckInOutController=require('./controllers/isoController/isoCheckInOutCo
 var isoTreeUsersController=require('./controllers/isoController/isoTreeUsersController');
 var isoNodeAncestorController=require('./controllers/isoController/isoNodeAncestorController');
 var isoAdminController=require('./controllers/isoController/isoAdminController');
+var isoUserGroupController=require('./controllers/isoController/isoUserGroupController');
+var isoApproverController = require('./controllers/isoController/isoApproverController');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -37,6 +39,8 @@ app.post('/api/iso/iso-tree-dir/check-dup-entry',isoTreeDirController.checkDupEn
 //isoTreeUsersController
 app.post('/api/iso/iso-tree-users/grant-node-permission',isoController.getUserPermission,isoTreeUsersController.grantNodePermission);
 app.post('/api/iso/iso-tree-users/check-can-permission',isoController.getUserPermission,isoTreeUsersController.checkCanPermission);
+app.post('/api/iso/iso-tree-users/grant-user-group-permission',isoController.getUserPermission,isoTreeUsersController.grantUserGroupPermission);
+app.post('/api/iso/iso-tree-users/grant-permission-for-new-user-in-group',isoController.checkAdminIsoSystem,isoTreeUsersController.grantPermissionForNewUserInGroup);
 
 //isoCheckInOutController
 app.post('/api/iso/iso-check-out-in/check-out-document',isoController.getUserPermission,isoCheckInOutController.checkOutDocument);
@@ -61,3 +65,20 @@ app.post('/api/iso/iso-check-out-in/approved-document',isoCheckInOutController.c
 app.post('/api/iso/iso-check-out-in/rejected-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.rejectedDocument);
 //isoAdminController
 app.post('/api/iso/iso-admin/check-iso-admin',isoAdminController.checkIsoAdmin);
+app.get('/api/iso/iso-admin/getAdminList',isoAdminController.getAdminList);
+app.post('/api/iso/iso-admin/insertNewUserToAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.insertNewUserToAdmin);
+app.post('/api/iso/iso-admin/updateEnableAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.updateEnableAdmin);
+
+//isoUserGroupController
+app.get('/api/iso/iso-user-group/get-user-group-list',isoUserGroupController.getUserGroupList);
+app.post('/api/iso/iso-user-group/update-group-info',isoUserGroupController.updateGroupInfo);
+app.post('/api/iso/iso-user-group/add-group',isoUserGroupController.addGroup);
+app.post('/api/iso/iso-user-group/get-user-in-group',isoUserGroupController.getUsersInGroup);
+app.post('/api/iso/iso-user-group/update-group-item-info',isoUserGroupController.updateGroupItemInfo);
+app.post('/api/iso/iso-user-group/add-group-item',isoUserGroupController.addGroupItem);
+
+//iso Approver 
+app.get('/api/iso/iso-approver/getApproverList',isoApproverController.getApproverList);
+app.post('/api/iso/iso-approver/insertNewUserToApprover',isoController.checkAdminIsoSystem,isoApproverController.insertNewUserToApprover);
+app.post('/api/iso/iso-approver/updateEnableApprover',isoController.checkAdminIsoSystem,isoApproverController.updateEnableApprover);
+

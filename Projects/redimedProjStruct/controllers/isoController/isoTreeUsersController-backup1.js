@@ -7,29 +7,27 @@ var watch = WatchJS.watch;
 var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 //----------------
-
 /**
- * Kiem tra user login co the phan quyen cho 1 item trong group hay khong
- * Ham de quy nhan vao pos=0, se kiem tra duoc xem user login co phan quyen duoc cho tat ca cac item hay khong
+ * Kiem  tra xem user A co the gan quyen cho user B hay khong
  * tannv.dts@gmail.com
  */
-function checkGrantGroupItem(pos,req,res,listItems)
+function checkGrant(pos,req,res,listUsers)
 {
-    if(pos>=listItems.length)
+    if(pos>=listUsers.length)
     {
-        checkGrantGroupResult(req,res,listItems,1);
+        res.json({status:'success'});
         return;
     }
     else
     {
-        isoUtil.exlog("THIS IS CHECK GRANT PERMISSION GROUP, USER:",listItems[pos]);
+        isoUtil.exlog("THIS IS CHECK GRANT PERMISSION GROUP, USER:",listUsers[pos]);
     }
 
     var userInfo=JSON.parse(req.cookies.userInfo);
     var userGrant=userInfo.id;
-    var userIsGranted=listItems[pos].accessibleUserId;
-    var nodeId=listItems[pos].nodeId;
-    var permission=listItems[pos].permission;
+    var userIsGranted=listUsers[pos].accessibleUserId;
+    var nodeId=listUsers[pos].nodeId;
+    var permission=listUsers[pos].permission;
     var checkInfo={
         grant:null,
         isGranted:null
@@ -47,7 +45,8 @@ function checkGrantGroupItem(pos,req,res,listItems)
             {
                 if(err)
                 {
-                    checkGrantGroupResult(req,res,listItems,0);
+                    isoUtil.exlog({status:'fail',msg:err});
+                    checkGrant(pos+1,req,res,listUsers);
                 }
                 else
                 {
@@ -72,7 +71,8 @@ function checkGrantGroupItem(pos,req,res,listItems)
             {
                 if(err)
                 {
-                    checkGrantGroupResult(req,res,listItems,0);
+                    isoUtil.exlog({status:'fail',msg:err});
+                    checkGrant(pos+1,req,res,listUsers);
                 }
                 else
                 {
@@ -93,7 +93,7 @@ function checkGrantGroupItem(pos,req,res,listItems)
             {
                 //user 2 chua duoc phan quyen tren node nen user 1 co the quan quyen cho user nay
                 //res.json({status:'success',info:1});//info=1: co the phan quyen
-                checkGrantGroupItem(pos+1,req,res,listItems);
+                grant(pos,req,res,listUsers);
             }
             else
             {
@@ -101,7 +101,7 @@ function checkGrantGroupItem(pos,req,res,listItems)
                 {
                     //user 1 co the gan hoac ha quyen user 2, quyen duoc gan tinh tu admin tro xuong
                     //res.json({status:'success',info:1});
-                    checkGrantGroupItem(pos+1,req,res,listItems);
+                    grant(pos,req,res,listUsers);
                 }
                 else
                 {
@@ -109,23 +109,23 @@ function checkGrantGroupItem(pos,req,res,listItems)
                     {
                         //user 1 khong duoc phep phan quyen cho user 2
                         //res.json({status:'success',info:0});
-                        checkGrantGroupResult(req,res,listItems,0);
+                        checkGrant(pos+1,req,res,listUsers);
                     }
                     else if(checkInfo.isGranted.PERMISSION>0)//tu create tro xuong
                     {
                         //user 1 duoc phep phan hoac ha quyen cho user 2, quyen duoc gan tu create tro xuong
                         if(permission>0)
                             //res.json({status:'success',info:1});
-                            checkGrantGroupItem(pos+1,req,res,listItems);
+                            grant(pos,req,res,listUsers);
                         else
                             //res.json({status:'success',info:0});
-                            checkGrantGroupResult(req,res,listItems,0);
+                            checkGrant(pos+1,req,res,listUsers);
                     }
                     else
                     {
                         //khong co quyen nao cao gia tri nho hon 0
                         //res.json({status:'success',info:0});
-                        checkGrantGroupResult(req,res,listItems,0);
+                        checkGrant(pos+1,req,res,listUsers);
                     }
                 }
                 
@@ -134,40 +134,43 @@ function checkGrantGroupItem(pos,req,res,listItems)
         else
         {
             //res.json({status:'success',info:0});
-            checkGrantGroupResult(req,res,listItems,0);
+            checkGrant(pos+1,req,res,listUsers);
         }
     }
 
     checkInfoFunc1();
 
+
+    // watch(checkInfo, "grant", function(){
+    //     res.json({status:'success',data:checkInfo.grant});
+    // });
+
+    //lay thu bat cua user tren node
+    
 }
 
-/**
- * Phan quyen cho mot item trong group
- * Ham de quy, khi pos=0 se phan quyen cho cat ca cac item trong group
- * tannv.dts@gmail.com
- */
-function grantGroupItem(pos,req,res,listItems)
+
+function grant(pos,req,res,listUsers)
 {
-    if(pos>=listItems.length)
+    if(pos>=listUsers.length)
     {
         res.json({status:'success'});
         return;
     }
     else
     {
-        isoUtil.exlog("THIS IS GRANT PERMISSION GROUP, USER:",listItems[pos]);
+        isoUtil.exlog("THIS IS GRANT PERMISSION GROUP, USER:",listUsers[pos]);
     }
 
-    var nodeId=listItems[pos].nodeId;
-    var permission=listItems[pos].permission;
-    var accessibleUserId=listItems[pos].accessibleUserId;
-    var groupId=listItems[pos].groupId;
+    var nodeId=listUsers[pos].nodeId;
+    var permission=listUsers[pos].permission;
+    var accessibleUserId=listUsers[pos].accessibleUserId;
+    var groupId=listUsers[pos].groupId;
     var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
     var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';   
     if(!isoUtil.checkListData([userId,nodeId,permission,accessibleUserId]))
     {
-        grantGroupItem(pos+1,req,res,listItems);
+        checkGrant(pos+1,req,res,listUsers);
         return;
     }
         
@@ -219,13 +222,13 @@ function grantGroupItem(pos,req,res,listItems)
                                         if(!err)
                                         {
                                             //res.json({status:'success'});
-                                            grantGroupItem(pos+1,req,res,listItems);
+                                            checkGrant(pos+1,req,res,listUsers);
                                         }
                                         else
                                         {
                                             isoUtil.exlog(err);
                                             //res.json({status:'fail'});
-                                            grantGroupItem(pos+1,req,res,listItems);
+                                            checkGrant(pos+1,req,res,listUsers);
                                         }
                                     });
                                     isoUtil.exlog(query.sql);
@@ -234,7 +237,7 @@ function grantGroupItem(pos,req,res,listItems)
                                 {
                                     isoUtil.exlog(err);
                                     //res.json({status:'fail'});
-                                    grantGroupItem(pos+1,req,res,listItems);
+                                    checkGrant(pos+1,req,res,listUsers);
                                 }
                             });
                             isoUtil.exlog(query.sql);
@@ -244,7 +247,7 @@ function grantGroupItem(pos,req,res,listItems)
                         {
                             isoUtil.exlog(err);
                             //res.json({status:'fail'});
-                            grantGroupItem(pos+1,req,res,listItems);
+                            checkGrant(pos+1,req,res,listUsers);
                         }
                     });
                     isoUtil.exlog(query.sql);
@@ -253,7 +256,7 @@ function grantGroupItem(pos,req,res,listItems)
                 {
                     isoUtil.exlog(err);
                     //res.json({status:'fail'});
-                    grantGroupItem(pos+1,req,res,listItems);
+                    checkGrant(pos+1,req,res,listUsers);
                 }
             });
             isoUtil.exlog(query.sql);
@@ -262,28 +265,133 @@ function grantGroupItem(pos,req,res,listItems)
         {
             isoUtil.exlog(err);
             //res.json({status:'fail'});
-            grantGroupItem(pos+1,req,res,listItems);
+            checkGrant(pos+1,req,res,listUsers);
         }
     });
+
 }
 
 
-/**
- * Ham tra ve va bien luan ket qua sau khi ham checkGrantGroup duyet het group
- * tannv.dts@gmail.com
- */
-function checkGrantGroupResult(req,res,listItems,result)
+function grant2(pos,req,res,listUsers)
 {
-    if(result==1)
+    if(pos>=listUsers.length)
     {
-        grantGroupItem(0,req,res,listItems);
-    }   
+        res.json({status:'success'});
+        return;
+    }
     else
     {
-        res.json({status:'fail'});
-    } 
-}
+        isoUtil.exlog("THIS IS GRANT PERMISSION GROUP, USER:",listUsers[pos]);
+    }
 
+    var nodeId=listUsers[pos].nodeId;
+    var permission=listUsers[pos].permission;
+    var accessibleUserId=listUsers[pos].accessibleUserId;
+    var groupId=listUsers[pos].groupId;
+    var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+    var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';   
+    if(!isoUtil.checkListData([userId,nodeId,permission,accessibleUserId]))
+    {
+        grant2(pos+1,req,res,listUsers);
+        return;
+    }
+        
+    req.getConnection(function(err,connection)
+    {
+        if(!err)
+        {
+            var sql=" DELETE FROM `iso_tree_users` WHERE NODE_ID=? AND ACCESSIBLE_USER_ID=? ";
+            var query = connection.query(sql,[nodeId,accessibleUserId],function(err,result)
+            {
+                if(!err)
+                {
+                    var newRow=
+                    {
+                        NODE_ID:nodeId,
+                        ACCESSIBLE_USER_ID:accessibleUserId,
+                        PERMISSION:permission,
+                        ROOT_PERMISSION_NODE:nodeId,
+                        CREATED_BY:userId,
+                        GROUP_ID:groupId
+                    }
+                    sql="insert into iso_tree_users set ? ";
+                    var query = connection.query(sql,newRow,function(err,result)
+                    {
+                        if(!err)
+                        {
+                            //Lay tat ca cac node con cua node duoc gan quyen
+                            var sql=
+                                " DELETE FROM `iso_tree_users`                                             "+
+                                " WHERE     ACCESSIBLE_USER_ID=?                                           "+
+                                "   AND NODE_ID IN                                                         "+
+                                "       (                                                                  "+
+                                "           SELECT `ancestor`.`NODE_ID`                                    "+  
+                                "           FROM `iso_node_ancestor` ancestor                              "+
+                                "           WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1      "+
+                                "       )                                                                  ";
+                            var query = connection.query(sql,[accessibleUserId,nodeId],function(err,result)
+                            {
+                                if(!err)
+                                {
+                                    var sql=
+                                        " INSERT INTO `iso_tree_users`                                                                 "+
+                                        " (NODE_ID,`ACCESSIBLE_USER_ID`,`PERMISSION`,`ROOT_PERMISSION_NODE`,`CREATED_BY`,`GROUP_ID`)   "+
+                                        " SELECT `ancestor`.`NODE_ID`,?,?,?,?,?                                                     "+
+                                        " FROM `iso_node_ancestor` ancestor                                                            "+
+                                        " WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1                                    ";
+                                    var query = connection.query(sql,[accessibleUserId,permission,nodeId,userId,groupId,nodeId],function(err,result)
+                                    {
+                                        if(!err)
+                                        {
+                                            //res.json({status:'success'});
+                                            grant2(pos+1,req,res,listUsers);
+                                        }
+                                        else
+                                        {
+                                            isoUtil.exlog(err);
+                                            //res.json({status:'fail'});
+                                            grant2(pos+1,req,res,listUsers);
+                                        }
+                                    });
+                                    isoUtil.exlog(query.sql);
+                                }
+                                else
+                                {
+                                    isoUtil.exlog(err);
+                                    //res.json({status:'fail'});
+                                    grant2(pos+1,req,res,listUsers);
+                                }
+                            });
+                            isoUtil.exlog(query.sql);
+                            
+                        }
+                        else
+                        {
+                            isoUtil.exlog(err);
+                            //res.json({status:'fail'});
+                            grant2(pos+1,req,res,listUsers);
+                        }
+                    });
+                    isoUtil.exlog(query.sql);
+                }
+                else
+                {
+                    isoUtil.exlog(err);
+                    //res.json({status:'fail'});
+                    grant2(pos+1,req,res,listUsers);
+                }
+            });
+            isoUtil.exlog(query.sql);
+        }
+        else
+        {
+            isoUtil.exlog(err);
+            //res.json({status:'fail'});
+            grant2(pos+1,req,res,listUsers);
+        }
+    });
+
+}
 
 
 module.exports =
@@ -421,10 +529,7 @@ module.exports =
             isGranted:null
         };
         if(!isoUtil.checkListData([userGrant,userIsGranted,nodeId,permission]))
-        {
             res.json({status:'fail'});
-            return;
-        }
         //lay thong tin de kiem tra xem userGrant co quyen tren node hay chua
         var checkInfoFunc1=function()
         {
@@ -535,28 +640,12 @@ module.exports =
         
     },
 
-    /**
-     * Kiem tra va phan quyen cho toan bo item trong group
-     * tannv.dts@gmail.com
-     */
     grantUserGroupPermission:function(req,res)
     {
-        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.administrator)===false)
-        {
-            res.json({status:'fail'});
-            return;
-        }
-
-        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
-        var permission=isoUtil.checkData(req.body.permission)?req.body.permission:'';
-        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
-        if(!isoUtil.checkListData([nodeId,groupId,permission]))
-        {
-            res.json({status:'fail'});
-            return;
-        }
-
-        var listItems=[];
+        var nodeId=req.body.nodeId;
+        var permission=req.body.permission;
+        var groupId=req.body.groupId;
+        var listUsers=[];
         var sql=
             " SELECT groupDetail.`USER_ID` FROM `iso_user_group_details` groupDetail  "+
             " WHERE groupDetail.`GROUP_ID`=? AND groupDetail.`ISENABLE`=1             ";
@@ -580,12 +669,11 @@ module.exports =
                             item.permission=permission;
                             item.accessibleUserId=rows[i].USER_ID;
                             item.groupId=groupId;
-                            listItems.push(item);
+                            listUsers.push(item);
                         }
                         isoUtil.exlog(rows)
                         //res.json({status:'success'})
-                        //checkGrant(0,req,res,listItems);
-                        checkGrantGroupItem(0,req,res,listItems);
+                        checkGrant(0,req,res,listUsers);
                     }
                     else
                     {
@@ -596,29 +684,13 @@ module.exports =
         });
     },
 
-    /**
-     * Phan quyen cho 1 user moi  duoc add them vao group
-     * tannv.dts@gmail.com
-     */
     grantPermissionForNewUserInGroup:function(req,res)
     {
-
-        var isAdminIsoSystem=isoUtil.checkData(req.body.isAdminIsoSystem)?req.body.isAdminIsoSystem:'';
-        if(isAdminIsoSystem!=1)
-        {
-            isoUtil.exlog("User login is not administrator iso system");
-            res.json({status:'fail'});
-            return;
-        }
-        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
-        var newUserId=isoUtil.checkData(req.body.newUserId)?req.body.newUserId:'';
-        if(!isoUtil.checkListData([groupId,newUserId]))
-        {
-            res.json({status:'fail'});
-            return;
-        }
-
-        var listItems=[];
+        // var groupId=req.body.groupId;
+        // var newUserId=req.body.newUserId;
+        var groupId=1;
+        var newUserId=207;
+        var listUsers=[];
         var sql=
             " SELECT DISTINCT treeUser.`ROOT_PERMISSION_NODE`,treeUser.`PERMISSION`   "+
             " FROM `iso_tree_users` treeUser                                          "+
@@ -644,9 +716,9 @@ module.exports =
                             item.permission=rows[i].PERMISSION;
                             item.accessibleUserId=newUserId;
                             item.groupId=groupId;
-                            listItems.push(item);
+                            listUsers.push(item);
                         }
-                        grantGroupItem(0,req,res,listItems);
+                        grant2(0,req,res,listUsers);
                     }
                     else
                     {
@@ -655,7 +727,7 @@ module.exports =
                 }
             });
         });
-    }
+    },
 
 
 

@@ -1,0 +1,192 @@
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-list"></i>
+            <span class="caption-subject uppercase">Admin List</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" ng-click="addNewUserToAdminList()" class="btn green-jungle btn-sm">
+                <i class="fa fa-plus"></i> Add New</a>
+   </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable" id="content">
+            <table   show-filter="false" class="table table-hover table-bordered table-responsive">
+                <tr>
+                    <th>User Name</th>
+                    <th>Role</th>
+                    <th>Enable</th>
+                    <th></th>
+                </tr>
+
+                <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="admin in adminList">
+                    <td>
+                        <label >{{admin.user_name}}</label>
+                    </td>
+                    <td>
+                        <label >{{admin.ROLE}}</label>
+                    </td>
+                    <td style="text-align:center">
+                        <input ng-disabled="true" type="checkbox"  ng-model="admin.ISENABLE"  ng-true-value="1" ng-false-value="0"
+                    ng-checked="admin.ISENABLE==1" ng-change="changeEnable(admin.APPROVER_ID,admin.ISENABLE)" />
+                    </td>
+                    <td style="text-align:center">
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="editAdmin(admin)">
+                        <i class="fa fa-pencil"></i>
+                        Edit
+                    </button>
+                    </td>
+                
+                </tr>
+            </table>
+            <!-- <pagination total-items="totalItems"
+                        ng-model="currentPage"
+                        max-size="maxSize"
+                        class="pagination-sm"
+                        boundary-links="true"
+                        rotate="false"
+                        num-pages="numPages"
+                        items-per-page="itemsPerPage"
+                        ng-change="handleListPaging()">
+            </pagination> -->
+        </div>
+        <br/>
+
+    </div>
+
+</div>
+
+   
+
+   <!-- <iso-selection-user-name></iso-selection-user-name> -->
+
+
+
+<div id="iso-global-msg-popup" class="modal fade">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><div class="iso-global-msg-popup-header"></div></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+
+                        <!--<span  class="label" ng-class="{'label-success':status=='success','label-warning':status=='fail'}">-->
+                        <!--{{msg}}-->
+                        <!--</span>-->
+
+                        <div  class="alert alert-success iso-global-msg-popup-success" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                        <div class="alert alert-danger iso-global-msg-popup-error" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  id="iso-admin-insert-list-popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add New User To Admin List</h4>
+            </div>
+            <div class="modal-body">
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='btn btn-info iso-user-permission-item' ng-show="newAdminUserName.user_name">
+                            {{newAdminUserName.user_name}}
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <br/>
+                        <a class='iso-add-user-permission-btn' ng-click="showSelectionAdminUserName=!showSelectionAdminUserName">
+                            {{showSelectionAdminUserName?'Cancel':'Add New'}}
+                        </a>
+                        <iso-selection-user-name show='showSelectionAdminUserName' selected-user-name="newAdminUserName"></iso-selection-user-name>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Role</label>
+                            <div class="radio-list">
+                            </div>
+                            <label class="radio-inline">
+                            <input type="radio" ng-model="role" value="master">Master </label>
+                            <label class="radio-inline">
+                            <input type="radio" ng-model="role" value="sub"> Sub </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" ng-click="addAdmin(newAdminUserName.id,role)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div  id="iso-admin-edit-list-popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit User To Admin List</h4>
+            </div>
+            <div class="modal-body">
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <div class='btn btn-info iso-user-permission-item' ng-show="newAdminUserName.user_name">
+                            {{newAdminUserName.user_name}}
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-12'>
+                        <br/>
+                        <a class='iso-add-user-permission-btn' ng-click="showSelectionAdminUserName=!showSelectionAdminUserName">
+                            {{showSelectionAdminUserName?'Cancel':'Add New'}}
+                        </a>
+                        <iso-selection-user-name show='showSelectionAdminUserName' selected-user-name="newAdminUserName"></iso-selection-user-name>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Role</label>
+                            <div class="radio-list">
+                            </div>
+                            <label class="radio-inline">
+                            <input type="radio" ng-model="roleAdmin" value="master" ng-valid="roleAdmin == master" >Master </label>
+                            <label class="radio-inline">
+                            <input type="radio" ng-model="roleAdmin" value="sub" ng-valid="roleAdmin == sub"> Sub </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                                <!-- <input type="checkbox"  ng-model="enableAdmin"  ng-true-value="1" ng-false-value="0" ng-checked="enableAdmin==1" > Enable -->
+                                <input type="checkbox" 
+                                        ng-true-value="1" ng-false-value="0"
+                                        ng-checked="enableAdmin==1"
+                                        ng-model="enableAdmin"> 
+                                        Enable
+                    </div>
+                    .
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" ng-click="updateAdmin(idAdmin,newAdminUserName.id,roleAdmin,enableAdmin)">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
