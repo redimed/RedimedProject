@@ -34,4 +34,14 @@ angular.module("app.loggedIn.im",[
                 }
             }
         })
+
+        .state('loggedIn.im.call',{
+            url:"/im/call",
+            views:{
+                "main-content":{
+                    templateUrl:"modules/injuryManagement/views/call.html",
+                    controller:"CallController"
+                }
+            }
+        })
 });

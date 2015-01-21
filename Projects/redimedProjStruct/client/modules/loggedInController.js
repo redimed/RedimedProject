@@ -186,6 +186,16 @@ angular.module("app.loggedIn.controller",[
     loadLoggedIn();
     //End load before logged in
 
+    $scope.menuParentClick = function(state){
+        if(state != null && state != '')
+            $state.go(state);
+
+    }
+
+    $scope.lockscreen = function(){
+        $state.go('lockscreen',null,{location: "replace", reload: true});
+    }
+
     //Logout
     $scope.logout = function(){
         socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type);

@@ -10,6 +10,10 @@ angular.module("app.loggedIn.im.services",[])
             return api.one('im/list').get();
         }
 
+        imService.searchInjury = function(info){
+            return api.all('im/search').post({info:info});
+        }
+
         imService.getInjuryById = function(id){
             return api.all('im/getById').post({injury_id:id});
         }
@@ -24,7 +28,10 @@ angular.module("app.loggedIn.im.services",[])
 
         imService.allocateDriver = function(dId,pId,iId){
             return api.all('im/allocateDriver').post({driverId:dId,patientId:pId,injuryId:iId});
+        }
 
+        imService.getOnlineUsers = function(){
+            return api.one('im/getOnlineUsers').get();
         }
 
         return imService;

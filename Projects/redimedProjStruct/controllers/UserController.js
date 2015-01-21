@@ -70,44 +70,37 @@ module.exports = {
             info = req.body.info;
 
             var hash = bcrypt.hashSync(info.password);
-            db.UserType.find({where:{user_type:info.userType}},{raw:true})
-                .success(function(type){
-                    db.User.create({
-                        Booking_Person: info.bookPerson,
-                        password: hash,
-                        Contact_email: info.email,
-                        user_name: info.username,
-                        Contact_number: info.phone,
-                        isEnable: info.isEnable,
-                        isDownloadResult: info.isDownload,
-                        isMakeBooking: info.isMakeBooking,
-                        isPackage: info.isPackage,
-                        isPosition: info.isPosition,
-                        isSetting: info.isSetting,
-                        isAll: info.isShowAll,
-                        isBooking: info.isShowBooking,
-                        isAllCompanyData: info.isViewAllData,
-                        company_id: info.companyId,
-                        user_type: type.ID,
-                        PO_number: info.poNum,
-                        invoiceemail: info.invoiceEmail,
-                        result_email: info.resultEmail,
-                        Report_To_email:info.reportEmail,
-                        function_id: info.function_id,
-                        function_mobile: info.function_mobile,
-                        employee_id: info.empId,
-                        isCalendar: info.isCalendar,
-                        isProject: info.isProject,
-                        isAdmin: info.isAdmin,
-                        isReceiveEmailAfterHour:info.isReceiveEmail
-                    })
-                        .success(function(data){
-                            res.json({status:'success'});
-                        })
-                        .error(function(err){
-                            res.json({status:'error'});
-                            console.log(err);
-                        })
+            db.User.create({
+                Booking_Person: info.bookPerson,
+                password: hash,
+                Contact_email: info.email,
+                user_name: info.username,
+                Contact_number: info.phone,
+                isEnable: info.isEnable,
+                isDownloadResult: info.isDownload,
+                isMakeBooking: info.isMakeBooking,
+                isPackage: info.isPackage,
+                isPosition: info.isPosition,
+                isSetting: info.isSetting,
+                isAll: info.isShowAll,
+                isBooking: info.isShowBooking,
+                isAllCompanyData: info.isViewAllData,
+                company_id: info.companyId,
+                user_type: info.userType,
+                PO_number: info.poNum,
+                invoiceemail: info.invoiceEmail,
+                result_email: info.resultEmail,
+                Report_To_email:info.reportEmail,
+                function_id: info.function_id,
+                function_mobile: info.function_mobile,
+                employee_id: info.empId,
+                isCalendar: info.isCalendar,
+                isProject: info.isProject,
+                isAdmin: info.isAdmin,
+                isReceiveEmailAfterHour:info.isReceiveEmail
+            })
+                .success(function(data){
+                    res.json({status:'success'});
                 })
                 .error(function(err){
                     res.json({status:'error'});

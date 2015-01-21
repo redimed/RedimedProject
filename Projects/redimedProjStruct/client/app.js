@@ -37,7 +37,13 @@ angular.module("app", [
     'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
-    var socket = io.connect('http://localhost:3000/');
+    var socket = io.connect('http://192.168.135.115/',{
+        'port':3000,
+        'reconnect': true,
+        'reconnection delay': 2000,
+        'max reconnection attempts': 10000,
+        'force new connection':true
+    });
 
     var socketFactory = socketFactory({
         ioSocket: socket
@@ -52,9 +58,9 @@ angular.module("app", [
     // END CORS PROXY
 
     //IDLE TIME
-    $idleProvider.idleDuration(15*60);
+    $idleProvider.idleDuration(30*60);
     $idleProvider.warningDuration(30);
-    $keepaliveProvider.interval(15*60);
+    $keepaliveProvider.interval(30*60);
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
@@ -100,6 +106,16 @@ angular.module("app", [
 
 //When update any route
 .run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket){
+        socket.on('messageReceived', function (name, message) {
+            switch (message.type) {
+                case 'call':
+                    if ($state.current.name === 'loggedIn.im.call') { return; }
+
+                    $state.go('loggedIn.im.call', { isCalling: false, contactName: name });
+                    break;
+            }
+        });
+
     $idle.watch();
     // Use when update any state
 
@@ -116,7 +132,8 @@ angular.module("app", [
     editableOptions.theme = 'bs3';
 
 
-    $rootScope.$on("$stateChangeSuccess", function(e, toState, fromState, fromParams){
+    $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
+        $cookieStore.put("fromState",fromState);
         if(!$cookieStore.get("userInfo")){
             socket.removeAllListeners();
             socket.emit('lostCookie');
@@ -124,6 +141,9 @@ angular.module("app", [
                 e.preventDefault();
                 $state.go("security.login");
             }
+        }else
+        {
+            socket.emit('checkUserSocket',$cookieStore.get('userInfo').id,$cookieStore.get('userInfo').user_name);
         }
     });
 })

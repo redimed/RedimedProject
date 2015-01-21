@@ -4,13 +4,11 @@
 angular.module("app.lockscreen.controller",[
 ])
 
-.controller("lockscreenController", function($scope, $state, $cookieStore, SecurityService, UserService,toastr,$window, $cookieStore){
+.controller("lockscreenController", function($scope,$rootScope, $state, $cookieStore, SecurityService, UserService,toastr,$window,socket,$location){
         var userInfo;
+        var fromState = $cookieStore.get('fromState');
 
-        $scope.$on('$locationChangeStart', function(event, newUrl, oldUrl) {
-            event.preventDefault();
-        });
-
+        console.log('From state: ',fromState);
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login');
@@ -32,9 +30,14 @@ angular.module("app.lockscreen.controller",[
         $scope.email = userInfo.Contact_email;
 
         $scope.notUser = function(){
+            socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type);
+
             $cookieStore.remove("userInfo");
             $cookieStore.remove("companyInfo");
-            $window.location.href="/";
+            $cookieStore.remove("doctorInfo");
+            $state.go("security.login",null,{location: "replace", reload: true});
+
+            socket.removeAllListeners();
         }
 
         $scope.returnHome = function(lockForm){
@@ -48,7 +51,8 @@ angular.module("app.lockscreen.controller",[
                     console.log(response);
                     if(response != null && response.status == 'success')
                     {
-                        $window.location.reload(true);
+                        //$window.location.reload(true);
+                        $state.go(fromState.name);
                     }
                     else
                     {

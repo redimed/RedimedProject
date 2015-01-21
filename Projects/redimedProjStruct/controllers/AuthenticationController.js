@@ -4,11 +4,6 @@ var db = require('../models');
 var io = require('socket.io');
 var _ = require('lodash-node');
 
-var OTKEY = "45110172";
-var OTSECRET = "2c6760b523e735a60c125af9d1a8a1f906bbd4c9";
-
-var OpenTok = require('opentok'),
-    opentok = new OpenTok(OTKEY, OTSECRET);
 
 module.exports = {
     login: function(req,username,password,done) {
@@ -36,22 +31,15 @@ module.exports = {
                             {
                                 delete data["img"];
                                 
-                                opentok.createSession({ mediaMode: 'routed' },function(err, session) {
-                                    if (err) throw err;
 
                                     db.UserToken.findOrCreate({
                                         user_id : data.id,
                                         user_type: data.UserType.id,
                                         android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
-                                        ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null,
-                                        roomSession: session.sessionId
+                                        ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
                                     })
                                         .success(function(rs,created)
                                         {
-                                            data.sessionId = session.sessionId;
-                                            data.apiKey = OTKEY;
-                                            data.token = opentok.generateToken(session.sessionId,{ role: 'moderator' });
-
                                             if(data.UserType.user_type == 'Company')
                                             {
                                                 db.Company.find({where: {id: data.company_id}},{raw:true})
@@ -75,11 +63,6 @@ module.exports = {
                                             }
                                         })
                                         .error(function(err){console.log(err)})
-
-                                });
-
-
-
                             }
                             else
                             {

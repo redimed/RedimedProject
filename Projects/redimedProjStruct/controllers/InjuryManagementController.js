@@ -9,17 +9,7 @@ var smtpPool = require('nodemailer-smtp-pool');
 var gcm = require('node-gcm');
 var mkdirp = require('mkdirp');
 
-var io = require('socket.io');
 var _ = require('lodash-node');
-
-
-var OTKEY = "45110172";
-var OTSECRET = "2c6760b523e735a60c125af9d1a8a1f906bbd4c9";
-
-var OpenTok = require('opentok'),
-    opentok = new OpenTok(OTKEY, OTSECRET);
-
-
 
 var transport = nodemailer.createTransport(smtpTransport({
     host: "mail.redimed.com.au", // hostname
@@ -235,6 +225,30 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
+    searchInjury: function(req,res){
+        var info = req.body.info;
+
+        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
+        "FROM `im_injury` i " +
+        "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+        "LEFT JOIN users u ON u.id = i.driver_id " +
+        "WHERE i.`cal_id` IS NULL AND u.user_name LIKE ? " +
+        "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},['%'+info.driver+'%'])
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+
+        //{ patient: 'a',
+        //    driver: 'aaaa'
+        //    isNew: false,
+        //        isWaiting: true
+        //    isDone: true }
+
+
+    },
     injuryById: function(req,res){
         var injury_id = req.body.injury_id;
 
@@ -410,40 +424,22 @@ module.exports = {
 
 
     },
-    makeCall: function(req,res){
-        io.on('connection', function(socket) {
-
-            socket.on('sendMessage', function(name, message) {
-                var currentUser = _.find(users, {
-                    socket: socket.id
-                });
-                if (!currentUser) {
-                    return;
+    getOnlineUsers: function(req,res){
+        var userList = [];
+        db.User.findAll({where: "socket IS NOT NULL"},{raw:true})
+            .success(function(data){
+                for (var i = 0; i < data.length; i++) {
+                    userList.push({
+                        id: data[i].id,
+                        username: data[i].user_name,
+                        socket: data[i].socket
+                    });
                 }
-
-                var contact = _.find(users, {
-                    name: name
-                });
-                if (!contact) {
-                    return;
-                }
-
-                io.to(contact.socket)
-                    .emit('messageReceived', currentUser.name, message);
-            });
-
-            socket.on('disconnect', function() {
-                var index = _.findIndex(users, {
-                    socket: socket.id
-                });
-                if (index !== -1) {
-                    socket.broadcast.emit('offline', users[index].name);
-                    console.log(users[index].name + ' disconnected');
-
-                    users.splice(index, 1);
-                }
-            });
-        });
+                res.json(userList);
+            })
+            .error(function(err){
+                console.log(err);
+            })
     }
 };
 

@@ -4,6 +4,7 @@ var fs = require('fs');//Read js file for import into
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var log = require('./log')(module);
+var cookie = require('cookie');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -36,12 +37,23 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(methodOverride());
-app.use(cookieParser());
-app.use(session({ secret: config.get('session.secret') }));
+app.use(cookieParser('secret'));
+app.use(session({
+    name: 'express.sid',
+    secret: config.get('session.secret'),
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        maxAge: null
+    }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./socket')(io,cookieParser);
+require('./socket')(io,cookie,cookieParser);
 
 var clientDir = path.join(__dirname, 'client');
 
@@ -162,8 +174,6 @@ if (app.get('env') === 'development') {
 }
 
 db.sequelize
-    // sync để tự động tạo các bảng trong database
-    //.sync({ force: true })
     .authenticate()
     .complete(function(err) {
         if (err) {

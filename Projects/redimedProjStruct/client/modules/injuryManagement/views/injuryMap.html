@@ -1,3 +1,34 @@
+<style type="text/css">
+    .rowWaiting {
+        background-color: rgba(255, 220, 96, 0.44);
+    }
+
+    .rowDone {
+        background-color: rgba(117, 255, 186, 0.35);
+    }
+
+    .img-image-name{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+        color: white;
+        font-size: 40px;
+        font-weight: lighter;
+    }
+
+    table {
+        table-layout:fixed;
+    }
+
+    .div-table-content {
+        height:600px;
+        overflow-y:auto;
+    }
+
+</style>
 <h3 class="page-title">Injury Map</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -15,104 +46,191 @@
         </li>
     </ul>
 </div>
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
-        <div class="caption ">
-            <i class="icon-map"></i>
-            <span class="caption-subject uppercase">Maps</span>
+<div class="tabbable-custom nav-justified">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active">
+            <a href="injuryMap.html#tab_1_1_1" data-toggle="tab">
+                <i class="icon-map"></i> &nbsp;&nbsp;&nbsp;
+                Injury Map </a>
+        </li>
+        <li>
+            <a href="injuryMap.html#tab_1_1_2" data-toggle="tab">
+                <i class="icon-list"></i>&nbsp;&nbsp;&nbsp;
+                Injury List</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1_1">
+            <map  center="current-location" zoom="10">
+                <marker id="{{im.id}}" data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
+                    <info-window max-width="500" id="info">
+                        <div class="portlet grey-cascade box">
+                            <div class="portlet-title">
+                                <div class="caption ">
+                                    <span class="caption-subject uppercase">{{im.fullName}}</span>
+                                </div>
+                                <div class="actions">
+                                    <a ng-class="{disabled:map.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)"  href="javascript:;" class="btn green btn-sm">
+                                        Submit </a>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+                            <div ng-non-bindable="">
+                            <div class="row">
+                                <div class="col-md-3"> <label class="bold">Pickup At</label></div>
+                                <div class="col-md-9">
+                                    <label>{{im.pickupAddr}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"> <label class="bold">Gender</label></div>
+                                <div class="col-md-9">
+                                    <label>{{im.gender}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"> <label class="bold">Injury Desc</label></div>
+                                <div class="col-md-9">
+                                    <label>{{im.injuryDesc}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"> <label class="bold">Status</label></div>
+                                <div class="col-md-9">
+                                    <span ng-show="im.status == 'New'" class="label label-md label-success">New </span>
+                                    <span ng-show="im.status == 'Waiting'" class="label label-md label-warning">Waiting </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"> <label class="bold">Driver</label></div>
+                                <div class="col-md-9">
+                                    <label ng-show="im.status == 'Waiting'">{{im.driverUser}}</label>
+                                    <select ng-model="map.driverId" ng-show="im.status == 'New'" ng-options="a.id as a.user_name for a in driverListTemp">
+                                        <option value="">--Select Driver--</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                                <br/>
+                            <div class="clearfix">
+                                <a ng-click="showDetails(im.id)" href="javascript:;" class="btn blue btn-block">
+                                    <i class="fa fa-pencil"></i>&nbsp;&nbsp;
+                                    Details </a>
+                                </div>
+                            </div>
+                                </div>
+                        </div>
+                    </info-window>
+                </marker>
+                <marker  data-position="{{d.position}}" icon="{{d.icon}}" ng-repeat="d in driverMarker" data-on-click="showInfoWindow(event, 'infoDriver')">
+                    <info-window max-width="500" id="infoDriver">
+                        <div class="portlet red-flamingo box">
+                            <div class="portlet-title">
+                                <div class="caption ">
+                                    <span class="caption-subject uppercase">{{d.username}}</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                        <div ng-non-bindable="">
+                            <div class="row" >
+                                <div class="col-md-5"> <label class="bold">Picking: </label></div>
+                                <div class="col-md-7" >
+                                    <label>{{d.patientList.length}} Patient(s)</label>
+                                </div>
+                            </div>
+                            <div class="row" ng-repeat="p in d.patientList">
+                                <div class="col-md-2">{{$index + 1}}.</div>
+                                <div class="col-md-10" >
+                                    <label>{{p.FullName}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                                </div>
+                            </div>
+                    </info-window>
+                </marker>
+            </map>
+
         </div>
-    </div>
-    <div class="portlet-body">
-        <map  center="current-location" zoom="10">
-            <marker id="{{im.id}}" data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
-                <info-window max-width="500" id="info">
-                    <div ng-non-bindable="">
-                        <div class="row">
-                            <div class="col-md-1">
-                                <img ng-show="im.gender == 'Male'" src="modules/injuryManagement/icons/male.png" />
-                                <img ng-show="im.gender == 'Female'" src="modules/injuryManagement/icons/female.png" />
+        <div class="tab-pane" id="tab_1_1_2">
+            <div class="panel panel-default">
+                <table class="table table-condensed" >
+                    <thead>
+                    <tr>
+                        <th width="100px">
+                        </th>
+                        <th>
+                            <label style="font-size: 17px;">Patient Name</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Injury Date</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Driver</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Status</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th width="100px">
+                        </th>
+                        <th>
+                            <input ng-change="searchInjury(search)" ng-model="search.patient" class="form-control" type="text" />
+                        </th>
+                        <th style="text-align:center">
+                            <input class="form-control" type="text" />
+                        </th>
+                        <th style="text-align:center">
+                            <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />
+                        </th>
+                        <th style="text-align:center">
+                            <input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New
+                            <input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting
+                            <input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="div-table-content">
+                <table class="table table-hover table-condensed">
+                    <tbody>
+                    <tr style="white-space: nowrap; cursor: pointer;"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
+                        <td width="100px" ng-click="showDetails(im.injury_id)" style="vertical-align:middle" align="center">
+                            <div class="img-image-name" ng-style={"background-color":im.background} >
+                                {{im.First_name | limitTo: 1 | uppercase}}
                             </div>
-                            <div class="col-md-8">
-                                <label style="margin-top: 20px;font-weight: bold; font-size: 18px; margin-left: 15px">{{im.fullName}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"> <label class="bold">Pickup At</label></div>
-                            <div class="col-md-9">
-                                <label>{{im.pickupAddr}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"> <label class="bold">Gender</label></div>
-                            <div class="col-md-9">
-                                <label>{{im.gender}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"> <label class="bold">Injury Desc</label></div>
-                            <div class="col-md-9">
-                                <label>{{im.injuryDesc}}</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"> <label class="bold">Status</label></div>
-                            <div class="col-md-9">
-                                <span ng-show="im.status == 'New'" class="label label-md label-success">New </span>
-                                <span ng-show="im.status == 'Waiting'" class="label label-md label-warning">Waiting </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"> <label class="bold">Driver</label></div>
-                            <div class="col-md-9">
-                                <label ng-show="im.status == 'Waiting'">{{im.driverUser}}</label>
-                                <select ng-model="info.driverId" ng-show="im.status == 'New'" ng-options="a.id as a.user_name for a in driverListTemp">
-                                    <option value="">--Select Driver--</option>
-                                </select>
-                                <a ng-class="{disabled:info.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)" style="margin-left: 10px;" href="javascript:;" class="btn btn-success btn-sm">
-                                     Submit </a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-9">
-                                <!--<a ng-show="im.status == 'New'" ng-click="showDetails(im.id)" style="margin-left: 10px;" href="javascript:;" class="btn blue-steel btn-sm">-->
-                                    <!--<i class="fa fa-pencil"></i> Details </a>-->
-                            </div>
-                        </div>
-
-                    </div>
-                </info-window>
-            </marker>
-            <marker  data-position="{{d.position}}" icon="{{d.icon}}" ng-repeat="d in driverMarker" data-on-click="showInfoWindow(event, 'infoDriver')">
-                <info-window max-width="500" id="infoDriver">
-                    <div ng-non-bindable="">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="modules/injuryManagement/icons/hospital.png" />
-                            </div>
-                            <div class="col-md-8">
-                                <label style="margin-left:20px; margin-top: 20px;font-weight: bold; font-size: 18px;">{{d.username}}</label>
-                            </div>
-                        </div>
-                        <div class="row" >
-                            <div class="col-md-5"> <label class="bold">Picking: </label></div>
-                            <div class="col-md-7" >
-                                <label>{{d.patientList.length}} Patient(s)</label>
-                            </div>
-                        </div>
-                        <div class="row" ng-repeat="p in d.patientList">
-                            <div class="col-md-2">{{$index + 1}}.</div>
-                            <div class="col-md-10" >
-                                <label>{{p.FullName}}</label>
-                            </div>
-                        </div>
-
-                    </div>
-                </info-window>
-            </marker>
-        </map>
-
-
+                        </td>
+                        <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" >
+                            <label class="bold">
+                                {{im.fullName}}
+                            </label>
+                        </td>
+                        <td style="vertical-align:middle" align="center">
+                            {{im.injury_date | date:'dd/MM/yyyy'}}
+                        </td>
+                        <td style="vertical-align:middle" align="center">
+                            <label ng-if="im.driverUser != null || im.driverUser != ''" class="bold">{{im.driverUser}}</label>
+                        </td>
+                        <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" align="center">
+                            <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn btn-primary btn-md" style="width:100px">
+                                New
+                            </a>
+                            <a ng-show="im.STATUS == 'Waiting'" href="javascript:;" class="btn btn-warning btn-md" style="width:100px">
+                                Waiting
+                            </a>
+                            <a ng-show="im.STATUS == 'Done'" href="javascript:;" class="btn btn-success btn-md" style="width:100px">
+                                Done
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

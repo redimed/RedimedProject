@@ -282,7 +282,7 @@
                 </li>
                 <li>
 
-                   <a ui-sref="lockscreen">
+                   <a ng-click="lockscreen()" href="javascript:;">
                        <i class="icon-lock"></i> Lock Screen </a>
 
                 </li>
@@ -324,7 +324,7 @@
     </li>
 
     <li ng-repeat="menu in loggedInMenus">
-        <a  ui-sref="{{menu.parent.definition}}">
+        <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)">
             <i class="glyphicon glyphicon-star-empty"></i>
             <span class="title">{{menu.parent.name}}</span>
         </a>
