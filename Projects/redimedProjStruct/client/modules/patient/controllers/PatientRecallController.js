@@ -198,11 +198,7 @@ angular.module("app.loggedIn.patient.recall.controller", [])
     		return;
     	}
 
-    	
-
     	var patients = data.patients[doctorIndex];
-    	console.log(patients)
-
     	var p = {
     		Patient_id: $scope.patient.Patient_id,
     		Patient_name: $scope.patient.Patient_name
