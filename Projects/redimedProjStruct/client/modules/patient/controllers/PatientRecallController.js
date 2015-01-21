@@ -207,7 +207,7 @@ angular.module("app.loggedIn.patient.recall.controller", [])
     	if(patients == '') {
     		patients = [];
     	}
-    	if( !patients.length == 0 || patients[0].Patient_id == 0 ) {
+    	if( patients.length == 0 || patients[0].Patient_id == 0 ) {
     		patients[0] = p;
     	} else {
     		// check patient
