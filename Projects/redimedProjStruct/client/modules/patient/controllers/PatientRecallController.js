@@ -181,7 +181,7 @@ angular.module("app.loggedIn.patient.recall.controller", [])
 
     $scope.bookingPatient = function(data, calIndex, doctorIndex) {
     	console.log(data)
-    	var cal_id = data.cals[calIndex];
+    	var cal_id = data.cals[doctorIndex];
     	var doctor_id = data.doctors[doctorIndex];
 
     	if(!cal_id) {
