@@ -18,41 +18,70 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                 $scope.refreshNodePermission=function()
                 {
                     //Lay danh sach cac user la admin tren node
-                    $scope.administratorUserList=[];
+                    $scope.administratorUserList={};
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.administrator)
                     .then(function(data){
                         if(data.status=='success'){
-                            $scope.administratorUserList=data.data;
+                            for(var i=0;i<data.data.length;i++)
+                            {
+                                if(!$scope.administratorUserList[data.data[i].GROUP_NAME])
+                                {
+                                    $scope.administratorUserList[data.data[i].GROUP_NAME]=[];                                    
+                                }
+                                $scope.administratorUserList[data.data[i].GROUP_NAME].push(data.data[i]);
+                            }
+                            exlog.log($scope.administratorUserList);
                         }
                     },function(err){
 
                     });
                     //Lay danh sach cac user co quyen create tren node
-                    $scope.createUserList=[];
+                    $scope.createUserList={};
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.create)
                     .then(function(data){
                         if(data.status=='success'){
-                            $scope.createUserList=data.data;
+                            for(var i=0;i<data.data.length;i++)
+                            {
+                                if(!$scope.createUserList[data.data[i].GROUP_NAME])
+                                {
+                                    $scope.createUserList[data.data[i].GROUP_NAME]=[];                                    
+                                }
+                                $scope.createUserList[data.data[i].GROUP_NAME].push(data.data[i]);
+                            }
                         }
                     },function(err){
 
                     });
                     //Lay danh sach cac user co quyen update tren node
-                    $scope.updateUserList=[];
+                    $scope.updateUserList={};
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.update)
                     .then(function(data){
                         if(data.status=='success'){
-                            $scope.updateUserList=data.data;
+                            for(var i=0;i<data.data.length;i++)
+                            {
+                                if(!$scope.updateUserList[data.data[i].GROUP_NAME])
+                                {
+                                    $scope.updateUserList[data.data[i].GROUP_NAME]=[];                                    
+                                }
+                                $scope.updateUserList[data.data[i].GROUP_NAME].push(data.data[i]);
+                            }
                         }
                     },function(err){
 
                     });
                     //Lay danh sach cac user co quyen read tren node
-                    $scope.readUserList=[];
+                    $scope.readUserList={};
                     isoService.core.gerUsersInPermissionGroup($scope.selectedTreeNode.NODE_ID,isoConst.isoPermission.read)
                     .then(function(data){
                         if(data.status=='success'){
-                            $scope.readUserList=data.data;
+                            for(var i=0;i<data.data.length;i++)
+                            {
+                                if(!$scope.readUserList[data.data[i].GROUP_NAME])
+                                {
+                                    $scope.readUserList[data.data[i].GROUP_NAME]=[];                                    
+                                }
+                                $scope.readUserList[data.data[i].GROUP_NAME].push(data.data[i]);
+                            }
                         }
                     },function(err){
 
@@ -173,6 +202,169 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                             ,$scope.newReadUserName
                             ,isoConst.isoPermission.read);
                         
+                    }
+                });
+
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                 /**
+                 * xu ly them group vao nhom admin
+                 * tannv.dts@gmail.com
+                 */
+                $scope.showSelectionAdminGroup=false;
+                $scope.newAdminGroup={};
+                $scope.$watchCollection('newAdminGroup',function(oldValues,newValues){
+                    if($scope.newAdminGroup && $scope.newAdminGroup.GROUP_NAME)
+                    {
+                        isoService.treeUser.grantGroupUserPermission(
+                            $scope.selectedTreeNode.NODE_ID,
+                            $scope.newAdminGroup.GROUP_ID,
+                            isoConst.isoPermission.administrator)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                if(data.status=='success')
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Add group success!');
+                                    $scope.refreshNodePermission();
+                                }
+                                else
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                }
+                            }
+                            else
+                            {
+                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                            }
+                        },function(err){
+                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                        })
+
+                    }
+                });
+
+
+
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                 /**
+                 * xu ly them group vao nhom create
+                 * tannv.dts@gmail.com
+                 */
+                $scope.showSelectionCreateGroup=false;
+                $scope.newCreateGroup={};
+                $scope.$watchCollection('newCreateGroup',function(oldValues,newValues){
+                    if($scope.newCreateGroup && $scope.newCreateGroup.GROUP_NAME)
+                    {
+                        isoService.treeUser.grantGroupUserPermission(
+                            $scope.selectedTreeNode.NODE_ID,
+                            $scope.newCreateGroup.GROUP_ID,
+                            isoConst.isoPermission.create)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                if(data.status=='success')
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Add group success!');
+                                    $scope.refreshNodePermission();
+                                }
+                                else
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                }
+                            }
+                            else
+                            {
+                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                            }
+                        },function(err){
+                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                        })
+
+                    }
+                });
+
+
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                 /**
+                 * xu ly them group vao nhom update
+                 * tannv.dts@gmail.com
+                 */
+                $scope.showSelectionUpdateGroup=false;
+                $scope.newUpdateGroup={};
+                $scope.$watchCollection('newUpdateGroup',function(oldValues,newValues){
+                    if($scope.newUpdateGroup && $scope.newUpdateGroup.GROUP_NAME)
+                    {
+                        isoService.treeUser.grantGroupUserPermission(
+                            $scope.selectedTreeNode.NODE_ID,
+                            $scope.newUpdateGroup.GROUP_ID,
+                            isoConst.isoPermission.update)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                if(data.status=='success')
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Add group success!');
+                                    $scope.refreshNodePermission();
+                                }
+                                else
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                }
+                            }
+                            else
+                            {
+                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                            }
+                        },function(err){
+                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                        })
+
+                    }
+                });
+
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                 /**
+                 * xu ly them group vao nhom update
+                 * tannv.dts@gmail.com
+                 */
+                $scope.showSelectionReadGroup=false;
+                $scope.newReadGroup={};
+                $scope.$watchCollection('newReadGroup',function(oldValues,newValues){
+                    if($scope.newReadGroup && $scope.newReadGroup.GROUP_NAME)
+                    {
+                        isoService.treeUser.grantGroupUserPermission(
+                            $scope.selectedTreeNode.NODE_ID,
+                            $scope.newReadGroup.GROUP_ID,
+                            isoConst.isoPermission.read)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                if(data.status=='success')
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Add group success!');
+                                    $scope.refreshNodePermission();
+                                }
+                                else
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                }
+                            }
+                            else
+                            {
+                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                            }
+                        },function(err){
+                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                        })
+
                     }
                 });
             }

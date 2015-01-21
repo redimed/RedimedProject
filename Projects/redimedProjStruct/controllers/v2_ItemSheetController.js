@@ -23,8 +23,8 @@ module.exports = {
             ]
         }).success(function(data){
             res.json({status:'success', data:data.itemLists});
-         })
-		},
+        })
+	},
     
     postInsertDeptItems: function(req,res){
         var insert_arr = req.body.list;

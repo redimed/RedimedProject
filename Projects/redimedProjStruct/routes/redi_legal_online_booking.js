@@ -10,6 +10,7 @@ var rlBookingsController=require('./controllers/rlBookingsController');
 var rlBookingFilesController=require('./controllers/rlBookingFilesController');
 var sysUserNotificationsController=require('./controllers/sysUserNotificationsController');
 var structureController=require('./controllers/structureController');
+var rlobBookingPaperlessController=require('./controllers/rlobBookingPaperlessController');
 
 //-------------------------------------------------------------
 
@@ -108,4 +109,18 @@ app.get('/api/rlob/rl_messages/getListMessages', rlBookingsController.rl_message
 app.get('/api/rlob/rl_messages/addNewMessages', rlBookingsController.rl_messages_insert_contents);
 app.get('/api/rlob/rl_messages/changeIsenableMessages', rlBookingsController.rl_messages_change_isenable);
 app.get('/api/rlob/rl_messages/updateMessages', rlBookingsController.rl_messages_update_message);
+
+//rl_form_ams6
+//phanquocchien.c1109g@gmail.com
+app.post('/api/rlob/rl_form_ams6/addNewFormAms6', rlobBookingPaperlessController.rl_form_ams6_insert);
+app.get('/api/rlob/rl_form_ams6/get_booking_doctor_company', rlobBookingPaperlessController.get_booking_doctor_company);
+app.get('/api/rlob/rl_form_ams6/select_Item_rl_form_ams6_bookingid', rlobBookingPaperlessController.select_Item_rl_form_ams6_bookingid);
+app.post('/api/rlob/rl_form_ams6/rl_form_ams6_update', rlobBookingPaperlessController.rl_form_ams6_update);
+
+//rl_form_ams6
+//phanquocchien.c1109g@gmail.com
+app.post('/api/rlob/rl_form_ams5/addNewFormAms5', rlobBookingPaperlessController.rl_form_ams5_insert);
+app.post('/api/rlob/rl_form_ams5/rl_form_ams5_update', rlobBookingPaperlessController.rl_form_ams5_update);
+app.get('/api/rlob/rl_form_ams5/select_Item_rl_form_ams5_bookingid', rlobBookingPaperlessController.select_Item_rl_form_ams5_bookingid);
+
 

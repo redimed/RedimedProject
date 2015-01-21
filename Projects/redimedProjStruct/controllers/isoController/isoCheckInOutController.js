@@ -645,18 +645,13 @@ module.exports =
                                     listEmail +=item.Contact_email+','
                                 })
                                 var mailInfo = {
-                                    senders:'Tan Nguyen ? <tannv.solution@gmail.com>',
+                                    senders:"REDiMED <healthscreenings@redimed.com.au>",
                                     recipients:listEmail,
-                                    subject:'Check Submit ISO Document',
+                                    subject:'Submit ISO Document by '+userInfo.user_name,
                                     htmlBody:
                                     "	<p>Hi,</p>                                 "+
                                     "    <p>                                                                                                 "+
-                                    "    Check New Submit Document : http://localhost:3000/#/isoSubmitStatusPending "+
-                                    "    </p>                                                                                                "+
-
-                                    "    <p>                                                                                                 "+
-                                    "        Should you have any questions please do not hesitate to contact Redilegal                       "+
-                                    "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
+                                    "    Please Check New Submit Document : http://localhost:3000/#/iso/isoSubmitStatusPending "+
                                     "    </p>                                                                                                "+
                                     "    <p>                                                                                                 "+
                                     "        Thank you                                                                                       "+

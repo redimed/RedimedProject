@@ -77,17 +77,29 @@ angular.module('app.loggedIn.iso.service',[])
                 var result=api.all("iso/iso-tree-dir/restore-node");
                 return result.post({nodeId:nodeId});
             },
-	    
-	       handlingDownloadDocument:function(data)
-           {
-                var result=api.all("iso/iso-tree-dir/handlingDownloadFolder");
-                return result.post({data:data});
-            },
-            
-            downloadFolder : function(data){
-                $window.location.href = '/api/iso/iso-tree-dir/dowloadFolder?path='+data;
 
+            handlingCloneFolder:function(nodeId,listNode)
+            {
+                var result=api.all("iso/iso-tree-dir/handling-clone-folder");
+                return result.post({nodeId:nodeId,listNode:listNode});
+            },
+
+            cloneFolder:function(nodeId,downloadPackName)
+            {
+                $window.location.href = '/api/iso/iso-tree-dir/clone-folder?downloadPackName='+downloadPackName+'&nodeId='+nodeId;;
+            },
+            getFullVersionDoccument:function(nodeId){
+                var result = api.all("iso/iso-tree-dir/getFullVersionDoccument");
+                return result.post({nodeId:nodeId});
+            },
+            getFullCheckinDoccument:function(nodeId){
+                var result = api.all("iso/iso-tree-dir/getFullCheckinDoccument");
+                return result.post({nodeId:nodeId});
+            },
+            handlingDownloadVersionDocument:function(FILE_NAME,CHECK_IN_FOLDER_STORAGE,nodeId){
+                $window.location.href = '/api/iso/iso-tree-dir/handlingDownloadVersionDocument?nodeId='+nodeId+'&FILE_NAME='+FILE_NAME+'&CHECK_IN_FOLDER_STORAGE='+CHECK_IN_FOLDER_STORAGE;
             }
+
         };
 
         isoService.treeUser={
@@ -96,10 +108,17 @@ angular.module('app.loggedIn.iso.service',[])
                 var result=api.all("iso/iso-tree-users/grant-node-permission");
                 return result.post({nodeId:nodeId,accessibleUserId:accessibleUserId,permission:permission});
             },
+
             checkCanPermission:function(nodeId,userIsGranted,permission)
             {
                 var result=api.all("iso/iso-tree-users/check-can-permission");
                 return result.post({nodeId:nodeId,userIsGranted:userIsGranted,permission:permission});
+            },
+
+            grantGroupUserPermission:function(nodeId,groupId,permission)
+            {
+                var result=api.all("iso/iso-tree-users/grant-user-group-permission");
+                return result.post({nodeId:nodeId,groupId:groupId,permission:permission});
             }
         }
 
@@ -178,7 +197,86 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result=api.all("iso/iso-admin/check-iso-admin");
                 return result.post();
+            },
+            getAdminList:function(){
+                var result=api.one("iso/iso-admin/getAdminList");
+                return result.get();
+            },
+            insertNewUserToAdmin:function(id,role){
+                var result = api.all("iso/iso-admin/insertNewUserToAdmin");
+                return result.post({id:id,role:role});
+            },
+            updateEnableAdmin:function(id,idnew,role,enable){
+                var result = api.all("iso/iso-admin/updateEnableAdmin");
+                return result.post({id:id,idnew:idnew,role:role,enable:enable});
             }
+        }
+
+        isoService.isoUserGroup={
+            checkCanAccessUserGroupPage:function()
+            {
+                var result = api.one("iso/iso-user-group/access-user-group-page");
+                return result.get();
+            },
+
+            getUserGroupList:function()
+            {
+                var result = api.one("iso/iso-user-group/get-user-group-list");
+                return result.get();
+            },
+
+            updateGroupInfo:function(groupInfo)
+            {
+                var result=api.all("iso/iso-user-group/update-group-info");
+                return result.post({groupInfo:groupInfo});
+            },
+
+            addGroup:function(groupInfo)
+            {                
+                var result=api.all("iso/iso-user-group/add-group");
+                return result.post({groupInfo:groupInfo});
+            },
+
+            getUsersInGroup:function(groupId)
+            {
+                var result=api.all("iso/iso-user-group/get-user-in-group");
+                return result.post({groupId:groupId});
+            },
+
+            updateGroupItemInfo:function(groupItemInfo)
+            {
+                var result=api.all("iso/iso-user-group/update-group-item-info");
+                return result.post({groupItemInfo:groupItemInfo});
+            },
+
+            addGroupItem:function(groupItemInfo)
+            {
+                var result=api.all("iso/iso-user-group/add-group-item");
+                return result.post({groupItemInfo:groupItemInfo});
+            },
+
+            
+            grantPermissionForNewUserInGroup:function(groupId,newUserId)
+            {
+                var result=api.all("iso/iso-tree-users/grant-permission-for-new-user-in-group");
+                return result.post({groupId:groupId,newUserId:newUserId});
+            }
+        }
+
+        isoService.isoApprover={
+            getApproverList:function(){
+                var result=api.one("iso/iso-approver/getApproverList");
+                return result.get();
+            },
+            insertNewUserToApprover:function(id){
+                var result = api.all("iso/iso-approver/insertNewUserToApprover");
+                return result.post({id:id});
+            },
+            updateEnableApprover:function(id,enable){
+                var result = api.all("iso/iso-approver/updateEnableApprover");
+                return result.post({id:id,enable:enable});
+            }
+
         }
 
         return isoService;

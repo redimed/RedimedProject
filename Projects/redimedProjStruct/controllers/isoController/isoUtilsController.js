@@ -68,6 +68,10 @@ module.exports =
         }
     },
 
+    nodeType:{
+        folder:'FOLDER',
+        document:'DOC'
+    },
 
     submitStatus:{
         pending:'PENDING',
@@ -106,17 +110,18 @@ module.exports =
     checkUserPermission:function(req,permissionCanExecute)
     {
         var userLoginPermission=1000;
-        if(haveData(req.query))
+        if(req.method=='GET')
         {
             userLoginPermission=checkData(req.query.userLoginPermission)?req.query.userLoginPermission:1000;
         }
-        if(haveData(req.body))
+        if(req.method=='POST')
         {
             userLoginPermission=checkData(req.body.userLoginPermission)?req.body.userLoginPermission:1000;
         }
         if(userLoginPermission>permissionCanExecute)
         {
             //res.json({status:'fail'});
+            exlog('user login permission:'+userLoginPermission);
             exlog("User cannot execute function!");
             return false;
         }
@@ -127,5 +132,25 @@ module.exports =
         
     },
 
+    isAdminIsoSystem:function(req)
+    {
+        var value=0;
+        if(req.method=='GET')
+        {
+            value=checkData(req.query.isAdminIsoSystem)?req.query.isAdminIsoSystem:0;
+        }
+        if(req.method=='POST')
+        {
+            value=checkData(req.body.isAdminIsoSystem)?req.body.isAdminIsoSystem:0;
+        }
+        if(value==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
 }

@@ -10,6 +10,7 @@ angular.module("app.loggedIn.patient.claim.list.controller", [
 		permission: {
 			edit: false
 		},
+        isOpenFirst: false,
 		Patient_id: $stateParams.patient_id
 	};
 	$scope.list = {};
@@ -59,12 +60,14 @@ angular.module("app.loggedIn.patient.claim.list.controller", [
 	}
 
     $scope.openPopup = function (option) {
-        if (option.type === 'add') {
+        $scope.claim_params.isOpenFirst = true;
+        if (option.type === 'add' && $scope.claim_params.isOpenFirst === true) {
             angular.element(idClaimDetailAdd).fadeIn();
         }
     }
 
     $scope.clickRow = function (claimData) {
+        $scope.claim_params.isOpenFirst = true;
         if ($scope.claim_params.permission.edit !== true)
             $scope.claim_params = {
                 permission: {
@@ -72,7 +75,9 @@ angular.module("app.loggedIn.patient.claim.list.controller", [
                     Claim_id: claimData.row.Claim_id
                 },
             };
+        if( $scope.claim_params.isOpenFirst = true){
         angular.element(idClaimDetailAdd).fadeIn();
+        }
 
     }
 

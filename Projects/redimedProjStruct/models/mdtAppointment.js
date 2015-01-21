@@ -33,7 +33,8 @@ module.exports = function(sequelize, DataTypes){
 				mdtAppointment.hasMany(models.Patient,{
 					as: 'Patients', 
 					foreignKey: 'CAL_ID',
-					through: 'cln_appt_patients'
+					// through: 'cln_appt_patients'
+					through: models.ApptPatient
 				});
 
 				mdtAppointment.hasMany(models.InvItem, {
@@ -49,10 +50,6 @@ module.exports = function(sequelize, DataTypes){
 				});
                 mdtAppointment.belongsTo( models.SysServices, { 
                     as: 'Service', foreignKey: 'SERVICE_ID'
-                });
-
-				mdtAppointment.belongsTo( models.SysServices, { 
-            		as: 'Service', foreignKey: 'SERVICE_ID'
                 });
 			}
 		}// end association

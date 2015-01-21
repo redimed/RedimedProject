@@ -1,0 +1,169 @@
+<div class="portlet box red">
+	<div class="portlet-title">
+	    <div class="caption">
+	        <i class="fa fa-medkit"></i> Invoice Detail
+	    </div>
+	    <div class="pull-right navbar-right">
+            <button ng-click="clickAction()" class="btn btn-default"><i class="fa fa-save"></i> Save </button>
+        </div>
+	</div>
+	<div class="portlet-body">
+<div class="row" style="margin-top: 15px;">
+
+	<!--Patient_id-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Patient</label>
+			<input disabled type="text" placeholder="Patient" class="form-control" 
+				ng-model="InvoiceMap.patient.full_name" float-label>
+		</span>	
+	</div>
+	<!--Patient_id-->
+
+	<!--Company_id-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="company_id">Company</label>
+			<input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" class="form-control"float-label>
+		</span>	
+	</div>
+	<!--Company_id-->
+
+	<!--Insurer_id-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Insurer</label>
+			<input type="text" disabled placeholder="Insurer" ng-model="InvoiceMap.insurer.insurer_name" class="form-control"  float-label>
+		</span>	
+	</div>
+	<!--Insurer_id-->
+
+	<!--SERVICE_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Service</label>
+			<input type="text" disabled placeholder="Service" ng-model="InvoiceMap.service.SERVICE_NAME" class="form-control" float-label>
+		</span>	
+	</div>
+	<!--SERVICE_ID-->
+
+	<div class="break-row"></div>
+
+	<!--SITE_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Site</label>
+			<input type="text" disabled placeholder="Site" ng-model="InvoiceMap.site.Site_name" class="form-control" float-label>
+		</span>	
+	</div>
+	<!--SITE_ID-->
+
+	<!--DEPT_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Department</label>
+			<input type="text" disabled placeholder="Department" ng-model="InvoiceMap.department.CLINICAL_DEPT_NAME" class="form-control" float-label>
+		</span>	
+	</div>
+	<!--DEPT_ID-->
+
+	<!--DOCTOR_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Doctor</label>
+			<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control"  float-label>
+		</span>	</div>
+	<!--DOCTOR_ID-->
+
+
+
+
+	<!--cal_id-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<a ng-click="goToAppt(InvoiceMap.Patient_id, InvoiceMap.cal_id)" class="btn btn-primary btn-block" ng-click="test"><i class="fa fa-calendar"></i> Appointment Detail</a>
+	</div>
+	<!--cal_id-->
+
+	<div class="break-row"></div>
+
+	<!--STATUS-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="status">Status</label>
+			<select class="form-control" name="STATUS"
+				ng-model="InvoiceMap.STATUS"
+				ng-options="item.code as item.label for item in options.invoice_status">
+			</select>
+		</span>	
+	</div>
+	<!--STATUS-->
+
+	<!--claim_id-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<!-- <button class="btn btn-block green" ng-click="patientClaim.open()">
+			<span ng-if="!InvoiceMap.claim_id">
+				<i class="fa fa-search"></i> Choose Claim
+			</span>
+		</button> -->
+		<div class="input-group input-large">
+			<input ng-if="!InvoiceMap.claim_id" disabled type="text" value="No Claim" class="form-control" placeholder=".input-large">
+			
+			<input ng-if="InvoiceMap.claim_id" disabled type="text" ng-model="InvoiceMap.claim.Injury_name" class="form-control">
+
+			<div class="input-group-btn" dropdown="">
+				<button type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">Claim <i class="fa fa-angle-down"></i></button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a ng-click="patientClaim.open()"><i class="fa fa-search"></i> Choose Claim </a></li>
+					<li><a><i class="fa fa-times"></i> Remove Claim</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--claim_id-->
+	<div class="break-row"></div>
+</div>
+
+
+	</div>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+       <b> Invoice Items </b>
+    </div>
+   
+	<table class="table table-bordered">
+		<tr>
+			<th> Item No</th>
+			<th> Time Spent </th>
+			<th> Quantity </th>
+			<th> Price </th>
+			<th> Amount </th>
+		</tr>
+		<tr ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
+			<td>{{item.invItem.ITEM_CODE}}</td>
+			<td>{{item.TIME_SPENT}}</td>
+			<td>{{item.QUANTITY}}</td>
+			<td class="text-right">${{item.PRICE}}</td>
+			<td class="text-right">${{item.AMOUNT}}</td>
+		</tr>
+		<tr>
+			<td colspan="4"><strong> Total </strong></td>
+			<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
+		</tr>
+	</table>
+
+</div>
+
+
+<!-- POPUP PATIENT CLAIM -->
+<div class="mdt-search" style="display: block;" ng-show="patientClaim.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="patientClaim.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="patientClaim.options" rowclick="patientClaim.click"></my-data-table>
+</div>
+ <!-- END POPUP PATIENT CLAIM  -->

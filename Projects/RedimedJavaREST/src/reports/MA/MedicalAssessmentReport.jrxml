@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MedicalAssessmentReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9630c75d-ce05-498d-98ef-39e1645f8c5b">
 	<property name="ireport.zoom" value="1.0245201830476074"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1607"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -95,6 +95,11 @@
     doc_ma.`COORDINATION` AS doc_ma_COORDINATION,
     doc_ma.`LYMPH` AS doc_ma_LYMPH,
     doc_ma.`THYROID` AS doc_ma_THYROID,
+    doc_ma.`COMMENT_SEC4` AS doc_ma_COMMENT_SEC4,
+    doc_ma.`COMMENT_SEC5` AS doc_ma_COMMENT_SEC5,
+    doc_ma.`COMMENT_SEC6` AS doc_ma_COMMENT_SEC6,
+    doc_ma.`COMMENT_SEC7` AS doc_ma_COMMENT_SEC7,
+    doc_ma.`COMMENT_SEC8` AS doc_ma_COMMENT_SEC8,
     doc_ma.`COMMENT_SEC9` AS doc_ma_COMMENT_SEC9,
     doc_ma.`AGE` AS doc_ma_AGE,
     doc_ma.`HYPER` AS doc_ma_HYPER,
@@ -135,7 +140,7 @@ doc_ma.`MA_ID` = $P{id}]]>
 	<field name="doc_ma_HIP" class="java.lang.Float"/>
 	<field name="doc_ma_WHR" class="java.lang.Float"/>
 	<field name="doc_ma_IS_BMI" class="java.lang.Integer"/>
-	<field name="doc_ma_BLOOD_SEC1" class="java.lang.Integer"/>
+	<field name="doc_ma_BLOOD_SEC1" class="java.lang.String"/>
 	<field name="doc_ma_IS_BLOOD" class="java.lang.Integer"/>
 	<field name="doc_ma_RESTING_HEART_RATE" class="java.lang.Integer"/>
 	<field name="doc_ma_IS_RESTING_HEART_RATE" class="java.lang.Integer"/>
@@ -182,6 +187,11 @@ doc_ma.`MA_ID` = $P{id}]]>
 	<field name="doc_ma_COORDINATION" class="java.lang.Integer"/>
 	<field name="doc_ma_LYMPH" class="java.lang.Integer"/>
 	<field name="doc_ma_THYROID" class="java.lang.Integer"/>
+	<field name="doc_ma_COMMENT_SEC4" class="java.lang.String"/>
+	<field name="doc_ma_COMMENT_SEC5" class="java.lang.String"/>
+	<field name="doc_ma_COMMENT_SEC6" class="java.lang.String"/>
+	<field name="doc_ma_COMMENT_SEC7" class="java.lang.String"/>
+	<field name="doc_ma_COMMENT_SEC8" class="java.lang.String"/>
 	<field name="doc_ma_COMMENT_SEC9" class="java.lang.String"/>
 	<field name="doc_ma_AGE" class="java.lang.Integer"/>
 	<field name="doc_ma_HYPER" class="java.lang.Integer"/>
@@ -209,46 +219,49 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<reportElement x="0" y="1" width="555" height="119" uuid="ccd8942e-10bd-4112-8e4e-b4f9aa8d9835"/>
 				<imageExpression><![CDATA[$P{real_path}+"\\images\\header.PNG"]]></imageExpression>
 			</image>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="11" width="265" height="92" uuid="971ffacf-83fc-4f55-b41b-471f2d3df435"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="8" y="81" width="50" height="15" uuid="05e93de0-5e56-4f1f-b7a2-665c332a56bd"/>
+				<text><![CDATA[Company:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="58" y="81" width="200" height="15" uuid="63cd730e-68e0-43ca-a744-bc037d140d1f"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_Company_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="50" y="66" width="200" height="15" uuid="b9a7acc1-3da3-4714-af41-53339f1d76ff"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_Address1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="35" y="51" width="100" height="15" uuid="a7e23eb1-cc00-4829-92a9-06a641b05f63"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_DOB}]]></textFieldExpression>
+			</textField>
 			<textField>
-				<reportElement x="44" y="29" width="218" height="15" uuid="50f1ab3c-ac7f-4737-8e1a-13ffe951c8da"/>
+				<reportElement x="43" y="21" width="218" height="15" uuid="50f1ab3c-ac7f-4737-8e1a-13ffe951c8da"/>
 				<textFieldExpression><![CDATA[($F{doc_ma_First_name} != null ? $F{doc_ma_First_name} : "")+ " " +($F{doc_ma_Middle_name} != null ? $F{doc_ma_Middle_name} : "") + " " + ($F{doc_ma_Sur_name} != null ? $F{doc_ma_Sur_name} : "")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="29" width="35" height="15" uuid="5277b1c9-272d-415d-b06e-02470931feb2"/>
+				<reportElement x="8" y="21" width="35" height="15" uuid="5277b1c9-272d-415d-b06e-02470931feb2"/>
 				<text><![CDATA[Name:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="44" width="25" height="15" uuid="0150da85-8e96-450b-8752-5ecf67da0459"/>
+				<reportElement x="8" y="36" width="25" height="15" uuid="0150da85-8e96-450b-8752-5ecf67da0459"/>
 				<text><![CDATA[Sex:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="34" y="44" width="100" height="15" uuid="d747735c-4e40-4a4e-8c6d-9e919286e609"/>
+				<reportElement x="33" y="36" width="100" height="15" uuid="d747735c-4e40-4a4e-8c6d-9e919286e609"/>
 				<textFieldExpression><![CDATA[$F{doc_ma_Sex}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="59" width="27" height="15" uuid="ef62a927-da0f-45bc-83f3-c608a08034b0"/>
+				<reportElement x="8" y="51" width="27" height="15" uuid="ef62a927-da0f-45bc-83f3-c608a08034b0"/>
 				<text><![CDATA[DOB:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="74" width="42" height="15" uuid="5db8f3fc-aea6-4251-9528-726d742feeb5"/>
+				<reportElement x="8" y="66" width="42" height="15" uuid="5db8f3fc-aea6-4251-9528-726d742feeb5"/>
 				<text><![CDATA[Address:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="9" y="89" width="50" height="15" uuid="05e93de0-5e56-4f1f-b7a2-665c332a56bd"/>
-				<text><![CDATA[Company:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="36" y="59" width="100" height="15" uuid="a7e23eb1-cc00-4829-92a9-06a641b05f63"/>
-				<textFieldExpression><![CDATA[$F{doc_ma_DOB}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="51" y="74" width="200" height="15" uuid="b9a7acc1-3da3-4714-af41-53339f1d76ff"/>
-				<textFieldExpression><![CDATA[$F{doc_ma_Address1}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="59" y="89" width="200" height="15" uuid="63cd730e-68e0-43ca-a744-bc037d140d1f"/>
-				<textFieldExpression><![CDATA[$F{doc_ma_Company_name}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<detail>
@@ -288,10 +301,6 @@ doc_ma.`MA_ID` = $P{id}]]>
 			<textField>
 				<reportElement x="429" y="46" width="100" height="20" uuid="f1417a7c-f0d4-457c-a394-87db7623fffd"/>
 				<textFieldExpression><![CDATA[$F{doc_ma_WHR} != null ? $F{doc_ma_WHR} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="110" y="71" width="42" height="15" uuid="0220c714-a251-492b-8478-c78a38899866"/>
-				<textFieldExpression><![CDATA[$F{doc_ma_BLOOD_SEC1} != null ? $F{doc_ma_BLOOD_SEC1} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="110" y="97" width="42" height="15" uuid="e6979289-4ba0-442c-9648-e970d4179338"/>
@@ -559,6 +568,10 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<reportElement x="7" y="609" width="540" height="37" uuid="650d1d29-52d2-4d64-8594-e7079034706a"/>
 				<textFieldExpression><![CDATA[$F{doc_ma_COMMENT_SEC3} != null ? $F{doc_ma_COMMENT_SEC3} : ""]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="111" y="68" width="50" height="15" uuid="50da66e1-bef2-4d31-8ac4-7658cd63b9e3"/>
+				<textFieldExpression><![CDATA[$F{doc_ma_BLOOD_SEC1}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="682">
 			<image scaleImage="RetainShape">
@@ -825,9 +838,9 @@ doc_ma.`MA_ID` = $P{id}]]>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement x="6" y="572" width="540" height="90" uuid="83facef6-df21-4c49-a06f-2f30514020d8"/>
-				<textFieldExpression><![CDATA[$F{doc_ma_COMMENT_SEC9} != null ? $F{doc_ma_COMMENT_SEC9} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{doc_ma_COMMENT_SEC4} != null ? $F{doc_ma_COMMENT_SEC4} + "\n" : "") + ($F{doc_ma_COMMENT_SEC5} != null ? $F{doc_ma_COMMENT_SEC5} + "\n" : "") + ($F{doc_ma_COMMENT_SEC6} != null ? $F{doc_ma_COMMENT_SEC6} + "\n" : "") + ($F{doc_ma_COMMENT_SEC7} != null ? $F{doc_ma_COMMENT_SEC7} + "\n" : "") + ($F{doc_ma_COMMENT_SEC8} != null ? $F{doc_ma_COMMENT_SEC8} + "\n" : "") + ($F{doc_ma_COMMENT_SEC9} != null ? $F{doc_ma_COMMENT_SEC9} : "")]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="669">
@@ -940,8 +953,11 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+"\\images\\checked.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="6" y="354" width="540" height="153" uuid="78435f2d-4030-4d97-bfc4-3c3716fa1d34"/>
-				<textFieldExpression><![CDATA[$F{doc_ma_COMMENT_SEC10} != null ? $F{doc_ma_COMMENT_SEC10} : ""]]></textFieldExpression>
+				<reportElement x="6" y="354" width="540" height="168" uuid="78435f2d-4030-4d97-bfc4-3c3716fa1d34"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{doc_ma_COMMENT_SEC1} != null ? $F{doc_ma_COMMENT_SEC1} + "\n" : "") + ($F{doc_ma_COMMENT_SEC2} != null ? $F{doc_ma_COMMENT_SEC2} + "\n" : "") + ($F{doc_ma_COMMENT_SEC3} != null ? $F{doc_ma_COMMENT_SEC3} + "\n" : "") +($F{doc_ma_COMMENT_SEC10} != null ? $F{doc_ma_COMMENT_SEC10} : "")]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="80" y="33" width="262" height="20" uuid="e9d4b688-5015-438d-9f0b-e699f6802a48"/>
@@ -963,7 +979,7 @@ doc_ma.`MA_ID` = $P{id}]]>
 				<textFieldExpression><![CDATA[$F{doc_ma_Creation_date}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="344" y="510" width="162" height="120" uuid="f2abcee0-d809-48bb-b9a0-fb2232f94826"/>
+				<reportElement x="344" y="522" width="162" height="108" uuid="f2abcee0-d809-48bb-b9a0-fb2232f94826"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doc_ma_SIGN}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">

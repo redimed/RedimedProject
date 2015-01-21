@@ -357,7 +357,6 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                         s8_hay_fever: data.s8_hay_fever || null,
                         s8_tuberculosis: data.s8_tuberculosis || null,
                         s8_obstructive: data.s8_obstructive || null,
-                        s8_disease: data.s8_disease || null,
                         s8_rheumatic_fever: data.s8_rheumatic_fever || null,
                         s8_bronchitis: data.s8_bronchitis || null,
                         s8_coughed_blood: data.s8_coughed_blood || null,

@@ -21,7 +21,6 @@
     <div class="row">
         <div class="col-md-5 col-sm-6">
             <div class="note note-warning note-bordered">
-                <label class="bold">Sticker Here:</label></br>
                 <label>
                     Name: {{patientInfo.First_name}} {{patientInfo.Middle_name}} {{patientInfo.Sur_name}}</br>
                     Sex: {{patientInfo.Sex}}</br>
@@ -111,8 +110,8 @@
                 </div>
                 <div class="row">
                     <label class="control-label col-lg-2 col-md-3 col-sm-4" style="margin-top: 7px">Blood Pressure (mmHg)</label>
-                    <div class="col-md-2 col-lg-1 col-sm-2">
-                        <input type="text" class="form-control" ng-model="info.BLOOD_SEC1" ng-pattern="/^[0-9]+$/" name="BLOOD_SEC1">
+                    <div class="col-md-2 col-lg-2 col-sm-2">
+                        <input type="text" class="form-control" ng-model="info.BLOOD_SEC1" ng-pattern="/^[0-9]+/[0-9]+$/" name="BLOOD_SEC1">
                     </div>
                     <div class="btn-group col-lg-3 col-md-4 col-sm-6">
                             <label class="btn">
@@ -124,12 +123,12 @@
                 <div class="row"  ng-show="showClickedValidation && MAForm.BLOOD_SEC1.$error.pattern">
                     <div class="col-lg-2 col-md-3 col-sm-4"></div>
                     <div class="col-md-5 col-lg-5 col-sm-5" for="BLOOD_SEC1">
-                        <label style="color: #8b0000">Blood Pressure must be number</label>
+                        <label style="color: #8b0000">Blood Pressure is usually # / #</label>
                     </div>
                 </div>
                 <div class="row">
                     <label class="control-label col-lg-2 col-md-3 col-sm-4" style="margin-top: 7px">Resting Heart rate (bpm)</label>
-                    <div class="col-md-2 col-lg-1 col-sm-2">
+                    <div class="col-md-2 col-lg-2 col-sm-2">
                         <input type="text" class="form-control" ng-model="info.RESTING_HEART_RATE" ng-pattern="/^[0-9]+$/" name="RESTING_HEART_RATE">
                     </div>
                     <div class="btn-group col-lg-3 col-md-4 col-sm-6">
@@ -352,9 +351,9 @@
                 </div>
             </div>
             <div class="row">
-                <label class="col-lg-12 col-md-12 col-sm-12">Blood Sugar Level <input type="text" ng-model="info.BLOOD_SUGAR_LEVEL" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/" name="BLOOD_SUGAR_LEVEL" style="width: 60px"> mmol/L</label>
+                <label class="col-lg-12 col-md-12 col-sm-12">Blood Sugar Level <input type="text" ng-model="info.BLOOD_SUGAR_LEVEL" ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d)?$/" name="BLOOD_SUGAR_LEVEL" style="width: 60px"> mmol/L</label>
                 <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showClickedValidation && MAForm.BLOOD_SUGAR_LEVEL.$error.pattern">
-                    <label style="color: #8b0000">Blood Sugar Level must be number</label>
+                    <label style="color: #8b0000">Blood Sugar Level must be number with the first decimal point </label>
                 </div>
             </div>
             <div class="row">
@@ -548,8 +547,13 @@
             </div>
             <div class="row">
                 <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
-                <div class="col-lg-10 col-md-10 col-sm-10">
-                    <textarea class="form-control " ng-model="info.COMMENT_SEC6" ng-change="collectComment()"></textarea></div>
+                <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC6.$error.required}">
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC6" ng-change="collectComment()" name="COMMENT_SEC6"
+                    ng-required="info.SCAR == 1 || info.NAIL == 1 || info.DRUG == 1 || info.SKIN == 1"></textarea>
+                    <div class="help-block" ng-show="MAForm.COMMENT_SEC6.$error.required">
+                        <label class="control-label">Required!</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -701,8 +705,8 @@
             <div class="row">
                 <label class="control-label bold col-lg-12 col-md-12 col-sm-12">Examiner Comments</label>
                 <div class="col-lg-10 col-md-10 col-sm-10" ng-class="{'has-error': MAForm.COMMENT_SEC9.$error.required}">
-                    <textarea class="form-control " ng-model="info.COMMENT_SEC9" ng-change="totalComment()" name="COMMENT_SEC9"
-                    ng-required="info.LYMPH == 0 || info.THYROID == 0" style="height: 150px"></textarea>
+                    <textarea class="form-control " ng-model="info.COMMENT_SEC9" ng-change="collectComment()" name="COMMENT_SEC9"
+                    ng-required="info.LYMPH == 0 || info.THYROID == 0"></textarea>
                     <div class="help-block" ng-show="MAForm.COMMENT_SEC9.$error.required">
                         <label class="control-label">Required!</label>
                     </div>
@@ -852,7 +856,7 @@
                     shortness of breath with usual activities; orthopnoea or paroxysmal nocturnal dyspnoea
                 </label>
                 <div class="col-lg-12 col-md-12 col-sm-12" >
-                    <textarea class="form-control" rows="10" ng-model="info.COMMENT_SEC10"></textarea></div>
+                    <textarea class="form-control" rows="10" ng-model="info.COMMENT_SEC10" ng-change="totalComment()"></textarea></div>
             </div>
         </div>
     </div>

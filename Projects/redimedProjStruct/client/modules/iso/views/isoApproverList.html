@@ -1,0 +1,105 @@
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-list"></i>
+            <span class="caption-subject uppercase">Approver List</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" ng-click="addNewUserToApproverList()" class="btn green-jungle btn-sm">
+                <i class="fa fa-plus"></i> Add New</a>
+   </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable" id="content">
+            <table   show-filter="false" class="table table-hover table-bordered table-responsive">
+                <tr>
+                    <th>User Name</th>
+                    <th>Enable</th>
+                   
+                </tr>
+
+                <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="applist in approverList">
+                    <td width="800px">
+                        <label >{{applist.user_name}}</label>
+                    </td>
+                    <td width="100px">
+                        <input type="checkbox"  ng-model="applist.ISENABLE"  ng-true-value="1" ng-false-value="0"
+                    ng-checked="applist.ISENABLE==1" ng-change="changeEnable(applist.APPROVER_ID,applist.ISENABLE)" />
+                    </td>
+                
+                </tr>
+            </table>
+            <!-- <pagination total-items="totalItems"
+                        ng-model="currentPage"
+                        max-size="maxSize"
+                        class="pagination-sm"
+                        boundary-links="true"
+                        rotate="false"
+                        num-pages="numPages"
+                        items-per-page="itemsPerPage"
+                        ng-change="handleListPaging()">
+            </pagination> -->
+        </div>
+        <br/>
+
+    </div>
+
+</div>
+
+   
+
+   <!-- <iso-selection-user-name></iso-selection-user-name> -->
+
+
+
+<div id="iso-global-msg-popup" class="modal fade">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><div class="iso-global-msg-popup-header"></div></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+
+                        <!--<span  class="label" ng-class="{'label-success':status=='success','label-warning':status=='fail'}">-->
+                        <!--{{msg}}-->
+                        <!--</span>-->
+
+                        <div  class="alert alert-success iso-global-msg-popup-success" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                        <div class="alert alert-danger iso-global-msg-popup-error" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  id="iso-approver-list-popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add New User To Approver List</h4>
+            </div>
+            <div class="modal-body">
+                <div >
+                       <iso-selection-user-name show='showSelectionAdminUserName' selected-user-name="newAdminUserName"></iso-selection-user-name>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

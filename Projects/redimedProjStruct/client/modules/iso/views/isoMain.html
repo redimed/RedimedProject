@@ -64,7 +64,7 @@
                         </button>
 
                         <button
-                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].cloneToPC"
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].cloneToPC && selectedTreeNode.NODE_ID!==0"
                             type="button" 
                             class="btn btn-default"
                             ng-click="downloadFolderSelected()">
@@ -141,8 +141,27 @@
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].grantDocumentPermission"
                             type="button" 
                             class="btn btn-default"
-                            ng-click="">
+                            ng-click="showTreeActionContentPopup(treeActions.grantNodePermission.name);">
                             Grant Permission
+                        </button>
+
+                    </div>
+
+                    <div class='iso-action-group'>
+                        <button 
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].getFullVersionDoccument"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="showTreeActionContentPopup(treeActions.getFullVersionDocument.name);">
+                            Show Version History
+                        </button>
+
+                        <button 
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].getFullCheckinDoccument"
+                            type="button" 
+                            class="btn btn-default"
+                            ng-click="showTreeActionContentPopup(treeActions.getFullCheckinDocument.name);">
+                            Show Check In History
                         </button>
                     </div>
 

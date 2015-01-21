@@ -2,14 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormAMS6" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34724f58-210c-471f-b592-23f049b81d64">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="576"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="real_path" class="java.lang.String">
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -616,9 +613,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[Schedule 2: Lump Sum Payments]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement positionType="Float" x="418" y="528" width="22" height="20" uuid="253cfc51-e61a-45f6-ad78-b5731886d171"/>
-			</rectangle>
 			<staticText>
 				<reportElement positionType="Float" x="137" y="570" width="246" height="23" uuid="dcb07ef9-8d19-44b3-8d27-e71dfd53b8de"/>
 				<textElement>
@@ -634,9 +628,6 @@ Subdivision 3]]></text>
 				</textElement>
 				<text><![CDATA[Common Law ]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement positionType="Float" x="418" y="557" width="22" height="20" uuid="2a97804e-e391-406d-b09f-99e92c028c40"/>
-			</rectangle>
 			<staticText>
 				<reportElement positionType="Float" x="137" y="606" width="246" height="20" uuid="cceda391-44a4-42f3-846a-9072b3adb508"/>
 				<textElement>
@@ -651,9 +642,6 @@ Subdivision 3]]></text>
 				</textElement>
 				<text><![CDATA[Specialised Retraining Programs]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement positionType="Float" x="418" y="593" width="22" height="20" uuid="0117e5d5-387c-4677-b6cb-dce7625c99b6"/>
-			</rectangle>
 			<staticText>
 				<reportElement positionType="Float" x="137" y="635" width="246" height="20" uuid="1e1ecb07-2d4c-4287-a844-522137547512"/>
 				<textElement>
@@ -668,24 +656,21 @@ Subdivision 3]]></text>
 				</textElement>
 				<text><![CDATA[Payment of Additional Medical Expenses: Exceptional Circumstances]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement positionType="Float" x="418" y="622" width="22" height="20" uuid="d0d930eb-e5c2-4780-b640-4a6b4cfb4cd9"/>
-			</rectangle>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="528" width="24" height="22" uuid="aa7d61a1-1499-4915-bf41-0c6f14ce4ebe"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="557" width="24" height="22" uuid="f4e2df94-2e35-44d5-aa54-14be25522c66"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="593" width="24" height="22" uuid="607285c8-62d8-4626-a9e7-c37f131500a4"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="622" width="24" height="22" uuid="21dbc9f2-038f-4277-8517-327f4ff7979c"/>
-				<imageExpression><![CDATA[$P{real_path}+"/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 		</band>
 		<band height="526">

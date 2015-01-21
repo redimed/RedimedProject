@@ -144,7 +144,7 @@ angular.module("app.model", [])
 	Claim_date: new Date(), //yes
 	Insurer: '', //yes
 	Address: '', //yes
-	Claim_no: null, //yes
+	Claim_no: '', //yes
 	Case_manager: '', //yes
 	Isenable: '1', //yes
 	Created_by: null,
@@ -225,6 +225,35 @@ angular.module("app.model", [])
 //END WAITING LIST
 
 /*AUTO CREATE*/
+.value('InvoiceHeaderModel', {
+	cal_id: null,
+	claim_id: null,
+	Patient_id: null,
+	Company_id: null,
+	Insurer_id: null,
+	DOCTOR_ID: null,
+	SITE_ID: null,
+	DEPT_ID: null,
+	SERVICE_ID: '',
+	INVOICE_NUMBER: null,
+	INVOICE_DATE: null,
+	CURRENCY_CODE: null,
+	RATE_TYPE: null,
+	RATE: null,
+	STATUS: null,
+	DESCRIPTION: '',
+	DUE_DATE: null,
+	AMOUNT: null,
+	TAX_AMOUNT: null,
+	TOTAL_AMOUNT: null,
+	BASE_AMOUNT: null,
+	BASE_TAX_AMOUNT: null,
+	BASE_TOTAL_AMOUNT: null,
+	LAST_UPDATE_DATE: null,
+	LAST_UPDATED_BY: null,
+	CREATION_DATE: null,
+	CREATED_BY: null,
+})
 .value('mdtInsurerModel', {
 	insurer_name: '',
 	address: '',

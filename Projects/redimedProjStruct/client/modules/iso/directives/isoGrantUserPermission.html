@@ -5,20 +5,38 @@
 				Group Admin
 			</div>
 			<div class="panel-body">
-				<div class='row'>
+				
+				<div class="row">
 					<div class='col-md-12'>
-						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in administratorUserList">
-							{{user.user_name}}
+						<div ng-repeat='(key,users) in administratorUserList'>
+							<div style="color:#008000">
+								{{key!='null'?(key+':'):'Single User:'}}
+							</div>
+								
+							<div>
+								<a ng-repeat="user in users" style="margin:10px;color:#408080">
+									{{user.user_name}}
+								</a>
+							</div>
 						</div>
+						
 					</div>
+					
 				</div>
+				
 				<div class='row'>
 					<div class='col-md-12'>
 						<br/>
 						<a class='iso-add-user-permission-btn' ng-click="showSelectionAdminUserName=!showSelectionAdminUserName">
-							{{showSelectionAdminUserName?'Cancel':'Add New'}}
+							{{showSelectionAdminUserName?'Cancel':'Add User'}}
 						</a>
 						<iso-selection-user-name show='showSelectionAdminUserName' selected-user-name="newAdminUserName"></iso-selection-user-name>
+
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionAdminGroup=!showSelectionAdminGroup">
+							{{showSelectionAdminGroup?'Cancel':'Add Group'}}
+						</a>
+						<iso-selection-group-user show='showSelectionAdminGroup' selected-group="newAdminGroup"></iso-selection-group-user>
 					</div>
 				</div>
 			</div>
@@ -30,20 +48,39 @@
 				Group Create
 			</div>
 			<div class="panel-body">
-				<div class='row'>
+
+				<div class="row">
 					<div class='col-md-12'>
-						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in createUserList">
-							{{user.user_name}}
+						<div ng-repeat='(key,users) in createUserList'>
+							<div style="color:#008000">
+								{{key!='null'?(key+':'):'Single User:'}}
+							</div>
+								
+							<div>
+								<a ng-repeat="user in users" style="margin:10px;color:#408080">
+									{{user.user_name}}
+								</a>
+							</div>
 						</div>
+						
 					</div>
+					
 				</div>
+
 				<div class='row'>
 					<div class='col-md-12'>
 						<br/>
 						<a class='iso-add-user-permission-btn' ng-click="showSelectionCreateUserName=!showSelectionCreateUserName">
-							{{showSelectionCreateUserName?'Cancel':'Add New'}}
+							{{showSelectionCreateUserName?'Cancel':'Add User'}}
 						</a>
 						<iso-selection-user-name show='showSelectionCreateUserName' selected-user-name="newCreateUserName"></iso-selection-user-name>
+
+
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionCreateGroup=!showSelectionCreateGroup">
+							{{showSelectionCreateGroup?'Cancel':'Add Group'}}
+						</a>
+						<iso-selection-group-user show='showSelectionCreateGroup' selected-group="newCreateGroup"></iso-selection-group-user>
 					</div>
 				</div>
 			</div>
@@ -56,20 +93,37 @@
 				Group Update
 			</div>
 			<div class="panel-body">
-				<div class='row'>
+
+				<div class="row">
 					<div class='col-md-12'>
-						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in updateUserList">
-							{{user.user_name}}
+						<div ng-repeat='(key,users) in updateUserList'>
+							<div style="color:#008000">
+								{{key!='null'?(key+':'):'Single User:'}}
+							</div>
+								
+							<div>
+								<a ng-repeat="user in users" style="margin:10px;color:#408080">
+									{{user.user_name}}
+								</a>
+							</div>
 						</div>
+						
 					</div>
+					
 				</div>
 				<div class='row'>
 					<div class='col-md-12'>
 						<br/>
 						<a class='iso-add-user-permission-btn' ng-click="showSelectionUpdateUserName=!showSelectionUpdateUserName">
-							{{showSelectionUpdateUserName?'Cancel':'Add New'}}
+							{{showSelectionUpdateUserName?'Cancel':'Add User'}}
 						</a>
 						<iso-selection-user-name show='showSelectionUpdateUserName' selected-user-name="newUpdateUserName"></iso-selection-user-name>
+
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionUpdateGroup=!showSelectionUpdateGroup">
+							{{showSelectionUpdateGroup?'Cancel':'Add Group'}}
+						</a>
+						<iso-selection-group-user show='showSelectionUpdateGroup' selected-group="newUpdateGroup"></iso-selection-group-user>
 					</div>
 				</div>
 			</div>
@@ -82,20 +136,37 @@
 				Group Read
 			</div>
 			<div class="panel-body">
-				<div class='row'>
+
+				<div class="row">
 					<div class='col-md-12'>
-						<div class='btn btn-info iso-user-permission-item' ng-repeat="user in readUserList">
-							{{user.user_name}}
+						<div ng-repeat='(key,users) in readUserList'>
+							<div style="color:#008000">
+								{{key!='null'?(key+':'):'Single User:'}}
+							</div>
+								
+							<div>
+								<a ng-repeat="user in users" style="margin:10px;color:#408080">
+									{{user.user_name}}
+								</a>
+							</div>
 						</div>
+						
 					</div>
+					
 				</div>
 				<div class='row'>
 					<div class='col-md-12'>
 						<br/>
 						<a class='iso-add-user-permission-btn' ng-click="showSelectionReadUserName=!showSelectionReadUserName">
-							{{showSelectionReadUserName?'Cancel':'Add New'}}
+							{{showSelectionReadUserName?'Cancel':'Add User'}}
 						</a>
 						<iso-selection-user-name show='showSelectionReadUserName' selected-user-name="newReadUserName"></iso-selection-user-name>
+
+						<br/>
+						<a class='iso-add-user-permission-btn' ng-click="showSelectionReadGroup=!showSelectionReadGroup">
+							{{showSelectionReadGroup?'Cancel':'Add Group'}}
+						</a>
+						<iso-selection-group-user show='showSelectionReadGroup' selected-group="newReadGroup"></iso-selection-group-user>
 					</div>
 				</div>
 			</div>

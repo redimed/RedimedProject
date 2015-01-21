@@ -61,25 +61,6 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             value = $scope.info.WAIST / $scope.info.HIP;
             if (value > 0 && value < 100) {
                 $scope.info.WHR = value.toFixed(2);
-                if (sex == "Female") {
-                    if ($scope.info.WHR < 0.80) {
-                        $scope.info.RISK = 0;
-                    } else if ($scope.info.WHR >= 0.80 && $scope.info.WHR <= 0.85) {
-                        $scope.info.RISK = 1;
-                    } else if ($scope.info.WHR > 0.85) {
-                        $scope.info.RISK = 2;
-                    }
-                } else if (sex == "Male") {
-                    if ($scope.info.WHR < 0.90) {
-                        $scope.info.RISK = 0;
-                    } else if ($scope.info.WHR >= 0.90 && $scope.info.WHR <= 0.95) {
-                        $scope.info.RISK = 1;
-                    } else if ($scope.info.WHR > 0.95) {
-                        $scope.info.RISK = 2;
-                    }
-                }
-            } else {
-                $scope.info.RISK = null;
             }
         };
 
@@ -108,16 +89,16 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
 
         var len, totalCom = '', str;
         $scope.collectComment = function () {
-            $scope.info.COMMENT_SEC9 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '') + totalCom;
+            $scope.info.COMMENT_SEC10 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '')+ (($scope.info.COMMENT_SEC9 != null && $scope.info.COMMENT_SEC9 != '') ? $scope.info.COMMENT_SEC9 + '\n' : '') + totalCom;
         };
 
         $scope.totalComment = function () {
-            if (!$scope.info.COMMENT_SEC9) {
-                $scope.info.COMMENT_SEC9 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '');
+            if (!$scope.info.COMMENT_SEC10) {
+                $scope.info.COMMENT_SEC10 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '')+ (($scope.info.COMMENT_SEC9 != null && $scope.info.COMMENT_SEC9 != '') ? $scope.info.COMMENT_SEC9 + '\n' : '');
             }
-            len = ($scope.info.COMMENT_SEC4 != null ? $scope.info.COMMENT_SEC4.length : 0) + ($scope.info.COMMENT_SEC5 != null ? $scope.info.COMMENT_SEC5.length : 0) + ($scope.info.COMMENT_SEC6 != null ? $scope.info.COMMENT_SEC6.length : 0) + ($scope.info.COMMENT_SEC7 != null ? $scope.info.COMMENT_SEC7.length : 0) + ($scope.info.COMMENT_SEC8 != null ? $scope.info.COMMENT_SEC8.length : 0);
-            str = $scope.info.COMMENT_SEC9.replace('\n', '');
-            for (var i = 0; i < 4; i++) {
+            len = ($scope.info.COMMENT_SEC4 != null ? $scope.info.COMMENT_SEC4.length : 0) + ($scope.info.COMMENT_SEC5 != null ? $scope.info.COMMENT_SEC5.length : 0) + ($scope.info.COMMENT_SEC6 != null ? $scope.info.COMMENT_SEC6.length : 0) + ($scope.info.COMMENT_SEC7 != null ? $scope.info.COMMENT_SEC7.length : 0) + ($scope.info.COMMENT_SEC8 != null ? $scope.info.COMMENT_SEC8.length : 0) + ($scope.info.COMMENT_SEC9 != null ? $scope.info.COMMENT_SEC9.length : 0);
+            str = $scope.info.COMMENT_SEC10.replace('\n', '');
+            for (var i = 0; i < 5; i++) {
                 str = str.replace('\n', '');
             }
             totalCom = str.substr(len);
@@ -234,8 +215,8 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
                 $scope.info = angular.copy(response['data']);
                 $scope.info.DOCTOR_NAME = response['docName'];
                 $scope.info.SIGN = response['docSign'];
-                oriInfo = angular.copy($scope.info);
                 $scope.totalComment();
+                oriInfo = angular.copy($scope.info);
             }
             if ($scope.isNew == true) {
                 clearInfo = angular.copy($scope.info);

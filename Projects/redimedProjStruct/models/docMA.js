@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes){
         "HIP": DataTypes.FLOAT,
         "WHR": DataTypes.FLOAT,
         "IS_BMI": DataTypes.INTEGER(11),
-        "BLOOD_SEC1": DataTypes.INTEGER(11),
+        "BLOOD_SEC1": DataTypes.STRING(50),
         "IS_BLOOD": DataTypes.INTEGER(11),
         "RESTING_HEART_RATE": DataTypes.INTEGER(11),
         "IS_RESTING_HEART_RATE": DataTypes.INTEGER(11),

@@ -329,6 +329,11 @@
                             Set Documents Status
                         </a>
                     </li>
+                    <li>
+                        <a class="pointer" role="menuitem" tabindex="2" ng-click="setBookingIdInPaperless(selectedBooking.BOOKING_ID)">
+                            Paperless
+                        </a>
+                    </li>
                     <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
                     <!--Set Bookings Status:-->
                     <!--<li ng-hide="selectedBooking.STATUS=='Confirmed'" >-->
@@ -487,6 +492,11 @@
                             <li>
                                 <a class="pointer" role="menuitem" tabindex="2" ng-click="documentstatusfadeIn()">
                                     Set Documents Status
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="setBookingIdInPaperless(node.BOOKING_ID)">
+                                    Paperless
                                 </a>
                             </li>
                             <!--<li>-->
@@ -702,8 +712,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <!--<h4 class="modal-title">Enter message</h4>-->
                 <div class="caption">
-                    <i class="fa fa-plus-square"></i>
-                    <span class="caption-subject bold uppercase">Enter</span>
+                    <i class="fa fa-plus-square font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
                     <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
                 </div>
             </div>
@@ -720,8 +730,8 @@
                 <div class="col1">
                     <div class="cont">
                         <div class="cont-col1">
-							<div class="label label-sm label-default">
-								<i class="fa fa-comment-o"></i>
+							<div class="label label-sm label-danger">
+								<i class="fa fa-envelope-o"></i>
 							</div>
 						</div>
                         <div class="cont-col2">

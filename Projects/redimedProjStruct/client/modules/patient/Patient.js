@@ -44,8 +44,18 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
+  
+    .state("loggedIn.patient.invoice_detail", {
+        url: "/:header_id/invoices/detail",
+        views: {
+            "main-content": {
+                templateUrl: "modules/patient/views/invoice_detail.html",
+                controller: "PatientInvoiceDetailController"
+            }
+        }
+    })
     .state("loggedIn.patient.invoices", {
-        url: "/:patient_id/invoices",
+        url: "/:patient_id/invoices/:cal_id",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/invoices.html",
@@ -53,12 +63,12 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.invoice_detail", {
-        url: "/:header_id/invoices/detail",
+    .state("loggedIn.patient.recall", {
+        url: "/:patient_id/recall/:cal_id",
         views: {
             "main-content": {
-                templateUrl: "modules/patient/views/invoice_detail.html",
-                controller: "PatientInvoiceDetailController"
+                templateUrl: "modules/patient/views/recall.html",
+                controller: "PatientRecallController"
             }
         }
     })

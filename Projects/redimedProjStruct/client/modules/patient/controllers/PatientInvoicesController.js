@@ -1,16 +1,15 @@
 angular.module("app.loggedIn.patient.invoices.controller", [])
 .controller("PatientInvoicesController", function($scope, $state, $stateParams, PatientService, ConfigService){
 	var patient_id = $stateParams.patient_id;
-
+    var cal_id = $stateParams.cal_id;
 
 	$scope.invoiceClass = function(item) {
-		console.log(item)
-		if(item.STATUS == 'approach')
-			return 'warning';
-		if(item.STATUS == 'done')
-			return 'success';
-
-		return 'danger'; // enter
+        return {
+            warning: (item.STATUS == 'approach'),
+            success: (item.STATUS == 'done'),
+            danger: (item.STATUS == 'enter' || item.STATUS == null),
+            selected: (item.cal_id == cal_id)
+        }
 	}
 	$scope.invoiceOption = {
         api: 'api/erm/v2/invoice/search',
@@ -42,7 +41,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
         use_actions: true, 
         actions: [              
             {
-                class: 'fa fa-money', title: 'Invoice',
+                class: 'fa fa-money', title: 'Detail',
                 callback: function(item){
                 	console.log(item)
                		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 

@@ -65,6 +65,11 @@ var rlobConstant={
     notificationAppearance:{
         once:'ONCE',
         whenAccess:'WHEN ACCESS'
+    },
+    uersType:{
+        admin : 2,
+        doctor : 4,
+        assistant : 1
     }
 }
 

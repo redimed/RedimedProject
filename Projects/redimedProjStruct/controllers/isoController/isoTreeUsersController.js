@@ -8,6 +8,284 @@ var unwatch = WatchJS.unwatch;
 var callWatchers = WatchJS.callWatchers;
 //----------------
 
+/**
+ * Kiem tra user login co the phan quyen cho 1 item trong group hay khong
+ * Ham de quy nhan vao pos=0, se kiem tra duoc xem user login co phan quyen duoc cho tat ca cac item hay khong
+ * tannv.dts@gmail.com
+ */
+function checkGrantGroupItem(pos,req,res,listItems)
+{
+    if(pos>=listItems.length)
+    {
+        checkGrantGroupResult(req,res,listItems,1);
+        return;
+    }
+    else
+    {
+        isoUtil.exlog("THIS IS CHECK GRANT PERMISSION GROUP, USER:",listItems[pos]);
+    }
+
+    var userInfo=JSON.parse(req.cookies.userInfo);
+    var userGrant=userInfo.id;
+    var userIsGranted=listItems[pos].accessibleUserId;
+    var nodeId=listItems[pos].nodeId;
+    var permission=listItems[pos].permission;
+    var checkInfo={
+        grant:null,
+        isGranted:null
+    };
+    //lay thong tin de kiem tra xem userGrant co quyen tren node hay chua
+    var checkInfoFunc1=function()
+    {
+        var sql=
+            " SELECT treeUser.*                                                "+
+            " FROM `iso_tree_users` treeUser                                   "+
+            " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?;  ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[nodeId,userGrant],function(err,rows)
+            {
+                if(err)
+                {
+                    checkGrantGroupResult(req,res,listItems,0);
+                }
+                else
+                {
+                    if(rows.length>0)
+                        checkInfo.grant=rows[0];
+                   checkInfoFunc2();
+                }
+            });
+        });
+    }
+
+    //lay thong tin de kiem tra xem userIsGrant co quyen tren node hay chua
+    var checkInfoFunc2=function()
+    {
+        var sql=
+            " SELECT treeUser.*                                                "+
+            " FROM `iso_tree_users` treeUser                                   "+
+            " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?;  ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[nodeId,userIsGranted],function(err,rows)
+            {
+                if(err)
+                {
+                    checkGrantGroupResult(req,res,listItems,0);
+                }
+                else
+                {
+                    if(rows.length>0)
+                        checkInfo.isGranted=rows[0];
+                    checkFunc();
+                }
+            });
+        });
+    }
+
+    var checkFunc=function()
+    {
+        if(checkInfo.grant!=null && checkInfo.grant.PERMISSION==isoUtil.isoPermission.administrator)
+        {
+            //user 1 co quyen admin co the phan quyen cho nguoi khac
+            if(checkInfo.isGranted==null)
+            {
+                //user 2 chua duoc phan quyen tren node nen user 1 co the quan quyen cho user nay
+                //res.json({status:'success',info:1});//info=1: co the phan quyen
+                checkGrantGroupItem(pos+1,req,res,listItems);
+            }
+            else
+            {
+                if(checkInfo.grant.ROOT_PERMISSION_NODE<checkInfo.isGranted.ROOT_PERMISSION_NODE)
+                {
+                    //user 1 co the gan hoac ha quyen user 2, quyen duoc gan tinh tu admin tro xuong
+                    //res.json({status:'success',info:1});
+                    checkGrantGroupItem(pos+1,req,res,listItems);
+                }
+                else
+                {
+                    if(checkInfo.isGranted.PERMISSION==0)//admin
+                    {
+                        //user 1 khong duoc phep phan quyen cho user 2
+                        //res.json({status:'success',info:0});
+                        checkGrantGroupResult(req,res,listItems,0);
+                    }
+                    else if(checkInfo.isGranted.PERMISSION>0)//tu create tro xuong
+                    {
+                        //user 1 duoc phep phan hoac ha quyen cho user 2, quyen duoc gan tu create tro xuong
+                        if(permission>0)
+                            //res.json({status:'success',info:1});
+                            checkGrantGroupItem(pos+1,req,res,listItems);
+                        else
+                            //res.json({status:'success',info:0});
+                            checkGrantGroupResult(req,res,listItems,0);
+                    }
+                    else
+                    {
+                        //khong co quyen nao cao gia tri nho hon 0
+                        //res.json({status:'success',info:0});
+                        checkGrantGroupResult(req,res,listItems,0);
+                    }
+                }
+                
+            }
+        }
+        else
+        {
+            //res.json({status:'success',info:0});
+            checkGrantGroupResult(req,res,listItems,0);
+        }
+    }
+
+    checkInfoFunc1();
+
+}
+
+/**
+ * Phan quyen cho mot item trong group
+ * Ham de quy, khi pos=0 se phan quyen cho cat ca cac item trong group
+ * tannv.dts@gmail.com
+ */
+function grantGroupItem(pos,req,res,listItems)
+{
+    if(pos>=listItems.length)
+    {
+        res.json({status:'success'});
+        return;
+    }
+    else
+    {
+        isoUtil.exlog("THIS IS GRANT PERMISSION GROUP, USER:",listItems[pos]);
+    }
+
+    var nodeId=listItems[pos].nodeId;
+    var permission=listItems[pos].permission;
+    var accessibleUserId=listItems[pos].accessibleUserId;
+    var groupId=listItems[pos].groupId;
+    var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+    var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';   
+    if(!isoUtil.checkListData([userId,nodeId,permission,accessibleUserId]))
+    {
+        grantGroupItem(pos+1,req,res,listItems);
+        return;
+    }
+        
+    req.getConnection(function(err,connection)
+    {
+        if(!err)
+        {
+            var sql=" DELETE FROM `iso_tree_users` WHERE NODE_ID=? AND ACCESSIBLE_USER_ID=? ";
+            var query = connection.query(sql,[nodeId,accessibleUserId],function(err,result)
+            {
+                if(!err)
+                {
+                    var newRow=
+                    {
+                        NODE_ID:nodeId,
+                        ACCESSIBLE_USER_ID:accessibleUserId,
+                        PERMISSION:permission,
+                        ROOT_PERMISSION_NODE:nodeId,
+                        CREATED_BY:userId,
+                        GROUP_ID:groupId
+                    }
+                    sql="insert into iso_tree_users set ? ";
+                    var query = connection.query(sql,newRow,function(err,result)
+                    {
+                        if(!err)
+                        {
+                            //Lay tat ca cac node con cua node duoc gan quyen
+                            var sql=
+                                " DELETE FROM `iso_tree_users`                                             "+
+                                " WHERE     ACCESSIBLE_USER_ID=?                                           "+
+                                "   AND NODE_ID IN                                                         "+
+                                "       (                                                                  "+
+                                "           SELECT `ancestor`.`NODE_ID`                                    "+  
+                                "           FROM `iso_node_ancestor` ancestor                              "+
+                                "           WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1      "+
+                                "       )                                                                  ";
+                            var query = connection.query(sql,[accessibleUserId,nodeId],function(err,result)
+                            {
+                                if(!err)
+                                {
+                                    var sql=
+                                        " INSERT INTO `iso_tree_users`                                                                 "+
+                                        " (NODE_ID,`ACCESSIBLE_USER_ID`,`PERMISSION`,`ROOT_PERMISSION_NODE`,`CREATED_BY`,`GROUP_ID`)   "+
+                                        " SELECT `ancestor`.`NODE_ID`,?,?,?,?,?                                                     "+
+                                        " FROM `iso_node_ancestor` ancestor                                                            "+
+                                        " WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1                                    ";
+                                    var query = connection.query(sql,[accessibleUserId,permission,nodeId,userId,groupId,nodeId],function(err,result)
+                                    {
+                                        if(!err)
+                                        {
+                                            //res.json({status:'success'});
+                                            grantGroupItem(pos+1,req,res,listItems);
+                                        }
+                                        else
+                                        {
+                                            isoUtil.exlog(err);
+                                            //res.json({status:'fail'});
+                                            grantGroupItem(pos+1,req,res,listItems);
+                                        }
+                                    });
+                                    isoUtil.exlog(query.sql);
+                                }
+                                else
+                                {
+                                    isoUtil.exlog(err);
+                                    //res.json({status:'fail'});
+                                    grantGroupItem(pos+1,req,res,listItems);
+                                }
+                            });
+                            isoUtil.exlog(query.sql);
+                            
+                        }
+                        else
+                        {
+                            isoUtil.exlog(err);
+                            //res.json({status:'fail'});
+                            grantGroupItem(pos+1,req,res,listItems);
+                        }
+                    });
+                    isoUtil.exlog(query.sql);
+                }
+                else
+                {
+                    isoUtil.exlog(err);
+                    //res.json({status:'fail'});
+                    grantGroupItem(pos+1,req,res,listItems);
+                }
+            });
+            isoUtil.exlog(query.sql);
+        }
+        else
+        {
+            isoUtil.exlog(err);
+            //res.json({status:'fail'});
+            grantGroupItem(pos+1,req,res,listItems);
+        }
+    });
+}
+
+
+/**
+ * Ham tra ve va bien luan ket qua sau khi ham checkGrantGroup duyet het group
+ * tannv.dts@gmail.com
+ */
+function checkGrantGroupResult(req,res,listItems,result)
+{
+    if(result==1)
+    {
+        grantGroupItem(0,req,res,listItems);
+    }   
+    else
+    {
+        res.json({status:'fail'});
+    } 
+}
+
+
+
 module.exports =
 {
     /**
@@ -22,335 +300,104 @@ module.exports =
             res.json({status:'fail'});
             return;
         }
-        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):'';
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
         var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
         var permission=isoUtil.checkData(req.body.permission)?req.body.permission:'';
         var accessibleUserId=isoUtil.checkData(req.body.accessibleUserId)?req.body.accessibleUserId:'';
-        if(!isoUtil.checkListData([userInfo,nodeId,permission,accessibleUserId]))
+        if(!isoUtil.checkListData([userId,nodeId,permission,accessibleUserId]))
         {
             res.json({status:'fail'});
             return;
         }
             
-
         req.getConnection(function(err,connection)
         {
-            if(err)
+            if(!err)
             {
-                res.json({status:'fail'});
-            }
-            else
-            {
-
-                //Kiem tra xem user da tung duoc phan quyen tren node hay chua
-                var sql=
-                    " SELECT treeUser.*                                                  "+
-                    " FROM `iso_tree_users` treeUser                                     "+
-                    " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?     ";
-
-                var query = connection.query(sql,[nodeId,accessibleUserId],function(err,rows)
+                var sql=" DELETE FROM `iso_tree_users` WHERE NODE_ID=? AND ACCESSIBLE_USER_ID=? ";
+                var query = connection.query(sql,[nodeId,accessibleUserId],function(err,result)
                 {
-                    //Neu user da tung duoc phan quyen tren node
-                    
-                    if(rows.length<=0)
+                    if(!err)
                     {
-                        isoUtil.exlog("User chua tung duoc phan quyen tren node");
-                        //INSERT
-                        //insert dong new hoan toan, de cho user duoc quyen tren node
                         var newRow=
                         {
                             NODE_ID:nodeId,
                             ACCESSIBLE_USER_ID:accessibleUserId,
                             PERMISSION:permission,
                             ROOT_PERMISSION_NODE:nodeId,
-                            CREATED_BY:userInfo.id
+                            CREATED_BY:userId,
+                            GROUP_ID:null
                         }
                         sql="insert into iso_tree_users set ? ";
                         var query = connection.query(sql,newRow,function(err,result)
                         {
-                            if(err)
-                            {
-                                isoUtil.exlog('error',err);
-                                res.json({status:'fail'});
-                            }
-                            else
+                            if(!err)
                             {
                                 //Lay tat ca cac node con cua node duoc gan quyen
                                 var sql=
-                                    " SELECT `ancestor`.*                                          "+
-                                    " FROM `iso_node_ancestor` ancestor                            "+
-                                    " WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1;    ";
-                                var query = connection.query(sql,[nodeId],function(err,rows)
+                                    " DELETE FROM `iso_tree_users`                                             "+
+                                    " WHERE     ACCESSIBLE_USER_ID=?                                           "+
+                                    "   AND NODE_ID IN                                                         "+
+                                    "       (                                                                  "+
+                                    "           SELECT `ancestor`.`NODE_ID`                                    "+  
+                                    "           FROM `iso_node_ancestor` ancestor                              "+
+                                    "           WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1      "+
+                                    "       )                                                                  ";
+                                var query = connection.query(sql,[accessibleUserId,nodeId],function(err,result)
                                 {
-                                    if(err)
+                                    if(!err)
                                     {
-                                        isoUtil.exlog('error',err);
-                                        res.json({status:'fail'});
+                                        var sql=
+                                            " INSERT INTO `iso_tree_users`                                                                 "+
+                                            " (NODE_ID,`ACCESSIBLE_USER_ID`,`PERMISSION`,`ROOT_PERMISSION_NODE`,`CREATED_BY`,`GROUP_ID`)   "+
+                                            " SELECT `ancestor`.`NODE_ID`,?,?,?,?,NULL                                                     "+
+                                            " FROM `iso_node_ancestor` ancestor                                                            "+
+                                            " WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1                                    ";
+                                        var query = connection.query(sql,[accessibleUserId,permission,nodeId,userId,nodeId],function(err,result)
+                                        {
+                                            if(!err)
+                                            {
+                                                res.json({status:'success'});
+                                            }
+                                            else
+                                            {
+                                                isoUtil.exlog(err);
+                                                res.json({status:'fail'});
+                                            }
+                                        });
+                                        isoUtil.exlog(query.sql);
                                     }
                                     else
                                     {
-                                        var size=rows.length;
-                                        //Neu node duoc gan quyen khong co node con nao
-                                        if(size<=0)
-                                        {
-                                            res.json({status:'success'});
-                                            return;
-                                        }
-                                        var myList=rows;
-                                        var update=function(index)
-                                        {   
-                                            isoUtil.exlog("kiem tra quyen cua user cho node con thu "+index);
-                                            //kiem tra xem user co quyen tren node con thu index chua
-                                            var sql=
-                                                " SELECT treeUser.*                                                  "+
-                                                " FROM `iso_tree_users` treeUser                                     "+
-                                                " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?     ";
-                                            var query = connection.query(sql,[myList[index].NODE_ID,accessibleUserId],function(err,rows)
-                                            {
-
-                                                if(err)
-                                                {
-                                                    isoUtil.exlog('error',err);
-                                                    res.json({status:'fail'});
-                                                }
-                                                else
-                                                {
-                                                    //Neu node con chua duoc gan quyen cho user bao gio
-                                                    if(rows.length<=0)
-                                                    {
-                                                        //insert
-                                                        sql="insert into iso_tree_users set ? ";
-                                                        var newRow=
-                                                        {
-                                                            NODE_ID:myList[index].NODE_ID,
-                                                            ACCESSIBLE_USER_ID:accessibleUserId,
-                                                            PERMISSION:permission,
-                                                            ROOT_PERMISSION_NODE:nodeId,
-                                                            CREATED_BY:userInfo.id
-                                                        }
-                                                        var query = connection.query(sql,newRow,function(err,result)
-                                                        {
-                                                            if(!err)
-                                                            {
-                                                                if((index+1)<size)
-                                                                {
-                                                                    return update(index+1);
-                                                                }
-                                                                else
-                                                                {
-                                                                    res.json({status:'success'});
-                                                                }
-                                                                    
-                                                            }
-                                                            else
-                                                            {
-                                                                isoUtil.exlog(err);
-                                                                res.json({status:'fail'});
-                                                            }
-                                                        })
-                                                        isoUtil.exlog('insert mot dong moi the hien user duoc quyen tren node con thu index',query.sql);
-                                                    }
-                                                    else
-                                                    {
-                                                        //Neu node con da tung duoc gan quyen cho user
-                                                        var sql=
-                                                            " UPDATE `iso_tree_users` SET ?                   "+
-                                                            " WHERE `NODE_ID`=? AND `ACCESSIBLE_USER_ID`=?    ";
-                                                        var updateInfo={
-                                                            PERMISSION:permission,
-                                                            ROOT_PERMISSION_NODE:nodeId,
-                                                            ISENABLE:1,
-                                                            LAST_UPDATED_BY:userInfo.id,
-                                                            LAST_UPDATED_DATE:moment().format("YYYY/MM/DD HH:mm:ss")
-                                                        }
-                                                        var query = connection.query(sql,[updateInfo,myList[index].NODE_ID,accessibleUserId],function(err,result)
-                                                        {
-                                                            if(!err)
-                                                            {
-                                                                if((index+1)<size)
-                                                                {
-                                                                    return update(index+1);
-                                                                }
-                                                                else
-                                                                {
-                                                                    res.json({status:'success'});
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                isoUtil.exlog(err);
-                                                                res.json({status:'fail'});
-                                                            }
-                                                        })
-                                                        isoUtil.exlog('cap nhat quyen tren node con cua user',query.sql);
-
-                                                    }
-                                                }
-                                            });
-                                            isoUtil.exlog('kiem tra xem user co quyen tren node con thu index chua',query.sql);
-                                 
-                                        }
-                                        update(0);
-                                        
+                                        isoUtil.exlog(err);
+                                        res.json({status:'fail'});
                                     }
                                 });
-                                isoUtil.exlog("Lay tat ca cac node con cua node duoc gan quyen",query.sql);
-                            }
-                        });
-                        isoUtil.exlog("insert mot dong new hoan toan, cap quyen lan dau cho user tren node",query.sql);
-                    }
-                    else
-                    {
-                        isoUtil.exlog("User da tung duoc phan quyen tren node");
-                        var updateInfo={
-                            PERMISSION:permission,
-                            ROOT_PERMISSION_NODE:nodeId,
-                            ISENABLE:1,
-                            LAST_UPDATED_BY:userInfo.id,
-                            LAST_UPDATED_DATE:moment().format("YYYY/MM/DD HH:mm:ss")
-                        }
-                        //Cap nhat lai quyen cua user tren node duoc chon
-                        var sql=
-                            " UPDATE `iso_tree_users` SET ?                   "+
-                            " WHERE `NODE_ID`=? AND `ACCESSIBLE_USER_ID`=?    ";
-                        var query = connection.query(sql,[updateInfo,nodeId,accessibleUserId],function(err,result)
-                        {
-                            if(err)
-                            {
-                                isoUtil.exlog('error',err);
-                                res.json({status:'fail'});
+                                isoUtil.exlog(query.sql);
+                                
                             }
                             else
                             {
-                                //Lay tat ca cac node con cua node duoc cap nhat quyen
-                                var sql=
-                                    " SELECT `ancestor`.*                                          "+
-                                    " FROM `iso_node_ancestor` ancestor                            "+
-                                    " WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1;    ";
-                                var query = connection.query(sql,[nodeId],function(err,rows)
-                                {
-                                    if(err)
-                                    {
-                                        isoUtil.exlog('error',err);
-                                        res.json({status:'fail'});
-                                    }
-                                    else
-                                    {
-                                        var size=rows.length;
-                                        //Neu node duoc gan quyen khong co node con nao
-                                        if(size<=0)
-                                        {
-                                            res.json({status:'success'});
-                                            return;
-                                        }
-                                        var myList=rows;
-                                        var update=function(index)
-                                        {   
-                                            isoUtil.exlog("kiem tra quyen cua user cho node con thu "+index);
-                                            //kiem tra xem user co quyen tren node con thu index chua
-                                            var sql=
-                                                " SELECT treeUser.*                                                  "+
-                                                " FROM `iso_tree_users` treeUser                                     "+
-                                                " WHERE treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?     ";
-                                            var query = connection.query(sql,[myList[index].NODE_ID,accessibleUserId],function(err,rows)
-                                            {
-
-                                                if(err)
-                                                {
-                                                    isoUtil.exlog('error',err);
-                                                    res.json({status:'fail'});
-                                                }
-                                                else
-                                                {
-                                                    //Neu node con chua duoc gan quyen cho user bao gio
-                                                    if(rows.length<=0)
-                                                    {
-                                                        //insert
-                                                        sql="insert into iso_tree_users set ? ";
-                                                        var newRow=
-                                                        {
-                                                            NODE_ID:myList[index].NODE_ID,
-                                                            ACCESSIBLE_USER_ID:accessibleUserId,
-                                                            PERMISSION:permission,
-                                                            ROOT_PERMISSION_NODE:nodeId,
-                                                            CREATED_BY:userInfo.id
-                                                        }
-                                                        var query = connection.query(sql,newRow,function(err,result)
-                                                        {
-                                                            if(!err)
-                                                            {
-                                                                if((index+1)<size)
-                                                                {
-                                                                    return update(index+1);
-                                                                }
-                                                                else
-                                                                {
-                                                                    res.json({status:'success'});
-                                                                }
-                                                                    
-                                                            }
-                                                            else
-                                                            {
-                                                                isoUtil.exlog(err);
-                                                                res.json({status:'fail'});
-                                                            }
-                                                        })
-                                                        isoUtil.exlog('insert mot dong moi the hien user duoc quyen tren node con thu index',query.sql);
-                                                    }
-                                                    else
-                                                    {
-                                                        //Neu node con da tung duoc gan quyen cho user
-                                                        var sql=
-                                                            " UPDATE `iso_tree_users` SET ?                   "+
-                                                            " WHERE `NODE_ID`=? AND `ACCESSIBLE_USER_ID`=?    ";
-                                                        var updateInfo={
-                                                            PERMISSION:permission,
-                                                            ROOT_PERMISSION_NODE:nodeId,
-                                                            ISENABLE:1,
-                                                            LAST_UPDATED_BY:userInfo.id,
-                                                            LAST_UPDATED_DATE:moment().format("YYYY/MM/DD HH:mm:ss")
-                                                        }
-                                                        var query = connection.query(sql,[updateInfo,myList[index].NODE_ID,accessibleUserId],function(err,result)
-                                                        {
-                                                            if(!err)
-                                                            {
-                                                                if((index+1)<size)
-                                                                {
-                                                                    return update(index+1);
-                                                                }
-                                                                else
-                                                                {
-                                                                    res.json({status:'success'});
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                isoUtil.exlog(err);
-                                                                res.json({status:'fail'});
-                                                            }
-                                                        })
-                                                        isoUtil.exlog('cap nhat quyen tren node con cua user',query.sql);
-
-                                                    }
-                                                }
-                                            });
-                                            isoUtil.exlog('kiem tra xem user co quyen tren node con thu index chua',query.sql);
-                                 
-                                        }
-                                        update(0);
-                                        
-                                    }
-                                });
-                                isoUtil.exlog("Lay tat ca cac node con cua node duoc cap nhat quyen",query.sql);
+                                isoUtil.exlog(err);
+                                res.json({status:'fail'});
                             }
                         });
-                        isoUtil.exlog("cap nhat lai quyen cua user tren node duoc chon",query.sql);
+                        isoUtil.exlog(query.sql);
+                    }
+                    else
+                    {
+                        isoUtil.exlog(err);
+                        res.json({status:'fail'});
                     }
                 });
-                isoUtil.exlog('Kiem tra xem user da tung duoc phan quyen tren node hay chua',query.sql);
+                isoUtil.exlog(query.sql);
+            }
+            else
+            {
+                res.json({status:'fail'});
             }
         });
-
     },
 
     /**
@@ -374,7 +421,10 @@ module.exports =
             isGranted:null
         };
         if(!isoUtil.checkListData([userGrant,userIsGranted,nodeId,permission]))
+        {
             res.json({status:'fail'});
+            return;
+        }
         //lay thong tin de kiem tra xem userGrant co quyen tren node hay chua
         var checkInfoFunc1=function()
         {
@@ -483,6 +533,130 @@ module.exports =
 
         //lay thu bat cua user tren node
         
+    },
+
+    /**
+     * Kiem tra va phan quyen cho toan bo item trong group
+     * tannv.dts@gmail.com
+     */
+    grantUserGroupPermission:function(req,res)
+    {
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.administrator)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var permission=isoUtil.checkData(req.body.permission)?req.body.permission:'';
+        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
+        if(!isoUtil.checkListData([nodeId,groupId,permission]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var listItems=[];
+        var sql=
+            " SELECT groupDetail.`USER_ID` FROM `iso_user_group_details` groupDetail  "+
+            " WHERE groupDetail.`GROUP_ID`=? AND groupDetail.`ISENABLE`=1             ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[groupId],function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        for(var i=0;i<rows.length;i++)
+                        {
+                            var item={};
+                            item.nodeId=nodeId;
+                            item.permission=permission;
+                            item.accessibleUserId=rows[i].USER_ID;
+                            item.groupId=groupId;
+                            listItems.push(item);
+                        }
+                        isoUtil.exlog(rows)
+                        //res.json({status:'success'})
+                        //checkGrant(0,req,res,listItems);
+                        checkGrantGroupItem(0,req,res,listItems);
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+
+    /**
+     * Phan quyen cho 1 user moi  duoc add them vao group
+     * tannv.dts@gmail.com
+     */
+    grantPermissionForNewUserInGroup:function(req,res)
+    {
+
+        var isAdminIsoSystem=isoUtil.checkData(req.body.isAdminIsoSystem)?req.body.isAdminIsoSystem:'';
+        if(isAdminIsoSystem!=1)
+        {
+            isoUtil.exlog("User login is not administrator iso system");
+            res.json({status:'fail'});
+            return;
+        }
+        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
+        var newUserId=isoUtil.checkData(req.body.newUserId)?req.body.newUserId:'';
+        if(!isoUtil.checkListData([groupId,newUserId]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var listItems=[];
+        var sql=
+            " SELECT DISTINCT treeUser.`ROOT_PERMISSION_NODE`,treeUser.`PERMISSION`   "+
+            " FROM `iso_tree_users` treeUser                                          "+
+            " WHERE treeUser.`GROUP_ID`=? AND treeUser.`ISENABLE`=1;                  ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[groupId],function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        for(var i=0;i<rows.length;i++)
+                        {
+                            var item={};
+                            item.nodeId=rows[i].ROOT_PERMISSION_NODE;
+                            item.permission=rows[i].PERMISSION;
+                            item.accessibleUserId=newUserId;
+                            item.groupId=groupId;
+                            listItems.push(item);
+                        }
+                        grantGroupItem(0,req,res,listItems);
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
     }
+
+
 
 }

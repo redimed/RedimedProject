@@ -1069,4 +1069,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.check = function(aa){
             $scope.bookingMessage.message = aa;
         }
+        //chien set booking id in paperless
+        //phanquocchien.c1109g@gmail.com
+        $scope.setBookingIdInPaperless = function(BookingID){
+            // alert(BookingID);
+            if (BookingID !=null && BookingID != "") {
+                rlobService.bookingInfoPaperless.id=BookingID;
+                $state.go('loggedIn.rlob.paperless');
+            }else{
+                alert("Khong ton tai Booking ID");
+            };
+        }
     });

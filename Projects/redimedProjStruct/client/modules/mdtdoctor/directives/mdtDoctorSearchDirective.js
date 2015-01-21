@@ -17,7 +17,7 @@ angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoct
 				scope.list = {};
 				scope.params = {
 					pagination: {
-						limit: 25,
+						limit: 30,
 						offset: 0,
 						current_page: 1,
 						max_size: 3
@@ -29,7 +29,7 @@ angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoct
 						{type: 'text', name: 'Isenable', value:'1'}
 					],
 					select: [
-						'doctor_id', 'NAME', 'Email', 'Phone'
+						'doctor_id', 'NAME', 'Email', 'Phone', 'CLINICAL_DEPT_ID'
 					]
 				}
 

@@ -25,9 +25,9 @@ angular.module("app.loggedIn.patient.search.directive", [])
 				},
 				filters: [
 					{type: 'text', name: 'First_name', value:''},
-					{type: 'text', name: 'Sur_name', value: ''}
+					{type: 'text', name: 'Sur_name', value: ''},
 				],
-				select: ['Patient_id', 'First_name', 'Sur_name']
+				select: ['Patient_id', 'First_name', 'Sur_name', 'company_id']
 			}//END DECLARE
 
 			//POPUP
