@@ -42,13 +42,15 @@ module.exports = function(io,cookie,cookieParser) {
                 .success(function(user){
                     if(user)
                     {
-                        if(user.socket == null){
-                            socket.emit('isSuccess');
-                        }
-                        else
-                        {
-                            socket.emit('isError', 'You are already connected.');
-                        }
+                        socket.emit('isSuccess');
+
+                        //if(user.socket == null){
+                        //    socket.emit('isSuccess');
+                        //}
+                        //else
+                        //{
+                        //    socket.emit('isError', 'You are already connected.');
+                        //}
                     }
 
                 })
