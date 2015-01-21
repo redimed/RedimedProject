@@ -1,13 +1,13 @@
 var PatientModel = require('../v1_models/Cln_patients');
 var db = require('../models');
 
-var mdtFunction = require('../mdt-functions');
+var mdtFunction = require('../functions');
 
 module.exports = {
 
 	postAppointments: function(req, res) {
 		var patient_id = req.body.patient_id;
-
+		
 		db.Patient.find({
 			where: {Patient_id: patient_id},
 			include: [
@@ -29,7 +29,7 @@ module.exports = {
 	postRecallAppointments: function(req, res) {
     	var patient_id = req.body.patient_id;
 
-    	var str_now = mdtFunction.toDateDatabase(new Date());
+    	var str_now = mdtFunction.toCurrentTimeDatabase(new Date());
     	console.log(str_now)
 
     	db.ApptPatient.findAll({

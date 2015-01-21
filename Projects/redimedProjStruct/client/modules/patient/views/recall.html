@@ -1,10 +1,17 @@
 <h3 class="page-title"> Recall </h3>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-       <b> Appointment List </b>
+<div class="portlet box red">
+   <div class="portlet-title">
+       <div class="caption">
+            <i class="fa fa-calendar"></i>  Appointment List 
+        </div>
+        <div class="pull-right navbar-right">
+              <button  type="button" class="btn btn-default" ng-click="formRecall.open()">
+                    <i class="fa fa-plus"></i> New Recall
+              </button>
+        </div>
     </div>
-    <div class="panel-body">
+    <div class="portlet-body">
     	<table class="mdt-table table table-bordered">
     		<tr>
     			<th>#</th>
@@ -21,5 +28,107 @@
     			<td>{{item.appointment.service.SERVICE_NAME}}</td>
     		</tr>
     	</table>
+    </div>
+</div>
+
+
+
+<div class="portlet box blue" ng-if="formRecall.is_show">
+   <div class="portlet-title">
+       <div class="caption">
+            <i class="fa fa-calendar"></i>  Make a recall 
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+             <!-- BOOKING DATE -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <span class="field">
+                    <label for="booking-date">Booking Date</label>
+                    <input ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Booking Date" 
+                        ng-change="refreshAppointment()"
+                        name="booking-date" ng-model="modelObjectMap.datepicker" float-label>
+                </span>
+            </div>
+            <!-- END BOOKING DATE -->
+
+            <!-- CHOOSE REDIMEDSITE -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <span class="field">
+                    <label for="site">Redimed Site</label>
+                    <select ng-options="site.id as site.Site_name for site in options.redimedsites" 
+                        ng-change="refreshAppointment()"
+                        name="site" ng-model="modelObjectMap.site" id="site" float-label>
+                        <option value="" disabled selected>Redimed Site</option>
+                    </select>
+                </span>
+            </div>
+            <!-- END CHOOSE REDIMEDSITE -->
+
+            <!-- CHOOSE DEPT -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <span class="field">
+                    <label for="dept">Department</label>
+                    <select ng-options="dept.CLINICAL_DEPT_ID as dept.CLINICAL_DEPT_NAME for dept in options.departments" 
+                        ng-change="refreshAppointment('department')"
+                        name="dept" ng-model="modelObjectMap.dept" id="dept" float-label>
+                    </select>
+                </span>
+            </div>
+            <!-- END CHOOSE DEPT -->
+
+
+              <!-- CHOOSE DEPT -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <span class="field">
+                    <label for="dept">Service</label>
+                    <select ng-options="dept.SERVICE_ID as dept.SERVICE_NAME for dept in opt_services" 
+                        name="dept" ng-model="modelObjectMap.service" id="dept" float-label>
+                    </select>
+                </span>
+            </div>
+            <!-- END CHOOSE DEPT -->
+
+
+        </div>
+
+        <div class="row">
+            <table class="mdt-booking-table" id="main-table">
+            <thead>
+                <tr>
+                    <th class="no-border"></th>
+                    <th ng-repeat="doctor in options.doctors">
+                        <a ng-click="goToAppointmentDoctor(doctor)">
+                            {{doctor.NAME}}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in overviewAppointment track by $index" ng-init="overviewIndex=$index" 
+                    id="overview{{overviewIndex}}">
+                    <td class="time-booking"><b>{{data.from_time_map}}</b></td>
+                    <td ng-click="bookingPatient(data, overviewIndex, doctorIndex)" 
+                        ng-repeat="status in data.patients track by $index" 
+                        ng-init="doctorIndex=$index"
+                        id="status{{overviewIndex}}{{doctorIndex}}" 
+                        ng-style="{'background': data.service_colors[doctorIndex]}">
+
+                        <ul class="mdt-list-booking-patient">
+                            <li ng-repeat="p in status track by $index">
+                                <a ng-if="p.Patient_name === 'No Patient'">
+                                    No Patient
+                                </a>
+                                <a ng-click="goToPatientDetail(p, data, doctorIndex)" ng-if="p.Patient_name !== 'No Patient'">
+                                    {{p.Patient_name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="clearfix"></div>
+        </div>
     </div>
 </div>

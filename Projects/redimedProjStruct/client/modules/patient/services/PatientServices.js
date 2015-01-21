@@ -7,9 +7,31 @@ angular.module("app.loggedIn.patient.services", [])
     var mdtApi = Restangular.all("api/meditek/v1/patient/");
 
     var khankAPI = Restangular.all("api/erm/v2");
+
+    var restfulAPI = Restangular.all("api/restful");
     /*
     *   KHANK 
     */
+    // RESTFUL
+
+    instanceService.get = function(patient_id) {
+        return restfulAPI.one('Patient/' + patient_id).get();
+    }
+
+    instanceService.getApptClaim = function(patient_id, cal_id) {
+        return restfulAPI.one('mdtPatientClaim').get({ CAL_ID:cal_id, Patient_id: patient_id});
+    }     
+
+    instanceService.insertApptClaim = function(data) {
+        return restfulAPI.all('mdtPatientClaim').post(data);
+    }     
+
+
+
+
+    //  RESTFUL
+
+
     instanceService.numCompanies = function(patient_id){
         var funcApi = khankAPI.one('patients/num_companies');
         return funcApi.get({id: patient_id});

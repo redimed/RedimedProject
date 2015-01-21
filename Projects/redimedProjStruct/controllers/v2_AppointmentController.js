@@ -190,7 +190,5 @@ module.exports = {
                 "message": error
             });
         })
-
-
 	}
 }
