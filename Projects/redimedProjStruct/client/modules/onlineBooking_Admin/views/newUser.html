@@ -38,12 +38,13 @@
             <div class="form-body">
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
-                        <div class="form-group" ng-class="{'has-error':showClickedValidation && userForm.name.$invalid}">
+                        <div class="form-group" ng-class="{'has-error':(showClickedValidation && userForm.name.$invalid) || usernameExist}">
                             <label class="control-label col-md-3 col-sm-3">Username <span class="required">
                                                 * </span></label>
                             <div class="col-md-8 col-sm-8">
-                                <input required ng-model="info.username" name="name" class="form-control"  />
-                                <span ng-show="showClickedValidation && userForm.name.$invalid" for="name" class="help-block">Username is required.</span>
+                                <input ng-change="checkUsername(info.username)" required ng-model="info.username" name="name" class="form-control"  />
+                                <span ng-show="showClickedValidation && userForm.name.$invalid" for="name" class="help-block red">Username is required.</span>
+                                <span ng-show="usernameExist" for="name" class="help-block red">Username is already existed.</span>
                             </div>
                         </div>
                     </div>
@@ -154,12 +155,14 @@
                     <!--/span-->
                     <div class="col-md-6 col-sm-6" >
                         <div class="form-group" >
-                            <div class="form-group" ng-class="{'has-error':showClickedValidation && userForm.email.$invalid}">
+                            <div class="form-group" ng-class="{'has-error':(showClickedValidation && userForm.email.$invalid) || emailExist}">
                                 <label class="control-label col-md-3 col-sm-3">Contact Email <span class="required">
                                                 * </span></label>
                                 <div class="col-md-8 col-sm-8">
-                                    <input type="email" required ng-model="info.email" name="email" class="form-control"  />
+                                    <input ng-change="checkEmail(info.email)" type="email" required ng-model="info.email" name="email" class="form-control"  />
                                     <span ng-show="showClickedValidation && userForm.email.$invalid" for="email" class="help-block">Contact Email is required.</span>
+                                    <span ng-show="emailExist" for="email" class="help-block red">Email is already existed.</span>
+
                                 </div>
                             </div>
                         </div>

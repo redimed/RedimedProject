@@ -27,17 +27,15 @@ angular.module("app.loggedIn.im.map.controller",[])
         }
 
         $scope.searchInjury = function(s){
-            //InjuryManagementService.searchInjury(s).then(function(rs){
-            //    for(var i=0;i<rs.data.length;i++){
-            //        rs.data[i].background = colors[Math.floor(Math.random() * colors.length)];
-            //    }
-            //
-            //    $scope.injuryList = rs.data;
-            //})
 
-            $scope.injuryList = $filter('filter')($scope.injuryListTemp, {driverUser: s.driver,FullName: s.patient});
+            $scope.injuryList = $filter('filter')($scope.injuryListTemp, {
+                driverUser: s.driver,
+                FullName: s.patient
+            });
 
         }
+
+        getOnlineDriver();
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
 
@@ -89,10 +87,6 @@ angular.module("app.loggedIn.im.map.controller",[])
             }
         })
 
-        InjuryManagementService.getOnlineUsers().then(function(data){
-            $scope.onlineList = data;
-        })
-
         socket.on('driverLocation',function(data){
 
             var driverInfo = data.location;
@@ -133,24 +127,7 @@ angular.module("app.loggedIn.im.map.controller",[])
                         $scope.driverMarker.push($scope.driverData);
                     }
 
-                    InjuryManagementService.listDriver().then(function(data){
-                        var onlineDriver = [];
-                        for(var i=0; i<$scope.driverMarker.length;i++){
-                            onlineDriver.push($scope.driverMarker[i].driverId);
-                        }
 
-                        for(var i=0; i<data.length; i++){
-                            if(onlineDriver.indexOf(data[i].id) != -1){
-                                $scope.driverList.push(data[i]);
-                            }
-                        }
-
-                        if(_.isEqual($scope.driverListTemp,$scope.driverList) == false){
-                            $scope.driverListTemp = [];
-                            $scope.driverListTemp = _.clone($scope.driverList);
-                        }
-
-                    })
                 });
             }
 
@@ -187,7 +164,13 @@ angular.module("app.loggedIn.im.map.controller",[])
 
         $scope.refreshMap = function(){
             refreshMap();
+            refreshList();
+            getOnlineDriver();
         }
+
+        setInterval(refreshMap,60 * 1000);
+        setInterval(refreshList,60 * 1000);
+        setInterval(getOnlineDriver,60 * 1000);
 
         function refreshMap(){
             $scope.injuryMarker = [];
@@ -213,15 +196,12 @@ angular.module("app.loggedIn.im.map.controller",[])
                                 patientId: patient.Patient_id,
                                 position:positionArr,
                                 pickupAddr:patient.pickup_address,
-                                fullName: (patient.Title != null || patient.Title != '' ? patient.Title+'.':'')+
-                                (patient.First_name != null || patient.First_name != '' ? patient.First_name+' ':'')+
-                                (patient.Sur_name != null || patient.Sur_name != '' ? patient.Sur_name+' ':'')+
-                                (patient.Middle_name != null || patient.Middle_name != '' ? patient.Middle_name+' ':''),
+                                FullName: patient.FullName,
                                 gender: patient.Sex,
                                 injuryDesc: patient.injury_description,
                                 status:patient.STATUS,
                                 icon: icon,
-                                driverUser: patient.driverUser,
+                                driverUser: patient.driverUser ,
                                 driverName: patient.driverName
                             };
 
@@ -238,18 +218,22 @@ angular.module("app.loggedIn.im.map.controller",[])
             $scope.injuryListTemp = [];
             InjuryManagementService.getInjuryList().then(function(rs) {
                 if (rs.status == 'success') {
-                    for (var j = 0; j < rs.data.length; j++) {
+                    for(var j=0;j<rs.data.length;j++){
                         rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
-
-                        rs.data[j].fullName = (rs.data[j].Title != null || rs.data[j].Title != '' ? rs.data[j].Title + '.' : '') +
-                        (rs.data[j].First_name != null || rs.data[j].First_name != '' ? rs.data[j].First_name + ' ' : '') +
-                        (rs.data[j].Sur_name != null || rs.data[j].Sur_name != '' ? rs.data[j].Sur_name + ' ' : '') +
-                        (rs.data[j].Middle_name != null || rs.data[j].Middle_name != '' ? rs.data[j].Middle_name + ' ' : '')
+                        if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
+                            rs.data[j].driverUser = '';
                     }
                     $scope.injuryListTemp = rs.data;
 
                     $scope.injuryList = $scope.injuryListTemp;
                 }
+            })
+        }
+
+        function getOnlineDriver(){
+            InjuryManagementService.listDriver().then(function(data){
+                $scope.driverListTemp = [];
+                $scope.driverListTemp = data;
             })
         }
     })

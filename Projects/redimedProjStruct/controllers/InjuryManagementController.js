@@ -225,34 +225,10 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
-    searchInjury: function(req,res){
-        var info = req.body.info;
-
-        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
-        "FROM `im_injury` i " +
-        "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
-        "LEFT JOIN users u ON u.id = i.driver_id " +
-        "WHERE i.`cal_id` IS NULL AND u.user_name LIKE ? " +
-        "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},['%'+info.driver+'%'])
-            .success(function(data){
-                res.json({status:'success',data:data})
-            })
-            .error(function(err){
-                res.json({status:'error',error:err})
-            })
-
-        //{ patient: 'a',
-        //    driver: 'aaaa'
-        //    isNew: false,
-        //        isWaiting: true
-        //    isDone: true }
-
-
-    },
     injuryById: function(req,res){
         var injury_id = req.body.injury_id;
 
-        db.sequelize.query("SELECT i.*,p.*,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
+        db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -284,6 +260,25 @@ module.exports = {
         var id = req.body.injury_id;
         db.IMInjury.update(info,{injury_id:id})
             .success(function(){
+                if(info.STATUS == 'Done'){
+                    db.IMInjury.find({where:{injury_id:id}},{raw:true})
+                        .success(function(im){
+                            db.DriverInjury.update({
+                                STATUS:'Done'
+                            },{driver_id: im.driver_id, patient_id:im.patient_id})
+                                .success(function(){
+                                })
+                                .error(function(err){
+                                    res.json({status:'error'});
+                                    console.log(err);
+                                })
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                }
+
                 res.json({status:'success'});
             })
             .error(function(err){
@@ -291,10 +286,10 @@ module.exports = {
                 console.log(err);
             })
     },
-    getListDriver: function(req,res){
+    getListDriverOnline: function(req,res){
         db.UserType.find({where:{user_type:'Driver'}},{raw:true})
             .success(function(rs){
-                db.User.findAll({where:{user_type:rs.ID},attributes:['id','user_name','Booking_Person']},{raw:true})
+                db.User.findAll({where:["socket IS NOT NULL and user_type = ?",rs.ID],attributes:['id','user_name','Booking_Person']},{raw:true})
                     .success(function(data){
                         res.json(data);
                     })

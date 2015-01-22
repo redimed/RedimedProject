@@ -192,9 +192,9 @@
                             <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />
                         </th>
                         <th style="text-align:center">
-                            <input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New
-                            <input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting
-                            <input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New-->
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting-->
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done-->
                         </th>
                     </tr>
                     </thead>
@@ -222,13 +222,13 @@
                         </td>
                         <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" align="center">
                             <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn btn-primary btn-md" style="width:100px">
-                                New
+                                {{im.STATUS}}
                             </a>
                             <a ng-show="im.STATUS == 'Waiting'" href="javascript:;" class="btn btn-warning btn-md" style="width:100px">
-                                Waiting
+                                {{im.STATUS}}
                             </a>
                             <a ng-show="im.STATUS == 'Done'" href="javascript:;" class="btn btn-success btn-md" style="width:100px">
-                                Done
+                                {{im.STATUS}}
                             </a>
                         </td>
                     </tr>

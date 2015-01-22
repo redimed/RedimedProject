@@ -10,10 +10,6 @@ angular.module("app.loggedIn.im.services",[])
             return api.one('im/list').get();
         }
 
-        imService.searchInjury = function(info){
-            return api.all('im/search').post({info:info});
-        }
-
         imService.getInjuryById = function(id){
             return api.all('im/getById').post({injury_id:id});
         }

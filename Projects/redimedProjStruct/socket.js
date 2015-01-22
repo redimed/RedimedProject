@@ -160,8 +160,6 @@ module.exports = function(io,cookie,cookieParser) {
 
         socket.on('disconnect', function (reason) {
 
-            console.log("===>>>>>>>>>>>>> Socket Disconnect reason:  ",reason);
-
             socket.removeAllListeners();
 
             var headers = socket.request.headers;
@@ -180,9 +178,27 @@ module.exports = function(io,cookie,cookieParser) {
                         })
                 }
                 else {
-                    db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-                        .success(function () {
-                            getOnlineUser();
+                    db.User.find({where:{socket:socket.id}},{raw:true})
+                        .success(function(user){
+                            if(user)
+                            {
+                                db.UserType.find({where:{ID:user.user_type}},{raw:true})
+                                    .success(function(type){
+                                        if(type.user_type == 'Driver')
+                                            io.sockets.emit('driverLogout',user.id);
+
+                                        db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
+                                            .success(function () {
+                                                getOnlineUser();
+                                            })
+                                            .error(function (err) {
+                                                console.log(err);
+                                            })
+                                    })
+                                    .error(function (err) {
+                                        console.log(err);
+                                    })
+                            }
 
                         })
                         .error(function (err) {
@@ -191,13 +207,33 @@ module.exports = function(io,cookie,cookieParser) {
                 }
             }
             else {
-                db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-                    .success(function () {
-                        getOnlineUser();
+                db.User.find({where:{socket:socket.id}},{raw:true})
+                    .success(function(user){
+                        if(user)
+                        {
+                            db.UserType.find({where:{ID:user.user_type}},{raw:true})
+                                .success(function(type){
+                                    if(type.user_type == 'Driver')
+                                        io.sockets.emit('driverLogout',user.id);
+
+                                    db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
+                                        .success(function () {
+                                            getOnlineUser();
+                                        })
+                                        .error(function (err) {
+                                            console.log(err);
+                                        })
+                                })
+                                .error(function (err) {
+                                    console.log(err);
+                                })
+                        }
+
                     })
                     .error(function (err) {
                         console.log(err);
                     })
+
             }
         });
 

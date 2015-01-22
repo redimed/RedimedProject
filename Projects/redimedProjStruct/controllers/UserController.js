@@ -116,8 +116,6 @@ module.exports = {
 
       console.log(info);
 
-        db.UserType.find({where:{user_type:info.userType}},{raw:true})
-            .success(function(type) {
                 db.User.update({
                     Booking_Person: info.bookPerson,
                     Contact_email: info.email,
@@ -133,7 +131,7 @@ module.exports = {
                     isBooking: info.isShowBooking,
                     isAllCompanyData: info.isViewAllData,
                     company_id: info.companyId,
-                    user_type: type.ID,
+                    user_type: info.userType,
                     PO_number: info.poNum,
                     invoiceemail: info.invoiceEmail,
                     result_email: info.resultEmail,
@@ -153,11 +151,7 @@ module.exports = {
                         res.json({status: 'error'});
                         console.log(err);
                     })
-            })
-            .error(function (err) {
-                res.json({status: 'error'});
-                console.log(err);
-            })
+
     },
     changePass: function(req,res){
         var info = req.body.info;

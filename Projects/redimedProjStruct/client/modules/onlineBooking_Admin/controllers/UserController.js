@@ -241,9 +241,12 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
         }
 })
 
-.controller('AdminNewUserController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingAdminService,UserService,toastr){
+.controller('AdminNewUserController',function($scope,$state,$modal,$filter,ngTableParams,OnlineBookingAdminService,UserService,toastr,SecurityService){
         $scope.isEdit = false;
         $scope.isCompany = false;
+
+        $scope.usernameExist = false;
+        $scope.emailExist = false;
 
         $scope.typeList = [];
 
@@ -259,6 +262,24 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             }
         }
 
+        $scope.checkUsername = function(username){
+            SecurityService.checkUserName(username).then(function(data){
+                if(data == null || data.length <= 0)
+                    $scope.usernameExist = false;
+                else
+                    $scope.usernameExist = true;
+            })
+        }
+
+        $scope.checkEmail = function(email){
+            SecurityService.checkEmail(email).then(function(data){
+                if(data == null || data.length <= 0)
+                    $scope.emailExist = false;
+                else
+                    $scope.emailExist = true;
+            })
+        }
+
 
         UserService.getUserType().then(function(data){
             $scope.typeList = data;
@@ -270,7 +291,7 @@ angular.module('app.loggedIn.booking.admin.user.controller',[])
             bookPerson:null,
             email: null,
             isDownload: null,
-            isEnable: null,
+            isEnable: "1",
             isMakeBooking: null,
             isPackage: null,
             isPosition:null,

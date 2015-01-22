@@ -10,12 +10,6 @@ angular.module("app.loggedIn.im.detail.controller",[])
         InjuryManagementService.getInjuryById($stateParams.id).then(function(rs){
             if(rs.status == 'success')
                 $scope.injuryInfo = rs.data[0];
-                $scope.injuryInfo.patientFullName =($scope.injuryInfo.Title != null || $scope.injuryInfo.Title != '' ? $scope.injuryInfo.Title+'.':'')+
-                                                    ($scope.injuryInfo.First_name != null || $scope.injuryInfo.First_name != '' ? $scope.injuryInfo.First_name+' ':'')+
-                                                    ($scope.injuryInfo.Sur_name != null || $scope.injuryInfo.Sur_name != '' ? $scope.injuryInfo.Sur_name+' ':'')+
-                                                    ($scope.injuryInfo.Middle_name != null || $scope.injuryInfo.Middle_name != '' ? $scope.injuryInfo.Middle_name+' ':'');
-
-
         })
 
         InjuryManagementService.getImageByInjury($stateParams.id).then(function(rs){
