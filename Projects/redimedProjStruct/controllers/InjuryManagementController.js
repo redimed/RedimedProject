@@ -213,7 +213,7 @@ module.exports = {
 
     },
     injuryList: function(req,res){
-        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
+        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
                             "FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "LEFT JOIN users u ON u.id = i.driver_id " +

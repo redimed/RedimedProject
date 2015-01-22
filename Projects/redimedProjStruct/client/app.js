@@ -37,7 +37,7 @@ angular.module("app", [
     'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
-    var socket = io.connect('http://192.168.135.115/',{
+    var socket = io.connect('http://localhost/',{
         'port':3000,
         'reconnect': true,
         'reconnection delay': 2000,

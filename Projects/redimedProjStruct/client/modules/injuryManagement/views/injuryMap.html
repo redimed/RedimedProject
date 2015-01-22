@@ -62,16 +62,22 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1_1_1">
             <map  center="current-location" zoom="10">
-                <marker id="{{im.id}}" data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
+                <custom-control  id="refresh" position="TOP_RIGHT" index="1" on-click="refreshMap()">
+                    <div style="width: 75px;background-color: white;border-style: solid;border-width: 2px;cursor: pointer;text-align: center; margin-top: 5px">
+                        Refresh Map
+                    </div>
+                </custom-control>
+                <marker data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
                     <info-window max-width="500" id="info">
                         <div class="portlet grey-cascade box">
                             <div class="portlet-title">
                                 <div class="caption ">
-                                    <span class="caption-subject uppercase">{{im.fullName}}</span>
+                                    <span class="caption-subject uppercase">{{im.FullName}}</span>
                                 </div>
                                 <div class="actions">
-                                    <a ng-class="{disabled:map.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)"  href="javascript:;" class="btn green btn-sm">
-                                        Submit </a>
+                                    <a  ng-click="showDetails(im.id)"  href="javascript:;" class="btn green btn-sm">
+                                        <i class="fa fa-pencil"></i>&nbsp;&nbsp;
+                                        Details </a>
                                 </div>
 
                             </div>
@@ -114,9 +120,8 @@
                             </div>
                                 <br/>
                             <div class="clearfix">
-                                <a ng-click="showDetails(im.id)" href="javascript:;" class="btn blue btn-block">
-                                    <i class="fa fa-pencil"></i>&nbsp;&nbsp;
-                                    Details </a>
+                                <a  ng-class="{disabled:map.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)"  href="javascript:;" class="btn blue btn-block">
+                                    Submit </a>
                                 </div>
                             </div>
                                 </div>
@@ -206,14 +211,14 @@
                         </td>
                         <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" >
                             <label class="bold">
-                                {{im.fullName}}
+                                {{im.FullName}}
                             </label>
                         </td>
                         <td style="vertical-align:middle" align="center">
                             {{im.injury_date | date:'dd/MM/yyyy'}}
                         </td>
                         <td style="vertical-align:middle" align="center">
-                            <label ng-if="im.driverUser != null || im.driverUser != ''" class="bold">{{im.driverUser}}</label>
+                            <label class="bold">{{im.driverUser}}</label>
                         </td>
                         <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" align="center">
                             <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn btn-primary btn-md" style="width:100px">

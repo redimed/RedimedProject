@@ -189,3 +189,5 @@ db.sequelize
     }
 );
 
+module.exports = app;
+

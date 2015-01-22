@@ -77,7 +77,7 @@ app.post('/api/patient/editClaim', ClientController.editClaim);
 // COMPANY
  app.post('/api/erm/company/getDetail', CompanyController.getDetail);
  // END COMPANY
- 
+
  //dqt
 app.post('/api/patient/getReferral', ClientController.getReferral);
 app.post('/api/patient/insertReferral', ClientController.insertReferral);

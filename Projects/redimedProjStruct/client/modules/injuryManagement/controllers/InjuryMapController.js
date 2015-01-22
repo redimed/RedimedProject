@@ -30,24 +30,12 @@ angular.module("app.loggedIn.im.map.controller",[])
             //InjuryManagementService.searchInjury(s).then(function(rs){
             //    for(var i=0;i<rs.data.length;i++){
             //        rs.data[i].background = colors[Math.floor(Math.random() * colors.length)];
-            //
-            //        rs.data[i].fullName = (rs.data[i].Title != null || rs.data[i].Title != '' ? rs.data[i].Title+'.':'')+
-            //        (rs.data[i].First_name != null || rs.data[i].First_name != '' ? rs.data[i].First_name+' ':'')+
-            //        (rs.data[i].Sur_name != null || rs.data[i].Sur_name != '' ? rs.data[i].Sur_name+' ':'')+
-            //        (rs.data[i].Middle_name != null || rs.data[i].Middle_name != '' ? rs.data[i].Middle_name+' ':'')
             //    }
             //
             //    $scope.injuryList = rs.data;
             //})
-            $scope.injuryListTemp = [];
-            for(var i=0; i<$scope.injuryListTemp.length;i++){
-                if($scope.injuryListTemp[i].driverUser == s.driver){
-                    console.log("aaaaaaaaaaaaaaaa");
-                    $scope.injuryList.push($scope.injuryListTemp[i]);
-                }
-            }
 
-            //console.log($scope.injuryList);
+            $scope.injuryList = $filter('filter')($scope.injuryListTemp, {driverUser: s.driver,FullName: s.patient});
 
         }
 
@@ -55,20 +43,17 @@ angular.module("app.loggedIn.im.map.controller",[])
 
         InjuryManagementService.getInjuryList().then(function(rs){
             if(rs.status == 'success'){
-                for(var i=0;i<rs.data.length;i++){
-                    rs.data[i].background = colors[Math.floor(Math.random() * colors.length)];
-
-                    rs.data[i].fullName = (rs.data[i].Title != null || rs.data[i].Title != '' ? rs.data[i].Title+'.':'')+
-                                            (rs.data[i].First_name != null || rs.data[i].First_name != '' ? rs.data[i].First_name+' ':'')+
-                                            (rs.data[i].Sur_name != null || rs.data[i].Sur_name != '' ? rs.data[i].Sur_name+' ':'')+
-                                            (rs.data[i].Middle_name != null || rs.data[i].Middle_name != '' ? rs.data[i].Middle_name+' ':'')
+                for(var j=0;j<rs.data.length;j++){
+                    rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
+                    if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
+                        rs.data[j].driverUser = '';
                 }
                 $scope.injuryListTemp = rs.data;
 
                 $scope.injuryList = $scope.injuryListTemp;
 
                 for(var i=0; i<rs.data.length; i++){
-                    if(rs.data[i].STATUS != null && rs.data[i].STATUS != 'Done')
+                    if(rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Waiting')
                     {
                         var patient = rs.data[i];
                         var positionArr = [];
@@ -87,15 +72,12 @@ angular.module("app.loggedIn.im.map.controller",[])
                             patientId: patient.Patient_id,
                             position:positionArr,
                             pickupAddr:patient.pickup_address,
-                            fullName: (patient.Title != null || patient.Title != '' ? patient.Title+'.':'')+
-                            (patient.First_name != null || patient.First_name != '' ? patient.First_name+' ':'')+
-                            (patient.Sur_name != null || patient.Sur_name != '' ? patient.Sur_name+' ':'')+
-                            (patient.Middle_name != null || patient.Middle_name != '' ? patient.Middle_name+' ':''),
+                            FullName: patient.FullName,
                             gender: patient.Sex,
                             injuryDesc: patient.injury_description,
                             status:patient.STATUS,
                             icon: icon,
-                            driverUser: patient.driverUser,
+                            driverUser: patient.driverUser ,
                             driverName: patient.driverName
                         };
 
@@ -103,6 +85,7 @@ angular.module("app.loggedIn.im.map.controller",[])
                     }
 
                 }
+
             }
         })
 
@@ -171,8 +154,6 @@ angular.module("app.loggedIn.im.map.controller",[])
                 });
             }
 
-            console.log($scope.driverMarker);
-
         })
 
         socket.on('driverLogout',function(userId){
@@ -194,6 +175,8 @@ angular.module("app.loggedIn.im.map.controller",[])
             InjuryManagementService.allocateDriver($scope.map.driverId,injury.patientId,injury.id).then(function(rs){
                 if(rs.status == 'success'){
                     toastr.success("Submit Successfully!","Success");
+                    refreshMap();
+                    refreshList();
                 }
                 else
                 {
@@ -202,8 +185,72 @@ angular.module("app.loggedIn.im.map.controller",[])
             })
         }
 
-        $scope.makeCall = function(im){
+        $scope.refreshMap = function(){
+            refreshMap();
+        }
 
+        function refreshMap(){
+            $scope.injuryMarker = [];
+            InjuryManagementService.getInjuryList().then(function(rs){
+                if(rs.status == 'success'){
+                    for(var i=0; i<rs.data.length; i++){
+                        if(rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Waiting')
+                        {
+                            var patient = rs.data[i];
+                            var positionArr = [];
+                            var icon;
+                            if(patient.latitude != null)
+                                positionArr.push(patient.latitude);
+                            if(patient.longitude != null)
+                                positionArr.push(patient.longitude);
+
+                            if(patient.STATUS == 'Waiting')
+                                icon = 'modules/injuryManagement/icons/icon-orange.png';
+                            else if(patient.STATUS == 'New')
+                                icon = 'modules/injuryManagement/icons/icon-blue.png';
+
+                            $scope.patientData = {id:patient.injury_id,
+                                patientId: patient.Patient_id,
+                                position:positionArr,
+                                pickupAddr:patient.pickup_address,
+                                fullName: (patient.Title != null || patient.Title != '' ? patient.Title+'.':'')+
+                                (patient.First_name != null || patient.First_name != '' ? patient.First_name+' ':'')+
+                                (patient.Sur_name != null || patient.Sur_name != '' ? patient.Sur_name+' ':'')+
+                                (patient.Middle_name != null || patient.Middle_name != '' ? patient.Middle_name+' ':''),
+                                gender: patient.Sex,
+                                injuryDesc: patient.injury_description,
+                                status:patient.STATUS,
+                                icon: icon,
+                                driverUser: patient.driverUser,
+                                driverName: patient.driverName
+                            };
+
+                            $scope.injuryMarker.push($scope.patientData);
+                        }
+
+                    }
+                }
+            })
+        };
+
+        function refreshList(){
+            $scope.injuryList = [];
+            $scope.injuryListTemp = [];
+            InjuryManagementService.getInjuryList().then(function(rs) {
+                if (rs.status == 'success') {
+                    for (var j = 0; j < rs.data.length; j++) {
+                        rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
+
+                        rs.data[j].fullName = (rs.data[j].Title != null || rs.data[j].Title != '' ? rs.data[j].Title + '.' : '') +
+                        (rs.data[j].First_name != null || rs.data[j].First_name != '' ? rs.data[j].First_name + ' ' : '') +
+                        (rs.data[j].Sur_name != null || rs.data[j].Sur_name != '' ? rs.data[j].Sur_name + ' ' : '') +
+                        (rs.data[j].Middle_name != null || rs.data[j].Middle_name != '' ? rs.data[j].Middle_name + ' ' : '')
+                    }
+                    $scope.injuryListTemp = rs.data;
+
+                    $scope.injuryList = $scope.injuryListTemp;
+                }
+            })
         }
     })
 
