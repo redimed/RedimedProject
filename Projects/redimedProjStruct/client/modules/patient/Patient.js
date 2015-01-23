@@ -126,4 +126,13 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
+    .state("loggedIn.patient.apptdoc", {
+        url:'/appointment/:patient_id/:cal_id/document',
+        views:{
+            "main-content":{
+                templateUrl:'modules/patient/views/apptdoc.html',
+                controller:'PatientApptDocController'
+            }
+        }
+    })
 })

@@ -57,6 +57,11 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.get({id: patient_id});
     }
 
+    instanceService.numDocuments = function(patient_id){
+        var funcApi = khankAPI.one('patients/num_documents');
+        return funcApi.get({id: patient_id});
+    }
+
     instanceService.initAppointment = function(patient_id, cal_id){
         var funcApi = khankAPI.all('appt/init');
         return funcApi.post({patient_id: patient_id, cal_id: cal_id});
@@ -106,6 +111,12 @@ angular.module("app.loggedIn.patient.services", [])
     instanceService.getApptItems = function(appt_id, patient_id){
         var funcApi = khankAPI.all('itemsheet/appt_items');
         return funcApi.post({appt_id: appt_id, patient_id: patient_id });
+    }
+
+    //APPT DOCUMENT API
+       instanceService.deleteFile = function(id){
+        var funcApi = khankAPI.all('apptdoc/delete');
+        return funcApi.post({ID: id });
     }
 
     /*

@@ -1,0 +1,129 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'easyrtc',
+1 verbose cli   '--save' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json util@0.10.3 util is also the name of a node core module.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'easyrtc@^1.0.12', null ]
+8 verbose cache add name=undefined spec="easyrtc@^1.0.12" args=["easyrtc@^1.0.12",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'easyrtc@^1.0.12',
+9 verbose parsed url   path: 'easyrtc@^1.0.12',
+9 verbose parsed url   href: 'easyrtc@^1.0.12' }
+10 verbose cache add name="easyrtc" spec="^1.0.12" args=["easyrtc","^1.0.12"]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: '^1.0.12',
+11 verbose parsed url   path: '^1.0.12',
+11 verbose parsed url   href: '^1.0.12' }
+12 verbose addNamed [ 'easyrtc', '^1.0.12' ]
+13 verbose addNamed [ null, '>=1.0.12-0 <2.0.0-0' ]
+14 silly lockFile 3c8d4940-easyrtc-1-0-12 easyrtc@^1.0.12
+15 verbose lock easyrtc@^1.0.12 C:\Users\Minh Hikari\AppData\Roaming\npm-cache\3c8d4940-easyrtc-1-0-12.lock
+16 silly addNameRange { name: 'easyrtc', range: '>=1.0.12-0 <2.0.0-0', hasData: false }
+17 verbose request where is /easyrtc
+18 verbose request registry https://registry.npmjs.org/
+19 verbose request id 05455e061616320a
+20 verbose url raw /easyrtc
+21 verbose url resolving [ 'https://registry.npmjs.org/', './easyrtc' ]
+22 verbose url resolved https://registry.npmjs.org/easyrtc
+23 verbose request where is https://registry.npmjs.org/easyrtc
+24 info trying registry request attempt 1 at 11:52:30
+25 verbose etag "ERG9Z0H9F5OIWD9A3ELA0WOZR"
+26 http GET https://registry.npmjs.org/easyrtc
+27 http 304 https://registry.npmjs.org/easyrtc
+28 silly registry.get cb [ 304,
+28 silly registry.get   { date: 'Fri, 23 Jan 2015 04:52:32 GMT',
+28 silly registry.get     server: 'Apache',
+28 silly registry.get     via: '1.1 varnish',
+28 silly registry.get     'last-modified': 'Fri, 23 Jan 2015 04:52:32 GMT',
+28 silly registry.get     'cache-control': 'max-age=60',
+28 silly registry.get     etag: '"ERG9Z0H9F5OIWD9A3ELA0WOZR"',
+28 silly registry.get     age: '0',
+28 silly registry.get     'x-served-by': 'cache-lax1428-LAX',
+28 silly registry.get     'x-cache': 'MISS',
+28 silly registry.get     'x-cache-hits': '0',
+28 silly registry.get     'x-timer': 'S1421988752.141857,VS0,VE178',
+28 silly registry.get     vary: 'Accept',
+28 silly registry.get     'content-length': '0',
+28 silly registry.get     'keep-alive': 'timeout=10, max=50',
+28 silly registry.get     connection: 'Keep-Alive' } ]
+29 verbose etag https://registry.npmjs.org/easyrtc from cache
+30 silly addNameRange number 2 { name: 'easyrtc', range: '>=1.0.12-0 <2.0.0-0', hasData: true }
+31 silly addNameRange versions [ 'easyrtc',
+31 silly addNameRange   [ '0.5.0',
+31 silly addNameRange     '0.6.0',
+31 silly addNameRange     '0.7.0',
+31 silly addNameRange     '0.8.0',
+31 silly addNameRange     '0.9.0',
+31 silly addNameRange     '0.10.2-alpha',
+31 silly addNameRange     '0.10.3-alpha',
+31 silly addNameRange     '0.10.4-alpha',
+31 silly addNameRange     '1.0.0-beta',
+31 silly addNameRange     '1.0.1-beta',
+31 silly addNameRange     '1.0.2-beta',
+31 silly addNameRange     '1.0.5-beta',
+31 silly addNameRange     '1.0.6-beta',
+31 silly addNameRange     '1.0.7',
+31 silly addNameRange     '1.0.8',
+31 silly addNameRange     '1.0.9',
+31 silly addNameRange     '1.0.10',
+31 silly addNameRange     '1.0.11',
+31 silly addNameRange     '1.0.12',
+31 silly addNameRange     '0.5.0-a' ] ]
+32 verbose addNamed [ 'easyrtc', '1.0.12' ]
+33 verbose addNamed [ '1.0.12', '1.0.12' ]
+34 silly lockFile 99aa8fa4-easyrtc-1-0-12 easyrtc@1.0.12
+35 verbose lock easyrtc@1.0.12 C:\Users\Minh Hikari\AppData\Roaming\npm-cache\99aa8fa4-easyrtc-1-0-12.lock
+36 silly lockFile 2806e71e-s-org-easyrtc-easyrtc-1-0-12-tgz https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz
+37 verbose lock https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz C:\Users\Minh Hikari\AppData\Roaming\npm-cache\2806e71e-s-org-easyrtc-easyrtc-1-0-12-tgz.lock
+38 verbose addRemoteTarball [ 'https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz',
+38 verbose addRemoteTarball   'a44331776a0c7f0f4cf8e3124a761c3005804b5b' ]
+39 info retry fetch attempt 1 at 11:52:34
+40 verbose fetch to= C:\Users\MINHHI~1\AppData\Local\Temp\npm-7804-ifIFjJO4\registry.npmjs.org\easyrtc\-\easyrtc-1.0.12.tgz
+41 http GET https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz
+42 http 200 https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz
+43 silly lockFile 2806e71e-s-org-easyrtc-easyrtc-1-0-12-tgz https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz
+44 silly lockFile 2806e71e-s-org-easyrtc-easyrtc-1-0-12-tgz https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz
+45 silly lockFile 99aa8fa4-easyrtc-1-0-12 easyrtc@1.0.12
+46 silly lockFile 99aa8fa4-easyrtc-1-0-12 easyrtc@1.0.12
+47 silly lockFile 3c8d4940-easyrtc-1-0-12 easyrtc@^1.0.12
+48 silly lockFile 3c8d4940-easyrtc-1-0-12 easyrtc@^1.0.12
+49 error Error: shasum check failed for C:\Users\MINHHI~1\AppData\Local\Temp\npm-7804-ifIFjJO4\registry.npmjs.org\easyrtc\-\easyrtc-1.0.12.tgz
+49 error Expected: a44331776a0c7f0f4cf8e3124a761c3005804b5b
+49 error Actual:   5409042cde9ad2842b325a3a467d914abf53a616
+49 error From:     https://registry.npmjs.org/easyrtc/-/easyrtc-1.0.12.tgz
+49 error     at C:\Program Files\nodejs\node_modules\npm\node_modules\sha\index.js:38:8
+49 error     at ReadStream.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\sha\index.js:85:7)
+49 error     at ReadStream.emit (events.js:117:20)
+49 error     at _stream_readable.js:943:16
+49 error     at process._tickCallback (node.js:419:13)
+50 error If you need help, you may report this *entire* log,
+50 error including the npm and node versions, at:
+50 error     <http://github.com/npm/npm/issues>
+51 error System Windows_NT 6.2.9200
+52 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "easyrtc" "--save"
+53 error cwd E:\Redimed\RedimedProject\Projects\redimedProjStruct
+54 error node -v v0.10.33
+55 error npm -v 1.4.28
+56 verbose exit [ 1, true ]

@@ -229,4 +229,18 @@ module.exports = {
 		});
     },
 	
+	getNumDocuments : function(req, res) {
+    	var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+		db.AppointmentDocument.count({
+			where: {patient_id: id}
+		}).success(function(data){
+			res.json({status: 'success', count: data});
+		}) . error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+    },
 }

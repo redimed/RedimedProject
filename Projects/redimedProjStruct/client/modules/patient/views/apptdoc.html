@@ -1,0 +1,26 @@
+<h1>Appointment Documents</h1>
+
+<div class="portlet box green ng-scope">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Documents
+        </div>
+        <div class="pull-right navbar-right">
+            <!-- Single button -->
+              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="openUploader()">
+                    Upload documents
+              </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+       	<my-data-table options="docs.options" rowclass="docs.class" numrows="10"></my-data-table>
+    	<div class="clearfix"></div>
+    </div>
+</div>
+
+
+
+
+
+
+<input id="appt_doc_upload" ng-hide="true" type="file" multiple nv-file-select uploader="uploader" />

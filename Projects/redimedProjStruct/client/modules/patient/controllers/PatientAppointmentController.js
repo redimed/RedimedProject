@@ -28,12 +28,14 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.workcover({patient_id:' + $stateParams.patient_id + ', cal_id: '+  $stateParams.cal_id +'})'},
         {'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.script.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
-        {'name': 'Referral', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
+        {'name': 'Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.referral.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
         {'name': 'Re-Call', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
+            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
+        {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
+            'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},     
  
     ];
     //End detail appt modules
@@ -125,6 +127,13 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 		*/
 		PatientService.numScripts(patient_id).then(function(response){
             $scope.patient_apt_modules[3].desc = 'Has: ' + response.count; 
+        });
+
+        /*
+        *   DOCUMENT
+        */
+        PatientService.numDocuments(patient_id).then(function(response){
+            $scope.patient_apt_modules[7].desc = 'Has: ' + response.count; 
         });
     }
 
