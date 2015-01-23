@@ -327,24 +327,26 @@ module.exports = {
 
                         db.UserType.find({where:{user_type:'Driver'}},{raw:true})
                             .success(function(type){
-                                db.UserToken.findAll({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
+                                db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
                                     .success(function (data) {
-                                        for (var i = 0; i < data.length; i++) {
-                                            if (data[i].android_token != null)
-                                                registrationIds.push(data[i].android_token);
+                                        if(data)
+                                        {
+                                            if (data.android_token != null)
+                                                registrationIds.push(data.android_token);
+
+                                            sender.send(message, registrationIds, 4, function (err,result) {
+                                                if(err)
+                                                {
+                                                    console.log("ERROR:",err);
+                                                }
+                                                else
+                                                {
+                                                    console.log("SUCCESS:",result);
+                                                }
+
+                                            });
                                         }
 
-                                        sender.send(message, registrationIds, 4, function (err,result) {
-                                            if(err)
-                                            {
-                                                console.log("ERROR:",err);
-                                            }
-                                            else
-                                            {
-                                                console.log("SUCCESS:",result);
-                                            }
-
-                                        });
                                     })
                                     .error(function (err) {
                                         console.log(err);
