@@ -26,43 +26,77 @@ module.exports = {
                     bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                         if (compareResult == true) {
 
-
                             if(platform != null)
                             {
                                 delete data["img"];
-                                
 
-                                    db.UserToken.findOrCreate({
-                                        user_id : data.id,
-                                        user_type: data.UserType.id,
-                                        android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
-                                        ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
-                                    })
-                                        .success(function(rs,created)
-                                        {
-                                            if(data.UserType.user_type == 'Company')
-                                            {
-                                                db.Company.find({where: {id: data.company_id}},{raw:true})
-                                                    .success(function(company){
+                                db.UserToken.find({where:{user_id:data.id}},{raw:true})
+                                    .success(function(rs){
+                                        if(rs){
+                                            db.UserToken.update({
+                                                android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
+                                                ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
+                                            },{user_id:data.id})
+                                                .success(function(){
+                                                    if(data.UserType.user_type == 'Company')
+                                                    {
+                                                        db.Company.find({where: {id: data.company_id}},{raw:true})
+                                                            .success(function(company){
+                                                                return done(null, {status: 'success',
+                                                                    msg: "Login Successfully!",
+                                                                    userInfo: data,
+                                                                    companyInfo: company
+                                                                });
+                                                            })
+                                                            .error(function(err){
+                                                                console.log(err);
+                                                            })
+                                                    }
+                                                    else
+                                                    {
                                                         return done(null, {status: 'success',
                                                             msg: "Login Successfully!",
-                                                            userInfo: data,
-                                                            companyInfo: company
+                                                            userInfo: data
                                                         });
-                                                    })
-                                                    .error(function(err){
-                                                        console.log(err);
-                                                    })
-                                            }
-                                            else
-                                            {
-                                                return done(null, {status: 'success',
-                                                    msg: "Login Successfully!",
-                                                    userInfo: data
-                                                });
-                                            }
-                                        })
-                                        .error(function(err){console.log(err)})
+                                                    }
+                                                })
+                                                .error(function(err){console.log(err)})
+                                        }
+                                        else
+                                        {
+                                            db.UserToken.create({
+                                                user_id : data.id,
+                                                user_type: data.UserType.id,
+                                                android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
+                                                ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
+                                            })
+                                                .success(function()
+                                                {
+                                                    if(data.UserType.user_type == 'Company')
+                                                    {
+                                                        db.Company.find({where: {id: data.company_id}},{raw:true})
+                                                            .success(function(company){
+                                                                return done(null, {status: 'success',
+                                                                    msg: "Login Successfully!",
+                                                                    userInfo: data,
+                                                                    companyInfo: company
+                                                                });
+                                                            })
+                                                            .error(function(err){
+                                                                console.log(err);
+                                                            })
+                                                    }
+                                                    else
+                                                    {
+                                                        return done(null, {status: 'success',
+                                                            msg: "Login Successfully!",
+                                                            userInfo: data
+                                                        });
+                                                    }
+                                                })
+                                                .error(function(err){console.log(err)})
+                                        }
+                                    })
                             }
                             else
                             {

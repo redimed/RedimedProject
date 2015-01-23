@@ -73,6 +73,8 @@ module.exports = {
       submitInjury: function(req,res){
           var imInfo = req.body.info;
 
+          var userId = req.body.userId;
+
           db.IMInjury.create({
               patient_id: imInfo.Patient_id,
               doctor_id: imInfo.doctor_id,
@@ -188,29 +190,22 @@ module.exports = {
     deleteToken: function(req,res){
         var data = req.body.info[0];
 
-
         if(data.platform != null && data.platform.toLowerCase() == 'android')
         {
-            db.UserToken.destroy({
-                user_id : data.info.id,
-                user_type: data.info.user_type,
-                android_token: data.token
-            })
+            db.UserToken.update({
+                android_token: null
+            },{user_id:data.info.id})
                 .success(function(){res.json({status:'Success'});})
                 .error(function(err){res.json({status:'Error',error:err});})
         }
         else if(data.platform != null && data.platform.toLowerCase() == 'ios')
         {
-            db.UserToken.destroy({
-                user_id : data.info.id,
-                user_type: data.info.user_type,
-                ios_token: data.token
-            })
+            db.UserToken.update({
+                ios_token: null
+            },{user_id:data.info.id})
                 .success(function(){res.json({status:'Success'});})
                 .error(function(err){res.json({status:'Error',error:err});})
         }
-
-
     },
     injuryList: function(req,res){
         db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +

@@ -19,17 +19,18 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('lodash-node');
+var easyrtc = require("easyrtc");
 
 server.listen(3000);
 
+require('./socket')(io,cookie,cookieParser);
 
+var rtc = easyrtc.listen(app, io);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-
 app.use(restful(db.sequelize, { endpoint: '/api/restful'}));
-
 
 app.use(favicon());
 app.use(compress());
@@ -53,7 +54,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./socket')(io,cookie,cookieParser);
+
 
 var clientDir = path.join(__dirname, 'client');
 
