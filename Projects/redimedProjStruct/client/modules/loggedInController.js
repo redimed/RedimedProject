@@ -203,6 +203,7 @@ angular.module("app.loggedIn.controller",[
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
         $state.go("security.login",null,{reload:true});
 
         socket.removeAllListeners();

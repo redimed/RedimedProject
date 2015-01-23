@@ -42,15 +42,13 @@ module.exports = function(io,cookie,cookieParser) {
                 .success(function(user){
                     if(user)
                     {
-                        socket.emit('isSuccess');
-
-                        //if(user.socket == null){
-                        //    socket.emit('isSuccess');
-                        //}
-                        //else
-                        //{
-                        //    socket.emit('isError', 'You are already connected.');
-                        //}
+                        if(user.socket == null){
+                            socket.emit('isSuccess');
+                        }
+                        else
+                        {
+                            socket.emit('isError', 'You are already connected.');
+                        }
                     }
 
                 })
@@ -58,29 +56,6 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log(err);
                 })
         });
-
-        socket.on('checkUserSocket',function(id,username){
-            db.User.find({where:{id:id,user_name:username}},{raw:true})
-                .success(function(user){
-                    if(user)
-                    {
-                        if(user.socket == null){
-                            db.User.update({
-                                socket: socket.id
-                            },{id: id, user_name: username})
-                                .success(function(){
-                                    console.log('success');
-                                })
-                                .error(function(err){
-                                    console.log(err);
-                                })
-                        }
-                    }
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        })
 
         socket.on('login_successful',function(id,username){
             db.User.update({
@@ -162,79 +137,34 @@ module.exports = function(io,cookie,cookieParser) {
 
             socket.removeAllListeners();
 
-            var headers = socket.request.headers;
+            db.User.find({where:{socket:socket.id}},{raw:true})
+                .success(function(user){
+                    if(user)
+                    {
+                        db.UserType.find({where:{ID:user.user_type}},{raw:true})
+                            .success(function(type){
+                                if(type.user_type == 'Driver')
+                                    io.sockets.emit('driverLogout',user.id);
 
-            if(typeof headers.cookie !== 'undefined'){
-                if(typeof headers.cookie.userInfo !== 'undefined'){
-                    var userInfo = JSON.parse(headers.cookie.userInfo);
-                    db.User.update({
-                        socket: socket.id
-                    },{id: userInfo.id, user_name: userInfo.user_name})
-                        .success(function(){
-                            console.log('success');
-                        })
-                        .error(function(err){
-                            console.log(err);
-                        })
-                }
-                else {
-                    db.User.find({where:{socket:socket.id}},{raw:true})
-                        .success(function(user){
-                            if(user)
-                            {
-                                db.UserType.find({where:{ID:user.user_type}},{raw:true})
-                                    .success(function(type){
-                                        if(type.user_type == 'Driver')
-                                            io.sockets.emit('driverLogout',user.id);
-
-                                        db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-                                            .success(function () {
-                                                getOnlineUser();
-                                            })
-                                            .error(function (err) {
-                                                console.log(err);
-                                            })
+                                db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
+                                    .success(function () {
+                                        getOnlineUser();
                                     })
                                     .error(function (err) {
                                         console.log(err);
                                     })
-                            }
+                            })
+                            .error(function (err) {
+                                console.log(err);
+                            })
+                    }
 
-                        })
-                        .error(function (err) {
-                            console.log(err);
-                        })
-                }
-            }
-            else {
-                db.User.find({where:{socket:socket.id}},{raw:true})
-                    .success(function(user){
-                        if(user)
-                        {
-                            db.UserType.find({where:{ID:user.user_type}},{raw:true})
-                                .success(function(type){
-                                    if(type.user_type == 'Driver')
-                                        io.sockets.emit('driverLogout',user.id);
+                })
+                .error(function (err) {
+                    console.log(err);
+                })
 
-                                    db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-                                        .success(function () {
-                                            getOnlineUser();
-                                        })
-                                        .error(function (err) {
-                                            console.log(err);
-                                        })
-                                })
-                                .error(function (err) {
-                                    console.log(err);
-                                })
-                        }
 
-                    })
-                    .error(function (err) {
-                        console.log(err);
-                    })
-
-            }
         });
 
         function getOnlineUser(){

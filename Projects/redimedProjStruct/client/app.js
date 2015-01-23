@@ -37,7 +37,7 @@ angular.module("app", [
     'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
-    var socket = io.connect('http://testapp.redimed.com.au/',{
+    var socket = io.connect('http://localhost/',{
         'port':3000,
         'reconnect': true,
         'reconnection delay': 2000,
@@ -105,7 +105,7 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket){
+.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr){
         socket.on('messageReceived', function (name, message) {
             switch (message.type) {
                 case 'call':
@@ -131,9 +131,26 @@ angular.module("app", [
 
     editableOptions.theme = 'bs3';
 
+    if($cookieStore.get("userInfo"))
+    {
+        socket.emit("checkApp",$cookieStore.get("userInfo").id);
+    }
+
+    socket.on("isLoggedIn",function(){
+        toastr.error("Your Account Is Already Logged In!");
+
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $state.go("security.login",null,{reload:true});
+
+        socket.removeAllListeners();
+    })
+
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
-        $cookieStore.put("fromState",fromState);
+        $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
         if(!$cookieStore.get("userInfo")){
             socket.removeAllListeners();
             socket.emit('lostCookie');
@@ -141,9 +158,6 @@ angular.module("app", [
                 e.preventDefault();
                 $state.go("security.login");
             }
-        }else
-        {
-            socket.emit('checkUserSocket',$cookieStore.get('userInfo').id,$cookieStore.get('userInfo').user_name);
         }
     });
 })
