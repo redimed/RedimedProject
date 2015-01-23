@@ -3,13 +3,44 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
         
         var patient_id = $stateParams.patient_id, cal_id = $stateParams.cal_id; 
         var download_api = 'http://' + location.host + '/api/erm/v2/apptdoc/download?id=';
+        $scope.info_upload = {
+            total_size: 0,
+            progress_percent: 0,
+            pre_progress_percent: 0,
+        }
 
         var uploader = $scope.uploader = new FileUploader({
             url: '/api/erm/v2/apptdoc/upload',
             autoUpload: true,
             removeAfterUpload: true,
+
+            onSuccessItem: function(item, response, status, headers){
+                var uploaded_percent =  item.file.size   * 100 / $scope.info_upload.total_size ;
+                $scope.info_upload.pre_progress_percent += uploaded_percent;
+
+                console.log($scope.info_upload.pre_progress_percent)
+            },
+            onProgressItem: function(item, progress) {
+                var uploaded_size = progress * item.file.size / 100;
+                var uploaded_percent =  uploaded_size  * 100 / $scope.info_upload.total_size ;
+                $scope.info_upload.progress_percent =  $scope.info_upload.pre_progress_percent + uploaded_percent;
+            },
             onCompleteAll: function(res){
                 $scope.document_panel.reload();
+                $scope.info_upload = {
+                    total_size: 0,
+                    progress_percent: 0,
+                    pre_progress_percent: 0,
+                }
+
+                toastr.success('Upload complete!','Complete!');
+            },
+            onAfterAddingAll :function(items){
+                angular.forEach(items, function(f){
+                     $scope.info_upload.total_size += f.file.size;
+                });
+
+                $scope.info_upload.step_size = $scope.info_upload.total_size / 100;   
             }
         });
 

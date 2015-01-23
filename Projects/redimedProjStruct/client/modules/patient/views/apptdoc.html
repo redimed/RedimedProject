@@ -8,11 +8,17 @@
         <div class="pull-right navbar-right">
             <!-- Single button -->
               <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="openUploader()">
-                    Upload documents
+                  <i class="fa fa-upload"></i>   Upload documents
               </button>
         </div>
     </div>
     <div class="portlet-body">
+        <div ng-if="uploader.queue.length> 0" class="progress progress-striped active">
+            <div class="progress-bar progress-bar-danger" role="progressbar"  ng-style="{ 'width': info_upload.progress_percent + '%' }" >
+            </div>
+        </div>
+
+
        	<my-data-table options="docs.options" rowclass="docs.class" numrows="10"></my-data-table>
     	<div class="clearfix"></div>
     </div>
