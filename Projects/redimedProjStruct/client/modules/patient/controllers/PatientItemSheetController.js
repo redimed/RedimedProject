@@ -38,7 +38,10 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         // GET ITEMS OF DEPARTMENT
         .then(function(response){
             if(response.status === 'success') {
-                $scope.deptItems = response.data;
+                $scope.deptItems = response.data.filter(function(item){
+                    return item.clnDeptItemList.ISENABLE;
+                });
+				
                 return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);
             }
         })
