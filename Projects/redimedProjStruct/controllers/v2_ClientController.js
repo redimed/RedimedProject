@@ -243,4 +243,32 @@ module.exports = {
 			res.json(500, {status: 'error', error: error});
 		});
     },
+    
+    getNumRecalls : function(req, res) {
+    	var id = req.query.id;
+		if(!id) {
+			res.json(500, {status: 'error'});
+			return;
+		}
+		var str_now = mdtFunction.toCurrentTimeDatabase(new Date());
+
+    	db.ApptPatient.count({
+			where: {Patient_id: id},
+			include: [
+				{ 
+					model: db.Appointment , as: 'Appointment',
+					attributes: ['FROM_TIME'],
+					where: {FROM_TIME: {gt: str_now}}
+				}
+			],
+		}).success(function(data){
+			if(!data) {
+				res.json(500, {status: 'error', message: 'Cannot found Patient'});
+				return;
+			}
+			res.json({status: 'success', count: data});
+		}).error(function(error){
+			res.json(500, {status: 'error', error: error});
+		});
+    },
 }

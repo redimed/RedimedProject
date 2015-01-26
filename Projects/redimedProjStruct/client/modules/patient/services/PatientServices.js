@@ -61,6 +61,13 @@ angular.module("app.loggedIn.patient.services", [])
         var funcApi = khankAPI.one('patients/num_documents');
         return funcApi.get({id: patient_id});
     }
+    
+    
+     instanceService.numRecalls = function(patient_id){
+        var funcApi = khankAPI.one('patients/num_recalls');
+        return funcApi.get({id: patient_id});
+    }
+    
 
     instanceService.initAppointment = function(patient_id, cal_id){
         var funcApi = khankAPI.all('appt/init');

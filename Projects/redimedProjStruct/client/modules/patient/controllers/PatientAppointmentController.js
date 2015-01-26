@@ -128,6 +128,13 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 		PatientService.numScripts(patient_id).then(function(response){
             $scope.patient_apt_modules[3].desc = 'Has: ' + response.count; 
         });
+	
+	 /*
+        *   RECALL 
+        */
+        PatientService.numRecalls(patient_id).then(function(response){
+            $scope.patient_apt_modules[6].desc = 'Has: ' + response.count; 
+        });
 
         /*
         *   DOCUMENT
