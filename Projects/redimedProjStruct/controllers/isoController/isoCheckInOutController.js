@@ -1351,7 +1351,8 @@ module.exports =
                                             // listEmail.substring(0,listEmail.length -1);
                                             isoUtil.exlog('list mai for 1 :',listEmail);
                                             var mailInfo = {
-                                            senders:"REDiMED <tannv.solution@gmail.com>",
+                                            // senders:"REDiMED <tannv.solution@gmail.com>",
+                                            senders:"REDiMED <healthscreenings@redimed.com.au>",
                                             recipients:listEmail,
                                             subject: contactEmail[0].NODE_NAME + ' new version release ',
                                             htmlBody:
@@ -1381,7 +1382,8 @@ module.exports =
                                             // listEmail.substring(0,listEmail.length -1);
                                             isoUtil.exlog('list mai for 2:',listEmail);
                                             var mailInfo = {
-                                            senders:"REDiMED <tannv.solution@gmail.com>",
+                                            // senders:"REDiMED <tannv.solution@gmail.com>",
+                                            senders:"REDiMED <healthscreenings@redimed.com.au>",
                                             recipients:listEmail,
                                             subject: contactEmail[0].NODE_NAME + ' new version release ',
                                             htmlBody:
