@@ -2,7 +2,7 @@
  * Created by Luan Nguyen on 1/11/2015.
  */
 angular.module("app.loggedIn.im.map.controller",[])
-    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,toastr,socket){
+    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket){
         $scope.injuryMarker = [];
         $scope.driverMarker = [];
         $scope.driverListTemp = [];

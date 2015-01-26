@@ -26,9 +26,5 @@ angular.module("app.loggedIn.im.services",[])
             return api.all('im/allocateDriver').post({driverId:dId,patientId:pId,injuryId:iId});
         }
 
-        imService.getOnlineUsers = function(){
-            return api.one('im/getOnlineUsers').get();
-        }
-
         return imService;
     })

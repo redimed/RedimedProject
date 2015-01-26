@@ -3,6 +3,23 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket){
 
+
+
+    $scope.userImg = null;
+
+    UserService.getOnlineUsers().then(function(data){
+        $scope.onlineUsers = data;
+    })
+
+    socket.on("online",function(data){
+        $scope.onlineUsers = data;
+    })
+
+    $scope.makeCall = function(user){
+        $state.go("call");
+    }
+
+
     // DATE
     $scope.dateOptions = {
         changeYear: true,
@@ -141,12 +158,16 @@ angular.module("app.loggedIn.controller",[
     {
         $scope.userInfo=userInfo;
         $scope.user = userInfo.Booking_Person;
+        $scope.username = userInfo.user_name;
     }
     $scope.loggedInMenus = [];
     $scope.selectedMenu = null;
 
     UserService.getUserInfo(userInfo.id).then(function(data){
-       $scope.img = data.img;
+        if(data.img)
+           $scope.userImg = data.img;
+        else
+            $scope.userImg = "theme/assets/icon.png"
     })
 
 
@@ -198,15 +219,17 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
-        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type);
+        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type,null);
 
-        $cookieStore.remove("userInfo");
-        $cookieStore.remove("companyInfo");
-        $cookieStore.remove("doctorInfo");
-        $cookieStore.remove("fromState");
-        $state.go("security.login",null,{reload:true});
+        socket.on('logoutSuccess',function(){
+            $cookieStore.remove("userInfo");
+            $cookieStore.remove("companyInfo");
+            $cookieStore.remove("doctorInfo");
+            $cookieStore.remove("fromState");
+            $state.go("security.login",null,{reload:true});
 
-        socket.removeAllListeners();
+            socket.removeAllListeners();
+        })
 
     }
 

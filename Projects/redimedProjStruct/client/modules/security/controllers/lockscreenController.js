@@ -62,11 +62,11 @@ angular.module("app.lockscreen.controller",[
                     {
                         if(params != null || typeof params !== 'undefined')
                         {
-                            $state.go(from.fromState.name,params);
+                            $state.go(from.fromState.name,params,{location: "replace", reload: true});
                         }
                         else
                         {
-                            $state.go(from.fromState.name);
+                            $state.go(from.fromState.name,params,{location: "replace", reload: true});
                         }
 
                     }

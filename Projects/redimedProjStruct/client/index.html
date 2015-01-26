@@ -267,6 +267,7 @@
     <script type="text/javascript" src="modules/loggedIn.js"></script>
     <script type="text/javascript" src="modules/loggedInController.js"></script>
     <script type="text/javascript" src="modules/security/controllers/lockscreenController.js"></script>
+    <script type="text/javascript" src="modules/callController.js"></script>
     <!-- END -->
 
 	<!-- START MODULE SECURITY -->
@@ -846,31 +847,16 @@ RLOB PAPERLESS STRUCTURE -->
 		<link rel="stylesheet" href="lib/v1/gridforms-master/gridforms/gridforms.css" />
 		<!-- END GRID FORM CSS -->
 
-<!-- CUSTOM CSS -->
+        <!-- CUSTOM CSS -->
         <link rel="stylesheet" type="text/css" href="theme/custom.css">
         <!-- END CUSTOM CSS -->
+
+    <link rel="stylesheet" type="text/css" href="theme/BootSideMenu.css" />
+    <script type="text/javascript" src="theme/BootSideMenu.js"></script>
     <!-- ========================================================== END MODULE ================================================= -->
-
-
-
-
-    
-
-    <!--<script src="theme/assets/global/scripts/metronic.js" type="text/javascript"></script>-->
-    <!--<script src="theme/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>-->
-    <!--<script src="theme/assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>-->
-    <!--<script src="theme/assets/admin/pages/scripts/index.js" type="text/javascript"></script>-->
-    <!--<script>-->
-        <!--jQuery(document).ready(function() {-->
-            <!--Metronic.init(); // init metronic core componets-->
-            <!--Layout.init(); // init layout-->
-            <!--Demo.init(); // init demo features-->
-            <!--Index.init();-->
-        <!--});-->
-    <!--</script>-->
 </head>
 
-<body class="page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1">
+<body>
 	<!-- ROOT -->
 	<div ui-view="root"></div>
 	<!-- END ROOT VIEW -->

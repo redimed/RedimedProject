@@ -12,7 +12,6 @@ app.post('/api/im/patients/checkEmail',injuryController.checkEmail);
 app.post('/api/im/submit',injuryController.submitInjury);
 app.post('/api/im/edit',injuryController.editInjury);
 app.post('/api/im/upload',multipartMiddleware,injuryController.uploadInjuryPic);
-app.post('/api/im/deleteToken',injuryController.deleteToken);
 app.get('/api/im/list',injuryController.injuryList);
 app.post('/api/im/getById',injuryController.injuryById);
 app.post('/api/im/images',injuryController.injuryImageById);

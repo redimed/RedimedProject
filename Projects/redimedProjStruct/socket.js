@@ -11,50 +11,52 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.on('connection', function (socket) {
         socket.on('checkApp',function(id){
-            if(id != null){
-                db.User.find({where:{id:id}},{raw:true})
-                    .success(function(user){
-                        if(user.socket == null){
-                            db.User.update({
-                                socket: socket.id
-                            },{id:id})
-                                .success(function(){
-                                    console.log('success');
-                                })
-                                .error(function(err){
-                                    console.log(err);
-                                })
-                        }
-                        else
-                        {
-                            io.to(socket.id).emit("isLoggedIn");
-                            console.log("error")
-                        }
-                    })
-                    .error(function(err){
-                        console.log(err);
-                    })
-            }
+        //    if(id != null){
+        //        db.User.find({where:{id:id}},{raw:true})
+        //            .success(function(user){
+        //                if(user.socket == null){
+        //                    db.User.update({
+        //                        socket: socket.id
+        //                    },{id:id})
+        //                        .success(function(){
+        //                            console.log('success');
+        //                        })
+        //                        .error(function(err){
+        //                            console.log(err);
+        //                        })
+        //                }
+        //                else
+        //                {
+        //                    io.to(socket.id).emit("isLoggedIn");
+        //                    console.log("error")
+        //                }
+        //            })
+        //            .error(function(err){
+        //                console.log(err);
+        //            })
+        //    }
         })
 
         socket.on('checkLogin',function(username){
-            db.User.find({where:{user_name:username}},{raw:true})
-                .success(function(user){
-                    if(user)
-                    {
-                        if(user.socket == null){
-                            socket.emit('isSuccess');
-                        }
-                        else
-                        {
-                            socket.emit('isError', 'You are already connected.');
-                        }
-                    }
+            //db.User.find({where:{user_name:username}},{raw:true})
+            //    .success(function(user){
+            //        if(user)
+            //        {
+            //            if(user.socket == null){
+            //                socket.emit('isSuccess');
+            //            }
+            //            else
+            //            {
+            //                socket.emit('isError', 'You are already connected.');
+            //            }
+            //        }
+            //
+            //    })
+            //    .error(function(err){
+            //        console.log(err);
+            //    })
 
-                })
-                .error(function(err){
-                    console.log(err);
-                })
+            socket.emit('isSuccess');
         });
 
         socket.on('login_successful',function(id,username){
@@ -90,19 +92,55 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         });
 
-        socket.on('logout', function (username,id,userType) {
+        socket.on('logout', function (username,id,userType,info) {
            db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
                 .success(function(){
-                   getOnlineUser();
+                   if(info != null && typeof info !== 'undefined')
+                   {
+                       var data = info[0];
+                       if(typeof data.platform !== 'undefined' && data.platform != null && data.platform.toLowerCase() == 'android')
+                       {
+                           db.UserToken.update({
+                               android_token: null
+                           },{user_id:data.info.id})
+                               .success(function(){
+                                   if(userType == 'Driver')
+                                       io.sockets.emit('driverLogout',id);
+
+                                   socket.emit('logoutSuccess');
+                                   getOnlineUser();
+                               })
+                               .error(function(err){
+                                   console.log(err);
+                               })
+                       }
+                       else if(typeof data.platform !== 'undefined' && data.platform != null && data.platform.toLowerCase() == 'ios')
+                       {
+                           db.UserToken.update({
+                               ios_token: null
+                           },{user_id:data.info.id})
+                               .success(function(){
+                                   if(userType == 'Driver')
+                                       io.sockets.emit('driverLogout',id);
+
+                                   socket.emit('logoutSuccess');
+                                   getOnlineUser();
+                               })
+                               .error(function(err){
+                                   console.log(err);
+                               })
+                       }
+                   }
+                   else
+                   {
+                       socket.emit('logoutSuccess');
+                       getOnlineUser();
+                   }
 
                 })
                 .error(function(err){
                     console.log(err);
                 })
-
-            if(userType == 'Driver')
-                io.sockets.emit('driverLogout',id);
-
         });
 
         socket.on('location',function(data){
@@ -175,7 +213,8 @@ module.exports = function(io,cookie,cookieParser) {
                         userList.push({
                             id: data[i].id,
                             username: data[i].user_name,
-                            socket: data[i].socket
+                            socket: data[i].socket,
+                            img: data[i].img
                         });
                     }
                     io.sockets.emit('online', userList);

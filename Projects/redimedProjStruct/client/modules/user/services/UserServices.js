@@ -66,5 +66,9 @@ angular.module("app.loggedIn.user.services", [])
         return userApi.all('users/type/menu/delete').post({id:id});
     }
 
+    userService.getOnlineUsers = function(){
+        return userApi.one('im/getOnlineUsers').get();
+    }
+
     return userService;
 })

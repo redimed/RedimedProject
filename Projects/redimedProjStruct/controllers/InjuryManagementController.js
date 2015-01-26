@@ -187,26 +187,6 @@ module.exports = {
 
         });
     },
-    deleteToken: function(req,res){
-        var data = req.body.info[0];
-
-        if(data.platform != null && data.platform.toLowerCase() == 'android')
-        {
-            db.UserToken.update({
-                android_token: null
-            },{user_id:data.info.id})
-                .success(function(){res.json({status:'Success'});})
-                .error(function(err){res.json({status:'Error',error:err});})
-        }
-        else if(data.platform != null && data.platform.toLowerCase() == 'ios')
-        {
-            db.UserToken.update({
-                ios_token: null
-            },{user_id:data.info.id})
-                .success(function(){res.json({status:'Success'});})
-                .error(function(err){res.json({status:'Error',error:err});})
-        }
-    },
     injuryList: function(req,res){
         db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
                             "FROM `im_injury` i " +
@@ -424,7 +404,8 @@ module.exports = {
                     userList.push({
                         id: data[i].id,
                         username: data[i].user_name,
-                        socket: data[i].socket
+                        socket: data[i].socket,
+                        img: data[i].img
                     });
                 }
                 res.json(userList);

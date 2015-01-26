@@ -19,6 +19,7 @@ angular.module("app", [
      "app.config", // ANGULAR CONFIG
     "app.model",    // ANGULAR MODEL
     "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
+    "app.call.controller", //CALL CONTROLLER
     "ui.slider", // ANGULAR SLIDER
     "pragmatic-angular", // ANGULAR PRAGMATIC
     "cfp.hotkeys",      // ANGULAR HOTKEYS
@@ -104,6 +105,16 @@ angular.module("app", [
         }
 
     })
+
+        .state('call',{
+            url:'/call',
+            views:{
+                "root":{
+                    templateUrl:"common/views/call.html",
+                    controller:'callController'
+                }
+            }
+        })
     /* END */
 })
 
@@ -142,13 +153,18 @@ angular.module("app", [
     socket.on("isLoggedIn",function(){
         toastr.error("Your Account Is Already Logged In!");
 
-        $cookieStore.remove("userInfo");
-        $cookieStore.remove("companyInfo");
-        $cookieStore.remove("doctorInfo");
-        $cookieStore.remove("fromState");
-        $state.go("security.login",null,{reload:true});
+        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type,null);
 
-        socket.removeAllListeners();
+        socket.on('logoutSuccess',function(){
+            $cookieStore.remove("userInfo");
+            $cookieStore.remove("companyInfo");
+            $cookieStore.remove("doctorInfo");
+            $cookieStore.remove("fromState");
+            $state.go("security.login",null,{reload:true});
+
+            socket.removeAllListeners();
+        })
+
     })
 
 
