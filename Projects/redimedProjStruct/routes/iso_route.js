@@ -19,7 +19,7 @@ app.post('/api/iso/core/get-users-in-permission-group',isoController.getUsersInP
 app.post('/api/iso/iso-tree-dir/get-tree-dir',isoTreeDirController.getTreeDir);
 app.post('/api/iso/iso-tree-dir/create-folder',isoController.getUserPermission,isoTreeDirController.createFolder);
 app.post('/api/iso/iso-tree-dir/delete-node',isoController.getUserPermission,isoTreeDirController.deleteNode);
-app.post('/api/iso/iso-tree-dir/restore-node',isoController.getUserPermission,isoTreeDirController.restoreNode);
+app.post('/api/iso/iso-tree-dir/restore-node',isoController.checkAdminIsoSystem,isoTreeDirController.restoreNode);
 app.post('/api/iso/iso-tree-dir/handling-clone-folder',isoController.getUserPermission,isoTreeDirController.handlingCloneFolder);
 app.get('/api/iso/iso-tree-dir/clone-folder',isoController.getUserPermission,isoTreeDirController.cloneFolder);
 app.post('/api/iso/iso-tree-dir/getFullVersionDoccument',isoController.getUserPermission,isoTreeDirController.getFullVersionDoccument);
@@ -40,7 +40,10 @@ app.post('/api/iso/iso-tree-dir/check-dup-entry',isoTreeDirController.checkDupEn
 app.post('/api/iso/iso-tree-users/grant-node-permission',isoController.getUserPermission,isoTreeUsersController.grantNodePermission);
 app.post('/api/iso/iso-tree-users/check-can-permission',isoController.getUserPermission,isoTreeUsersController.checkCanPermission);
 app.post('/api/iso/iso-tree-users/grant-user-group-permission',isoController.getUserPermission,isoTreeUsersController.grantUserGroupPermission);
-app.post('/api/iso/iso-tree-users/grant-permission-for-new-user-in-group',isoController.checkAdminIsoSystem,isoTreeUsersController.grantPermissionForNewUserInGroup);
+app.post('/api/iso/iso-tree-users/grant-permission-for-user-in-group',isoController.checkAdminIsoSystem,isoTreeUsersController.grantPermissionForUserInGroup);
+app.post('/api/iso/iso-tree-users/remove-all-permission-of-user-of-group',isoController.checkAdminIsoSystem,isoTreeUsersController.removeAllPermissionOfUserInGroup);
+app.post('/api/iso/iso-tree-users/disable-permission-of-group',isoController.checkAdminIsoSystem,isoTreeUsersController.disablePermissionOfGroup);
+app.post('/api/iso/iso-tree-users/enable-permission-of-group',isoController.checkAdminIsoSystem,isoTreeUsersController.enablePermissionOfGroup);
 
 //isoCheckInOutController
 app.post('/api/iso/iso-check-out-in/check-out-document',isoController.getUserPermission,isoCheckInOutController.checkOutDocument);
@@ -51,6 +54,7 @@ app.post('/api/iso/iso-check-out-in/submitDocument',isoCheckInOutController.subm
 app.post('/api/iso/iso-check-out-in/approvedAndReject',isoCheckInOutController.approvedAndReject);
 app.get('/api/iso/iso-check-out-in/selectIdFromCheckOutIn',isoCheckInOutController.selectIdFromCheckOutIn);
 app.get('/api/iso/iso-check-out-in/downloadNewestVersionDocument',isoController.getUserPermission,isoCheckInOutController.downloadNewestVersionDocument);
+app.post('/api/iso/iso-check-out-in/send-email-all-user-document-release',isoCheckInOutController.sendEmailAllUserDocumentRelease);
 //tannv.dts@gmail.com
 app.post('/api/iso/iso-check-out-in/submit-document',isoController.getUserPermission,isoCheckInOutController.checkCanSubmitDocument,isoCheckInOutController.submitDocument);
 app.post('/api/iso/iso-check-out-in/cancel-submit-document',isoController.getUserPermission,isoCheckInOutController.checkCanCancelSubmitDocument,isoCheckInOutController.cancelSubmitDocument);
@@ -61,15 +65,18 @@ app.get('/api/iso/iso-check-out-in/getAllOutInStatusPending',isoCheckInOutContro
 app.get('/api/iso/iso-check-out-in/downloadFileCheckOutIn',isoCheckInOutController.checkIsApprover,isoCheckInOutController.downloadFileCheckOutIn);
 app.post('/api/iso/iso-check-out-in/approved-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.approvedDocument);
 app.post('/api/iso/iso-check-out-in/rejected-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.rejectedDocument);
+
 //isoAdminController
-app.post('/api/iso/iso-admin/check-iso-admin',isoAdminController.checkIsoAdmin);
+app.post('/api/iso/iso-admin/check-is-admin-iso-system',isoController.checkAdminIsoSystem,isoAdminController.checkIsAdminIsoSystem);
+app.post('/api/iso/iso-admin/check-is-admin-iso-system-master',isoController.checkAdminIsoSystemMaster,isoAdminController.checkIsAdminIsoSystemMaster);
 app.get('/api/iso/iso-admin/getAdminList',isoAdminController.getAdminList);
 app.post('/api/iso/iso-admin/insertNewUserToAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.insertNewUserToAdmin);
 app.post('/api/iso/iso-admin/updateEnableAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.updateEnableAdmin);
 
 //isoUserGroupController
 app.get('/api/iso/iso-user-group/access-user-group-page',isoController.checkAdminIsoSystem,isoUserGroupController.accessUserGroupPage);
-app.get('/api/iso/iso-user-group/get-user-group-list',isoController.checkAdminIsoSystem,isoUserGroupController.getUserGroupList);
+// app.get('/api/iso/iso-user-group/get-user-group-list',isoController.checkAdminIsoSystem,isoUserGroupController.getUserGroupList);
+app.get('/api/iso/iso-user-group/get-user-group-list',isoUserGroupController.getUserGroupList);
 app.post('/api/iso/iso-user-group/update-group-info',isoController.checkAdminIsoSystem,isoUserGroupController.updateGroupInfo);
 app.post('/api/iso/iso-user-group/add-group',isoController.checkAdminIsoSystem,isoUserGroupController.addGroup);
 app.post('/api/iso/iso-user-group/get-user-in-group',isoController.checkAdminIsoSystem,isoUserGroupController.getUsersInGroup);
@@ -80,4 +87,5 @@ app.post('/api/iso/iso-user-group/add-group-item',isoController.checkAdminIsoSys
 app.get('/api/iso/iso-approver/getApproverList',isoApproverController.getApproverList);
 app.post('/api/iso/iso-approver/insertNewUserToApprover',isoController.checkAdminIsoSystem,isoApproverController.insertNewUserToApprover);
 app.post('/api/iso/iso-approver/updateEnableApprover',isoController.checkAdminIsoSystem,isoApproverController.updateEnableApprover);
+app.get('/api/iso/iso-approver/check-is-iso-approver',isoController.checkIsoApprover,isoApproverController.checkIsIsoApprover);
 

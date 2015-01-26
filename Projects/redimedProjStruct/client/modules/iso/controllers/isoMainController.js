@@ -41,11 +41,11 @@ angular.module('app.loggedIn.iso.main.controller',[])
         $scope.tempData[-1]={};
         $scope.treeData={};
 
-        $scope.isIsoAdmin=0;
+        $scope.isIsoAdminSystem=0;
         
         $scope.getTreeDir=function()
         {
-            isoService.treeDir.getTreeDir($scope.userInfo.id,$scope.isIsoAdmin)
+            isoService.treeDir.getTreeDir($scope.userInfo.id,$scope.isIsoAdminSystem)
             .then(function(data){
                 if(data.status=='success')
                 {
@@ -134,18 +134,18 @@ angular.module('app.loggedIn.iso.main.controller',[])
          * Kiem tra xem user dang nhap co phai la admin cua he  thong iso hay khong
          * tannv.dts@gmail.com
          */
-        isoService.isoAdmin.checkIsoAdmin()
+        isoService.isoAdmin.checkIsAdminIsoSystem()
         .then(function(data){
             if(data.status=='success')
             {
-                $scope.isIsoAdmin=1;
+                $scope.isIsoAdminSystem=1;
             }
             else
             {
-                $scope.isIsoAdmin=0;
+                $scope.isIsoAdminSystem=0;
             }
         },function(err){
-            $scope.isIsoAdmin=0;
+            $scope.isIsoAdminSystem=0;
         })
         .then(function()
         {
@@ -171,6 +171,12 @@ angular.module('app.loggedIn.iso.main.controller',[])
         $scope.showTreeActionsMenuPopup=function(node)
         {
             $scope.selectedTreeNode=node;
+               /**
+               * phanquocchien.c1109g@gmail.com
+               * set new folder and document 
+               */
+            $scope.newFolder=angular.copy($scope.newFolderBlank);
+            $scope.newDocument=angular.copy($scope.newDocumentBlank);
             $("#iso-tree-actions-menu-popup").modal({show:true,backdrop:'static'});
         };
 
@@ -201,11 +207,21 @@ angular.module('app.loggedIn.iso.main.controller',[])
             {
                 case $scope.treeActions.createFolder.name:
                     $scope.currentTreeAction=$scope.treeActions.createFolder;
-                    $scope.newFolder=angular.copy($scope.newFolderBlank);
+                     /**
+                       * phanquocchien.c1109g@gmail.com
+                       * remove class validate 
+                       */
+                    angular.element(".form-group").removeClass('has-success');
+                    angular.element(".form-group").removeClass('has-error');
                     break;
                 case $scope.treeActions.createDocument.name:
                     $scope.currentTreeAction=$scope.treeActions.createDocument;
-                    $scope.newDocument=angular.copy($scope.newDocumentBlank);
+                    /**
+                       * phanquocchien.c1109g@gmail.com
+                       * remove class validate 
+                       */
+                    angular.element(".form-group").removeClass('has-success');
+                    angular.element(".form-group").removeClass('has-error');
                     break;
                 case $scope.treeActions.grantNodePermission.name:
                     $scope.currentTreeAction=$scope.treeActions.grantNodePermission;
@@ -239,24 +255,27 @@ angular.module('app.loggedIn.iso.main.controller',[])
        };
        $scope.beforeCreateFolder=function()
        {
-            $scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
-            $scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.nodeName;
-            $scope.newFolderBackError=angular.copy($scope.newFolderBackErrorTemplate);
-            isoService.treeDir.checkDupEntry($scope.newFolder.fatherNodeId,$scope.newFolder.nodeName)
-            .then(function(data){
-                if(data.status=='success')
-                {
-                    if(data.data.isDup)
+            $scope.$broadcast('show-errors-check-validity');
+            if ($scope.actionContentForm.$valid && $scope.newFolder.nodeName != null && $scope.newFolder.nodeName !="") {
+                $scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
+                $scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.nodeName;
+                $scope.newFolderBackError=angular.copy($scope.newFolderBackErrorTemplate);
+                isoService.treeDir.checkDupEntry($scope.newFolder.fatherNodeId,$scope.newFolder.nodeName)
+                .then(function(data){
+                    if(data.status=='success')
                     {
-                        if(data.data.counts.NAME)
-                            $scope.newFolderBackError.name="Name has been used!";
+                        if(data.data.isDup)
+                        {
+                            if(data.data.counts.NAME)
+                                $scope.newFolderBackError.name="Name has been used!";
+                        }
+                        else
+                        {
+                            $scope.createFolder();
+                        }
                     }
-                    else
-                    {
-                        $scope.createFolder();
-                    }
-                }
-            });
+                });
+             }; 
        };
         $scope.createFolder=function()
         {
@@ -298,27 +317,30 @@ angular.module('app.loggedIn.iso.main.controller',[])
        {
             //$scope.newDocument.nodeId la node dang duoc tao document, dung de kiem tra quyen han cua user tren node
             //tannv.dts@gmail.com
-            $scope.newDocument.nodeId=$scope.selectedTreeNode.NODE_ID;
-            $scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
-            $scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.nodeName;
-            $scope.newDocumentBackError=angular.copy($scope.newDocumentBackErrorTemplate);
-            isoService.treeDir.checkDupEntry($scope.newDocument.fatherNodeId,$scope.newDocument.nodeName,$scope.newDocument.docCode)
-            .then(function(data){
-                if(data.status=='success')
-                {
-                    if(data.data.isDup)
+            $scope.$broadcast('show-errors-check-validity');
+            if ($scope.actionContentForm.$valid && $scope.newDocument.nodeName != null && $scope.newDocument.nodeName !="") {
+                $scope.newDocument.nodeId=$scope.selectedTreeNode.NODE_ID;
+                $scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
+                $scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.nodeName;
+                $scope.newDocumentBackError=angular.copy($scope.newDocumentBackErrorTemplate);
+                isoService.treeDir.checkDupEntry($scope.newDocument.fatherNodeId,$scope.newDocument.nodeName,$scope.newDocument.docCode)
+                .then(function(data){
+                    if(data.status=='success')
                     {
-                        if(data.data.counts.NAME)
-                            $scope.newDocumentBackError.name="Name has been used!";
-                        if(data.data.counts.CODE)
-                            $scope.newDocumentBackError.docCode="Document Code has been used!";
+                        if(data.data.isDup)
+                        {
+                            if(data.data.counts.NAME)
+                                $scope.newDocumentBackError.name="Name has been used!";
+                            if(data.data.counts.CODE)
+                                $scope.newDocumentBackError.docCode="Document Code has been used!";
+                        }
+                        else
+                        {
+                            $scope.createDocument();
+                        }
                     }
-                    else
-                    {
-                        $scope.createDocument();
-                    }
-                }
-            });
+                });
+            };
        };
         $scope.createDocument=function()
         {
@@ -398,6 +420,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,isoLang.createDocumentError);
                 }
             }
+            uploader.queue.splice(0);
             console.info('onCompleteItem', fileItem, response, status, headers);
         };
         uploader.onCompleteAll = function() {

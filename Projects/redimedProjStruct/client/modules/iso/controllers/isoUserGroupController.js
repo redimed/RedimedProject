@@ -5,7 +5,7 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
          * Kiem tra xem user dang nhap co phai la admin iso system hay khong
          * tannv.dts@gmail.com
          */
-        isoService.isoUserGroup.checkCanAccessUserGroupPage()
+        isoService.isoAdmin.checkIsAdminIsoSystem()
         .then(function(data){
             if(data.status!='success')
             {
@@ -14,6 +14,7 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
         },function(err){
             $state.go("loggedIn.iso.main");
         }); 
+
         /**
          * Lay danh sach tat ca cac user Group
          * tannv.dts@gmail.com
@@ -105,6 +106,25 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
                     isoMsg.popup('ISO User Groups',isoConst.msgPopupType.success,'Update success!');
                     $scope.selectedGroup.GROUP_NAME=data.data.GROUP_NAME;
                     $scope.selectedGroup.ISENABLE=data.data.ISENABLE;
+
+                    if($scope.groupUpdateInfo.ISENABLE==1)
+                    {
+                        isoService.treeUser.enablePermissionOfGroup($scope.selectedGroup.GROUP_ID)
+                        .then(function(data){
+
+                        },function(err){
+
+                        })
+                    }
+                    else
+                    {
+                        isoService.treeUser.disablePermissionOfGroup($scope.selectedGroup.GROUP_ID)
+                        .then(function(data){
+
+                        },function(err){
+                            
+                        })
+                    }
                 }
                 else
                 {
@@ -196,6 +216,45 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
             }
         });
 
+
+        /**
+         * 
+         */
+        $scope.grantPermissionForUserInGroup=function(groupId,userId)
+        {
+            isoService.treeUser.grantPermissionForUserInGroup(groupId,userId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    
+                }
+                else if(data.status=='fail')
+                {
+                    
+                }
+            },function(err){
+                
+            });
+        }
+
+
+        $scope.removeAllPermissionOfUserInGroup=function(groupId,userId)
+        {
+            isoService.treeUser.removeAllPermissionOfUserInGroup(groupId,userId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+
+                }
+                else
+                {
+
+                }
+            },function(err){
+
+            });
+        }
+
         /**
          * Update thong tin group detail
          * tannv.dts@gmail.com
@@ -210,6 +269,30 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
                     $scope.selectedGroupItem.USER_ID=data.data.USER_ID;
                     $scope.selectedGroupItem.user_name=data.data.user_name;
                     $scope.selectedGroupItem.ISENABLE=data.data.ISENABLE;
+                    if($scope.groupItemUpdateInfo.USER_ID!=$scope.groupItemUpdateInfo.NEW_USER_ID)
+                    {
+                        if($scope.groupItemUpdateInfo.ISENABLE==1)
+                        {
+                            $scope.removeAllPermissionOfUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.USER_ID);
+                            $scope.grantPermissionForUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.NEW_USER_ID);
+                        }
+                        else
+                        {
+                            $scope.removeAllPermissionOfUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.USER_ID);
+                            $scope.removeAllPermissionOfUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.NEW_USER_ID);
+                        }
+                    }
+                    else
+                    {
+                        if($scope.groupItemUpdateInfo.ISENABLE==1)
+                        {
+                            $scope.grantPermissionForUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.USER_ID);
+                        }
+                        else
+                        {
+                            $scope.removeAllPermissionOfUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.USER_ID);
+                        }
+                    }
                 }
                 else
                 {
@@ -247,19 +330,7 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
                     $scope.userList.push(data.data);
                     $scope.selectedGroupItem=$scope.userList[$scope.userList.length-1];   
                     //Grant permission for new user
-                    isoService.isoUserGroup.grantPermissionForNewUserInGroup($scope.newGroupItemInfo.GROUP_ID,$scope.newGroupItemInfo.USER_ID)
-                    .then(function(data){
-                        if(data.status=='success')
-                        {
-                            isoMsg.popup('ISO User Groups',isoConst.msgPopupType.success,'Grant permission for new user success!');
-                        }
-                        else
-                        {
-                            isoMsg.popup('ISO User Groups',isoConst.msgPopupType.error,'Grant permission for new user fail!');
-                        }
-                    },function(errr){
-                        isoMsg.popup('ISO User Groups',isoConst.msgPopupType.error,'Grant permission for new user fail!');
-                    });
+                    $scope.grantPermissionForUserInGroup($scope.newGroupItemInfo.GROUP_ID,$scope.newGroupItemInfo.USER_ID);
                 }
                 else
                 {

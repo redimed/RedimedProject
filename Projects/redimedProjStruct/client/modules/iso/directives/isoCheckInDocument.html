@@ -1,7 +1,8 @@
-<form role="form">
-    <div class="form-group">
+<div ng-form name="checkInForm" novalidate>
+    <div class="form-group" show-errors='{showSuccess: true}'>
         <label >Check in comment:</label>
-        <input type="text" ng-model="checkInInfo.checkInComment" class="form-control" placeholder="Check in comment">
+        <input type="text" ng-model="checkInInfo.checkInComment" class="form-control" placeholder="Check in comment" name="checkInCommentName" ng-maxlength="200">
+        <p class="help-block" ng-if="checkInForm.checkInCommentName.$error.maxlength">Check in comment cannot be longer than 200 characters</p>
     </div>
 
     <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
@@ -42,5 +43,4 @@
             </button>
         </div>
     </div>
-
-</form>
+</div>

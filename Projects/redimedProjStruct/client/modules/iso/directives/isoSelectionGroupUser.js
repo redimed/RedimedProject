@@ -17,6 +17,7 @@ angular.module("app.loggedIn.iso.selectionGroupUser.directive", [])
                     if(data.status=='success')
                     {
                         $scope.groupList=data.data;
+
                     }
                     else
                     {

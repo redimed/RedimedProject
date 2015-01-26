@@ -600,24 +600,24 @@ module.exports =
      * Phan quyen cho 1 user moi  duoc add them vao group
      * tannv.dts@gmail.com
      */
-    grantPermissionForNewUserInGroup:function(req,res)
+    grantPermissionForUserInGroup:function(req,res)
     {
-
-        var isAdminIsoSystem=isoUtil.checkData(req.body.isAdminIsoSystem)?req.body.isAdminIsoSystem:'';
-        if(isAdminIsoSystem!=1)
+        if(!isoUtil.isAdminIsoSystem(req))
         {
             isoUtil.exlog("User login is not administrator iso system");
             res.json({status:'fail'});
             return;
         }
+
         var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
-        var newUserId=isoUtil.checkData(req.body.newUserId)?req.body.newUserId:'';
-        if(!isoUtil.checkListData([groupId,newUserId]))
+        var userIsGrantedId=isoUtil.checkData(req.body.userIsGrantedId)?req.body.userIsGrantedId:'';
+        if(!isoUtil.checkListData([groupId,userIsGrantedId]))
         {
+            isoUtil.exlog("grantPermissionForNewUserInGroup Loi data truyen den");
             res.json({status:'fail'});
             return;
         }
-
+        
         var listItems=[];
         var sql=
             " SELECT DISTINCT treeUser.`ROOT_PERMISSION_NODE`,treeUser.`PERMISSION`   "+
@@ -642,7 +642,7 @@ module.exports =
                             var item={};
                             item.nodeId=rows[i].ROOT_PERMISSION_NODE;
                             item.permission=rows[i].PERMISSION;
-                            item.accessibleUserId=newUserId;
+                            item.accessibleUserId=userIsGrantedId;
                             item.groupId=groupId;
                             listItems.push(item);
                         }
@@ -650,13 +650,132 @@ module.exports =
                     }
                     else
                     {
-                        res.json({status:'fail'});
+                        isoUtil.exlog('Khong co data');
+                        res.json({status:'fail',info:'nodata'});
                     }
                 }
             });
+            isoUtil.exlog(query.sql);
+        });
+    },
+
+    removeAllPermissionOfUserInGroup:function(req,res)
+    {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            isoUtil.exlog("User login is not administrator iso system");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var userIsGrantedId=isoUtil.checkData(req.body.userIsGrantedId)?req.body.userIsGrantedId:'';
+        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
+        if(!isoUtil.checkListData([userIsGrantedId,groupId]))
+        {
+            isoUtil.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql=" DELETE FROM `iso_tree_users` WHERE `ACCESSIBLE_USER_ID`=? AND `GROUP_ID`=? ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[userIsGrantedId,groupId],function(err,result)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success'});
+                }
+            });
+            isoUtil.exlog(query.sql);
+        });
+    },
+
+    /**
+     * Disable tat ca cac quyen han cua user trong group,
+     * quyen han la nhung quyen han cua group tren cay thu muc
+     * tannv.dts@gmail.com
+     */
+    disablePermissionOfGroup:function(req,res)
+    {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            isoUtil.exlog("User login is not administrator iso system");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
+        if(!isoUtil.checkListData([groupId]))
+        {
+            isoUtil.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+
+        var sql=" UPDATE `iso_tree_users` SET `ISENABLE`=0 WHERE `GROUP_ID`=? ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[groupId],function(err,result)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success'});
+                }
+            });
+            isoUtil.exlog(query.sql);
+        });
+    },
+
+    /**
+     * Khoi phuc quyen han cua user trong group
+     * quyen han la nhung quyen han cua group tren cay thu muc
+     * tannv.dts@gmail.com
+     */
+    enablePermissionOfGroup:function(req,res)
+    {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            isoUtil.exlog("User login is not administrator iso system");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
+        if(!isoUtil.checkListData([groupId]))
+        {
+            isoUtil.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql=" UPDATE `iso_tree_users` SET `ISENABLE`=1 WHERE `GROUP_ID`=? ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[groupId],function(err,result)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success'});
+                }
+            });
+            isoUtil.exlog(query.sql);
         });
     }
-
-
-
 }

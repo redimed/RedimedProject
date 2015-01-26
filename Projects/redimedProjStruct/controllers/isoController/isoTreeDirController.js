@@ -634,7 +634,7 @@ module.exports =
         {
             res.json({status:'fail'});
         }
-        var lastUpdatedDate=moment().format("YYYY/DD/MM HH:mm:ss");
+        var lastUpdatedDate=moment().format("YYYY/MM/DD HH:mm:ss");
         var sql=
             " UPDATE iso_tree_dir treeDir SET `treeDir`.`ISENABLE`=0,treeDir.`LAST_UPDATED_BY`=?,treeDir.`LAST_UPDATED_DATE`=?  "+
             " WHERE     treeDir.`NODE_ID` IN (                                                                                  "+
@@ -668,19 +668,26 @@ module.exports =
      */
     restoreNode:function(req,res)
     {
-        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
-        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.administrator)===false)
+        // if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.administrator)===false)
+        // {
+        //     res.json({status:'fail'});
+        //     return;
+        // }
+
+        if(!isoUtil.isAdminIsoSystem(req))
         {
             res.json({status:'fail'});
             return;
         }
+        
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
         if(!isoUtil.checkListData([nodeId,userId]))
         {
             res.json({status:'fail'});
         }
-        var lastUpdatedDate=moment().format("YYYY/DD/MM HH:mm:ss");
+        var lastUpdatedDate=moment().format("YYYY/MM/DD HH:mm:ss");
         var sql=
             " UPDATE iso_tree_dir treeDir SET `treeDir`.`ISENABLE`=1,treeDir.`LAST_UPDATED_BY`=?,treeDir.`LAST_UPDATED_DATE`=?  "+
             " WHERE     treeDir.`NODE_ID` IN (                                                                                  "+

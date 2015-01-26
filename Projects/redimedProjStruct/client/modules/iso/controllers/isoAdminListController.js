@@ -3,10 +3,8 @@ angular.module('app.loggedIn.iso.isoAdminController.controller',[])
         var msgPopup=isoMsg.popup;
         $scope.adminList= {};
         /**
-         * voducgiap
-         * Select full list approver
-         * [getApproverList description]
-         * @return {[type]} [description]
+         * phanquocchien.c1109g@gmail.com
+         * Select full list admin
          */
           $scope.getAdminList = function(){
                 isoService.isoAdmin.getAdminList().then(function(data){
@@ -17,16 +15,15 @@ angular.module('app.loggedIn.iso.isoAdminController.controller',[])
           }
           $scope.getAdminList();
  
-          /*/**
-           * voducgiap
-           * insert new user to approver list
-           * [showSelectionAdminUserName description]
-           * @type {Boolean}
+          /**
+           * phanquocchien.c1109g@gmail.com
+           * insert new admin 
            */
           $scope.newAdminUserName={};
           $scope.addNewUserToAdminList = function(){
               $("#iso-admin-insert-list-popup").modal({show:true,backdrop:'static'});
                $scope.newAdminUserName={};
+               $scope.role = null;
           }
 
           $scope.addAdmin = function(id,role){
@@ -48,7 +45,10 @@ angular.module('app.loggedIn.iso.isoAdminController.controller',[])
           		$("#iso-admin-insert-list-popup").modal('hide');
           	}
           }
-
+          /**
+           * phanquocchien.c1109g@gmail.com
+           * edit admin 
+           */
           $scope.editAdmin = function(info){
           	console.log(info);
           	console.log(info.ISENABLE);
@@ -60,6 +60,10 @@ angular.module('app.loggedIn.iso.isoAdminController.controller',[])
           	// console.log(info.ISENABLE);
             $("#iso-admin-edit-list-popup").modal({show:true,backdrop:'static'});
           }
+           /**
+           * phanquocchien.c1109g@gmail.com
+           * update admin 
+           */
           $scope.updateAdmin = function(adId,idAdminNew,adRole,adEnable){
           	console.log(adId);
           	console.log(adRole);

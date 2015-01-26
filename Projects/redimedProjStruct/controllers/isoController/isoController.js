@@ -232,38 +232,109 @@ module.exports =
             }
         });
     },
+
 	/**
-	     * phan quoc chien
-	     * MiddleWare Check Admin
-	     */
-    checkAdminIsoSystemMaster:function(req,res,next){
+     * phan quoc chien
+     * MiddleWare Check Admin
+     */
+    checkAdminIsoSystemMaster:function(req,res,next)
+    {
+
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+
+        if(!isoUtil.checkListData([userId]))
+        {
+            isoUtil.exlog("loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
         var sql = 
             "SELECT * FROM `iso_admin` "+
             "WHERE `ADMIN_ID` = ? AND `ISENABLE` = 1 AND `ROLE` ='master' ";
-
-        var query = connection.query(sql,userId,function(err,rows)
+        req.getConnection(function(err,connection)
         {
-            if(err)
+            var query = connection.query(sql,userId,function(err,rows)
             {
-                isoUtil.exlog({status:'fail',msg:err});
-                res.json({status:'fail'});
-            }
-            else
-            {
-                if(rows.length>0)
-                {                      
-                    next();
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
                 }
                 else
                 {
-                    isoUtil.exlog("Error,You can not be right");
+                    if(rows.length>0)
+                    {
+                        if(req.method=='POST')
+                        {
+                            req.body.isIsoAdminMaster=1;
+                        }
+                        if(req.method=='GET')
+                        {
+                            req.query.isIsoAdminMaster=1;
+                        }    
+                        next();
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                        
+                }
+            });
+            isoUtil.exlog(query.sql);
+        });
+        
+    },
+
+    checkIsoApprover:function(req,res,next)
+    {
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+
+        if(!isoUtil.checkListData([userId]))
+        {
+            isoUtil.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql="SELECT * FROM `iso_approver` WHERE `APPROVER_ID`=? AND `ISENABLE`=1";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[userId],function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
                     res.json({status:'fail'});
                 }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        if(req.method=='POST')
+                        {
+                            req.body.isIsoApprover=1;
+                        }
+                        if(req.method=='GET')
+                        {
+                            req.query.isIsoApprover=1;
+                        }    
+                        next();
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
                     
-            }
+                }
+            });
+            isoUtil.exlog(query.sql);
         });
     }
+
+
 
 }

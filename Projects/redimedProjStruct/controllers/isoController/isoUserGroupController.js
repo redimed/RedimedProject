@@ -17,11 +17,11 @@ module.exports =
 
 	getUserGroupList:function(req,res)
 	{
-        if(!isoUtil.isAdminIsoSystem(req))
-        {
-            res.json({status:'fail'});
-            return;
-        }
+        // if(!isoUtil.isAdminIsoSystem(req))
+        // {
+        //     res.json({status:'fail'});
+        //     return;
+        // }
 
 		var sql="SELECT * FROM `iso_user_group`";
 		req.getConnection(function(err,connection)
@@ -47,6 +47,8 @@ module.exports =
                         
                 }
             });
+            isoUtil.exlog("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe");
+            isoUtil.exlog('get group user list',query.sql); 
         });
 	},
 

@@ -48,9 +48,9 @@ angular.module('app.loggedIn.isoSubmitStatusPendingController.controller',[])
                 };
                 isoService.checkOutIn.approvedAndReject(info).then(function(data){
                     if(data.status =='success'){
-
                         msgPopup("Approved",isoConst.msgPopupType.success,"Approved Success");
                         getAllOutInStatusPending();
+                        
                     }else{
                         msgPopup("Approved",isoConst.msgPopupType.error,"Approved Error");
                     }
@@ -92,6 +92,12 @@ angular.module('app.loggedIn.isoSubmitStatusPendingController.controller',[])
                     {
                         msgPopup("Approved",isoConst.msgPopupType.success,"Approved Success");
                         getAllOutInStatusPending();
+                        isoService.checkOutIn.sendEmailNotificationNewDocumentVersion(nodeId)
+                        .then(function(data){
+
+                        },function(err){
+
+                        });
                     }
                     else
                     {

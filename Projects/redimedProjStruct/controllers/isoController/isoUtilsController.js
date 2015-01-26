@@ -89,6 +89,11 @@ module.exports =
 
     },
 
+    adminMasterRole:{
+        master:'master',
+        sub:'sub'
+    },
+
     /**
      * Kiem tra xem bien co ton tai, hoac neu ton tai thi co gia tri hay khong
      * tannv.dts@gmail.com
@@ -142,6 +147,48 @@ module.exports =
         if(req.method=='POST')
         {
             value=checkData(req.body.isAdminIsoSystem)?req.body.isAdminIsoSystem:0;
+        }
+        if(value==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    },
+
+    isIsoApprover:function(req)
+    {
+        var value=0;
+        if(req.method=='GET')
+        {
+            value=checkData(req.query.isIsoApprover)?req.query.isIsoApprover:0;
+        }
+        if(req.method=='POST')
+        {
+            value=checkData(req.body.isIsoApprover)?req.body.isIsoApprover:0;
+        }
+        if(value==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    },
+
+    isAdminIsoSystemMaster:function(req)
+    {
+        var value=0;
+        if(req.method=='GET')
+        {
+            value=checkData(req.query.isIsoAdminMaster)?req.query.isIsoAdminMaster:0;
+        }
+        if(req.method=='POST')
+        {
+            value=checkData(req.body.isIsoAdminMaster)?req.body.isIsoAdminMaster:0;
         }
         if(value==1)
         {
