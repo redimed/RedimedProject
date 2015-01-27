@@ -29,6 +29,13 @@ angular.module("app.loggedIn.invoice.list.controller",[
             {field: 'Patient_id', label: 'Patient', type: 'custom', fn: function(item){
             	if(item.patient) return item.patient.Title + '. ' + item.patient.First_name;
             }},
+			{field: 'AMOUNT', label: 'Amount', type: 'custom', fn: function(item){
+				if(!item.AMOUNT) 
+					return '$0';
+				
+				
+            	return '$' + Number((item.AMOUNT).toFixed(2));
+            }},
             {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
             	if(item.company) return item.company.Company_name;
             }},
