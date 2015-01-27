@@ -11,7 +11,7 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
 
         var uploader = $scope.uploader = new FileUploader({
             url: '/api/erm/v2/apptdoc/upload',
-            autoUpload: true,
+            autoUpload: false,
             removeAfterUpload: true,
 
             onSuccessItem: function(item, response, status, headers){
@@ -40,7 +40,8 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
                      $scope.info_upload.total_size += f.file.size;
                 });
 
-                $scope.info_upload.step_size = $scope.info_upload.total_size / 100;   
+                $scope.info_upload.step_size = $scope.info_upload.total_size / 100;
+                console.log('This is upload files',uploader);   
             }
         });
 
