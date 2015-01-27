@@ -7,7 +7,11 @@ angular.module('app.config', [])
     {code:50},
     {code:500}
 ])
-
+.constant("INVOICE_STATUS", [
+    {"code":"enter", "label": "Enter"},
+    {"code":"approach", "label": "Approach"},
+    {"code":"done", "label":"Done"}
+])
 .constant("ACC_TYPE", [
     {"code":"PRIVATE", "name": "Private"},
     {"code":"PUBLIC", "name": "Public"},
@@ -90,10 +94,14 @@ angular.module('app.config', [])
     {code: 11, title: 'November'},
     {code: 12, title: 'December'},
 ])
-.factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, Restangular) {
+.factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
+
+    configService.invoice_status_option = function() {
+        return INVOICE_STATUS;
+    }
 
     configService.timetable_dow_option = function(){
         return TIMETABLE_DAY_OF_WEEK;
