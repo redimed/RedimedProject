@@ -9,7 +9,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 
 	$scope.modelObjectMap = {
 		'from_time': ConfigService.convertToDate(from_time),
-		'to_time': ConfigService.convertToDate(to_time),
+		'to_time': ConfigService.convertToDate(from_time),
 		'doctor_id': doctor_id
 	}
 
@@ -20,7 +20,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 	$scope.changeCalendar = function(options){
 		var data = {
 			'FROM_TIME': options.data.from_time_map,
-			'TO_TIME': options.data.to_time_map,
+			'TO_TIME': options.data.from_time_map,
 			'SITE_ID': options.data.SITE_ID,
 			'DOCTOR_ID': $stateParams.doctorId,
 			'CAL_ID': options.data.CAL_ID
@@ -60,8 +60,8 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 				$scope.casual_list = data.data;
 
 				for(var i = 0; i < $scope.casual_list.length; i++){
-					$scope.casual_list[i].from_time_map = ConfigService.convertToTimeString($scope.casual_list[i].FROM_TIME);
-					$scope.casual_list[i].to_time_map = ConfigService.convertToTimeString($scope.casual_list[i].TO_TIME);
+					$scope.casual_list[i].from_time_map = ConfigService.convertToTimeStringApp($scope.casual_list[i].FROM_TIME);
+					$scope.casual_list[i].to_time_map = ConfigService.convertToTimeStringApp($scope.casual_list[i].TO_TIME);
 
 					$scope.casual_list[i].day_of_week = REAL_DAY_OF_WEEK[ConfigService.getDayFromTime($scope.casual_list[i].FROM_TIME)];
 					$scope.casual_list[i].week = ConfigService.getWeekFromDate($scope.casual_list[i].FROM_TIME);
@@ -96,6 +96,8 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 						}
 					}// end for
 				} // end if real_list
+
+				console.log($scope.real_list_map);
 			} // end if
 		})
 	}
