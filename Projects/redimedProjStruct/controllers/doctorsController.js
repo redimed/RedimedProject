@@ -24,9 +24,11 @@ module.exports =
                 +" SET FROM_TIME='"+from_time+"'"
                 +", TO_TIME='"+to_time+"'"
                 +", SITE_ID="+site_id
+                +", SERVICE_ID="+service_id
                 +" WHERE DOCTOR_ID="+doctor_id
-                +" AND CAL_ID="+cal_id
-                +" AND SERVICE_ID="+service_id;
+                +" AND CAL_ID="+cal_id;
+
+        console.log(sql);
         
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {
