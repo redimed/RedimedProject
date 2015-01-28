@@ -18,13 +18,15 @@ module.exports =
         var site_id = req.body.SITE_ID;
         var doctor_id = req.body.DOCTOR_ID;
         var cal_id = req.body.CAL_ID;
+        var service_id = req.body.SERVICE_ID;
 
         var sql = "UPDATE cln_appointment_calendar"
                 +" SET FROM_TIME='"+from_time+"'"
                 +", TO_TIME='"+to_time+"'"
                 +", SITE_ID="+site_id
                 +" WHERE DOCTOR_ID="+doctor_id
-                +" AND CAL_ID="+cal_id;
+                +" AND CAL_ID="+cal_id
+                +" AND SERVICE_ID="+service_id;
         
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {

@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 
-.controller("DoctorTimetableDetailCasualController", function($scope, $stateParams, DoctorService, ConfigService, mdtTimetableService, REAL_DAY_OF_WEEK, toastr){
+.controller("DoctorTimetableDetailCasualController", function($scope, $stateParams, DoctorService, ConfigService, mdtDoctorService, mdtTimetableService, sysServiceService, REAL_DAY_OF_WEEK, toastr){
 	var from_time = new Date();
 	var to_time = new Date();
 	var doctor_id = $stateParams.doctorId;
@@ -26,7 +26,8 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 				'TO_TIME': options.data.to_time_map,
 				'SITE_ID': options.data.SITE_ID,
 				'DOCTOR_ID': $stateParams.doctorId,
-				'CAL_ID': options.data.CAL_ID
+				'CAL_ID': options.data.CAL_ID,
+				'SERVICE_ID': options.data.SERVICE_ID
 			}
 
 			DoctorService.changeCasual(data).then(function(response){
@@ -60,7 +61,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 				DOCTOR_ID: $stateParams.doctorId,
 				from_time_map: "00:00",
 				to_time_map: "00:00",
-
+				SERVICE_ID: 1
 			};
 
 			$scope.real_list_map[$index].items.unshift(object);
@@ -71,7 +72,8 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 				TO_TIME: list.to_time_map,
 				SITE_ID: list.SITE_ID,
 				DOCTOR_ID: $stateParams.doctorId,
-				CLINICAL_DEPT_ID: $scope.doctor.CLINICAL_DEPT_ID
+				CLINICAL_DEPT_ID: $scope.doctor.CLINICAL_DEPT_ID,
+				SERVICE_ID: list.SERVICE_ID
 			}
 
 			mdtTimetableService.addRow(options).then(function(response){
@@ -146,9 +148,12 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 	init();
 
 	$scope.doctor = {};
-	DoctorService.getById($stateParams.doctorId).then(function(response){
-		$scope.doctor = response;
 
+	mdtDoctorService.byId($stateParams.doctorId).then(function(response){
+		$scope.doctor = response.data;
+		sysServiceService.byClinicalDepartment(response.data.CLINICAL_DEPT_ID).then(function(response){
+			$scope.options.clinical_depts = response.data;
+		})
 	})
 	// END LOAD CASUAL CALENDAR
 })

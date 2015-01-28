@@ -48,6 +48,7 @@
                                 <th>From Time</th>
                                 <th>To Time</th>
                                 <th>Site</th>
+                                <th>Service</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -66,6 +67,14 @@
                                         <select ng-model="l.SITE_ID"
                                             ng-options="site.id as site.Site_name for site in options.sites_option"
                                             ng-change="changeCalendar({'data':l})">
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select ng-model="l.SERVICE_ID"
+                                            ng-change="changeCalendar({'data':l})"
+                                            ng-options="service.SERVICE_ID as service.SERVICE_NAME 
+                                                for service in options.clinical_depts">
+                                            <option value="" selected disabled>Service</option>
                                         </select>
                                     </td>
                                     <td>

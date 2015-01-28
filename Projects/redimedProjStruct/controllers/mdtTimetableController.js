@@ -9,8 +9,9 @@ module.exports = {
 		var site_id = req.body.SITE_ID;
 		var doctor_id = req.body.DOCTOR_ID;
 		var clinical_dept_id = req.body.CLINICAL_DEPT_ID;
+		var service_id = req.body.SERVICE_ID;
 
-		var sql = "INSERT INTO cln_appointment_calendar(FROM_TIME, TO_TIME, SITE_ID, DOCTOR_ID, CLINICAL_DEPT_ID) VALUES('"+from_time+"', '"+to_time+"', '"+site_id+"', '"+doctor_id+"', '"+clinical_dept_id+"')";
+		var sql = "INSERT INTO cln_appointment_calendar(FROM_TIME, TO_TIME, SITE_ID, DOCTOR_ID, CLINICAL_DEPT_ID, SERVICE_ID) VALUES('"+from_time+"', '"+to_time+"', '"+site_id+"', '"+doctor_id+"', '"+clinical_dept_id+"', '"+service_id+"')";
 
 		db.sequelize.query(sql)
 		.success(function(result){
