@@ -208,7 +208,7 @@ angular.module("app.loggedIn.controller",[
     //End load before logged in
 
     $scope.menuParentClick = function(state){
-        if(state != null && state != '')
+        if(state != null && state != ' ' && state != undefined)
             $state.go(state);
 
     }
