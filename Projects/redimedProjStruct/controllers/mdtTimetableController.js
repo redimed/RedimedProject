@@ -1,7 +1,38 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
+var common_function = require("../functions.js");
 
 module.exports = {
+	addRow: function(req, res){
+		var from_time = common_function.convertFromHoursToDateTime(req.body.FROM_TIME);
+		var to_time = common_function.convertFromHoursToDateTime(req.body.TO_TIME);
+		var site_id = req.body.SITE_ID;
+		var doctor_id = req.body.DOCTOR_ID;
+		var clinical_dept_id = req.body.CLINICAL_DEPT_ID;
+
+		var sql = "INSERT INTO cln_appointment_calendar(FROM_TIME, TO_TIME, SITE_ID, DOCTOR_ID, CLINICAL_DEPT_ID) VALUES('"+from_time+"', '"+to_time+"', '"+site_id+"', '"+doctor_id+"', '"+clinical_dept_id+"')";
+
+		db.sequelize.query(sql)
+		.success(function(result){
+			res.json({status: "success"});
+		})
+		.error(function(error){
+			res.json(500, {status: 'error', 'message': error});
+		})
+	},
+	remove: function(req, res){
+		var cal_id = req.body.cal_id;
+
+		var sql = "DELETE FROM cln_appointment_calendar WHERE CAL_ID="+cal_id;
+
+		db.sequelize.query(sql)
+		.success(function(result){
+			res.json({status: "success"});
+		})
+		.error(function(error){
+			res.json(500, {status: 'error', 'message': error});
+		})
+	},
 	postByDoctor: function(req, res){
 		var doctor_id = req.body.doctor_id;
 

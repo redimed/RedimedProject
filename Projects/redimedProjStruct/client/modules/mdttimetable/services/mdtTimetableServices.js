@@ -24,9 +24,19 @@ angular.module("app.loggedIn.timetable.services",[])
 		return funcApi.post({timetable: timetable, doctor_id: doctor_id});
 	}
 
+	mdtService.addRow = function(data){
+		var funcApi = mdtApi.all("addRow");
+		return funcApi.post(data);
+	}
+
 	mdtService.generate = function(doctor_id, interval, clinical_id){
 		var funcApi = mdtApi.all("generate");
 		return funcApi.post({doctor_id: doctor_id, interval: interval, clinical_id: clinical_id});
+	}
+
+	mdtService.remove = function(cal_id){
+		var funcApi = mdtApi.all("remove");
+		return funcApi.post({cal_id: cal_id});
 	}
 
 	return mdtService;

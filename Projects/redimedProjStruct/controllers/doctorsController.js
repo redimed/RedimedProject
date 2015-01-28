@@ -42,7 +42,7 @@ module.exports =
         var doctor_id = req.body.doctor_id;
 
         var sql = "SELECT * FROM cln_appointment_calendar WHERE DOCTOR_ID = "+doctor_id
-                +" AND DATE(FROM_TIME) BETWEEN '"+from_time+"' AND '"+to_time+"'";
+                +" AND FROM_TIME LIKE '%"+from_time+"%'";
 
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {
