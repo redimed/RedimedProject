@@ -1,22 +1,107 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller("loggedInController", function($scope, $state, $cookieStore, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket){
+.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userId,$cookieStore,notify,socket){
+
+        var audio = new Audio('theme/assets/notification.mp3');
+        audio.loop = true;
+        audio.play();
+
+        socket.on("messageReceived",function(fromId,fromUser,message){
+            if(message.type == 'cancel')
+            {
+                audio.pause();
+                notify.close();
+                $modalInstance.close();
+            }
+        })
+
+        UserService.getUserInfo(userId).then(function(data){
+            if(data){
+                $scope.username = data.user_name;
+
+                if(data.img)
+                    $scope.img = data.img;
+                else
+                    $scope.img = "theme/assets/icon.png"
+            }
+        })
+
+        $scope.ignoreCall = function(){
+            audio.pause();
+            notify.close();
+            $modalInstance.close();
+            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userId,{type:'ignore'});
+        }
+
+        $scope.acceptCall = function(){
+            audio.pause();
+            notify.close();
+            $modalInstance.close();
+            $state.go("call",{callUser:userId,isCaller:false},{reload:true});
+        }
+
+    })
+
+.controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
 
+    socket.on("messageReceived",function(fromId,fromUser,message){
+        if(message.type == 'call')
+        {
+            var options = {
+                body: fromUser + " Is Calling You...",
+                icon: "theme/assets/icon.png",
+                dir : "ltr"
+            };
+            var notification = new Notification("You Have A Call!",options);
+
+            notification.onclick = function(){
+                window.open().close();
+                window.focus();
+            }
+
+            var modalInstance = $modal.open({
+                templateUrl: 'common/views/dialog/callDialog.html',
+                controller: 'callDialogController',
+                size: 'sm',
+                resolve:{
+                    userId: function(){
+                            return fromId;
+                    },
+                    notify: function(){
+                        return notification;
+                    }
+                },
+                backdrop: 'static',
+                keyboard: false
+            })
+        }
+    })
 
     $scope.userImg = null;
+    $scope.onlineUsers = [];
+    $scope.onlineUsersTemp = [];
 
     UserService.getOnlineUsers().then(function(data){
         $scope.onlineUsers = data;
+        $scope.onlineUsersTemp = data;
     })
 
     socket.on("online",function(data){
+        $scope.onlineUsers = [];
         $scope.onlineUsers = data;
+        $scope.onlineUsersTemp = data;
     })
 
+    $scope.searchOnlineUser = function(str){
+        $scope.onlineUsers = $filter('filter')($scope.onlineUsersTemp, {
+            username: str
+        });
+    }
+
     $scope.makeCall = function(user){
-        $state.go("call");
+        $state.go("call",{callUser:user.id,isCaller:true},{reload:true});
     }
 
 
@@ -158,7 +243,6 @@ angular.module("app.loggedIn.controller",[
     {
         $scope.userInfo=userInfo;
         $scope.user = userInfo.Booking_Person;
-        $scope.username = userInfo.user_name;
     }
     $scope.loggedInMenus = [];
     $scope.selectedMenu = null;

@@ -233,6 +233,8 @@ module.exports = {
     {
         var info = req.body.info;
         var id = req.body.injury_id;
+        var geolocation = req.body.geo;
+
         db.IMInjury.update(info,{injury_id:id})
             .success(function(){
                 if(info.STATUS == 'Done'){
@@ -241,6 +243,36 @@ module.exports = {
                             db.DriverInjury.update({
                                 STATUS:'Done'
                             },{driver_id: im.driver_id, patient_id:im.patient_id})
+                                .success(function(){
+                                })
+                                .error(function(err){
+                                    res.json({status:'error'});
+                                    console.log(err);
+                                })
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                }
+                if(info.STATUS == 'Waiting')
+                {
+                    db.IMInjury.find({where:{injury_id:id}},{raw:true})
+                        .success(function(im){
+                            var p1 = {lat: im.latitude,lng:im.longitude};
+                            var p2 = geolocation;
+
+                            console.log("==========Distance: ",getDistance(p1,p2)+" km ");
+                            console.log("==========Time: ", ((getDistance(p1,p2) / 50) * 60)+" minutes ");
+
+
+
+                            db.DriverInjury.create({
+                                driver_id: im.driver_id,
+                                patient_id: im.patient_id,
+                                STATUS : 'Picking',
+                                pickup_date: new Date()
+                            })
                                 .success(function(){
                                 })
                                 .error(function(err){
@@ -282,70 +314,51 @@ module.exports = {
         var driverId = req.body.driverId;
         var patientId = req.body.patientId;
         var injuryId = req.body.injuryId;
-        db.IMInjury.update({
-            driver_id: driverId,
-            STATUS:'Waiting'
-        },{injury_id: injuryId,patient_id:patientId})
-            .success(function(){
-                db.DriverInjury.create({
-                    driver_id: driverId,
-                    patient_id: patientId,
-                    STATUS : 'Picking',
-                    pickup_date: new Date()
-                })
-                    .success(function(){
-                        var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
-                        var message = new gcm.Message();
-                        message.addData('title','EMERGENCY');
-                        message.addData('message','You have new patient to pickup!');
-                        message.addData('injury_id',injuryId);
-                        message.addData('soundname','beep.wav');
-                        message.collapseKey = 'EMERGENCY';
-                        message.delayWhileIdle = true;
-                        message.timeToLive = 3;
-                        var registrationIds = [];
 
-                        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
-                            .success(function(type){
-                                db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
-                                    .success(function (data) {
-                                        if(data)
-                                        {
-                                            if (data.android_token != null)
-                                                registrationIds.push(data.android_token);
+        var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+        var message = new gcm.Message();
+        message.addData('title','EMERGENCY');
+        message.addData('message','You have new patient to pickup!');
+        message.addData('injury_id',injuryId);
+        message.addData('soundname','beep.wav');
+        message.collapseKey = 'EMERGENCY';
+        message.delayWhileIdle = true;
+        message.timeToLive = 3;
+        var registrationIds = [];
 
-                                            sender.send(message, registrationIds, 4, function (err,result) {
-                                                if(err)
-                                                {
-                                                    console.log("ERROR:",err);
-                                                }
-                                                else
-                                                {
-                                                    console.log("SUCCESS:",result);
-                                                }
+        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+            .success(function(type){
+                db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
+                    .success(function (data) {
+                        if(data)
+                        {
+                            if (data.android_token != null)
+                                registrationIds.push(data.android_token);
 
-                                            });
-                                        }
+                            sender.send(message, registrationIds, 4, function (err,result) {
+                                if(err)
+                                {
+                                    console.log("ERROR:",err);
+                                }
+                                else
+                                {
+                                    console.log("SUCCESS:",result);
+                                }
 
-                                    })
-                                    .error(function (err) {
-                                        console.log(err);
-                                    })
-                            })
-                            .error(function (err) {
-                                console.log(err);
-                            })
-                        res.json({status:'success'});
+                            });
+                        }
+
                     })
-                    .error(function(err){
-                        res.json({status:'error'});
+                    .error(function (err) {
                         console.log(err);
                     })
             })
-            .error(function(err){
-                res.json({status:'error'});
+            .error(function (err) {
                 console.log(err);
             })
+        res.json({status:'success'});
+
+
     },
     testPushGCM: function(req,res)
     {
@@ -426,6 +439,24 @@ function base64Image(src) {
         if (err.code !== 'ENOENT')
             return null;
     }
+}
+
+function getDistance(p1,p2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(p2.lat-p1.lat);  // deg2rad below
+    var dLon = deg2rad(p2.lng-p1.lng);
+    var a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(p1.lat)) * Math.cos(deg2rad(p2.lat)) *
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c; // Distance in km
+    return d;
+}
+
+function deg2rad(deg) {
+    return deg * (Math.PI/180)
 }
 
 

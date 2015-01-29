@@ -108,6 +108,10 @@ angular.module("app", [
 
         .state('call',{
             url:'/call',
+            params: {
+                callUser : null,
+                isCaller: null
+            },
             views:{
                 "root":{
                     templateUrl:"common/views/call.html",
@@ -150,6 +154,17 @@ angular.module("app", [
         socket.emit("checkApp",$cookieStore.get("userInfo").id);
     }
 
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+    }
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+            if (!('permission' in Notification)) {
+                Notification.permission = permission;
+            }
+        });
+    }
+
     socket.on("isLoggedIn",function(){
         toastr.error("Your Account Is Already Logged In!");
 
@@ -167,6 +182,11 @@ angular.module("app", [
 
     })
 
+    $rootScope.$on("$locationChangeStart",function(event, next, current){
+        if (easyrtc.webSocket) {
+            easyrtc.disconnect();
+        }
+    });
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
         $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});

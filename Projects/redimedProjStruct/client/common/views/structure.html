@@ -4,19 +4,20 @@
         <div id="chat-users" >
             <div class="chat-header">
                 <div class="pull-left">
-                    <input type="text" placeholder="search">
+                    <input ng-model="searchUser" ng-change="searchOnlineUser(searchUser)" type="text" placeholder="search">
                 </div>
             </div>
             <div class="side-widget">
                 <div class="side-widget-title">Online Users</div>
                 <div class="side-widget-content" >
-                    <div class="user-details-wrapper" ng-repeat="user in onlineUsers" ng-if="username != user.username">
+                    <div class="user-details-wrapper" ng-repeat="u in onlineUsers track by u.id" ng-if="u.id !== userInfo.id">
                         <div class="user-profile">
-                            <img style="background-color: white;" class="img-circle hide1" src="{{user.img}}"  alt="" data-src="{{user.img}}" width="35" height="35">
+                            <img ng-if="u.img != null"  style="background-color: white;" class="img-circle hide1" src="{{u.img}}"  alt="" width="35" height="35">
+                            <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png"  alt="" width="35" height="35">
                         </div>
                         <div class="user-details">
                             <div class="user-name">
-                                {{user.username}}
+                                {{u.username}}
                             </div>
                             <div class="user-more">
                                 <span class="status-icon green"></span>
@@ -24,7 +25,7 @@
                             </div>
                         </div>
                         <span>
-                            <a ng-click="makeCall(user)" href="javascript:;" class="btn btn-circle green btn-sm">
+                            <a ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle green btn-sm">
                                 <i class="fa fa-video-camera"></i></a>
                         </span>
                         <div class="clearfix"></div>
@@ -466,14 +467,14 @@
         Demo.init(); // init demo features
         Index.init();
 
-        var backup_Img = 'theme/assets/no-image.gif';
-        $("img").on('error', function(){
-            $(this).prop('src', backup_Img);
-        });
-
         $('#chatMenu').BootSideMenu({side:"right",autoClose:true});
+
+        $('img').error(function(){
+            $(this).attr('src', 'theme/assets/icon.png');
+        });
     });
 
+    
     document.body.className = "mainClass page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1";
 </script>
 

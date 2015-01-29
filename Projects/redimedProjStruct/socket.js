@@ -11,50 +11,52 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.on('connection', function (socket) {
         socket.on('checkApp',function(id){
-        //    if(id != null){
-        //        db.User.find({where:{id:id}},{raw:true})
-        //            .success(function(user){
-        //                if(user.socket == null){
-        //                    db.User.update({
-        //                        socket: socket.id
-        //                    },{id:id})
-        //                        .success(function(){
-        //                            console.log('success');
-        //                        })
-        //                        .error(function(err){
-        //                            console.log(err);
-        //                        })
-        //                }
-        //                else
-        //                {
-        //                    io.to(socket.id).emit("isLoggedIn");
-        //                    console.log("error")
-        //                }
-        //            })
-        //            .error(function(err){
-        //                console.log(err);
-        //            })
-        //    }
+            if(id != null){
+                db.User.find({where:{id:id}},{raw:true})
+                    .success(function(user){
+                        if(user.socket == null){
+                            db.User.update({
+                                socket: socket.id
+                            },{id:id})
+                                .success(function(){
+                                    getOnlineUser();
+                                    console.log('success');
+                                })
+                                .error(function(err){
+                                    console.log(err);
+                                })
+                        }
+                        else
+                        {
+                            getOnlineUser();
+                            io.to(socket.id).emit("isLoggedIn");
+                            console.log("error")
+                        }
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
         })
 
         socket.on('checkLogin',function(username){
-            //db.User.find({where:{user_name:username}},{raw:true})
-            //    .success(function(user){
-            //        if(user)
-            //        {
-            //            if(user.socket == null){
-            //                socket.emit('isSuccess');
-            //            }
-            //            else
-            //            {
-            //                socket.emit('isError', 'You are already connected.');
-            //            }
-            //        }
-            //
-            //    })
-            //    .error(function(err){
-            //        console.log(err);
-            //    })
+            db.User.find({where:{user_name:username}},{raw:true})
+                .success(function(user){
+                    if(user)
+                    {
+                        if(user.socket == null){
+                            socket.emit('isSuccess');
+                        }
+                        else
+                        {
+                            socket.emit('isError', 'You are already connected.');
+                        }
+                    }
+
+                })
+                .error(function(err){
+                    console.log(err);
+                })
 
             socket.emit('isSuccess');
         });
@@ -73,19 +75,28 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
-            db.User.find({where:{user_name: currUser}},{raw:true})
-                .success(function(currentUser){
-                    db.User.find({where:{user_name:contactUser}},{raw:true})
-                        .success(function(contact){
-                            io.to(contact.socket)
-                                .emit('messageReceived', currentUser.user_name, message);
+            console.log("FromID:"+currUser+"-ToID:"+contactUser+"-Msg:"+JSON.stringify(message));
 
-                            console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
-                            console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
-                        })
-                        .error(function(err){
-                            console.log(err);
-                        })
+            db.User.find({where:{id: currUser}},{raw:true})
+                .success(function(currentUser){
+                    if(currentUser)
+                    {
+                        db.User.find({where:{id:contactUser}},{raw:true})
+                            .success(function(contact){
+                                if(contact)
+                                {
+                                    io.to(contact.socket)
+                                        .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+
+                                    console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
+                                    console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
+                                }
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                    }
+
                 })
                 .error(function(err){
                     console.log(err);
