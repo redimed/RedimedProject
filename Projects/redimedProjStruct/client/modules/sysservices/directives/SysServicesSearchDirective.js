@@ -19,7 +19,7 @@ angular.module('app.loggedIn.sysservices.search.directive', []).directive('sysse
 				scope.list = {};
 				scope.params = {
 					pagination: {
-						limit: 5,
+						limit: 100,
 						offset: 0,
 						current_page: 1,
 						max_size: 3
