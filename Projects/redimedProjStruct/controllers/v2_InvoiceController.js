@@ -153,6 +153,8 @@ module.exports = {
 
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
+		var inv_status = req.body.status;
+		console.log(req.body);
 
 		db.mdtInvoiceHeader.find({
 			where: {header_id: header_id},
@@ -176,7 +178,7 @@ module.exports = {
 	 			amount +=  line.AMOUNT;
 	 		}
 
-	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: 'approach'}, {
+	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status}, {
 	            header_id: header_id
 	        });
 		}).then(function(updated){

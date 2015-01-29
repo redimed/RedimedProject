@@ -99,7 +99,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				// 	if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
 				// }//end for
 				if(scope.params.permission.edit === true){
-					InvoiceService.save(scope.params.id).then(function(response){
+					InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
 						if(response.status == 'error') toastr.error('Error Get Detail', 'Error')
 						toastr.success('Edit Successfully !!!', 'Success');
 					})
