@@ -21,7 +21,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 	$scope.changeCalendar = function(options){
 
 		var from_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.from_time)+" "+options.data.from_time_map+":00";
-		var to_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.to_time)+" "+options.data.to_time_map+"00";
+		var to_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.to_time)+" "+options.data.to_time_map+":00";
 
 		if(options.data.CAL_ID !== null){
 			var data = {
@@ -71,7 +71,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 		},
 		addRowData: function(list){
 			var from_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.from_time)+" "+list.from_time_map+":00";
-			var to_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.to_time)+" "+list.to_time_map+"00";
+			var to_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.to_time)+" "+list.to_time_map+":00";
 
 			var options = {
 				FROM_TIME: from_time,
