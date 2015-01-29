@@ -3,41 +3,36 @@ var moment=require('moment');
 var isoUtil=require('./isoUtilsController');
 module.exports =
 {
-	checkIsoAdmin:function(req,res)
+	checkIsAdminIsoSystem:function(req,res)
 	{
-		var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
-		var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
-		if(!isoUtil.checkListData([userId]))
-		{
-			res.json({status:'fail'});
-			return;
-		}
-		var sql="SELECT * FROM iso_admin WHERE ISENABLE=1 AND ADMIN_ID=?";
-		req.getConnection(function(err,connection)
+		if(isoUtil.isAdminIsoSystem(req))
         {
-            var query = connection.query(sql,[userId],function(err,rows)
-            {
-                if(err)
-                {
-                    isoUtil.exlog({status:'fail',msg:err});
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                    {
-                    	res.json({status:'success'});
-                    }
-                    else
-                    {
-                    	res.json({status:'fail'});
-                    }
-                    
-                }
-            });
-            isoUtil.exlog(query.sql);
-        }); 
+            res.json({status:'success'});
+            return;
+        }
+        else
+        {
+            isoUtil.exlog("User dang nhap khong phai la admin iso system")
+            res.json({status:'fail'});
+            return;
+        }
 	},
+
+    checkIsAdminIsoSystemMaster:function(req,res)
+    {
+        if(isoUtil.isAdminIsoSystemMaster(req))
+        {
+            res.json({status:'success'});
+            return;
+        }
+        else
+        {
+            isoUtil.exlog("User dang nhap khong phai la admin master iso system");
+            res.json({status:'fail'});
+            return;
+        }
+    },
+
     getAdminList: function(req,res){
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
@@ -61,6 +56,7 @@ module.exports =
                     isoUtil.exlog(rows);
                 }
             });
+            isoUtil.exlog(query.sql);
 
         });
     },

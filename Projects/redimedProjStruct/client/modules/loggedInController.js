@@ -129,8 +129,8 @@ angular.module("app.loggedIn.controller",[
         weeks_of_month: ConfigService.number_of_week_option(),
 
         month_in_year: ConfigService.month_in_year(),
-        date_in_month: ConfigService.date_in_month()
-        
+        date_in_month: ConfigService.date_in_month(),
+        invoice_status: ConfigService.invoice_status_option(),
     }
 
     var loadOptionsApi = function(){
@@ -292,7 +292,7 @@ angular.module("app.loggedIn.controller",[
     //End load before logged in
 
     $scope.menuParentClick = function(state){
-        if(state != null && state != '')
+        if(state != null && state != ' ' && state != undefined)
             $state.go(state);
 
     }

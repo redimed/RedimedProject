@@ -1,7 +1,26 @@
 
 angular.module('app.loggedIn.iso.isoApproverListController.controller',[])
     .controller("isoApproverListController", function($scope,$http,$state,$window,$cookieStore,toastr,isoService) {
-       var msgPopup=isoMsg.popup;
+        /**
+         * Kiem tra xem user dang nhap co phai la admin iso system hay khong
+         * tannv.dts@gmail.com
+         */
+        if(!isoTest)
+        {
+            isoService.isoAdmin.checkIsAdminIsoSystem()
+            .then(function(data){
+                if(data.status!='success')
+                {
+                    $state.go("loggedIn.iso.main");
+                }
+            },function(err){
+                $state.go("loggedIn.iso.main");
+            }); 
+        }
+        
+
+
+        var msgPopup=isoMsg.popup;
         $scope.approverList= {};
         /**
          * voducgiap

@@ -49,7 +49,7 @@ angular.module('app.loggedIn.iso',
             })
 
             .state("loggedIn.iso.isoApproverList",{
-                url:'/isoApproverList',
+                url:'/approver-list',
                 templateUrl:"modules/iso/views/isoApproverList.html",
                 controller:"isoApproverListController"
             })

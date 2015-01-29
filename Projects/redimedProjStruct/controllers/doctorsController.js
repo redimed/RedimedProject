@@ -13,18 +13,22 @@ var common_function = require("../functions.js");
 module.exports =
 {
     changeCasual: function(req, res){
-        var from_time = common_function.convertFromHoursToDateTime(req.body.FROM_TIME);
-        var to_time = common_function.convertFromHoursToDateTime(req.body.TO_TIME);
+        var from_time = req.body.FROM_TIME;
+        var to_time = req.body.TO_TIME;
         var site_id = req.body.SITE_ID;
         var doctor_id = req.body.DOCTOR_ID;
         var cal_id = req.body.CAL_ID;
+        var service_id = req.body.SERVICE_ID;
 
         var sql = "UPDATE cln_appointment_calendar"
                 +" SET FROM_TIME='"+from_time+"'"
                 +", TO_TIME='"+to_time+"'"
                 +", SITE_ID="+site_id
+                +", SERVICE_ID="+service_id
                 +" WHERE DOCTOR_ID="+doctor_id
                 +" AND CAL_ID="+cal_id;
+
+        console.log(sql);
         
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {
@@ -42,7 +46,7 @@ module.exports =
         var doctor_id = req.body.doctor_id;
 
         var sql = "SELECT * FROM cln_appointment_calendar WHERE DOCTOR_ID = "+doctor_id
-                +" AND DATE(FROM_TIME) BETWEEN '"+from_time+"' AND '"+to_time+"'";
+                +" AND FROM_TIME LIKE '%"+from_time+"%'";
 
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {

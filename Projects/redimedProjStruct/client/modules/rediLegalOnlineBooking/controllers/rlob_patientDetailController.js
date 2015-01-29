@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
-    .controller("rlob_patientDetailController", function($scope,$state,$http,$cookieStore,bookingService,appointmentCalendarService,FileUploader,Mailto,$location,$window) {
+    .controller("rlob_patientDetailController", function($scope,$state,$http,$cookieStore,bookingService,appointmentCalendarService,FileUploader,Mailto,$location,$window,rlobService,PatientModel,ClaimModel) {
         $scope.selectedAppointmentCalendar=appointmentCalendarService.getSelectedAppointmentCalendar();
         /***
          * An ngan can thay doi url khi change state
@@ -12,6 +12,10 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 //        $scope.$on('$stateChangeStart', function(event, newUrl, oldUrl) {
 //            event.preventDefault();
 //        });
+//        
+//        
+        var patientData = angular.copy(PatientModel);
+        var claimData = angular.copy(ClaimModel);
 
         $scope.loginInfo=$cookieStore.get('userInfo');
 
@@ -459,8 +463,34 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             {
                 $("#lob-client-send-document-dialog").modal({show:true,backdrop:'static'});
             }
-
-
+            //phan quoc chien
+            //phanquocchien.c1109g@gmail.com
+            //add new patient
+            $scope.addPatient = function(){
+                // delete patientData.Patient_id;
+                patientData.Sur_name = $scope.newBooking.WRK_SURNAME;
+                patientData.First_name = $scope.newBooking.WRK_OTHERNAMES;
+                patientData.DOB = $scope.newBooking.WRK_DOB;
+                patientData.Email = $scope.newBooking.WRK_EMAIL;
+                patientData.Mobile = $scope.newBooking.WRK_CONTACT_NO;
+                console.log(patientData);
+                rlobService.addPatient(patientData).then(function(data){
+                    console.log(data.data.Patient_id);
+                    if (data.status == 'success') {
+                        // delete claimData.Claim_id;
+                        claimData.Patient_id = data.data.Patient_id;
+                        claimData.Claim_no = $scope.newBooking.CLAIM_NO;
+                        claimData.Injury_name = 'No Description';
+                        console.log(claimData);
+                        rlobService.addClaim(claimData).then(function(data){
+                            console.log(data);
+                            if (data.status == 'success') {
+                                // alert('okok');
+                            };
+                        });
+                    };
+                });
+            }
             $http({
                 method:"POST",
                 url:"/api/rlob/rl_bookings/add",
@@ -479,6 +509,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                      * Update appointment calendar upcoming cua structure
                      * tannv.dts@gmail.com
                      */
+                    $scope.addPatient();
                     $scope.getAppointmentCalendarUpcoming();
                     //Gui email confirm  cho khach hang
                     $scope.sendConfirmEmail();

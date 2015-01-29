@@ -114,20 +114,52 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                                 .then(function(data){
                                     if(data.status=='success')
                                     {
-                                        isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Add '+user.user_name+' to group success!')
+                                        if(permission<isoConst.isoPermission.notPermission)
+                                        {
+                                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Add '+user.user_name+' to group success!');
+                                        }
+                                        else
+                                        {
+                                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Remove '+user.user_name+' from group success!');
+                                        }
+                                        
                                         $scope.refreshNodePermission();
                                     }
                                     else
                                     {
-                                        isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add '+user.user_name+' to group fail!')
+                                        if(permission<isoConst.isoPermission.notPermission)
+                                        {
+                                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add '+user.user_name+' to group fail!');
+                                        }
+                                        else
+                                        {
+                                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Remove '+user.user_name+' from group fail!');
+                                        }
+                                        
                                     }
                                 },function(err){
-                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add '+user.user_name+' to group fail!')
+                                    if(permission<isoConst.isoPermission.notPermission)
+                                    {
+                                        isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add '+user.user_name+' to group fail!')
+                                    }
+                                    else
+                                    {
+                                        isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Remove '+user.user_name+' from group fail!')
+                                    }
+                                    
                                 });
                             }
                             else
                             {
-                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'You cannot grant permission to '+user.user_name);
+                                if(permission<isoConst.isoPermission.notPermission)
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'You cannot grant permission to '+user.user_name);
+                                }
+                                else
+                                {
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'You cannot remove '+user.user_name + ' from group');
+                                }
+                                
                             }
                         }
                         else
@@ -231,7 +263,7 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                                 }
                                 else
                                 {
-                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group fail!');
                                 }
                             }
                             else
@@ -273,7 +305,7 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                                 }
                                 else
                                 {
-                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group fail!');
                                 }
                             }
                             else
@@ -314,7 +346,7 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                                 }
                                 else
                                 {
-                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group fail!');
                                 }
                             }
                             else
@@ -354,7 +386,7 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                                 }
                                 else
                                 {
-                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group success!');
+                                    isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Add group fail!');
                                 }
                             }
                             else
@@ -367,6 +399,60 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
 
                     }
                 });
+
+                /**
+                 * Remove Permission of User
+                 * tannv.dts@gmail.com
+                 */
+                $scope.removePermission=function(u)
+                {
+                    var user={
+                        id:u.id,
+                        user_name:u.user_name
+                    }
+                    $scope.grantNodePermission(
+                            $scope.selectedTreeNode.NODE_ID
+                            ,user
+                            ,isoConst.isoPermission.notPermission);
+                }
+
+                /**
+                 * Remove Permission of group
+                 * tannv.dts@gmail.com
+                 */
+                $scope.removePermissionOfGroup=function(groupId)
+                {
+                    if(!groupId)
+                    {
+                        isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                        return;
+                    }
+
+                    isoService.treeUser.grantGroupUserPermission(
+                            $scope.selectedTreeNode.NODE_ID,
+                            groupId,
+                            isoConst.isoPermission.notPermission)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            if(data.status=='success')
+                            {
+                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.success,'Remove permission of this group success!');
+                                $scope.refreshNodePermission();
+                            }
+                            else
+                            {
+                                isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Remove permission of this group fail!');
+                            }
+                        }
+                        else
+                        {
+                            isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                        }
+                    },function(err){
+                        isoMsg.popup(isoLang.isoHeader,isoConst.msgPopupType.error,'Error!');
+                    })
+                }
             }
 
         };

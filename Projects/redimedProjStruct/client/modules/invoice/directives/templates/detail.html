@@ -80,7 +80,7 @@
 
 	<!--cal_id-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<a ng-click="goToAppt(InvoiceMap.Patient_id, InvoiceMap.cal_id)" class="btn btn-primary btn-block" ng-click="test"><i class="fa fa-calendar"></i> Appointment Detail</a>
+		<a ng-if="InvoiceMap.cal_id" ng-click="goToAppt(InvoiceMap.Patient_id, InvoiceMap.cal_id)" class="btn btn-primary btn-block"><i class="fa fa-calendar"></i> Appointment Detail</a>
 	</div>
 	<!--cal_id-->
 

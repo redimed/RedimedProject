@@ -1019,7 +1019,7 @@ module.exports =
                             VERSION_NO:versionNew,
                             CHECK_IN_STATUS:isoUtil.isoConst.checkInStatus.unlock,
                             LAST_UPDATED_BY:userId,
-                            LAST_UPDATED_DATE:currentDate,
+                            LAST_UPDATED_DATE:currentDate
                         }
                         req.getConnection(function(err,connection)
                         {
@@ -1268,7 +1268,153 @@ module.exports =
                 }
             });
         });
-    }
+    },
+    /**
+     * phanquocchien.c1109g@gmail.com
+     * send email all user document release
+     */
+    sendEmailAllUserDocumentRelease: function(req,res){
+        isoUtil.exlog("chay ham send mail",">>>>>>>>>>>>>>>>> send Email All User Document release");
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var isoread = isoUtil.isoPermission.read;
+        isoUtil.exlog("quyen read",isoread);
+        isoUtil.exlog("id read",req.body.nodeId);
+        var sqlGetContentMail=
+            "SELECT isotree.`NODE_NAME`,isocheck.`VERSION_NO`,isocheck.`CENSORSHIP_DATE` "+
+            "FROM `iso_tree_dir` isotree                                                 "+
+            "INNER JOIN `iso_check_out_in` isocheck                                      "+
+            "ON isotree.`CURRENT_VERSION_ID` = isocheck.`ID`                             "+
+            "WHERE isotree.`NODE_ID` = ?                                                 "+
+            "AND isotree.`CURRENT_VERSION_ID` IS NOT NULL                                "+
+            "AND isotree.`ISENABLE` = 1                                                  "+
+            "AND isocheck.`ISENABLE` = 1                                                 ";
+        
+        req.getConnection(function(err,connection)
+        {
+            /**
+           * phanquocchien.c1109g@gmail.com
+           * select content Email 
+           */
+            var query = connection.query(sqlGetContentMail,nodeId,function(err,data)
+            {
+                if(err)
+                {
+                    isoUtil.exlog("loi get contact Email",err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(data.length>0)
+                    {
+                        var contactEmail = data;
+                        var sqlGetListEmail =
+                            " SELECT us.`Contact_email` FROM `iso_tree_users` isouser     "+
+                            " INNER JOIN `users` us                                       "+
+                            " ON isouser.`ACCESSIBLE_USER_ID` = us.`id`                   "+
+                            " WHERE isouser.`NODE_ID` = ?                                 "+
+                            " AND isouser.`PERMISSION` <= ?                               "+
+                            " AND isouser.`ISENABLE` = 1                                  "+
+                            " AND us.`ISENABLE` = 1                                       ";
+                        req.getConnection(function(err,connection)
+                        {
+                            /**
+                               * phanquocchien.c1109g@gmail.com
+                               * select list mail 
+                               */
+                            var query = connection.query(sqlGetListEmail,[nodeId,isoread],function(err,data)
+                            {
+                                if(err)
+                                {
+                                    isoUtil.exlog(err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    var soMailGuiMotLan = 10;
+                                    var listEmail = '';
+                                    var soMailKhongChiaHet = data.length % soMailGuiMotLan;
+                                    isoUtil.exlog('soMailKhongChiaHet :',soMailKhongChiaHet);
+                                    var soMailChiaHet = data.length - soMailKhongChiaHet;
+                                    isoUtil.exlog('soMailChiaHet',soMailChiaHet);
+                                    /**
+                                       * phanquocchien.c1109g@gmail.com
+                                       * send mail 
+                                       */
+                                    for (var i = 0; i < data.length; i+=soMailGuiMotLan) {
+                                        isoUtil.exlog('bat dau for', i);
+                                        listEmail = '';
+                                        if (i<soMailChiaHet) {
+                                            isoUtil.exlog('bat dau for 1', i);
+                                            for (var j = i; j < i+soMailGuiMotLan; j++) {
+                                                listEmail += data[j].Contact_email+",";
+                                            };
+                                            // listEmail.substring(0,listEmail.length -1);
+                                            isoUtil.exlog('list mai for 1 :',listEmail);
+                                            var mailInfo = {
+                                            // senders:"REDiMED <tannv.solution@gmail.com>",
+                                            senders:"REDiMED <healthscreenings@redimed.com.au>",
+                                            recipients:listEmail,
+                                            subject: contactEmail[0].NODE_NAME + ' new version release ',
+                                            htmlBody:
+                                            "   <p>Hi,</p>      "+
+                                            "    <p>            "+
+                                            "    Notification of new version of the "+ contactEmail[0].NODE_NAME +
+                                            "    </p>                                "+
+                                            "    <p>            "+
+                                            "Version No :"+ contactEmail[0].VERSION_NO+
+                                            "    </p>                                "+
+                                            "    <p>            "+
+                                            "Release Date :"+ moment(contactEmail[0].CENSORSHIP_DATE).format('MMMM Do YYYY, h:mm:ss a')+
+                                            "    </p>                                "+
+                                            "    <p>                                 "+
+                                            "        Thank you                       "+
+                                            "    </p>   "
+                                            };
+                                            isoUtil.exlog("noi dung mail " , mailInfo.htmlBody);
+                                            isoEmail.sendEmail(req,res,mailInfo);
+                                        };
 
-    
+                                        if (i>=soMailChiaHet) {
+                                            isoUtil.exlog('bat dau for 2', i);
+                                            for (var j = i; j < i+soMailKhongChiaHet; j++) {
+                                                listEmail += data[j].Contact_email+",";
+                                            };
+                                            // listEmail.substring(0,listEmail.length -1);
+                                            isoUtil.exlog('list mai for 2:',listEmail);
+                                            var mailInfo = {
+                                            // senders:"REDiMED <tannv.solution@gmail.com>",
+                                            senders:"REDiMED <healthscreenings@redimed.com.au>",
+                                            recipients:listEmail,
+                                            subject: contactEmail[0].NODE_NAME + ' new version release ',
+                                            htmlBody:
+                                            "   <p>Hi,</p>      "+
+                                            "    <p>            "+
+                                            "    Notification of new version of the "+ contactEmail[0].NODE_NAME+
+                                            "    </p>                                "+
+                                            "    <p>            "+
+                                            "Version No :"+ contactEmail[0].VERSION_NO+
+                                            "    </p>                                "+
+                                            "    <p>            "+
+                                            "Release Date :"+ moment(contactEmail[0].CENSORSHIP_DATE).format('MMMM Do YYYY, h:mm:ss a')+
+                                            "    </p>                                "+
+                                            "    <p>                                 "+
+                                            "        Thank you                       "+
+                                            "    </p>   "
+                                            };
+                                            isoEmail.sendEmail(req,res,mailInfo);
+                                        };
+                                    };
+                                }
+                            });
+                        });
+                    }
+                    else
+                    {
+                        isoUtil.exlog("loi send mail",err);
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    }
 }

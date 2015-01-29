@@ -90,9 +90,16 @@ tannv.dts@gmail.com
     margin-top:10px;
 }
 
-.iso_node_deleted span{
+/*Xu ly an khi node bi delete*/
+.iso_node_deleted span:first-child{
+    display:inline;
     color:#B90000;
 }
+
+.iso_node_deleted li{
+    display:none;
+}
+/*-------------------------------*/
 
 .selection-user-name-box{
     border:1px solid #5bc0de;
@@ -100,4 +107,9 @@ tannv.dts@gmail.com
 
 .iso_user_in_group{
     background-color: #f0ad4e!important;
+}
+
+.iso_action_button{
+    width:200px;
+    margin-top:10px;
 }

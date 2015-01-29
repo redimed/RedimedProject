@@ -183,6 +183,22 @@ angular.module('app.loggedIn.rlob.services',[])
             var getMAS6=api.one('rlob/rl_form_ams5/select_Item_rl_form_ams5_bookingid');
             return getMAS6.get({BOOKING_ID:BOOKING_ID});
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //add claim
+        rlobService.addClaim=function(data)
+        {
+            var Claim=api.all('restful/Claim');
+            return Claim.post(data);
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //add Patient
+        rlobService.addPatient=function(data)
+        {
+            var Patient=api.all('restful/Patient');
+            return Patient.post(data);
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');

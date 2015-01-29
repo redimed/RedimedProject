@@ -54,7 +54,11 @@ module.exports = function(sequelize, DataTypes){
 				}
 			},
 			afterUpdate: function( header, fn ) {
-				console.log('after update')
+				if(!header.cal_id) {
+					fn();
+					return;
+				}
+				
 				var updateData = {Claim_id : header.claim_id};
 				var PatientClaim = sequelize.daoFactoryManager.getDAO('mdtPatientClaim', { attribute: 'name' })
 				PatientClaim.findOrCreate(

@@ -4,11 +4,24 @@
 angular.module("app.lockscreen.controller",[
 ])
 
-.controller("lockscreenController", function($scope,$rootScope, $state, $cookieStore, SecurityService, UserService,toastr,$window,socket,$location){
+.controller("lockscreenController", function($scope,$rootScope, $state, $cookieStore, SecurityService, UserService,toastr,$window,socket,$location, $rootScope){
         var userInfo;
         var from = $cookieStore.get('fromState');
-
+        var isLocking = true;
         var params = {};
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+            console.log('this is state change to', toState);
+           if(isLocking===true){
+            if(toState.name !== 'security.login'){
+                 event.preventDefault();
+                 toastr.error('Please provide your password to unlock the system!','Password required!');
+            }
+            else{
+                isLocking=false;
+            }
+           }
+        });
 
         if(from.fromParams != null || typeof from.fromParams !== 'undefined')
         {
@@ -60,7 +73,16 @@ angular.module("app.lockscreen.controller",[
                     console.log(response);
                     if(response != null && response.status == 'success')
                     {
-                        $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                        isLocking = false;
+                        if(params != null || typeof params !== 'undefined')
+                        {
+                            $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                        }
+                        else
+                        {
+                            $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                        }
+
                     }
                     else
                     {

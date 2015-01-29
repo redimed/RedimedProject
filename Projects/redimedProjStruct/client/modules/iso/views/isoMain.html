@@ -1,3 +1,12 @@
+<style type="text/css">
+    .form-group .help-block {
+      display: none;
+    }
+     
+    .form-group.has-error .help-block {
+      display: block;
+    }
+</style>
 <h2 id="demo1">REDiMED ISO SYSTEM</h2>
 <div>
     R:Read. C:Create. U:Update. D:Delete. G: Grant Permission
@@ -12,24 +21,24 @@
                 {{node.NODE_NAME}}
                 <!-- ____{{node.relativePath}} -->
         </span>
-        <div style="color:#800000;display:inline;font-size:11px">
+        <div ng-show='node.PERMISSION<isoPermission.notPermission' style="color:#800000;display:inline;font-size:11px">
            {{node.ACCESSIBLE_USER_ID?'(':''}}
            {{node.PERMISSION==0?'A':''}}
            {{node.PERMISSION==1?'C':''}}
            {{node.PERMISSION==2?'U':''}}
            {{node.PERMISSION==3?'R':''}}
-           {{node.ACCESSIBLE_USER_ID?')':''}}           
+           {{node.ACCESSIBLE_USER_ID?')':''}}  
         </div>
-        <a ng-show="node.ACCESSIBLE_USER_ID" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
+        <a ng-show="node.ACCESSIBLE_USER_ID && node.PERMISSION<isoPermission.notPermission" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
         
         <ul>
-            <li ng-show='node.ISENABLE==1 || isIsoAdmin==1' ng-class="{node_accessible:node.ACCESSIBLE_USER_ID,iso_node_deleted:node.ISENABLE==0}" ng-repeat="(key,node) in node.nodes" iso-notice-finish-render-directory-tree ng-include="'nodes_renderer.html'">
+            <li ng-show='node.ISENABLE==1 || isIsoAdminSystem==1' ng-class="{node_accessible:node.ACCESSIBLE_USER_ID && node.PERMISSION<isoPermission.notPermission,iso_node_deleted:node.ISENABLE==0}" ng-repeat="(key,node) in node.nodes" iso-notice-finish-render-directory-tree ng-include="'nodes_renderer.html'">
             </li>
         </ul>
     </script>
 
     <ul>
-        <li ng-show='node.ISENABLE==1 || isIsoAdmin==1' ng-class="{node_accessible:node.ACCESSIBLE_USER_ID,iso_node_deleted:node.ISENABLE==0}" ng-repeat="(key,node) in treeData"  ng-include="'nodes_renderer.html'">
+        <li ng-show='node.ISENABLE==1 || isIsoAdminSystem==1' ng-class="{node_accessible:node.ACCESSIBLE_USER_ID && node.PERMISSION<isoPermission.notPermission,iso_node_deleted:node.ISENABLE==0}" ng-repeat="(key,node) in treeData"  ng-include="'nodes_renderer.html'">
         </li>
     </ul>
 
@@ -50,7 +59,7 @@
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].createFolder"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.createFolder.name);">
                             Create Folder
                         </button>
@@ -58,7 +67,7 @@
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].deleteFolder"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="deleteNode();">
                             Delete Folder
                         </button>
@@ -66,7 +75,7 @@
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].cloneToPC && selectedTreeNode.NODE_ID!==0"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="downloadFolderSelected()">
                             Clone to PC
                         </button>
@@ -77,7 +86,7 @@
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].grantFolderPermission"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.grantNodePermission.name);">
                             Grant Permission
                         </button>
@@ -87,7 +96,7 @@
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].createDocument"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.createDocument.name);">
                             Create Document
                         </button>
@@ -101,30 +110,30 @@
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].checkOut && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="checkOutDocument();">
                             Check out
                         </button>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].checkIn && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock && selectedTreeNode.CHECK_IN_NO==null"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="beforeCheckIn();">
                             Check in
                         </button>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].submitDocument && (selectedTreeNode.SUBMIT_STATUS==null || selectedTreeNode.SUBMIT_STATUS==submitStatus.cancel) && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="SubmitDocument()">
                             Submit Document
                         </button>
 
                        <button
-                                ng-show="selectedTreeNode.SUBMIT_STATUS==submitStatus.pending && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock"
-                                type="button"
-                                class="btn btn-default"
-                                ng-click="cancelSubmitDocument();">
+                            ng-show="selectedTreeNode.SUBMIT_STATUS==submitStatus.pending && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock"
+                            type="button"
+                            class="btn btn-default iso_action_button"
+                            ng-click="cancelSubmitDocument();">
                             Cancel Submit Document
                         </button>
                     </div>
@@ -133,14 +142,14 @@
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].deleteDocument"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="deleteNode();">
                             Delete Document
                         </button>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].grantDocumentPermission"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.grantNodePermission.name);">
                             Grant Permission
                         </button>
@@ -151,7 +160,7 @@
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].getFullVersionDoccument"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.getFullVersionDocument.name);">
                             Show Version History
                         </button>
@@ -159,7 +168,7 @@
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].getFullCheckinDoccument"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.getFullCheckinDocument.name);">
                             Show Check In History
                         </button>
@@ -169,7 +178,7 @@
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].downloadNewestVersion && selectedTreeNode.CURRENT_VERSION_ID!=null"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="downloadNewestVersionDocument()">Download Current Version
                         </button>
                     </div>
@@ -180,7 +189,7 @@
                         <button 
                             ng-show="isoAdminFunction.restoreFolder"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="restoreNode();">
                             Restore Folder
                         </button>
@@ -192,7 +201,7 @@
                         <button 
                             ng-show="isoAdminFunction.restoreDocument"
                             type="button" 
-                            class="btn btn-default"
+                            class="btn btn-default iso_action_button"
                             ng-click="restoreNode();">
                             Restore Document
                         </button>
@@ -219,8 +228,12 @@
                 <h4 class="modal-title">Run</h4>
             </div>
             <div class="modal-body">
-                <div ng-include='currentTreeAction.url'>
+                <form name='actionContentForm' novalidate>
+                    <div ng-include='currentTreeAction.url'>
                 </div>
+
+                </form>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

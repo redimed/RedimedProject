@@ -7,13 +7,24 @@ var isoUtil=require('./isoUtilsController');
 
 module.exports =
 {
+    checkIsIsoApprover:function(req,res)
+    {
+        if(isoUtil.isIsoApprover(req))
+        {
+            res.json({status:'success'});
+            return;
+        }
+        else
+        {
+            isoUtil.exlog("User dang nhap khong phai iso approver");
+            res.json({status:'fail'});
+            return;
+        }
+    },
+    
     /**
      * Vo Duc GIap 14/01/2015
      * get all data to table approver
-     * [getApproverList description]
-     * @param  {[type]}
-     * @param  {[type]}
-     * @return {[type]}
      */
     getApproverList: function(req,res){
         var sql= 
@@ -40,19 +51,31 @@ module.exports =
 
         });
     },
-/**
- * voducgiap
- * add new user to table approver
- * [insertNewUserToApprover description]
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
- */
-    insertNewUserToApprover:function(req,res){
+
+    /**
+     * voducgiap
+     * add new user to table approver
+     */
+    insertNewUserToApprover:function(req,res)
+    {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            isoUtil.exlog("User dang nhap khong phai admin system");
+            res.json({status:'fail'});
+            return;
+        }
+
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
         var id = isoUtil.checkData(req.body.id)?req.body.id:'';
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
+
+        if(!isoUtil.checkListData([userId,id]))
+        {
+            isoUtil.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
 
         var sql = 
             "INSERT INTO `iso_approver`(`APPROVER_ID`,`ISENABLE`,`CREATED_BY`,`CREATION_DATE`) "+
@@ -61,32 +84,41 @@ module.exports =
         req.getConnection(function(err,connection){
             var query = connection.query(sql,[id,userId,currentDate],function(err,rows){
                 if(err){
-                   res.json({status:'fail'});
                     isoUtil.exlog(err);
+                    res.json({status:'fail'});
                 }
                 else{
-                     res.json({status:'success'});
                      isoUtil.exlog("Insert SUccess");
+                     res.json({status:'success'});
                 }
             })
         })
     },
-/**
- * voducgiap
- * update col Enable in table Approver
- * [updateEnableApprover description]
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
- */
+
+    /**
+     * voducgiap
+     * update col Enable in table Approver
+     */
     updateEnableApprover:function(req,res){
+        
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            isoUtil.exlog("User dang nhap khong phai admin system");
+            res.json({status:'fail'});
+            return;
+        }
+
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
         var id = isoUtil.checkData(req.body.id)?req.body.id:'';
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        var enableApprover =  isoUtil.checkData(req.body.enable)?req.body.enable:'';
-        isoUtil.exlog(id);
-        isoUtil.exlog(enableApprover);
+        var enableApprover =  isoUtil.checkData(req.body.enable)?req.body.enable:0;
+        if(!isoUtil.checkListData([userId,id]))
+        {
+            isoUtil.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
 
         var sql = 
             "UPDATE `iso_approver` app "+
@@ -105,17 +137,5 @@ module.exports =
                 }
             })
         })
-
-
-
-    }
-
-
-
-
-    
-
-   
-
-    
+    } 
 }

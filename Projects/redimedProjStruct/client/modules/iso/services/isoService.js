@@ -119,6 +119,30 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result=api.all("iso/iso-tree-users/grant-user-group-permission");
                 return result.post({nodeId:nodeId,groupId:groupId,permission:permission});
+            },
+
+            grantPermissionForUserInGroup:function(groupId,userIsGrantedId)
+            {
+                var result=api.all("iso/iso-tree-users/grant-permission-for-user-in-group");
+                return result.post({groupId:groupId,userIsGrantedId:userIsGrantedId});
+            },
+
+            removeAllPermissionOfUserInGroup:function(groupId,userIsGrantedId)
+            {
+                var result=api.all("iso/iso-tree-users/remove-all-permission-of-user-of-group");
+                return result.post({userIsGrantedId:userIsGrantedId,groupId:groupId});
+            },
+
+            disablePermissionOfGroup:function(groupId)
+            {
+                var result=api.all("iso/iso-tree-users/disable-permission-of-group");
+                return result.post({groupId:groupId});
+            },
+
+            enablePermissionOfGroup:function(groupId)
+            {
+                var result=api.all("iso/iso-tree-users/enable-permission-of-group");
+                return result.post({groupId:groupId});
             }
         }
 
@@ -188,14 +212,27 @@ angular.module('app.loggedIn.iso.service',[])
             countOutIn:function(){
                 var result = api.one("iso/iso-check-out-in/countOutInStatusPending");
                 return result.get();
+            },
+
+            sendEmailNotificationNewDocumentVersion:function(nodeId)
+            {
+                var result = api.all("iso/iso-check-out-in/send-email-all-user-document-release");
+                return result.post({nodeId:nodeId})
             }
 
         }
 
         isoService.isoAdmin={
-            checkIsoAdmin:function()
+
+            checkIsAdminIsoSystemMaster:function()
             {
-                var result=api.all("iso/iso-admin/check-iso-admin");
+                var result=api.all("iso/iso-admin/check-is-admin-iso-system-master");
+                return result.post();
+            },
+            
+            checkIsAdminIsoSystem:function()
+            {
+                var result=api.all("iso/iso-admin/check-is-admin-iso-system");
                 return result.post();
             },
             getAdminList:function(){
@@ -253,14 +290,10 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result=api.all("iso/iso-user-group/add-group-item");
                 return result.post({groupItemInfo:groupItemInfo});
-            },
+            }
 
             
-            grantPermissionForNewUserInGroup:function(groupId,newUserId)
-            {
-                var result=api.all("iso/iso-tree-users/grant-permission-for-new-user-in-group");
-                return result.post({groupId:groupId,newUserId:newUserId});
-            }
+            
         }
 
         isoService.isoApprover={
@@ -268,15 +301,22 @@ angular.module('app.loggedIn.iso.service',[])
                 var result=api.one("iso/iso-approver/getApproverList");
                 return result.get();
             },
+
             insertNewUserToApprover:function(id){
                 var result = api.all("iso/iso-approver/insertNewUserToApprover");
                 return result.post({id:id});
             },
+
             updateEnableApprover:function(id,enable){
                 var result = api.all("iso/iso-approver/updateEnableApprover");
                 return result.post({id:id,enable:enable});
-            }
+            },
 
+            checkIsIsoApprover:function()
+            {
+                var result=api.one("iso/iso-approver/check-is-iso-approver");
+                return result.get();
+            }
         }
 
         return isoService;

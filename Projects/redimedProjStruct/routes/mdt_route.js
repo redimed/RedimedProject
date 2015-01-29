@@ -37,7 +37,9 @@ app.post('/api/meditek/v1/mdttimetable/byDoctor', mdtTimetableController.postByD
 app.post('/api/meditek/v1/mdttimetable/showWeek', mdtTimetableController.showWeek);
 app.post('/api/meditek/v1/mdttimetable/addSite', mdtTimetableController.addSite);
 app.post('/api/meditek/v1/mdttimetable/add', mdtTimetableController.add);
+app.post('/api/meditek/v1/mdttimetable/addRow', mdtTimetableController.addRow);
 app.post('/api/meditek/v1/mdttimetable/generate', mdtTimetableController.generate);
+app.post('/api/meditek/v1/mdttimetable/remove', mdtTimetableController.remove);
 
 /*AUTO CREATE*/
 var mdtInsurerController = require('./controllers/mdtInsurerController');

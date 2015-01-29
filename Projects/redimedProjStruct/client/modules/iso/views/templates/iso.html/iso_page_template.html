@@ -1,46 +1,44 @@
 
 <script type="text/ng-template" id="iso_create_folder_template.html">
-    <form role="form">
-        <div class="form-group">
-            <label >Folder name:
-                <small class="has-error">
-                    {{newFolderBackError.name}}
-                </small>
-            </label>
-            
-            <input type="text" ng-model="newFolder.nodeName" class="form-control" placeholder="Folder name">
-        </div>
-        <div class="form-group">
-            <label >Description:</label>
-            <input type="text" ng-model="newFolder.description" class="form-control" placeholder="Description">
-        </div>
-        <button class="btn btn-default" ng-click="beforeCreateFolder();">Create</button>
-    </form>
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Folder name:
+        </label>
+        <input type="text" ng-model="newFolder.nodeName" class="form-control" placeholder="Folder name" name="nameFolder" required ng-maxlength="50">
+        <p class="help-block" ng-if="actionContentForm.nameFolder.$error.required">Required!</p>
+        <p class="help-block" ng-if="actionContentForm.nameFolder.$error.maxlength">Folder name cannot be longer than 50 characters</p>
+    </div>
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Description:</label>
+        <input type="text" ng-model="newFolder.description" class="form-control" placeholder="Description" ng-maxlength="500" name="description">
+        <p class="help-block" ng-if="actionContentForm.description.$error.maxlength">Description cannot be longer than 500 characters</p>
+    </div>
+    <button class="btn btn-default" ng-click="beforeCreateFolder();">Create</button>
 </script>
 
 
 <script type="text/ng-template" id="iso_create_document_template.html">
-    <form role="form">
-        <div class="form-group">
-            <label >Document name:
-                <small class="has-error">
-                    {{newDocumentBackError.name}}
-                </small>
-            </label>
-            <input type="text" ng-model="newDocument.nodeName" class="form-control" placeholder="Document name">
-        </div>
-        <div class="form-group">
-            <label >Document code:
-                <small class="has-error">
-                    {{newDocumentBackError.docCode}}
-                </small>
-            </label>
-            <input type="text" ng-model="newDocument.docCode" class="form-control" placeholder="Document code">
-        </div>
-        <div class="form-group">
-            <label >Description:</label>
-            <input type="text" ng-model="newDocument.description" class="form-control" placeholder="Description">
-        </div>
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Document name:
+        </label>
+        <input type="text" ng-model="newDocument.nodeName" class="form-control" placeholder="Document name" ng-maxlength="50" required name="nameDocument">
+        <p class="help-block" ng-if="actionContentForm.nameDocument.$error.required">Required!</p>
+        <p class="help-block" ng-if="actionContentForm.nameDocument.$error.maxlength">Document name cannot be longer than 50 characters</p>
+    </div>
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Document code:
+            <small class="has-error">
+                {{newDocumentBackError.docCode}}
+            </small>
+        </label>
+        <input type="text" ng-model="newDocument.docCode" class="form-control" placeholder="Document code" ng-maxlength="20" required name="nameDocumentCode">
+        <p class="help-block" ng-if="actionContentForm.nameDocumentCode.$error.required">Required!</p>
+        <p class="help-block" ng-if="actionContentForm.nameDocumentCode.$error.maxlength">Document code cannot be longer than 20 characters</p>
+    </div>
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Description:</label>
+        <input type="text" ng-model="newDocument.description" class="form-control" placeholder="Description" ng-maxlength="500" name="Description">
+        <p class="help-block" ng-if="actionContentForm.Description.$error.maxlength">Description cannot be longer than 500 characters</p>
+    </div>
 
         <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
             <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader"  /><br/>
@@ -73,20 +71,18 @@
                 </tbody>
             </table>
 
-            <div
-                <button type="button" class="btn btn-success btn-s" ng-click="beforeCreateDocument();" ng-disabled="!uploader.getNotUploadedItems().length">
-                    <span class="glyphicon glyphicon-upload"></span> Create Documents
-                </button>
-                <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
-                <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
-                <!--</button>-->
-                <!-- <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                    <span class="glyphicon glyphicon-trash"></span> Clear file
-                </button> -->
-            </div>
+        <div
+            <button type="button" class="btn btn-success btn-s" ng-click="beforeCreateDocument();" ng-disabled="!uploader.getNotUploadedItems().length && $scope.actionContentForm.$valid">
+                <span class="glyphicon glyphicon-upload"></span> Create Documents
+            </button>
+            <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
+            <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
+            <!--</button>-->
+            <!-- <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Clear file
+            </button> -->
         </div>
-
-    </form>
+    </div>
 </script>
 
 
