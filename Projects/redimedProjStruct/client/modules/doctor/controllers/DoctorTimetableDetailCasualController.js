@@ -20,10 +20,13 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 
 	$scope.changeCalendar = function(options){
 
+		var from_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.from_time)+" "+options.data.from_time_map+":00";
+		var to_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.to_time)+" "+options.data.to_time_map+"00";
+
 		if(options.data.CAL_ID !== null){
 			var data = {
-				'FROM_TIME': options.data.from_time_map,
-				'TO_TIME': options.data.to_time_map,
+				'FROM_TIME': from_time,
+				'TO_TIME': to_time,
 				'SITE_ID': options.data.SITE_ID,
 				'DOCTOR_ID': $stateParams.doctorId,
 				'CAL_ID': options.data.CAL_ID,
@@ -67,9 +70,12 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 			$scope.real_list_map[$index].items.unshift(object);
 		},
 		addRowData: function(list){
+			var from_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.from_time)+" "+list.from_time_map+":00";
+			var to_time = ConfigService.getCommonDateDatabase($scope.modelObjectMap.to_time)+" "+list.to_time_map+"00";
+
 			var options = {
-				FROM_TIME: list.from_time_map,
-				TO_TIME: list.to_time_map,
+				FROM_TIME: from_time,
+				TO_TIME: to_time,
 				SITE_ID: list.SITE_ID,
 				DOCTOR_ID: $stateParams.doctorId,
 				CLINICAL_DEPT_ID: $scope.doctor.CLINICAL_DEPT_ID,

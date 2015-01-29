@@ -4,8 +4,8 @@ var common_function = require("../functions.js");
 
 module.exports = {
 	addRow: function(req, res){
-		var from_time = common_function.convertFromHoursToDateTime(req.body.FROM_TIME);
-		var to_time = common_function.convertFromHoursToDateTime(req.body.TO_TIME);
+		var from_time = req.body.FROM_TIME;
+		var to_time = req.body.TO_TIME;
 		var site_id = req.body.SITE_ID;
 		var doctor_id = req.body.DOCTOR_ID;
 		var clinical_dept_id = req.body.CLINICAL_DEPT_ID;
