@@ -195,7 +195,7 @@ public class DocumentService {
         	if(report.equalsIgnoreCase("ams5"))
         	{
         		params.put("id",id);
-        		params.put("real_path","/reports/AMS5");
+        		params.put("realPath","/reports/AMS5");
         		
         		return downloadReport("/reports/AMS5/FormAMS5.jasper", params, "FormAMS5.pdf");
         	}
@@ -204,7 +204,7 @@ public class DocumentService {
         	if(report.equalsIgnoreCase("ams6"))
         	{
         		params.put("id",id);
-        		params.put("real_path","/reports/AMS6");
+        		params.put("realPath","/reports/AMS6");
         		
         		return downloadReport("/reports/AMS6/FormAMS6.jasper", params, "FormAMS6.pdf");
         	}
