@@ -4,6 +4,7 @@
 module.exports = function(sequelize,DataTypes){
     var IMInjury = sequelize.define('IMInjury',{
         injury_id : {type:DataTypes.INTEGER(11), primaryKey: true} ,
+        user_submit: DataTypes.INTEGER(11),
         patient_id : DataTypes.INTEGER(20) ,
         driver_id : DataTypes.INTEGER(11) ,
         doctor_id : DataTypes.INTEGER(11) ,

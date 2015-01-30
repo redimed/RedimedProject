@@ -73,18 +73,19 @@ module.exports = {
       submitInjury: function(req,res){
           var imInfo = req.body.info;
 
-          var userId = req.body.userId;
+          console.log("Injury Info: ",imInfo);
 
           db.IMInjury.create({
               patient_id: imInfo.Patient_id,
+              user_submit: imInfo.userId,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
               injury_date: imInfo.injury_date,
               injury_description: imInfo.injury_description,
-              STATUS: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ?"New":null,
-              pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address == 'undefined' ? null : imInfo.infoMaps.format_address) : null,
-              latitude: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ?  (imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat == 'undefined' ? null : imInfo.infoMaps.lat) : null,
-              longitude: imInfo.cal_id == null || typeof imInfo.cal_id == 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng == 'undefined' ? null : imInfo.infoMaps.lng) : null
+              STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
+              pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,
+              latitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?  (imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat === 'undefined' ? null : imInfo.infoMaps.lat) : null,
+              longitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng === 'undefined' ? null : imInfo.infoMaps.lng) : null
           },{raw:true})
               .success(function(data){
                   db.IMInjury.find({where:data.dataValues},{raw:true})
@@ -263,9 +264,7 @@ module.exports = {
                             var p2 = geolocation;
 
                             console.log("==========Distance: ",getDistance(p1,p2)+" km ");
-                            console.log("==========Time: ", ((getDistance(p1,p2) / 50) * 60)+" minutes ");
-
-
+                            console.log("==========Time: ", ((getDistance(p1,p2) / 45) * 60)+" minutes ");
 
                             db.DriverInjury.create({
                                 driver_id: im.driver_id,

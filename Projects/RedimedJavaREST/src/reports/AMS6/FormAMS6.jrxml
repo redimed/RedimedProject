@@ -658,19 +658,19 @@ Subdivision 3]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="528" width="24" height="22" uuid="aa7d61a1-1499-4915-bf41-0c6f14ce4ebe"/>
-				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="557" width="24" height="22" uuid="f4e2df94-2e35-44d5-aa54-14be25522c66"/>
-				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="593" width="24" height="22" uuid="607285c8-62d8-4626-a9e7-c37f131500a4"/>
-				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="622" width="24" height="22" uuid="21dbc9f2-038f-4277-8517-327f4ff7979c"/>
-				<imageExpression><![CDATA["E:\\code\\New folder\\RedimedProject\\Projects\\redimedProjStruct\\reports\\AMS5\\images\\"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 		</band>
 		<band height="526">
