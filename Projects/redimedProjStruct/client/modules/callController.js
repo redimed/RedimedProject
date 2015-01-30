@@ -6,6 +6,8 @@ angular.module("app.call.controller",[
     .controller("callController", function($scope,$rootScope, $state, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
         socket.removeAllListeners();
 
+        easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
+
         $scope.userInfo = null;
         $scope.callUserInfo = null;
         $scope.isCaller = $stateParams.isCaller;
@@ -45,7 +47,6 @@ angular.module("app.call.controller",[
             })
         }
 
-
         if($stateParams.callUser == null || typeof $stateParams === 'undefined')
         {
                 disconnect();
@@ -55,6 +56,8 @@ angular.module("app.call.controller",[
         {
             UserService.getUserInfo($stateParams.callUser).then(function(data){
                 $scope.callUserInfo = data;
+                if(!$scope.callUserInfo.img)
+                    $scope.callUserInfo.img = "theme/assets/icon.png"
             })
         }
 
@@ -67,10 +70,18 @@ angular.module("app.call.controller",[
 
         $scope.muteAudio = function(){
             $scope.isAudioMuted = !$scope.isAudioMuted;
+            if($scope.isAudioMuted)
+                easyrtc.enableMicrophone(false);
+            else
+                easyrtc.enableMicrophone(true)
         }
 
         $scope.muteVideo = function(){
             $scope.isVideoMuted = !$scope.isVideoMuted;
+            if($scope.isVideoMuted)
+                easyrtc.enableCamera(false);
+            else
+                easyrtc.enableCamera(true)
         }
 
         socket.on("messageReceived",function(fromId,fromUser,message){
@@ -84,7 +95,6 @@ angular.module("app.call.controller",[
             if(message.type == 'ignore')
             {
                 audio.pause();
-                console.log("=======Ignore=======");
                 toastr.error('Error',"Call Have Been Rejected!");
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
@@ -92,8 +102,7 @@ angular.module("app.call.controller",[
             if(message.type == 'cancel')
             {
                 audio.pause();
-                console.log("=======Cancel=======");
-                toastr.error('Error',"Call Have Been Cancel!");
+                toastr.error('Error',"Call Have Been Cancelled!");
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
             }
@@ -106,30 +115,33 @@ angular.module("app.call.controller",[
                 };
             var successCB = function(to) {
                 $scope.isAccept = true;
-                toastr.success("Success","Call Success!");
             };
             var failureCB = function(errCode, errMsg) {
                 toastr.error("Error",errMsg);
+                disconnect();
+                $state.go(from.fromState.name,params,{location: "replace"});
             };
 
             easyrtc.call(easyRtcId, successCB, failureCB, acceptedCB);
         }
 
+
+
         function init(){
             var connectSuccess = function(rtcId) {
                 if($scope.isCaller == true)
                     socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call'});
-                if($scope.isCaller == false)
-                {
+                if($scope.isCaller == false){
                     socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId})
                 }
 
+
             }
             var connectFailure = function(errorCode, errText) {
-                console.log("===RTC Connect Error====");
                 easyrtc.showError(errorCode, message);
             }
 
+            easyrtc.dontAddCloseButtons();
             easyrtc.easyApp("easyrtc.audioVideo",'selfVideo',['callerVideo'], connectSuccess, connectFailure);
         }
         init();

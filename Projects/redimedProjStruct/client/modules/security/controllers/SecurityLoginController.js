@@ -24,8 +24,6 @@ angular.module("app.security.login.controller",[
                     UserService.detail().then(function (response) {
                         if (typeof response.userInfo !== 'undefined') {
 
-                            easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
-
                             socket.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
 
                             $cookieStore.put("userInfo", response.userInfo);

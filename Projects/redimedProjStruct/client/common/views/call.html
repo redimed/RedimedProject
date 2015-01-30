@@ -311,7 +311,6 @@
     </div>
 
 
-
     <video autoplay="autoplay" class="easyrtcMirror" id="selfVideo" muted="muted" volume="0" ></video>
     <video ng-show="!isCaller || isAccept" autoplay="autoplay" id="callerVideo" ></video>
 
@@ -319,18 +318,15 @@
       <div class="span4 offset4 text-center">
         <div class="buttons">
           <a class="videoBtn" ng-click="muteVideo()" href="javascript:;">
-              <i ng-show="!isVideoMuted" class="fa fa-video-camera fa-3x"></i>
-              <span class="fa-stack fa-lg" ng-show="isVideoMuted">
-                  <i class="fa fa-video-camera fa-stack-2x"></i>
-                    <i class="fa fa-ban fa-stack-3x"></i>
-            </span>
+              <i ng-show="isVideoMuted" class="fa fa-eye fa-3x"></i>
+              <i ng-show="!isVideoMuted" class="fa fa-eye-slash fa-3x"></i>
           </a>
           <a class="cancelBtn" ng-click="cancelCall()" href="javascript:;">
               <i class="fa fa-power-off fa-3x"></i>
           </a>
           <a class="audioBtn" ng-click="muteAudio()" href="javascript:;">
-              <i class="fa fa-microphone fa-3x" ng-show="!isAudioMuted"></i>
-              <i class="fa fa-microphone-slash fa-3x" ng-show="isAudioMuted"></i>
+              <i class="fa fa-microphone fa-3x" ng-show="isAudioMuted"></i>
+              <i class="fa fa-microphone-slash fa-3x" ng-show="!isAudioMuted"></i>
           </a>
         </div>
       </div>

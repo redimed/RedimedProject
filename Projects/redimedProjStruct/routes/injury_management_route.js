@@ -17,6 +17,7 @@ app.post('/api/im/getById',injuryController.injuryById);
 app.post('/api/im/images',injuryController.injuryImageById);
 app.get('/api/im/testGCM',injuryController.testPushGCM);
 app.get('/api/im/getOnlineUsers',injuryController.getOnlineUsers);
+app.post('/api/im/getInjuryByCompany',injuryController.getInjuryByCompany);
 
 app.get('/api/im/getListDriver',injuryController.getListDriverOnline);
 app.post('/api/im/allocateDriver',injuryController.allocateDriver);

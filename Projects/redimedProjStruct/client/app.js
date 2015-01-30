@@ -107,7 +107,6 @@ angular.module("app", [
     })
 
         .state('call',{
-            url:'/call',
             params: {
                 callUser : null,
                 isCaller: null

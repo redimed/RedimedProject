@@ -426,6 +426,20 @@ module.exports = {
             .error(function(err){
                 console.log(err);
             })
+    },
+    getInjuryByCompany: function(req,res){
+        var companyId = req.body.companyId;
+
+        db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i " +
+                            "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+                            "INNER JOIN companies c ON c.id = p.company_id " +
+                            "WHERE c.id = ?",null,{raw:true},[companyId])
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
     }
 };
 
