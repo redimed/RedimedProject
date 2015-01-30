@@ -1,0 +1,42 @@
+<h1>Patient List</h1>
+
+<div class="portlet box green ng-scope">
+	<div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-person"></i> Patient List
+        </div>
+        <div class="pull-right navbar-right">
+            <!-- Single button -->
+              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="patientAddForm.open()">
+                  <i class="fa fa-plus"></i>	Add patient
+              </button>
+        </div>
+    </div>
+
+    <div class="portlet-body">
+    	<my-data-table options="patients.options" rowclass="patients.class" numrows="10"></my-data-table>
+    </div>
+</div>
+
+
+<!--PATIENT ADD FORM-->
+<div class="mdt-search" style="display: block; width:100%" ng-if="patientAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="patientAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <patient-detail options="options" params="patientAddForm.params" onsuccess="patientAddForm.success" />
+</div>
+<!--END PATIENT ADD FORM-->
+
+<!--PATIENT EDIT FORM-->
+<div class="mdt-search" style="display: block; width:100%" ng-if="patientEditForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="patientEditForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <patient-detail options="options" params="patientEditForm.params" onsuccess="patientEditForm.success"  data="{id:'{{patient.id}}'}" />
+</div>
+<!--END PATIENT EDIT FORM-->

@@ -135,4 +135,13 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
+    .state("loggedIn.patient.listall", {
+        url:'/all',
+        views:{
+            "main-content":{
+                templateUrl:'modules/patient/views/allpatients.html',
+                controller:'PatientListAllController'
+            }
+        }
+    })
 })

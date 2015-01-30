@@ -7,7 +7,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			options: "=",
 			isClose: "@",
 			patient: "=",
-			params: "="
+			params: "=",
+			onsuccess: '=onsuccess'
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
@@ -156,11 +157,14 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                        }
 	                        toastr.success('Updated Patient Successfully !!!', "Success");
 
-	                        initObject();
+	                        //initObject();
 
 	                        if(scope.isClose){
 	                        	scope.closePopup();
 	                        }
+	                        if (scope.onsuccess) {
+                            	scope.onsuccess(response);
+                        	}
 						})
 					}else{
 						PatientService.mdtAdd(postData).then(function (data) {
@@ -169,18 +173,24 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                            return;
 	                        }
 	                        toastr.success('Insert Patient Successfully !!!', "Success");
-
-	                        //return
-	                        scope.patient = {};
-	                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
-	                        scope.patient.Patient_id = data.data.Patient_id;
-	                        //end return
+	                        if(scope.params.isAtAllPatient!== true){
+	                        	//return
+		                        scope.patient = {};
+		                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
+		                        scope.patient.Patient_id = data.data.Patient_id;
+		                        //end return
+	                        }
+	                        
+	                        if (scope.onsuccess) {
+                            	scope.onsuccess(data);
+                        	}
 
 	                        initObject();
 
 	                        if(scope.isClose){
 	                        	scope.closePopup();
 	                        }
+	                        
 	                    })
 					}
 				}else{
