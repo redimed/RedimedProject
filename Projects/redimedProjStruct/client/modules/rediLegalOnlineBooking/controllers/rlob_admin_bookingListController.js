@@ -826,15 +826,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.localNotificationType={
             type1:{
-                header:'Pass bookings not change status',
+                header:'Change Appointment Status',
                 alias:'passBookingNotChangeStatus'
             },
             type2:{
-                header:'Upcomming bookings have not been uploaded document (client)',
+                header:'Waiting on Paperwork',
                 alias:'upcommingBookingHaveNotDucment'
             },
             type3:{
-                header:'Pass bookings have not been uploaded result',
+                header:'Outstanding reports',
                 alias:'passBookingHaveNotResult'
             }
 

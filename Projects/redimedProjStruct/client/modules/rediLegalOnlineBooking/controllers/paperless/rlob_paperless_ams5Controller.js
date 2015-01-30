@@ -40,7 +40,7 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
           PROPORTION_OF_PERMANENT_IMPAIRMENT : null,
           INJURY_ASSESSMENT : null,
           DOCTOR_ID : null,
-          DT_DATE_TEMP : null,
+          DT_DATE_TEMP : new Date(),
           DT_DATE : null,
           DT_SIGNATURE : null,
           DT_NAME : null,

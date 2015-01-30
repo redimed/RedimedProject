@@ -39,6 +39,7 @@ documentStatus:{
 /*
 //phanquocchien.c1109g@gmail.com
 //quy dinh mau sac trang admin-booking-report-type2.html
+//cac booking nho hon ngay hien tại
 - yellow : nhung booking khong co file va booking status la 'Completed',
 - red : nhung booking chua change status(status la 'Confirmed'),
 - blue : nhung booking co status khac 'Confirmed'

@@ -467,25 +467,63 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             //phanquocchien.c1109g@gmail.com
             //add new patient
             $scope.addPatient = function(){
-                // delete patientData.Patient_id;
                 patientData.Sur_name = $scope.newBooking.WRK_SURNAME;
                 patientData.First_name = $scope.newBooking.WRK_OTHERNAMES;
                 patientData.DOB = $scope.newBooking.WRK_DOB;
                 patientData.Email = $scope.newBooking.WRK_EMAIL;
                 patientData.Mobile = $scope.newBooking.WRK_CONTACT_NO;
-                console.log(patientData);
+                //phan quoc chien
+                //phanquocchien.c1109g@gmail.com
+                //add new cln_patients
                 rlobService.addPatient(patientData).then(function(data){
-                    console.log(data.data.Patient_id);
                     if (data.status == 'success') {
-                        // delete claimData.Claim_id;
                         claimData.Patient_id = data.data.Patient_id;
                         claimData.Claim_no = $scope.newBooking.CLAIM_NO;
                         claimData.Injury_name = 'No Description';
-                        console.log(claimData);
-                        rlobService.addClaim(claimData).then(function(data){
-                            console.log(data);
-                            if (data.status == 'success') {
-                                // alert('okok');
+                        //phan quoc chien
+                        //phanquocchien.c1109g@gmail.com
+                        //add new cln_claims
+                        rlobService.addClaim(claimData);
+                        var idPatient = data.data.Patient_id;
+                        var calID = $scope.newBooking.CAL_ID;
+                        //phan quoc chien
+                        //phanquocchien.c1109g@gmail.com
+                        //check Patient_id và CAL_ID trong bảng cln_appt_patients
+                        rlobService.checkApptPatient(idPatient,calID).then(function(data){
+                            if (!(data.status == 'success' && data.data.length > 0)){
+                                //phan quoc chien
+                                //phanquocchien.c1109g@gmail.com
+                                //insert bảng cln_appt_patients
+                                rlobService.addApptPatient(idPatient,calID).then(function(data){
+                                    if (data.status == 'success') {
+                                        //phan quoc chien
+                                        //phanquocchien.c1109g@gmail.com
+                                        //check PATIENTS trong bảng cln_appointment_calendar
+                                        rlobService.selectAppointment(calID).then(function(data){
+                                            if (data.status == 'success') {
+                                                if (data.data.PATIENTS == null) {
+                                                    var arr = [];
+                                                    arr.push({"Patient_id":idPatient,"Patient_name":$scope.newBooking.WRK_OTHERNAMES+" "+$scope.newBooking.WRK_SURNAME});
+                                                    var PATIENTS = JSON.stringify(arr);
+                                                }else{
+                                                    var arr = JSON.parse(data.data.PATIENTS);
+                                                    arr.push({"Patient_id":idPatient,"Patient_name":$scope.newBooking.WRK_OTHERNAMES+" "+$scope.newBooking.WRK_SURNAME});
+                                                    var PATIENTS = JSON.stringify(arr);
+                                                };
+                                                //phan quoc chien
+                                                //phanquocchien.c1109g@gmail.com
+                                                //update PATIENTS trong bảng cln_appointment_calendar
+                                                rlobService.updateAppointment(calID,PATIENTS).then(function(data){
+                                                    if (data.status == 'success') {
+                                                        $scope.isSaving=true;
+                                                        $scope.bookingSuccess=true;
+                                                        $scope.showDialogAddSuccess();
+                                                    };
+                                                });
+                                            };
+                                        });
+                                    };
+                                });
                             };
                         });
                     };
@@ -499,16 +537,16 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             .success(function(data) {
                 if(data.status=='success')
                 {
-                    $scope.isSaving=true;
-                    $scope.bookingSuccess=true;
                     $scope.scrollTo($('.bookingSuccess'),-200);
                     bookingService.setBookingInfo($scope.newBooking);
                     //uploader.formData.push({booking_id:$scope.newBooking.BOOKING_ID,company_id:$scope.loginInfo.company_id,worker_name:$scope.newBooking.WRK_SURNAME,isClientDownLoad:0});
-                    $scope.showDialogAddSuccess();
                     /***
                      * Update appointment calendar upcoming cua structure
                      * tannv.dts@gmail.com
                      */
+                    //phan quoc chien
+                    //phanquocchien.c1109g@gmail.com
+                    //new patient -> new cln_claims -> new cln_appt_patients -> update cln_appointment_calendar
                     $scope.addPatient();
                     $scope.getAppointmentCalendarUpcoming();
                     //Gui email confirm  cho khach hang

@@ -66,10 +66,14 @@ var rlobConstant={
         once:'ONCE',
         whenAccess:'WHEN ACCESS'
     },
-    uersType:{
-        admin : 2,
+    userType:{
+        admin : 1,
+        redimed : 2,
+        company : 3,
         doctor : 4,
-        assistant : 1
+        nurse : 5,
+        driver : 6,
+        assistant : 7
     }
 }
 

@@ -4,6 +4,7 @@
 
 var db = require('../models');
 var common_functions = require("../functions");
+var rlobUtil=require('./rlobUtilsController');
 
 module.exports =
 {
@@ -246,6 +247,7 @@ module.exports =
         var Specialties_id=req.query.Specialties_id?req.query.Specialties_id:'%';
         var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
+        var serviceId = rlobUtil.redilegalServiceId;
         console.log("*************************************>"+JSON.stringify(req.query));
         var sql = 
             "  SELECT  DISTINCT DATE(h.`FROM_TIME`) AS APPOINTMENT_DATE                                                       "+
@@ -256,13 +258,15 @@ module.exports =
             "    INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                        "+
             "    INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                              "+
             "  WHERE     h.`NOTES` IS NULL                                                                                    "+
+            "    AND h.`PATIENTS` IS NULL                                                                                     "+
+            "    AND h.`SERVICE_ID` = ?                                                                                       "+
             "    AND                                                                                                          "+
             "    rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND d.`Specialties_id` LIKE ?                      "+
             "    AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)   "+
             "ORDER BY APPOINTMENT_DATE ASC                                                                                    ";
             req.getConnection(function(err,connection)
             {
-                var query = connection.query(sql,[sourceType,RL_TYPE_ID,Specialties_id,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE],function(err,rows)
+                var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_id,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE],function(err,rows)
                     {
                         if(err){
                             console.log("Error Selecting : %s ",err );
@@ -274,7 +278,11 @@ module.exports =
                     });
             });
     },
-    
+    /**
+     * phan quoc chien
+     * phanquocchien.c1109g@gmail.com
+     * edit DATE_FORMAT(h.`FROM_TIME`,'%i')) va AND h.`PATIENTS` IS NULL
+     */
     getAppointmentCalendar: function(req,res)
     {
         var DOCTOR_ID=req.query.DOCTOR_ID;
@@ -283,9 +291,10 @@ module.exports =
         var Specialties_id=req.query.Specialties_id?req.query.Specialties_id:'%';
         var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
+        var serviceId = rlobUtil.redilegalServiceId;
         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^>"+JSON.stringify(req.query));
         var sql =
-            " SELECT  DISTINCT h.*,CONCAT(HOUR(h.`FROM_TIME`),':',MINUTE(h.`FROM_TIME`)) AS appointment_time,  "+
+            " SELECT  DISTINCT h.*,CONCAT(HOUR(h.`FROM_TIME`),':',DATE_FORMAT(h.`FROM_TIME`,'%i')) AS appointment_time,  "+
             "	 `redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`,spec.`Specialties_id`,     "+
             "	 spec.`Specialties_name`,`rltype`.`RL_TYPE_ID`,rltype.`Rl_TYPE_NAME`                           "+
             "  FROM 	 `cln_appointment_calendar` h                                                          "+
@@ -295,12 +304,14 @@ module.exports =
             "	 INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                         "+
             "	 INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                               "+
             "  WHERE	 h.`NOTES` IS NULL                                                                     "+
+            "    AND h.`PATIENTS` IS NULL                                                                      "+
+            "    AND h.`SERVICE_ID` = ?                                                                        "+
             "	 AND                                                                                           "+
             "	 rltype.`SOURCE_TYPE` like ? and spec.`RL_TYPE_ID` LIKE ?  AND d.`Specialties_id` LIKE ?                "+
             "	 AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                     ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[sourceType,RL_TYPE_ID,Specialties_id,DOCTOR_ID,SITE_ID,FROM_TIME],function(err,rows)
+            var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_id,DOCTOR_ID,SITE_ID,FROM_TIME],function(err,rows)
                 {
                     if(err)
                     {
@@ -308,6 +319,7 @@ module.exports =
                     }
                     res.json(rows);
                 });
+            console.log(query);
         });
     },
     

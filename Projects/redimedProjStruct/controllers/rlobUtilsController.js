@@ -26,5 +26,6 @@ module.exports =
         canel:'Cancel'
     },
 
+    redilegalServiceId:7
     
 }

@@ -58,6 +58,7 @@ app.post('/api/rlob/rl_bookings/count-report-upcomming-bookings',rlBookingsContr
 app.post('/api/rlob/rl_bookings/get-items-of-paging-report-upcomming-bookings',rlBookingsController.getItemsOfPageReportUpcommingBookings);//chien Upcomming booking
 app.post('/api/rlob/rl_bookings/count-report-status-bookings',rlBookingsController.getCountReportStatusBookings);//chien Status
 app.post('/api/rlob/rl_bookings/get-items-of-paging-report-status-bookings',rlBookingsController.getItemsOfPageReportStatusBookings);//chien Status
+app.post('/api/rlob/rl_bookings/update-appointment-calendar',rlBookingsController.cln_appointment_calendar_update);//chien update 
 
 app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: get pass booking have not result
 app.post('/api/rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result',rlBookingsController.getCountReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: count total number of pass booking have not result

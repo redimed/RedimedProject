@@ -199,6 +199,43 @@ angular.module('app.loggedIn.rlob.services',[])
             var Patient=api.all('restful/Patient');
             return Patient.post(data);
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //add ApptPatient
+        rlobService.addApptPatient=function(Patient_id,CAL_ID)
+        {
+            var Patient=api.all('restful/ApptPatient');
+            return Patient.post({Patient_id:Patient_id,CAL_ID:CAL_ID});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //add checkApptPatient
+        rlobService.checkApptPatient=function(Patient_id,CAL_ID)
+        {
+            var Patient=api.one('restful/ApptPatient');
+            return Patient.get({Patient_id:Patient_id,CAL_ID:CAL_ID});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //add checkApptPatient
+        rlobService.updateAppointment=function(CAL_ID,PATIENTS)
+        {
+
+            var Patient=api.all('rlob/rl_bookings/update-appointment-calendar');
+            return Patient.post({CAL_ID:CAL_ID,PATIENTS:PATIENTS});
+            // var zzz = CAL_ID + '';
+            // var test = api.all('restful/Appointment').one(zzz);
+            // test.PATIENTS = PATIENTS;
+            // return test.put();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //add select 
+        rlobService.selectAppointment=function(CAL_ID)
+        {
+            var Patient=api.one('restful/Appointment/'+ CAL_ID);
+            return Patient.get();
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');

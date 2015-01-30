@@ -366,7 +366,7 @@
                                             <textarea placeholder="Description of injury" class="form-control" rows="2"
                                                       name="DESC_INJURY"
                                                       ng-maxlength="200"
-                                                      ng-model="newBooking.DESC_INJURY"/>
+                                                      ng-model="newBooking.DESC_INJURY" required/>
 
                                             <small class="help-block pull-right" ng-show="bookingForm.DESC_INJURY.$error.maxlength  && hadForcused">
                                                 Injury Description cannot be longer than 200 characters.

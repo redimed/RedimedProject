@@ -140,7 +140,7 @@ module.exports =
         var userId=(req.body.userId)?req.body.userId:null;
         var sql=
             " SELECT booking.*,company.`Company_name`,doctor.`NAME`,redi.`Site_addr`,redi.`Site_name`,rltype.`Rl_TYPE_NAME`,                     "+
-            "   COUNT(files.`FILE_ID`) AS NUMBER_OF_RESULTS                                                                                      "+
+            "	COUNT(files.`FILE_ID`) AS NUMBER_OF_RESULTS                                                                                      "+
             " FROM `rl_bookings` booking                                                                                                         "+
             " INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
             " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                              "+
@@ -221,27 +221,27 @@ module.exports =
         var documentStatusKey=req.query.documentStatusKey?req.query.documentStatusKey:'%';
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+doctorId);
         var sql=
-            " SELECT    booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
-            "   booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
-            "   booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`, booking.DOCUMENT_STATUS,                                                  "+
-            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                                               "+
-            "   CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
-            "   CONCAT(HOUR(calendar.`From_time`),':',MINUTE(calendar.`From_time`)) AS APPOINTMENT_TIME,                                                     "+
-            "   booking.`STATUS`,                                                                                                                            "+
-            "   `bookingfile`.`FILE_ID`,`bookingfile`.`FILE_TYPE`,`bookingfile`.`FILE_NAME`,`bookingfile`.`FILE_PATH`,`bookingfile`.`isClientDownLoad`       "+
-            " FROM  `rl_bookings` booking                                                                                                                    "+
-            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                          "+
-            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                                   "+
-            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`=spec.`Specialties_id`                                                           "+
-            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                                        "+
-            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                              "+
-            "   LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                                  "+
-            "   INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                       "+
-            " WHERE  booking.BOOKING_TYPE=? AND DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                                                     "+
-            "   AND                                                                                                                                          "+
-            "   `doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                       "+
-            "   AND                                                                                                                                          "+
-            "   `booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%') and `booking`.DOCUMENT_STATUS LIKE ?                                                                                              "+
+            " SELECT 	booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
+            " 	booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
+            " 	booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`, booking.DOCUMENT_STATUS,                                                  "+
+            " 	calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                                               "+
+            " 	CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
+            " 	CONCAT(HOUR(calendar.`From_time`),':',MINUTE(calendar.`From_time`)) AS APPOINTMENT_TIME,                                                     "+
+            " 	booking.`STATUS`,                                                                                                                            "+
+            " 	`bookingfile`.`FILE_ID`,`bookingfile`.`FILE_TYPE`,`bookingfile`.`FILE_NAME`,`bookingfile`.`FILE_PATH`,`bookingfile`.`isClientDownLoad`       "+
+            " FROM 	`rl_bookings` booking                                                                                                                    "+
+            " 	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                          "+
+            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                                   "+
+            " 	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`=spec.`Specialties_id`                                                           "+
+            " 	INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                                        "+
+            " 	INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                              "+
+            " 	LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                                  "+
+            " 	INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                       "+
+            " WHERE  booking.BOOKING_TYPE=? AND	DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                                                     "+
+            "	AND                                                                                                                                          "+
+            "	`doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                       "+
+            "	AND                                                                                                                                          "+
+            "	`booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%') and `booking`.DOCUMENT_STATUS LIKE ?                                                                                              "+
             (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
             " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 "
         req.getConnection(function(err,connection) {

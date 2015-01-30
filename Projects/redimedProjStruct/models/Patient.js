@@ -2,7 +2,8 @@ module.exports = function(sequelize, DataTypes){
     var Patient = sequelize.define('Patient',{
         "Patient_id" : {
             type:DataTypes.BIGINT(20), 
-            primaryKey:true
+            primaryKey:true,
+            autoIncrement: true
         },
         "Title": DataTypes.STRING(10),
         "First_name": DataTypes.STRING(50),
