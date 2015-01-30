@@ -49,7 +49,7 @@ angular.module('app.loggedIn.patient.listall.controller',[])
 			params: {
 	            permission:{
 	                edit:false,
-	                add:true
+	                create:true
 	            }
             },
             is_show: false,
@@ -70,7 +70,7 @@ angular.module('app.loggedIn.patient.listall.controller',[])
 			params: {
 	            permission:{
 	                edit:true,
-	                add:false
+	                create:false
 	            },
             },
             is_show: false,
