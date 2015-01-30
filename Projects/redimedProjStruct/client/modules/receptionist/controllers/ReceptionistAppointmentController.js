@@ -343,8 +343,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			FROM_TIME: data.from_time_map,
 			TO_TIME: data.to_time_map
 		}
-		sysServiceService.byClinicalDepartment($scope.modelObjectMap.dept).then(function(response){
-			$scope.options.services = response.data;
+
+		ConfigService.system_service_by_clinical($scope.options.doctors[index].CLINICAL_DEPT_ID).then(function(list){
+			$scope.options.services = list;
 		})
 		/*$scope.modelObjectMap.FROM_TIME = data.from_time_map;
 		$scope.modelObjectMap.TO_TIME = data.to_time_map;

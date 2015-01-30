@@ -660,7 +660,7 @@ module.exports =
         }
 
         req.getConnection(function(err, connection){
-            var sql = "SELECT DISTINCT cac.DOCTOR_ID, d.NAME"+
+            var sql = "SELECT DISTINCT cac.DOCTOR_ID, d.NAME, d.CLINICAL_DEPT_ID"+
                 " FROM cln_appointment_calendar cac"+
                 " INNER JOIN doctors d ON cac.DOCTOR_ID=d.doctor_id"+
                 dept_sql+
