@@ -6,8 +6,6 @@ angular.module("app.call.controller",[
     .controller("callController", function($scope,$rootScope, $state, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
         socket.removeAllListeners();
 
-        easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
-
         $scope.userInfo = null;
         $scope.callUserInfo = null;
         $scope.isCaller = $stateParams.isCaller;
@@ -16,8 +14,9 @@ angular.module("app.call.controller",[
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
 
+        var audio = new Audio('theme/assets/phone_calling.mp3');
+
         if($scope.isCaller){
-            var audio = new Audio('theme/assets/phone_calling.mp3');
             audio.loop = true;
             audio.play();
         }
@@ -85,26 +84,28 @@ angular.module("app.call.controller",[
         }
 
         socket.on("messageReceived",function(fromId,fromUser,message){
-            if(message.type == 'answer')
+            if(message.type === 'answer')
             {
                 audio.pause();
                 if(message.rtcId){
                     performCall(message.rtcId);
                 }
             }
-            if(message.type == 'ignore')
+            if(message.type === 'ignore')
             {
                 audio.pause();
                 toastr.error('Error',"Call Have Been Rejected!");
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
             }
-            if(message.type == 'cancel')
+            if(message.type === 'cancel')
             {
+                console.log("========Cancel============");
                 audio.pause();
                 toastr.error('Error',"Call Have Been Cancelled!");
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
+
             }
 
         })

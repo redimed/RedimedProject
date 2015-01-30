@@ -123,15 +123,8 @@ angular.module("app", [
 
 //When update any route
 .run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr){
-        socket.on('messageReceived', function (name, message) {
-            switch (message.type) {
-                case 'call':
-                    if ($state.current.name === 'loggedIn.im.call') { return; }
 
-                    $state.go('loggedIn.im.call', { isCalling: false, contactName: name });
-                    break;
-            }
-        });
+        easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
 
     $idle.watch();
     // Use when update any state

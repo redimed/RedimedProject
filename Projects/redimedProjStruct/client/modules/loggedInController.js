@@ -1,7 +1,7 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userId,$cookieStore,notify){
+.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
@@ -16,35 +16,34 @@ angular.module("app.loggedIn.controller",[
             }
         })
 
-        UserService.getUserInfo(userId).then(function(data){
-            if(data){
-                $scope.username = data.user_name;
 
-                if(data.img)
-                    $scope.img = data.img;
-                else
-                    $scope.img = "theme/assets/icon.png"
-            }
-        })
+        if(userInfo){
+            $scope.username = userInfo.user_name;
+
+            if(data.img)
+                $scope.img = userInfo.img;
+            else
+                $scope.img = "theme/assets/icon.png"
+        }
+
 
         $scope.ignoreCall = function(){
             audio.pause();
             notify.close();
             $modalInstance.close();
-            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userId,{type:'ignore'});
+            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
         $scope.acceptCall = function(){
             audio.pause();
             notify.close();
             $modalInstance.close();
-            $state.go("call",{callUser:userId,isCaller:false},{reload:true});
+            $state.go("call",{callUser:userInfo.id,isCaller:false},{reload:true});
         }
 
     })
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
-
 
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
@@ -61,21 +60,28 @@ angular.module("app.loggedIn.controller",[
                 window.focus();
             }
 
-            var modalInstance = $modal.open({
-                templateUrl: 'common/views/dialog/callDialog.html',
-                controller: 'callDialogController',
-                size: 'sm',
-                resolve:{
-                    userId: function(){
-                            return fromId;
-                    },
-                    notify: function(){
-                        return notification;
-                    }
-                },
-                backdrop: 'static',
-                keyboard: false
+            UserService.getUserInfo(fromId).then(function(data){
+                if(data)
+                {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'common/views/dialog/callDialog.html',
+                        controller: 'callDialogController',
+                        size: 'sm',
+                        resolve:{
+                            userInfo: function(){
+                                return data;
+                            },
+                            notify: function(){
+                                return notification;
+                            }
+                        },
+                        backdrop: 'static',
+                        keyboard: false
+                    })
+                }
             })
+
+
         }
     })
 

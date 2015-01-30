@@ -73,7 +73,7 @@ module.exports = {
       submitInjury: function(req,res){
           var imInfo = req.body.info;
 
-          console.log("Injury Info: ",imInfo);
+          console.log(imInfo);
 
           db.IMInjury.create({
               patient_id: imInfo.Patient_id,
