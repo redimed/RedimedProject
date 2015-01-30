@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
-.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, mdtClaimService, localStorageService) {
+.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, mdtClaimService, localStorageService, sysServiceService) {
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
     $scope.addClaimShow = false;
@@ -197,8 +197,8 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 					$scope.modelObjectMap.dept = parseInt(list[0].CLINICAL_DEPT_ID);
 				}
 
-				ConfigService.system_service_by_clinical($scope.modelObjectMap.dept).then(function(list){
-					$scope.options.services = list;
+				sysServiceService.byClinicalDepartment($scope.modelObjectMap.dept).then(function(response){
+					$scope.options.services = response.data;
 				})
 
 				loadAppointmentOverview($scope.modelObjectMap);
