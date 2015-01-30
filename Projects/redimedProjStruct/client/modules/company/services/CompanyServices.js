@@ -4,6 +4,10 @@ angular.module("app.loggedIn.company.services", [])
     var companyApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1/company/");
 
+
+
+    var restApi = Restangular.all('api/restful/Company');
+
     companyService.mdtSearch = function(options){
         var funcApi = mdtApi.all("search");
         return funcApi.post(options);
@@ -34,5 +38,8 @@ angular.module("app.loggedIn.company.services", [])
     }
 
 
+    companyService.get = function(id) {
+        return restApi.one('' + id).get();
+    }
     return companyService;
 })
