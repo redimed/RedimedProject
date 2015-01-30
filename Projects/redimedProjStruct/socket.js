@@ -58,7 +58,6 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log(err);
                 })
 
-            socket.emit('isSuccess');
         });
 
         socket.on('login_successful',function(id,username){
