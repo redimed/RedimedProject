@@ -2,14 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormAMS6" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34724f58-210c-471f-b592-23f049b81d64">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="595"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="realPath" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -661,19 +661,19 @@ Subdivision 3]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="528" width="24" height="22" uuid="aa7d61a1-1499-4915-bf41-0c6f14ce4ebe"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="557" width="24" height="22" uuid="f4e2df94-2e35-44d5-aa54-14be25522c66"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="593" width="24" height="22" uuid="607285c8-62d8-4626-a9e7-c37f131500a4"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="417" y="622" width="24" height="22" uuid="21dbc9f2-038f-4277-8517-327f4ff7979c"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 		</band>
 		<band height="526">

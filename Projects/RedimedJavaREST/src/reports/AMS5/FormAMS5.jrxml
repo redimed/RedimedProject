@@ -668,15 +668,15 @@
 			</staticText>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="416" y="543" width="24" height="20" uuid="7c4aeb1a-e9c7-4a52-8aca-456273840d51"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 1)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="416" y="571" width="24" height="20" uuid="450afe9a-60b4-4314-9230-c0c0edb3772f"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 2)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="416" y="609" width="24" height="20" uuid="19acf3ad-da32-4ff7-a328-53b152e7835e"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 3)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 		</band>
 		<band height="644">
@@ -1000,7 +1000,7 @@ Subdivision 3]]></text>
 			</textField>
 			<image scaleImage="FillFrame">
 				<reportElement positionType="Float" x="416" y="3" width="24" height="20" uuid="c1d723d4-1c31-4174-b2e9-4d023c8a2c6d"/>
-				<imageExpression><![CDATA[realPath + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath} + "/images/"+(($F{PURPOSE_OF_THE_ASSESSMENT}!=null && $F{PURPOSE_OF_THE_ASSESSMENT} == 4)?"checked.jpg":"uncheck.jpg")]]></imageExpression>
 			</image>
 		</band>
 		<band height="39">
