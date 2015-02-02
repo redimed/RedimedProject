@@ -44,9 +44,22 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on('forceLogin',function(username){
+
             db.User.find({where:{user_name: username}},{raw:true})
                 .success(function(user){
-                    io.to(user.socket).emit('forceLogout');
+                    if(user.socket != null)
+                    {
+                        db.User.update({
+                            socket: null
+                        },{user_name: username})
+                            .success(function(){
+                                io.to(user.socket).emit('forceLogout');
+                                getOnlineUser();
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                    }
                 })
                 .error(function(err){
                     console.log(err);
