@@ -43,14 +43,14 @@ angular.module("app.security",[
     // END FORGOT
 
     //REGISTER
-    .state("security.register", {
-    	url: "/register",
-    	views: {
-    		"main-content": {
-    			templateUrl: "modules/security/views/register.html",
-                controller: "SecurityRegisterController"
-    		}
-    	}
-    })
+    //.state("security.register", {
+    //	url: "/register",
+    //	views: {
+    //		"main-content": {
+    //			templateUrl: "modules/security/views/register.html",
+    //            controller: "SecurityRegisterController"
+    //		}
+    //	}
+    //})
     //END REGISTER
 })

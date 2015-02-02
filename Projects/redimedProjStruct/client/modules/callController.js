@@ -139,7 +139,7 @@ angular.module("app.call.controller",[
 
             }
             var connectFailure = function(errorCode, errText) {
-                easyrtc.showError(errorCode, message);
+                easyrtc.showError(errorCode, errText);
             }
 
             easyrtc.dontAddCloseButtons();

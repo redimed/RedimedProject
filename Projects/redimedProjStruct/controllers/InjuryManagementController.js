@@ -72,12 +72,11 @@ module.exports = {
         },
       submitInjury: function(req,res){
           var imInfo = req.body.info;
-
-          console.log(imInfo);
+          var userId =  req.body.userId;
 
           db.IMInjury.create({
               patient_id: imInfo.Patient_id,
-              user_submit: imInfo.userId,
+              user_submit: userId,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
               injury_date: imInfo.injury_date,
@@ -260,11 +259,54 @@ module.exports = {
                 {
                     db.IMInjury.find({where:{injury_id:id}},{raw:true})
                         .success(function(im){
-                            var p1 = {lat: im.latitude,lng:im.longitude};
-                            var p2 = geolocation;
 
-                            console.log("==========Distance: ",getDistance(p1,p2)+" km ");
-                            console.log("==========Time: ", ((getDistance(p1,p2) / 45) * 60)+" minutes ");
+                            db.sequelize.query("SELECT p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName FROM `cln_patients` p WHERE p.`Patient_id` = ?",null,{raw:true},[im.patient_id])
+                                .success(function(data)
+                                {
+                                    var p1 = {lat: im.latitude,lng:im.longitude};
+                                    var p2 = geolocation;
+
+                                    var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                                    var message = new gcm.Message();
+                                    message.addData('title','REDiMED');
+                                    message.addData('message',data[0].FullName+" will be picked up in "+((getDistance(p1,p2) / 45) * 60)+" minutes.");
+                                    message.addData('injury_id',id);
+                                    message.addData('time',((getDistance(p1,p2) / 45) * 60));
+                                    message.addData('soundname','beep.wav');
+                                    message.collapseKey = 'REDiMED';
+                                    message.delayWhileIdle = true;
+                                    message.timeToLive = 3;
+                                    var registrationIds = [];
+
+                                    db.UserToken.find({where: {user_id:im.user_submit}}, {raw: true})
+                                        .success(function (data) {
+                                            if(data)
+                                            {
+                                                if (data.android_token != null)
+                                                    registrationIds.push(data.android_token);
+
+                                                sender.send(message, registrationIds, 4, function (err,result) {
+                                                    if(err)
+                                                    {
+                                                        console.log("ERROR:",err);
+                                                    }
+                                                    else
+                                                    {
+                                                        console.log("SUCCESS:",result);
+                                                    }
+
+                                                });
+                                            }
+
+                                        })
+                                        .error(function (err) {
+                                            console.log(err);
+                                        })
+
+                                })
+                                .error(function(err){
+                                    res.json({status:'error',error:err})
+                                })
 
                             db.DriverInjury.create({
                                 driver_id: im.driver_id,
