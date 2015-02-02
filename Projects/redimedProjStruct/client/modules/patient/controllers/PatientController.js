@@ -18,7 +18,8 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.invoice_detail.controller",
     "app.loggedIn.patient.recall.controller",
     "app.loggedIn.patient.apptdoc.controller",
-    "app.loggedIn.patient.listall.controller"
+    "app.loggedIn.patient.listall.controller",
+    "app.loggedIn.patient.checkin.controller"
 ])
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW) {
     // FOR VIEW LIST

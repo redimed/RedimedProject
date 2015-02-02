@@ -144,4 +144,13 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
+    .state("loggedIn.patient.checkin",{
+        url:'/checkin',
+        views:{
+            "main-content":{
+                templateUrl:'modules/patient/views/checkin.html',
+                controller:'PatientCheckinController'
+            }
+        }
+    })
 })

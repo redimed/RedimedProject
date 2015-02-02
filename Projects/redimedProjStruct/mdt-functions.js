@@ -197,5 +197,29 @@ module.exports = {
 				});
 			}
 		});
+	},
+
+	getTodayRange: function(){
+		date = new Date();
+
+		var dates = date.getDate();
+
+		if(dates < 10){
+			dates = "0"+dates;
+		}
+
+		var month = date.getMonth()+1;
+
+		if(month < 10){
+			month = "0"+month;
+		}
+
+		var year = date.getFullYear();
+
+		var result = {
+			todayStart: year+"-"+month+"-"+dates+" " + "00:00:00",
+			todayEnd: year+"-"+month+"-"+dates+" " + "23:59:59"
+		};
+		return result;
 	}
 }

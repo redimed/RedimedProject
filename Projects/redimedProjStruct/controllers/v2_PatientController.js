@@ -16,7 +16,7 @@ module.exports ={
 
 //		var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
 
-		db.Patient.findAndCountAll({
+		db.Patient.findAll({
 			where: search_data,
 			offset: offset,
 			limit: limit,
@@ -29,4 +29,6 @@ module.exports ={
 			res.json(500, {"status": "error", "message": error});
 		});
 	},
+
+	
 }

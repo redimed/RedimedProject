@@ -12,6 +12,9 @@ module.exports = function(sequelize, DataTypes){
         'CAL_ID': { 
             type: DataTypes.INTEGER(11),  
         },
+        'appt_status': {
+            type:DataTypes.STRING(20)
+        }
         
     }, {
         tableName: "cln_appt_patients",

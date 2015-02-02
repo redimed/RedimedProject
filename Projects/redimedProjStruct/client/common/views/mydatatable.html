@@ -32,6 +32,7 @@
                         <div ng-switch-default>
                               <input ng-if="field.type == 'text'" ng-model="search[col.field]" ng-enter="enterFilter()" type="text" placeholder="{{col.label || col.field}}" class="form-control input-sm" />
                         </div>
+                        
                     </div>
                 </td>
             </tr>
@@ -50,6 +51,9 @@
                         </span>
                         <span ng-switch-when="number">
                             <input ng-disabled="col.disabled" ng-model="item[col.field]" type="number" />
+                        </span>
+                        <span ng-switch-when="button">
+                            <button class="btn btn-sm blue-soft" ng-click="col.btnfn(item)">{{col.btnlabel}}</button>
                         </span>
                         <span ng-switch-when="custom">{{col.fn(item)}}</span>
                         <span ng-switch-default>{{item[col.field]}}</span>

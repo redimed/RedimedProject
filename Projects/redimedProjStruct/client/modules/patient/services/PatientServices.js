@@ -126,6 +126,18 @@ angular.module("app.loggedIn.patient.services", [])
         return funcApi.post({ID: id });
     }
 
+    //APPT STATUS UPADTE
+        instanceService.checkIn = function(cal_id, patient_id){
+            var funcApi = khankAPI.all('appt/check_in');
+            return funcApi.post({
+                CAL_ID: cal_id,
+                Patient_id: patient_id,
+                data:{
+                    appt_status: "Checked In"
+                }
+            });
+        }
+
     /*
     * END MINH
     */
