@@ -9,7 +9,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 	$scope.objectMap = {};
 	$scope.objectMap.from_time = ConfigService.convertToDate(new Date());
 
-	console.log($scope.options)
+	// console.log($scope.options)
 
 	$scope.timetable = {
 		add: function(item){
@@ -90,12 +90,12 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 		var str_from_time = ConfigService.getCommonDateDatabase($scope.objectMap.from_time);
 		var get_date = new Date(str_from_time);
 
-		console.log('LOAD TIME ', Date.now())
+		// console.log('LOAD TIME ', Date.now())
 		DoctorService.overviewCalendar(doctor_id, str_from_time)
 		.then(function(response){
 			var cal_list = response.data;
-			for(var i = 0; i < cal_list.length; ++i) {
-				console.log(i)
+			for(var i = 0; i < cal_list.length && i < 30; ++i) {
+				// console.log(i)
 				var item = cal_list[i];
 				var run_date = new Date(get_date);
 				run_date.setDate(get_date.getDate() + i);
@@ -104,8 +104,8 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 					cal_list.splice(i, 0, {DATE: str_date, list: []});
 				}
 			}
-		//	$scope.data = cal_list.slice(0, 5);
-			console.log('LOADed TIME ', Date.now())
+			$scope.data = cal_list.slice(0, 30);
+			// console.log('LOADed TIME ', Date.now())
 		});
 	}
 	
