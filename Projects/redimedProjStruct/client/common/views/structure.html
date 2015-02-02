@@ -10,7 +10,7 @@
             <div class="side-widget">
                 <div class="side-widget-title">Online Users</div>
                 <div class="side-widget-content" >
-                    <div class="user-details-wrapper" ng-repeat="u in onlineUsers" ng-if="u.id !== userInfo.id">
+                    <div class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'id'" ng-if="u.id !== userInfo.id">
                         <div class="user-profile">
                             <img ng-if="u.img != null"  style="background-color: white;" class="img-circle hide1" src="{{u.img}}"  alt="" width="35" height="35">
                             <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png"  alt="" width="35" height="35">

@@ -112,7 +112,7 @@
                                 <div class="col-md-3"> <label class="bold">Driver</label></div>
                                 <div class="col-md-9">
                                     <label ng-show="im.status == 'Waiting'">{{im.driverUser}}</label>
-                                    <select ng-model="map.driverId" ng-show="im.status == 'New'" ng-options="a.id as a.user_name for a in driverListTemp">
+                                    <select ng-model="map.driverId" ng-show="im.status == 'New'" ng-options="a.id as a.user_name for a in driverListTemp | unique:'id'">
                                         <option value="">--Select Driver--</option>
                                     </select>
 

@@ -20,9 +20,6 @@ module.exports = {
             {
                 if(data)
                 {
-                    console.log(data);
-
-                    var ses = null;
                     bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
                         if (compareResult == true) {
 

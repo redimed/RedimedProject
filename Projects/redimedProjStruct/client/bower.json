@@ -53,7 +53,8 @@
     "angular-socket-io": "~0.7.0",
     "underscore": "~1.7.0",
     "angular-underscore": "~0.5.0",
-    "screenfull": "~2.0.0"
+    "screenfull": "~2.0.0",
+    "bootstrap-material-design": "~0.2.2"
   },
   "resolutions": {
     "angular": "1.2.25",

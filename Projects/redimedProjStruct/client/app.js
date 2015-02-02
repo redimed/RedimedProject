@@ -160,19 +160,26 @@ angular.module("app", [
     socket.on("isLoggedIn",function(){
         toastr.error("Your Account Is Already Logged In!");
 
-        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type,null);
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $state.go("security.login",null,{location: "replace", reload: true});
 
-        socket.on('logoutSuccess',function(){
-            $cookieStore.remove("userInfo");
-            $cookieStore.remove("companyInfo");
-            $cookieStore.remove("doctorInfo");
-            $cookieStore.remove("fromState");
-            $state.go("security.login",null,{reload:true});
-
-            socket.removeAllListeners();
-        })
-
+        socket.removeAllListeners();
     })
+
+
+
+    $rootScope.$on("$locationChangeSuccess",function(event, current,previous){
+        if(current === previous)
+        {
+            if($cookieStore.get("userInfo")){
+                socket.emit("checkApp",$cookieStore.get("userInfo").id);
+            }
+        }
+    })
+
 
     $rootScope.$on("$locationChangeStart",function(event, next, current){
         if (easyrtc.webSocket) {
@@ -187,7 +194,7 @@ angular.module("app", [
             socket.emit('lostCookie');
             if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register"){
                 e.preventDefault();
-                $state.go("security.login");
+                $state.go("security.login",null,{location: "replace", reload: true});
             }
         }
     });

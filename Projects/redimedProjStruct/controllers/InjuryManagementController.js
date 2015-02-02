@@ -266,6 +266,8 @@ module.exports = {
                             console.log("==========Distance: ",getDistance(p1,p2)+" km ");
                             console.log("==========Time: ", ((getDistance(p1,p2) / 45) * 60)+" minutes ");
 
+
+
                             db.DriverInjury.create({
                                 driver_id: im.driver_id,
                                 patient_id: im.patient_id,

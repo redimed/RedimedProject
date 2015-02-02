@@ -11,32 +11,47 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.on('connection', function (socket) {
         socket.on('checkApp',function(id){
-            if(id != null){
+            if(id){
                 db.User.find({where:{id:id}},{raw:true})
                     .success(function(user){
-                        if(user.socket == null){
-                            db.User.update({
-                                socket: socket.id
-                            },{id:id})
-                                .success(function(){
-                                    getOnlineUser();
-                                    console.log('success');
-                                })
-                                .error(function(err){
-                                    console.log(err);
-                                })
-                        }
-                        else
+                        if(user)
                         {
-                            getOnlineUser();
-                            io.to(socket.id).emit("isLoggedIn");
-                            console.log("error")
+                            if(user.socket == null){
+                                db.User.update({
+                                    socket: socket.id
+                                },{id:id})
+                                    .success(function(){
+                                        getOnlineUser();
+                                    })
+                                    .error(function(err){
+                                        console.log(err);
+                                    })
+                            }
+                            else
+                            {
+                                if(user.socket != socket.id){
+                                    io.to(socket.id).emit("isLoggedIn");
+                                }
+                                getOnlineUser();
+                            }
                         }
+
                     })
                     .error(function(err){
                         console.log(err);
                     })
             }
+        })
+
+        socket.on('forceLogin',function(username){
+            db.User.find({where:{user_name: username}},{raw:true})
+                .success(function(user){
+                    io.to(user.socket).emit('forceLogout');
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+
         })
 
         socket.on('checkLogin',function(username){
@@ -49,7 +64,7 @@ module.exports = function(io,cookie,cookieParser) {
                         }
                         else
                         {
-                            socket.emit('isError', 'You are already connected.');
+                            socket.emit('isError');
                         }
                     }
 
@@ -174,7 +189,6 @@ module.exports = function(io,cookie,cookieParser) {
             db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
                 .success(function(){
                     getOnlineUser();
-
                 })
                 .error(function(err){
                     console.log(err);
