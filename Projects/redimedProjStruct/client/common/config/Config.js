@@ -370,8 +370,8 @@ angular.module('app.config', [])
         var split = dateTime.split("/");
 
         var year = split[2];
-        var month = split[1];
-        var date = split[0];
+        var month = parseInt(split[1]);
+        var date = parseInt(split[0]);
 
         if(month < 10){
             month = "0"+month;

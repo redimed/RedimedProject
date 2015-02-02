@@ -4,6 +4,7 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
 	var doctorApi = Restangular.all("api/erm");
 
 	var mdtApi = Restangular.all("api/meditek/v1/doctor/");
+    var restfulApi = Restangular.all('api/restful');
 
 	doctorService.mdtSearch = function(options){
 		var funcApi = mdtApi.all("search");
@@ -273,6 +274,35 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
      	var casualApi = doctorApi.all("doctors/changeCasual");
      	return casualApi.post(options);
      }
+
+    /*
+    *   KHANK API V2
+    */
+    doctorService.overviewCalendar = function(doctor_id, from_time) {
+        var api = doctorApi.all('v2/timetable/overview_doctor');
+        return api.post({doctor_id: doctor_id, from_time: from_time})
+    } 
+
+    doctorService.deleteDateCalendar = function(doctor_id, date) {
+        var api = doctorApi.all('v2/timetable/delete_date');
+        return api.post({doctor_id: doctor_id, date: date})
+    }
+
+    doctorService.addCalendar = function(postData) {
+        var api = restfulApi.all('Appointment');
+        return api.post(postData);
+// http://localhost:3000/api/restful/Appointment
+    }
+
+    doctorService.editCalendar = function(cal_id, postData) {
+        var api = restfulApi.one('Appointment/' + cal_id);
+
+        for(var key in postData) {
+            api[key] = postData[key];
+        }
+        return api.put();
+    }
+
 
      return doctorService;
  })

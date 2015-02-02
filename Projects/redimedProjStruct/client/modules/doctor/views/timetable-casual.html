@@ -3,94 +3,80 @@
 		Casual Calendar
 	</div>
 	<div class="panel-body">
-		<div class="break-row"></div>
-		<!-- FROM TIME -->
 		<div class="form-group">
             <label class="control-label col-md-2 col-sm-3 col-xs-6">
                 From Time
                 <span class="required"> * </span>
             </label>
             <div class="col-md-4 col-sm-3 col-xs-6">
-                <input placeholder="From Time" ng-model="modelObjectMap.from_time" 
-                	name="from_time" class="form-control" custom-date ng-change="changeTime()">
+                <input placeholder="From Time" ng-model="objectMap.from_time" 
+                	name="from_time" class="form-control" custom-date ng-change="getAppointments()">
             </div>
         </div>
-        <!-- END FROM TIME -->
-        
-        <!-- END TIME -->
-		<!--<div class="form-group">
-            <label class="control-label col-md-2 col-sm-3 col-xs-6">
-                To Time
-                <span class="required"> * </span>
-            </label>
-            <div class="col-md-4 col-sm-3 col-xs-6">
-                <input placeholder="To Time" ng-model="modelObjectMap.to_time" 
-                	name="to_time" class="form-control" custom-date ng-change="changeTime()">
+
+        <div class="clearfix" style="margin: 10px 5px;"></div>
+
+
+        <div class="row" ng-repeat="item in data">
+ 
+            <div class="col-md-3" style="font-size: 14px;">
+                <b>Date: </b>{{item.DATE}}<br>
+                <button class="btn btn-sm" ng-click="timetable.add(item)">Add New</button>
+                <button ng-if="item.list.length > 0" class="btn btn-sm btn-danger" ng-click="timetable.removeAllDay(item)">Delete All</button>
             </div>
-        </div>-->
-        <!-- END END TIME -->
+            <div  class="col-md-9">
+                <table class="table table-bordered">
+                    <thead>
+                        <th>From Time</th>
+                        <th>To Time</th>
+                        <th>Site</th>
+                        <th>Service</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cal in item.list">
+                            <td>
+                                <input ng-model="cal.FROM_TIME" name="from_time" 
+                                custom-timepicker style="width: 50px;" readonly 
+                                ng-change="changeCalendar({'data':l})">
+                            </td>
+                            <td>
+                                <input ng-model="cal.TO_TIME" name="from_time" 
+                                custom-timepicker style="width: 50px;" readonly 
+                                ng-change="changeCalendar({'data':l})">
+                            </td>
+                            <td>
+                                <select ng-model="cal.SITE_ID"
+                                    ng-options="site.id as site.Site_name for site in options.redimedsites">
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-model="cal.SERVICE_ID"
+                                    ng-change="changeCalendar({'data':l})"
+                                    ng-options="service.SERVICE_ID as service.SERVICE_NAME 
+                                        for service in options.clinical_depts">
+                                    <option value="" selected disabled>Service</option>
+                                </select>
+                            </td>
+                            <td>
+                            	<a ng-show="!cal.CAL_ID" ng-click="timetable.addRowData(item, cal)">
+                                    <i class="fa fa-plus"></i>
+                                </a>
 
-        <div class="break-row"></div>
+                                <a ng-show="cal.CAL_ID" ng-click="timetable.updateRow(item, cal)">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
 
-        <table class="table">
-        	<tbody>
-                <tr ng-repeat="list in real_list_map">
-                    <td style="font-size: 14px;">
-                        <b>Date: </b>{{list.convert_date}}<br>
-                        <b>Day: </b>{{list.day_of_week}}<br>
-                        <b>Week: </b>{{list.week}}<br>
-
-                        <button class="btn btn-sm" ng-click="timetable.add($index)">Add New</button>
-                    </td>
-                    <td>
-                        <table class="table table-bordered">
-                            <thead>
-                                <th>From Time</th>
-                                <th>To Time</th>
-                                <th>Site</th>
-                                <th>Service</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="l in list.items">
-                                    <td>
-                                        <input ng-model="l.from_time_map" name="from_time" 
-                                        custom-timepicker style="width: 50px;" readonly 
-                                        ng-change="changeCalendar({'data':l})">
-                                    </td>
-                                    <td>
-                                        <input ng-model="l.to_time_map" name="from_time" 
-                                        custom-timepicker style="width: 50px;" readonly 
-                                        ng-change="changeCalendar({'data':l})">
-                                    </td>
-                                    <td>
-                                        <select ng-model="l.SITE_ID"
-                                            ng-options="site.id as site.Site_name for site in options.sites_option"
-                                            ng-change="changeCalendar({'data':l})">
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select ng-model="l.SERVICE_ID"
-                                            ng-change="changeCalendar({'data':l})"
-                                            ng-options="service.SERVICE_ID as service.SERVICE_NAME 
-                                                for service in options.clinical_depts">
-                                            <option value="" selected disabled>Service</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a ng-click="timetable.remove({list: l, parentIndex: $parent.$index, index: $index })">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                        <a ng-show="!l.CAL_ID" ng-click="timetable.addRowData(l)">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-        	</tbody>
+                                <a ng-click="timetable.remove({cal: cal, parentIndex: $parent.$index, index: $index })">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          
         </table>
-	</div>
+    </div>
 </div>

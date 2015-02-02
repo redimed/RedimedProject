@@ -48,7 +48,7 @@ var v2_InvoiceController = require('./controllers/v2_InvoiceController');
 var v2_AppointmentDocumentController = require('./controllers/v2_AppointmentDocumentController');
 var v2_PatientController = require('./controllers/v2_PatientController');
 
-
+var v2_TimetableController = require('./controllers/v2_TimetableController');
 
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
 k_route.setRoute(app, v2_InsurersController, '/api/erm/v2/insurers/');
@@ -68,3 +68,5 @@ k_route.setRoute(app, v2_ItemSheetController,'/api/erm/v2/itemsheet/');
 k_route.setRoute(app, v2_InvoiceController,'/api/erm/v2/invoice/');
 k_route.setRoute(app, v2_AppointmentDocumentController,'/api/erm/v2/apptdoc/');
 k_route.setRoute(app, v2_PatientController, '/api/erm/v2/patient/');
+
+k_route.setRoute(app, v2_TimetableController, '/api/erm/v2/timetable/');
