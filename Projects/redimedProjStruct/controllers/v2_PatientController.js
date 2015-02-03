@@ -7,20 +7,11 @@ module.exports ={
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
 		var search_data = req.body.search;
-		console.log('this is search data', search_data);
-//		var agrs = [];
-//		for (var key in search_data) {
-//			if(search_data[key])
-//			agrs.push(key + " = '"+ search_data[key] +"'");
-//		};
-
-//		var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
-
-		db.Patient.findAll({
+		db.Patient.findAndCountAll({
 			where: search_data,
 			offset: offset,
 			limit: limit,
-			attributes: fields,
+			attributes: ['Patient_id','First_name','Sur_name','DOB','Address1','Post_code'],
 			order: 'Patient_id DESC'
 		}).success(function(result){
 			res.json({"status": "success", "list": result.rows, "count": result.count});

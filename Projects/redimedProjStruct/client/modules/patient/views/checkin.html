@@ -1,6 +1,6 @@
 <h1>Check In</h1>
 
-<div class="portlet box green ng-scope">
+<div class="portlet box blue ng-scope">
 	<div class="portlet-title">
         <div class="caption">
             <i class="fa fa-person"></i> Today's Appointment List
@@ -13,6 +13,54 @@
     </div>
 
     <div class="portlet-body">
-    	<my-data-table options="patients.options" rowclass="patients.class" numrows="10"></my-data-table>
+      <form name="sysservicesForm" class="form-horizontal" novalidate style="margin-bottom: 0">
+        <div class="form-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-4">
+              <span class="field">
+                <label for="patient_FN">First name</label>
+                <input type="text" placeholder="First name" name="patient_FN" ng-model="patientSearch.First_name" class="form-control" id="patient_FN" float-label/>
+              </span>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <span class="field">
+                <label for="patient_LN">Last name</label>
+                <input type="text" placeholder="Last name" name="patient_LN" ng-model="patientSearch.Sur_name" class="form-control" id="patient_LN" float-label/>
+              </span>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <span class="field">
+                <label for="patient_DOB">Date Of Birth</label>
+                <input type="text" placeholder="Date Of Birth" name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}" readonly="readonly"/>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- ACTION -->
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-md-offset-8 col-sm-offset-8 col-md-4 col-sm-4">
+              <div class="col-md-6 col-sm-6">
+                <button class="btn btn-block green" ng-click="searchClick()">
+                    <i class="fa fa-search"></i>  Search
+                </button>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <button class="btn btn-block red" ng-click="resetClick()">
+                    <i class="fa fa-refresh"></i>  Reset
+                </button>
+              </div>
+            </div>
+        </div>
+        <!-- END ACTION -->
+      </form>
+    	
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <my-data-table options="patients.options" rowclass="patients.class" numrows="10" ></my-data-table>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <my-data-table options="appointment.options" rowclass="appointments.class" numrows="10" ></my-data-table>
+        </div>
+      </div>
     </div>
 </div>

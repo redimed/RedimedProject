@@ -192,38 +192,69 @@ module.exports = {
         })
 	},
 
-	postTodayAppt: function(req,res){
-		console.log("It's get in here");
+	postApptById: function(req,res){
+		console.log('appointment searching is running');
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
+		var whereCon = req.body.search;
 
-		var today = mdt_functions.getTodayRange();
-		db.ApptPatient.findAll({
-			attributes:['CAL_ID','Patient_id','appt_status'],
-			include:[
-				{
-					model:db.Appointment, as:'Appointment',
-					attributes:['FROM_TIME'],
-					where:{
-						FROM_TIME:{
-							between: [today.todayStart,today.todayEnd]
-						}
-					}
-				},
-				{
-					model:db.Patient, as:'Patient',
-					attributes:['First_name','Sur_name','DOB'],
-				}
-			],
-		})
-		.success(function(result){
-			res.json({'status':'success', list:result});
+		db.ApptPatient.findAndCountAll({
+			attributes: ['CAL_ID', 'Patient_id', 'appt_status'],
+			include:{
+				model:db.Appointment, as: 'Appointment',
+				attributes:['FROM_TIME']
+			},
+			where:whereCon,
+			order:'CAL_ID DESC'
+		}).success(function(result){
+			res.json({'status':'success', 'list':result.rows, 'count':result.count});
 		})
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
 	},
+
+	// postTodayAppt: function(req,res){
+	// 	console.log("It's get in here");
+	// 	var limit = (req.body.limit) ? req.body.limit : 10;
+ //        var offset = (req.body.offset) ? req.body.offset : 0;
+	// 	var fields = req.body.fields;
+
+	// 	var today = mdt_functions.getTodayRange();
+	// 	db.ApptPatient.findAll({
+	// 		attributes:['CAL_ID','Patient_id','appt_status'],
+	// 		include:[
+	// 			{
+	// 				model:db.Appointment, as:'Appointment',
+	// 				attributes:['FROM_TIME'],
+	// 				where:{
+	// 					FROM_TIME:{
+	// 						between: [today.todayStart,today.todayEnd]
+	// 					}
+	// 				}
+	// 			},
+	// 			{
+	// 				model:db.Patient, as:'Patient',
+	// 				attributes:['First_name','Sur_name','DOB'],
+	// 			}
+	// 		],
+	// 	})
+	// 	.success(function(result){
+	// 		res.json({'status':'success', list:result});
+	// 	})
+	// 	.error(function(error){
+	// 		res.json(500, {"status": "error", "message": error});
+	// 	});
+	// },
+
+	// postCheckinSearch: function(req,res){
+	// 	console.log('this is body request', req.body);
+	// 	var limit = (req.body.limit) ? req.body.limit : 10;
+ //        var offset = (req.body.offset) ? req.body.offset : 0;
+	// 	var fields = req.body.fields;
+	// 	res.end();
+	// },
 
 	postCheckIn: function(req, res) {
 		var cal_id = req.body.CAL_ID;
