@@ -19,7 +19,7 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
 				columns:[
                     {field: 'CAL_ID', is_hide:true},
                     {field: 'Patient_id', is_hide:true},
-                    {field: 'First_name', label: 'First name', type:'custom', fn:function(item){
+                    {field: 'item.patient.First_name', label: 'First name', type:'custom', fn:function(item){
                         return item.patient.First_name;
                     }},
                     {field: 'Sur_name', label: 'Sur name', type:'custom', fn:function(item){
@@ -37,15 +37,23 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                         }
                         return "No";
                     }},
-                    {type:'button', btnlabel:'Check In', btnfn:function(item){
-                        PatientService.checkIn(item.CAL_ID, item.Patient_id).then(function(result){
-                            if(result.status!=="success") toastr.error("Check-in error!", "Error");
-                            else {
-                                toastr.success("Checked In!", "Success!");
-                                $scope.patient_panel.reload();
+                    {type:'button', btnlabel:'Check In', 
+                        btnfn:function(item){
+                            PatientService.checkIn(item.CAL_ID, item.Patient_id).then(function(result){
+                                if(result.status!=="success") toastr.error("Check-in error!", "Error");
+                                else {
+                                    toastr.success("Checked In!", "Success!");
+                                    $scope.patient_panel.reload();
+                                }
+                            });
+                        },
+                        disfn: function(item){
+                            if(item.appt_status==="Checked In" || item.appt_status === "Seen"){
+                                return true;
                             }
-                        });
-                    }}
+                            return false;
+                        }
+                    }
 
 
                     // {field: 'Sur_name', label: 'Last name'}, 
@@ -57,7 +65,7 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                 ],
                 use_filters: true,
                 filters:{
-                	First_name: {type: 'text'},
+                	"item.patient.First_name": {type: 'text'},
                 	Sur_name: {type: 'text'},
                 	DOB: {type: 'text'}
                 },
