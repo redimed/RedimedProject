@@ -126,6 +126,7 @@ angular.module("app", [
 
         easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
 
+
     $idle.watch();
     // Use when update any state
 

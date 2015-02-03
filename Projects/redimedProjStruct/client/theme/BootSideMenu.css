@@ -42,8 +42,19 @@
       left:20px;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 300px) {
+    .sidebar {
+        width: 250px;
+    }
+    .sidebar.sidebar-left{
+        left:0px;
+        right:auto;
+    }
 
+    .sidebar.sidebar-right{
+        right:0px;
+        left:auto;
+    }
 }
 @media (min-width: 528px) {
       .sidebar {

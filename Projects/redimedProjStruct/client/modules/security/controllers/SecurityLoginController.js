@@ -4,7 +4,6 @@ angular.module("app.security.login.controller",[
         $scope.showClickedValidation = false;
 
 
-
     $scope.modelUser = {
         username : null,
         password : null
@@ -20,6 +19,7 @@ angular.module("app.security.login.controller",[
 
             SecurityService.login($scope.modelUser).then(function(response){
                 socket.emit('checkLogin',$scope.modelUser.username);
+
                 socket.on('isSuccess',function() {
                     login();
                 })
@@ -46,10 +46,10 @@ angular.module("app.security.login.controller",[
                 })
 
             }, function(error){
-                toastr.error("Wrong Username Or Password!", "Error");
+                toastr.error("Wrong Username Or Password!");
             });
 
-            socket.removeAllListeners();
+            //socket.removeAllListeners();
 
         }
     }
@@ -66,10 +66,7 @@ angular.module("app.security.login.controller",[
                     if (typeof response.companyInfo !== 'undefined')
                         $cookieStore.put("companyInfo", response.companyInfo);
 
-                    /**
-                     * khank
-                     * ADD COOKIE INFO 4 DOCTOR
-                     */
+
                     if (response.userInfo.UserType.user_type == 'Doctor') {
                         DoctorService.getByUserId(response.userInfo.id).then(function (data) {
                             if (data) {

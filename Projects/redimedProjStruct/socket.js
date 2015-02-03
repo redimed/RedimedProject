@@ -6,10 +6,13 @@ var parser = require('socket.io-cookie');
 var users = [];
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
+    var socketId = null;
 
     io.use(parser);
 
     io.on('connection', function (socket) {
+        socketId = socket.id;
+
         socket.on('checkApp',function(id){
             if(id){
                 db.User.find({where:{id:id}},{raw:true})

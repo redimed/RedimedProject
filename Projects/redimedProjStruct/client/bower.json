@@ -54,7 +54,8 @@
     "underscore": "~1.7.0",
     "angular-underscore": "~0.5.0",
     "screenfull": "~2.0.0",
-    "bootstrap-material-design": "~0.2.2"
+    "bootstrap-material-design": "~0.2.2",
+    "ng-bs-daterangepicker": "~0.0.3"
   },
   "resolutions": {
     "angular": "1.2.25",

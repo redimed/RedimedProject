@@ -263,6 +263,7 @@ module.exports = {
                             db.sequelize.query("SELECT p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName FROM `cln_patients` p WHERE p.`Patient_id` = ?",null,{raw:true},[im.patient_id])
                                 .success(function(data)
                                 {
+
                                     var p1 = {lat: im.latitude,lng:im.longitude};
                                     var p2 = geolocation;
 
@@ -379,10 +380,12 @@ module.exports = {
                             sender.send(message, registrationIds, 4, function (err,result) {
                                 if(err)
                                 {
+                                    res.json({status:'error'});
                                     console.log("ERROR:",err);
                                 }
                                 else
                                 {
+                                    res.json({status:'success'});
                                     console.log("SUCCESS:",result);
                                 }
 
@@ -397,7 +400,7 @@ module.exports = {
             .error(function (err) {
                 console.log(err);
             })
-        res.json({status:'success'});
+
 
 
     },

@@ -121,7 +121,7 @@
                                 <br/>
                             <div class="clearfix">
                                 <a  ng-class="{disabled:map.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)"  href="javascript:;" class="btn blue btn-block">
-                                    Submit </a>
+                                    Send Notification </a>
                                 </div>
                             </div>
                                 </div>
@@ -186,6 +186,7 @@
                             <input ng-change="searchInjury(search)" ng-model="search.patient" class="form-control" type="text" />
                         </th>
                         <th style="text-align:center">
+                            <!--<input type="daterange" ng-model="dates3" separator="/">-->
                             <input class="form-control" type="text" />
                         </th>
                         <th style="text-align:center">

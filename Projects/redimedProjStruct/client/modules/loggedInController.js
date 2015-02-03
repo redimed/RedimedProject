@@ -46,18 +46,19 @@ angular.module("app.loggedIn.controller",[
     })
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
-        socket.on("forceLogout",function(){
 
-            toastr.error("Someone Is Logged Into Your Account!");
+    socket.on("forceLogout",function(){
 
-            $cookieStore.remove("userInfo");
-            $cookieStore.remove("companyInfo");
-            $cookieStore.remove("doctorInfo");
-            $cookieStore.remove("fromState");
-            $state.go("security.login",null,{location: "replace", reload: true});
+        toastr.error("Someone Is Logged Into Your Account!");
 
-            socket.removeAllListeners();
-        })
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $state.go("security.login",null,{location: "replace", reload: true});
+
+        socket.removeAllListeners();
+    })
 
 
     socket.on("messageReceived",function(fromId,fromUser,message){

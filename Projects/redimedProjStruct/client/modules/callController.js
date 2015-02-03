@@ -94,15 +94,14 @@ angular.module("app.call.controller",[
             if(message.type === 'ignore')
             {
                 audio.pause();
-                toastr.error('Error',"Call Have Been Rejected!");
+                toastr.error("Call Have Been Rejected!");
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
             }
             if(message.type === 'cancel')
             {
-                console.log("========Cancel============");
                 audio.pause();
-                toastr.error('Error',"Call Have Been Cancelled!");
+                toastr.error("Call Have Been Cancelled!");
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
 
@@ -118,7 +117,7 @@ angular.module("app.call.controller",[
                 $scope.isAccept = true;
             };
             var failureCB = function(errCode, errMsg) {
-                toastr.error("Error",errMsg);
+                toastr.error(errMsg);
                 disconnect();
                 $state.go(from.fromState.name,params,{location: "replace"});
             };
@@ -130,12 +129,12 @@ angular.module("app.call.controller",[
 
         function init(){
             var connectSuccess = function(rtcId) {
+
                 if($scope.isCaller == true)
                     socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call'});
                 if($scope.isCaller == false){
                     socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId})
                 }
-
 
             }
             var connectFailure = function(errorCode, errText) {

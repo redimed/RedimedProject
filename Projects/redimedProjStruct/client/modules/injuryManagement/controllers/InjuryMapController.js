@@ -9,6 +9,7 @@ angular.module("app.loggedIn.im.map.controller",[])
         $scope.injuryList = [];
         $scope.injuryListTemp = [];
 
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -151,13 +152,15 @@ angular.module("app.loggedIn.im.map.controller",[])
         $scope.allocateDriver = function(injury){
             InjuryManagementService.allocateDriver($scope.map.driverId,injury.patientId,injury.id).then(function(rs){
                 if(rs.status == 'success'){
-                    toastr.success("Submit Successfully!","Success");
-                    refreshMap();
-                    refreshList();
+                    toastr.success("Send Notification Successfully!","Success");
+
+                    $scope.map.driverId = null;
+                    //refreshMap();
+                    //refreshList();
                 }
                 else
                 {
-                    toastr.error("Submit Failed!","Error");
+                    toastr.error("Send Notification Failed!","Error");
                 }
             })
         }
