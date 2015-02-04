@@ -38,7 +38,7 @@ angular.module("app", [
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
-   var host = location.hostname;
+    var host = location.hostname;
     var port = location.port;
 
     var socket = io.connect('http://'+host+'/',{
@@ -71,7 +71,7 @@ angular.module("app", [
 
     $urlRouterProvider.otherwise('/');
 
-	localStorageServiceProvider.setStorageType('sessionStorage');
+	localStorageServiceProvider.setStorageType('localStorage');
 	
     $stateProvider
 
@@ -122,10 +122,9 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr){
+.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
-        easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
-
+    easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
 
     $idle.watch();
     // Use when update any state
@@ -179,6 +178,8 @@ angular.module("app", [
                 socket.emit("checkApp",$cookieStore.get("userInfo").id);
             }
         }
+
+
     })
 
 
@@ -190,7 +191,7 @@ angular.module("app", [
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
         $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
-        if(!$cookieStore.get("userInfo")){
+        if(!$cookieStore.get("userInfo") ){
             socket.removeAllListeners();
             socket.emit('lostCookie');
             if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register"){

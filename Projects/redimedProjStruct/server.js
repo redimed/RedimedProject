@@ -25,7 +25,34 @@ server.listen(3000);
 
 require('./socket')(io,cookie,cookieParser);
 
-var rtc = easyrtc.listen(app, io);
+var myIceServers = [
+    {url: "stun:stun.l.google.com:19302"},
+    {url: "stun:stun1.l.google.com:19302"},
+    {url: "stun:stun2.l.google.com:19302"},
+    {url: "stun:stun3.l.google.com:19302"},
+    {url: "stun:stun4.l.google.com:19302"},
+    {url: "stun:stun.voipstunt.com"},
+    {url: "turn:54.149.226.250:3478?transport=tcp", "username":"root", "credential":"root"},
+    {url: "turn:54.149.226.250:3478?transport=udp", "username":"root", "credential":"root"}
+];
+
+// EasyRTC configs
+easyrtc.setOption("appIceServers", myIceServers);
+
+var easyrtcServer = easyrtc.listen(
+    app,
+    io,
+    {logLevel:"debug", logDateEnable:true},
+    function(err, rtc) {
+        rtc.setOption("roomDefaultName", "Redimed");
+
+    }
+);
+
+easyrtc.on("getIceConfig", function(connectionObj, callback){
+    callback(null, myIceServers);
+});
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

@@ -109,6 +109,19 @@ angular.module("app.call.controller",[
 
         })
 
+        //var timeoutCall = setInterval(function(){
+        //    if($scope.isAccept == false)
+        //    {
+        //        toastr.error("No Answer!");
+        //        audio.pause();
+        //        disconnect();
+        //        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+        //        $state.go(from.fromState.name,params,{location: "replace"});
+        //
+        //        clearInterval(timeoutCall);
+        //    }
+        //},(60 * 1000));
+
         function performCall(easyRtcId) {
             easyrtc.hangupAll();
             var acceptedCB = function(accepted, easyrtcid) {

@@ -96,8 +96,6 @@ angular.module("app.loggedIn.controller",[
                     })
                 }
             })
-
-
         }
     })
 

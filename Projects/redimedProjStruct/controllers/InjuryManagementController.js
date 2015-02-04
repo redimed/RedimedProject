@@ -260,19 +260,17 @@ module.exports = {
                     db.IMInjury.find({where:{injury_id:id}},{raw:true})
                         .success(function(im){
 
-                            db.sequelize.query("SELECT p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName FROM `cln_patients` p WHERE p.`Patient_id` = ?",null,{raw:true},[im.patient_id])
+                            db.sequelize.query("SELECT p.*,CONCAT(IFNULL(p.Title,''), '.', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName FROM `cln_patients` p WHERE p.`Patient_id` = ?",null,{raw:true},[im.patient_id])
                                 .success(function(data)
                                 {
-
-                                    var p1 = {lat: im.latitude,lng:im.longitude};
-                                    var p2 = geolocation;
+                                   var time = (geolocation.duration / 60);
 
                                     var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
                                     var message = new gcm.Message();
                                     message.addData('title','REDiMED');
-                                    message.addData('message',data[0].FullName+" will be picked up in "+((getDistance(p1,p2) / 45) * 60)+" minutes.");
+                                    message.addData('message',data[0].FullName+" will be picked up in "+ time +" minutes.");
                                     message.addData('injury_id',id);
-                                    message.addData('time',((getDistance(p1,p2) / 45) * 60));
+                                    message.addData('time',time);
                                     message.addData('soundname','beep.wav');
                                     message.collapseKey = 'REDiMED';
                                     message.delayWhileIdle = true;
@@ -357,41 +355,54 @@ module.exports = {
         var patientId = req.body.patientId;
         var injuryId = req.body.injuryId;
 
-        var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
-        var message = new gcm.Message();
-        message.addData('title','EMERGENCY');
-        message.addData('message','You have new patient to pickup!');
-        message.addData('injury_id',injuryId);
-        message.addData('soundname','beep.wav');
-        message.collapseKey = 'EMERGENCY';
-        message.delayWhileIdle = true;
-        message.timeToLive = 3;
-        var registrationIds = [];
+        db.IMInjury.find({where:{injury_id: injuryId}},{raw:true})
+            .success(function(injury){
 
-        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
-            .success(function(type){
-                db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
-                    .success(function (data) {
-                        if(data)
-                        {
-                            if (data.android_token != null)
-                                registrationIds.push(data.android_token);
+                var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                var message = new gcm.Message();
+                message.addData('title','EMERGENCY');
+                message.addData('message','You have new patient to pickup!');
+                message.addData('injury_id',injuryId);
 
-                            sender.send(message, registrationIds, 4, function (err,result) {
-                                if(err)
+                if(injury.latitude != null)
+                    message.addData('lat',injury.latitude);
+                if(injury.longitude != null)
+                    message.addData('lng',injury.longitude);
+
+                message.addData('soundname','beep.wav');
+                message.collapseKey = 'EMERGENCY';
+                message.delayWhileIdle = true;
+                message.timeToLive = 3;
+                var registrationIds = [];
+
+                db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+                    .success(function(type){
+                        db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
+                            .success(function (data) {
+                                if(data)
                                 {
-                                    res.json({status:'error'});
-                                    console.log("ERROR:",err);
-                                }
-                                else
-                                {
-                                    res.json({status:'success'});
-                                    console.log("SUCCESS:",result);
+                                    if (data.android_token != null)
+                                        registrationIds.push(data.android_token);
+
+                                    sender.send(message, registrationIds, 4, function (err,result) {
+                                        if(err)
+                                        {
+                                            res.json({status:'error'});
+                                            console.log("ERROR:",err);
+                                        }
+                                        else
+                                        {
+                                            res.json({status:'success'});
+                                            console.log("SUCCESS:",result);
+                                        }
+
+                                    });
                                 }
 
-                            });
-                        }
-
+                            })
+                            .error(function (err) {
+                                console.log(err);
+                            })
                     })
                     .error(function (err) {
                         console.log(err);
@@ -400,9 +411,6 @@ module.exports = {
             .error(function (err) {
                 console.log(err);
             })
-
-
-
     },
     testPushGCM: function(req,res)
     {

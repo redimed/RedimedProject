@@ -49,7 +49,7 @@ angular.module("app.security.login.controller",[
                 toastr.error("Wrong Username Or Password!");
             });
 
-            //socket.removeAllListeners();
+            socket.removeAllListeners();
 
         }
     }
