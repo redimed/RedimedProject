@@ -206,6 +206,8 @@ module.exports = {
 				attributes:['FROM_TIME']
 			},
 			where:whereCon,
+			offset: offset,
+			limit: limit,
 			order:'CAL_ID DESC'
 		}).success(function(result){
 			res.json({'status':'success', 'list':result.rows, 'count':result.count});

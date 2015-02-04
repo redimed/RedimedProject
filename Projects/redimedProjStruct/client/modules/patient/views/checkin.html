@@ -3,7 +3,7 @@
 <div class="portlet box blue ng-scope">
 	<div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-person"></i> Today's Appointment List
+            <i class="fa fa-search"></i> Search
         </div>
 <!--         <div class="pull-right navbar-right">
               <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="patientAddForm.open()">
@@ -31,14 +31,17 @@
             <div class="col-md-4 col-sm-4">
               <span class="field">
                 <label for="patient_DOB">Date Of Birth</label>
-                <input type="text" placeholder="Date Of Birth" name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}" readonly="readonly"/>
+                <input placeholder="Date Of Birth" name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}" readonly="readonly"/>
               </span>
             </div>
           </div>
         </div>
         <!-- ACTION -->
         <div class="row" style="margin-bottom: 15px;">
-            <div class="col-md-offset-8 col-sm-offset-8 col-md-4 col-sm-4">
+            <div class="col-md-8 col-sm-8 has-error">
+              <label class="control-label ">Please reset the form when you have completed your check-in.</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
               <div class="col-md-6 col-sm-6">
                 <button class="btn btn-block green" ng-click="searchClick()">
                     <i class="fa fa-search"></i>  Search
@@ -59,7 +62,7 @@
             <my-data-table options="patients.options" rowclass="patients.class" numrows="10" ></my-data-table>
         </div>
         <div class="col-md-6 col-sm-6">
-            <my-data-table options="appointment.options" rowclass="appointments.class" numrows="10" ></my-data-table>
+            <my-data-table options="appointments.options" rowclass="appointments.class" numrows="10" ></my-data-table>
         </div>
       </div>
     </div>

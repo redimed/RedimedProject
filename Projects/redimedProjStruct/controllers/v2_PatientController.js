@@ -14,7 +14,7 @@ module.exports ={
 			attributes: ['Patient_id','First_name','Sur_name','DOB','Address1','Post_code'],
 			order: 'Patient_id DESC'
 		}).success(function(result){
-			res.json({"status": "success", "list": result.rows, "count": result.count});
+			res.json({'status':'success', 'list':result.rows, 'count':result.count});
 		})
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});

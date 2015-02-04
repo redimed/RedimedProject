@@ -6,17 +6,23 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
         $scope.appointment_panel={};
         $scope.patientSearch={};
 
-        var init = function(){
+
             $scope.patients = {
                 show: function (searchInfo) {
                     $scope.patients.options.search = searchInfo;
                     $scope.patient_panel.reload();
                 },
-                select:0,
-                class:function(patient){
-                    return {
-                        selected: (patient.ID == $scope.patients.select)
+                reset: function(){
+                    $scope.patients.options.search = {
+                        First_name:null,
+                        Sur_name: null,
+                        DOB:null
                     };
+                    $scope.patient_panel.reload();
+
+                },
+                class:function(patient){
+                    
                 },
                 scope: $scope.patient_panel,
                 options:{
@@ -32,7 +38,7 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                         }},
                         {type:'button', btnlabel:'Appointment', 
                             btnfn:function(item){
-                                $scope.appointment.show(item.Patient_id);
+                                $scope.appointments.show(item.Patient_id);
                             }
                         }
                     ],
@@ -40,16 +46,22 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                 }
             };
 
-            $scope.appointment = {
+            $scope.appointments = {
                 show: function (patient_id) {
-                    $scope.appointment.options.search = {
+                    $scope.appointments.options.search = {
                          Patient_id:patient_id
+                    };
+                    $scope.appointment_panel.reload();
+                },
+                reset: function(){
+                    $scope.appointments.options.search = {
+                        Patient_id:null
                     };
                     $scope.appointment_panel.reload();
                 },
                 class:function(appointment){
                     return {
-                        selected: (appointment.ID == $scope.appointments.select)
+                        
                     };
                 },
                 scope: $scope.appointment_panel,
@@ -57,9 +69,6 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                     api:'api/erm/v2/appt/appt_by_id',
                     method: 'post',
                     scope: $scope.appointment_panel,
-                    search:{
-                        Patient_id:$scope.showAppointmentOfId
-                    },
                     columns:[
                         {field: 'CAL_ID', is_hide:true},
                         {field: 'Patient_id', is_hide:true},
@@ -90,26 +99,35 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                             }
                         }
                     ],
+                    not_load:true
                 }
             };
-        }
-
-        
-		init();
 
         $scope.searchClick = function(){
-            if(($scope.patientSearch.First_name==='' || $scope.patientSearch.First_name===null || $scope.patientSearch.First_name===undefined) && ($scope.patientSearch.Last_name==='' || $scope.patientSearch.Last_name===null || $scope.patientSearch.Last_name===undefined) && ($scope.patientSearch.DOB==='' || $scope.patientSearch.DOB===null || $scope.patientSearch.DOB===undefined)){
+            if(!$scope.patientSearch.First_name&&!$scope.patientSearch.Sur_name&&!$scope.patientSearch.DOB){
                 toastr.error('Please provide at least 1 information!','Error!');
             }
             else{
-              if(!!$scope.patientSearch.DOB){
-                $scope.patientSearch.DOB = ConfigService.getCommonDate($scope.patientSearch.DOB);
+                var searchData = {
+                    First_name: $scope.patientSearch.First_name,
+                    Sur_name: $scope.patientSearch.Sur_name,
+                    DOB: $scope.patientSearch.DOB
+                };
+                console.log('this is patientSearch', $scope.patientSearch);
+                console.log('this is searchData', searchData);
+                if(searchData.First_name==='') searchData.First_name=undefined;
+                if(searchData.Sur_name==='') searchData.Sur_name=undefined;
+                if(searchData.DOB==='') searchData.DOB=undefined;
+                if(!!searchData.DOB){
+                    searchData.DOB = ConfigService.getCommonDate(searchData.DOB);
                 }
-                $scope.patients.show($scope.patientSearch);  
+                $scope.patients.show(searchData);  
             }
             
         }
         $scope.resetClick = function(){
-           
+           $scope.appointments.reset();
+           $scope.patients.reset();
+           $scope.patientSearch={};
         }
 	});
