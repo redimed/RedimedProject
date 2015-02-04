@@ -40,7 +40,11 @@ angular.module("app.loggedIn.controller",[
             audio.pause();
             notify.close();
             $modalInstance.close();
-            $state.go("call",{callUser:userInfo.id,isCaller:false},{reload:true});
+
+            if(!userInfo.img)
+                userInfo.img = "theme/assets/icon.png"
+            $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false},{reload:true});
+
         }
 
     })
@@ -103,9 +107,13 @@ angular.module("app.loggedIn.controller",[
     $scope.onlineUsers = [];
     $scope.onlineUsersTemp = [];
 
-    UserService.getOnlineUsers().then(function(data){
-        $scope.onlineUsers = data;
-        $scope.onlineUsersTemp = data;
+    UserService.getOnlineUsers().then(function(rs){
+        $scope.onlineUsers = [];
+        if(rs.data)
+        {
+            $scope.onlineUsers = rs.data;
+            $scope.onlineUsersTemp = rs.data;
+        }
     })
 
     socket.on("online",function(data){
@@ -115,13 +123,19 @@ angular.module("app.loggedIn.controller",[
     })
 
     $scope.searchOnlineUser = function(str){
+        $scope.onlineUsers = [];
         $scope.onlineUsers = $filter('filter')($scope.onlineUsersTemp, {
             username: str
         });
     }
 
     $scope.makeCall = function(user){
-        $state.go("call",{callUser:user.id,isCaller:true},{reload:true});
+        UserService.getUserInfo(user.id).then(function(data){
+            if(!data.img)
+                data.img = "theme/assets/icon.png"
+            $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true},{reload:true});
+        })
+
     }
 
 
@@ -301,7 +315,6 @@ angular.module("app.loggedIn.controller",[
                     i++;
                 });
 
-                console.log($scope.loggedInMenus);
             }
 
         });

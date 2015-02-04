@@ -108,6 +108,7 @@ angular.module("app", [
 
         .state('call',{
             params: {
+                callUserInfo: null,
                 callUser : null,
                 isCaller: null
             },
@@ -172,19 +173,20 @@ angular.module("app", [
 
 
     $rootScope.$on("$locationChangeSuccess",function(event, current,previous){
+
         if(current === previous)
         {
             if($cookieStore.get("userInfo")){
                 socket.emit("checkApp",$cookieStore.get("userInfo").id);
             }
         }
-
-
     })
 
 
     $rootScope.$on("$locationChangeStart",function(event, next, current){
         if (easyrtc.webSocket) {
+            easyrtc.hangupAll();
+            easyrtc.closeLocalStream();
             easyrtc.disconnect();
         }
     });

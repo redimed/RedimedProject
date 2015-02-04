@@ -105,8 +105,6 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
-            console.log("FromID:"+currUser+"-ToID:"+contactUser+"-Msg:"+JSON.stringify(message));
-
             db.User.find({where:{id: currUser}},{raw:true})
                 .success(function(currentUser){
                     if(currentUser)

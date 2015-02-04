@@ -338,7 +338,7 @@ module.exports = {
             .success(function(rs){
                 db.User.findAll({where:["socket IS NOT NULL and user_type = ?",rs.ID],attributes:['id','user_name','Booking_Person']},{raw:true})
                     .success(function(data){
-                        res.json(data);
+                        res.json({data:data});
                     })
                     .error(function(err){
                         res.json({status:'error'});
@@ -465,15 +465,18 @@ module.exports = {
         var userList = [];
         db.User.findAll({where: "socket IS NOT NULL"},{raw:true})
             .success(function(data){
-                for (var i = 0; i < data.length; i++) {
-                    userList.push({
-                        id: data[i].id,
-                        username: data[i].user_name,
-                        socket: data[i].socket,
-                        img: data[i].img
-                    });
+                if(data)
+                {
+                    for (var i = 0; i < data.length; i++) {
+                        userList.push({
+                            id: data[i].id,
+                            username: data[i].user_name,
+                            socket: data[i].socket,
+                            img: data[i].img
+                        });
+                    }
+                    res.json({data:userList});
                 }
-                res.json(userList);
             })
             .error(function(err){
                 console.log(err);

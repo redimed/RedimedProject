@@ -234,9 +234,11 @@ angular.module("app.loggedIn.im.map.controller",[])
         }
 
         function getOnlineDriver(){
-            InjuryManagementService.listDriver().then(function(data){
+            InjuryManagementService.listDriver().then(function(rs){
                 $scope.driverListTemp = [];
-                $scope.driverListTemp = data;
+                if(rs.data){
+                    $scope.driverListTemp = rs.data;
+                }
             })
         }
     })

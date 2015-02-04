@@ -7,7 +7,7 @@ angular.module("app.call.controller",[
         socket.removeAllListeners();
 
         $scope.userInfo = null;
-        $scope.callUserInfo = null;
+        $scope.callUserInfo = $stateParams.callUserInfo;
         $scope.isCaller = $stateParams.isCaller;
         $scope.isAccept = false;
 
@@ -33,7 +33,7 @@ angular.module("app.call.controller",[
         }
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
-            $state.go('security.login');
+            $state.go('security.login',null,{location: "replace"});
         else
         {
             $scope.userInfo = $cookieStore.get('userInfo');
@@ -49,22 +49,15 @@ angular.module("app.call.controller",[
         if($stateParams.callUser == null || typeof $stateParams === 'undefined')
         {
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace"});
+                $state.go(from.fromState.name,params,{location: "replace",reload: true});
 
-        }else
-        {
-            UserService.getUserInfo($stateParams.callUser).then(function(data){
-                $scope.callUserInfo = data;
-                if(!$scope.callUserInfo.img)
-                    $scope.callUserInfo.img = "theme/assets/icon.png"
-            })
         }
 
         $scope.cancelCall = function(){
             audio.pause();
             disconnect();
             socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
-            $state.go(from.fromState.name,params,{location: "replace"});
+            $state.go(from.fromState.name,params,{location: "replace", reload: true});
         }
 
         $scope.muteAudio = function(){
@@ -96,31 +89,18 @@ angular.module("app.call.controller",[
                 audio.pause();
                 toastr.error("Call Have Been Rejected!");
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace"});
+                $state.go(from.fromState.name,params,{location: "replace", reload: true});
             }
             if(message.type === 'cancel')
             {
                 audio.pause();
                 toastr.error("Call Have Been Cancelled!");
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace"});
+                $state.go(from.fromState.name,params,{location: "replace", reload: true});
 
             }
 
         })
-
-        //var timeoutCall = setInterval(function(){
-        //    if($scope.isAccept == false)
-        //    {
-        //        toastr.error("No Answer!");
-        //        audio.pause();
-        //        disconnect();
-        //        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
-        //        $state.go(from.fromState.name,params,{location: "replace"});
-        //
-        //        clearInterval(timeoutCall);
-        //    }
-        //},(60 * 1000));
 
         function performCall(easyRtcId) {
             easyrtc.hangupAll();
@@ -132,7 +112,7 @@ angular.module("app.call.controller",[
             var failureCB = function(errCode, errMsg) {
                 toastr.error(errMsg);
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace"});
+                $state.go(from.fromState.name,params,{location: "replace", reload: true});
             };
 
             easyrtc.call(easyRtcId, successCB, failureCB, acceptedCB);
