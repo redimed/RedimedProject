@@ -193,7 +193,6 @@ module.exports = {
 	},
 
 	postApptById: function(req,res){
-		console.log('appointment searching is running');
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
@@ -218,7 +217,6 @@ module.exports = {
 	},
 
 	// postTodayAppt: function(req,res){
-	// 	console.log("It's get in here");
 	// 	var limit = (req.body.limit) ? req.body.limit : 10;
  //        var offset = (req.body.offset) ? req.body.offset : 0;
 	// 	var fields = req.body.fields;
@@ -251,7 +249,6 @@ module.exports = {
 	// },
 
 	// postCheckinSearch: function(req,res){
-	// 	console.log('this is body request', req.body);
 	// 	var limit = (req.body.limit) ? req.body.limit : 10;
  //        var offset = (req.body.offset) ? req.body.offset : 0;
 	// 	var fields = req.body.fields;

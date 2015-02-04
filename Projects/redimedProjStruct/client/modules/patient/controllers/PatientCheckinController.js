@@ -113,8 +113,6 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                     Sur_name: $scope.patientSearch.Sur_name,
                     DOB: $scope.patientSearch.DOB
                 };
-                console.log('this is patientSearch', $scope.patientSearch);
-                console.log('this is searchData', searchData);
                 if(searchData.First_name==='') searchData.First_name=undefined;
                 if(searchData.Sur_name==='') searchData.Sur_name=undefined;
                 if(searchData.DOB==='') searchData.DOB=undefined;
