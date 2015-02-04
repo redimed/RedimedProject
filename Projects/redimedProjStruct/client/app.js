@@ -35,7 +35,7 @@ angular.module("app", [
     'ngSanitize',
     'ngMap',
     'btford.socket-io',
-    'angular-underscore'
+    // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
    var host = location.hostname;

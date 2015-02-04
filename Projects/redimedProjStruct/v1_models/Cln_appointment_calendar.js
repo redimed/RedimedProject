@@ -5,7 +5,7 @@ var squel = install_model._squel;
 install_model.sql_timetable_overview = function(doctor_id, from_time) {
 	var query_builder = squel.select().from('cln_appointment_calendar')
 	        .where('DOCTOR_ID = ?', doctor_id)
-	        .where("FROM_TIME > DATE_FORMAT(?, '%Y-%m-%d')", from_time)
+	        .where("FROM_TIME >= DATE_FORMAT(?, '%Y-%m-%d')", from_time)
 	        .where("FROM_TIME < DATE_ADD(?, INTERVAL 31 DAY)", from_time)
         	;
 
