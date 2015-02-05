@@ -4,7 +4,7 @@
 	        <i class="fa fa-medkit"></i> Invoice Detail
 	    </div>
 	    <div class="pull-right navbar-right">
-            <button ng-click="clickAction()" class="btn btn-default"><i class="fa fa-save"></i> Save </button>
+            <button ng-click="clickAction()" class="btn btn-default" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
         </div>
 	</div>
 	<div class="portlet-body">
@@ -92,7 +92,8 @@
 			<label for="status">Status</label>
 			<select class="form-control" name="STATUS"
 				ng-model="InvoiceMap.STATUS"
-				ng-options="item.code as item.label for item in options.invoice_status">
+				ng-options="item.code as item.label for item in options.invoice_status"
+				ng-disabled="statusDisable">
 			</select>
 		</span>	
 	</div>
@@ -111,7 +112,7 @@
 			<input ng-if="InvoiceMap.claim_id" disabled type="text" ng-model="InvoiceMap.claim.Injury_name" class="form-control">
 
 			<div class="input-group-btn" dropdown="">
-				<button type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">Claim <i class="fa fa-angle-down"></i></button>
+				<button type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false" ng-show="claimShow">Claim <i class="fa fa-angle-down"></i></button>
 				<ul class="dropdown-menu" role="menu">
 					<li><a ng-click="patientClaim.open()"><i class="fa fa-search"></i> Choose Claim </a></li>
 					<li><a><i class="fa fa-times"></i> Remove Claim</a></li>

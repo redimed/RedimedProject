@@ -55,6 +55,11 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			}
 		},
 		link: function(scope, element, attrs){
+
+			scope.showSave= true;
+			scope.statusDisable = false;
+			scope.claimShow = true;
+
 			var init = function(){
 				scope.isSubmit = false;
 				if(scope.params.permission.edit === true){
@@ -79,12 +84,14 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 
 				 		scope.InvoiceMap.AMOUNT = amount;
 
+				 		if(scope.InvoiceMap.STATUS === 'done'){
+				 			scope.showSave= false;
+							scope.statusDisable = true;
+							scope.claimShow = false;
+				 		}
 
 				 		scope.patientClaim.options.search.Patient_id = scope.InvoiceMap.Patient_id;
-				 		console.log(scope.patientClaimPanel)
 				 		scope.patientClaimPanel.reload();
-						
-						console.log(scope.InvoiceMap)
 					})
 				}
 				scope.InvoiceMap = angular.copy(InvoiceHeaderModel);
@@ -99,9 +106,14 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				// 	if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
 				// }//end for
 				if(scope.params.permission.edit === true){
+					if(scope.InvoiceMap.STATUS==='done'){
+						var r = confirm("You cannot change this invoice information once you change the status to \"Done\". \n Are you sure?");
+						if(r==false) return;
+					}
 					InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
 						if(response.status == 'error') toastr.error('Error Get Detail', 'Error')
 						toastr.success('Edit Successfully !!!', 'Success');
+						init();
 					})
 				}else{
 					InvoiceService.add(postData).then(function(data){
