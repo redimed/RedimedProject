@@ -21,5 +21,35 @@ module.exports ={
 		});
 	},
 
+	getRedirectPatient : function(req, res) {
+		var token = req.query.t;
+		var patient_id = req.query.p;
+		var cal_id = req.query.c;
+
+		if(!patient_id || !cal_id) {
+			res.json({status: 'error'});
+			return;
+		}
 	
-}
+		db.User.find({
+			where: {
+				socket: token
+			}
+		},{raw:true}).success(function(result){
+			if(!result) {
+				res.json({cookies: req.cookies, session: req.session})
+				return;
+			}
+
+			delete result.img;
+			var info = JSON.stringify(result);
+
+			var hostname = req.headers.host; //  'localhost:3000'
+			info.no_socket = true;
+			res.cookie('userInfo', info);
+    		res.redirect('http://' + hostname + '/#/patient/appointment/'+ patient_id +'/' + cal_id);
+		})
+		.error(function(error){
+			res.json({cookies: req.cookies, session: req.session})
+		});
+	}}
