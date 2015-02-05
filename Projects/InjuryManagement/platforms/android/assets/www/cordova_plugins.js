@@ -6,10 +6,17 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/com.dooble.phonertc/www/phonertc.js",
-        "id": "com.dooble.phonertc.PhoneRTC",
+        "file": "plugins/com.dooble.audiotoggle/www/audiotoggle.js",
+        "id": "com.dooble.audiotoggle.AudioToggle",
         "clobbers": [
-            "cordova.plugins.phonertc"
+            "AudioToggle"
+        ]
+    },
+    {
+        "file": "plugins/com.ionic.keyboard/www/keyboard.js",
+        "id": "com.ionic.keyboard.keyboard",
+        "clobbers": [
+            "cordova.plugins.Keyboard"
         ]
     },
     {
@@ -255,24 +262,34 @@ module.exports = [
         "clobbers": [
             "window.Media"
         ]
+    },
+    {
+        "file": "plugins/org.chromium.power/power.js",
+        "id": "org.chromium.power.power",
+        "clobbers": [
+            "chrome.power"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "com.chariotsolutions.nfc.plugin": "0.6.0",
-    "com.dooble.phonertc": "2.0.0",
+    "com.dooble.audiotoggle": "1.0.0",
+    "com.ionic.keyboard": "1.0.3",
     "com.phonegap.plugins.PushPlugin": "2.4.0",
     "com.plugin.datepicker": "0.5.0",
-    "org.apache.cordova.camera": "0.3.3",
+    "org.apache.cordova.camera": "0.3.4",
     "org.apache.cordova.console": "0.2.12",
     "org.apache.cordova.device": "0.2.13",
     "org.apache.cordova.dialogs": "0.2.10",
+    "org.apache.cordova.engine.crosswalk": "0.0.1-dev",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
     "org.apache.cordova.geolocation": "0.3.11",
-    "org.apache.cordova.inappbrowser": "0.5.3",
-    "org.apache.cordova.media": "0.2.15"
+    "org.apache.cordova.inappbrowser": "0.5.4",
+    "org.apache.cordova.media": "0.2.15",
+    "org.chromium.power": "1.0.3"
 }
 // BOTTOM OF METADATA
 });

@@ -1,41 +1,46 @@
 angular.module('starter.NFC.controller',[])
 .controller('readNFCController',function($scope,WorkerServices,localStorageService, $ionicPopup, $ionicLoading, $timeout,$state,ConfigService,InjuryServices,$q,$cordovaInAppBrowser,$cordovaBarcodeScanner){
-        $scope.receiveData='';
+        $scope.receiveData=[];
         $scope.info=[];
+        
         $scope.sexIndex = ConfigService.sex_option();
         $scope.titleIndex = ConfigService.title_option();
         $scope.accTypeIndex = ConfigService.ac_type_option();
         $scope.fundIndex = {};
         $scope.list = [];
         $scope.isShow = true;
-
         $scope.getData = function(data){
-
             $scope.receiveData=JSON.parse(data);
-
+            var tempNfc = {
+              'data': JSON.parse(data)
+            }
             if($scope.receiveData.Patient_id != null){
-                WorkerServices.getInfoPatientbyID($scope.receiveData.Patient_id).then(function(data){
-                    $scope.info = data;
+                WorkerServices.getInfoPatientbyID($scope.receiveData.Patient_id).then(function(info){
+                    $scope.info = info;
                 })
             }
             $scope.$apply(function(){
                 $scope.$watch('info',function(info){
-                    $scope.testData = $scope.info;
+                   if(info.length == 0){
+                      $scope.testData = tempNfc
+                   }
+                   else{
+                     $scope.testData = info;
+                   }
                 })
             })
         };
        var inni = function(){
-
-
                localStorageService.set('mode','read');
                var mode = localStorageService.get('mode');
                writeNFC.initialize($scope.getData,mode);
-
         };
         inni();
-
         $scope.updateWorker = function(data){
-            var NewInfo = {
+           if(data.length == 0){
+                alert("please read NFC tag!!!")
+           }else{
+                var NewInfo = {
                 Patient_id:data.data.Patient_id,
                 Title:data.data.Title,
                 First_name:data.data.First_name,
@@ -98,13 +103,13 @@ angular.module('starter.NFC.controller',[])
                    alert("Update Fail");
                }
             })
+           }
         }
         $scope.getInfoPatien = function(firstName){
                 $scope.isShow = true;
                 WorkerServices.getInfoPatientByFirstName(firstName).then(function (data) {
                   if(data.status=='success'){
                       $scope.list = data.data;
-
                   }
                 })
         }
@@ -114,7 +119,6 @@ angular.module('starter.NFC.controller',[])
                 data:data
             }
             $scope.info = p;
-
         }
         $scope.$watch('info',function(info){
             if(typeof  info !== undefined){
@@ -124,6 +128,7 @@ angular.module('starter.NFC.controller',[])
         })
         $scope.writeNewNFC = function(data){
 
+            if(data.length !== 0){
                 localStorageService.set('mode','write');
                 var mode = localStorageService.get('mode');
                 writeNFC.initialize(data,mode);
@@ -172,21 +177,16 @@ angular.module('starter.NFC.controller',[])
                         alert("Update Fail");
                     }
                 })
+            }else{
+                alert("Please read NFC tag!!")
+            }    
         }
         $scope.Inapp = function(data){
 
-            if(data == undefined){
+            if(data.length == 0){
                 alert("please read tag NFC!")
             }else{
-                //app.initialize(data.data.Patient_id);
-                $cordovaInAppBrowser
-                    .open('http://testapp.redimed.com.au:3000/#/patient/appointment/'+data.data.Patient_id+'/68767', '_blank')
-                    //.then(function(event) {
-                    //
-                    //}, function(event) {
-                    //
-                    //});
-
+                $cordovaInAppBrowser.open('http://testapp.redimed.com.au:3000/#/patient/appointment/'+data.data.Patient_id+'/68767', '_blank')
             }
 
 

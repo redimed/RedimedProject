@@ -2,9 +2,6 @@ angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
                                                    $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
-
-
-
         $scope.notifications = [];
 
         $scope.$on('pushNotificationReceived', function (event, notification) {
@@ -30,6 +27,10 @@ angular.module('starter.security.login.controller',[])
 
         //iOS.
         function handleIOS(notification) {
+            if (notification.event == "registered") {
+                $scope.modelUser.token = notification.regid;
+                $scope.modelUser.platform = ionic.Platform.platform();
+            }
             if (notification.foreground == "1") {
                 if (notification.sound) {
                     var mediaSrc = $cordovaMedia.newMedia(notification.sound);
@@ -58,10 +59,16 @@ angular.module('starter.security.login.controller',[])
         }
 
         signaling.on('isError', function () {
-            var alertPopup = $ionicPopup.alert({
+            $ionicLoading.hide();
+            cordova.plugins.Keyboard.close();
+            var alertPopup = $ionicPopup.confirm({
                 title: "Can't Login",
                 template: 'Account is using!'
-            });
+            }).then( function(result) {
+                if(result){
+                    signaling.emit('forceLogin', $scope.modelUser.username);
+                }
+            })
         });
 
         signaling.on('isSuccess', function () {
@@ -70,66 +77,85 @@ angular.module('starter.security.login.controller',[])
 
         // SUBMIT LOGIN
         $scope.loginApp = function() {
-            signaling.emit('checkLogin', $scope.modelUser.username);
-        }
-
-        function sigInApp() {
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
                 "<br />"+
-                "<span>signing...</span>",
+                "<span>Signing...</span>",
                 animation: 'fade-in',
                 showBackdrop: true,
                 maxWidth: 500,
                 showDelay: 0
             });
             SecurityService.login($scope.modelUser).then(function(response) {
-                UserService.detail().then(function(response) {
-                    if(typeof response.userInfo !== 'undefined')
-                        localStorageService.set("userInfo", response.userInfo);
-
-                    signaling.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
-
-                    if(typeof response.companyInfo !== 'undefined')
-                        localStorageService.set("companyInfo", response.companyInfo);
-                    if(response.userInfo['function_mobile'] != null){
-                        UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
-                            var rs = data.definition.split('(');
-                            if(rs[0] != null)
-                            {
-                                if(rs[1] != null)
-                                {
-                                    var r = rs[1].split(')');
-                                    var params = eval("("+r[0]+")");
-
-                                    $state.go(rs[0],params,{reload:true});
-                                }
-                                else
-                                {
-                                    $state.go(rs[0],{reload:true});
-                                }
-                            }
-                        })
-                    }
-                    else
-                    {
-                        $ionicLoading.hide();
-                        if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                        {
-                            $state.go('app.driver.list');
-                        } else {
-                            $state.go('app.injury.info');
-                        }
-                    }
-                });
-            }, function(error){
-                console.log(error);
+                signaling.emit('checkLogin', $scope.modelUser.username);
+            }, function(error) {
+                $ionicLoading.hide();
                 $ionicPopup.alert({
                     title: "Can't Login",
-                    template: 'Please Check Your Information!'
+                    template: 'Invalid Username or Password!'
                 })
             });
         }
 
+        $scope.keyPress = function(keyCode) {
+            if(keyCode == '13' && $scope.modelUser.username && $scope.modelUser.password){
+                cordova.plugins.Keyboard.close();
+                $scope.loginApp();
+            }
+        }
 
+        function sigInApp() {
+            UserService.detail().then(function(response) {
+                if(typeof response.userInfo !== 'undefined')
+                    localStorageService.set("userInfo", response.userInfo);
+
+                signaling.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
+
+                if(typeof response.companyInfo !== 'undefined')
+                    localStorageService.set("companyInfo", response.companyInfo);
+
+                if(response.userInfo['function_mobile'] != null){
+                    UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
+                        var rs = data.definition.split('(');
+                        if(rs[0] != null)
+                        {
+                            if(rs[1] != null)
+                            {
+                                var r = rs[1].split(')');
+                                var params = eval("("+r[0]+")");
+                                $state.go(rs[0],params,{reload:true});
+                            }
+                            else
+                            {
+                                $state.go(rs[0],{reload:true});
+                            }
+
+                        }
+                    })
+                }
+                else
+                {
+                    if (localStorageService.get("userInfo").UserType.user_type == "Driver")
+                    {
+                        $state.go('app.driver.list');
+                    }
+                    else if (localStorageService.get("userInfo").UserType.user_type == "Company")
+                    {
+                        $state.go('app.injury.info');
+                    }
+                    else {
+                        $state.go('app.injury.info');
+                    }
+                }
+
+                $ionicLoading.hide();
+            });
+        }
+
+        // Get Current Offset() div
+        //$('#B').click(function(e) {
+        //    alert('ClICK');
+        //    var posX = $(this).offset().left, posY = $(this).offset().top;
+        //    alert((e.pageX - posX)+ ' , ' + (e.pageY - posY));
+        //});
     });

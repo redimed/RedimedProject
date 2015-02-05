@@ -18,14 +18,12 @@ angular.module('starter', ['ionic',
     'app.config',
     'starter.worker',
     'starter.booking',
-    'ui.bootstrap',
     'starter.NFC',
     'ngCordova',
     'starter.driver',
     'starter.NFC',
     'starter.phoneCall',
 ])
-    //app ready get function register get device token
     .factory(("ionPlatform"), function( $q ){
         var ready = $q.defer();
 
@@ -38,8 +36,8 @@ angular.module('starter', ['ionic',
         }
     })
 
-    .factory('signaling', function (socketFactory, localStorageService) {
-        var socket = io.connect('http://192.168.133.121:3000/');
+    .factory('signaling', function (socketFactory, HOST_CONFIG) {
+        var socket = io.connect("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/");
 
         var socketFactory = socketFactory({
             ioSocket: socket
@@ -48,18 +46,15 @@ angular.module('starter', ['ionic',
         return socketFactory;
     })
 
-    .config(function($stateProvider, $urlRouterProvider, RestangularProvider) {
+    .config(function($stateProvider, $urlRouterProvider, RestangularProvider, HOST_CONFIG) {
 
-        RestangularProvider.setBaseUrl("http://192.168.133.121:3000");
-
-        //RestangularProvider.setBaseUrl("http://testapp.redimed.com.au:3000");
-
+        RestangularProvider.setBaseUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state("init", {
                 url: "/",
                 resolve: {
-                    initHome: function($timeout,$state,localStorageService){
+                    initHome: function($timeout, $state, localStorageService){
                         if(!localStorageService.get("userInfo")){
                             $timeout(function(){
                                 $state.go("security.login");
@@ -72,55 +67,43 @@ angular.module('starter', ['ionic',
                                 } else {
                                     $state.go('app.injury.info');
                                 }
-                            }, 100);
+                            }, 1000);
                         }
                     }
                 }
             })
     })
 
-    .run(function($state, $rootScope, localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal){
+    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, HOST_CONFIG){
 
-        //modal receive phone call
-        $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', function(modal) {
-            $rootScope.receivePhoneModal = modal;
-        },{
+        easyrtc.setSocketUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port)
+
+        $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', {
             scope: $rootScope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            backdropClickToClose: false
+        }).then(function(modal) {
+            $rootScope.modal = modal
         });
+
         $rootScope.contacts = {};
 
-        //sound phone call;
-        var src = "/android_asset/www/receive_phone.mp3";
-        var media = null;
+        $rootScope.nameCallingJson = [];
 
         if(localStorageService.get("userInfo")) {
             signaling.emit('checkApp', localStorageService.get("userInfo").id);
         }
 
-        document.addEventListener("pause", onPause, false);
-
-        function onPause() {
-            console.log('onPause------');
-        }
-
-        function onDeviceReady() {
-            document.addEventListener("offline", onOffline, false);
-        }
-
-        function onOffline() {
-            console.log('onOffline--------');
-        }
-
         localStorageService.set('mode','read');
-        $rootScope.$on("$stateChangeSuccess", function(e, toState) {
+        $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams) {
+            localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {
                     e.preventDefault();
                     $state.go("security.login");
                 }
             }
-            if( toState.name == "app.injury.desinjury" || toState.name == "app.injury.desinjurySuccess")
+            if( toState.name == "app.injury.desinjury" || toState.name == "app.injury.desinjurySuccess" || toState.name == "app.injury.modelBody")
             {
                 $ionicSideMenuDelegate.canDragContent(false);
             }
@@ -145,43 +128,21 @@ angular.module('starter', ['ionic',
                     }
                 }
                 $cordovaPush.register(config).then(function (result) {
-                    console.log("Register Push Notification " + result)
+                    console.log("Register Push Notification Status: " + result)
                 }, function (err) {
-                    console.log("Register Push Notification " + err)
+                    console.log("Register Push Notification Status: " + err)
                 });
             });
         });
 
-        signaling.on('messageReceived', function (userInfo, message) {
-            switch (message.type) {
-                case 'call':
-
-                    media = new Media(src);
-                    media.play();
-                    if ($state.current.name === 'app.phoneCall') { return; }
-
-                    $rootScope.nameCalling = userInfo;
-                    $rootScope.receivePhoneModal.show();
-
-                    $rootScope.answerphoneCall = function() {
-                        media.stop();
-                        $rootScope.receivePhoneModal.hide();
-                        $state.go('app.phoneCall', { isCalling: false, contactName: userInfo });
-                    }
-
-                    $rootScope.hideModalphoneCall = function(){
-                        media.stop();
-                        $rootScope.receivePhoneModal.hide();
-                        signaling.emit('sendMessage', userInfo, { type: 'ignore' });
-                    }
-
-                    break;
-                case 'ignore':
-                    $rootScope.receivePhoneModal.hide();
-                    media.stop();
-                    break;
-            }
-        });
+        signaling.on('forceLogout', function(){
+            $ionicPopup.confirm({
+                title: "Sorry",
+                template: 'Account is using!'
+            })
+            localStorageService.clearAll();
+            $state.go("security.login");
+        })
     })
 
     .directive('videoView', function ($rootScope, $timeout) {

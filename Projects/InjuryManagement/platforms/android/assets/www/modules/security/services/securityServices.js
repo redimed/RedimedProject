@@ -1,5 +1,5 @@
 angular.module('starter.security.services',[])
-    .factory("SecurityService", function(Restangular, ionPlatform, $cordovaPush){
+    .factory("SecurityService", function(Restangular){
         var securityService = {};
         var securityApi = Restangular.all("api");
 
@@ -27,10 +27,6 @@ angular.module('starter.security.services',[])
         securityService.forgotPass = function(email){
             var forgotMail = securityApi.one('users/forgotPassword');
             return forgotMail.get({email:email});
-        }
-        securityService.logOutapp = function(userinfo){
-            var notificationServices = securityApi.all('im/deleteToken');
-            return notificationServices.post({info:userinfo});
         }
 
         return securityService;

@@ -1,255 +1,151 @@
 angular.module('starter.phoneCall.controller',[])
 
-    .controller('phoneCallController', function ($scope, $state, localStorageService,  $rootScope, $timeout, $ionicModal, $stateParams, signaling, $cordovaMedia) {
+    .controller('phoneCallController', function ($scope, $state, localStorageService,
+                                                 $rootScope, $timeout, $ionicModal,
+                                                 $stateParams, signaling, UserService) {
 
-        var duplicateMessages = [];
-        $scope.callInProgress = false;
+        var from = localStorageService.get('fromState');
+        $scope.isCaller = ($stateParams.isCaller == 'true') ? true : false;
+        $scope.isAccept = false;
+        var params = {};
+        if(from.fromParams != null || typeof from.fromParams !== 'undefined')
+        {
+            angular.forEach(from.fromParams, function(value , key) {
+                params[key] = value;
+            })
+        }
+        $scope.contactNameJson = [];
+        $scope.mic = false;
+        $scope.camera = false;
 
-        $scope.isCalling = $stateParams.isCalling === 'true';
-        $scope.contactName = $stateParams.contactName;
-
-
-        $scope.contacts = {};
-        $scope.hideFromContactList = [$scope.contactName];
-        $scope.muted = false;
-
-
+        var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
         var src = "/android_asset/www/phone_calling.mp3";
         var media = null;
-        media = new Media(src);
-
-        function call(isInitiator, contactName) {
-            console.log(new Date().toString() + ': calling to ' + contactName + ', isInitiator: ' + isInitiator);
-
-            var config = {
-                isInitiator: isInitiator,
-                turn: {
-                    host: 'turn:ec2-54-149-226-250.us-west-2.compute.amazonaws.com:3478',
-                    username: 'root',
-                    password: 'root'
-                },
-                streams: {
-                    audio: true,
-                    video: true
-                },
-                prefercodec:"G722"
-            };
-
-            var session = new cordova.plugins.phonertc.Session(config);
-
-            console.log(session);
-            session.on('sendMessage', function (data) {
-                signaling.emit('sendMessage', contactName, {
-                    type: 'phonertc_handshake',
-                    data: JSON.stringify(data)
-                });
-            });
-
-            session.on('answer', function () {
-                console.log('Answered!');
-            });
-
-            session.on('disconnect', function () {
-                if ($scope.contacts[contactName]) {
-                    delete $scope.contacts[contactName];
-                }
-                if (Object.keys($scope.contacts).length === 0) {
-                    signaling.emit('sendMessage', contactName, { type: 'ignore' });
-                    if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                    {
-                        $state.go('app.driver.list');
-                    } else {
-                        $state.go('app.injury.info');
-                    }
-                }
-            });
-
-            session.call();
-
-            $scope.contacts[contactName] = session;
-        }
-
-        if ($scope.isCalling) {
-            media.play();
-            signaling.emit('sendMessage', $stateParams.contactName, { type: 'call' });
-        }
-
-        if(!$scope.isCalling && $scope.contactName != '') {
-            if ($scope.callInProgress) { return; }
-            $scope.callInProgress = true;
-            $timeout($scope.updateVideoPosition, 1000);
-
-            call(false, $stateParams.contactName);
-
-            setTimeout(function () {
-                console.log('sending answer');
-                signaling.emit('sendMessage', $stateParams.contactName, { type: 'answer' });
-            }, 1500);
-        }
-
-        //$scope.mute = function() {
-        //    session.streams.audio = false;
-        //    $scope.contacts.renegotiate();
-        //}
-
-
-        $scope.ignore = function () {
-            media.stop();
-            var contactNames = Object.keys($scope.contacts);
-            if (contactNames.length > 0) {
-                $scope.contacts[contactNames[0]].disconnect();
-            } else {
-                signaling.emit('sendMessage', $stateParams.contactName, { type: 'ignore' });
-                if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                {
-                    $state.go('app.driver.list', {reload: true});
-                } else {
-                    $state.go('app.injury.info', {reload: true});
-                }
+        var loop = function (status) {
+            if (status === Media.MEDIA_STOPPED) {
+                media.play();
+            }
+            else if (status === Media.MEDIA_PAUSED) {
+                media.pause();
             }
         };
 
-        $scope.end = function () {
-            Object.keys($scope.contacts).forEach(function (contact) {
-                $scope.contacts[contact].close();
-                delete $scope.contacts[contact];
-            });
-        };
+        UserService.getUserInfo($stateParams.callUser).then( function(data) {
+            $scope.contactNameJson.contactName = data.user_name;
+            $scope.contactNameJson.background = colors[Math.floor(Math.random() * colors.length)];
+            $scope.contactNameJson.letter = String(data.user_name).substr(0,1).toUpperCase();
+        })
 
-        $scope.updateVideoPosition = function () {
-            $rootScope.$broadcast('videoView.updatePosition');
-        };
+        $scope.micToogle = function() {
+            $scope.mic = !$scope.mic;
 
-        //$scope.addContact = function (newContact) {
-        //    $scope.hideFromContactList.push(newContact);
-        //    signaling.emit('sendMessage', newContact, { type: 'call' });
-        //
-        //    cordova.plugins.phonertc.showVideoView();
-        //    $scope.selectContactModal.hide();
-        //};
-        //
-        //$scope.hideCurrentUsers = function () {
-        //    return function (item) {
-        //        return $scope.hideFromContactList.indexOf(item) === -1;
-        //    };
-        //};
-        //
-        //$scope.toggleMute = function () {
-        //    $scope.muted = !$scope.muted;
-        //
-        //    Object.keys($scope.contacts).forEach(function (contact) {
-        //        var session = $scope.contacts[contact];
-        //        session.streams.audio = !$scope.muted;
-        //        session.renegotiate();
-        //    });
-        //};
-
-        function onMessageReceive (name, message) {
-            switch (message.type) {
-                case 'answer':
-                    media.stop();
-                    $scope.$apply(function () {
-                        $scope.callInProgress = true;
-                        $timeout($scope.updateVideoPosition, 1000);
-                    });
-
-                    var existingContacts = Object.keys($scope.contacts);
-                    if (existingContacts.length !== 0) {
-                        signaling.emit('sendMessage', name, {
-                            type: 'add_to_group',
-                            contacts: existingContacts,
-                            isInitiator: false
-                        });
-                    }
-
-                    call(true, name);
-                    break;
-
-                case 'ignore':
-                    media.stop();
-                    var len = Object.keys($scope.contacts).length;
-                    if (len > 0) {
-                        if ($scope.contacts[name]) {
-                            $scope.contacts[name].close();
-                            delete $scope.contacts[name];
-                        }
-
-                        var i = $scope.hideFromContactList.indexOf(name);
-                        if (i > -1) {
-                            $scope.hideFromContactList.splice(i, 1);
-                        }
-
-                        if (Object.keys($scope.contacts).length === 0) {
-                            if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                            {
-                                $state.go('app.driver.list', {reload: true});
-                            } else {
-                                $state.go('app.injury.info', {reload: true});
-                            }
-                        }
-                    } else {
-                        if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                        {
-                            $state.go('app.driver.list', {reload: true});
-                        } else {
-                            $state.go('app.injury.info', {reload: true});
-                        }
-                    }
-
-                    break;
-
-                case 'phonertc_handshake':
-                    if (duplicateMessages.indexOf(message.data) === -1) {
-                        $scope.contacts[name].receiveMessage(JSON.parse(message.data));
-                        duplicateMessages.push(message.data);
-                    }
-
-                    break;
-
-                case 'add_to_group':
-                    message.contacts.forEach(function (contact) {
-                        $scope.hideFromContactList.push(contact);
-                        call(message.isInitiator, contact);
-
-                        if (!message.isInitiator) {
-                            $timeout(function () {
-                                signaling.emit('sendMessage', contact, {
-                                    type: 'add_to_group',
-                                    isInitiator: true
-                                });
-                            }, 1500);
-                        }
-                    });
-
-                    break;
+            if($scope.mic){
+                easyrtc.enableMicrophone(false);
+            }
+            else {
+                easyrtc.enableMicrophone(true);
             }
         }
 
-        signaling.on('messageReceived', onMessageReceive);
+        $scope.videoToogle = function() {
+            $scope.camera = !$scope.camera;
+
+            if($scope.camera){
+                easyrtc.enableCamera(false);
+            }
+            else {
+                easyrtc.enableCamera(true);
+            }
+        }
+
+        $scope.cancelCall = function () {
+            disconnect();
+            signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
+            $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+        };
 
         $scope.$on('$destroy', function() {
-            signaling.removeListener('messageReceived', onMessageReceive);
+            signaling.removeListener('messageReceived', function(fromId, fromUser, message) {
+                switch (message.type) {
+                    case 'answer':
+                        media.pause();
+                        performCall(message.rtcId);
+                        break;
+                    case 'ignore':
+                        media.pause();
+                        disconnect();
+                        $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+                        break;
+                    case 'cancel':
+                        media.pause();
+                        disconnect();
+                        $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+                        break;
+                }
+            });
         });
 
-        function doOnOrientationChange()
-        {
-            switch(window.orientation)
-            {
-                case -90:
-                case 90:
-                    var widthWindow = $(window).width()+"px";
-                    $('.video-container').width(widthWindow);
-                    $('.video-container').height(widthWindow);
+        signaling.on('messageReceived', function(fromId, fromUser, message) {
+            switch (message.type) {
+                case 'answer':
+                    media.pause();
+                    performCall(message.rtcId);
                     break;
-                default:
-                    var widthWindow = $(window).width()+"px"
-                    $('.video-container').width(widthWindow);
-                    $('.video-container').height(widthWindow);
+                case 'ignore':
+                    media.pause();
+                    disconnect();
+                    $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+                    break;
+                case 'cancel':
+                    disconnect();
+                    $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
             }
+        });
+
+
+        function performCall(easyRtcId) {
+            easyrtc.hangupAll();
+            var acceptedCB = function(accepted, easyrtcid) {
+            };
+            var successCB = function() {
+                $scope.isAccept = true;
+                console.log("Success","Call Success!");
+            };
+            var failureCB = function(errCode, errMsg) {
+                console.log("Error",errMsg);
+            };
+
+            easyrtc.call(easyRtcId, successCB, failureCB, acceptedCB);
         }
 
-        window.addEventListener('orientationchange', doOnOrientationChange);
+        function init() {
+            var connectSuccess = function(rtcId) {
+                if ($scope.isCaller == true) {
+                    signaling.emit("sendMessage", localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'call'});
+                    AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+                    media = new Media(src, null, null, loop);
+                    media.play();
+                }
+                if($scope.isCaller == false) {
+                    signaling.emit("sendMessage", localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'answer',rtcId: rtcId})
+                }
 
-        doOnOrientationChange();
+            }
+            var connectFailure = function(errorCode, errText) {
+                console.log("===RTC Connect Error====== " + errText);
+                easyrtc.showError(errorCode, errText);
+            }
+
+            easyrtc.dontAddCloseButtons();
+            easyrtc.easyApp("easyrtc.audioVideo",'selfVideo',['callerVideo'], connectSuccess, connectFailure);
+        }
+
+        var disconnect = function() {
+            easyrtc.hangupAll();
+            easyrtc.closeLocalStream();
+            easyrtc.disconnect();
+        }
+
+        init();
     })

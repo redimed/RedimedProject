@@ -1,9 +1,9 @@
 <ion-view title="Add Worker">
     <ion-nav-buttons>
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <button menu-toggle="left" class="button button-icon icon ion-navicon waves-effect waves-light" style="color:#fff"></button>
     </ion-nav-buttons>
     <div class="bar bar-subheader">
-        <button class="button button-clear button-positive" ui-sref="app.chooseAppointmentCalendar"  >
+        <button class="button button-icon icon ion-ios7-arrow-back  waves-effect waves-light "  ui-sref="app.chooseAppointmentCalendar"  >
             Back
         </button>
         <h1 class="title">Detail Booking</h1>
@@ -13,69 +13,70 @@
             <div class="portlet yellow-crusta box">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-cogs"></i>
+                        <i class="small mdi-action-event "></i>
                         Summary of Booking
                     </div>
 
                 </div>
-                <div class="portlet-body">
-                    <div class="row static-info">
-                        <div class="col-md-5 name" style="width: 100px">
+                <div class="">
+                    <div class="row ">
+                        <div class="col s4">
                             Date:
                         </div>
-                        <div class="col-md-7 value">
+                        <div class="col s8">
                             {{selectedBooking.FROM_TIME|date:'dd/MM/yyyy'}}
-                            <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
                         </div>
+                         
                     </div>
-                    <div class="row static-info">
-                        <div class="col-md-5 name" style="width: 100px">
+                    <div class="row ">
+                        <div class="col s4" >
                             Time:
                         </div>
-                        <div class="col-md-7 value">
+                        <div class="col s6">
                             {{selectedBooking.APPOINTMENT_TIME|date:'HH:mm'}}
-                            <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
                         </div>
+                      
                     </div>
-                    <div class="row static-info">
-                        <div class="col-md-5 name" style="width: 100px">
+                    <div class="row ">
+                        <div class="col s4" >
                             Doctor:
                         </div>
-                        <div class="col-md-7 value">
+                        <div class="col s6">
                             {{selectedBooking.DOCTOR_NAME}}
-                            <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
                         </div>
+                        
                     </div>
-                    <div class="row static-info">
-                        <div class="col-md-5 name" style="width: 145px">
+                    <div class="row ">
+                        <div class="col s4" >
                             Address:
                         </div>
-                        <div class="col-md-7 value">
+                        <div class="col s6">
                             {{selectedBooking.Address}}
-                            <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
                         </div>
+                        
                     </div>
 
-                    <div class="row static-info">
-                        <div class="col-md-5 name" style="width: 115px">
+                    <div class="row ">
+                        <div class="col s4" >
                             Description:
                         </div>
-                        <div class="col-md-7 value">
+                        <div class="col s6">
                                 <textarea class="form-control ng-pristine ng-valid ng-valid-maxlength" ng-model="description" ></textarea>
                         </div>
+                        
                     </div>
                     <div class="portlet light">
-                        <div class="portlet-title">
-                            <div class="tools" style="float:left;" >
-                                <i class="fa fa-map-marker fa-2x text-danger" ng-click="isCollapsed = !isCollapsed">Show maps</i>
-                            </div>
-                        </div>
+                       
+                        
+                            <a class="btn-floating btn-small waves-effect waves-light #26a69a"><i class="mdi-maps-place"></i></a>
 
-                        <div class="row portlet-body " collapse="!isCollapsed" style="height: 0px;overflow: auto;margin: 0px;padding: 0px;">
-                            <div id="map-canvas" class="col-md-12" style="height: 200px; width: 100%"></div>
-                        </div>
-                        <div class="clearfix"></div>
+                           <div id="map-canvas" class="col-md-12" style="height: 200px; width: 100%"></div>
+                                <div class="clearfix"></div>
+
+                       
                     </div>
+                   
+
 
                     <div class="footer_injury">
                         <ion-scroll direction="x">
@@ -87,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <button class="button button-full button-energized" ng-click="addbooking(description)">
+            <button class="button button-full button-energized waves-effect waves-light" ng-click="addbooking(description)">
                 Add Booking
             </button>
         </ion-list>

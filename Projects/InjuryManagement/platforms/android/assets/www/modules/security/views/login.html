@@ -8,11 +8,11 @@
                 </a>
                 <div class="form-group">
                     <label class="item item-input item-floating-label input-login-form" style="line-height: 0;">
-                        <input type="text" name="username" ng-model="modelUser.username" required placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"/>
+                        <input ng-keypress="keyPress($event.keyCode)" type="text" name="username" ng-model="modelUser.username" required placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"/>
                     </label>
-                    <hr style="margin-bottom: 0; margin-top: 0">
+                   
                     <label class="item item-input item-floating-label input-login-form" style="line-height: 0;">
-                        <input type="password" name="password" ng-model="modelUser.password" required placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+                        <input ng-keypress="keyPress($event.keyCode)" type="password" name="password" ng-model="modelUser.password" required placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
                     </label>
                 </div>
 

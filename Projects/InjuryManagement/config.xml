@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.injurymanagement949685" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.injurymanagement949685" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>InjuryManagement</name>
   <description>&#xD;
     An Ionic Framework and Cordova project.&#xD;
@@ -17,6 +17,9 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+  <feature name="PushPlugin">
+      <param name="ios-package" value="PushPlugin" />
+  </feature>
   <!--<icon src="www/img/icons/icon.png" />-->
   <icon src="www/img/icons/android/mipmap-hdpi/ic_launcher.png" width="72" height="72" />
   <icon src="www/img/icons/android/mipmap-mdpi/ic_launcher.png" width="48" height="48" />
@@ -26,4 +29,5 @@
   <feature name="Media">
     <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
   </feature>
+  
 </widget>

@@ -1,6 +1,8 @@
 <ion-view title="Add Worker">
     <ion-nav-buttons>
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+         <button menu-toggle="left" class="button button-icon icon ion-navicon  waves-effect waves-light" style="color:#fff">
+          
+        </button>
     </ion-nav-buttons>
         <div class="bar bar-subheader">
             <button class="button button-icon icon ion-ios7-arrow-back" ui-sref="app.worker.add">&nbsp;Back</button>
@@ -14,32 +16,34 @@
                     <input type="number" ng-model="worker.Post_code" name="Post_code">
                 </label>
 
-                <hr class="custom-hr">
+               
 
                 <label class="item item-input item-select label-custom-field">
                     <span class="input-label span-input-color">Account Type</span>
-                    <select ng-model="worker.Account_type"
+                    <select ng-model="worker.Account_type" class="browser-default" name="type"
                             ng-options="row.Account_id as row.Account_name for row in accTypeIndex">
                         <option value="">--Select Type--</option>
                     </select>
+                     <hr class="customHr" >
                 </label>
 
-                <hr class="custom-hr">
+                
 
                 <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Account Holder</span>
                     <textarea type="text" ng-model="worker.Account_holder" name="worker.Account_holder"></textarea>
+
                 </label>
 
-                <hr class="custom-hr">
+                
 
                 <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit2 && main.Medicare_no.$invalid}">
                     <span class="input-label span-input-color">Medicare No</span>
                     <input ng-required="true" type="tel" ng-model="worker.Medicare_no" name="Medicare_no" >
-                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit2 && main.Medicare_no.$invalid}"></i>
+                   
                 </label>
 
-                <hr class="custom-hr">
+                
 
                 <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Expire Medicare</span>
@@ -48,21 +52,21 @@
                     this.focus();" ng-model="worker.Exp_medicare" name="Exp_medicare" />
                 </label>
 
-                <hr class="custom-hr">
+                
 
                 <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">MemberShip No</span>
                     <input type="tel" ng-model="worker.MemberShip_no" name="MemberShip_no">
                 </label>
 
-                <hr class="custom-hr">
+              
 
                 <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">DVA No</span>
                     <input ng-model="worker.DVA_No" type="number" name="DVA_No">
                 </label>
 
-                <hr class="custom-hr">
+              
 
                 <!--<label class="item item-input">-->
                     <!--<span class="input-label span-input-color">DVA Disability</span>-->
@@ -79,7 +83,7 @@
                     <input ng-model="worker.HCC_Pension_No" type="number" name="HCC_Pension_No">
                 </label>
 
-                <hr class="custom-hr">
+               
 
                 <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Expiry</span>
@@ -88,28 +92,29 @@
                     this.focus();" ng-model="worker.Exp_pension" name="Exp_pension" />
                 </label>
 
-                <hr class="custom-hr">
+               
 
                 <div class="row" style="padding-left: 0px; padding-top: 0px; padding-right: 8px; width: 103%;">
                     <div class="col col-75" style="padding-left: 0px; padding-right: 30px;">
                         <label class="item item-input label-custom-field">
                             <span class="input-label span-input-color">Health Fund</span>
-                            <select ng-model="worker.Private_fund_id"
+                            <select ng-model="worker.Private_fund_id" class="browser-default"
                                     ng-options="row.PF_id as row.Fund_name for row in fundIndex">
                                 <option value="">--Select Fund--</option>
                             </select>
                         </label>
 
-                        <hr class="custom-hr">
+                      
 
                     </div>
                     <div class="col" style="padding-top: 1px">
                         <label class="item item-input label-custom-field" style="padding-bottom: 8px;">
                             <input type="tel" ng-model="worker.UPI" name="UPI" placeholder="UPI">
                         </label>
-                        <hr class="custom-hr">
+                       
                     </div>
                 </div>
+
 
             </ion-list>
         </ion-content>

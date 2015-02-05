@@ -1,5 +1,5 @@
 angular.module('starter.user.controller',[])
-.controller('userProfileController',function($scope,UserService,$http,localStorageService,OnlineBookingService,$state){
+.controller('userProfileController',function($scope, UserService, $http, localStorageService, OnlineBookingService, $state){
         var userInfo = null;
         var companyInfo = null;
 

@@ -3,7 +3,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, $filter, $stateParams,
                                                 InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate, $cordovaGeolocation,
-                                                $ionicLoading, $compile, $timeout){
+                                                $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $document, $ionicSideMenuDelegate, $cordovaDialogs){
+
         $scope.isSubmit = false;
         $scope.isShow = true;
         $scope.imgURI = [];
@@ -21,8 +22,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }];
 
         var i = 0;
-        var ipUpload = "testapp.redimed.com.au";
-        var serverUpload = "http://"+ipUpload+":3000/api/im/upload";
+        var serverUpload = "http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
 
@@ -41,7 +41,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             Email: '',
             injury_description: '',
             injury_date: '',
-            description:''
+            description:'',
+            userId:userInfoLS.id,
+            infoMaps:{}
         };
 
         //INPUT DATE ANDROID VER == 4.3
@@ -280,15 +282,14 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
             {
                 InjuryServices.checkEmail($scope.worker.Email).then(function (data) {
                     if (data.status == 'success')
-                    $timeout(function (){
-                        console.log(data.data.length);
-                        if (data.data.length == 0) {
-                            $scope.isFailEmail = false;
-                        }
-                        else {
-                            $scope.isFailEmail = true;
-                        }
-                    }, 5000)
+                        $timeout(function (){
+                            if (data.data.length == 0) {
+                                $scope.isFailEmail = false;
+                            }
+                            else {
+                                $scope.isFailEmail = true;
+                            }
+                        }, 5000)
                 })
             }
         }
@@ -298,6 +299,8 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.showConfirm = function(desc, isClick) {
             if(isClick)
             {
+                $scope.infopatient = [];
+
                 $scope.isSubmitdesc = true;
                 if (desc.$invalid)
                 {
@@ -310,6 +313,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 {
                     if($scope.imgURI.length > 0) {
                         $state.go('app.injury.desinjurySuccess');
+                        var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
+                        $scope.infopatient.background = colors[Math.floor(Math.random() * colors.length)];
+                        $scope.infopatient.letter = String($scope.worker.First_name).substr(0,1).toUpperCase();
                     }
                     else
                     {
@@ -360,7 +366,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
 
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
-            $scope.worker.infoMaps = $scope.infoMaps;
+           
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
                 "<br />"+
@@ -370,7 +376,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 maxWidth: 200,
                 showDelay: 0
             });
-            InjuryServices.insertInjury($scope.worker).then(function(data) {
+            InjuryServices.insertInjury($scope.worker, localStorageService.get('userInfo').id).then(function(data) {
                 $timeout(function () {
                     if(data.status == 'success')
                     {
@@ -426,20 +432,23 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         }
 
         $scope.pushNotificationbutton = function() {
-            //$rootScope.receivePhoneModal.show();
-            InjuryServices.pushGCM().then(function(res){
-                if(res.status.toLocaleLowerCase() == "success"){
-                    alert("push success");
-                }
-                else {
-                    alert("push error");
-                }
-            });
+            var dialogCall = $cordovaDialogs.confirm('Incoming Call', 'aaaa', ['answer','ignore']);
+
+                dialogCall.then(function(buttonIndex) {
+                    console.log(buttonIndex)
+                });
+            //$rootScope.modal.show();
+            //InjuryServices.pushGCM().then(function(res){
+            //    if(res.status.toLocaleLowerCase() == "success"){
+            //        alert("push success");
+            //    }
+            //    else {
+            //        alert("push error");
+            //    }
+            //});
         }
 
         initForm();
-
-
 
         $scope.tabs = [{
             title: 'Information',
@@ -458,21 +467,53 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.isActiveTab = function(tabUrl) {
             return tabUrl == $scope.currentTab;
         };
+         $scope.ad = {};
+        $scope.sc = {showAddress: function(ad){
+            
+            $scope.location = ad;  
+            $scope.worker.infoMaps = ad;
+            console.log('SHOW ADDRESS',  $scope.worker.infoMaps)
 
-        $scope.ad = {};
-        $scope.result1 = '';
-        $scope.options1 = null;
-        $scope.details1 = '';
-        $scope.infoMaps =  $scope.ad;
+        }};
+       
+        $scope.location =  $scope.ad;
+
+        $scope.takePhotoModel = function() {
+            $state.go('app.injury.modelBody', null, {reload: true});
+        }
+        $scope.PostitionObject = [];
+
+        $scope.$on('$stateChangeSuccess', function(event, state) {
+            if(state.name == 'app.injury.modelBody') {
+                $ionicSideMenuDelegate.canDragContent(false);
+                $(document).ready(function(){
+                    $("#modelbody").vc3dEye({
+                        imagePath:"images/", // the location where you’ve put the images.
+                        totalImages:36, // the number of images you have.
+                        imageExtension:"png" // the extension of the images. Make sure all the images have same extension.
+                    })
+                });
+            }
+        });
+
+        // Get Current Offset() div
+        $('#modelbody').click(function(e) {
+            var posX = $(this).offset().left, posY = $(this).offset().top;
+            $scope.PostitionObject.push({
+                positionX: e.pageX - posX,
+                positionY: e.pageY - posY
+            })
+        });
     })
-        .directive("mdtMap", function($http,$ionicLoading){
+.directive("mdtMap", function($http,$ionicLoading,$timeout){
             return {
                 restrict: "A",
                 replace: "true",
                 scope:{
                     address: '=',
                     lo:'=',
-                    ad:'='
+                    ad:'=',
+                    sc: '='
                 },
                 link: function(scope, element, attrs){
                     var id = "#"+attrs.id;
@@ -510,6 +551,10 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                             maxWidth: 200,
                             showDelay: 0
                         });
+                     $timeout(function(){
+                            $ionicLoading.hide();
+                          
+                    },3000)
                  GMaps.geolocate({
                      success: function(position) {
 
@@ -526,25 +571,28 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                     scope.ad.lat = position.coords.latitude;
                                     scope.ad.lng = position.coords.longitude;
                                     scope.ad.format_address =  data.data.results[0].formatted_address;
-                                    $ionicLoading.hide();
+                                      scope.sc.showAddress(scope.ad);
+                                     $timeout(function(){
+                                        $ionicLoading.hide();
+                                    },3000)
+                                    
                          });
                      },
                      error: function(error) {
                          alert('Geolocation failed: '+error.message);
+                          $ionicLoading.hide();
                      },
                      not_supported: function() {
                          alert("Your browser does not support geolocation");
+                          $ionicLoading.hide();
                      }
-                     //,
-                     //always: function() {
-                     //    alert("done");
-                     //}
+                     
                  });
              };
                     location();
                 map.addControl({
-                    position:'top_right',
-                    content:'<i class="fa fa-location-arrow fa-4x text-danger"></i>',
+                    position:'right_center',
+                    content:'<i class="small mdi-maps-my-location black"></i>',
                     events:{
                         click: function(){
                             location();
@@ -560,8 +608,9 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                         showBackdrop: true,
                         maxWidth: 500
                     });
+                     
                     GMaps.geocode({
-                        address:scope.address,
+                        address:scope.address.formatted_address,
                         callback: function(results, status){
                             if(status=='OK'){
                                 var latlng = results[0].geometry.location;
@@ -573,56 +622,121 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                                 });
                                 scope.ad.lat = latlng.lat();
                                 scope.ad.lng = latlng.lng();
-                                scope.ad.format_address =  scope.address;
-                                $ionicLoading.hide();
+                                scope.ad.format_address =  scope.address.formatted_address;
+                               
+                                scope.sc.showAddress(scope.ad);
+                                $timeout(function(){
+                                    $ionicLoading.hide();
+                                    alert(JSON.stringify(scope.ad.lat))
+                                },3000)
+                            }else{
+                                 $ionicLoading.hide();
                             }
                         }
                     });
                 };
-                //scope.$watch('address',function(newadd,oldadd){
-                //    if(typeof newadd!== undefined){
-                //        scope.address = newadd;
-                //        ad();
-                //    }
-                //});
-                //event out ditective
                 scope.$watch('lo',function(newval,oldval){
                   if(newval==true){
                       scope.lo = false;
-                      ad();
+                       ad();
                   }
                 })
             }
         }
     })
-    .directive('ngAutocomplete', function($parse) {
+    
+.directive("companyMap", function( $state,InjuryServices,localStorageService,$ionicLoading,$timeout){
         return {
-            scope: {
-                details: '=',
-                ngAutocomplete: '=',
-                options: '='
+            restrict: "A",
+            replace: "true",
+            scope:{
+                
             },
-            link: function(scope, element, attrs, model) {
-                //options for autocomplete
-                var opts;
-                //convert options provided to opts
-                var initOpts = function() {
-                    opts = {};
-                    if (scope.options) {
-                        if (scope.options.types) {
-                            opts.types = [];
-                            opts.types.push(scope.options.types)
+            link: function(scope, element, attrs){
+                var id = "#"+attrs.id;
+                var userinfo = localStorageService.get("userInfo");
+                var map = new GMaps({
+                    el: id,
+                    lat: -32.280625,
+                    lng: 115.736246,
+                    zoomControl : true,
+                    zoomControlOpt: {
+                        style : 'SMALL',
+                        position: 'TOP_LEFT'
+                    },
+                    panControl : true,
+                    streetViewControl : true,
+                    mapTypeControl: true,
+                    overviewMapControl: true
+                });
+             var getWokerbyIdCompany = function() {
+                InjuryServices.getInjuryByCompany(userinfo.company_id).then(function (result){
+                   
+                     if(result.status == "success")
+                     {
+
+                         scope.lstPatient = result.data;
+                         location();
+                     }
+                 });
+             };
+             getWokerbyIdCompany();
+
+             var location =  function(){
+                    map.removeMarkers();
+                    $ionicLoading.show({
+                        template: "<div class='icon ion-ios7-reloading'></div>"+
+                        "<br />"+
+                        "<span>Waiting...</span>",
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+
+
+                    GMaps.geolocate({
+                        success: function(position) {
+                            map.setCenter(position.coords.latitude, position.coords.longitude);
+                            map.addMarker({
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                                icon:'img/icon/ambulance.png'
+                            });
+                                angular.forEach(scope.lstPatient,function(item){
+                                    var contentSring = ''
+                                    
+                                     map.addMarker({
+                                        lat: item.latitude,
+                                        lng: item.longitude,
+                                        infoWindow: {
+                                            content: contentSring
+                                        },
+                                        click: function(){
+                                                   
+                                        }
+                                    });
+                                });
+
+                            $ionicLoading.hide();
+                        },
+                        error: function(error) {
+                            alert('Geolocation failed: '+error.message);
+                        },
+                        not_supported: function() {
+                            alert("Your browser does not support geolocation");
                         }
-                        if (scope.options.bounds) {
-                            opts.bounds = scope.options.bounds
-                        }
-                        if (scope.options.country) {
-                            opts.componentRestrictions = {
-                                country: scope.options.country
-                            }
+                    });
+                };
+                map.addControl({
+                    position:'RIGHT_CENTER',
+                    content:'<a class="btn-floating btn-small waves-effect waves-light black"><i class="mdi-maps-my-location"></i></a>',
+                    events:{
+                        click: function(){
+                            getWokerbyIdCompany();
                         }
                     }
-                };
+                });
                 initOpts();
                 //create new autocomplete
                 //reinitializes on every change of the options provided
@@ -650,6 +764,42 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 }, true);
             }
         };
+    })
+    .directive("tabmari", function( $state){
+        return {
+            restrict: "A",
+            replace: "true",
+            scope:{
+                
+            },
+            link: function(scope, element, attrs){
+                var id = "#"+attrs.id;
+                $(document).ready(function(){
+                    $('ul.tabs').tabs();
+                  });    
+                 $(document).ready(function(){
+                    $('ul.tabs').tabs('select_tab', 'tab_id');
+                  });
+               
+            }
+        }
+    })
+    .directive("diModal", function( $state){
+        return {
+            restrict: "A",
+            replace: "true",
+            scope:{
+                
+            },
+            link: function(scope, element, attrs){
+                var id = "#"+attrs.id;
+
+               
+
+               
+               
+            }
+        }
     });
 
 //.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {

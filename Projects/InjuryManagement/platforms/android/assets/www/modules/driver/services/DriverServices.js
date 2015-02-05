@@ -14,11 +14,10 @@ angular.module('starter.driver.services',[])
             return lstPatient.get();
         }
 
-        driverServices.editPatient = function (info, injuryID) {
+        driverServices.editPatient = function (info, injuryID, geolocation) {
             var lstPatient = driverApi.all("im/edit");
-            return lstPatient.post({info: info, injury_id: injuryID});
+            return lstPatient.post({info: info, injury_id: injuryID, geo: geolocation});
         }
-
         return driverServices;
     })
 

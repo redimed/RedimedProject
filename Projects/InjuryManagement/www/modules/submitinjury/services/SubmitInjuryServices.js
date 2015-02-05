@@ -29,9 +29,9 @@ angular.module('starter.injury.services',[])
             return detailApi.post({email:data});
         }
 
-        injuryServices.insertInjury = function(data) {
+        injuryServices.insertInjury = function(data, userID) {
             var detailApi = injuryApi.all("im/submit");
-            return detailApi.post({info: data});
+            return detailApi.post({info: data, userId: userID});
         }
 
         injuryServices.getPicture = function(options) {
@@ -47,6 +47,10 @@ angular.module('starter.injury.services',[])
         injuryServices.pushGCM = function() {
             var detailApi = injuryApi.one("im/testGCM");
             return detailApi.get();
+        }
+        injuryServices.getInjuryByCompany = function(company_id){
+            var detailApi = injuryApi.all("im/getInjuryByCompany");
+            return detailApi.post({companyId:company_id})
         }
 
         return injuryServices;

@@ -242,7 +242,7 @@ angular.module('starter.worker.add.controller',[])
             }
         }
         init();
-        // alert(JSON.stringify(localStorageService.get('newInfo')));
+       
 
         if($scope.nfcInfo.length == 0){
             $scope.nfcInfo = localStorageService.get('newInfo');

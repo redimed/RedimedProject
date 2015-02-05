@@ -5,7 +5,7 @@ angular.module('starter.phoneCall',[
     .config(function ($stateProvider) {
         $stateProvider
             .state('app.phoneCall',{
-                url: "/phoneCall/:contactName?isCalling",
+                url: "/phoneCall/:callUser?isCaller",
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/phoneCall/views/main.html",
@@ -14,3 +14,4 @@ angular.module('starter.phoneCall',[
                 }
             })
     })
+

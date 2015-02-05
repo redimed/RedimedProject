@@ -1,18 +1,57 @@
-<div class="transparent-modal-phone modal">
+<!--<div class="modal-open modal-phone">-->
 
-    <div class="cus-content-modal-phone content">
-        <div class="content-modal-calling padding">
+    <!--<div class="modal-phone-child">-->
+        <!--<ion-header-bar>-->
+            <!--<h1 class="title">Incoming call</h1>-->
+        <!--</ion-header-bar>-->
+        <!--<ion-content>-->
+            <!--<div style="border-radius: 50%;" ng-class="{'img-modal-receiveCall': nameCallingJson}" ng-style={"background-color":nameCallingJson.background}>-->
+                <!--<span>-->
+                    <!--{{nameCallingJson.letter}}-->
+                <!--</span>-->
+            <!--</div>-->
+            <!--<span style="float: left; margin-left: 20px; font-size: 20px; font-weight: bolder;">{{ nameCallingJson.nameCalling }} </span>-->
+        <!--</ion-content>-->
+        <!--<ion-footer-bar>-->
+                <!--<button class="button custom-bottom-answer" ng-click="answerphoneCall()">-->
+                    <!--answer-->
+                <!--</button>-->
 
-            <p style="color: whitesmoke"><span class="balanced">{{ nameCalling }}</span> is calling you</p>
+                <!--<button class="button custom-bottom-cancel" ng-click="hideModalphoneCall()">-->
+                    <!--ignore-->
+                <!--</button>-->
+        <!--</ion-footer-bar>-->
 
-            <button class="button custom-bottom-answer" ng-click="answerphoneCall()">
-                <img class="img-responsive margin-auto" src="img/call-up.png" />
-            </button>
-            <button class="button custom-bottom-cancel" ng-click="hideModalphoneCall()">
-                <img class="img-responsive margin-auto" src="img/call-down.png" />
-            </button>
-        </div>
-    </div>
+        <!--<div class="col-25" ng-class="{'img-modal-receiveCall': nameCallingJson}" ng-style={"background-color":nameCallingJson.background}>-->
+        <!--<span>-->
+        <!--{{nameCallingJson.letter}}-->
+        <!--</span>-->
+        <!--</div>-->
 
-</div>
+        <!--<div class="col" style="color: whitesmoke">-->
+        <!--<span style="float: left; margin-left: 20px; font-size: 20px; font-weight: bolder;">{{ nameCallingJson.nameCalling }} </span> <br>-->
+
+        <!--<div style="margin-top: 20px; float: left">-->
+        <!--<button class="button custom-bottom-answer" ng-click="answerphoneCall()">-->
+        <!--<img class="img-responsive margin-auto" src="img/call-up.png" />-->
+        <!--</button>-->
+
+        <!--<button class="button custom-bottom-cancel" ng-click="hideModalphoneCall()">-->
+        <!--<img class="img-responsive margin-auto" src="img/call-down.png" />-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+<!--</div>-->
+
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">My Modal title</h1>
+    </ion-header-bar>
+    <ion-content>
+        Hello!
+    </ion-content>
+</ion-modal-view>
 

@@ -974,6 +974,11 @@ var COUNTRY_LIST = [
 ]
 angular.module('app.config', [])
 
+    .constant('HOST_CONFIG', {
+        'host':'testapp.redimed.com.au',
+        'port':'3000'
+    })
+
     .constant('USER_OPTION', {
         'Company': {
             default_route: 'loggedIn.company.home',
@@ -992,10 +997,10 @@ angular.module('app.config', [])
                     state: 'loggedIn.company.service',
                     title: 'Services'
                 },
-            ],
+            ]
         },
         'RediMed': {default_route: 'loggedIn.company.home'},
-        'ERP': {default_route: 'loggedIn.company.home',
+        'ERP': {default_route: 'loggedIn.company.home'
         },
         'Doctor': {
             default_route: 'loggedIn.doctor.home',
@@ -1018,7 +1023,7 @@ angular.module('app.config', [])
             ]
         },
         'Patient': {default_route: 'loggedIn.company.home'},
-        'None': {default_route: 'security.login'},
+        'None': {default_route: 'security.login'}
     })
 
     .constant('DEFAULT_ROUTES', {
@@ -1026,7 +1031,7 @@ angular.module('app.config', [])
         'RediMed': 'RediMed',
         'ERP': 'ERP',
         'Doctor': 'Doctor',
-        'Patient': 'Patient',
+        'Patient': 'Patient'
     })
 
     .constant("ACC_TYPE", [
@@ -1108,6 +1113,7 @@ angular.module('app.config', [])
         {code:'Billing', title: 'Billing'},
         {code: null, title: 'Not Met'},
     ])
+
     .factory('ConfigService', function (USER_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, COUNTRY_LIST, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, SYS_TITLE,  APPT_STATUS,  Restangular) {
         var configService = {};
         var configApi = Restangular.all("api/erm");

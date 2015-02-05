@@ -40,4 +40,20 @@ angular.module('starter.injury', [
                     }
                 }
             })
+            .state('app.injury.modelBody', {
+                url: "/modelbody",
+                views: {
+                    'main': {
+                        templateUrl: "modules/submitinjury/views/modelBody.html"
+                    }
+                }
+            })
+	    .state('app.injury.mapCompany',{
+                url:"/mapCompany",
+                views:{
+                    'main':{
+                        templateUrl:"modules/submitinjury/views/mapCompany.html"
+                    }
+                }
+            })
     })
