@@ -113,7 +113,7 @@ angular.module("app.loggedIn.controller",[
         {
             $scope.onlineUsers = rs.data;
             $scope.onlineUsersTemp = rs.data;
-        }
+         }
     })
 
     socket.on("online",function(data){

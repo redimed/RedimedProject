@@ -1,17 +1,21 @@
 var _ = require('lodash-node');
 var db = require('./models');
 var parser = require('socket.io-cookie');
+var useragent = require('express-useragent');
 //var parseCookie = require('connect').utils.parseCookie;
 
 var users = [];
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
-    var socketId = null;
+    var ua = null;
 
     io.use(parser);
 
     io.on('connection', function (socket) {
-        socketId = socket.id;
+
+        var header = socket.request.headers;
+        var source = header['user-agent'];
+        ua = useragent.parse(source);
 
         socket.on('checkApp',function(id){
             if(id){

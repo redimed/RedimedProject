@@ -26,5 +26,9 @@ angular.module("app.loggedIn.im.services",[])
             return api.all('im/allocateDriver').post({driverId:dId,patientId:pId,injuryId:iId});
         }
 
+        imService.searchByDate = function(from,to){
+            return api.all('im/searchByDate').post({from:from,to:to});
+        }
+
         return imService;
     })

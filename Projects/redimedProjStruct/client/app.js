@@ -35,6 +35,7 @@ angular.module("app", [
     'ngSanitize',
     'ngMap',
     'btford.socket-io',
+    'dateRangePicker'
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
@@ -126,6 +127,8 @@ angular.module("app", [
 .run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
     easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
+
+
 
     $idle.watch();
     // Use when update any state

@@ -200,6 +200,22 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
+    searchByDate: function(req,res){
+        var from = req.body.from;
+        var to = req.body.to;
+
+        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
+        "FROM `im_injury` i " +
+        "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+        "LEFT JOIN users u ON u.id = i.driver_id " +
+        "WHERE i.`cal_id` IS NULL AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[from,to])
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
     injuryById: function(req,res){
         var injury_id = req.body.injury_id;
 

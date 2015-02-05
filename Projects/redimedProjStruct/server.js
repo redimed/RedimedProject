@@ -14,6 +14,7 @@ var config = require('config');
 var compress = require('compression');
 var db = require('./models');
 var restful = require('sequelize-restful');
+var useragent = require('express-useragent');
 //Create application management
 var app = express();
 var server = require('http').Server(app);
@@ -56,7 +57,7 @@ easyrtc.on("getIceConfig", function(connectionObj, callback){
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.use(useragent.express());
 app.use(restful(db.sequelize, { endpoint: '/api/restful'}));
 
 app.use(favicon());

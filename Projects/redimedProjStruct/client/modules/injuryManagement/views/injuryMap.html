@@ -186,8 +186,8 @@
                             <input ng-change="searchInjury(search)" ng-model="search.patient" class="form-control" type="text" />
                         </th>
                         <th style="text-align:center">
-                            <!--<input type="daterange" ng-model="dates3" separator="/">-->
-                            <input class="form-control" type="text" />
+                            <date-range-picker style="width:200px;" ng-model="search.dateRange" ranged="true" callback="getDateRange(search.dateRange)"></date-range-picker>
+                            <!--<input class="form-control" type="text" />-->
                         </th>
                         <th style="text-align:center">
                             <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />

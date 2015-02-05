@@ -24,8 +24,11 @@ angular.module("app.loggedIn.im.map.controller",[])
             driver: "",
             isNew: true,
             isWaiting: true,
-            isDone: true
+            isDone: true,
+            dateRange: moment().range( $filter('date')(new Date(),'yyyy-MM-dd'),  $filter('date')(new Date(),'yyyy-MM-dd'))
         }
+
+        filterDate($filter('date')(new Date(),'yyyy-MM-dd'), $filter('date')(new Date(),'yyyy-MM-dd'));
 
         $scope.searchInjury = function(s){
 
@@ -35,6 +38,12 @@ angular.module("app.loggedIn.im.map.controller",[])
             });
 
         }
+
+        $scope.getDateRange = function(range){
+            filterDate($filter('date')(range.start.toDate(),'yyyy-MM-dd'), $filter('date')(range.end.toDate(),'yyyy-MM-dd'));
+            $scope.search.patient = "";
+            $scope.search.driver = "";
+        };
 
         getOnlineDriver();
 
@@ -238,6 +247,23 @@ angular.module("app.loggedIn.im.map.controller",[])
                 $scope.driverListTemp = [];
                 if(rs.data){
                     $scope.driverListTemp = rs.data;
+                }
+            })
+        }
+
+        function filterDate(from,to){
+            $scope.injuryList = [];
+            $scope.injuryListTemp = [];
+            InjuryManagementService.searchByDate(from,to).then(function(rs){
+                if(rs.status == 'success'){
+                    for(var j=0;j<rs.data.length;j++){
+                        rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
+                        if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
+                            rs.data[j].driverUser = '';
+                    }
+                    $scope.injuryListTemp = rs.data;
+                    $scope.injuryList = $scope.injuryListTemp;
+
                 }
             })
         }
