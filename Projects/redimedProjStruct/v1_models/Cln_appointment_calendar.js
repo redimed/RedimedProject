@@ -2,11 +2,12 @@ var k_model = require("./k_model");
 var install_model = new k_model('cln_appointment_calendar', 'CAL_ID');
 var squel = install_model._squel;
 
-install_model.sql_timetable_overview = function(doctor_id, from_time) {
+install_model.sql_timetable_overview = function(doctor_id, from_time, to_time) {
 	var query_builder = squel.select().from('cln_appointment_calendar')
 	        .where('DOCTOR_ID = ?', doctor_id)
 	        .where("FROM_TIME >= DATE_FORMAT(?, '%Y-%m-%d')", from_time)
-	        .where("FROM_TIME < DATE_ADD(?, INTERVAL 31 DAY)", from_time)
+	        .where("DATE_FORMAT(FROM_TIME, '%Y-%m-%d') <= DATE_FORMAT(?, '%Y-%m-%d')", to_time) 
+	        // .where("FROM_TIME < DATE_ADD(?, INTERVAL 31 DAY)", from_time)
         	;
 
     query_builder.field('CAL_ID')

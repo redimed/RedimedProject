@@ -8,9 +8,17 @@
                 From Time
                 <span class="required"> * </span>
             </label>
-            <div class="col-md-4 col-sm-3 col-xs-6">
+            <div class="col-md-2 col-sm-3 col-xs-6">
                 <input placeholder="From Time" ng-model="objectMap.from_time" 
                 	name="from_time" class="form-control" custom-date ng-change="getAppointments()">
+            </div>
+             <label class="control-label col-md-2 col-sm-3 col-xs-6">
+                To Time
+                <span class="required"> * </span>
+            </label>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <input placeholder="To Time" ng-model="objectMap.to_time" 
+                    name="to_time" class="form-control" custom-date ng-change="getAppointments()">
             </div>
         </div>
 

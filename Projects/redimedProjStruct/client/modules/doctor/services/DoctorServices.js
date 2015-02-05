@@ -278,9 +278,9 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
     /*
     *   KHANK API V2
     */
-    doctorService.overviewCalendar = function(doctor_id, from_time) {
+    doctorService.overviewCalendar = function(doctor_id, from_time, to_time) {
         var api = doctorApi.all('v2/timetable/overview_doctor');
-        return api.post({doctor_id: doctor_id, from_time: from_time})
+        return api.post({doctor_id: doctor_id, from_time: from_time, to_time: to_time})
     } 
 
     doctorService.deleteDateCalendar = function(doctor_id, date) {

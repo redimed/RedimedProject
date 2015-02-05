@@ -6,11 +6,12 @@ module.exports = {
 	postOverviewDoctor: function(req,res){
 		var doctor_id = req.body.doctor_id;
 		var from_time = req.body.from_time;
+        var to_time = req.body.to_time;
 		if(!from_time) {
 			from_time = mdt_functions.toDateDatabase(new Date());
-		}
+		} 
 
-		var sql = AppointmentModel.sql_timetable_overview(doctor_id, from_time);
+		var sql = AppointmentModel.sql_timetable_overview(doctor_id, from_time, to_time);
 		// console.log(sql);
 		// console.log(doctor_id, from_time)
 

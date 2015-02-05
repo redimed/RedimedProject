@@ -1,5 +1,7 @@
 var db = require('../models');
 
+var ERP_REST = require('../helper/ERP_Rest');
+
 var inc_common_model =  [
 	{ 
 		model: db.Company , as: 'Company',
@@ -133,8 +135,6 @@ module.exports = {
  		} 
  		postData.AMOUNT = amount;
 
- 		console.log(lines);
-
 		db.mdtInvoiceHeader.create(postData)
 		.success(function (header) {
 			var header_id = header.header_id;
@@ -186,6 +186,16 @@ module.exports = {
 		}).error(function(error){
 			console.log(error)
 			res.json(500, {"status": "error", "message": error});
+		});
+	},
+
+	getTest: function (req, res) {
+
+		ERP_REST.get_all_invoice_line().then(function(response){
+			console.log(response)
+			res.json(response)
+		}, function(err){
+			res.json({err: err})
 		});
 	}
 }

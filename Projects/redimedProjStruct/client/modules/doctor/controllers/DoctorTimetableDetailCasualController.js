@@ -5,9 +5,14 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 
 	var doctor_id = $stateParams.doctorId;
 	var from_time = null;
+	var today = new Date();
 
 	$scope.objectMap = {};
-	$scope.objectMap.from_time = ConfigService.convertToDate(new Date());
+	$scope.objectMap.from_time = ConfigService.convertToDate(today);
+	today.setDate(today.getDate() + 30);
+	$scope.objectMap.to_time = ConfigService.convertToDate(today);
+
+
 
 	// console.log($scope.options)
 
@@ -88,8 +93,19 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 	$scope.getAppointments  = function() {	
 		toastr.info('Loading data from server');
 		var str_from_time = ConfigService.getCommonDateDatabase($scope.objectMap.from_time);
+		var str_to_time = ConfigService.getCommonDateDatabase($scope.objectMap.to_time);
+		
 		var get_date = new Date(str_from_time);
-		var num_date = 30;
+		var get_to_date = new Date(str_to_time);
+
+		var timeDiff = Math.abs(get_to_date.getTime() - get_date.getTime());
+		var num_date = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;  // 30
+		console.log(num_date)
+
+		if(num_date < 1) {
+			alert('To time must be greater then from time');
+			return;
+		}
 
 		// init 
 		var cal_list = [];
@@ -102,7 +118,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 		$scope.data = cal_list;
 
 		// console.log('LOAD TIME ', Date.now())
-		DoctorService.overviewCalendar(doctor_id, str_from_time)
+		DoctorService.overviewCalendar(doctor_id, str_from_time, str_to_time)
 		.then(function(response){
 			var cal_list = response.data;
 			for(var i = 0; i < cal_list.length; ++i) {
@@ -116,8 +132,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 			}
 		
 		
-			// $scope.data = cal_list.slice(0, 30);
-			// console.log('LOADed TIME ', Date.now())
+
 		});
 	}
 	
