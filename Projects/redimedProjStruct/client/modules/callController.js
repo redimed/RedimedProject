@@ -3,7 +3,7 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,$rootScope, $state, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
+    .controller("callController", function($scope,$rootScope, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
         socket.removeAllListeners();
 
         $scope.userInfo = null;
@@ -80,6 +80,7 @@ angular.module("app.call.controller",[
             if(message.type === 'answer')
             {
                 audio.pause();
+                $scope.isAccept = true;
                 if(message.rtcId){
                     performCall(message.rtcId);
                 }
@@ -107,7 +108,6 @@ angular.module("app.call.controller",[
             var acceptedCB = function(accepted, easyrtcid) {
                 };
             var successCB = function(to) {
-                $scope.isAccept = true;
             };
             var failureCB = function(errCode, errMsg) {
                 toastr.error(errMsg);

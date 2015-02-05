@@ -2,7 +2,6 @@ var _ = require('lodash-node');
 var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
-//var parseCookie = require('connect').utils.parseCookie;
 
 var users = [];
 module.exports = function(io,cookie,cookieParser) {

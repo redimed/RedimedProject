@@ -25,10 +25,8 @@ angular.module("app.loggedIn.im.map.controller",[])
             isNew: true,
             isWaiting: true,
             isDone: true,
-            dateRange: moment().range( $filter('date')(new Date(),'yyyy-MM-dd'),  $filter('date')(new Date(),'yyyy-MM-dd'))
+            dateRange: null
         }
-
-        filterDate($filter('date')(new Date(),'yyyy-MM-dd'), $filter('date')(new Date(),'yyyy-MM-dd'));
 
         $scope.searchInjury = function(s){
 
@@ -181,7 +179,7 @@ angular.module("app.loggedIn.im.map.controller",[])
         }
 
         setInterval(refreshMap,60 * 1000);
-        setInterval(refreshList,60 * 1000);
+        //setInterval(refreshList,60 * 1000);
         setInterval(getOnlineDriver,60 * 1000);
 
         function refreshMap(){
@@ -226,6 +224,10 @@ angular.module("app.loggedIn.im.map.controller",[])
         };
 
         function refreshList(){
+            $scope.search.patient = "";
+            $scope.search.driver = "";
+            $scope.search.dateRange = null;
+
             $scope.injuryList = [];
             $scope.injuryListTemp = [];
             InjuryManagementService.getInjuryList().then(function(rs) {

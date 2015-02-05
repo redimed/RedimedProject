@@ -7,17 +7,15 @@ angular.module("app.loggedIn.controller",[
         audio.loop = true;
         audio.play();
 
-
-
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
             {
                 audio.pause();
-                notify.close();
+                if(notify != null)
+                    notify.close();
                 $modalInstance.close();
             }
         })
-
 
         if(userInfo){
             $scope.username = userInfo.user_name;
@@ -31,14 +29,16 @@ angular.module("app.loggedIn.controller",[
 
         $scope.ignoreCall = function(){
             audio.pause();
-            notify.close();
+            if(notify != null)
+                notify.close();
             $modalInstance.close();
             socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
         $scope.acceptCall = function(){
             audio.pause();
-            notify.close();
+            if(notify != null)
+                notify.close();
             $modalInstance.close();
 
             if(!userInfo.img)
