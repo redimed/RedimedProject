@@ -17,13 +17,20 @@
         </div>
     </div>
 
-    <div class="caption">
-        <div class="row">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <p style="font-size: xx-large;font-weight: bolder;text-align: center;">Medical Summary</p>
-                </div>
+    <div class="row">
+        <div class="col-md-5 col-sm-6">
+            <div class="note note-warning note-bordered">
+                <label>
+                    Name: {{patientInfo.First_name}} {{patientInfo.Middle_name}} {{patientInfo.Sur_name}}</br>
+                    Sex: {{patientInfo.Sex}}</br>
+                    DOB: {{patientInfo.DOB}}</br>
+                    Adress: {{patientInfo.Address1}}</br>
+                    Company: {{companyName}}
+                </label>
             </div>
+        </div>
+        <div  class="col-md-7 col-sm-6">
+            <p class="ng-binding" style="font-size: xx-large;text-align: center;font-weight: bolder;margin-top: 40px">Medical Summary</p>
         </div>
     </div>
 
@@ -34,24 +41,11 @@
                     <div class="portlet box grey-cascade">
                         <div class="portlet-body form">
                             <div class="row">
-                                <div class="col-md-12 col-sm-12">
-                                    <div class="col-md-6 col-sm-6" style="margin-top: 10px;"
-                                         ng-class="{'has-error':mrsForm.sticker_here.$error.maxlength}">
-                                        <label class="control-label">Sticker Here:</label>
-                                        <textarea class="form-control" ng-model="info.sticker_here" ng-maxlength="500"
-                                                  name="sticker_here">
-                                        </textarea>
-                                        <label class="control-label help-block col-md-12 col-sm-12"
-                                               ng-show="mrsForm.sticker_here.$error.maxlength">Too long!</label>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6" style="margin-top:70px;">
-                                        <div class="col-md-4 col-sm-4" style="width:auto; margin-top: 5px;">
-                                            <label class="control-label">Proposed Occupation:</label>
-                                        </div>
-                                        <div class="col-md-8 col-sm-8">
-                                            <input type="text" class="form-control" ng-model="info.proposed"/>
-                                        </div>
-                                    </div>
+                                <div class="col-md-2 col-sm-3" style="margin-left: 10px;margin-top: 15px;">
+                                    <label class="control-label">Proposed Occupation:</label>
+                                </div>
+                                <div class="col-md-2 col-sm-3" style="margin-top: 15px;">
+                                    <input type="text" class="form-control" ng-model="info.proposed"/>
                                 </div>
                             </div>
                             <br/>
@@ -67,20 +61,15 @@
                                 <div class="col-md-12 col-sm-12">
                                     <div class="col-md-1 col-sm-2" style="text-align: center;margin-top: 10px;">
                                         <label class="control-label">Height</label>
-
-                                        <div ng-class="{'has-error':mrsForm.as_height.$error.pattern}">
-                                            <input type="text" class="form-control" ng-pattern="/^[0-9]+$/"
-                                                   name="as_height" ng-model="info.as_height"/>
+                                        <div>
+                                            <input type="text" class="form-control"ng-model="info.as_height"/>
                                         </div>
                                     </div>
                                     <div class="col-md-1 col-sm-2"
                                          style="text-align:center; margin-top: 10px;">
                                         <label class="control-label">Weight</label>
-
-                                        <div ng-class="{'has-error':mrsForm.as_weight.$error.pattern}">
-                                            <input type="text" class="form-control" ng-pattern="/^[0-9]+$/"
-                                                   name="as_weight"
-                                                   ng-model="info.as_weight"/>
+                                        <div>
+                                            <input type="text" class="form-control" ng-model="info.as_weight"/>
                                         </div>
                                     </div>
                                     <div class="col-md-1 col-sm-2"
@@ -88,10 +77,8 @@
                                         <label class="control-label">
                                             WHR
                                         </label>
-
-                                        <div ng-class="{'has-error':mrsForm.as_whr.$error.pattern}">
-                                            <input type="text" class="form-control" ng-model="info.as_whr"
-                                                   ng-pattern="/^[0-9]+$/" name="as_whr"/>
+                                        <div>
+                                            <input type="text" class="form-control" ng-model="info.as_whr"/>
                                         </div>
                                     </div>
                                     <div class="col-md-1 col-sm-2"
@@ -99,10 +86,8 @@
                                         <label class="control-label">
                                             BMI
                                         </label>
-
-                                        <div ng-class="{'has-error':mrsForm.as_bmi.$error.pattern}">
-                                            <input type="text" class="form-control" ng-model="info.as_bmi"
-                                                   ng-pattern="/^[0-9]+$/" name="as_bmi"/>
+                                        <div>
+                                            <input type="text" class="form-control" ng-model="info.as_bmi"/>
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-sm-4" style="text-align:center; margin-top: 30px;">
@@ -513,8 +498,9 @@
                                             </label>
                                         </div>
                                         <div class="col-md-1 col-sm-1">
-                                            <input type="checkbox" class="form-control" ng-model="info.rr_green"
-                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_green==1"/>
+                                            <label class="btn bold">
+                                                <input type="radio" ng-model="info.risk_rating" value="0"/>
+                                            </label>
                                         </div>
                                         <div class="col-md-8 col-sm-8" style="margin-top:10px;">
                                             <label class="control-label">
@@ -534,21 +520,22 @@
                                             </label>
                                         </div>
                                         <div class="col-md-1 col-sm-1">
-                                            <input type="checkbox" class="form-control" ng-model="info.rr_amber"
-                                                   ng-true-value="1" ng-false-value="0" ng-checked="info.rr_amber==1"/>
+                                            <label class="btn bold">
+                                                <input type="radio" ng-model="info.risk_rating" value="1"/>
+                                            </label>
                                         </div>
                                         <div class="col-md-8 col-sm-8" style="margin-top:10px;">
                                             <label class="control-label">
                                                 The candidate is fit to perform the proposed position: further
                                                 discussion regarding the candidate's medical management with the
-                                                CKJV Injury Management team is required. It is strongly recommended
+                                                company Injury Management team is required. It is strongly recommended
                                                 the below is addressed to minimise the risk of medical complications
                                                 and/or injury:
                                             </label>
 
                                             <div ng-class="{'has-error':mrsForm.rr_amber_comment.$error.required}">
                                                 <textarea class="form-control" ng-model="info.rr_amber_comment"
-                                                          ng-required="info.rr_amber == 1"
+                                                          ng-required="info.risk_rating == 1"
                                                           name="rr_amber_comment"></textarea>
                                                 <label class="control-label help-block"
                                                        ng-show="mrsForm.rr_amber_comment.$error.required">Required</label>
@@ -567,9 +554,9 @@
                                             </label>
                                         </div>
                                         <div class="col-md-1 col-sm-1">
-                                            <input type="checkbox" class="form-control" ng-model="info.rr_red"
-                                                   ng-true-value="1" ng-false-value="0"
-                                                   ng-checked="info.rr_red==1"/>
+                                            <label class="btn bold">
+                                                <input type="radio" ng-model="info.risk_rating" value="2"/>
+                                            </label>
                                         </div>
                                         <div class="col-md-8 col-sm-8" style="margin-top:10px;">
                                             <label class="control-label">
@@ -580,7 +567,7 @@
 
                                             <div ng-class="{'has-error':mrsForm.rr_red_comment.$error.required}">
                                                 <textarea class="form-control" ng-model="info.rr_red_comment"
-                                                          ng-required="info.rr_red == 1"
+                                                          ng-required="info.risk_rating == 2"
                                                           name="rr_red_comment"></textarea>
                                                 <label class="control-label help-block"
                                                        ng-show="mrsForm.rr_red_comment.$error.required">Required</label>

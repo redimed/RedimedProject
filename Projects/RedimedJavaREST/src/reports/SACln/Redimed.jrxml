@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="835b0ce9-13bd-4174-855e-0c0624b090de">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="202"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -355,8 +355,8 @@ MAX(IF(l.Name = 8000 , l.value_left , NULL )) AS '8000Hz' FROM `cln_sa_df_lines`
      cln_sa_df_headers.`test_date` AS cln_sa_df_headers_test_date,
      cln_sa_df_headers.`tester` AS cln_sa_df_headers_tester,
      cln_patients.`Patient_id` AS cln_patients_Patient_id,
-   	CONCAT(IFNULL(cln_patients.`First_name` ,'') ,
-	IFNULL(cln_patients.`Sur_name` 	 ,'') ,
+   	CONCAT(IFNULL(cln_patients.`First_name` ,'') , ' ',
+	IFNULL(cln_patients.`Sur_name` 	 ,'') , ' ',
 	IFNULL(cln_patients.`Middle_name` ,'')) AS cln_patient_name,
  	e.`Company_name` AS entity_name ,
  	 cln_patients.DOB AS cln_patients_DOB
@@ -383,13 +383,13 @@ WHERE
 	</background>
 	<pageHeader>
 		<band height="21" splitType="Stretch">
-			<textField>
-				<reportElement x="134" y="0" width="273" height="19" uuid="1956d4f5-8c2d-40c9-940e-e8caeaed5538"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+			<staticText>
+				<reportElement x="198" y="0" width="150" height="21" uuid="0b7bdd8d-4157-4816-81f1-464ade33244f"/>
+				<textElement>
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cln_sa_df_headers_SA_NAME}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Standard Audiogram]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>

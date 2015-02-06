@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Audiogram_report_WA" language="groovy" pageWidth="598" pageHeight="1075" columnWidth="558" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8d269830-c96a-4f26-930c-c81dd460147e">
 	<property name="ireport.zoom" value="1.0245201830476058"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1290"/>
+	<property name="ireport.y" value="96"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -55,14 +55,18 @@
      cln_sa_df_headers.`tester` AS cln_sa_df_headers_tester,
      SUBSTRING_INDEX(cln_sa_df_headers.`Signature`,',',-1) AS Signature,
      cln_patients.`Patient_id` AS cln_patients_Patient_id,
-   	CONCAT(IFNULL(cln_patients.`First_name` ,' ') ,
-	IFNULL(cln_patients.`Sur_name` 	 ,' ') ,
+   	CONCAT(IFNULL(cln_patients.`First_name` ,' ') ,' ',
+	IFNULL(cln_patients.`Sur_name` 	 ,' ') ,' ',
 	IFNULL(cln_patients.`Middle_name` ,' ')) AS cln_patient_name,
- 	e.`Company_name` AS entity_name,
-	r.site_addr , cln_sa_df_headers.recipient_name , d.Name
+ 	companies.`Company_name` AS entity_name,
+	redimedsites.site_addr , cln_sa_df_headers.recipient_name , d.Name
 FROM
-     `cln_sa_df_headers` cln_sa_df_headers INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`  LEFT JOIN `companies` e ON `cln_patients`.`company_id` = e.`id`
-LEFT JOIN redimedsites r ON r.id = cln_sa_df_headers.cal_id INNER JOIN doctors d ON d.doctor_id = cln_sa_df_headers.doctor_id
+     `cln_sa_df_headers` cln_sa_df_headers
+	INNER JOIN `cln_patients` cln_patients ON cln_sa_df_headers.`patient_id` = cln_patients.`Patient_id`
+	INNER JOIN `companies` companies ON companies.`id` = cln_patients.`company_id`
+	INNER JOIN `cln_appointment_calendar` cln_appointment_calendar ON cln_appointment_calendar.`CAL_ID` = cln_sa_df_headers.`CAL_ID`
+	INNER JOIN `redimedsites` redimedsites ON redimedsites.`id` = cln_appointment_calendar.`SITE_ID`
+	INNER JOIN doctors d ON d.doctor_id = cln_sa_df_headers.doctor_id
 WHERE
      cln_sa_df_headers.patient_id = $P{patient_id} AND cln_sa_df_headers.SA_ID = $P{sa_id} AND
      cln_sa_df_headers.CAL_ID = $P{cal_id}]]>
@@ -94,11 +98,11 @@ WHERE
 	<pageHeader>
 		<band height="88" splitType="Stretch">
 			<staticText>
-				<reportElement x="380" y="29" width="123" height="33" forecolor="#999999" uuid="a9d5925d-4943-4907-aa42-5a56c537fbe1"/>
+				<reportElement x="350" y="29" width="163" height="20" forecolor="#999999" uuid="a9d5925d-4943-4907-aa42-5a56c537fbe1"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[AUDIOGRAM RESULTS 	Form 411]]></text>
+				<text><![CDATA[Workcover Audiogram]]></text>
 			</staticText>
 			<image>
 				<reportElement x="0" y="15" width="160" height="65" uuid="1b1768fa-55b1-4bdb-aeef-ee8b9a02acbc"/>
@@ -133,7 +137,7 @@ WHERE
 			<textField isBlankWhenNull="true">
 				<reportElement x="42" y="137" width="487" height="23" uuid="0c8dde95-f027-48cb-bcf8-78ec9e76b9b6"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{recipient_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{entity_name} + ' REDIMED']]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="42" y="176" width="375" height="24" uuid="4534d952-75b9-4a2a-867c-c11afb21f709"/>

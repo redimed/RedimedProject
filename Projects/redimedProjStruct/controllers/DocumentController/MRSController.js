@@ -13,76 +13,106 @@ module.exports = {
         var info = req.body.info;
         var patient_id = info.patient_id;
         var cal_id = info.cal_id;
+        var idC = info.idC;
         //load doc
-        MedicalSummary.find({where: {patient_id: patient_id, cal_id: cal_id}}, {raw: true})
-            .success(function (data) {
-                //load patient
-                Patient.find({where: {patient_id: patient_id}}, {raw: true})
-                    .success(function (patient) {
-                        //check patient
-                        if (patient === null || patient.length === 0) {
-                            console.log('******************* Find not found patient in cln_patient *******************');
-                            res.json({status: 'fail'});
-                            return false;
-                        }
-                        //load appt
-                        APPTCAL.find({where: {cal_id: cal_id}}, {raw: true})
-                            .success(function (appt) {
-                                //check appt
-                                if (appt === null || appt.length === 0) {
-                                    console.log('******************* Find not found appt in appt table')
-                                    res.json({status: 'fail'});
-                                    return false;
-                                }
-                                ;
-                                //load doctor
-                                Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
-                                    .success(function (doctor) {
-                                        //check doctor
-                                        if (doctor === null || doctor.length === 0) {
-                                            console.log('******************* Find not found doctor in doctor table *******************');
-                                            res.json({
-                                                status: 'fail'
-                                            });
-                                            return false;
-                                        }
-                                        ;
-                                        //check status
-                                        var status = "findFound";
-                                        if (data == null || data.length == 0) {
-                                            status = "findNull";
-                                        }
+        db.docMA.find({where:{PATIENT_ID:patient_id,CAL_ID : cal_id},attribute:['HEIGHT','WEIGHT','WHR','BMI']})
+            .success(function(dataMA) {
+                if (dataMA == null) {
+                    res.json({status: 'not'});
+                } else {
+                    db.Company.find({where: {id: idC}}, {raw: true})
+                        .success(function (company) {
+                            if (company === null || company.length === 0) {
+                                console.log("Not found company in table");
+                                res.json({status: 'fail'});
+                                return false;
+                            }else
+                            {
+                                MedicalSummary.find({where: {patient_id: patient_id, cal_id: cal_id}}, {raw: true})
+                                    .success(function (data) {
+                                        //load patient
+                                        Patient.find({where: {patient_id: patient_id}}, {raw: true})
+                                            .success(function (patient) {
+                                                //check patient
+                                                if (patient === null || patient.length === 0) {
+                                                    console.log('******************* Find not found patient in cln_patient *******************');
+                                                    res.json({status: 'fail'});
+                                                    return false;
+                                                }
+                                                //load appt
+                                                APPTCAL.find({where: {cal_id: cal_id}}, {raw: true})
+                                                    .success(function (appt) {
+                                                        //check appt
+                                                        if (appt === null || appt.length === 0) {
+                                                            console.log('******************* Find not found appt in appt table')
+                                                            res.json({status: 'fail'});
+                                                            return false;
+                                                        }
+                                                        ;
+                                                        //load doctor
+                                                        Doctor.find({where: {doctor_id: appt.DOCTOR_ID}}, {raw: true})
+                                                            .success(function (doctor) {
+                                                                //check doctor
+                                                                if (doctor === null || doctor.length === 0) {
+                                                                    console.log('******************* Find not found doctor in doctor table *******************');
+                                                                    res.json({
+                                                                        status: 'fail'
+                                                                    });
+                                                                    return false;
+                                                                }
+                                                                ;
+                                                                //check status
+                                                                var status = "findFound";
+                                                                if (data == null || data.length == 0) {
+                                                                    status = "findNull";
+                                                                }
 
-                                        var response = [{
-                                            "data": data || [],
-                                            "patient": patient,
-                                            "appt": appt,
-                                            "doctor": doctor,
-                                            "status": status
-                                        }];
-                                        res.json(response);
-                                        return true;
+                                                                var response = [{
+                                                                    "data": data || [],
+                                                                    "dataMA": dataMA,
+                                                                    "patient": patient,
+                                                                    "appt": appt,
+                                                                    "doctor": doctor,
+                                                                    "status": status,
+                                                                    "nameCompany" : company.Company_name
+                                                                }];
+                                                                res.json(response);
+                                                                return true;
+                                                            })
+                                                            .error(function (err) {
+                                                                console.log('*******************' + err + '*******************');
+                                                                res.json({status: 'fail'});
+                                                                return false;
+                                                            });
+                                                    })
+                                                    .error(function (err) {
+                                                        console.log('*******************' + err + '*******************');
+                                                        res.json({status: 'fail'});
+                                                        return false;
+                                                    });
+                                            })
+                                            .error(function (err) {
+                                                console.log("*******************" + err + "*******************");
+                                                res.json({status: 'fail'});
+                                                return false;
+                                            });
                                     })
                                     .error(function (err) {
-                                        console.log('*******************' + err + '*******************');
+                                        console.log("*******************" + err + "*******************");
                                         res.json({status: 'fail'});
                                         return false;
                                     });
-                            })
-                            .error(function (err) {
-                                console.log('*******************' + err + '*******************');
-                                res.json({status: 'fail'});
-                                return false;
-                            });
-                    })
-                    .error(function (err) {
-                        console.log("*******************" + err + "*******************");
-                        res.json({status: 'fail'});
-                        return false;
-                    });
+                            }
+                        })
+                        .error(function (err) {
+                            console.log('*******************' + err + '*******************');
+                            res.json({status: 'fail'});
+                            return false;
+                        });
+                }
             })
             .error(function (err) {
-                console.log("*******************" + err + "*******************");
+                console.log('*******************' + err + '*******************');
                 res.json({status: 'fail'});
                 return false;
             });
@@ -113,10 +143,8 @@ module.exports = {
             ac_any_medical_or_functional: info.ac_any_medical_or_functional,
             ac_any_diagnosed_or_previous: info.ac_any_diagnosed_or_previous,
             ac_examiner_comment: info.ac_examiner_comment,
-            rr_green: info.rr_green,
-            rr_amber: info.rr_amber,
+            risk_rating: info.risk_rating,
             rr_amber_comment: info.rr_amber_comment,
-            rr_red: info.rr_red,
             rr_red_comment: info.rr_red_comment,
             mrs_review: info.mrs_review,
             mrs_doc_date: info.mrs_doc_date,
@@ -162,10 +190,8 @@ module.exports = {
             ac_any_medical_or_functional: info.ac_any_medical_or_functional,
             ac_any_diagnosed_or_previous: info.ac_any_diagnosed_or_previous,
             ac_examiner_comment: info.ac_examiner_comment,
-            rr_green: info.rr_green,
-            rr_amber: info.rr_amber,
+            risk_rating: info.risk_rating,
             rr_amber_comment: info.rr_amber_comment,
-            rr_red: info.rr_red,
             rr_red_comment: info.rr_red_comment,
             mrs_review: info.mrs_review,
             mrs_doc_date: info.mrs_doc_date,
