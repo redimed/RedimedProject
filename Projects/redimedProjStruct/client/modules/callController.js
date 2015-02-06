@@ -108,6 +108,7 @@ angular.module("app.call.controller",[
             var acceptedCB = function(accepted, easyrtcid) {
                 };
             var successCB = function(to) {
+                console.log("Call Success: ",to);
             };
             var failureCB = function(errCode, errMsg) {
                 toastr.error(errMsg);
