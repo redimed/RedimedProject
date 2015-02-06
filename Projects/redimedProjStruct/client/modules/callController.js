@@ -134,7 +134,7 @@ angular.module("app.call.controller",[
                 easyrtc.showError(errorCode, errText);
             }
 
-            easyrtc.dontAddCloseButtons();
+            easyrtc.dontAddCloseButtons(true);
             easyrtc.easyApp("easyrtc.audioVideo",'selfVideo',['callerVideo'], connectSuccess, connectFailure);
         }
         init();

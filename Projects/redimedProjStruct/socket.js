@@ -12,6 +12,8 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.on('connection', function (socket) {
 
+        console.log("IP: ",socket.request.connection.remoteAddress);
+
         var header = socket.request.headers;
         var source = header['user-agent'];
         ua = useragent.parse(source);
