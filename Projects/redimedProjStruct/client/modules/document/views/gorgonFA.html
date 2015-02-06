@@ -724,11 +724,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 col-sm-10" ng-class="{'has-error': gorgonFAForm.Comments2.$error.required}">
-                    <textarea class="form-control" ng-model="info.Comments2" name="Comments2" ng-change="collectComment()" ng-required="info.Chest==1"></textarea>
-                    <div class="help-block" ng-show="gorgonFAForm.Comments2.$error.required">
-                        <label class="control-label">Required!</label>
-                    </div>
+                <div class="col-md-8 col-sm-10">
+                    <textarea class="form-control" ng-model="info.Comments2" ng-change="collectComment()"></textarea>
                 </div>
             </div>
             <div class="row">

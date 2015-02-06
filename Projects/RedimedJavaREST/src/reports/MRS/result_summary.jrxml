@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="result_summary" pageWidth="595" pageHeight="900" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d23aca8a-126b-409e-a28e-0c3c45a44d8f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<subDataset name="Table Dataset 1" uuid="fb71c9c0-58bf-4055-b248-f597c5a711f9"/>
@@ -14,6 +14,13 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
+    cln_patients.`First_name` AS medical_summary_First_name,
+    cln_patients.`Sur_name` AS medical_summary_Sur_name,
+    cln_patients.`Middle_name` AS medical_summary_Middle_name,
+    cln_patients.`Sex` AS medical_summary_Sex,
+    cln_patients.`DOB` AS medical_summary_DOB,
+    cln_patients.`Address1` AS medical_summary_Address1,
+    companies.`Company_name` AS medical_summary_Company_name,
     medical_summary.`sticker_here` AS medical_summary_sticker_here,
     medical_summary.`proposed` AS medical_summary_proposed,
     medical_summary.`as_height` AS medical_summary_as_height,
@@ -35,20 +42,27 @@
     medical_summary.`ac_any_medical_or_functional` AS medical_summary_ac_any_medical_or_functional,
     medical_summary.`ac_any_diagnosed_or_previous` AS medical_summary_ac_any_diagnosed_or_previous,
     medical_summary.`ac_examiner_comment` AS medical_summary_ac_examiner_comment,
-    medical_summary.`rr_green` AS medical_summary_rr_green,
-    medical_summary.`rr_amber` AS medical_summary_rr_amber,
+    medical_summary.`risk_rating` AS medical_summary_risk_rating,
     medical_summary.`rr_amber_comment` AS medical_summary_rr_amber_comment,
-    medical_summary.`rr_red` AS medical_summary_rr_red,
     medical_summary.`rr_red_comment` AS medical_summary_rr_red_comment,
     medical_summary.`mrs_review` AS medical_summary_mrs_review,
     medical_summary.`mrs_doc_date` AS medical_summary_mrs_doc_date,
     SUBSTRING_INDEX(doctors.`Signature`, ',', -1) AS medical_summary_Signature,
     doctors.`NAME` AS medical_summary_NAME
-FROM
-`doctors` doctors INNER JOIN `medical_summary` medical_summary ON doctors.`doctor_id` = medical_summary.`doctor_id`
+FROM `medical_summary` medical_summary
+ INNER JOIN `doctors` doctors ON doctors.`doctor_id` = medical_summary.`doctor_id`
+  INNER JOIN `cln_patients` cln_patients ON cln_patients.`Patient_id` = medical_summary.`patient_id`
+     INNER JOIN `companies` companies ON companies.`id` = cln_patients.`company_id`
 WHERE
 medical_summary.`mrs_id` = $P{id}]]>
 	</queryString>
+	<field name="medical_summary_First_name" class="java.lang.String"/>
+	<field name="medical_summary_Sur_name" class="java.lang.String"/>
+	<field name="medical_summary_Middle_name" class="java.lang.String"/>
+	<field name="medical_summary_Sex" class="java.lang.String"/>
+	<field name="medical_summary_DOB" class="java.sql.Date"/>
+	<field name="medical_summary_Address1" class="java.lang.String"/>
+	<field name="medical_summary_Company_name" class="java.lang.String"/>
 	<field name="medical_summary_sticker_here" class="java.lang.String"/>
 	<field name="medical_summary_proposed" class="java.lang.String"/>
 	<field name="medical_summary_as_height" class="java.lang.Double"/>
@@ -70,10 +84,8 @@ medical_summary.`mrs_id` = $P{id}]]>
 	<field name="medical_summary_ac_any_medical_or_functional" class="java.lang.Integer"/>
 	<field name="medical_summary_ac_any_diagnosed_or_previous" class="java.lang.Integer"/>
 	<field name="medical_summary_ac_examiner_comment" class="java.lang.String"/>
-	<field name="medical_summary_rr_green" class="java.lang.Integer"/>
-	<field name="medical_summary_rr_amber" class="java.lang.Integer"/>
+	<field name="medical_summary_risk_rating" class="java.lang.Integer"/>
 	<field name="medical_summary_rr_amber_comment" class="java.lang.String"/>
-	<field name="medical_summary_rr_red" class="java.lang.Integer"/>
 	<field name="medical_summary_rr_red_comment" class="java.lang.String"/>
 	<field name="medical_summary_mrs_review" class="java.lang.Integer"/>
 	<field name="medical_summary_mrs_doc_date" class="java.sql.Timestamp"/>
@@ -88,14 +100,53 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<reportElement x="0" y="0" width="555" height="88" uuid="5eade9f0-9968-4d76-81df-ecc8ec855156"/>
 				<imageExpression><![CDATA[$P{real_path}+"images/MS1.PNG"]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement x="5" y="26" width="197" height="50" uuid="a5b18f4f-d28e-4460-9a66-089fed485121"/>
-				<textFieldExpression><![CDATA[$F{medical_summary_sticker_here}!= null ? $F{medical_summary_sticker_here} : ""]]></textFieldExpression>
-			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="333" y="68" width="92" height="20" uuid="b8e98465-c958-4a39-9db0-37625539019e"/>
 				<textFieldExpression><![CDATA[$F{medical_summary_proposed}!= null ? $F{medical_summary_proposed} : ""]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="5" width="220" height="78" uuid="90695b54-8395-48bd-bfe5-d2e9a2834a9e"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="55" y="65" width="163" height="15" uuid="83b3739b-9832-43ba-8b57-cb335a4c82e2"/>
+				<textFieldExpression><![CDATA[$F{medical_summary_Company_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="47" y="50" width="171" height="15" uuid="b68cf813-85f7-4b24-a0dc-0b9ac71b350e"/>
+				<textFieldExpression><![CDATA[$F{medical_summary_Address1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="32" y="35" width="147" height="15" uuid="33c94d11-0020-428d-8e56-b0418f09a76b"/>
+				<textFieldExpression><![CDATA[$F{medical_summary_DOB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="5" width="178" height="15" uuid="736abdf2-7147-43a6-a725-0bde57338360"/>
+				<textFieldExpression><![CDATA[($F{medical_summary_First_name} != null ? $F{medical_summary_First_name} : "")+ " " +($F{medical_summary_Middle_name} != null ? $F{medical_summary_Middle_name} : "") + " " + ($F{medical_summary_Sur_name} != null ? $F{medical_summary_Sur_name} : "")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="5" width="35" height="15" uuid="4b36fbc1-dc49-4cc1-be1c-e5ad56235d93"/>
+				<text><![CDATA[Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="20" width="25" height="15" uuid="f02787e4-b92f-4ee3-aa87-7c7863fe5eec"/>
+				<text><![CDATA[Sex:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="30" y="20" width="149" height="15" uuid="bd4d470b-9652-44d2-b38e-aa167ac355de"/>
+				<textFieldExpression><![CDATA[$F{medical_summary_Sex}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="35" width="27" height="15" uuid="d9f991f7-12ea-4557-bd8d-89194d3b5522"/>
+				<text><![CDATA[DOB:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="50" width="42" height="15" uuid="6de95f0c-ffd9-4a57-bdef-158b2338c0e1"/>
+				<text><![CDATA[Address:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="65" width="50" height="15" uuid="d2c86af6-69f1-4d0d-a818-f0f585a44bb8"/>
+				<text><![CDATA[Company:]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
@@ -189,20 +240,12 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_as_other}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="108" y="517" width="12" height="12" uuid="e8f69c53-e9e6-492b-a897-f5bab2272d17"/>
-				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_rr_amber}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
-			</image>
-			<image>
 				<reportElement x="408" y="260" width="12" height="12" uuid="c16ce802-82c8-46a0-93c3-0d0f40a08f55"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_medical_or_functional}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="408" y="235" width="12" height="12" uuid="867969a8-fd0c-4182-9f34-686042270320"/>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_ac_any_current_or_work_related}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="108" y="587" width="12" height="12" uuid="d65bb21c-f442-4fa3-8b15-48b5d96e001a"/>
-				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_rr_red}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="399" y="106" width="12" height="12" uuid="dbf0ccd0-863b-46ef-8910-57dd012f9a54"/>
@@ -283,7 +326,7 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<textFieldExpression><![CDATA[$F{medical_summary_NAME}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame">
-				<reportElement x="322" y="637" width="94" height="20" uuid="685aa6b1-3b12-4854-9a2c-bd9d6dd71eb1"/>
+				<reportElement x="322" y="637" width="94" height="99" uuid="685aa6b1-3b12-4854-9a2c-bd9d6dd71eb1"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{medical_summary_Signature}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<image>
@@ -299,8 +342,16 @@ medical_summary.`mrs_id` = $P{id}]]>
 				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_mrs_review}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="108" y="454" width="12" height="12" uuid="6c6b55fe-f6fe-43d8-89c8-18d947a25d8a"/>
-				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_rr_green}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
+				<reportElement x="109" y="454" width="12" height="12" uuid="62ccd075-65f0-4214-9861-202170f35919"/>
+				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_risk_rating}==0?"images/checked.png":"images/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="109" y="517" width="12" height="12" uuid="0ed762cb-2e47-4f0e-97f9-eb1e293aafda"/>
+				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_risk_rating}==1?"images/checked.png":"images/uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="109" y="586" width="12" height="12" uuid="9eb05661-5628-488e-8cda-074eadd42a10"/>
+				<imageExpression><![CDATA[$P{real_path}+($F{medical_summary_risk_rating}==2?"images/checked.png":"images/uncheck.png")]]></imageExpression>
 			</image>
 		</band>
 	</detail>

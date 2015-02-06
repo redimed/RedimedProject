@@ -2,7 +2,7 @@
  * Created by thanh on 10/1/2014.
  */
 angular.module('app.loggedIn.document.MRS.controllers', [])
-    .controller("MRSController", function ($scope, DocumentService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
+    .controller("MRSController", function ($filter,$scope, DocumentService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -34,21 +34,22 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
             //end signature
 
             //var apptInfo = localStorageService.get('tempAppt');
-            var patientInfo = localStorageService.get('tempPatient');
-            if (patientInfo == null || patientInfo == 'undefined') {
+            $scope.patientInfo = localStorageService.get('tempPatient');
+            if ($scope.patientInfo == null || $scope.patientInfo == 'undefined') {
                 $state.go("loggedIn.home", null, {"reload": true});
                 toastr.error("Load information fail, Please try again", "Error");
             }
             else {
-
-                var patient_id = patientInfo.Patient_id;
+                var patient_id = $scope.patientInfo.Patient_id;
                 //var CAL_ID = $scope.apptInfo.CAL_ID;
                 var cal_id = -1; //set default cal_id
                 //set value default
 
+                $scope.patientInfo.DOB = $filter('date')($scope.patientInfo.DOB, 'dd/MM/yyyy');
                 $scope.info = {
                     patient_id: patient_id,
-                    cal_id: cal_id
+                    cal_id: cal_id,
+                    idC: $scope.patientInfo.company_id
                 };
                 /**
                  * exist cookies
@@ -58,6 +59,10 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 DocumentService.loadMRS(info).then(function (response) {
                     if (response['status'] === 'fail') {
                         $state.go('loggedIn.MRS', null, {raw: true});
+                    }
+                    else if(response['status'] == 'not'){
+                        toastr.error("You have to make Medical Assessment first", "Error");
+                        $state.go('loggedIn.MA', null, {'reload': true});
                     }
                     else if (response[0].status === 'findNull') {
                         //add new mrs
@@ -71,6 +76,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                      */
                     var data = response[0].data;
                     //set value load
+                    $scope.companyName = response[0].nameCompany;
                     $scope.patient = response[0].patient;
                     $scope.doctor = response[0].doctor;
                     $scope.appt = response[0].appt;
@@ -80,10 +86,10 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         cal_id: cal_id,
                         sticker_here: data.sticker_here,
                         proposed: data.proposed,
-                        as_height: data.as_height,
-                        as_weight: data.as_weight,
-                        as_whr: data.as_whr,
-                        as_bmi: data.as_bmi,
+                        as_height: response[0].dataMA.HEIGHT,
+                        as_weight: response[0].dataMA.WEIGHT,
+                        as_whr: response[0].dataMA.WHR,
+                        as_bmi: response[0].dataMA.BMI,
                         as_height_weight: data.as_height_weight,
                         as_medical_history: data.as_medical_history,
                         as_medical_assessment: data.as_medical_assessment,
@@ -99,10 +105,8 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                         ac_any_medical_or_functional: data.ac_any_medical_or_functional,
                         ac_any_diagnosed_or_previous: data.ac_any_diagnosed_or_previous,
                         ac_examiner_comment: data.ac_examiner_comment,
-                        rr_green: data.rr_green,
-                        rr_amber: data.rr_amber,
+                        risk_rating : data.risk_rating,
                         rr_amber_comment: data.rr_amber_comment,
-                        rr_red: data.rr_red,
                         rr_red_comment: data.rr_red_comment,
                         mrs_review: data.mrs_review,
                         mrs_doc_date: data.mrs_doc_date || new Date(),

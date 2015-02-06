@@ -81,20 +81,13 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-3 col-sm-3"
-                                 style="text-align: left;width: auto;margin-top: 5px;">
+                                 style="text-align: left;width: auto">
                                 <label class="control-label">Name of
                                     recipient:</label>
                             </div>
-                            <div ng-class="{'has-error': SA1.RECIPIENT_NAME.$error.maxlength}">
-                                <div class="col-md-5 col-sm-7">
-                                    <input type="text" class="form-control" name="RECIPIENT_NAME"
-                                           ng-model="info.RECIPIENT_NAME"
-                                           ng-maxlength="200"/>
-                                </div>
-                                <div class="help-block" ng-show="SA1.RECIPIENT_NAME.$error.maxlength">
-                                    <label class="control-label">Too long!</label>
-                                </div>
-                            </div>
+                           <label class="col-md-5 col-sm-7">
+                           {{info.company.Company_name}}  REDIMED
+                                </label>
                         </div>
                     </div>
                     <br/>

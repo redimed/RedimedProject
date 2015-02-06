@@ -118,9 +118,23 @@ module.exports = function(sequelize, DataTypes){
                  mdtInvoiceHeader.belongsTo(models.Department, { 
                 	as: 'Department', foreignKey: 'DEPT_ID'
                 });
+            },
+            
+        },
+        instanceMethods: {
+		 	getAmount : function() {
+		 		var lines = this.lines.filter(function(item){
+		 			return item.IS_ENABLE == 1;
+		 		});	
 
+		 		var amount = 0;
+				for(var i = 0, len = lines.length; i < len; ++i) {
+		 			var line = lines[i];
+		 			amount +=  line.AMOUNT;
+		 		}
+		 		return amount;
             }
-        }
+		}
 	});
 
 	return mdtInvoiceHeader;
