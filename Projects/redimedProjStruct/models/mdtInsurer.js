@@ -29,6 +29,8 @@ var mdtInstance = sequelize.define("Insurer", {
                 'last_updated_by': { 
     type: DataTypes.INTEGER(11),  
             },
+    'phone':{type: DataTypes.STRING(15)},
+    'country':{type: DataTypes.INTEGER(11)}
         }, {
 tableName: "cln_insurers",
 createdAt: "creation_date",

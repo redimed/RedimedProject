@@ -17,6 +17,11 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
 
                 });
             };
+
+            ConfigService.countries_option().then(function(result){
+                scope.country_options = result.data;
+            })
+
             scope.modelObjectMap = angular.copy(InsurerModel);
             scope.mode = {type: 'add', text: 'Add Company'};
             if (scope.data) {

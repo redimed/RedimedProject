@@ -34,8 +34,31 @@
             </span>
         </div>
         <!-- END ADDRESS -->
+
+        <!-- STATE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="country">Country</label>
+                <select name="country" id="country" ng-model="modelObjectMap.country" ng-options="c.id as c.Country_name for c in country_options" float-label>
+                    <option value="" disabled selected>--Select Country--</option>
+                </select>
+            </span>
+        </div>
+        <!-- END STATE -->
      
-         <!-- POSTCODE -->
+        <div class="break-row"></div>
+
+        <!-- SUBURB -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="suburb">Suburb</label>
+                <input type="text" id="suburb"
+                       name="suburb" ng-model="modelObjectMap.suburb" placeholder="Suburb" float-label />
+            </span>
+        </div>
+        <!-- END SUBURB -->   
+
+        <!-- POSTCODE -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="postcode">Postcode</label>
@@ -45,18 +68,7 @@
         </div>
         <!-- END POSTCODE -->
 
-        <div class="break-row"></div>
-        
-       <!-- SUBURB -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="suburb">Suburb</label>
-                <input type="text" id="suburb"
-                       name="suburb" ng-model="modelObjectMap.suburb" placeholder="Suburb" float-label />
-            </span>
-        </div>
-        <!-- END SUBURB -->   
-       
+
         <!-- STATE -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field">
@@ -67,6 +79,17 @@
         </div>
         <!-- END STATE -->
 
+        <div class="break-row"></div>
+
+        <!-- PHONE -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="phone">Phone</label>
+                <input type="text" id="state"
+                       name="phone" ng-model="modelObjectMap.phone" placeholder="Phone" float-label />
+            </span>
+        </div>
+        <!-- END PHONE -->
       
         <!-- IS ENABLE -->
         <div class="col-md-4 col-sm-6 col-xs-12">
