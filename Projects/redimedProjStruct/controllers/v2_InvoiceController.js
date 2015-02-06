@@ -154,7 +154,6 @@ module.exports = {
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
-		console.log(req.body);
 
 		db.mdtInvoiceHeader.find({
 			where: {header_id: header_id},
@@ -168,15 +167,7 @@ module.exports = {
 				res.json(500, {"status": "error", "message": 'Missing header / lines'});
 				return;
 			}
-
-			var lines = header.lines.filter(function(item){
-	 			return item.IS_ENABLE == 1;
-	 		});
-			var amount = 0;
-			for(var i = 0, len = lines.length; i < len; ++i) {
-	 			var line = lines[i];
-	 			amount +=  line.AMOUNT;
-	 		}
+			var amount = header.getAmount();
 
 	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status}, {
 	            header_id: header_id
