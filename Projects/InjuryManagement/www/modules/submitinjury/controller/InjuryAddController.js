@@ -3,7 +3,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
     .controller('InjuryAddController', function($scope, $state, $filter, $stateParams,
                                                 InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                                 $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate, $cordovaGeolocation,
-                                                $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $document, $ionicSideMenuDelegate, $cordovaDialogs){
+                                                $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $document, $ionicSideMenuDelegate, $cordovaDialogs, $ionicPlatform){
 
         $scope.isSubmit = false;
         $scope.isShow = true;
@@ -86,7 +86,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 });
             }
             else {
-                $state.go('app.injury.desinjury');
+                $state.go('app.injury.desInjury');
                 $scope.worker.injury_date = $filter('date')(new Date(), "yyyy-MM-dd");
             }
         }
@@ -312,7 +312,7 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                 else
                 {
                     if($scope.imgURI.length > 0) {
-                        $state.go('app.injury.desinjurySuccess');
+                        $state.go('app.injury.desInjurySuccess');
                         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
                         $scope.infopatient.background = colors[Math.floor(Math.random() * colors.length)];
                         $scope.infopatient.letter = String($scope.worker.First_name).substr(0,1).toUpperCase();
@@ -481,10 +481,12 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
         $scope.takePhotoModel = function() {
             $state.go('app.injury.modelBody', null, {reload: true});
         }
+
         $scope.PostitionObject = [];
 
         $scope.$on('$stateChangeSuccess', function(event, state) {
             if(state.name == 'app.injury.modelBody') {
+                //screen.lockOrientation('portrait');
                 $ionicSideMenuDelegate.canDragContent(false);
                 $(document).ready(function(){
                     $("#modelbody").vc3dEye({
@@ -494,6 +496,13 @@ angular.module('starter.injury.add.controller', ['ngCordova'])
                     })
                 });
             }
+            //else if (state.name == 'app.injury.desInjurySuccess') {
+            //    $ionicPlatform.onHardwareBackButton(onBackKeyDown)
+            //
+            //    function onBackKeyDown() {
+            //        screen.unlockOrientation();
+            //    }
+            //}
         });
 
         // Get Current Offset() div

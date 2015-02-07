@@ -103,7 +103,7 @@ angular.module('starter', ['ionic',
                     $state.go("security.login");
                 }
             }
-            if( toState.name == "app.injury.desinjury" || toState.name == "app.injury.desinjurySuccess" || toState.name == "app.injury.modelBody")
+            if( toState.name == "app.injury.desInjury" || toState.name == "app.injury.desInjurySuccess" || toState.name == "app.injury.modelBody")
             {
                 $ionicSideMenuDelegate.canDragContent(false);
             }

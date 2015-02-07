@@ -36,7 +36,7 @@
                 </div>
 
                 <div>
-                    <button class="button button-cancel_main" ng-click="cancelCall()">
+                    <button class="button button-cancel_main" ng-click="cancelCall(offMedia = true)">
                         <img class="img-responsive margin-auto" src="img/call-down.png" />
                     </button>
                 </div>
@@ -60,7 +60,7 @@
                     ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
             </button>
 
-            <button class="button button-cancel_main" ng-click="cancelCall()">
+            <button class="button button-cancel_main" ng-click="cancelCall(offMedia = false)">
                 <img class="img-responsive margin-auto" src="img/call-down.png" />
             </button>
 

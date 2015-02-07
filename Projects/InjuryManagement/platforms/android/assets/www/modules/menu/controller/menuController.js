@@ -1,7 +1,7 @@
 angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
-                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling, $cordovaGeolocation, $interval){
+                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling, $cordovaGeolocation, $interval, $ionicPlatform){
         signaling.removeAllListeners();
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
@@ -29,7 +29,7 @@ angular.module("starter.menu.controller",[])
         if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
         {
             getLocation();
-            stopInterval = $interval(function () { console.log('setInterval'); getLocation()}, 10 * 1000);
+            stopInterval = $interval(function () { getLocation()}, 10 * 1000);
         }
 
 
@@ -241,36 +241,44 @@ angular.module("starter.menu.controller",[])
                 case 'call':
                     media = new Media(src, null, null, loop);
                     media.play();
-                    if ($state.current.name === 'app.phoneCall') { return; }
+                    if ($state.current.name === 'app.phoneCall') { return; };
 
-                    var dialogCall = $ionicPopup.confirm({
+                    $scope.popupCall = $ionicPopup.show({
                         title: 'Incoming Call',
-                        template: fromUsername
-                    }).then(function(result){
-                        if(result){
-                            media.pause();
-                            $state.go('app.phoneCall', { callUser: fromId, isCaller: false  }, {reload: true});
-                        }
-                        else {
-                            media.pause();
-                            signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
-                        }
-                    })
-                    //    $cordovaDialogs.confirm('Incoming Call', fromUsername, ['answer','ignore'])
-                    //
-                    //dialogCall.then(function(buttonIndex) {
-                    //    if(buttonIndex == 1) {
-                    //
-                    //    }
-                    //    else if (buttonIndex == 2) {
-                    //
-                    //    }
-                    //});
+                        template: fromUsername + ' Calling you!',
+                        buttons: [
+                            {
+                                text: '<b>answer</b>',
+                                type: 'button button-balanced',
+                                onTap: function(e) {
+                                    media.pause();
+                                    $state.go('app.phoneCall', { callUser: fromId, isCaller: false  }, {reload: true});
+                                    $scope.popupCall = null;
+                                }
+                            },
+
+                            { text: '<b>ignore</b>',
+                                type: 'button button-assertive',
+                                onTap: function(e) {
+                                    media.pause();
+                                    signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
+                                }
+                            },
+                        ]
+                    });
                     break;
-                case 'ignore':
-                    dialogCall.close();
-                    media.pause();
+                case 'cancel':
+                    if($scope.popupCall != null) {
+                        media.pause();
+                        $scope.popupCall.close();
+                    }
                     break;
             }
         });
+
+        //$scope.$on('$stateChangeSuccess', function(event, state) {
+        //    if(state.name == 'app.injury.info') {
+        //        $ionicPlatform.onHardwareBackButton($scope.logoutApp);
+        //    }
+        //});
     })

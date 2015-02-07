@@ -181,7 +181,7 @@ angular.module('starter.worker.add.controller',[])
         //back injuryDesc
         $scope.backdescInjury = function() {
             localStorageService.set("checkNonemerg", $scope.injurySubmitNonemer);
-            $state.go('app.injury.desinjury');
+            $state.go('app.injury.desInjury');
         }
 
         //submit worker check true false

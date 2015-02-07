@@ -24,7 +24,7 @@ angular.module('starter.injury', [
                 }
 
             })
-            .state('app.injury.desinjury', {
+            .state('app.injury.desInjury', {
                 url: "/des_injury",
                 views: {
                     'main': {
@@ -32,7 +32,7 @@ angular.module('starter.injury', [
                     }
                 }
             })
-            .state('app.injury.desinjurySuccess', {
+            .state('app.injury.desInjurySuccess', {
                 url: "/successInjury",
                 views: {
                     'main': {

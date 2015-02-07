@@ -58,38 +58,30 @@ angular.module('starter.phoneCall.controller',[])
             }
         }
 
-        $scope.cancelCall = function () {
-            disconnect();
-            signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
-            $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+        $scope.cancelCall = function (offMedia) {
+            if(offMedia) {
+                media.pause()
+                disconnect();
+                signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
+                $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
+            }
+            else {
+                disconnect();
+                signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
+                $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+            }
         };
 
         $scope.$on('$destroy', function() {
-            signaling.removeListener('messageReceived', function(fromId, fromUser, message) {
-                switch (message.type) {
-                    case 'answer':
-                        media.pause();
-                        performCall(message.rtcId);
-                        break;
-                    case 'ignore':
-                        media.pause();
-                        disconnect();
-                        $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
-                        break;
-                    case 'cancel':
-                        media.pause();
-                        disconnect();
-                        $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
-                        break;
-                }
-            });
+            signaling.removeListener('messageReceived', onMessageReceive);
         });
 
-        signaling.on('messageReceived', function(fromId, fromUser, message) {
+        function onMessageReceive (fromId, fromUser, message) {
             switch (message.type) {
                 case 'answer':
                     media.pause();
                     performCall(message.rtcId);
+                    $scope.isAccept = true;
                     break;
                 case 'ignore':
                     media.pause();
@@ -101,7 +93,9 @@ angular.module('starter.phoneCall.controller',[])
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
             }
-        });
+        }
+
+        signaling.on('messageReceived', onMessageReceive);
 
 
         function performCall(easyRtcId) {
@@ -109,7 +103,6 @@ angular.module('starter.phoneCall.controller',[])
             var acceptedCB = function(accepted, easyrtcid) {
             };
             var successCB = function() {
-                $scope.isAccept = true;
                 console.log("Success","Call Success!");
             };
             var failureCB = function(errCode, errMsg) {
