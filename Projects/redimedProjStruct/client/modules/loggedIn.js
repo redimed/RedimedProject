@@ -65,7 +65,8 @@ angular.module("app.loggedIn",[
 	/*END AUTO CREATE*/
     'app.loggedIn.timetable',
 
-    'app.loggedIn.im'
+    'app.loggedIn.im',
+    "app.loggedIn.staff"
 ])
 
 .config(function($stateProvider) {
