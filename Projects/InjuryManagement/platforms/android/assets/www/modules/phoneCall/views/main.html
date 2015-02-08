@@ -1,0 +1,79 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="content-scroll-custom">
+
+        <div class="waiting-screen" ng-show="isCaller && !isAccept">
+            <div style="border: 1px solid rgba(255, 255, 255, .1); border-radius: 50%; width: 400px; height: 400px;" class="waiting-screen" ></div>
+            <div style="border: 1px solid rgba(255, 255, 255, .3);; border-radius: 50%; width: 300px; height: 300px;" class="waiting-screen div2" ></div>
+            <div style="border: 1px solid rgba(255, 255, 255, .5); border-radius: 50%; width: 200px; height: 200px;" class="waiting-screen div1" ></div>
+
+            <div ng-class="{'img-phone-call':contactNameJson}" ng-style={"background-color":contactNameJson.background} class="main img-circle avatar-calling">
+                <span>
+                    {{ contactNameJson.letter }}
+                </span>
+            </div>
+        </div>
+
+        <div class="calling-container" ng-show="isCaller && !isAccept">
+            <div style="color: whitesmoke; margin-bottom: 50px;">
+                <div style="margin-bottom: 15px;">
+                    <span style="font-size: 15px; font-weight: 300">Calling...</span>  <br>
+                </div>
+                <div>
+                    <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 10px">
+                <div style="margin-bottom: 30px;">
+                    <button class="button custom-bottom-control button-icon"
+                            ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
+                    </button>
+
+                    <button class="button custom-bottom-control button-icon"
+                            ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
+                    </button>
+                </div>
+
+                <div>
+                    <button class="button button-cancel_main" ng-click="cancelCall(offMedia = true)">
+                        <img class="img-responsive margin-auto" src="img/call-down.png" />
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="calling-container" ng-show="!isCaller || isAccept">
+
+            <div style="color: whitesmoke; color: whitesmoke; position: fixed; top: 0; left: 0; right: 0; margin-top: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <span style="font-size: 15px; font-weight: 300">Call in progress...</span>  <br>
+                </div>
+                <div>
+                    <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
+                </div>
+
+            </div>
+
+
+            <button class="button custom-bottom-control button-icon"
+                    ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
+            </button>
+
+            <button class="button button-cancel_main" ng-click="cancelCall(offMedia = false)">
+                <img class="img-responsive margin-auto" src="img/call-down.png" />
+            </button>
+
+
+            <button class="button custom-bottom-control button-icon"
+                    ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
+            </button>
+
+        </div>
+
+        <video autoplay="autoplay" id="selfVideo" muted="muted" volume="0" class="selfVideo"></video>
+
+        <video ng-show="!isCaller || isAccept" autoplay="autoplay" id="callerVideo" class="callerVideo"></video>
+
+    </ion-content>
+</ion-view>

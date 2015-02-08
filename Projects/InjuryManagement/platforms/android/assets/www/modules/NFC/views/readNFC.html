@@ -1,0 +1,295 @@
+<ion-view title="Read NFC Tag" >
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon waves-effect waves-light " style="color:#fff"></button>
+        
+    </ion-nav-buttons>
+
+        <ion-content class="padding has-header ">
+        
+            <ion-list>
+                <div class="app">
+                <div id="messageDiv"></div>
+                
+                    <div class="row">
+                      <form class="col s12" >
+                        <div class="row">
+                          <div class="input-field col s6">
+                            <i class="mdi-action-search prefix"></i>
+                            <input id="icon_prefix" class="validate" ize="40" ng-required="true" type="text" ng-model="testData.data.SearchKey" name="SearchKey"  ng-change="getInfoPatien(testData.data.SearchKey)" >
+                            <label for="icon_prefix">Search key</label>
+                          </div>
+                        
+                        </div>
+                      </form>
+                    </div>
+
+
+                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.SearchKey || !isShow">
+                    <a class="item itemsearch"
+                       ng-repeat="result in list | filter:testData.data.SearchKey" ng-click="selectInfo(result)">
+                        <h3 style="text-decoration: underline;">
+                            {{ (result.Title == null ? '' : result.Title + " . ") +
+                            (result.First_name == null ? '' : result.First_name) + " " +
+                            (result.Middle_name == null ? '' : result.Middle_name) + " " +
+                            (result.Sur_name == null ? '' : result.Sur_name) }}
+                        </h3>
+                        <h4 ng-hide="result.DOB == null">
+                            <i class="fa fa-calendar"></i>
+                            {{result.DOB | date:"dd/MM/yyyy"}}
+                        </h4>
+                        <h4 ng-hide="result.Mobile == null">
+                            <i class="fa fa-phone"></i>
+                            {{result.Mobile}}
+                        </h4>
+                    </a>
+        </ion-scroll>
+
+
+
+    
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Email.$invalid || isFailEmail}">
+                    <span class="input-label span-input-color">Email</span>
+                    <input ng-required="true" type="email" ng-model="testData.data.Email" name="Email" >
+                </label>
+
+
+
+                <label class="item item-input item-select label-custom-field" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
+                    <span class="input-label span-input-color">Title</span>
+                    <select ng-required="true" ng-model="testData.data.Title" name="Title" class="browser-default"
+                            ng-options="row.name as row.name for row in titleIndex" >
+                        <option value="">--Select Title--</option>
+                    </select>
+                     <hr class="customHr" >
+                </label>
+
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.First_name.$invalid}">
+                    <span class="input-label span-input-color">First Name</span>
+                    <input ng-required="true" type="text" ng-model="testData.data.First_name" name="First_name"  />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.First_name.$invalid}"></i>
+                </label>
+
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Sur_name.$invalid}">
+                    <span class="input-label span-input-color">Sur Name</span>
+                    <input ng-required="true" type="text" ng-model="testData.data.Sur_name" name="Sur_name"  />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Sur_name.$invalid}"></i>
+                </label>
+
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Middle Name</span>
+                    <input type="text" ng-model="testData.data.Middle_name" name="Middle_name" />
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Know as</span>
+                    <input type="text" ng-model="testData.data.Known_as" name="Known_as" />
+                </label>
+
+                <!--<label class="item item-input">-->
+                <!--<span class="input-label span-input-color">Maiden Name</span>-->
+                <!--<input type="text" ng-model="worker.Maiden_name" name="Maiden_name" />-->
+                <!--</label>-->
+
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Address1.$invalid}">
+                    <span class="input-label span-input-color">Address</span>
+                    <input ng-required="true" type="text" ng-model="testData.data.Address1" name="Address1">
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Address1.$invalid}"></i>
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Address 2</span>
+                    <input type="text" ng-model="testData.data.Address2" name="Address2">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Suburb</span>
+                    <input type="text" ng-model="testData.data.Suburb" name="Suburb">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">State</span>
+                    <input type="text" ng-model="testData.data.State" name="State">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Country</span>
+                    <input type="text" ng-model="testData.data.Country" name="Country">
+                </label>
+
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.DOB.$invalid}">
+                    <span class="input-label span-input-color">Birthday</span>
+                    <input ng-required="true" type="date" ng-model="testData.data.DOB" name="DOB" />
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.DOB.$invalid}"></i>
+                </label>
+
+                <label class="item item-input item-select label-custom-field" ng-class="{'has-error':isSubmit && infor.Sex.$invalid}">
+                    <span class="input-label span-input-color">Sex</span>
+                    <select ng-required="true" ng-model="testData.data.Sex" name="Sex" class="browser-default"
+                            ng-options="row.name as row.name for row in sexIndex">
+                        <option value="">--Select Gender--</option>
+                    </select>
+                     <hr class="customHr" >
+                </label>
+
+
+
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Mobile.$invalid || isFailMobile}">
+                    <span class="input-label span-input-color">Mobile Phone</span>
+                    <input ng-required="true" type="tel" ng-model="testData.data.Mobile" name="Mobile" ng-change="Checkfield(isMobile = true)">
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Mobile.$invalid || isFailMobile}"></i>
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Home Phone</span>
+                    <input type="tel" ng-model="testData.data.Home_phone" name="Home_phone">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Work Phone</span>
+                    <input type="tel" ng-model="testData.data.Work_phone" name="Work_phone">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Post Code</span>
+                    <input type="number" ng-model="testData.data.Post_code" name="Post_code">
+                </label>
+
+                <label class="item item-input item-select label-custom-field">
+                    <span class="input-label span-input-color">Account Type</span>
+                    <select ng-model="testData.data.Account_type" class="browser-default"
+                            ng-options="row.name as row.name for row  in accTypeIndex">
+                        <option value="">--Select Type--</option>
+                    </select>
+                     <hr class="customHr" >
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Account Holder</span>
+                    <textarea type="text" ng-model="testData.data.Account_holder" name="testData.data.Account_holder"></textarea>
+
+                </label>
+
+                <label class="item item-input label-custom-field" ng-class="{'has-error':isSubmit2 && main.Medicare_no.$invalid}">
+                    <span class="input-label span-input-color">Medicare No</span>
+                    <input ng-required="true" type="tel" ng-model="testData.data.Medicare_no" name="Medicare_no" >
+                    <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit2 && main.Medicare_no.$invalid}"></i>
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Expire Medicare</span>
+                    <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="testData.data.Exp_medicare" name="Exp_medicare" />
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">MemberShip No</span>
+                    <input type="tel" ng-model="testData.data.MemberShip_no" name="MemberShip_no">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">DVA No</span>
+                    <input ng-model="testData.data.DVA_No" type="number" name="DVA_No">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">HCC/Pension No</span>
+                    <input ng-model="testData.data.HCC_Pension_No" type="number" name="HCC_Pension_No">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Expiry</span>
+                    <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="testData.data.Exp_pension" name="Exp_pension" />
+                </label>
+
+                <div class="row" >
+                    <div class="col col-75" style="padding-top: 1px">
+                        <label class="item item-input label-custom-field">
+                            <span class="input-label span-input-color">Health Fund</span>
+                            <select ng-model="testData.data.Private_fund_id" class="browser-default"
+                                    ng-options="row.name as row.name for row in fundIndex">
+                                <option value="">--Select Fund--</option>
+                            </select>
+                           
+                        </label>
+                    </div>
+                    <div class="col" style="padding-top: 1px">
+                        <label class="item item-input label-custom-field" style="padding-bottom: 8px;">
+                            <input type="tel" ng-model="testData.data.UPI" name="UPI" placeholder="UPI">
+                        </label>
+                    </div>
+                </div>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color label-custom-field">Occupation</span>
+                    <input type="text" ng-model="testData.data.Occupation" name="Occupation">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Partner's Name</span>
+                    <input type="text" ng-model="testData.data.Partner_name" name="Partner_name">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Partner's DOB</span>
+                    <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="testData.data.Partner_DOB" name="Partner_DOB" />
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Partner's Occupation</span>
+                    <input type="text" ng-model="testData.data.Partner_Occupation" name="Partner_Occupation">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Alias First Name</span>
+                    <input type="text" ng-model="testData.data.Alias_First_name" name="Alias_First_name">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Alias Sur Name</span>
+                    <input type="text" ng-model="testData.data.Alias_Sur_name" name="Alias_Sur_name">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">UR No</span>
+                    <input type="tel" ng-model="testData.data.UR_no" name="UR_no">
+                </label>
+
+                <label class="item item-input label-custom-field">
+                    <span class="input-label span-input-color">Custom</span>
+                    <input type="text" ng-model="testData.data.Custom" name="Custom">
+                </label>
+
+
+            </ion-list>
+           <!--  <button class="button button-positive" ng-click="updateWorker(testData)">Update Worker</button>
+            <button class="button button-positive" ng-click="writeNewNFC(testData)">Write NFC</button>
+            <button class="button button-positive" ng-click="Inapp(testData)">Go to Appoinment</button> -->
+            <div class="row">
+                <div class="col" style="text-align: right">
+                    <a class="btn-floating btn-large waves-effect waves-light blue" ng-click="updateWorker(testData)">
+                        <i class="icon ion-ios7-refresh-empty"></i> Update Worker
+                    </a>
+                </div>
+                <div  style="text-align: left">
+                    <a class="btn-floating btn-large waves-effect waves-light blue" ng-click="writeNewNFC(testData)">
+                        <i class="mdi-image-style"></i> Write Tag NFC
+                    </a>
+                </div>
+
+                 <div class="col" style="text-align: left">
+                    <a class="btn-floating btn-large waves-effect waves-light blue" ng-click="Inapp(testData)">
+                        <i class="mdi-action-open-in-browser"></i> Go Appoinment
+                    </a>
+                </div>
+            </div>
+        </ion-content>
+
+</ion-view>
+
+
