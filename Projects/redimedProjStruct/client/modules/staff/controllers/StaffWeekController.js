@@ -45,16 +45,18 @@ angular.module("app.loggedIn.staff.week.controller", [])
                         return t;
                     }
                 },
-                controller: function($scope, $modalInstance,task) {
+                controller: function($scope,$modalInstance,task){
                     $scope.$modalInstance = $modalInstance;
-                    $scope.taskModal = task;
+                    $scope.taskModal = angular.copy(task);
+
                     $scope.addTask = function(){
                         $modalInstance.close($scope.taskModal);
                     };
                 }
             });
-            modalInstance.result.then(function(task){
 
+            modalInstance.result.then(function(task){
+                $scope.tasks[key][i] = task;
             })
         };
 
@@ -63,3 +65,4 @@ angular.module("app.loggedIn.staff.week.controller", [])
             $scope.tasks[i].splice(j,1);
         }
     })
+
