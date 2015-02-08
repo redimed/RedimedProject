@@ -3,6 +3,7 @@ angular.module("app.security.login.controller",[
     .controller("SecurityLoginController", function ($scope, $state,$modal, $cookieStore, SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
         $scope.showClickedValidation = false;
 
+        $scope.isLogging = false;
 
     $scope.modelUser = {
         username : null,
@@ -16,40 +17,44 @@ angular.module("app.security.login.controller",[
         if($scope.loginForm.$invalid){
             toastr.error("Please Input Your Username And Password!", "Error");
         }else{
+            $scope.isLogging = true;
 
-            SecurityService.login($scope.modelUser).then(function(response){
-                socket.emit('checkLogin',$scope.modelUser.username);
+            if($scope.isLogging) {
+                SecurityService.login($scope.modelUser).then(function (response) {
+                    socket.emit('checkLogin', $scope.modelUser.username);
 
-                socket.on('isSuccess',function() {
-                    login();
-                })
-
-                socket.on('isError',function(){
-
-                    var modalInstance = $modal.open({
-                        templateUrl: 'modules/security/views/confirmLogin.html',
-                        controller: 'ConfirmLoginController',
-                        size: 'md' ,
-                        backdrop: 'static',
-                        keyboard: false
+                    socket.on('isSuccess', function () {
+                        login();
                     })
 
-                    modalInstance.result.then(function (acceptLogin){
-                        if(acceptLogin)
-                        {
-                            socket.emit('forceLogin',$scope.modelUser.username);
-                        }
+                    socket.on('isError', function () {
+                        $scope.isLogging = false;
+                        var modalInstance = $modal.open({
+                            templateUrl: 'modules/security/views/confirmLogin.html',
+                            controller: 'ConfirmLoginController',
+                            size: 'md',
+                            backdrop: 'static',
+                            keyboard: false
+                        })
 
-                    },function(err){
-                        console.log(err);
-                    });
-                })
+                        modalInstance.result.then(function (acceptLogin) {
+                            if (acceptLogin) {
+                                socket.emit('forceLogin', $scope.modelUser.username);
+                            }
 
-            }, function(error){
-                toastr.error("Wrong Username Or Password!");
-            });
+                        }, function (err) {
+                            console.log(err);
+                        });
+                    })
 
-            socket.removeAllListeners();
+                }, function (error) {
+                    toastr.error("Wrong Username Or Password!");
+                    $scope.isLogging = false;
+                });
+
+                socket.removeAllListeners();
+
+            }
 
         }
     }

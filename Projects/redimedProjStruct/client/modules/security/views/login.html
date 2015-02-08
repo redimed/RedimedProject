@@ -44,7 +44,7 @@
 					name="remember" ng-checked="modelUser.remember">
 				Remember Me
 			</label>
-			<button class="btn green pull-right" type="submit">
+			<button ng-class="{disabled : isLogging}"  class="btn green pull-right" type="submit">
 				Login <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>
