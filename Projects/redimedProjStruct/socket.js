@@ -18,6 +18,8 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
+        console.log(ua);
+
         socket.on('checkApp',function(id){
             // if(id){
             //     db.User.find({where:{id:id}},{raw:true})
@@ -80,13 +82,15 @@ module.exports = function(io,cookie,cookieParser) {
             //     .success(function(user){
             //         if(user)
             //         {
-            //             if(user.socket == null){
+                       
+            //             if(user.socketMobile == null){
             //                 socket.emit('isSuccess');
             //             }
             //             else
             //             {
             //                 socket.emit('isError');
             //             }
+                        
             //         }
 
             //     })

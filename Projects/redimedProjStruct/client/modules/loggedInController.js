@@ -1,6 +1,18 @@
 angular.module("app.loggedIn.controller",[
 ])
 
+.controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+    var from = $location.search().from;
+    var to = $location.search().to;
+    var isCaller = $location.search().isCaller;
+
+    UserService.getUserInfo(from).then(function(data){
+        console.log(data);
+    })
+
+    console.log(from);
+})
+
 .controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify){
 
         var audio = new Audio('theme/assets/notification.mp3');

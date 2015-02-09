@@ -73,8 +73,10 @@ module.exports ={
 
 			var hostname = req.headers.host; //  'localhost:3000'
 			info.no_socket = true;
+
 			res.cookie('userInfo', info);
-    		res.redirect('http://' + hostname + '/#/patient/appointment/'+ patient_id +'/' + cal_id);
+    		res.redirect('http://' + hostname + '/#/patient/appointment/'+ patient_id +'/' + cal_id + '?fromMobile=true');
+
 		})
 		.error(function(error){
 			res.json({cookies: req.cookies, session: req.session})

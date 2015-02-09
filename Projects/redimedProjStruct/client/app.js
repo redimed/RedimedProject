@@ -56,7 +56,7 @@ angular.module("app", [
 
     return socketFactory;
 })
-.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
+.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider, $locationProvider) {
     // CORS PROXY
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -66,6 +66,8 @@ angular.module("app", [
     $idleProvider.idleDuration(30*60);
     $idleProvider.warningDuration(30);
     $keepaliveProvider.interval(30*60);
+
+    $locationProvider.html5Mode(true);
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
@@ -120,6 +122,18 @@ angular.module("app", [
                 }
             }
         })
+
+    .state('renderCall',{
+            url:'/renderCall',
+            views:{
+                "root":{
+                   templateUrl: "common/views/renderCall.html",
+                    controller:'renderCall'
+                }
+            }
+
+        })
+
     /* END */
 })
 
@@ -194,6 +208,14 @@ angular.module("app", [
     });
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
+
+        var locationHref = location.href;
+        if(locationHref.indexOf('fromMobile=true') != -1)
+        {
+
+             e.preventDefault();
+             return;
+        }
         $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
         if(!$cookieStore.get("userInfo") ){
             socket.removeAllListeners();
