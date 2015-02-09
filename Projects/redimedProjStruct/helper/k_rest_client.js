@@ -21,10 +21,13 @@ function BaseRestClient (host) {
 
 	this.post = function(path, data) {
 		var q = $q.defer();
-		var agrs = {};
-		agrs.data = data;
-		agrs.headers = {"Content-Type": "application/json"};
-	
+		var args = {data: data };
+		args.headers = {"Content-Type": "application/json"};
+		
+		console.log("\nPOST TO: ", this.host + path);
+		console.log("\nDATA: ", data);
+		console.log("\n")
+
 		client.post(this.host + path, args, function(data, response) {
 		    q.resolve({data: data, response: response});
 		}).on('error',function(err){

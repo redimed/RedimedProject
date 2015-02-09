@@ -142,8 +142,10 @@ angular.module("app.loggedIn.patient.services", [])
     * END MINH
     */
     instanceService.mdtVerifiedMedicare = function(options){
-        var govermentApi = Restangular.allUrl("Medicare", "http://localhost:9292/testapp.redimed.com.au:3003/RedimedJavaREST/api/medicare/verify/pvm");
-        return govermentApi.post(options);
+        return khankAPI.all('patient/verified_medicare').post(options);
+
+        // var govermentApi = Restangular.allUrl("Medicare", "http://localhost:9292/testapp.redimed.com.au:3003/RedimedJavaREST/api/medicare/verify/pvm");
+        // return govermentApi.post(options);
     }
 
     instanceService.mdtSearch = function(options){
