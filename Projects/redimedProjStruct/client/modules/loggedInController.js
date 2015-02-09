@@ -15,15 +15,15 @@ angular.module("app.loggedIn.controller",[
                 delete data.img;
                 $cookieStore.put('userInfo',data);
             }
-
             
-            if(!data.img)
-                data.img = "theme/assets/icon.png"
+            UserService.getUserInfo(to).then(function(data){
+                if(!data.img)
+                     data.img = "theme/assets/icon.png"
 
-            if(isCaller)
-                $state.go("call",{callUserInfo:data,callUser:from,isCaller:true},{reload:true});
-            else
-                $state.go("call",{callUserInfo:data,callUser:from,isCaller:false},{reload:true});
+                if(isCaller)
+                    $state.go("call",{callUserInfo:data,callUser:to,isCaller:true},{reload:true});
+               
+            })
         }
     })
 

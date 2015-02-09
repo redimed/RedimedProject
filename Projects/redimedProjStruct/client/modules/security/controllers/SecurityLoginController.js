@@ -19,7 +19,7 @@ angular.module("app.security.login.controller",[
         }else{
             // $scope.isLogging = true;
 
-            if($scope.isLogging) {
+            // if($scope.isLogging) {
                 SecurityService.login($scope.modelUser).then(function (response) {
                     socket.emit('checkLogin', $scope.modelUser.username);
 
@@ -54,7 +54,7 @@ angular.module("app.security.login.controller",[
 
                 socket.removeAllListeners();
 
-            }
+            // }
 
         }
     }
