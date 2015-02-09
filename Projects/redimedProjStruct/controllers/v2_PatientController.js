@@ -9,8 +9,15 @@ module.exports ={
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
 		var search_data = req.body.search;
+		var whereOpt = {};
+		for(var key in search_data){
+			if(search_data[key]){
+				whereOpt[key] = {like: search_data[key]+'%'};
+			}
+		}
+		console.log('this is where Opt', whereOpt);
 		db.Patient.findAndCountAll({
-			where: search_data,
+			where: whereOpt,
 			offset: offset,
 			limit: limit,
 			attributes: ['Patient_id','First_name','Sur_name','DOB','Address1','Post_code'],

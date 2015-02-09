@@ -18,13 +18,13 @@ module.exports = {
 		var fields = req.body.fields;
 		var search_data = req.body.search;
 		console.log('this is search data', search_data);
-//		var agrs = [];
-//		for (var key in search_data) {
-//			if(search_data[key])
-//			agrs.push(key + " = '"+ search_data[key] +"'");
-//		};
-
-//		var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
+		var whereOpt = {};
+		whereOpt.patient_id = search_data.patient_id;
+		if(!!search_data.document_name){
+			whereOpt.document_name = {
+				like: search_data.document_name + '%'
+			}
+		}
 
 		db.AppointmentDocument.findAndCountAll({
             include:[
@@ -33,7 +33,7 @@ module.exports = {
                     attributes:['FROM_TIME'],
                 }
             ],
-			where: search_data,
+			where: whereOpt,
 			offset: offset,
 			limit: limit,
 			attributes: fields,
