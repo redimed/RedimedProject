@@ -32,7 +32,7 @@ var myIceServers = [
     {url: "stun:stun2.l.google.com:19302"},
     {url: "stun:stun3.l.google.com:19302"},
     {url: "stun:stun4.l.google.com:19302"},
-    {url: "turn:54.149.226.250", "username":"redimed", "credential":"redimed123"}
+    {url: "turn:172.17.19.101:3478", "username":"redimed", "credential":"redimed123"}
 ];
 
 // EasyRTC configs
