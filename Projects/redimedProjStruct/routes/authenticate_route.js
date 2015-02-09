@@ -26,8 +26,6 @@ app.get('/home',AuthenticationController.authenticated,function(req,res){
     res.sendfile(path.join(clientDir, 'home.html'))
 });
 
-
-
 app.post('/api/users/login', passport.authenticate('local'),function(req, res) {
         res.send(req.user);
     }
@@ -39,6 +37,9 @@ app.all('/api/users/logout', function(req, res) {
 });
 
 app.post('/api/users/register',AuthenticationController.register);
+
 app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
+
+

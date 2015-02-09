@@ -176,7 +176,6 @@ angular.module("app", [
 
 
     $rootScope.$on("$locationChangeSuccess",function(event, current,previous){
-
         if(current === previous)
         {
             if($cookieStore.get("userInfo")){

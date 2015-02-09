@@ -99,17 +99,28 @@ module.exports = function(io,cookie,cookieParser) {
 
         });
 
-        socket.on('login_successful',function(id,username){
+        socket.on('updateSocketLogin',function(username){
             db.User.update({
                 socket: socket.id
-            },{id: id, user_name: username})
+            },{user_name: username})
                 .success(function(){
                     getOnlineUser();
+                    socket.emit('login_success')
                 })
                 .error(function(err){
                     console.log(err);
                 })
 
+        })
+
+        socket.on('getSocket',function(username){
+            db.User.find({where:{user_name:username}},{raw:true})
+                .success(function(user){
+                    socket.emit('returnSocket',user.socket);
+                })
+                .error(function(err){
+                    console.log(err);
+                })
         })
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
