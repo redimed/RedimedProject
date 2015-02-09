@@ -26,7 +26,7 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                 },
                 scope: $scope.patient_panel,
                 options:{
-                    api:'api/erm/v2/patient/search',
+                    api:'api/erm/v2/patient/checkin_search',
                     method: 'post',
                     scope: $scope.patient_panel,
                     columns:[
