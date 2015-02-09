@@ -1,0 +1,108 @@
+<ion-view title="Add Worker">
+    <ion-nav-buttons>
+         <button menu-toggle="left" class="btn-floating btn-large waves-effect waves-light red" style="color:#fff">
+            <i class="mdi-action-view-headline"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <!-- <ion-content class="padding has-subheader has-header">
+        <button class="button button-positive" ng-click="NFCwrite()">
+           Write To Tag NFC
+        </button>
+        <div>
+            <span>PatientID:{{nfcInfo.data.Patient_id}}</span><br/>
+            <span>Name:{{nfcInfo.data.Title}} {{nfcInfo.data.First_name}}{{nfcInfo.data.Sur_name}}</span><br/>
+            <span>DOB:{{nfcInfo.data.DOB| date:'dd/MM/yyyy'}}</span><br/>
+            <span>Phone:{{nfcInfo.data.Mobile}}</span><br/>
+            <span>MedicareNo:{{nfcInfo.data.Medicare_no}}</span><br/>
+            <span>PassportorDriverslicence:</span><br/>
+            <span>Address:{{nfcInfo.data.Address1}}</span>
+
+            
+
+        </div>
+        <div class="app">
+            <div id="messageDiv">No tag found</div>
+        </div>
+    </ion-content> -->
+
+    <ion-content style="background-color: #F7F7F7 !important;">
+        <div class="bg-info-success text-center">
+            <img class="img-responsive img-circle img-infoInjury" src="img/profile.png"/>
+            <span class="name-info-injury">
+                {{nfcInfo.data.Title}}. {{nfcInfo.data.First_name}} {{nfcInfo.data.Sur_name}}
+            </span>
+        </div>
+            <div class="row">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                    <span>
+                         <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>
+                       {{nfcInfo.data.DOB | date:'yyyy-MM-dd'}}
+                    </span>
+                </label>
+            </div>
+
+            <div class="row">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                    <span>
+                        <i class="fa fa-mobile-phone margin-right-10"></i> Mobile</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{nfcInfo.data.Mobile}}</span>
+                </label>
+            </div>
+
+             <div class="row">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                    <span>
+                        <i class="fa fa-mobile-phone margin-right-10"></i> MedicareNo</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{nfcInfo.data.Medicare_no}}</span>
+                </label>
+            </div>
+
+             <div class="row">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                    <span>
+                        <i class="fa fa-mobile-phone margin-right-10"></i> PassportorDriverslicence</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span></span>
+                </label>
+            </div>
+
+           
+            <div class="row">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                    <span>
+                        <i class="icon ion-ios7-location-outline margin-right-10" style="font-size: 20px;"></i> Address</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{nfcInfo.data.Address1}}</span>
+                </label>
+            </div>
+    
+
+        
+
+        <div class="row">
+            <div class="col col-50 col-offset-25 padding-bottom">
+                <button class="button button-block bg-btn-custom" ng-click="NFCwrite()">
+                     Write To Tag NFC
+                </button>
+            </div>
+        </div>
+        <div class="app">
+            <div id="messageDiv">No tag found</div>
+        </div>
+
+    </ion-content>
+
+
+</ion-view>
+
+
