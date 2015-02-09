@@ -67,7 +67,7 @@ angular.module("app", [
     $idleProvider.warningDuration(30);
     $keepaliveProvider.interval(30*60);
 
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
@@ -212,10 +212,10 @@ angular.module("app", [
         var locationHref = location.href;
         if(locationHref.indexOf('fromMobile=true') != -1)
         {
-
              e.preventDefault();
              return;
         }
+        
         $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
         if(!$cookieStore.get("userInfo") ){
             socket.removeAllListeners();

@@ -17,7 +17,7 @@ angular.module("app.security.login.controller",[
         if($scope.loginForm.$invalid){
             toastr.error("Please Input Your Username And Password!", "Error");
         }else{
-            $scope.isLogging = true;
+            // $scope.isLogging = true;
 
             if($scope.isLogging) {
                 SecurityService.login($scope.modelUser).then(function (response) {
@@ -49,7 +49,7 @@ angular.module("app.security.login.controller",[
 
                 }, function (error) {
                     toastr.error("Wrong Username Or Password!");
-                    $scope.isLogging = false;
+                    // $scope.isLogging = false;
                 });
 
                 socket.removeAllListeners();

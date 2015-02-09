@@ -7,10 +7,27 @@ angular.module("app.loggedIn.controller",[
     var isCaller = $location.search().isCaller;
 
     UserService.getUserInfo(from).then(function(data){
-        console.log(data);
+        if(data)
+        {
+
+            if(typeof $cookieStore.get('userInfo') === 'undefined')
+            {
+                delete data.img;
+                $cookieStore.put('userInfo',data);
+            }
+
+            
+            if(!data.img)
+                data.img = "theme/assets/icon.png"
+
+            if(isCaller)
+                $state.go("call",{callUserInfo:data,callUser:from,isCaller:true},{reload:true});
+            else
+                $state.go("call",{callUserInfo:data,callUser:from,isCaller:false},{reload:true});
+        }
     })
 
-    console.log(from);
+
 })
 
 .controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify){
