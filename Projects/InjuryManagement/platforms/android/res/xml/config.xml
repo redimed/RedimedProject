@@ -30,7 +30,6 @@
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
-    <preference name="webView" value="org.apache.cordova.engine.crosswalk.XWalkCordovaWebView" />
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
@@ -43,6 +42,9 @@
     </feature>
     <feature name="Media">
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    </feature>
+    <feature name="Toast">
+        <param name="android-package" value="nl.xservices.plugins.Toast" />
     </feature>
     <name>InjuryManagement</name>
     <description>

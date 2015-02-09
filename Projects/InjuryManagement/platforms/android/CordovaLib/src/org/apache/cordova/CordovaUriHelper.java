@@ -25,14 +25,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.webkit.WebView;
 
-public class CordovaUriHelper {
+class CordovaUriHelper {
     
     private static final String TAG = "CordovaUriHelper";
     
     private CordovaWebView appView;
     private CordovaInterface cordova;
     
-    public CordovaUriHelper(CordovaInterface cdv, CordovaWebView webView)
+    CordovaUriHelper(CordovaInterface cdv, CordovaWebView webView)
     {
         appView = webView;
         cordova = cdv;
@@ -47,9 +47,9 @@ public class CordovaUriHelper {
      * @return              true to override, false for default behavior
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    public boolean shouldOverrideUrlLoading(String url) {
+    boolean shouldOverrideUrlLoading(WebView view, String url) {
         // Give plugins the chance to handle the url
-        if (this.appView.getPluginManager().onOverrideUrlLoading(url)) {
+        if (this.appView.pluginManager.onOverrideUrlLoading(url)) {
             // Do nothing other than what the plugins wanted.
             // If any returned true, then the request was handled.
             return true;

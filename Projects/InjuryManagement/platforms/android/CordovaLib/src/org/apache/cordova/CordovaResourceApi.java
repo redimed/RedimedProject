@@ -28,6 +28,8 @@ import android.os.Looper;
 import android.util.Base64;
 import android.webkit.MimeTypeMap;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import org.apache.http.util.EncodingUtils;
 
 import java.io.ByteArrayInputStream;
@@ -54,10 +56,13 @@ import java.util.Locale;
  *     passing the URL onto other utility functions in this class.
  *   - For an example usage of this, refer to the org.apache.cordova.file plugin.
  *
+ * 3. It exposes a way to use the OkHttp library that ships with Cordova.
+ *   - Through createHttpConnection().
+ *
  * Future Work:
  *   - Consider using a Cursor to query content URLs for their size (like the file plugin does).
- *   - Allow plugins to remapUri to "cdv-plugin://plugin-name/foo", which CordovaResourceApi
- *     would then delegate to pluginManager.getPlugin(plugin-name).openForRead(url)
+ *   - Allow plugins to remapUri to "cdv-plugin://plugin-name/$ID", which CordovaResourceApi
+ *     would then delegate to pluginManager.getPlugin(plugin-name).openForRead($ID)
  *     - Currently, plugins *can* do this by remapping to a data: URL, but it's inefficient
  *       for large payloads.
  */
@@ -76,7 +81,10 @@ public class CordovaResourceApi {
     
     private static final String[] LOCAL_FILE_PROJECTION = { "_data" };
     
-    public static Thread jsThread;
+    // Creating this is light-weight.
+    private static OkHttpClient httpClient = new OkHttpClient();
+    
+    static Thread jsThread;
 
     private final AssetManager assetManager;
     private final ContentResolver contentResolver;
@@ -180,7 +188,7 @@ public class CordovaResourceApi {
             case URI_TYPE_HTTP:
             case URI_TYPE_HTTPS: {
                 try {
-                    HttpURLConnection conn = (HttpURLConnection)new URL(uri.toString()).openConnection();
+                    HttpURLConnection conn = httpClient.open(new URL(uri.toString()));
                     conn.setDoInput(false);
                     conn.setRequestMethod("HEAD");
                     return conn.getHeaderField("Content-Type");
@@ -275,7 +283,7 @@ public class CordovaResourceApi {
             }
             case URI_TYPE_HTTP:
             case URI_TYPE_HTTPS: {
-                HttpURLConnection conn = (HttpURLConnection)new URL(uri.toString()).openConnection();
+                HttpURLConnection conn = httpClient.open(new URL(uri.toString()));
                 conn.setDoInput(true);
                 String mimeType = conn.getHeaderField("Content-Type");
                 int length = conn.getContentLength();
@@ -316,10 +324,10 @@ public class CordovaResourceApi {
         }
         throw new FileNotFoundException("URI not supported by CordovaResourceApi: " + uri);
     }
-
+    
     public HttpURLConnection createHttpConnection(Uri uri) throws IOException {
         assertBackgroundThread();
-        return (HttpURLConnection)new URL(uri.toString()).openConnection();
+        return httpClient.open(new URL(uri.toString()));
     }
     
     // Copies the input to the output in the most efficient manner possible.

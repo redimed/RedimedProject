@@ -10,10 +10,11 @@
     </div>
 
     <ion-slide-box style="height: 100%;" scroll="false" active-slide="imageObj.selected" show-pager="false">
-        <ion-slide ng-repeat="img in imgURI">
+        <ion-slide>
 
             <ion-scroll locking="false" zooming="true" min-zoom="1" ng-click="hide.bars = !hide.bars" class="heightcs">
-                <img ng-src="{{img.image}}" class="fullscreen-image" />
+                <!--<img ng-src="{{img.image}}" class="fullscreen-image" />-->
+                <img src="images/1.png" class="fullscreen-image"/>
             </ion-scroll>
 
             <div class="bg-descImg padding cssFade" ng-hide="!hide.bars">
@@ -26,3 +27,4 @@
     </ion-slide-box>
 </div>
 
+<!--ng-repeat="img in imgURI"-->

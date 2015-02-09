@@ -269,6 +269,17 @@ module.exports = [
         "clobbers": [
             "chrome.power"
         ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.toast/www/Toast.js",
+        "id": "nl.x-services.plugins.toast.Toast",
+        "clobbers": [
+            "window.plugins.toast"
+        ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
+        "id": "nl.x-services.plugins.toast.tests"
     }
 ];
 module.exports.metadata = 
@@ -283,13 +294,13 @@ module.exports.metadata =
     "org.apache.cordova.console": "0.2.12",
     "org.apache.cordova.device": "0.2.13",
     "org.apache.cordova.dialogs": "0.2.10",
-    "org.apache.cordova.engine.crosswalk": "0.0.1-dev",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
     "org.apache.cordova.geolocation": "0.3.11",
     "org.apache.cordova.inappbrowser": "0.5.4",
     "org.apache.cordova.media": "0.2.15",
-    "org.chromium.power": "1.0.3"
+    "org.chromium.power": "1.0.3",
+    "nl.x-services.plugins.toast": "2.0.4"
 }
 // BOTTOM OF METADATA
 });

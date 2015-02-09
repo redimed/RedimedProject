@@ -168,8 +168,6 @@ angular.module('starter.driver.controller',[])
         //           });
         //       }, false);
         // }
-
-
     })
     .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading,$timeout){
         return {

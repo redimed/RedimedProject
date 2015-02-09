@@ -32,11 +32,16 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class IceCreamCordovaWebViewClient extends AndroidWebViewClient {
+public class IceCreamCordovaWebViewClient extends CordovaWebViewClient {
 
     private static final String TAG = "IceCreamCordovaWebViewClient";
+    private CordovaUriHelper helper;
 
-    public IceCreamCordovaWebViewClient(CordovaInterface cordova, AndroidWebView view) {
+    public IceCreamCordovaWebViewClient(CordovaInterface cordova) {
+        super(cordova);
+    }
+    
+    public IceCreamCordovaWebViewClient(CordovaInterface cordova, CordovaWebView view) {
         super(cordova, view);
     }
 
