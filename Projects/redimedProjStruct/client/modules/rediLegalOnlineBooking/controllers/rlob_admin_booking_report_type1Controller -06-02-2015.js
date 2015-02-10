@@ -50,10 +50,10 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
 
             //$scope.currentPageReport1=1;
         $scope.filterInfo = {
-            Doctor:'',
+            ClaimNo:'',
             Surname:'',
             Type:'',
-            Location:'',
+            employeeNumber:'',
             FromAppointmentDate:'',
             ToAppointmentDate:''
         };

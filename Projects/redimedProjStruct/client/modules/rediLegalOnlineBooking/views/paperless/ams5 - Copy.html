@@ -1,0 +1,577 @@
+<style type="text/css">
+	.row {
+		margin-right: -15px;
+		margin-left: -15px;
+		margin-bottom: 15px;
+	}
+	.form-group .help-block {
+	  display: none;
+	}
+	 
+	.form-group.has-error .help-block {
+	  display: block;
+	}
+</style>
+<div style="background: #E5E5E5;" class="portlet light bg-inverse" >
+	<div style="border-bottom:none" class="portlet-title">
+		<div class="caption">
+			<i class="icon-tag font-red-flamingo"></i>
+			<span class="caption-subject bold font-red-flamingo uppercase">
+			Form </span>
+			<span class="caption-helper">AMS 5...</span>
+		</div>
+		<div class="actions" ng-if="isSaving == true">
+			<a class="btn green btn-sm" ng-click="editFormAms5()">
+			<i class="fa fa-pencil"></i> Edit </a>
+			<a class="btn green btn-sm" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/ams5/{{info.AMS5_ID}}" target="_blank">
+			<i class="fa fa-print"></i> print </a>
+		</div>
+	</div>
+	<form name="FormAms5" novalidate>
+	<fieldset ng-disabled="isSaving">
+	<div class="portlet-body">
+		
+			<div class="alert alert-danger display-hide errorSummary" style="display: block;position: fixed;z-index: 9;right: 41px;height: 350px;overflow: auto;" ng-show="FormAms5.$invalid && hadForcused">
+                <button data-close="alert" class="close"></button>
+               	<a ng-click="test('WRK_NAME')" class="help-block" ng-if="FormAms5.WRK_NAME.$error.required">Name is required!</a>
+               	<a ng-click="test('WRK_ADDRESS_1')" class="help-block" ng-if="FormAms5.WRK_ADDRESS_1.$error.required">Address is required!</a>
+               	<a ng-click="test('WRK_ADDRESS_2')" class="help-block" ng-if="FormAms5.WRK_ADDRESS_2.$error.required">Address is required!</a>
+               	<a ng-click="test('WRK_DATE_OF_INJURI_TEMP')" class="help-block" ng-if="FormAms5.WRK_DATE_OF_INJURI_TEMP.$error.required">Date of injury is required!</a>
+               	<a ng-click="test('WRK_DATE_OF_BIRTH_TEMP')" class="help-block" ng-if="FormAms5.WRK_DATE_OF_BIRTH_TEMP.$error.required">Date of birth is required!</a>
+               	<a ng-click="test('WRK_PHONE')" class="help-block" ng-if="FormAms5.WRK_PHONE.$error.required">Contact telephone number is required!</a>
+               	<a ng-click="test('WRK_INSURER_CLAIM_NUMBER')" class="help-block" ng-if="FormAms5.WRK_INSURER_CLAIM_NUMBER.$error.required">Insurer claim number is required!</a>
+               	<a ng-click="test('WRK_EMAIL')" class="help-block" ng-if="FormAms5.WRK_EMAIL.$error.required">Email address is required!</a>
+				<a ng-click="test('WRK_EMAIL')" class="help-block" ng-if="FormAms5.WRK_EMAIL.$error.email">Email address not valid email!</a>
+				<a ng-click="test('WRK_POSTCODE')" class="help-block" ng-if="FormAms5.WRK_POSTCODE.$error.required">Post code is required!</a>
+				<a ng-click="test('WRK_DESCRIPTION_OF_INJURI')" class="help-block" ng-if="FormAms5.WRK_DESCRIPTION_OF_INJURI.$error.required">Description of injury is required!</a>
+				<a ng-click="test('WRK_WORKCOVER_WA_CLAIM_NUMBER')" class="help-block" ng-if="FormAms5.WRK_WORKCOVER_WA_CLAIM_NUMBER.$error.required">WorkCover wa claim number is required!</a>
+				<a ng-click="test('EMP_ORGANISATION_NAME')" class="help-block" ng-if="FormAms5.EMP_ORGANISATION_NAME.$error.required">Orgainsation name is required!</a>
+				<a ng-click="test('EMP_CONTACT_PERSON')" class="help-block" ng-if="FormAms5.EMP_CONTACT_PERSON.$error.required">Contact person is required!</a>
+				<a ng-click="test('EMP_ADDRESS_1')" class="help-block" ng-if="FormAms5.EMP_ADDRESS_1.$error.required">Address is required!</a>
+				<a ng-click="test('EMP_ADDRESS_2')" class="help-block" ng-if="FormAms5.EMP_ADDRESS_2.$error.required">Address is required!</a>
+				<a ng-click="test('EMP_POSTCODE')" class="help-block" ng-if="FormAms5.EMP_POSTCODE.$error.required">Post code is required!</a>
+				<a ng-click="test('EMP_EMAIL')" class="help-block" ng-if="FormAms5.EMP_EMAIL.$error.required">Email address is required!</a>
+				<a ng-click="test('EMP_EMAIL')" class="help-block" ng-if="FormAms5.EMP_EMAIL.$error.email">Email address not valid email!</a>
+				<a ng-click="test('EMP_PHONE')" class="help-block" ng-if="FormAms5.EMP_PHONE.$error.required">Telephone number is required!</a>
+				<a ng-click="test('EMP_NAME_OF_INSURER')" class="help-block" ng-if="FormAms5.EMP_NAME_OF_INSURER.$error.required">Name of insurer is required!</a>
+				<a ng-click="test('EMP_WORKCOVER_MUNBER')" class="help-block" ng-if="FormAms5.EMP_WORKCOVER_MUNBER.$error.required">WorkCover number (if known) is required!</a>
+				<a ng-click="test('EX_DATE_TEMP')" class="help-block" ng-if="FormAms5.EX_DATE_TEMP.$error.required">Date of the examination is required!</a>
+				<a ng-click="test('EXL_NAME')" class="help-block" ng-if="FormAms5.EXL_NAME.$error.required">Name is required!</a>
+				<a ng-click="test('EXL_ADDRESS_1')" class="help-block" ng-if="FormAms5.EXL_ADDRESS_1.$error.required">Address is required!</a>
+				<a ng-click="test('EXL_ADDRESS_2')" class="help-block" ng-if="FormAms5.EXL_ADDRESS_2.$error.required">Address is required!</a>
+				<a ng-click="test('EXL_POSTCODE')" class="help-block" ng-if="FormAms5.EXL_POSTCODE.$error.required">Post code is required!</a>
+				<a ng-click="test('REPORTS_AND_DOCUMENTS')" class="help-block" ng-if="FormAms5.REPORTS_AND_DOCUMENTS.$error.required">Reports and documents provided is required!</a>
+				<a ng-click="test('NARRATIVE_HISTORY')" class="help-block" ng-if="FormAms5.NARRATIVE_HISTORY.$error.required">A narrative history is required!</a>
+				<a ng-click="test('DIAGNOSIS_AND_STUDIES')" class="help-block" ng-if="FormAms5.DIAGNOSIS_AND_STUDIES.$error.required">Diagnostic studies is required!</a>
+				<a ng-click="test('DIAGNOSIS_AND_IMPAIRMENTS')" class="help-block" ng-if="FormAms5.DIAGNOSIS_AND_IMPAIRMENTS.$error.required">Diagnosis and impairments is required!</a>
+				<a ng-click="test('PROPORTION_OF_PERMANENT_IMPAIRMENT')" class="help-block" ng-if="FormAms5.PROPORTION_OF_PERMANENT_IMPAIRMENT.$error.required">PROPORTION_OF_PERMANENT_IMPAIRMENT Proportion of premanent impairemtnt is required!</a>
+				<a ng-click="test('DT_NAME')" class="help-block" ng-if="FormAms5.DT_NAME.$error.required">Required!</a>
+                <a ng-click="test('DT_PHONE')" class="help-block" ng-if="FormAms5.DT_PHONE.$error.required">Telephone number is required</a>
+            </div>
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-user-follow"></i>
+						<span style="font-size: 13px;" class="caption-subject  bold uppercase">Worker's details</span>
+					</div>
+					<div class="tools">
+						<a href="" class="collapse" data-original-title="" title="">
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<div class="form-body">
+						<fieldset ng-disabled="isAdmin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Name  </label>
+										<div class="col-md-9">
+											<input type="text" ng-model="info.WRK_NAME" name="WRK_NAME" class="form-control" ng-required="!isAdmin">
+											<p class="help-block" ng-if="FormAms5.WRK_NAME.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div style="margin-bottom: -15px;margin-left: -15px;" class="col-md-6">
+									<div style="margin-right: -42px" class="form-group col-md-8" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Address  </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.WRK_ADDRESS_1" name="WRK_ADDRESS_1" class="form-control" ng-required="!isAdmin">
+											<p class="help-block" ng-if="FormAms5.WRK_ADDRESS_1.$error.required">Required!</p>
+										</div>
+									</div>
+									<div class="form-group col-md-5" show-errors='{showSuccess: true}'>
+										<div class="col-md-12">
+											<input type="text" ng-model="info.WRK_ADDRESS_2" name="WRK_ADDRESS_2" class="form-control" ng-required="!isAdmin">
+											<p class="help-block" ng-if="FormAms5.WRK_ADDRESS_2.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Date of injury  </label>
+										<div class="col-md-9">
+											<input type="text" ng-model="info.WRK_DATE_OF_INJURI_TEMP" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" name="WRK_DATE_OF_INJURI_TEMP" ng-required="!isAdmin">
+											<p class="help-block" ng-if="FormAms5.WRK_DATE_OF_INJURI_TEMP.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Date of birth  </label>
+										<div class="col-md-9">
+											<input type="text" ng-model="info.WRK_DATE_OF_BIRTH_TEMP" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" ng-required="!isAdmin" name="WRK_DATE_OF_BIRTH_TEMP">
+											<p class="help-block" ng-if="FormAms5.WRK_DATE_OF_BIRTH_TEMP.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-5">Contact telephone number </label>
+										<div class="col-md-7">
+											<input type="text" ng-model="info.WRK_PHONE" class="form-control" ng-required="!isAdmin" name="WRK_PHONE">
+											<p class="help-block" ng-if="FormAms5.WRK_PHONE.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Insurer claim number </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.WRK_INSURER_CLAIM_NUMBER" class="form-control" ng-required="!isAdmin" name="WRK_INSURER_CLAIM_NUMBER">
+											<p class="help-block" ng-if="FormAms5.WRK_INSURER_CLAIM_NUMBER.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Email address </label>
+										<div class="col-md-9">
+											<input type="email" ng-model="info.WRK_EMAIL" class="form-control" ng-required="!isAdmin" name="WRK_EMAIL">
+											<p class="help-block" ng-if="FormAms5.WRK_EMAIL.$error.required">Required!</p>
+											<p class="help-block" ng-if="FormAms5.WRK_EMAIL.$error.email">Not valid email!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Post code </label>
+										<div class="col-md-9">
+											<input type="text" ng-model="info.WRK_POSTCODE" class="form-control" ng-required="!isAdmin" name="WRK_POSTCODE">
+											<p class="help-block" ng-if="FormAms5.WRK_POSTCODE.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group"  show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Description of injury </label>
+										<div class="col-md-8">
+											<textarea class="form-control" ng-model="info.WRK_DESCRIPTION_OF_INJURI" rows="3" ng-required="!isAdmin" name="WRK_DESCRIPTION_OF_INJURI"></textarea>
+											<p class="help-block" ng-if="FormAms5.WRK_DESCRIPTION_OF_INJURI.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-6">WorkCover wa claim number </label>
+										<div class="col-md-6">
+											<input type="text" ng-model="info.WRK_WORKCOVER_WA_CLAIM_NUMBER" class="form-control" ng-required="!isAdmin" name="WRK_WORKCOVER_WA_CLAIM_NUMBER">
+											<p class="help-block" ng-if="FormAms5.WRK_WORKCOVER_WA_CLAIM_NUMBER.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-user-follow"></i>
+						<span style="font-size: 13px;" class="caption-subject  bold uppercase">Employer's details</span>
+					</div>
+					<div class="tools">
+						<a href="" class="collapse" data-original-title="" title="">
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body form">
+					<div class="form-body">
+						<fieldset ng-disabled="isAdmin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Orgainsation name  </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.EMP_ORGANISATION_NAME" class="form-control" ng-required="!isAdmin" name="EMP_ORGANISATION_NAME">
+											<p class="help-block" ng-if="FormAms5.EMP_ORGANISATION_NAME.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Contact person  </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.EMP_CONTACT_PERSON" class="form-control" ng-required="!isAdmin" name="EMP_CONTACT_PERSON">
+											<p class="help-block" ng-if="FormAms5.EMP_CONTACT_PERSON.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div style="margin-bottom: -15px;margin-left: -15px;" class="col-md-6">
+									<div style="margin-right: -42px" class="form-group col-md-8" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Address </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.EMP_ADDRESS_1" class="form-control" ng-required="!isAdmin" name="EMP_ADDRESS_1">
+											<p class="help-block" ng-if="FormAms5.EMP_ADDRESS_1.$error.required">Required!</p>
+										</div>
+									</div>
+									<div class="form-group col-md-5" show-errors='{showSuccess: true}'>
+										<div class="col-md-12">
+											<input type="text" ng-model="info.EMP_ADDRESS_2" class="form-control" ng-required="!isAdmin" name="EMP_ADDRESS_2">
+											<p class="help-block" ng-if="FormAms5.EMP_ADDRESS_2.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div style="margin-left: 15px" class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Post code </label>
+										<div class="col-md-9">
+											<input type="text" ng-model="info.EMP_POSTCODE" class="form-control" ng-required="!isAdmin" name="EMP_POSTCODE">
+											<p class="help-block" ng-if="FormAms5.EMP_POSTCODE.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Email address </label>
+										<div class="col-md-9">
+											<input type="email" ng-model="info.EMP_EMAIL" class="form-control" ng-required="!isAdmin" name="EMP_EMAIL">
+											<p class="help-block" ng-if="FormAms5.EMP_EMAIL.$error.required">Required!</p>
+											<p class="help-block" ng-if="FormAms5.EMP_EMAIL.$error.email">Not valid email!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Telephone number </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.EMP_PHONE" class="form-control" ng-required="!isAdmin" name="EMP_PHONE">
+											<p class="help-block" ng-if="FormAms5.EMP_PHONE.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Name of insurer </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.EMP_NAME_OF_INSURER" class="form-control" ng-required="!isAdmin" name="EMP_NAME_OF_INSURER">
+											<p class="help-block" ng-if="FormAms5.EMP_NAME_OF_INSURER.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-6">WorkCover number (if known)</label>
+										<div class="col-md-6">
+											<input type="text" ng-model="info.EMP_WORKCOVER_MUNBER" class="form-control" ng-required="!isAdmin" name="EMP_WORKCOVER_MUNBER">
+											<p class="help-block" ng-if="FormAms5.EMP_WORKCOVER_MUNBER.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="portlet light bordered">
+		        <div class="portlet-body form">
+					<div class="form-body">
+						<fieldset ng-disabled="isAdmin">
+							<div class="row">
+								<div class="col-md-6">
+									<p class="text-info" style="font-size: 16px;">
+							            Purpose of the assessment (Select only one below)
+							        </p>
+							        <fieldset>
+									<div style="margin-left: 15px;" class="radio-list">
+										<label>
+										<b>Schedule 2: Lump Sum Payments</b><br/>Assessment for the purpose of Part III Division 2A 
+										<input type="radio" ng-model="info.PURPOSE_OF_THE_ASSESSMENT" value="1">
+										</label>
+										<!--  -->
+										<label>
+										<b>Common Law</b><br/>Assessment for the purpose of Part IV Division 2 Subdivision 3 
+										<input type="radio" ng-model="info.PURPOSE_OF_THE_ASSESSMENT" value="2">
+										</label>
+										<!--  -->
+										<label>
+										<b>Specialised Retraining Programs</b><br/>Assessment for the purpose of Part IXA 
+										<input type="radio" ng-model="info.PURPOSE_OF_THE_ASSESSMENT" value="3">
+										</label>
+										<!--  -->
+										<label>
+										<b>Payment of Additional Medical Expenses: Exceptional Circumstances</b><br/>Assessment for the purpose of clause 18A of Schedule 1 
+										<input type="radio" ng-model="info.PURPOSE_OF_THE_ASSESSMENT" value="4">
+										</label>
+									</div>
+									</fieldset>
+								</div>
+								<div class="col-md-6">
+									<div style="margin-bottom: -15px;" class="row">
+										<p class="text-info" style="font-size: 16px;">
+								            Date of the examination
+								        </p>
+								        <div class="form-group col-md-12" show-errors='{showSuccess: true}'>
+								        	<input type="text" ng-model="info.EX_DATE_TEMP" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" name="EX_DATE_TEMP" ng-required="!isAdmin">
+								        	<p class="help-block" ng-if="FormAms5.EX_DATE_TEMP.$error.required">Required!</p>
+								        </div>
+									</div>
+									<div class="row">
+										<p class="text-info" style="font-size: 16px;">
+							            Examination location
+								        </p>
+								        <div class="form-group" show-errors='{showSuccess: true}'>
+								        	<label class="control-label col-md-3">Name  </label>
+											<div class="col-md-9">
+												<input type="text" ng-model="info.EXL_NAME" class="form-control" name="EXL_NAME" ng-required="!isAdmin">
+												<p class="help-block" ng-if="FormAms5.EXL_NAME.$error.required">Required!</p>
+											</div>
+								        </div>
+								        <div style="margin-left: -15px;margin-top: 15px;" class="form-group col-md-8" show-errors='{showSuccess: true}'>
+											<label class="control-label col-md-3">Address </label>
+											<div class="col-md-9">
+												<input type="text" ng-model="info.EXL_ADDRESS_1" class="form-control" name="EXL_ADDRESS_1" ng-required="!isAdmin">
+												<p class="help-block" ng-if="FormAms5.EXL_ADDRESS_1.$error.required">Required!</p>
+											</div>
+										</div>
+										<div style="margin-left: -45px;margin-top: 15px;" class="form-group col-md-5" show-errors='{showSuccess: true}'>
+											<div class="col-md-12">
+												<input type="text" ng-model="info.EXL_ADDRESS_2" class="form-control" ng-required="!isAdmin" name="EXL_ADDRESS_2">
+												<p class="help-block" ng-if="FormAms5.EXL_ADDRESS_2.$error.required">Required!</p>
+											</div>
+										</div>
+										<div class="form-group" show-errors='{showSuccess: true}'>
+								        	<label class="control-label col-md-3">Post code </label>
+											<div class="col-md-9">
+												<input type="text" ng-model="info.EXL_POSTCODE" class="form-control" name="EXL_POSTCODE" ng-required="!isAdmin">
+												<p class="help-block" ng-if="FormAms5.EXL_POSTCODE.$error.required">Required!</p>
+											</div>
+								        </div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+	    	</div>
+	    	<div class="portlet light bordered">
+		        <div class="portlet-body form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-6">
+								<p class="text-info" style="font-size: 16px;">
+						            Reports and documents provided (list of documents and information provided)
+						        </p>
+						        <fieldset ng-disabled="isAdmin">
+								<div class="form-group" show-errors='{showSuccess: true}'>
+									<textarea class="form-control" ng-model="info.REPORTS_AND_DOCUMENTS" rows="12" name="REPORTS_AND_DOCUMENTS" ng-required="!isAdmin"></textarea>
+								</div>
+								</fieldset>
+							</div>
+							<div class="col-md-6">
+								<p class="text-info" style="font-size: 16px;">
+						            A narrative history (as provided by the worker on history of injury, occupational history, past medical history)
+						        </p>
+						        <fieldset ng-disabled="isAssistant">
+								<div class="form-group" show-errors='{showSuccess: true}'>
+									<textarea class="form-control" ng-model="info.NARRATIVE_HISTORY" rows="12" ng-required="!isAssistant" name="NARRATIVE_HISTORY"></textarea>
+								</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</div>
+	    	</div>
+	    	<div class="portlet light bordered">
+		        <div class="portlet-body form">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-6">
+								<p class="text-info" style="font-size: 16px;">
+						            Diagnostic studies
+						        </p>
+						        <fieldset ng-disabled="isAdmin">
+								<div class="form-group" show-errors='{showSuccess: true}'>
+									<textarea class="form-control" ng-model="info.DIAGNOSIS_AND_STUDIES" rows="2"  ng-required="!isAdmin" name="DIAGNOSIS_AND_STUDIES"></textarea>
+								</div>
+								</fieldset>
+								<p class="text-info" style="font-size: 16px;">
+						            Diagnosis and impairments
+						        </p>
+						        <fieldset ng-disabled="isDoctor">
+								<div class="form-group" show-errors='{showSuccess: true}'>
+									<textarea class="form-control" ng-model="info.DIAGNOSIS_AND_IMPAIRMENTS" rows="2" ng-required="!isDoctor" name="DIAGNOSIS_AND_IMPAIRMENTS"></textarea>
+								</div>
+								</fieldset>
+								<p class="text-info" style="font-size: 16px;">
+						            The proportion of permanent impairment due to any previous injury that was not asymptomatic
+						        </p>
+						        <fieldset ng-disabled="isDoctor">
+								<div class="form-group" show-errors='{showSuccess: true}'>
+									<textarea class="form-control" ng-model="info.PROPORTION_OF_PERMANENT_IMPAIRMENT" rows="2" ng-required="!isDoctor" name="PROPORTION_OF_PERMANENT_IMPAIRMENT"></textarea>
+								</div>
+								</fieldset>
+							</div>
+							<div class="col-md-6">
+								<p class="text-info" style="font-size: 16px;">
+						            Statement as to the reasons for arriving at the calculation of the worker’s degree of permanent impairment 
+						        </p>
+						        <fieldset ng-disabled="isAdmin">
+								<div class="form-group" show-errors='{showSuccess: true}'>
+									<textarea class="form-control" ng-model="info.INJURY_ASSESSMENT" rows="12" ng-required="!isAdmin" name="INJURY_ASSESSMENT"></textarea>
+								</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</div>
+	    	</div>
+	    	<div class="portlet light bordered">
+				<div class="portlet-body form">
+					<div class="form-body">
+						<fieldset ng-disabled="isAdmin">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-6">Approved Medical Specialist name  </label>
+										<div class="col-md-6">
+											<input type="text" class="form-control" ng-model="info.DT_NAME" ng-required="!isAdmin" name="DT_NAME">
+											<p class="help-block" ng-if="FormAms5.DT_NAME.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div style="margin-bottom: -15px;margin-left: -15px;" class="col-md-6">
+									<div style="margin-right: -42px;" class="form-group col-md-8" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Address </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.DT_ADDRESS_1" class="form-control" ng-required="!isAdmin" name="DT_ADDRESS_1">
+											<p class="help-block" ng-if="FormAms5.DT_ADDRESS_1.$error.required">Required!</p>
+										</div>
+									</div>
+									<div class="form-group col-md-5" show-errors='{showSuccess: true}'>
+										<div class="col-md-12">
+											<input type="text" ng-model="info.DT_ADDRESS_2" class="form-control" ng-required="!isAdmin" name="DT_ADDRESS_2">
+											<p class="help-block" ng-if="FormAms5.DT_ADDRESS_2.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-4">Telephone number </label>
+										<div class="col-md-8">
+											<input type="text" ng-model="info.DT_PHONE" class="form-control" ng-required="!isAdmin" name="DT_PHONE">
+											<p class="help-block" ng-if="FormAms5.DT_PHONE.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Post Code </label>
+										<div class="col-md-9">
+											<input type="text" ng-model="info.DT_POSTCODE" class="form-control" ng-required="!isAdmin" name="DT_POSTCODE">
+											<p class="help-block" ng-if="FormAms5.DT_POSTCODE.$error.required">Required!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group" show-errors='{showSuccess: true}'>
+										<label class="control-label col-md-3">Email address </label>
+										<div class="col-md-9">
+											<input type="email" ng-model="info.DT_EMAIL" class="form-control" ng-required="!isAdmin" name="DT_EMAIL">
+											<p class="help-block" ng-if="FormAms5.DT_EMAIL.$error.required">Required!</p>
+											<p class="help-block" ng-if="FormAms5.DT_EMAIL.$error.email">Not valid email!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						<fieldset ng-disabled="isDoctor">
+							<div class="row">
+								<div style="margin-left: 15px;" class="form-group col-md-4" show-errors='{showSuccess: true}'>            	
+							        <input type="text" ng-model="info.DT_DATE_TEMP" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" ng-required="!isDoctor" name="DT_DATE_TEMP">
+							        <p class="help-block" ng-if="FormAms5.DT_DATE_TEMP.$error.required">Required!</p>
+		                        </div>
+		                    	<div class="col-md-2">
+		                            <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
+		                               class="btn btn-danger">Signature</a>
+		                        </div>
+		                        <div class="col-md-5"
+		                             ng-show="info.DT_SIGNATURE!=null && info.DT_SIGNATURE!='' && !isSignature">
+		                            <img src="" ng-src="{{info.DT_SIGNATURE}}" alt=""
+		                                 style="width: 200px;height: 70px;"/>
+		                        </div>
+		                    </div>
+							<div class="row" style="text-align: center;" ng-show="isSignature">
+		                        <div class="col-md-12 col-sm-12">
+		                            <canvas width="300" height="300" id="canvas"
+		                                    signature ng-model="info.DT_SIGNATURE"
+		                                    style="background-color: #8eece8">
+		                            </canvas>
+		                        </div>
+		                        <div class="col-md-12 col-sm-12">
+		                            <div class="break-row"></div>
+		                            <div class="btn-group">
+		                                <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+		                                    Cancel
+		                                </button>
+		                                <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">
+		                                    Clear
+		                                </button>
+		                                <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+		                            </div>
+		                        </div>
+		                    </div>
+	                    </fieldset>
+					</div>
+				</div>
+			</div>
+		
+	</div>
+	<div class="form-actions">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-offset-3 col-md-9">
+						<button type="submit" class="btn green" ng-click="addNewFormAMS5(info)" ng-if="edit == false">Submit</button>
+						<button type="submit" class="btn green" ng-click="updateFormAMS5(info)" ng-if="edit == true">Edit</button>
+						<button type="button" class="btn default" ng-click="cancelFormAms5()">Cancel</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+			</div>
+		</div>
+	</div>
+	</fieldset>
+	</form>
+	
+</div>

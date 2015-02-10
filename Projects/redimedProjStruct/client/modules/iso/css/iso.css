@@ -113,3 +113,20 @@ tannv.dts@gmail.com
     width:200px;
     margin-top:10px;
 }
+
+.iso_hierarchy_approved_line{
+    background-color: #dff0d8;
+}
+
+
+.iso_hierarchy_underreview_line{
+    background-color: #fcf8e3;
+}
+
+.iso_hierarchy_rejected_line{
+    background-color: #f2dede;
+}
+
+.iso_hierarchy_action_button{
+    margin-right: 10px;
+}

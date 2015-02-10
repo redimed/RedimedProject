@@ -27,7 +27,8 @@ module.exports =
                 }
                 else
                 {
-                    res.json({status:"success"});
+                    console.log("***************************"+JSON.stringify(input.BOOKING_ID));
+                    res.json({status:"success",data:input});
                 }
 
             })
@@ -475,8 +476,8 @@ module.exports =
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
         var doctorId = req.body.doctorId?req.body.doctorId:'%';
-        var ClaimNo = '%';
-        var employeeNumber='%';
+        var Doctor = '%';
+        var Location='%';
         var Surname = '%';
         var Type = '%';
         var FromAppointmentDate = '1900-1-1';
@@ -484,8 +485,8 @@ module.exports =
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
-            ClaimNo=filterInfo.ClaimNo?rlobUtil.fulltext(filterInfo.ClaimNo):'%';
-            employeeNumber=filterInfo.employeeNumber?rlobUtil.fulltext(filterInfo.employeeNumber):'%';
+            Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
+            Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
@@ -493,22 +494,24 @@ module.exports =
         }
         var sql=
             " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS count_bookings      	               "+
-            " FROM `rl_bookings` booking                                                   "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`     "+
-            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                           "+
-            " AND booking.`BOOKING_TYPE`= ?                                                "+
-            " AND booking.DOCTOR_ID LIKE ?                                                 "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")+
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                           "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                           "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)    ";
+            " FROM `rl_bookings` booking                                                           "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`             "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                     "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                    "+
+            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                                   "+
+            " AND booking.`BOOKING_TYPE`= ?                                                        "+
+            " AND booking.DOCTOR_ID LIKE ?                                                         "+
+            " AND  dt.`NAME` LIKE ?                                                                "+  
+            " AND stite.`Site_name` LIKE ?                                                         "+ 
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                   "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                   "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)            ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
+        params.push(Doctor);
+        params.push(Location);
         params.push(Surname);
         params.push(Type);
         params.push(FromAppointmentDate);
@@ -540,8 +543,8 @@ module.exports =
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
         var doctorId = req.body.doctorId?req.body.doctorId:'%';
-        var ClaimNo = '%';
-        var employeeNumber='%';
+        var Doctor = '%';
+        var Location='%';
         var Surname = '%';
         var Type = '%';
         var FromAppointmentDate = '1900-1-1';
@@ -549,8 +552,8 @@ module.exports =
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
-            ClaimNo=filterInfo.ClaimNo?rlobUtil.fulltext(filterInfo.ClaimNo):'%';
-            employeeNumber=filterInfo.employeeNumber?rlobUtil.fulltext(filterInfo.employeeNumber):'%';
+            Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
+            Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
@@ -559,25 +562,27 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`     	                   "+
-            " FROM `rl_bookings` booking                                                   "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`     "+
-            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                           "+
-            " AND booking.`BOOKING_TYPE`= ?                                                "+
-            " AND booking.DOCTOR_ID LIKE ?                                                 "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")+
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                           "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                           "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)    "+
-            " GROUP BY booking.BOOKING_ID                                                  "+
-            " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                           ";
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                   "+
+            " FROM `rl_bookings` booking                                                           "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`             "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                     "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                    "+
+            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                                   "+
+            " AND booking.`BOOKING_TYPE`= ?                                                        "+
+            " AND booking.DOCTOR_ID LIKE ?                                                         "+
+            " AND  dt.`NAME` LIKE ?                                                                "+  
+            " AND stite.`Site_name` LIKE ?                                                         "+ 
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                   "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                   "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)            "+
+            " GROUP BY booking.BOOKING_ID                                                          "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                   ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
+        params.push(Doctor);
+        params.push(Location);
         params.push(Surname);
         params.push(Type);
         params.push(FromAppointmentDate);
@@ -611,8 +616,8 @@ module.exports =
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
         var doctorId = req.body.doctorId?req.body.doctorId:'%';
-        var ClaimNo = '%';
-        var employeeNumber='%';
+        var Location = '%';
+        var Doctor='%';
         var Surname = '%';
         var Type = '%';
         var FromAppointmentDate = '1900-1-1';
@@ -620,60 +625,36 @@ module.exports =
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
-            ClaimNo=filterInfo.ClaimNo?rlobUtil.fulltext(filterInfo.ClaimNo):'%';
-            employeeNumber=filterInfo.employeeNumber?rlobUtil.fulltext(filterInfo.employeeNumber):'%';
+            Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
+            Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
         var sql=
-            "SELECT COUNT(tablesum.`BOOKING_ID`) AS count_bookings_status  FROM (                           "+
-            "SELECT table1.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`, rlfile.`FILE_ID`, 1 AS STTTABLE " +
-            " FROM `rl_bookings` booking                                                                    "+
-            " LEFT JOIN `rl_booking_files` rlfile ON `booking`.`BOOKING_ID` = rlfile.BOOKING_ID             "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
-            " AND rlfile.`FILE_ID` IS NULL                                                                  "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
-            " AND booking.`STATUS` = 'Completed'                                                            "+
-            " GROUP BY booking.`BOOKING_ID`                                                                 "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table1                                          "+
-            " UNION                                                                                         "+
-            " SELECT table2.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`,NULL AS id , 2 AS STTTABLE      "+
-            " FROM `rl_bookings` booking                                                                    "+
-            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`            "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
-            " AND !(rlfile.`FILE_ID` IS NULL AND booking.`STATUS` = 'Completed')                            "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table2 )AS tablesum                             ";
+            " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS count_bookings_status                                                        "+
+            " FROM `rl_bookings` booking                                                                           "+
+            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
+            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
+            " AND rlfile.`FILE_ID` IS NULL                                                                         "+
+            " AND booking.`STATUS` = 'Completed'                                                                   "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
+            " AND  dt.`NAME` LIKE ?                                                                                "+  
+            " AND stite.`Site_name` LIKE ?                                                                         "+ 
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
-        params.push(Surname);
-        params.push(Type);
-        params.push(FromAppointmentDate);
-        params.push(ToAppointmentDate);
-        params.push(bookingType);
-        params.push(doctorId);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
+        params.push(Doctor);
+        params.push(Location);
         params.push(Surname);
         params.push(Type);
         params.push(FromAppointmentDate);
@@ -705,18 +686,18 @@ module.exports =
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
         var doctorId = req.body.doctorId?req.body.doctorId:'%';
-        var ClaimNo = '%';
-        var employeeNumber='%';
+        var Location = '%';
         var Surname = '%';
         var Type = '%';
+        var Doctor = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
-            ClaimNo=filterInfo.ClaimNo?rlobUtil.fulltext(filterInfo.ClaimNo):'%';
-            employeeNumber=filterInfo.employeeNumber?rlobUtil.fulltext(filterInfo.employeeNumber):'%';
+            Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
+            Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
@@ -724,51 +705,30 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            "SELECT tablesum.* FROM (SELECT table1.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`, rlfile.`FILE_ID`, 1 AS STTTABLE"+
-            " FROM `rl_bookings` booking                                                                    "+
-            " LEFT JOIN `rl_booking_files` rlfile ON `booking`.`BOOKING_ID` = rlfile.BOOKING_ID             "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
-            " AND rlfile.`FILE_ID` IS NULL                                                                  "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
-            " AND booking.`STATUS` = 'Completed'                                                            "+
-            " GROUP BY booking.`BOOKING_ID`                                                                 "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table1                                "+
-            " UNION                                                                                         "+
-            " SELECT table2.* FROM ( SELECT booking.*,rltype.`Rl_TYPE_NAME`,NULL AS id , 2 AS STTTABLE      "+
-            " FROM `rl_bookings` booking                                                                    "+
-            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`            "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                            "+
-            " AND !(rlfile.`FILE_ID` IS NULL AND booking.`STATUS` = 'Completed')                            "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                 "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                  "+
-            (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")               +
-            (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")        +
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                            "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                            "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                     "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC ) AS table2 )AS tablesum LIMIT ?,?        ";
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,rlfile.`FILE_ID`,dt.`NAME`,stite.`Site_name`                  "+
+            " FROM `rl_bookings` booking                                                                           "+
+            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
+            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
+            " AND rlfile.`FILE_ID` IS NULL                                                                         "+
+            " AND booking.`STATUS` = 'Completed'                                                                   "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
+            " AND  dt.`NAME` LIKE ?                                                                              "+  
+            " AND stite.`Site_name` LIKE ?                                                                       "+ 
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            "+
+            " GROUP BY booking.`BOOKING_ID`                                                                        "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                  ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
-        params.push(Surname);
-        params.push(Type);
-        params.push(FromAppointmentDate);
-        params.push(ToAppointmentDate);
-        params.push(bookingType);
-        params.push(doctorId);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(ClaimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
+        params.push(Doctor);
+        params.push(Location);
         params.push(Surname);
         params.push(Type);
         params.push(FromAppointmentDate);
@@ -838,78 +798,66 @@ module.exports =
      */
     getCountReportPassBookingHaveNotResult:function(req,res)
     {
-
+        console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
-        var doctorId=req.body.doctorId?req.body.doctorId:'%';
-        //---
-        var doctor='%';
-        var weekOverdue='%';
-        var claimNo='%';
-        var employeeNumber='%';
-        var surname='%';
-        var rltype='%';
-        var fromAppointmentDate='1900-1-1';
-        var toAppointmentDate='2500-1-1';
-        if(req.body.searchKeys){
-            var searchKeys=req.body.searchKeys;
-            console.log("-------------------------------------");
-            console.log(searchKeys);
-            doctor=searchKeys.doctor?rlobUtil.fulltext(searchKeys.doctor):'%';
-            weekOverdue=searchKeys.weekOverdue?searchKeys.weekOverdue:'%';
-            claimNo=searchKeys.claimNo?rlobUtil.fulltext(searchKeys.claimNo):'%';
-            employeeNumber=searchKeys.employeeNumber?rlobUtil.fulltext(searchKeys.employeeNumber):'%';
-            surname=searchKeys.surname?rlobUtil.fulltext(searchKeys.surname):'%';
-            rltype=searchKeys.rltype?rlobUtil.fulltext(searchKeys.rltype):'%';
-            fromAppointmentDate=searchKeys.fromAppointmentDate?searchKeys.fromAppointmentDate:'1900-1-1',
-            toAppointmentDate=searchKeys.toAppointmentDate?searchKeys.toAppointmentDate:'2500-1-1';
-
+        var doctorId = req.body.doctorId?req.body.doctorId:'%';
+        var Location = '%';
+        var Doctor='%';
+        var Surname = '%';
+        var Type = '%';
+        var FromAppointmentDate = '1900-1-1';
+        var ToAppointmentDate = '2500-1-1';
+        if(req.body.filterInfo){
+            var filterInfo=req.body.filterInfo;
+            console.log(filterInfo);
+            Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
+            Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
+            Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
+            Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
+            FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
+            ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
-        //---
-
         var sql=
-            " SELECT DISTINCT COUNT(booking.BOOKING_ID) AS TOTAL_NUMBEROF_BOOKINGS                                                                "+
-            " FROM 	`rl_bookings` booking                                                                                                         "+
-            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                          "+
-            " 	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                               "+
-            " 	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                               "+
-            " 	INNER JOIN `doctors` dr ON dr.`doctor_id`=booking.`DOCTOR_ID`                                                                     "+
-            " 	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`    "+
-            " WHERE 	files.`FILE_ID` IS NULL                                                                                                   "+
-            " 	AND booking.`STATUS`='Completed'                                                                                                  "+
-            " 	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                  "+
-            " 	AND booking.`BOOKING_TYPE`=?   AND booking.DOCTOR_ID LIKE ?                                                                       "+
-            " 	AND dr.`NAME` LIKE ?                                                                                                              "+
-            " 	AND TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) LIKE ?                                                  "+
-                (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")+
-                (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")+
-            " 	AND booking.`WRK_SURNAME` LIKE ?                                                                                                  "+
-            " 	AND rltype.`Rl_TYPE_NAME` LIKE ?                                                                                                  "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)    ";
+            " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS TOTAL_NUMBEROF_BOOKINGS                                                        "+
+            " FROM `rl_bookings` booking                                                                           "+
+            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
+            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
+            " AND rlfile.`FILE_ID` IS NOT NULL                                                                         "+
+            " AND booking.`STATUS` = 'Completed'                                                                   "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
+            " AND  dt.`NAME` LIKE ?                                                                                "+  
+            " AND stite.`Site_name` LIKE ?                                                                         "+ 
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
-        params.push(doctor);
-        params.push(weekOverdue);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(claimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
-        params.push(surname);
-        params.push(rltype);
-        params.push(fromAppointmentDate);
-        params.push(toAppointmentDate);
+        params.push(Doctor);
+        params.push(Location);
+        params.push(Surname);
+        params.push(Type);
+        params.push(FromAppointmentDate);
+        params.push(ToAppointmentDate);
         console.log(params);
-
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,params,function(err,rows)
             {
-                if(err)
+                if(err || rows.length<1)
                 {
+                    console.log("Error Selecting : %s ",err );
                     res.json({status:'fail'});
                 }
                 else
                 {
-                    res.json({status:'success',data:rows})
+                    console.log(rows[0].count_bookings_status);
+                    res.json({status:'success',data:{count_bookings_status:rows[0].count_bookings_status}});
                 }
             });
         });
@@ -920,81 +868,72 @@ module.exports =
      */
     getItemsOfPageReportPassBookingHaveNotResult:function(req,res)
     {
+        console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
-        var doctorId=req.body.doctorId?req.body.doctorId:'%';
-        var pageIndex=req.body.pageIndex;
-        var itemsPerPage=req.body.itemsPerPage;
-
-        //---
-        var doctor='%';
-        var weekOverdue='%';
-        var claimNo='%';
-        var employeeNumber='%';
-        var surname='%';
-        var rltype='%';
-        var fromAppointmentDate='1900-1-1';
-        var toAppointmentDate='2500-1-1';
+        var doctorId = req.body.doctorId?req.body.doctorId:'%';
+        var Location = '%';
+        var Surname = '%';
+        var Type = '%';
+        var Doctor = '%';
+        var FromAppointmentDate = '1900-1-1';
+        var ToAppointmentDate = '2500-1-1';
         if(req.body.searchKeys){
             var searchKeys=req.body.searchKeys;
-            doctor=searchKeys.doctor?rlobUtil.fulltext(searchKeys.doctor):'%';
-            weekOverdue=searchKeys.weekOverdue?searchKeys.weekOverdue:'%';
-            claimNo=searchKeys.claimNo?rlobUtil.fulltext(searchKeys.claimNo):'%';
-            employeeNumber=searchKeys.employeeNumber?rlobUtil.fulltext(searchKeys.employeeNumber):'%';
-            surname=searchKeys.surname?rlobUtil.fulltext(searchKeys.surname):'%';
-            rltype=searchKeys.rltype?rlobUtil.fulltext(searchKeys.rltype):'%';
-            fromAppointmentDate=searchKeys.fromAppointmentDate?searchKeys.fromAppointmentDate:'1900-1-1',
-            toAppointmentDate=searchKeys.toAppointmentDate?searchKeys.toAppointmentDate:'2500-1-1';
-
+            console.log(searchKeys);
+            Location=searchKeys.location?rlobUtil.fulltext(searchKeys.location):'%';
+            Surname=searchKeys.surname?rlobUtil.fulltext(searchKeys.surname):'%';
+            Doctor=searchKeys.doctor?rlobUtil.fulltext(searchKeys.doctor):'%';
+            Type=searchKeys.rltype?rlobUtil.fulltext(searchKeys.rltype):'%';
+            FromAppointmentDate=searchKeys.fromAppointmentDate?searchKeys.fromAppointmentDate:'1900-1-1';
+            ToAppointmentDate=searchKeys.toAppointmentDate?searchKeys.toAppointmentDate:'2500-1-1';
         }
-        //---
-
+        var pageIndex= parseInt((req.body.pageIndex-1)*req.body.itemsPerPage);
+        var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT DISTINCT dr.`NAME`,TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) AS WEEK_OVERDUE,                   "+
-            "  	booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,files.`FILE_NAME`                                 "+
-            "  FROM 	`rl_bookings` booking                                                                                                    "+
-            "  	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                         "+
-            "  	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                              "+
-            "  	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                              "+
-            "  	INNER JOIN `doctors` dr ON dr.`doctor_id`=booking.`DOCTOR_ID`                                                                    "+
-            "  	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`   "+
-            "  WHERE 	files.`FILE_ID` IS NULL                                                                                                  "+
-            "  	AND booking.`STATUS`='Completed'                                                                                                 "+
-            "  	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                 "+
-            "  	AND booking.`BOOKING_TYPE`=?   AND booking.DOCTOR_ID LIKE ?                                                                      "+
-            "  	AND dr.`NAME` LIKE ?                                                                                                             "+
-            " 	AND TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) LIKE ?                                                 "+
-                (bookingType==rlobUtil.sourceType.REDiLEGAL?" AND booking.`CLAIM_NO` LIKE ? ":" ")+
-                (bookingType==rlobUtil.sourceType.Vaccination?" AND booking.EMPLOYEE_NUMBER LIKE ? ":" ")+
-            " 	AND booking.`WRK_SURNAME` LIKE ?                                                                                                 "+
-            " 	AND rltype.`Rl_TYPE_NAME` LIKE ?                                                                                                 "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)    "+
-            "  ORDER BY dr.`NAME` ASC,WEEK_OVERDUE DESC, booking.`APPOINTMENT_DATE` ASC                                                          "+
-            "  LIMIT ?,?                                                                                                                         ";
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,rlfile.`FILE_ID`,dt.`NAME`,stite.`Site_name`                  "+
+            " FROM `rl_bookings` booking                                                                           "+
+            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
+            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
+            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
+            " AND rlfile.`FILE_ID` IS NOT NULL                                                                     "+
+            " AND booking.`STATUS` = 'Completed'                                                                   "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
+            " AND  dt.`NAME` LIKE ?                                                                                "+  
+            " AND stite.`Site_name` LIKE ?                                                                         "+ 
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            "+
+            " GROUP BY booking.`BOOKING_ID`                                                                        "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                  ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
-        params.push(doctor);
-        params.push(weekOverdue);
-        if(bookingType==rlobUtil.sourceType.REDiLEGAL) params.push(claimNo);
-        if(bookingType==rlobUtil.sourceType.Vaccination) params.push(employeeNumber);
-        params.push(surname);
-        params.push(rltype);
-        params.push(fromAppointmentDate);
-        params.push(toAppointmentDate);
-        params.push(parseInt((pageIndex-1)*itemsPerPage));
-        params.push(parseInt(itemsPerPage));
+        params.push(Doctor);
+        params.push(Location);
+        params.push(Surname);
+        params.push(Type);
+        params.push(FromAppointmentDate);
+        params.push(ToAppointmentDate);
+        params.push(pageIndex);
+        params.push(itemsPerPage);
+        console.log(params);
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,params,function(err,rows)
             {
-                if(err)
+                if(err || rows.length<1)
                 {
+                    //console.log("Error Selecting : %s ",err );
                     res.json({status:'fail'});
                 }
                 else
                 {
-                    res.json({status:'success',data:rows})
+                    //console.log(">>>>>>>>>>>>>>>>>>>>>>>>"+rows.length)
+                    res.json({status:'success',data:rows});
                 }
             });
         });
@@ -1363,6 +1302,33 @@ module.exports =
             var query = connection.query(
                 'UPDATE `cln_appointment_calendar` SET `PATIENTS` = ?WHERE `CAL_ID` = ?'
                 ,[PATIENTS,CAL_ID],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        res.json({status:'success'});
+                    }
+
+                });
+        });
+    },
+    /*
+    phan quoc chien 
+    phanquocchien.c1109g@gmail.com
+    update patient id in booking
+     */
+    updatePatientIdInBooking:function(req,res){
+        var patientId = req.body.PATIENT_ID;
+        var bookingId = req.body.BOOKING_ID;
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'UPDATE `rl_bookings` SET `PATIENT_ID` = ? WHERE `BOOKING_ID` = ?'
+                ,[patientId,bookingId],function(err,rows)
                 {
                     if(err)
                     {

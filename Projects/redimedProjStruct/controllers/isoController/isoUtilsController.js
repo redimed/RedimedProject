@@ -3,11 +3,24 @@
  * 11-12-2014
  */
 
-function exlog(data1,data2)
+function exlog(data1,data2,data3)
 {
+    
     console.log("\n\nBEGIN ISO LOG-------------------------------");
-    console.log(JSON.stringify(data1));
-    console.log(JSON.stringify(data2));
+    if(data1)
+    {
+        console.log(JSON.stringify(data1));
+
+    }
+    if(data2)
+    {
+        console.log(JSON.stringify(data2));
+        
+    }
+    if(data3)
+    {
+        console.log(JSON.stringify(data3));
+    }
     console.log("END ISO LOG---------------------------------\n\n");
 }
 
@@ -92,6 +105,23 @@ module.exports =
     adminMasterRole:{
         master:'master',
         sub:'sub'
+    },
+
+    hierarchyGroup:{
+        qms:
+        {groupId:11,groupType:'QMS',groupName:'QMS',
+            nodes:{
+                admin:{nodeId:24,nodeCode:'QMS_Admin'},
+                head:{nodeId:25,nodeCode:'QMS_Head'}
+            }
+        }
+    },
+
+    hierarchyApprovalStatus:{
+        notYetReview:'not yet review',
+        underReview:'under review',
+        approved:'approved',
+        rejected:'rejected'
     },
 
     /**
@@ -198,6 +228,26 @@ module.exports =
         {
             return false;
         }
+    }, 
+
+    /**
+     * Tao ra 1 key moi cho row moi cua table
+     * tannv.dts@gmail.com
+     */
+    getNewKey:function(req,tableName,funcSuccess,funcError)
+    {
+        req.getConnection(function(err,connection) {
+            var query=connection.query("SELECT get_pk_value(?) as NEW_KEY",[tableName],function(err,rows){
+                if(!err)
+                {
+                    funcSuccess(rows[0].NEW_KEY);
+                }
+                else
+                {
+                    funcError(err);
+                }
+            });
+        });
     }
     
 }

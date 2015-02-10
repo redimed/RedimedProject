@@ -1,8 +1,48 @@
 angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
     .controller("rlob_paperless_ams5Controller", function($scope,rlobService,toastr,ConfigService) {
+      rlobService.checkBookingInFormAms5(rlobService.bookingInfoPaperless.id).then(function(data){
+            if (data.status == 'update') {
+                $scope.updateAMS5 = true;
+                $scope.info = data.data;
+                data.data.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
+                data.data.WRK_DATE_OF_INJURI != null?$scope.info.WRK_DATE_OF_INJURI_TEMP = new Date(data.data.WRK_DATE_OF_INJURI):$scope.info.WRK_DATE_OF_INJURI_TEMP = null;
+                data.data.EX_DATE != null?$scope.info.EX_DATE_TEMP = new Date(data.data.EX_DATE):$scope.info.EX_DATE_TEMP = null;
+                data.data.DT_DATE != null?$scope.info.DT_DATE_TEMP = new Date(data.data.DT_DATE):$scope.info.DT_DATE_TEMP = null;
+                console.log(data.data);
+                console.log("update a5:"+$scope.updateAMS5);
+                console.log($scope.info);
+                $scope.isSaving = true;
+            };
+            if (data.status == 'insert') {
+                $scope.insertAMS5 = true;
+                    rlobService.getBookingDoctorCompany(rlobService.bookingInfoPaperless.id).then(function(data){
+                        if (data.status == "success") {
+                            $scope.info.WRK_NAME = data.data.WRK_SURNAME +" "+data.data.WRK_OTHERNAMES;
+                            $scope.info.WRK_DATE_OF_BIRTH_TEMP = data.data.WRK_DATE_OF_BIRTH;
+                            $scope.info.WRK_PHONE = data.data.WRK_PHONE;
+                            $scope.info.WRK_EMAIL = data.data.WRK_EMAIL;
+                            $scope.info.WRK_DESCRIPTION_OF_INJURI = data.data.WRK_DESCRIPTION_OF_INJURI;
+                            $scope.info.EMP_ORGANISATION_NAME = data.data.EMP_ORGANISATION_NAME;
+                            $scope.info.EMP_POSTCODE = data.data.EMP_POSTCODE;
+                            $scope.info.EMP_ADDRESS_1 = data.data.EMP_ADDRESS_1;
+                            $scope.info.EMP_EMAIL = data.data.EMP_EMAIL;
+                            $scope.info.EMP_PHONE = data.data.EMP_PHONE;
+                            $scope.info.DT_NAME = data.data.DT_NAME;
+                            $scope.info.DT_ADDRESS_1 = data.data.DT_ADDRESS_1;
+                            $scope.info.DT_EMAIL = data.data.DT_EMAIL;
+                            $scope.info.DT_PHONE = data.data.DT_PHONE;
+                            $scope.info.DT_SIGNATURE = data.data.DT_SIGNATURE;
+                            $scope.info.DT_DATE_TEMP = new Date();
+                            console.log($scope.info);
+                        };
+                    });
+                $scope.isSaving = false;
+                console.log("insert a5:"+$scope.insertAMS5);
+            };
+        });
     	$scope.info = {
     		  AMS5_ID : null,
-    		  BOOKING_ID : null,
+    		  BOOKING_ID : rlobService.bookingInfoPaperless.id,
           WRK_NAME : null,
           WRK_ADDRESS_2 : null,
           WRK_ADDRESS_1 : null,
@@ -40,7 +80,7 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
           PROPORTION_OF_PERMANENT_IMPAIRMENT : null,
           INJURY_ASSESSMENT : null,
           DOCTOR_ID : null,
-          DT_DATE_TEMP : new Date(),
+          DT_DATE_TEMP : null,
           DT_DATE : null,
           DT_SIGNATURE : null,
           DT_NAME : null,
@@ -50,6 +90,21 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
           DT_PHONE : null,
           DT_EMAIL : null
     	};
+      $scope.scrollTo= function(el, offeset)
+        {
+            var pos = (el && el.size() > 0) ? el.offset().top : 0;
+
+            if (el) {
+                if ($('body').hasClass('page-header-fixed')) {
+                    pos = pos - $('.page-header').height();
+                }
+                pos = pos + (offeset ? offeset : -1 * el.height());
+            }
+
+            $('html,body').animate({
+                scrollTop: pos
+            }, 'slow');
+        };
     	//begin signature
       var tempSignature;
       $scope.isSignature = false;
@@ -68,57 +123,8 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
           tempSignature = $scope.info.DT_SIGNATURE;
       };    
       //end signature
-      
-      $scope.$watchCollection('bookingDetailAMS5',function(newValue,oldValue){
-          console.log(newValue);
-          $scope.info.AMS5_ID = $scope.bookingDetailAMS5.AMS5_ID,
-          $scope.info.BOOKING_ID = $scope.bookingDetailAMS5.BOOKING_ID,
-          $scope.info.WRK_NAME = $scope.bookingDetailAMS5.WRK_NAME,
-          $scope.info.WRK_ADDRESS_2 = $scope.bookingDetailAMS5.WRK_ADDRESS_2,
-          $scope.info.WRK_ADDRESS_1 = $scope.bookingDetailAMS5.WRK_ADDRESS_1,
-          $scope.info.WRK_POSTCODE = $scope.bookingDetailAMS5.WRK_POSTCODE,
-          $scope.bookingDetailAMS5.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date($scope.bookingDetailAMS5.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
-          $scope.bookingDetailAMS5.WRK_DATE_OF_INJURI != null?$scope.info.WRK_DATE_OF_INJURI_TEMP = new Date($scope.bookingDetailAMS5.WRK_DATE_OF_INJURI):$scope.info.WRK_DATE_OF_INJURI_TEMP = null;
-          $scope.info.WRK_INSURER_CLAIM_NUMBER = $scope.bookingDetailAMS5.WRK_INSURER_CLAIM_NUMBER,
-          $scope.info.WRK_DESCRIPTION_OF_INJURI = $scope.bookingDetailAMS5.WRK_DESCRIPTION_OF_INJURI,
-          $scope.info.WRK_PHONE = $scope.bookingDetailAMS5.WRK_PHONE,
-          $scope.info.WRK_EMAIL = $scope.bookingDetailAMS5.WRK_EMAIL,
-          $scope.info.WRK_WORKCOVER_WA_CLAIM_NUMBER = $scope.bookingDetailAMS5.WRK_WORKCOVER_WA_CLAIM_NUMBER,
-          $scope.info.COMPANIES_ID = $scope.bookingDetailAMS5.COMPANIES_ID,
-          $scope.info.EMP_ORGANISATION_NAME = $scope.bookingDetailAMS5.EMP_ORGANISATION_NAME,
-          $scope.info.EMP_CONTACT_PERSON = $scope.bookingDetailAMS5.EMP_CONTACT_PERSON,
-          $scope.info.EMP_ADDRESS_1 = $scope.bookingDetailAMS5.EMP_ADDRESS_1,
-          $scope.info.EMP_ADDRESS_2 = $scope.bookingDetailAMS5.EMP_ADDRESS_2,
-          $scope.info.EMP_POSTCODE = $scope.bookingDetailAMS5.EMP_POSTCODE,
-          $scope.info.EMP_PHONE = $scope.bookingDetailAMS5.EMP_PHONE,
-          $scope.info.EMP_EMAIL = $scope.bookingDetailAMS5.EMP_EMAIL,
-          $scope.info.EMP_NAME_OF_INSURER = $scope.bookingDetailAMS5.EMP_NAME_OF_INSURER,
-          $scope.info.EMP_WORKCOVER_MUNBER = $scope.bookingDetailAMS5.EMP_WORKCOVER_MUNBER,
-          $scope.info.PURPOSE_OF_THE_ASSESSMENT = $scope.bookingDetailAMS5.PURPOSE_OF_THE_ASSESSMENT,
-          $scope.bookingDetailAMS5.EX_DATE != null?$scope.info.EX_DATE_TEMP = new Date($scope.bookingDetailAMS5.EX_DATE):$scope.info.EX_DATE_TEMP = null;
-          $scope.info.EXL_NAME = $scope.bookingDetailAMS5.EXL_NAME,
-          $scope.info.EXL_ADDRESS_1 = $scope.bookingDetailAMS5.EXL_ADDRESS_1,
-          $scope.info.EXL_ADDRESS_2 = $scope.bookingDetailAMS5.EXL_ADDRESS_2,
-          $scope.info.EXL_POSTCODE = $scope.bookingDetailAMS5.EXL_POSTCODE,
-          $scope.info.REPORTS_AND_DOCUMENTS = $scope.bookingDetailAMS5.REPORTS_AND_DOCUMENTS,
-          $scope.info.NARRATIVE_HISTORY = $scope.bookingDetailAMS5.NARRATIVE_HISTORY,
-          $scope.info.DIAGNOSIS_AND_STUDIES = $scope.bookingDetailAMS5.DIAGNOSIS_AND_STUDIES,
-          $scope.info.DIAGNOSIS_AND_IMPAIRMENTS = $scope.bookingDetailAMS5.DIAGNOSIS_AND_IMPAIRMENTS,
-          $scope.info.PROPORTION_OF_PERMANENT_IMPAIRMENT = $scope.bookingDetailAMS5.PROPORTION_OF_PERMANENT_IMPAIRMENT,
-          $scope.info.INJURY_ASSESSMENT = $scope.bookingDetailAMS5.INJURY_ASSESSMENT,
-          $scope.info.DOCTOR_ID = $scope.bookingDetailAMS5.DOCTOR_ID,
-          $scope.bookingDetailAMS5.DT_DATE != null?$scope.info.DT_DATE_TEMP = new Date($scope.bookingDetailAMS5.DT_DATE):$scope.info.DT_DATE_TEMP = null;
-          $scope.info.DT_SIGNATURE = $scope.bookingDetailAMS5.DT_SIGNATURE,
-          $scope.info.DT_NAME = $scope.bookingDetailAMS5.DT_NAME,
-          $scope.info.DT_ADDRESS_1 = $scope.bookingDetailAMS5.DT_ADDRESS_1,
-          $scope.info.DT_ADDRESS_2 = $scope.bookingDetailAMS5.DT_ADDRESS_2,
-          $scope.info.DT_POSTCODE = $scope.bookingDetailAMS5.DT_POSTCODE,
-          $scope.info.DT_PHONE = $scope.bookingDetailAMS5.DT_PHONE,
-          $scope.info.DT_EMAIL = $scope.bookingDetailAMS5.DT_EMAIL
-      });
-
-      $scope.isSaving = false;
       $scope.addNewFormAMS5 = function(info){
+        // alert($scope.FormAms5.$invalid);
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.FormAms5.$valid) {
           if ($scope.updateAMS5 == true) {
@@ -169,6 +175,9 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
               };
           };
           // console.log(info);
+        }else{
+          $scope.hadForcused=true;
+          $('.errorSummaryAms5').show();
         };
       };
       $scope.edit = false;
@@ -177,30 +186,40 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
         $scope.edit = true;
       };
       $scope.updateFormAMS5 = function(info){
-      // console.log(info.WRK_DATE_OF_BIRTH_TEMP);
-      info.WRK_DATE_OF_BIRTH_TEMP !=null?$scope.info.WRK_DATE_OF_BIRTH = ConfigService.getCommonDate(info.WRK_DATE_OF_BIRTH_TEMP):$scope.info.WRK_DATE_OF_BIRTH = null;
-      info.WRK_DATE_OF_INJURI_TEMP != null?$scope.info.WRK_DATE_OF_INJURI = ConfigService.getCommonDate(info.WRK_DATE_OF_INJURI_TEMP):$scope.info.WRK_DATE_OF_INJURI = null;
-      info.EX_DATE_TEMP != null?$scope.info.EX_DATE = ConfigService.getCommonDate(info.EX_DATE_TEMP):$scope.info.EX_DATE = null;
-      info.DT_DATE_TEMP != null?$scope.info.DT_DATE = ConfigService.getCommonDate(info.DT_DATE_TEMP):$scope.info.DT_DATE = null;
-      
-      console.log($scope.info);
-      console.log(info);
-      if (info.BOOKING_ID != null && info.BOOKING_ID != "") {
-        rlobService.updateFromAms5(info).then(function(data){
-          if (data.status == 'success') {
-            toastr.success("Edit Success!","Success");
-            $scope.isSaving = true;
-            // $scope.AMS6_ID_NEW = data.data;
-            // console.log($scope.AMS6_ID_NEW);
-          }
-          else{
-            toastr.error("Edit Failed!","Error");
-          }
-        });
+      // alert($scope.FormAms5.$invalid);
+      $scope.$broadcast('show-errors-check-validity');
+      if ($scope.FormAms5.$valid) {
+        // console.log(info.WRK_DATE_OF_BIRTH_TEMP);
+        info.WRK_DATE_OF_BIRTH_TEMP !=null?$scope.info.WRK_DATE_OF_BIRTH = ConfigService.getCommonDate(info.WRK_DATE_OF_BIRTH_TEMP):$scope.info.WRK_DATE_OF_BIRTH = null;
+        info.WRK_DATE_OF_INJURI_TEMP != null?$scope.info.WRK_DATE_OF_INJURI = ConfigService.getCommonDate(info.WRK_DATE_OF_INJURI_TEMP):$scope.info.WRK_DATE_OF_INJURI = null;
+        info.EX_DATE_TEMP != null?$scope.info.EX_DATE = ConfigService.getCommonDate(info.EX_DATE_TEMP):$scope.info.EX_DATE = null;
+        info.DT_DATE_TEMP != null?$scope.info.DT_DATE = ConfigService.getCommonDate(info.DT_DATE_TEMP):$scope.info.DT_DATE = null;
+        
+        console.log($scope.info);
+        console.log(info);
+        if (info.BOOKING_ID != null && info.BOOKING_ID != "") {
+          rlobService.updateFromAms5(info).then(function(data){
+            if (data.status == 'success') {
+              toastr.success("Edit Success!","Success");
+              $scope.isSaving = true;
+              // $scope.AMS6_ID_NEW = data.data;
+              // console.log($scope.AMS6_ID_NEW);
+            }
+            else{
+              toastr.error("Edit Failed!","Error");
+            }
+          });
+        }else{
+          toastr.error("Not Booking Id!","Error");
+        };
       }else{
-        toastr.error("Not Booking Id!","Error");
+        $scope.hadForcused=true;
+        $('.errorSummaryAms5').show();
       };
     };
+    $scope.goToName = function(name) {
+      $scope.scrollTo($("[name='"+name+"']"),-200);
+    }
     $scope.cancelFormAms5 = function(){
       $scope.isSaving = true;
     }

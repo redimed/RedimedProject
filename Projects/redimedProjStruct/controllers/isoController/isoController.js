@@ -333,6 +333,74 @@ module.exports =
             });
             isoUtil.exlog(query.sql);
         });
+    },
+
+
+    //check_hierarchy_approver
+    //Kiem tra xem user login co phai la user ben hierarchy approval iso system khong
+    //tannv.dts@gmail.com
+    checkHierarchyIsoApprover:function(req,res,next)
+    {
+        isoUtil.exlog(">>>>>>>>>>>>>>. this is checkHierarchyIsoApprover");
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var groupType=isoUtil.hierarchyGroup.qms.groupType;
+
+        if(!isoUtil.checkListData([userId]))
+        {
+            res.json({status:'fail'});
+            return;
+        }        
+
+        var sql=
+            " SELECT huser.*,hnode.`NODE_CODE`,hnode.`TO_NODE_ID`,hnode.`GROUP_ID`,hnode.`GROUP_TYPE`,hnode.seq          "+
+            " FROM `sys_hierarchies_users` huser                                                               "+
+            " INNER JOIN `sys_hierarchy_nodes` hnode ON huser.`NODE_ID`=hnode.`NODE_ID`                        "+
+            " WHERE huser.`ISENABLE`=1 AND huser.`USER_ID`=? AND hnode.`GROUP_TYPE`=?   ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[userId,groupType],function(err,rows)
+            {
+                if(!err)
+                {
+                    if(rows.length>0)
+                    {
+                        //res.json({status:'success',data:rows});
+                        if(req.method=='POST')
+                        {
+                            req.body.isoHierarchyApproverInfo=rows[0];
+                        }
+                        else if(req.method=='GET')
+                        {
+                            req.query.isoHierarchyApproverInfo=rows[0];
+                        }
+                        next();
+                    }
+                    else
+                    {
+                        isoUtil.exlog("khong co du lieu");
+                        res.json({status:'fail'});
+                    }
+                }
+                else
+                {
+                    isoUtil.exlog(err);
+                    res.json({status:'fail'});
+                }
+            });
+
+        });
+    },
+
+    getNewKey:function(req,res)
+    {
+        var tableName=req.query.tableName;
+        isoUtil.getNewKey(req,tableName,function(data){
+            res.json({NEW_KEY:data});
+        },function(err){
+            res.json({status:'fail'});
+        });
     }
 
 

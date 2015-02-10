@@ -27,9 +27,44 @@
 			<i class="fa fa-print"></i> print </a>
 		</div>
 	</div>
-	<fieldset ng-disabled="isSaving">
-	<div class="portlet-body">
-		<form name="FormAms6" novalidate>
+
+	<form name="FormAms6" novalidate>
+		<fieldset ng-disabled="isSaving">
+		<div class="portlet-body">
+			<div class="alert alert-danger display-hide errorSummaryAms6" style="display: block;position: fixed;z-index: 9;right: 41px;max-height: 350px;overflow: auto;" ng-show="FormAms6.$invalid && hadForcused">
+		        <button data-close="alert" class="close"></button>
+		       	<a ng-click="goToName('WRK_NAME')" class="help-block" ng-if="FormAms6.WRK_NAME.$error.required">Name is required!</a>
+		       	<a ng-click="goToName('WRK_ADDRESS_1')" class="help-block" ng-if="FormAms6.WRK_ADDRESS_1.$error.required">Address is required!</a>
+		       	<a ng-click="goToName('WRK_ADDRESS_2')" class="help-block" ng-if="FormAms6.WRK_ADDRESS_2.$error.required">Address is required!</a>
+		       	<a ng-click="goToName('WRK_DATE_OF_INJURI_TEMP')" class="help-block" ng-if="FormAms6.WRK_DATE_OF_INJURI_TEMP.$error.required">Date of injury is required!</a>
+		       	<a ng-click="goToName('WRK_DATE_OF_BIRTH_TEMP')" class="help-block" ng-if="FormAms6.WRK_DATE_OF_BIRTH_TEMP.$error.required">Date of birth is required!</a>
+		       	<a ng-click="goToName('WRK_PHONE')" class="help-block" ng-if="FormAms6.WRK_PHONE.$error.required">Contact telephone number is required!</a>
+		       	<a ng-click="goToName('WRK_INSURER_CLAIM_NUMBER')" class="help-block" ng-if="FormAms6.WRK_INSURER_CLAIM_NUMBER.$error.required">Insurer claim number is required!</a>
+		       	<a ng-click="goToName('WRK_EMAIL')" class="help-block" ng-if="FormAms6.WRK_EMAIL.$error.required">Email address is required!</a>
+				<a ng-click="goToName('WRK_EMAIL')" class="help-block" ng-if="FormAms6.WRK_EMAIL.$error.email">Email address not valid email!</a>
+				<a ng-click="goToName('WRK_POSTCODE')" class="help-block" ng-if="FormAms6.WRK_POSTCODE.$error.required">Post code is required!</a>
+				<a ng-click="goToName('WRK_DESCRIPTION_OF_INJURI')" class="help-block" ng-if="FormAms6.WRK_DESCRIPTION_OF_INJURI.$error.required">Description of injury is required!</a>
+				<a ng-click="goToName('WRK_WORKCOVER_WA_CLAIM_NUMBER')" class="help-block" ng-if="FormAms6.WRK_WORKCOVER_WA_CLAIM_NUMBER.$error.required">WorkCover wa claim number is required!</a>
+				<a ng-click="goToName('EMP_ORGANISATION_NAME')" class="help-block" ng-if="FormAms6.EMP_ORGANISATION_NAME.$error.required">Orgainsation name is required!</a>
+				<a ng-click="goToName('EMP_CONTACT_PERSON')" class="help-block" ng-if="FormAms6.EMP_CONTACT_PERSON.$error.required">Contact person is required!</a>
+				<a ng-click="goToName('EMP_ADDRESS_1')" class="help-block" ng-if="FormAms6.EMP_ADDRESS_1.$error.required">Address is required!</a>
+				<a ng-click="goToName('EMP_ADDRESS_2')" class="help-block" ng-if="FormAms6.EMP_ADDRESS_2.$error.required">Address is required!</a>
+				<a ng-click="goToName('EMP_POSTCODE')" class="help-block" ng-if="FormAms6.EMP_POSTCODE.$error.required">Post code is required!</a>
+				<a ng-click="goToName('EMP_EMAIL')" class="help-block" ng-if="FormAms6.EMP_EMAIL.$error.required">Email address is required!</a>
+				<a ng-click="goToName('EMP_EMAIL')" class="help-block" ng-if="FormAms6.EMP_EMAIL.$error.email">Email address not valid email!</a>
+				<a ng-click="goToName('EMP_PHONE')" class="help-block" ng-if="FormAms6.EMP_PHONE.$error.required">Telephone number is required!</a>
+				<a ng-click="goToName('EMP_NAME_OF_INSURER')" class="help-block" ng-if="FormAms6.EMP_NAME_OF_INSURER.$error.required">Name of insurer is required!</a>
+				<a ng-click="goToName('EMP_WORKCOVER_MUNBER')" class="help-block" ng-if="FormAms6.EMP_WORKCOVER_MUNBER.$error.required">WorkCover number (if known) is required!</a>
+				<a ng-click="goToName('DATE_ASSESS_TEMP')" class="help-block" ng-if="FormAms6.DATE_ASSESS_TEMP.$error.required">Date is required!</a>
+				<a ng-click="goToName('INJURY_ASSESSMENT')" class="help-block" ng-if="FormAms6.INJURY_ASSESSMENT.$error.required">Degree of permanent impairment is required!</a>
+				<a ng-click="goToName('DT_NAME')" class="help-block" ng-if="FormAms6.DT_NAME.$error.required">Approved medical specialist name is required!</a>
+				<a ng-click="goToName('DT_ADDRESS_1')" class="help-block" ng-if="FormAms6.DT_ADDRESS_1.$error.required">Address is required!</a>
+				<a ng-click="goToName('DT_ADDRESS_2')" class="help-block" ng-if="FormAms6.DT_ADDRESS_2.$error.required">Address is required!</a>
+				<a ng-click="goToName('DT_PHONE')" class="help-block" ng-if="FormAms6.DT_PHONE.$error.required">Telephone number is required!</a>
+				<a ng-click="goToName('DT_POSTCODE')" class="help-block" ng-if="FormAms6.DT_POSTCODE.$error.required">Post code is required!</a>
+				<a ng-click="goToName('DT_EMAIL')" class="help-block" ng-if="FormAms6.DT_EMAIL.$error.required">Email address is required!</a>
+				<a ng-click="goToName('DT_EMAIL')" class="help-block" ng-if="FormAms6.DT_EMAIL.$error.email">Email address not valid email!</a>
+		    </div>
 			<div class="portlet light bordered">
 				<div class="portlet-title">
 					<div class="caption">
@@ -123,7 +158,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group" show-errors='{showSuccess: true}'>
-										<label class="control-label col-md-3">Post Code </label>
+										<label class="control-label col-md-3">Post code </label>
 										<div class="col-md-9">
 											<input type="text" ng-model="info.WRK_POSTCODE" class="form-control" ng-required="!isAdmin" name="WRK_POSTCODE">
 											<p class="help-block" ng-if="FormAms6.WRK_POSTCODE.$error.required">Required!</p>
@@ -143,7 +178,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group" show-errors='{showSuccess: true}'>
-										<label class="control-label col-md-6">WorkCover WA claim number </label>
+										<label class="control-label col-md-6">WorkCover wa claim number </label>
 										<div class="col-md-6">
 											<input type="text" ng-model="info.WRK_WORKCOVER_WA_CLAIM_NUMBER" class="form-control" ng-required="!isAdmin" name="WRK_WORKCOVER_WA_CLAIM_NUMBER">
 											<p class="help-block" ng-if="FormAms6.WRK_WORKCOVER_WA_CLAIM_NUMBER.$error.required">Required!</p>
@@ -207,7 +242,7 @@
 								</div>
 								<div style="margin-left: 15px" class="col-md-6">
 									<div class="form-group" show-errors='{showSuccess: true}'>
-										<label class="control-label col-md-3">Post Code </label>
+										<label class="control-label col-md-3">Post code </label>
 										<div class="col-md-9">
 											<input type="text" ng-model="info.EMP_POSTCODE" class="form-control" ng-required="!isAdmin" name="EMP_POSTCODE">
 											<p class="help-block" ng-if="FormAms6.EMP_POSTCODE.$error.required">Required!</p>
@@ -320,8 +355,8 @@
 						</div>
 					</div>
 				</div>
-	    	</div>
-	    	<div class="portlet light bordered">
+			</div>
+			<div class="portlet light bordered">
 				<div class="portlet-body form">
 					<div class="form-body">
 						<fieldset ng-disabled="isAdmin">
@@ -390,57 +425,57 @@
 							<div class="form-group col-md-4" show-errors='{showSuccess: true}'>            	
 						        <input style="margin-left: 15px;" type="text" ng-model="info.DT_DATE_TEMP" class="form-control" id="DateNow" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" ng-required="!isDoctor" name="DT_DATE_TEMP">
 						        <p class="help-block" ng-if="FormAms6.DT_DATE_TEMP.$error.required">Required!</p>
-	                        </div>
-	                    	<div class="col-md-3">
-	                            <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
-	                               class="btn btn-danger">Signature</a>
-	                        </div>
-	                        <div class="col-md-5"
-	                             ng-show="info.DT_SIGNATURE!=null && info.DT_SIGNATURE!='' && !isSignature">
-	                            <img src="" ng-src="{{info.DT_SIGNATURE}}" alt=""
-	                                 style="width: 200px;height: 70px;"/>
-	                        </div>
-	                    </div>
+		                    </div>
+		                	<div class="col-md-3">
+		                        <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
+		                           class="btn btn-danger">Signature</a>
+		                    </div>
+		                    <div class="col-md-5"
+		                         ng-show="info.DT_SIGNATURE!=null && info.DT_SIGNATURE!='' && !isSignature">
+		                        <img src="" ng-src="{{info.DT_SIGNATURE}}" alt=""
+		                             style="width: 200px;height: 70px;"/>
+		                    </div>
+		                </div>
 						<div class="row" style="text-align: center;" ng-show="isSignature">
-	                        <div class="col-md-12 col-sm-12">
-	                            <canvas width="300" height="300" id="canvas"
-	                                    signature ng-model="info.DT_SIGNATURE"
-	                                    style="background-color: #8eece8">
-	                            </canvas>
-	                        </div>
-	                        <div class="col-md-12 col-sm-12">
-	                            <div class="break-row"></div>
-	                            <div class="btn-group">
-	                                <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
-	                                    Cancel
-	                                </button>
-	                                <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">
-	                                    Clear
-	                                </button>
-	                                <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    </fieldset>
+		                    <div class="col-md-12 col-sm-12">
+		                        <canvas width="300" height="300" id="canvas"
+		                                signature ng-model="info.DT_SIGNATURE"
+		                                style="background-color: #8eece8">
+		                        </canvas>
+		                    </div>
+		                    <div class="col-md-12 col-sm-12">
+		                        <div class="break-row"></div>
+		                        <div class="btn-group">
+		                            <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+		                                Cancel
+		                            </button>
+		                            <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">
+		                                Clear
+		                            </button>
+		                            <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+		                        </div>
+		                    </div>
+		                </div>
+		                </fieldset>
 					</div>
 				</div>
-			</div>
-		</form>
-	</div>
-	<div class="form-actions">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-offset-3 col-md-9">
-						<button ng-if="edit == false" type="submit" class="btn green" ng-click="addNewFormAMS6(info)">Submit</button>
-						<button ng-show="edit == true" type="submit" class="btn green" ng-click="updateFormAMS6(info)">Edit</button>
-						<button type="button" class="btn default" ng-click="cancelFormAms6()">Cancel</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
 			</div>
 		</div>
-	</div>
-	</fieldset>
+		<div class="form-actions">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-9">
+							<button ng-if="edit == false" type="submit" class="btn green" ng-click="addNewFormAMS6(info)">Submit</button>
+							<button ng-show="edit == true" type="submit" class="btn green" ng-click="updateFormAMS6(info)">Edit</button>
+							<button type="button" class="btn default" ng-click="cancelFormAms6()">Cancel</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+				</div>
+			</div>
+		</div>
+		</fieldset>
+	</form>
 </div>

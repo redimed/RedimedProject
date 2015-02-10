@@ -167,8 +167,6 @@
     }
 </style>
 
-
-
 <!--Bookmark Begin Page-->
 <div id="rlob_admin_begin_page"></div>
 
@@ -282,9 +280,8 @@
         <div class="col-md-12">
             <a href="" class="btn btn-primary " ng-click="collapseAll()">Collapse all</a>
             <a href="" class="btn btn-primary " ng-click="expandAll()">Expand all</a>
-
-            <div ng-show="showDetailPanel" class="btn-group dropdown pull-right pull-right">
-
+            <div ng-show="showDetailPanel" class="btn-group dropdown pull-right">
+                <button class="btn btn-success" style="height:36px" ng-click="setBookingIdInPaperless(selectedBooking.BOOKING_ID)">Go to paperless</button>
                 <a type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">
                                     <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
 
@@ -327,11 +324,6 @@
                     <li>
                         <a class="pointer" role="menuitem" tabindex="2" ng-click="documentstatusfadeIn()">
                             Set Documents Status
-                        </a>
-                    </li>
-                    <li>
-                        <a class="pointer" role="menuitem" tabindex="2" ng-click="setBookingIdInPaperless(selectedBooking.BOOKING_ID)">
-                            Paperless
                         </a>
                     </li>
                     <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
@@ -494,55 +486,6 @@
                                     Set Documents Status
                                 </a>
                             </li>
-                            <li>
-                                <a class="pointer" role="menuitem" tabindex="2" ng-click="setBookingIdInPaperless(node.BOOKING_ID)">
-                                    Paperless
-                                </a>
-                            </li>
-                            <!--<li>-->
-                                <!--<a class="pointer" role="menuitem" tabindex="2">-->
-                                    <!--Set Documents Status-->
-                                <!--</a>-->
-                            <!--</li>-->
-                            <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
-                            <!--Set Bookings Status:-->
-
-                            <!--<li ng-hide="node.STATUS=='Confirmed'" >-->
-                                <!--<a ng-hide="node.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="3"-->
-                                   <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Confirmed',this)">-->
-                                    <!--<span>Confirmed</span>-->
-
-                                <!--</a>-->
-                            <!--</li>-->
-
-                            <!--<li ng-hide="node.STATUS=='Arrived'">-->
-                                <!--<a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="4"-->
-                                    <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Arrived',this)">-->
-                                    <!--<span>Arrived</span>-->
-
-                                <!--</a>-->
-                            <!--</li>-->
-
-                            <!--<li ng-hide="node.STATUS=='Not Arrived'">-->
-                                <!--<a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="5"-->
-                                   <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Not Arrived',this)">-->
-                                    <!--<span>Not Arrived</span>-->
-
-                                <!--</a>-->
-                            <!--</li>-->
-
-                            <!--<li ng-hide="node.STATUS=='Completed'">-->
-                                <!--<a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"-->
-                                    <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Completed',this)">-->
-                                    <!--<span>Completed</span>-->
-                                <!--</a>-->
-                            <!--</li>-->
-                            <!--<li ng-hide="node.STATUS=='Cancel'">-->
-                                <!--<a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"-->
-                                    <!--ng-click="lob_change_status(node.ASS_ID,node.BOOKING_ID,'Cancel',this)">-->
-                                    <!--<span>Cancel</span>-->
-                                <!--</a>-->
-                            <!--</li>-->
                         </ul>
                     </div>
 
@@ -589,7 +532,6 @@
                 </ol>
 
 
-
             </script>
             <div ui-tree data-drag-enabled="false" id="tree-root" class="panel-explorer treeScroll">
                 <ol ui-tree-nodes data-drag-enabled="false" ng-model="mydata">
@@ -612,7 +554,8 @@
 
             <div ng-class="selectedBooking.style_class" class="alert alert-info" role="alert" style="text-align: center;text-decoration: underline">
                 Booking Status: {{selectedBooking.STATUS}} <br />
-                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}
+                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}<br/>
+                <!-- <a id="testclick" ng-click="setBookingIdInPaperless(selectedBooking.BOOKING_ID)">chien test</a> -->
             </div>
 
 
@@ -889,8 +832,7 @@ phanquocchien.c1109g@gmail.com-->
         </div>
     </div>
 </div>
+ 
 
-
-
-
-
+<!-- <input type='button' value='Button 1' id='button1'>
+<input type='button' value='Button 2' id='button2'> -->

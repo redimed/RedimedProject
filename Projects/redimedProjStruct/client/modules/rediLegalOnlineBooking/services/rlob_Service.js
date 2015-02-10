@@ -230,6 +230,15 @@ angular.module('app.loggedIn.rlob.services',[])
         }
         //chien 
         //phanquocchien.c1109g@gmail.com
+        //update patient ID in booking
+        rlobService.updatePatientIdBooking=function(BOOKING_ID,PATIENT_ID)
+        {
+
+            var result=api.all('rlob/rl_bookings/update-patient-booking');
+            return result.post({BOOKING_ID:BOOKING_ID,PATIENT_ID:PATIENT_ID});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
         //add select 
         rlobService.selectAppointment=function(CAL_ID)
         {

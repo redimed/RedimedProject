@@ -477,6 +477,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 //add new cln_patients
                 rlobService.addPatient(patientData).then(function(data){
                     if (data.status == 'success') {
+                        rlobService.updatePatientIdBooking
                         claimData.Patient_id = data.data.Patient_id;
                         claimData.Claim_no = $scope.newBooking.CLAIM_NO;
                         claimData.Injury_name = 'No Description';
@@ -537,6 +538,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             .success(function(data) {
                 if(data.status=='success')
                 {
+                    console.log(data.data);
                     $scope.scrollTo($('.bookingSuccess'),-200);
                     bookingService.setBookingInfo($scope.newBooking);
                     //uploader.formData.push({booking_id:$scope.newBooking.BOOKING_ID,company_id:$scope.loginInfo.company_id,worker_name:$scope.newBooking.WRK_SURNAME,isClientDownLoad:0});

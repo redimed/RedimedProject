@@ -1,6 +1,3 @@
-/**
- * Created by tannv.dts@gmail.com on 9/17/2014.
- */
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService) {
@@ -888,16 +885,16 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.getListPassBookingHaveNotResult=function(doctorId)
         {
             rlobService.getPassBookingHaveNotResult($scope.bookingType,doctorId)
-                .then(function(data){
-                    if(data.status=='success')
-                    {
-                        $scope.listPassBookingHaveNotResult=data.data;
-                    }
-                },
-                function(error)
+            .then(function(data){
+                if(data.status=='success')
                 {
-
-                });
+                    $scope.listPassBookingHaveNotResult=data.data;
+                }
+            },
+            function(error)
+            {
+                
+            });
         }
 
         /**
@@ -948,7 +945,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             $scope.getListPassBookingHaveNotResult(doctorId);
         }
 
-        if($scope.loginInfo.UserType.user_type=='Doctor')
+        if($scope.loginInfo.UserType.user_type==rlobConstant.userType.doctor)
         {
             $scope.getDoctorInfoByUserId()
                 .then($scope.filterBooking)
@@ -1058,6 +1055,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         // phanquocchien.c1109g@gmail.com
         $scope.$watch('selectedBooking.BOOKING_ID',function(newValue, oldValue){
             if ( newValue !== oldValue ) {
+                // $scope.setBookingIdInPaperless();
                 angular.element('#documentstatus').fadeOut();
                 angular.element('#bookingstatus').fadeOut();
             }
@@ -1068,16 +1066,19 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         
         $scope.check = function(aa){
             $scope.bookingMessage.message = aa;
-        }
+        };
+        $scope.test = function(aa){
+            $scope.bookingMessage.message = aa;
+        };
         //chien set booking id in paperless
         //phanquocchien.c1109g@gmail.com
         $scope.setBookingIdInPaperless = function(BookingID){
-            // alert(BookingID);
             if (BookingID !=null && BookingID != "") {
                 rlobService.bookingInfoPaperless.id=BookingID;
                 $state.go('loggedIn.rlob.paperless');
+                return;
             }else{
                 alert("Khong ton tai Booking ID");
             };
-        }
+        };
     });
