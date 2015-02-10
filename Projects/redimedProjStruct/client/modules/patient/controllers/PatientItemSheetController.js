@@ -83,8 +83,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         })
         // GET FEE OF ITEM 
         .then( function( response ){
-            console.log(response)
-	     if(!response.list) return; 
+	     if(!response || !response.list) return; 
 	 		var list_fee = response.list;
 	 		angular.forEach($scope.deptItems, function(cat, key) {
 	 			angular.forEach(cat.items, function(item, key) {
