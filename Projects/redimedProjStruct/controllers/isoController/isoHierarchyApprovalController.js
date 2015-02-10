@@ -430,8 +430,8 @@ var sendEmailNotificationApprovalToNextNode=function(req,res)
                                     listEmail +=item.Contact_email+','
                                 })
                                 var mailInfo = {
-                                    // senders:"REDiMED <healthscreenings@redimed.com.au>",
-                                    senders:"REDiMED <tannv.solution@gmail.com>",
+                                    senders:"REDiMED <healthscreenings@redimed.com.au>",
+                                    // senders:"REDiMED <tannv.solution@gmail.com>",
                                     recipients:listEmail,
                                     subject:hierarchyNodeDesc+': Approval Document '+isoNodeName,
                                     htmlBody:
