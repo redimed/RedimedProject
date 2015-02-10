@@ -69,13 +69,13 @@ angular.module("app.loggedIn.patient.services", [])
     }
     
 
-    instanceService.initAppointment = function(patient_id, cal_id){
-        var funcApi = khankAPI.all('appt/init');
+    instanceService.initInvoice = function(patient_id, cal_id){
+        var funcApi = khankAPI.all('invoice/init');
         return funcApi.post({patient_id: patient_id, cal_id: cal_id});
     }
 
-    instanceService.endAppointment = function(patient_id, cal_id){
-        var funcApi = khankAPI.all('appt/end');
+    instanceService.endInvoice = function(patient_id, cal_id){
+        var funcApi = khankAPI.all('invoice/end');
         return funcApi.post({patient_id: patient_id, cal_id: cal_id});
     }
 
