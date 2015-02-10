@@ -4,29 +4,47 @@ angular.module("app.loggedIn.controller",[
 .controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
     var from = $location.search().from;
     var to = $location.search().to;
-    var isCaller = $location.search().isCaller;
+    var isCaller = ($location.search().isCaller == 'true') ? true : false;
+
+    console.log('Is Caller: ',isCaller);
+    console.log('Type: ', typeof isCaller);
+
+    var fromMobile = $location.search().fromMobile;
 
     UserService.getUserInfo(from).then(function(data){
         if(data)
         {
-
             if(typeof $cookieStore.get('userInfo') === 'undefined')
             {
                 delete data.img;
                 $cookieStore.put('userInfo',data);
+
+                if(fromMobile){
+                    socket.emit("mobileConnect",data.id);
+                }
             }
-            
-            UserService.getUserInfo(to).then(function(data){
-                if(!data.img)
-                     data.img = "theme/assets/icon.png"
 
-                if(isCaller)
-                    $state.go("call",{callUserInfo:data,callUser:to,isCaller:true},{reload:true});
-               
-            })
+
+            if(isCaller){
+                UserService.getUserInfo(to).then(function(rs){
+                    if(!rs.img)
+                         rs.img = "theme/assets/icon.png"
+
+                     $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+                })
+            }
+            else
+            {
+                UserService.getUserInfo(from).then(function(rs){
+                    if(!rs.img)
+                         rs.img = "theme/assets/icon.png"
+
+                    $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
+                })
+            }
         }
+               
     })
-
 
 })
 

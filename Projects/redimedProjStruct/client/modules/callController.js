@@ -3,7 +3,7 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,$rootScope, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
+    .controller("callController", function($scope,$location,$rootScope, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
         socket.removeAllListeners();
 
         $scope.userInfo = null;
@@ -13,6 +13,8 @@ angular.module("app.call.controller",[
 
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
+
+        var fromMobile = $location.search().fromMobile;
 
         var audio = new Audio('theme/assets/phone_calling.mp3');
 
@@ -39,25 +41,32 @@ angular.module("app.call.controller",[
             $scope.userInfo = $cookieStore.get('userInfo');
         }
 
-        if(from.fromParams != null || typeof from.fromParams !== 'undefined')
+        if(typeof from !== 'undefined')
         {
-            angular.forEach(from.fromParams, function(value , key) {
-                params[key] = value;
-            })
-        }
+            if(from.fromParams != null || typeof from.fromParams !== 'undefined')
+            {
+                angular.forEach(from.fromParams, function(value , key) {
+                    params[key] = value;
+                })
+            }
 
-        if($stateParams.callUser == null || typeof $stateParams === 'undefined')
-        {
-                disconnect();
-                $state.go(from.fromState.name,params,{location: "replace",reload: true});
+            if($stateParams.callUser == null || typeof $stateParams === 'undefined')
+            {
+                    disconnect();
+                    $state.go(from.fromState.name,params,{location: "replace",reload: true});
 
+            }
         }
 
         $scope.cancelCall = function(){
             audio.pause();
             disconnect();
             socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
-            $state.go(from.fromState.name,params,{location: "replace", reload: true});
+            if(typeof from !== 'undefined')
+                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+            if(typeof fromMobile !== 'undefined' && fromMobile)
+                 $window.close();
         }
 
         $scope.muteAudio = function(){
@@ -90,14 +99,23 @@ angular.module("app.call.controller",[
                 audio.pause();
                 toastr.error("Call Have Been Rejected!");
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                if(typeof from !== 'undefined')
+                    $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+                if(typeof fromMobile !== 'undefined' && fromMobile)
+                     $window.close();
             }
             if(message.type === 'cancel')
             {
                 audio.pause();
                 toastr.error("Call Have Been Cancelled!");
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                
+                if(typeof from !== 'undefined')
+                    $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+                if(typeof fromMobile !== 'undefined' && fromMobile)
+                     $window.close();
 
             }
 
@@ -113,7 +131,11 @@ angular.module("app.call.controller",[
             var failureCB = function(errCode, errMsg) {
                 toastr.error(errMsg);
                 disconnect();
-                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                 if(typeof from !== 'undefined')
+                    $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+                if(typeof fromMobile !== 'undefined' && fromMobile)
+                     $window.close();
             };
 
             easyrtc.call(easyRtcId, successCB, failureCB, acceptedCB);

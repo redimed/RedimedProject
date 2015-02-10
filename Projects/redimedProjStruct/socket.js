@@ -20,7 +20,31 @@ module.exports = function(io,cookie,cookieParser) {
 
         console.log(ua);
 
-        socket.on('checkApp',function(id){
+        socket.on('reconnected',function(id){
+            db.User.update({
+                socket: socket.id
+            },{id:id})
+                .success(function(){
+                    getOnlineUser();
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        })
+
+        socket.on('mobileConnect',function(id){
+            db.User.update({
+                socketMobile: socket.id
+            },{id:id})
+                .success(function(){
+                    getOnlineUser();
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        })
+
+        // socket.on('checkApp',function(id){
             // if(id){
             //     db.User.find({where:{id:id}},{raw:true})
             //         .success(function(user){
@@ -51,7 +75,7 @@ module.exports = function(io,cookie,cookieParser) {
             //             console.log(err);
             //         })
             // }
-        })
+        // })
 
         socket.on('forceLogin',function(username){
 
@@ -78,28 +102,28 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on('checkLogin',function(username){
-            // db.User.find({where:{user_name:username}},{raw:true})
-            //     .success(function(user){
-            //         if(user)
-            //         {
+            db.User.find({where:{user_name:username}},{raw:true})
+                .success(function(user){
+                    if(user)
+                    {
                        
-            //             if(user.socketMobile == null){
-            //                 socket.emit('isSuccess');
-            //             }
-            //             else
-            //             {
-            //                 socket.emit('isError');
-            //             }
+                        if(user.socket == null){
+                            socket.emit('isSuccess');
+                        }
+                        else
+                        {
+                            socket.emit('isError');
+                        }
                         
-            //         }
+                    }
 
-            //     })
-            //     .error(function(err){
-            //         console.log(err);
-            //     })
+                })
+                .error(function(err){
+                    console.log(err);
+                })
 
 
-            socket.emit('isSuccess');
+            // socket.emit('isSuccess');
 
         });
 
@@ -136,12 +160,16 @@ module.exports = function(io,cookie,cookieParser) {
                             .success(function(contact){
                                 if(contact)
                                 {
-                                    io.to(contact.socket)
-                                        .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                    if(contact.socket)
+                                        io.to(contact.socket)
+                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
-                                    console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
-                                    console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
+                                    if(contact.socketMobile)
+                                        io.to(contact.socketMobile)
+                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
                                 }
+                                console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
+                                console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
                             })
                             .error(function(err){
                                 console.log(err);
@@ -155,7 +183,7 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('logout', function (username,id,userType,info) {
-           db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
+           db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
                 .success(function(){
                    if(info != null && typeof info !== 'undefined')
                    {
