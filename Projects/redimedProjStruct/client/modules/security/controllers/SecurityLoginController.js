@@ -87,18 +87,25 @@ angular.module("app.security.login.controller",[
 
                         if (response.userInfo['function_id'] != null) {
                             UserService.getFunction(response.userInfo['function_id']).then(function (data) {
-                                var rs = data.definition.split('(');
-                                if (rs[0] != null) {
-                                    if (rs[1] != null) {
-                                        var r = rs[1].split(')');
-                                        var params = eval("(" + r[0] + ")");
+                                if(typeof data.definition !== 'undefined')
+                                {
+                                    var rs = data.definition.split('(');
+                                    if (rs[0] != null) {
+                                        if (rs[1] != null) {
+                                            var r = rs[1].split(')');
+                                            var params = eval("(" + r[0] + ")");
 
 
-                                        $state.go(rs[0], params, {location: "replace", reload: true});
+                                            $state.go(rs[0], params, {location: "replace", reload: true});
+                                        }
+                                        else {
+                                            $state.go(rs[0], {location: "replace", reload: true});
+                                        }
                                     }
-                                    else {
-                                        $state.go(rs[0], {location: "replace", reload: true});
-                                    }
+                                }
+                                else
+                                {
+                                     $state.go('loggedIn.home',null,{location: "replace", reload: true});
                                 }
                             })
                         }

@@ -49,6 +49,7 @@ module.exports = {
         db.Function.find({where:{function_id:id}},{raw:true})
             .success(function(data){
                 res.json(data);
+               
             })
             .error(function(err){
                 res.json({status:'error'});
