@@ -82,7 +82,7 @@ module.exports = {
     },
     deleteSystem: function(req, res) {
         var info = req.body.info || -1;
-        var query = "DELETE FROM sys_hierarchies_types where TYPE_ID = " + info;
+        var query = "DELETE FROM sys_hierarchies_types where TYPE_NAME = '" + info + "'";
         db.sequelize.query(query)
             .success(function() {
                 res.json({
@@ -104,7 +104,7 @@ module.exports = {
         var info = req.body.info;
         sys_hierarchies_types.find({
                 where: {
-                    TYPE_ID: info
+                    TYPE_NAME: info
                 }
             }, {
                 raw: true
@@ -128,11 +128,12 @@ module.exports = {
 
     updateSystem: function(req, res) {
         var info = req.body.info;
+        var TYPE_NAME = info.oldName;
         sys_hierarchies_types.update({
                 TYPE_NAME: info.TYPE_NAME,
                 Last_updated_by: info.userId
             }, {
-                TYPE_ID: info.TYPE_ID
+                TYPE_NAME: TYPE_NAME
             })
             .success(function(result1) {
                 sys_hierarchies_types.findAll({
@@ -172,7 +173,7 @@ module.exports = {
         var searchObj = req.body.searchObj;
         var searchParam = [];
         var strQuery = '';
-        strQuery += "GROUP_TYPE=" + searchObj.GROUP_TYPE + " and ";
+        strQuery += "GROUP_TYPE='" + searchObj.GROUP_TYPE + "' and ";
         for (var key in searchObj.data) {
             if (searchObj.data[key]) {
                 strQuery += key + " like '%" + searchObj.data[key] + "%' and ";
@@ -236,7 +237,7 @@ module.exports = {
                     })
                     .success(function(result) {
                         //get list department agian
-                        var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id WHERE sys_hierarchy_group.GROUP_TYPE=" + typeSystem + " ORDER BY CREATION_DATE DESC";
+                        var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id WHERE sys_hierarchy_group.GROUP_TYPE='" + typeSystem + "' ORDER BY CREATION_DATE DESC";
                         db.sequelize.query(query)
                             .success(function(result) {
                                 res.json({
@@ -296,7 +297,6 @@ module.exports = {
 
     loadOneDepartment: function(req, res) {
         var info = req.body.info;
-        console.log("INFO:" + info);
         sys_hierarchy_group.find({
                 where: {
                     GROUP_ID: info
@@ -333,7 +333,7 @@ module.exports = {
                 GROUP_ID: info.GROUP_ID
             })
             .success(function(result1) {
-                var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id WHERE sys_hierarchy_group.GROUP_TYPE=" + info.GROUP_TYPE + " ORDER BY CREATION_DATE DESC";
+                var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id WHERE sys_hierarchy_group.GROUP_TYPE='" + info.GROUP_TYPE + "' ORDER BY CREATION_DATE DESC";
                 db.sequelize.query(query)
                     .success(function(result2) {
                         res.json({
