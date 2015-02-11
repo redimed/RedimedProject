@@ -53,4 +53,16 @@ angular.module("app.security",[
     //	}
     //})
     //END REGISTER
+
+    //REDIRECT
+    .state("security.redirect", {
+        url: "/redirect/:userId/:patient_id",
+        views: {
+            "main-content": {
+                template: "<div> Waitting </div>",
+                controller: "SecurityRedirectController"
+            }
+        }
+    })
+    //END REDIRECT    
 })

@@ -1,0 +1,101 @@
+<!--chien-->
+<!--phanquocchien.c1109g@gmail.com-->
+<style type="text/css">
+    .portlet.box > .portlet-title {
+        border-bottom: 1px solid white;
+        padding: 0px 10px;
+        margin-bottom: 0;
+        color: #fff;
+    }
+    .portlet.box.grey-cascade > .portlet-title > .caption {
+        color: white;
+    }
+    a {
+        text-shadow: none;
+        /*color: #ffffff;*/
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: #555;
+        cursor: default;
+        background-color: #fff;
+        border: none;
+        border-bottom-color: transparent;
+        border-top: 2px solid #F1310F;
+        font-weight: normal;
+    }
+    .rlob-tab-font-color{
+        color: white;
+    }
+    .nav-tabs > li > a, .nav-pills > li > a {
+        font-size: 14px;
+        height: 46px;
+    }
+
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="portlet box grey-cascade ng-scope">
+            <div class="portlet-title">
+                <div class="caption">
+                    <ul style="margin-bottom: -8px;border: none;" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report1)" role="tab" data-toggle="tab"> <i class="fa fa-cogs"></i>Upcomming booking</a></li>
+                        <li role="presentation"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report2)" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Pass booking</a></li>
+                        <!--<li  role="presentation"><a class="rlob-tab-font-color" ng-click="gotoReport(reportType.report3)" role="tab" data-toggle="tab"><i class="fa fa-cogs"></i> Outstanding Report </a></li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="tab-content">
+                    <div ui-view></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-show="selectedBooking" class="action">
+    <h2 style="margin:10px;">Selected Booking Info:</h2>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <rlob-change-document-status selected-document="selectedBooking" document-status-changed-flag="documentStatusChangedFlag"></rlob-change-document-status>
+            <accordion >
+                <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
+                    <accordion-heading>
+                        <h3 class="panel-title">Documents</h3>
+                    </accordion-heading>
+                    <div>
+                        <!--files-update-flag
+                        tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
+                        -->
+                        <rlob-file-download selected-booking="selectedBooking"
+                                            booking-type="bookingType"
+                                            is-admin-get-files="isAdminGetFiles"
+                                            files-update-flag="filesUpdateFlag"
+                                >
+                        </rlob-file-download>
+
+                        <rlob-upload
+                                selected-booking="selectedBooking"
+                                files-update-flag="filesUpdateFlag"
+                                is-admin-upload="isAdminUpload">
+                        </rlob-upload>
+
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="col-md-6 col-sm-6">
+
+            <rlob-change-booking-status selected-booking="selectedBooking" booking-status-changed-flag="bookingStatusChangedFlag"></rlob-change-booking-status>
+            <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+

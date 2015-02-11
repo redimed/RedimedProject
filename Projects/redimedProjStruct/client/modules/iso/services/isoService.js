@@ -319,5 +319,42 @@ angular.module('app.loggedIn.iso.service',[])
             }
         }
 
+        isoService.hierarchyApproval={
+            addHierarchyApprovalHeader:function(isoNodeId){
+                var result = api.all("iso/iso-hierarchy-approval/add-hierarchy-approval-header");
+                return result.post({isoNodeId:isoNodeId});
+            },
+
+            approval:function(approvalInfo)
+            {
+                var result = api.all("iso/iso-hierarchy-approval/approval");
+                return result.post({approvalInfo:approvalInfo});
+            },
+
+            getAllHierarchyLineForUser:function()
+            {
+                var result=api.one("iso/iso-hierarchy-approval/get-all-hierarchy-line-for-user");
+                return result.get();
+            },
+
+            
+            downloadFileCheckOutIn: function(nodeId,checkOutInId){
+                $window.location.href = '/api/iso/iso-hierarchy-approval/download-file-check-out-in?nodeId='+nodeId+'&checkOutInId='+checkOutInId;
+            },
+
+
+            sendEmailNotificationApprovalToNextNode:function(hierarchyLineId,hierarchyNodeId,isoNodeId,checkOutInId)
+            {
+                
+                var result = api.all("iso/iso-hierarchy-approval/send-email-notification-approval-to-next-node");
+                return result.post({
+                            hierarchyLineId:hierarchyLineId,
+                            hierarchyNodeId:hierarchyNodeId,
+                            isoNodeId:isoNodeId,
+                            checkOutInId:checkOutInId});
+            },
+      
+        }
+
         return isoService;
     })

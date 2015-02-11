@@ -1,0 +1,67 @@
+
+
+<div role="tabpanel" class="tab-pane">
+    <pagination total-items="totalItemsReport2"
+                ng-model="currentPageReport2"
+                max-size="maxSizeReport2"
+                class="pagination-sm"
+                boundary-links="true"
+                rotate="false"
+                items-per-page="itemsPerPageReport2"
+                ng-change="pagingHandlerStatusBookingHaveNotResult()">
+    </pagination>
+    <table class="table table-hover table-light">
+        <thead class="flip-content">
+        <tr>
+            <th ng-if="bookingType=='REDiLEGAL'">
+                CLAIM NO.
+            </th>
+            <th ng-if="bookingType=='Vaccination'">
+                EMPLOYEE NUMBER
+            </th>
+            <th>
+                SURNAME
+            </th>
+            <th>
+                TYPE
+            </th>
+            <th>
+                APPOINTMENT DATE
+            </th>
+        </tr>
+        <tr>
+            <td ng-if="bookingType=='REDiLEGAL'" >
+                <input class="form-control input-sm" type="text" ng-model="filterInfo1.ClaimNo" ng-change="initPagingReportStatusBookingHaveNotResult()">
+            </td>
+            <td ng-if="bookingType=='Vaccination'">
+                <input class="form-control input-sm" type="text" ng-model="filterInfo1.employeeNumber" ng-change="initPagingReportStatusBookingHaveNotResult()">
+            </td>
+            <td>
+                <input class="form-control input-sm" type="text" ng-model="filterInfo1.Surname" ng-change="initPagingReportStatusBookingHaveNotResult()">
+            </td>
+            <td>
+                <select class="form-control input-sm"
+                        ng-model="rlTypeSelected"
+                        ng-options="rltype.Rl_TYPE_NAME for rltype in rlTypeList"
+                        ng-change="initPagingReportStatusBookingHaveNotResult()">
+                    <option  value="">ALL</option>
+                </select>
+            </td>
+
+            <td>
+                <rlob-choose-period from-date="filterInfo1.FromAppointmentDate" to-date="filterInfo1.ToAppointmentDate"></rlob-choose-period>
+            </td>
+            <!-- END SEARCH -->
+        </tr>
+        </thead>
+        <tbody ng-repeat="booking2 in reportStatusBookingsList">
+        <tr ng-class='booking2.style_class' ng-click="setSelectedBooking(booking2.BOOKING_ID)">
+            <td ng-if="bookingType=='REDiLEGAL'"><label>{{booking2.CLAIM_NO}}</label></td>
+            <td ng-if="bookingType=='Vaccination'"><label>{{booking2.EMPLOYEE_NUMBER}}</label></td>
+            <td><label>{{booking2.WRK_SURNAME}}</label></td>
+            <td><label>{{booking2.Rl_TYPE_NAME}}</label></td>
+            <td><label>{{booking2.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

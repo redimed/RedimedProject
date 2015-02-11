@@ -68,9 +68,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
         $scope.currentPage=1;
         $scope.searchKeys={
             doctor:'',
-            weekOverdue:'',
-            claimNo:'',
-            employeeNumber:'',
+            location:'',
             surname:'',
             rltype:'',
             fromAppointmentDate:'',
@@ -85,7 +83,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
             rlobService.getCountReportPassBookingHaveNotResult($scope.bookingType,doctorId,$scope.searchKeys)
                 .then(function(data){
 //                    exlog.alert(data)
-                    $scope.totalItems=data.data[0].TOTAL_NUMBEROF_BOOKINGS;
+                    $scope.totalItems=data.data.TOTAL_NUMBEROF_BOOKINGS;
                     $scope.itemsPerPage=10;
                     $scope.maxSize=10;
                     return {bookingType:$scope.bookingType,doctorId:doctorId,pageIndex:$scope.currentPage,itemsPerPage:$scope.itemsPerPage,searchKeys:$scope.searchKeys}
@@ -93,8 +91,12 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
                 .then(rlobService.getItemsOfPageReportPassBookingHaveNotResult)
                 .then(function(data){
                     if(data.status=='success')
+                    {
                         $scope.reportPassBookingHaveNotResult=data.data;
-
+                    }
+                    else{
+                        $scope.reportPassBookingHaveNotResult = '';
+                    }
                 });
 
         }
@@ -111,7 +113,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
             }
             rlobService.getCountReportPassBookingHaveNotResult(info.bookingType,info.doctorId,info.searchKeys)
                 .then(function(data){
-                    $scope.totalItems=data.data[0].TOTAL_NUMBEROF_BOOKINGS;
+                    $scope.totalItems=data.data.TOTAL_NUMBEROF_BOOKINGS;
                     return info;
                 })
                 .then(rlobService.getItemsOfPageReportPassBookingHaveNotResult)

@@ -3,6 +3,52 @@
  */
 angular.module('app.loggedIn.iso.main.controller',[])
     .controller("isoMainController", function($scope,$http,$state,$window,$cookieStore,FileUploader,toastr,isoService) {      
+        $scope.testHierarchy=function()
+        {
+            // var submitInfo={
+            //     nodeId:112,
+            //     checkOutInId:69
+            // }
+            
+            // isoService.hierarchyApproval.addHierarchyApprovalHeader(submitInfo)
+            // .then(function(data){
+            //     var approvalInfo={
+            //         userApprovalId:1,
+            //         hierarchyHeaderId:199,
+            //         hierarchyLineId:377,
+            //         hierarchyNodeId:26,
+            //         sourceLineId:69,
+            //         status:'approved',
+            //         isoNodeId:11
+            //     }
+            //     isoService.hierarchyApproval.approval(approvalInfo)
+            //     .then(function(data){
+            //         exlog.alert(data);
+            //     },function(err){
+
+            //     })
+                
+            // },function(err){
+
+            // });
+            
+            var approvalInfo={
+                    userApprovalId:7,
+                    hierarchyHeaderId:199,
+                    hierarchyLineId:379,
+                    hierarchyNodeId:24,
+                    sourceLineId:69,
+                    status:'approved',
+                    isoNodeId:112
+                }
+                isoService.hierarchyApproval.approval(approvalInfo)
+                .then(function(data){
+                    exlog.alert(data);
+                },function(err){
+
+                })
+        }
+
         /***
         //Khoi tao cac bien can thiet
         //tannv.dts@gmail.com
@@ -486,40 +532,55 @@ angular.module('app.loggedIn.iso.main.controller',[])
             },function(err){
             })
         };
+
+        // $scope.SubmitDocument = function(){
+
+        //     isoService.checkOutIn.submitDocument($scope.selectedTreeNode.NODE_ID)
+        //     .then(function(data)
+        //     {
+        //         if(data.status=='success'){
+        //             msgPopup("Submit Document",isoConst.msgPopupType.success,"Submit Document Success");
+        //             $scope.selectedTreeNode.SUBMIT_STATUS=data.data.SUBMIT_STATUS;
+        //             $scope.selectedTreeNode.CHECK_IN_STATUS=data.data.CHECK_IN_STATUS;
+        //         }else{
+        //             msgPopup("Submit Document",isoConst.msgPopupType.error,"Submit Document Error");
+        //         }
+        //     },function(err){
+        //         msgPopup("Submit Document",isoConst.msgPopupType.error,"Submit Document Error");
+        //     });
+        // }
         $scope.SubmitDocument = function(){
-            //Giap Code
-            // isoService.checkOutIn.selectIdFromCheckOutIn($scope.selectedTreeNode.NODE_ID).then(function(data){
-            //     var info = {
-            //         ID :data.data[0].ID,
-            //         status:isoConst.submitStatus.pending
-            //     };
-            //     if(data.status == "success"){
-            //         isoService.checkOutIn.submitDocument(info).then(function(data){
-
-            //             if(data.status=='success'){
-            // 				msgPopup("Submit Document",isoConst.msgPopupType.success,"Submit Document Success");
-            // 			}else{
-            // 				msgPopup("Submit Document",isoConst.msgPopupType.error,"Submit Document Error");
-            // 			}
-            //         })
-            //     }else{
-            //         alert("Error")
-            //     }
-            // })
-
-            isoService.checkOutIn.submitDocument($scope.selectedTreeNode.NODE_ID)
-            .then(function(data)
-            {
+            
+            isoService.hierarchyApproval.addHierarchyApprovalHeader($scope.selectedTreeNode.NODE_ID)
+            .then(function(data){
                 if(data.status=='success'){
                     msgPopup("Submit Document",isoConst.msgPopupType.success,"Submit Document Success");
-                    $scope.selectedTreeNode.SUBMIT_STATUS=data.data.SUBMIT_STATUS;
-                    $scope.selectedTreeNode.CHECK_IN_STATUS=data.data.CHECK_IN_STATUS;
+                    $scope.selectedTreeNode.SUBMIT_STATUS=isoConst.submitStatus.pending;
+                    $scope.selectedTreeNode.CHECK_IN_STATUS=isoConst.checkInStatus.lock;
                 }else{
                     msgPopup("Submit Document",isoConst.msgPopupType.error,"Submit Document Error");
                 }
+                // var approvalInfo={
+                //     userApprovalId:1,
+                //     hierarchyHeaderId:199,
+                //     hierarchyLineId:377,
+                //     hierarchyNodeId:26,
+                //     sourceLineId:69,
+                //     status:'approved',
+                //     isoNodeId:11
+                // }
+                // isoService.hierarchyApproval.approval(approvalInfo)
+                // .then(function(data){
+                //     exlog.alert(data);
+                // },function(err){
+
+                // })
+                
             },function(err){
                 msgPopup("Submit Document",isoConst.msgPopupType.error,"Submit Document Error");
             });
+
+            
         }
 
         $scope.cancelSubmitDocument=function()

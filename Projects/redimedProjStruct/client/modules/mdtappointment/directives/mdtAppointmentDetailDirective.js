@@ -9,10 +9,11 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 		},
 		templateUrl: 'modules/mdtappointment/directives/templates/detail.html',
 		link: function(scope, element, attrs){
-			console.log(scope.options)
 			var init = function(){
 				scope.isSubmit = false;
-				if(scope.params.permission.edit === true){
+				console.log(scope);
+
+				if(scope.params.permission.edit === true && scope.params.id !== '0'){
 					mdtAppointmentService.byId(scope.params.id).then(function(response){
 						if(response.status == 'error') 
 							toastr.error('Error Get Detail', 'Error');

@@ -105,6 +105,13 @@ var isoConst={
     checkInStatus:{
         lock:'LOCK',
         unlock:'UNLOCK'
+    },
+
+    hierarchyApprovalStatus:{
+        notYetReview:'not underReviewyet review',
+        underReview:'under review',
+        approved:'approved',
+        rejected:'rejected'
     }
 };
 

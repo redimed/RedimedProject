@@ -1,0 +1,88 @@
+<ion-view name="Injury">
+    <div class="bg-list"></div>
+
+    <ion-nav-buttons side="left">
+         <button menu-toggle="left" class="button button-icon icon ion-navicon  waves-effect waves-light " style="color:#fff"></button>
+         <a class="button button-icon icon" ui-sref="app.driver.mapsPickup" style="color:#fff"><i class="mdi-maps-pin-drop"></i></a>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+       <a menu-toggle="right" class="button button-icon  waves-effect waves-light" style="color:#fff">
+            <i class="mdi-communication-quick-contacts-dialer small"></i>
+        </a>
+    </ion-nav-buttons>
+
+
+    <ion-content style="z-index: 9999">
+        <div class="item-input-inset">
+            <label class="item-input-wrapper" style="background-color: rgba(127, 140, 141, 0.8); color: whitesmoke !important;">
+                <i class="icon ion-ios7-search placeholder-icon"></i>
+                <input type="search" placeholder="Search" ng-model="searchText">
+            </label>
+        </div>
+
+        <ion-list>
+            <!--<a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS)"-->
+            <!--class="item item-avatar custom-item-listpatient"-->
+            <!--ng-repeat="listPatient in lstPatient | filter: searchText"-->
+            <!--ng-class="{'waiting': listPatient.STATUS == 'Waiting', 'done': listPatient.STATUS == 'Done'}">-->
+            <!--<div class="padding fLeft">-->
+            <!--<div ng-class="{'img-image-name': listPatient}" ng-style={"background-color":listPatient.background}>-->
+            <!--{{listPatient.letter}}-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="padding lstinjury-div-info" ng-class="{'new':listPatient.STATUS == 'New'}">-->
+            <!--<div>-->
+            <!--<h2>{{listPatient.Title}}. {{listPatient.First_name}} {{listPatient.Sur_name}} {{listPatient.Middle_name}}</h2>-->
+            <!--<span class="text-right fRight">-->
+            <!--<i class="icon ion-ios7-arrow-right"></i>-->
+            <!--</span>-->
+            <!--</div>-->
+
+            <!--<p class="lstinjury-address">-->
+            <!--<i class="icon ion-ios7-location-outline"></i> - {{listPatient.pickup_address}}-->
+            <!--</p>-->
+
+            <!--<p>-->
+            <!--<i class="icon ion-ios7-telephone-outline"></i> - {{listPatient.Mobile}}-->
+            <!--</p>-->
+            <!--</div>-->
+            <!--</a>-->
+
+            <a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS, listPatient.background, listPatient.letter)"
+               class="item item-avatar custom-item-listpatient"
+               ng-repeat="listPatient in lstPatient | filter: searchText"
+               ng-class="{'new': listPatient.STATUS == 'New', 'waiting': listPatient.STATUS == 'Waiting'}" style="margin: 10px;" ng-hide="listPatient.STATUS == 'Done'">
+                <div class="padding fLeft">
+                    <div ng-class="{'img-image-name': listPatient}" ng-style={"background-color":listPatient.background}>
+                        {{listPatient.letter}}
+                    </div>
+                </div>
+                <div class="padding">
+                    <div>
+                        <h2 style="line-height: 2; font-size: 19px">{{listPatient.Title}}<span ng-show="listPatient.Title != null">.</span> {{listPatient.First_name}} {{listPatient.Sur_name}} {{listPatient.Middle_name}}</h2>
+                        <span class="text-right fRight">
+                            <i class="icon ion-ios7-arrow-right"></i>
+                        </span>
+                    </div>
+
+                    <p class="lstinjury-address">
+                        <i class="icon ion-ios7-location"></i> - {{listPatient.pickup_address}}
+                    </p>
+
+                    <p>
+                        <i class="icon ion-ios7-telephone"></i> - {{listPatient.Mobile}}
+                    <span ng-class="{'span-new': listPatient.STATUS == 'New'}" ng-show="listPatient.STATUS == 'New'">
+                        new
+                    </span>
+
+                    <span ng-class="{'span-waiting': listPatient.STATUS == 'Waiting'}" ng-show="listPatient.STATUS == 'Waiting'">
+                        waiting
+                    </span>
+
+                    </p>
+                </div>
+            </a>
+        </ion-list>
+    </ion-content>
+</ion-view>

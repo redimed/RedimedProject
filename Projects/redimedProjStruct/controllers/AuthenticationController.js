@@ -188,5 +188,16 @@ module.exports = {
         else
             next();
     }
+    // ,
+    // loggedIn: function(req,res){
+    //     var username = req.body.username;
+    //     db.User.find({where:{user_name: username}},{raw:true})
+    //         .success(function(data){
+    //             req.isAuthenticated() ? res.json(data) : res.json(null);
+    //         })
+    //         .error(function(err){
+    //             console.log(err);
+    //         })
+    // }
 
 };

@@ -22,7 +22,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         }
 
         // INIT INVOICE
-        PatientService.initAppointment($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+        PatientService.initInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
         // END INIT INVOICE 
 
         ReceptionistService.apptDetail( $scope.appointment.CAL_ID)
@@ -83,7 +83,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
         })
         // GET FEE OF ITEM 
         .then( function( response ){
-	     if(!response.list) return; 
+	     if(!response || !response.list) return; 
 	 		var list_fee = response.list;
 	 		angular.forEach($scope.deptItems, function(cat, key) {
 	 			angular.forEach(cat.items, function(item, key) {
@@ -198,7 +198,7 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                 console.log(response);
                 if(response.status === 'success'){
                     toastr.success('Save successfully!','Success!');
-                    PatientService.endAppointment($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
                 }
                 else{
                     toastr.error('Save failed!','Error!');

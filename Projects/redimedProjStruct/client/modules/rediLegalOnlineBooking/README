@@ -30,7 +30,7 @@ documentStatus:{
 
 /*
 //phanquocchien.c1109g@gmail.com
-//quy dinh mau sac trang admin-booking-report-type1.html
+//quy dinh mau sac trang admin-booking-report-type1.html(upcomming booking)
 - yellow : 'Not confirmed',
 - red : 'No documents',
 - blue : 'Checked'

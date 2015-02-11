@@ -48,9 +48,10 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
          * phanquocchien.c1109g@gmail.com
          */
         $scope.filterInfo1 = {
-            ClaimNo:'',
             Surname:'',
+            Location:'',
             Type:'',
+            Doctor:'',
             employeeNumber:'',
             FromAppointmentDate:'',
             ToAppointmentDate:''
@@ -76,21 +77,6 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
 
                     if(data.status == 'success')
                     {
-                        for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].STTTABLE == 1){
-                                data.data[i].style_class = "warning";
-                            }
-                            else{
-                                if(data.data[i].STTTABLE == 2){
-                                    if(data.data[i].STATUS == $scope.status){
-                                        data.data[i].style_class = "danger";
-                                    }
-                                    else{
-                                        data.data[i].style_class = "info";
-                                    }
-                                }
-                            }
-                        }
                         $scope.reportStatusBookingsList= data.data;
                     }
                     else{
@@ -125,21 +111,6 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
 
                     if(data.status == 'success')
                     {
-                        for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].STTTABLE == 1){
-                                data.data[i].style_class = "warning";
-                            }
-                            else{
-                                if(data.data[i].STTTABLE == 2){
-                                    if(data.data[i].STATUS == $scope.status){
-                                        data.data[i].style_class = "danger";
-                                    }
-                                    else{
-                                        data.data[i].style_class = "info";
-                                    }
-                                }
-                            }
-                        }
                         $scope.reportStatusBookingsList= data.data;
                     }
                 })

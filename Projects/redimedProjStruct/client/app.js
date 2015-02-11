@@ -56,7 +56,7 @@ angular.module("app", [
 
     return socketFactory;
 })
-.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider) {
+.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider, $locationProvider) {
     // CORS PROXY
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -66,6 +66,8 @@ angular.module("app", [
     $idleProvider.idleDuration(30*60);
     $idleProvider.warningDuration(30);
     $keepaliveProvider.interval(30*60);
+
+    // $locationProvider.html5Mode(true);
 
     // RESTANGULAR DEFAULT
     RestangularProvider.setBaseUrl("");
@@ -120,6 +122,18 @@ angular.module("app", [
                 }
             }
         })
+
+    .state('renderCall',{
+            url:'/renderCall',
+            views:{
+                "root":{
+                   templateUrl: "common/views/renderCall.html",
+                    controller:'renderCall'
+                }
+            }
+
+        })
+
     /* END */
 })
 
@@ -128,42 +142,14 @@ angular.module("app", [
 
     easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
 
-
-
-    $idle.watch();
-    // Use when update any state
-
-        $rootScope.jsErrors = [];
-        $window.onerror = function (message, url, lineNo) {
-            $rootScope.jsErrors.push({
-                error:message,
-                url: url,
-                lineNumber: lineNo
-            });
-            return true;
+    socket.on('reconnect',function(){
+        if($cookieStore.get("userInfo"))
+        {
+            socket.emit("reconnected",$cookieStore.get("userInfo").id);
         }
+    })
 
-    editableOptions.theme = 'bs3';
-
-    if($cookieStore.get("userInfo"))
-    {
-        socket.emit("checkApp",$cookieStore.get("userInfo").id);
-    }
-
-    if (!("Notification" in window)) {
-        alert("This browser does not support desktop notification");
-    }
-    else if (Notification.permission !== 'denied') {
-        Notification.requestPermission(function (permission) {
-            if (!('permission' in Notification)) {
-                Notification.permission = permission;
-            }
-        });
-    }
-
-    socket.on("isLoggedIn",function(){
-        toastr.error("Your Account Is Already Logged In!");
-
+    socket.on('reconnect_failed',function(){
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
@@ -173,18 +159,57 @@ angular.module("app", [
         socket.removeAllListeners();
     })
 
+    // socket.on("isLoggedIn",function(){
+    //     toastr.error("Your Account Is Already Logged In!");
 
+    //     $cookieStore.remove("userInfo");
+    //     $cookieStore.remove("companyInfo");
+    //     $cookieStore.remove("doctorInfo");
+    //     $cookieStore.remove("fromState");
+    //     $state.go("security.login",null,{location: "replace", reload: true});
+
+    //     socket.removeAllListeners();
+    // })
+
+
+    $idle.watch();
+
+    $rootScope.jsErrors = [];
+    $window.onerror = function (message, url, lineNo) {
+        $rootScope.jsErrors.push({
+            error:message,
+            url: url,
+            lineNumber: lineNo
+        });
+        return true;
+    }
+
+    editableOptions.theme = 'bs3';
+
+    if($cookieStore.get("userInfo"))
+    {
+        socket.emit("reconnected",$cookieStore.get("userInfo").id);
+    }
+
+    if (!("Notification" in window)) {
+        // alert("This browser does not support desktop notification");
+    }
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+            if (!('permission' in Notification)) {
+                Notification.permission = permission;
+            }
+        });
+    }
 
     $rootScope.$on("$locationChangeSuccess",function(event, current,previous){
-
         if(current === previous)
         {
             if($cookieStore.get("userInfo")){
-                socket.emit("checkApp",$cookieStore.get("userInfo").id);
+                socket.emit("reconnected",$cookieStore.get("userInfo").id);
             }
         }
     })
-
 
     $rootScope.$on("$locationChangeStart",function(event, next, current){
         if (easyrtc.webSocket) {
@@ -195,11 +220,21 @@ angular.module("app", [
     });
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
+
+        var locationHref = location.href;
+        if(locationHref.indexOf('fromMobile=true') != -1)
+        {
+             e.preventDefault();
+             return;
+        }
         $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
         if(!$cookieStore.get("userInfo") ){
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register"){
+            if(toState.name !== "security.forgot"
+             && toState.name !== "security.login"
+              && toState.name !== "security.register"
+               && toState.name !== "security.redirect"){
                 e.preventDefault();
                 $state.go("security.login",null,{location: "replace", reload: true});
             }

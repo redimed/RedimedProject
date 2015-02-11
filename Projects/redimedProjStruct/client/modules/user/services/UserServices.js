@@ -4,7 +4,7 @@ angular.module("app.loggedIn.user.services", [])
     var userService = {};
     var userApi = Restangular.all("api");
 
-    userService.detail = function(){
+    userService.detail = function(username){
         var detailApi = userApi.one("users/loggedin");
         return detailApi.get();
     }

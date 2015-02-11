@@ -18,7 +18,7 @@ angular.module("app.loggedIn.company.list.controller", [])
             {field: 'Company_name', label: 'Company Name'},
             {field: 'Industry'},
             {field: 'Addr', label: 'Address'},
-            {field: 'Country'},
+            {db_field: 'companies.country' ,field: 'country', label:'Country'},
             {db_field: 'insurers.insurer_name', field: 'insurer_name', label: 'Insurer'}
         ],
         show_index: true,

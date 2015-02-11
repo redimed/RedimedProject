@@ -14,71 +14,60 @@
     <table class="table table-responsive table-hover">
         <thead>
         <tr>
-            <th>Doctor </th>
-            <th>Week overdue</th>
-            <th ng-if="bookingType=='REDiLEGAL'">
-                Claim No.
-                <!--<rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+            <th class="col-md-2 col-sm-2">
+                SURNAME
             </th>
-            <th ng-if="bookingType=='Vaccination'">
-                Employee number
-                <!--<rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+            <th class="col-md-2 col-sm-2">
+                LOCATION
             </th>
-            <th>
-                Surname
-                <!--<rlob-order-by field-name="WRK_SURNAME" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+            <th class="col-md-2 col-sm-2">
+                TYPE
             </th>
-            <th>
-                Type
-                <!--<rlob-order-by field-name="Rl_TYPE_NAME" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+            <th class="col-md-2 col-sm-2">
+                DOCTOR
             </th>
-            <th>
-                Appointment Date
-                <!--<rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>-->
+            <th class="col-md-2 col-sm-2">
+                APPOINTMENT DATE
             </th>
-
+            <th class="col-md-2 col-sm-2">
+                COMPLETED
+            </th>
         </tr>
         <tr>
-            <td>
-                <input class="form-control input-sm" type="text" ng-model="searchKeys.doctor" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
-            </td>
-            <td>
-                <input class="form-control input-sm" type="text" ng-model="searchKeys.weekOverdue" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
-            </td>
-            <td ng-if="bookingType=='REDiLEGAL'">
-                <input class="form-control input-sm" type="text" ng-model="searchKeys.claimNo" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
-            </td>
-            <td ng-if="bookingType=='Vaccination'">
-                <input class="form-control input-sm" type="text" ng-model="searchKeys.employeeNumber" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
-            </td>
-            <td>
+            <td class="col-md-2 col-sm-2">
                 <input class="form-control input-sm" type="text" ng-model="searchKeys.surname" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
             </td>
-            <td ng-show="bookingType=='REDiLEGAL'" >
+            <td class="col-md-2 col-sm-2">
+                <input class="form-control input-sm" type="text" ng-model="searchKeys.location" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
+            </td>
+            <td class="col-md-2 col-sm-2">
                 <select class="form-control input-sm"
                         ng-model="rlTypeSelected"
                         ng-options="rltype.Rl_TYPE_NAME for rltype in rlTypeList"
                         ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
-                    <option  value=""></option>
+                    <option  value="">ALL</option>
                 </select>
             </td>
-            <td>
-                <!--<input class="form-control input-sm" type="text" ng-model="searchKeys.surname" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">-->
+            <td class="col-md-2 col-sm-2">
+                <input class="form-control input-sm" type="text" ng-model="searchKeys.doctor" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)">
+            </td>
+            <td class="col-md-2 col-sm-2">
                 <rlob-choose-period from-date="searchKeys.fromAppointmentDate" to-date="searchKeys.toAppointmentDate"></rlob-choose-period>
+            </td>
+            <td class="col-md-2 col-sm-2">
+                <!-- <input class="form-control input-sm" type="text" ng-model="searchKeys.complete" ng-change="initPagingReportPassBookingHaveNotResult(doctorId)"> -->
             </td>
         </tr>
 
         </thead>
         <tbody>
         <tr ng-repeat="booking in reportPassBookingHaveNotResult"  style="cursor: pointer;" ng-click="setSelectedBooking(booking.BOOKING_ID)">
-            <td>{{booking.NAME}}</td>
-            <td>{{booking.WEEK_OVERDUE}}</td>
-            <td ng-if="bookingType=='REDiLEGAL'">{{booking.CLAIM_NO}}</td>
-            <td ng-if="bookingType=='Vaccination'">{{booking.EMPLOYEE_NUMBER}}</td>
-            <td>{{booking.WRK_SURNAME}}</td>
-            <td>{{booking.Rl_TYPE_NAME}}</td>
-            <td>{{booking.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
-
+            <td class="col-md-2 col-sm-2">{{booking.WRK_SURNAME}}</td>
+            <td class="col-md-2 col-sm-2">{{booking.Site_name}}</td>
+            <td class="col-md-2 col-sm-2">{{booking.Rl_TYPE_NAME}}</td>
+            <td class="col-md-2 col-sm-2">{{booking.NAME}}</td>
+            <td class="col-md-2 col-sm-2">{{booking.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+            <td class="col-md-2 col-sm-2">{{booking.STATUS}}</td>
         </tr>
         </tbody>
     </table>

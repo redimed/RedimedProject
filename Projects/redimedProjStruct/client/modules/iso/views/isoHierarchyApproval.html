@@ -1,0 +1,68 @@
+<style type="text/css">
+    .form-group .help-block {
+      display: none;
+    }
+     
+    .form-group.has-error .help-block {
+      display: block;
+    }
+</style>
+<h2 id="demo1">QMS Hierarchy Approval Documents</h2>
+
+
+<div class="tree well">
+
+    <script type="text/ng-template" id="nodes_hierarchy_approval.html">
+        <span ng-class="{iso_hierarchy_approved_line:node.STATUS==hierarchyApprovalStatus.approved,iso_hierarchy_underreview_line:node.STATUS==hierarchyApprovalStatus.underReview,iso_hierarchy_rejected_line:node.STATUS==hierarchyApprovalStatus.rejected}">
+                <!-- <i ng-if="node.nodes" class="fa fa-minus"></i> -->
+                {{node.HIERARCHY_NODE_DESC}} <i>review<i> {{node.DOCUMENT_NAME}} (submit on:{{node.SUBMIT_DATE|date:'dd/MM/yyyy HH:mm:ss'}}, status:{{node.STATUS}})
+        </span>
+        <a class="iso_hierarchy_action_button" ng-show="node.STATUS==hierarchyApprovalStatus.underReview && node.THIS_NODE " ng-click="downloadFile(node)">Download</a>    
+        <a class="iso_hierarchy_action_button" ng-show="node.STATUS==hierarchyApprovalStatus.underReview && node.THIS_NODE " ng-click="approved(node)">Approved</a>    
+        <a class="iso_hierarchy_action_button" ng-show="node.STATUS==hierarchyApprovalStatus.underReview && node.THIS_NODE " ng-click="rejected(node)">Rejected</a>    
+
+        <ul>
+            <li ng-repeat="(key,node) in node.nodes"  ng-include="'nodes_hierarchy_approval.html'">
+            </li>
+        </ul>
+    </script>
+
+    <ul>
+        <li ng-show='node.SUBMIT_STATUS==submitStatus.pending' ng-repeat="(key,node) in hierarchyApprovalTree"  ng-include="'nodes_hierarchy_approval.html'">
+        </li>
+    </ul>
+</div>
+
+
+<div id="iso-global-msg-popup" class="modal fade">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><div class="iso-global-msg-popup-header"></div></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+
+                        <!--<span  class="label" ng-class="{'label-success':status=='success','label-warning':status=='fail'}">-->
+                        <!--{{msg}}-->
+                        <!--</span>-->
+
+                        <div  class="alert alert-success iso-global-msg-popup-success" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                        <div class="alert alert-danger iso-global-msg-popup-error" role="alert">
+                            <div class='iso-global-msg-popup-content'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

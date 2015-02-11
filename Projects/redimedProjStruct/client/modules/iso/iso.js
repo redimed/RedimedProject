@@ -15,7 +15,8 @@ angular.module('app.loggedIn.iso',
         ,'app.loggedIn.isoSubmitStatusPendingController.controller'
         ,'app.loggedIn.iso.userGroup.controller'
         ,'app.loggedIn.iso.isoApproverListController.controller'
-        ,'app.loggedIn.iso.isoAdminController.controller'])
+        ,'app.loggedIn.iso.isoAdminController.controller'
+        ,'app.loggedIn.isoHierarchyApprovalController.controller'])
     .config(function($stateProvider){
         $stateProvider
             .state("loggedIn.iso",{
@@ -57,5 +58,10 @@ angular.module('app.loggedIn.iso',
                 url:'/isoAdminList',
                 templateUrl:"modules/iso/views/isoAdminList.html",
                 controller:"isoAdminController"
+            })
+            .state("loggedIn.iso.isoHierarchyApproval",{
+                url:'/hierarchy-approval',
+                templateUrl:"modules/iso/views/isoHierarchyApproval.html",
+                controller:"isoHierarchyApprovalController"
             })
     });

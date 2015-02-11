@@ -3,6 +3,11 @@ angular.module("app.security.services", [])
 .factory("SecurityService", function(Restangular){
     var securityService = {};
     var securityApi = Restangular.all("api");
+    var restfulApi = Restangular.all("api/restful");    
+
+    securityService.getSocket = function(socket){
+        return restfulApi.one("User").get({SOCKET: socket});
+    }
 
     securityService.login = function(options){
         var loginApi = securityApi.all("users/login");
