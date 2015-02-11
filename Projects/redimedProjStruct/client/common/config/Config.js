@@ -428,6 +428,11 @@ angular.module('app.config', [])
         return postfix + ' ' + prefix;
     }
 
+    configService.convertStringToDate = function(dateTime){
+        var newDate = new Date(dateTime.substr(0,4),dateTime.substr(5,2)-1,dateTime.substr(8,2),dateTime.substr(11,2),dateTime.substr(14,2));
+        return newDate;
+    }
+
 	/*
 	*	END DATE TIME FUNCTION 
 	*/
