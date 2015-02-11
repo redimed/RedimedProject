@@ -267,6 +267,12 @@ module.exports = {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
 		var header = null;
+
+		var err_handle = function(err){
+			console.log('ERROR: ', err)
+			res.json({"status": "error"});
+		};
+
 		db.mdtInvoiceHeader.find({
 			where: {header_id: header_id},
 			include: [
@@ -304,27 +310,25 @@ module.exports = {
 		}).then(function(updated){
 			// SEND TO ERP
 
-			ERP_REST.push_customer(header).then(function(response){
+			// send patient 
+			ERP_REST.push_customer(header)
+			.then(function(response){
 				response.data = JSON.parse(response.data);
 				if(response.data.APEX_STATUS == 'success') {
+					// send item 
 					ERP_REST.push_items(header).then(function(response){
-						res.json({"status": "success", "data": response});
-					}, function(err){
-						console.log('ERROR: ', err)
-						res.json({"status": "error", "message": err});
-					})
+						// send invoice
+						ERP_REST.push_invoice(header).then(function(response){
+							res.json({"status": "success", "data": response});
+						}, err_handle)
+					}, err_handle)
 				} else {
 					res.json({"status": "error", "message": 'Can not push customer to ERP !!!'});
 				}
-			}, function(err){
-				res.json({err: err})
-			})
+			}, err_handle)
 			// END SEND TO ERP
 			
-		}).error(function(error){
-			console.log(error)
-			res.json(500, {"status": "error", "message": error});
-		});
+		}).error(err_handle);
 	},
 
 	getTest: function (req, res) {
