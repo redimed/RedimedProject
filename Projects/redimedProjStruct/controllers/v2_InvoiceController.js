@@ -299,7 +299,7 @@ module.exports = {
 			]
 		}).then(function(iheader){
 			header = iheader;
-			if(!header || !header.lines) {
+			if(!header || !header.lines || header.lines.length == 0) {
 				res.json(500, {"status": "error", "message": 'Missing header / lines'});
 				return;
 			}
@@ -308,8 +308,13 @@ module.exports = {
 	            header_id: header_id
 	        });
 		}).then(function(updated){
-			// SEND TO ERP
 
+			if(inv_status !== 'done') {
+				res.json({"status": "success"});
+				return;
+			}
+
+			// SEND TO ERP
 			// send patient 
 			ERP_REST.push_customer(header)
 			.then(function(response){
