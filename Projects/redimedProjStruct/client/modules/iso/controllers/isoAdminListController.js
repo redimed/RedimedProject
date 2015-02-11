@@ -1,6 +1,8 @@
 angular.module('app.loggedIn.iso.isoAdminController.controller',[])
     .controller("isoAdminController", function($scope,$http,$state,$window,$cookieStore,toastr,isoService) {      
         var msgPopup=isoMsg.popup;
+        $scope.userName=$cookieStore.get('userInfo').user_name;
+        console.log($scope.userName);
         $scope.adminList= {};
         /**
          * phanquocchien.c1109g@gmail.com
@@ -88,6 +90,14 @@ angular.module('app.loggedIn.iso.isoAdminController.controller',[])
           		$("#iso-admin-edit-list-popup").modal('hide');
           	}
 	        
+          }
+          $scope.deleteAdmin = function(id){
+            // alert(id);
+            isoService.isoAdmin.deleteAdminUser(id).then(function(data){
+              if (data.status == 'success') {
+                $scope.getAdminList();
+              };
+            });
           }
     })
 

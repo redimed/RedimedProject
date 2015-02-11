@@ -76,6 +76,7 @@ app.post('/api/iso/iso-admin/check-is-admin-iso-system-master',isoController.che
 app.get('/api/iso/iso-admin/getAdminList',isoAdminController.getAdminList);
 app.post('/api/iso/iso-admin/insertNewUserToAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.insertNewUserToAdmin);
 app.post('/api/iso/iso-admin/updateEnableAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.updateEnableAdmin);
+app.post('/api/iso/iso-admin/deleteAdmin',isoController.checkAdminIsoSystemMaster,isoAdminController.deleteAdmin);
 
 //isoUserGroupController
 app.get('/api/iso/iso-user-group/access-user-group-page',isoController.checkAdminIsoSystem,isoUserGroupController.accessUserGroupPage);
@@ -86,6 +87,7 @@ app.post('/api/iso/iso-user-group/add-group',isoController.checkAdminIsoSystem,i
 app.post('/api/iso/iso-user-group/get-user-in-group',isoController.checkAdminIsoSystem,isoUserGroupController.getUsersInGroup);
 app.post('/api/iso/iso-user-group/update-group-item-info',isoController.checkAdminIsoSystem,isoUserGroupController.updateGroupItemInfo);
 app.post('/api/iso/iso-user-group/add-group-item',isoController.checkAdminIsoSystem,isoUserGroupController.addGroupItem);
+app.post('/api/iso/iso-user-group/delete-group-item',isoController.checkAdminIsoSystem,isoUserGroupController.deleteGroupItem);
 
 //iso Approver 
 app.get('/api/iso/iso-approver/getApproverList',isoApproverController.getApproverList);
@@ -96,6 +98,6 @@ app.get('/api/iso/iso-approver/check-is-iso-approver',isoController.checkIsoAppr
 //isoHierarchyApprovalController
 app.post('/api/iso/iso-hierarchy-approval/add-hierarchy-approval-header',isoController.checkHierarchyIsoApprover,isoHierarchyApprovalController.checkCanSubmitDocument,isoHierarchyApprovalController.submitDocument,isoHierarchyApprovalController.addHierarchyApprovalHeader);
 app.post('/api/iso/iso-hierarchy-approval/approval',isoHierarchyApprovalController.approval);
-app.get('/api/iso/iso-hierarchy-approval/get-all-hierarchy-line-for-user',isoHierarchyApprovalController.getAllHierarchyLineForUser);
+app.get('/api/iso/iso-hierarchy-approval/get-all-hierarchy-line-for-user',isoController.checkHierarchyIsoApprover,isoHierarchyApprovalController.getAllHierarchyLineForUser);
 app.get('/api/iso/iso-hierarchy-approval/download-file-check-out-in',isoController.checkHierarchyIsoApprover,isoHierarchyApprovalController.downloadFileCheckOutIn);
 app.post('/api/iso/iso-hierarchy-approval/send-email-notification-approval-to-next-node',isoHierarchyApprovalController.sendEmailNotificationApprovalToNextNode);

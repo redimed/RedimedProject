@@ -7,7 +7,7 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
                 data.data.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
                 data.data.WRK_DATE_OF_INJURI != null?$scope.info.WRK_DATE_OF_INJURI_TEMP = new Date(data.data.WRK_DATE_OF_INJURI):$scope.info.WRK_DATE_OF_INJURI_TEMP = null;
                 data.data.EX_DATE != null?$scope.info.EX_DATE_TEMP = new Date(data.data.EX_DATE):$scope.info.EX_DATE_TEMP = null;
-                data.data.DT_DATE != null?$scope.info.DT_DATE_TEMP = new Date(data.data.DT_DATE):$scope.info.DT_DATE_TEMP = null;
+                data.data.DT_DATE != null?$scope.info.DT_DATE_TEMP = new Date(data.data.DT_DATE):$scope.info.DT_DATE_TEMP = new Date();
                 console.log(data.data);
                 console.log("update a5:"+$scope.updateAMS5);
                 console.log($scope.info);
@@ -17,11 +17,13 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
                 $scope.insertAMS5 = true;
                     rlobService.getBookingDoctorCompany(rlobService.bookingInfoPaperless.id).then(function(data){
                         if (data.status == "success") {
+                            console.log(data.data);
                             $scope.info.WRK_NAME = data.data.WRK_SURNAME +" "+data.data.WRK_OTHERNAMES;
-                            $scope.info.WRK_DATE_OF_BIRTH_TEMP = data.data.WRK_DATE_OF_BIRTH;
+                            data.data.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
+                            // $scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH);
                             $scope.info.WRK_PHONE = data.data.WRK_PHONE;
                             $scope.info.WRK_EMAIL = data.data.WRK_EMAIL;
-                            $scope.info.WRK_DESCRIPTION_OF_INJURI = data.data.WRK_DESCRIPTION_OF_INJURI;
+                            // $scope.info.WRK_DATE_OF_INJURI_TEMP = new Date(data.data.WRK_DESCRIPTION_OF_INJURI);
                             $scope.info.EMP_ORGANISATION_NAME = data.data.EMP_ORGANISATION_NAME;
                             $scope.info.EMP_POSTCODE = data.data.EMP_POSTCODE;
                             $scope.info.EMP_ADDRESS_1 = data.data.EMP_ADDRESS_1;

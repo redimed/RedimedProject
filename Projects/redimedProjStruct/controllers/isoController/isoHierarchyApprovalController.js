@@ -430,8 +430,8 @@ var sendEmailNotificationApprovalToNextNode=function(req,res)
                                     listEmail +=item.Contact_email+','
                                 })
                                 var mailInfo = {
-                                    senders:"REDiMED <healthscreenings@redimed.com.au>",
-                                    // senders:"REDiMED <tannv.solution@gmail.com>",
+                                    // senders:"REDiMED <healthscreenings@redimed.com.au>",
+                                    senders:"REDiMED <tannv.solution@gmail.com>",
                                     recipients:listEmail,
                                     subject:hierarchyNodeDesc+': Approval Document '+isoNodeName,
                                     htmlBody:
@@ -742,10 +742,22 @@ module.exports =
 		});
 	},
 
+    /**
+     * Lay danh sach cac hierarchy_line trong cung 1 department cho approver
+     * tannv.dts@gmail.com
+     */
 	getAllHierarchyLineForUser:function(req,res)
 	{
 		var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        //var isoHierarchyApproverInfo=isoUtil.checkData(req.query.isoHierarchyApproverInfo)?req.query.isoHierarchyApproverInfo:{};
+        //var userLoginDepartmentId=isoUtil.checkData(isoHierarchyApproverInfo.DEPARTMENT_CODE_ID)?isoHierarchyApproverInfo.DEPARTMENT_CODE_ID:'';
+        if(!isoUtil.checkListData([userId]))
+        {
+            isoUtil.exlog("getAllHierarchyLineForUser","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
         var sql=
         	" SELECT hline.*,temp1.DEPARTMENT_CODE_ID,hnode.`NODE_CODE`,hnode.`DECRIPTION` AS HIERARCHY_NODE_DESC,                                                          "+
 			" treedir.`NODE_NAME` AS DOCUMENT_NAME,outin.`SUBMIT_STATUS`,hu2.`NODE_ID` AS THIS_NODE,                                                                        "+
@@ -768,7 +780,25 @@ module.exports =
 			" )                                                                                                                                                             "+
 			" AND outin.`SUBMIT_STATUS`='PENDING'                                                                                                                           "+
 			" ORDER BY hline.`APPR_HEADER_ID` ASC, `APPR_ORDER` ASC                                                                                                         ";	
-		req.getConnection(function(err,connection)
+		
+        /*var sql=
+            " SELECT hline.*,temp1.DEPARTMENT_CODE_ID,hnode.`NODE_CODE`,hnode.`DECRIPTION` AS HIERARCHY_NODE_DESC,                                                       "+   
+            " treedir.`NODE_NAME` AS DOCUMENT_NAME,outin.`SUBMIT_STATUS`,hu2.`NODE_ID` AS THIS_NODE,                                                                     "+   
+            " outin.SUBMIT_DATE                                                                                                                                          "+
+            " FROM `sys_hierarchy_approval_lines` hline                                                                                                                  "+   
+            " INNER JOIN `iso_check_out_in` outin ON hline.`SOURCE_LINE_ID`=outin.`ID`                                                                                   "+   
+            " INNER JOIN `iso_tree_dir` treedir ON hline.`SOURCE_HEADER_ID`=treedir.`NODE_ID`                                                                            "+   
+            " INNER JOIN `sys_hierarchy_nodes` hnode ON hline.`NODE_ID`=hnode.`NODE_ID`                                                                                  "+   
+            " INNER JOIN                                                                                                                                                 "+   
+            " (SELECT DISTINCT hline.`CREATED_BY`, huser.`DEPARTMENT_CODE_ID`                                                                                            "+   
+            " FROM `sys_hierarchy_approval_lines` hline                                                                                                                  "+   
+            " INNER JOIN `sys_hierarchies_users` huser ON (hline.`NODE_ID`=huser.`NODE_ID` AND hline.`CREATED_BY`=huser.`USER_ID`) ) temp1                               "+   
+            " ON hline.`CREATED_BY` = temp1.CREATED_BY                                                                                                                   "+   
+            " LEFT JOIN `sys_hierarchies_users` hu2 ON (hu2.`USER_ID`=? AND hu2.`DEPARTMENT_CODE_ID`=temp1.DEPARTMENT_CODE_ID AND hu2.`NODE_ID`=hline.`NODE_ID`)         "+   
+            " WHERE temp1.DEPARTMENT_CODE_ID =?                                                                                                                          "+
+            " AND outin.`SUBMIT_STATUS`='PENDING'                                                                                                                        "+   
+            " ORDER BY hline.`APPR_HEADER_ID` ASC, `APPR_ORDER` ASC                                                                                                      ";*/
+        req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[userId,userId],function(err,rows)
             {
@@ -788,8 +818,8 @@ module.exports =
 
     /**
      * Download checkin moi nhat cua document
-     * Vo Duc Giap
      * modify by:tannv.dts@gmail.com
+     * tested
      */
     downloadFileCheckOutIn:function(req,res){
         var nodeId = isoUtil.checkData(req.query.nodeId)?req.query.nodeId:'';
@@ -815,7 +845,7 @@ module.exports =
             {
                 if(err)
                 {
-                    isoUtil.exlog(err);
+                    isoUtil.exlog('downloadFileCheckOutIn',err);
                     res.json({status:'fail'});
                 }
                 else
@@ -839,6 +869,7 @@ module.exports =
                                     Newpath += '/'+data[0].NODE_NAME+'/CHECK_IN/'+data[0].CHECK_IN_FOLDER_STORAGE+'/'+data[0].FILE_NAME;
                                     res.download("."+Newpath,function(err,data) {
                                         if (err) {
+                                            isoUtil.exlog("downloadFileCheckOutIn",err);
                                             res.json({status: "fail"});
                                         }else{
                                             isoUtil.exlog(data);
@@ -847,6 +878,7 @@ module.exports =
                                 }
                                 else
                                 {
+                                    isoUtil.exlog("downloadFileCheckOutIn","Khong ton tai du lieu")
                                     res.json({status:'fail'});
                                 }
                                 

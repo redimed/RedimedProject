@@ -885,16 +885,16 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.getListPassBookingHaveNotResult=function(doctorId)
         {
             rlobService.getPassBookingHaveNotResult($scope.bookingType,doctorId)
-            .then(function(data){
-                if(data.status=='success')
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        $scope.listPassBookingHaveNotResult=data.data;
+                    }
+                },
+                function(error)
                 {
-                    $scope.listPassBookingHaveNotResult=data.data;
-                }
-            },
-            function(error)
-            {
-                
-            });
+
+                });
         }
 
         /**

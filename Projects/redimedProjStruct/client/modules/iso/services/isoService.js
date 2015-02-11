@@ -246,6 +246,10 @@ angular.module('app.loggedIn.iso.service',[])
             updateEnableAdmin:function(id,idnew,role,enable){
                 var result = api.all("iso/iso-admin/updateEnableAdmin");
                 return result.post({id:id,idnew:idnew,role:role,enable:enable});
+            },
+            deleteAdminUser:function(id){
+                var result = api.all("iso/iso-admin/deleteAdmin");
+                return result.post({id:id});
             }
         }
 
@@ -290,6 +294,13 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result=api.all("iso/iso-user-group/add-group-item");
                 return result.post({groupItemInfo:groupItemInfo});
+            },
+
+            
+            deleteGroupItem:function(groupId,itemId)
+            {
+                var result=api.all("iso/iso-user-group/delete-group-item");
+                return result.post({groupId:groupId,itemId:itemId});
             }
 
             

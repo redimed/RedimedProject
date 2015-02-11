@@ -7,7 +7,7 @@ angular.module('app.loggedIn.rlob.paperless.ams6.controller',[])
     			data.data.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
                 data.data.WRK_DATE_OF_INJURI != null?$scope.info.WRK_DATE_OF_INJURI_TEMP = new Date(data.data.WRK_DATE_OF_INJURI):$scope.info.WRK_DATE_OF_INJURI_TEMP = null;
                 data.data.DATE_ASSESS != null?$scope.info.DATE_ASSESS_TEMP = new Date(data.data.DATE_ASSESS):$scope.info.DATE_ASSESS_TEMP = null;
-                data.data.DT_DATE != null?$scope.info.DT_DATE_TEMP = new Date(data.data.DT_DATE):$scope.info.DT_DATE_TEMP = null;
+                data.data.DT_DATE != null?$scope.info.DT_DATE_TEMP = new Date(data.data.DT_DATE):$scope.info.DT_DATE_TEMP = new Date();
     			console.log("update a6:"+$scope.update);
 			    console.log($scope.info);
 				$scope.isSaving = true;
@@ -17,10 +17,11 @@ angular.module('app.loggedIn.rlob.paperless.ams6.controller',[])
 	    			rlobService.getBookingDoctorCompany(rlobService.bookingInfoPaperless.id).then(function(data){
 			    		if (data.status == "success") {
                             $scope.info.WRK_NAME = data.data.WRK_SURNAME +" "+data.data.WRK_OTHERNAMES;
-                            $scope.info.WRK_DATE_OF_BIRTH = data.data.WRK_DATE_OF_BIRTH;
+                            // $scope.info.WRK_DATE_OF_BIRTH = data.data.WRK_DATE_OF_BIRTH;
                             $scope.info.WRK_PHONE = data.data.WRK_PHONE;
                             $scope.info.WRK_EMAIL = data.data.WRK_EMAIL;
-                            $scope.info.WRK_DESCRIPTION_OF_INJURI = data.data.WRK_DESCRIPTION_OF_INJURI;
+                            data.data.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
+                            // $scope.info.WRK_DESCRIPTION_OF_INJURI = data.data.WRK_DESCRIPTION_OF_INJURI;
                             $scope.info.EMP_ORGANISATION_NAME = data.data.EMP_ORGANISATION_NAME;
                             $scope.info.EMP_POSTCODE = data.data.EMP_POSTCODE;
                             $scope.info.EMP_ADDRESS_1 = data.data.EMP_ADDRESS_1;

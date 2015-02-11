@@ -466,7 +466,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             //phan quoc chien
             //phanquocchien.c1109g@gmail.com
             //add new patient
-            $scope.addPatient = function(){
+            $scope.addPatient = function(idBooking){
                 patientData.Sur_name = $scope.newBooking.WRK_SURNAME;
                 patientData.First_name = $scope.newBooking.WRK_OTHERNAMES;
                 patientData.DOB = $scope.newBooking.WRK_DOB;
@@ -477,7 +477,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 //add new cln_patients
                 rlobService.addPatient(patientData).then(function(data){
                     if (data.status == 'success') {
-                        rlobService.updatePatientIdBooking
                         claimData.Patient_id = data.data.Patient_id;
                         claimData.Claim_no = $scope.newBooking.CLAIM_NO;
                         claimData.Injury_name = 'No Description';
@@ -487,6 +486,10 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                         rlobService.addClaim(claimData);
                         var idPatient = data.data.Patient_id;
                         var calID = $scope.newBooking.CAL_ID;
+                        //phan quoc chien
+                        //phanquocchien.c1109g@gmail.com
+                        //update patient id
+                        rlobService.updatePatientIdBooking(idBooking,idPatient);
                         //phan quoc chien
                         //phanquocchien.c1109g@gmail.com
                         //check Patient_id và CAL_ID trong bảng cln_appt_patients
@@ -549,7 +552,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                     //phan quoc chien
                     //phanquocchien.c1109g@gmail.com
                     //new patient -> new cln_claims -> new cln_appt_patients -> update cln_appointment_calendar
-                    $scope.addPatient();
+                    $scope.addPatient(data.data);
                     $scope.getAppointmentCalendarUpcoming();
                     //Gui email confirm  cho khach hang
                     $scope.sendConfirmEmail();
