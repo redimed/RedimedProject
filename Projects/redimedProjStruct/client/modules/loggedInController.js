@@ -6,10 +6,7 @@ angular.module("app.loggedIn.controller",[
     var to = $location.search().to;
     var isCaller = ($location.search().isCaller == 'true') ? true : false;
 
-    console.log('Is Caller: ',isCaller);
-    console.log('Type: ', typeof isCaller);
-
-    var fromMobile = $location.search().fromMobile;
+    var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
     UserService.getUserInfo(from).then(function(data){
         if(data)
@@ -23,7 +20,6 @@ angular.module("app.loggedIn.controller",[
                     socket.emit("mobileConnect",data.id);
                 }
             }
-
 
             if(isCaller){
                 UserService.getUserInfo(to).then(function(rs){

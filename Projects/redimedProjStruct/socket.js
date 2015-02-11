@@ -141,15 +141,7 @@ module.exports = function(io,cookie,cookieParser) {
 
         })
 
-        socket.on('getSocket',function(username){
-            db.User.find({where:{user_name:username}},{raw:true})
-                .success(function(user){
-                    socket.emit('returnSocket',user.socket);
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        })
+        
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
             db.User.find({where:{id: currUser}},{raw:true})
@@ -262,8 +254,6 @@ module.exports = function(io,cookie,cookieParser) {
 
         socket.on('disconnect', function (reason) {
 
-            socket.removeAllListeners();
-
             db.User.find({where:{socket:socket.id}},{raw:true})
                 .success(function(user){
                     if(user)
@@ -273,13 +263,30 @@ module.exports = function(io,cookie,cookieParser) {
                                 if(type.user_type == 'Driver')
                                     io.sockets.emit('driverLogout',user.id);
 
-                                db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-                                    .success(function () {
-                                        getOnlineUser();
-                                    })
-                                    .error(function (err) {
-                                        console.log(err);
-                                    })
+                                if(user.socket == socket.id)
+                                {
+                                     db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
+                                        .success(function () {
+                                            getOnlineUser();
+                                        })
+                                        .error(function (err) {
+                                            console.log(err);
+                                        })
+                                }
+
+                                if(user.socketMobile == socket.id)
+                                {
+                                    db.sequelize.query("UPDATE `users` SET socketMobile = NULL WHERE socketMobile = ?", null, {raw: true}, [socket.id])
+                                        .success(function () {
+                                            getOnlineUser();
+                                        })
+                                        .error(function (err) {
+                                            console.log(err);
+                                        })
+                                }
+
+
+                               
                             })
                             .error(function (err) {
                                 console.log(err);
@@ -291,6 +298,7 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log(err);
                 })
 
+                socket.removeAllListeners();
 
         });
 

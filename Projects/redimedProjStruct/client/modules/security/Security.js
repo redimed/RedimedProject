@@ -56,7 +56,7 @@ angular.module("app.security",[
 
     //REDIRECT
     .state("security.redirect", {
-        url: "/redirect/:socket/:patient_id",
+        url: "/redirect/:userId/:patient_id",
         views: {
             "main-content": {
                 template: "<div> Waitting </div>",

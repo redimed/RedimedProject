@@ -224,10 +224,6 @@ angular.module("app", [
         var locationHref = location.href;
         if(locationHref.indexOf('fromMobile=true') != -1)
         {
-            if($cookieStore.get("userInfo"))
-            {
-                socket.emit("mobileConnect",$cookieStore.get("userInfo").id);
-            }
              e.preventDefault();
              return;
         }
