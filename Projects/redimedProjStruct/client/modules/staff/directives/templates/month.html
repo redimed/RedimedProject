@@ -4,7 +4,6 @@
 
 </div>
 <div class="cal-month-box">
-
   <div ng-repeat="week in view track by $index">
     <div class="cal-row-fluid cal-before-eventlist">
       <div
@@ -29,7 +28,7 @@
               ng-mouseenter="highlightEvent(event, true)"
               ng-mouseleave="highlightEvent(event, false)"
               tooltip-append-to-body="true"
-              tooltip="{{ event.title }}"
+              tooltip="{{ event.task }}"
               ></a>
           </div>
 
@@ -39,36 +38,42 @@
 
     <div class="cal-slide-box" collapse="!week.isOpened">
       <div class="cal-slide-content cal-event-list">
-        <ul class="unstyled list-unstyled">
+          </br>
+          <div class="row" ng-repeat="event in openEvents track by $index">
+              <div class="col-md-1">
+                  <span class="pull-left event event-{{ event.type }}"></span>
+              </div>
+              <div class="col-md-5">
+                  <a
+                          href="javascript:;"
+                          class="event-item"
+                          ng-click="eventClick({$event: event})">
+                      {{ event.task }}
+                  </a>
+              </div>
+              <div class="col-md-3">
+                  {{event.start_time | date:'shortTime'}} - {{event.end_time | date:'shortTime'}}
+              </div>
+              <div class="col-md-1">
 
-          <li ng-repeat="event in openEvents track by $index">
-            <span class="pull-left event event-{{ event.type }}"></span>
-            &nbsp;
-            <a
-              href="javascript:;"
-              class="event-item"
-              ng-click="eventClick({$event: event})">
-              {{ event.title }}
-            </a>
-
-            <a
-              href="javascript:;"
-              class="event-item-edit"
-              ng-if="editEventHtml && event.editable !== false"
-              ng-bind-html="$sce.trustAsHtml(editEventHtml)"
-              ng-click="eventEditClick({$event: event})">
-            </a>
-
-            <a
-              href="javascript:;"
-              class="event-item-delete"
-              ng-if="deleteEventHtml && event.deletable !== false"
-              ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
-              ng-click="eventDeleteClick({$event: event})">
-            </a>
-          </li>
-
-        </ul>
+              </div>
+              <div class="col-md-2">
+                  <a
+                          href="javascript:;"
+                          class="event-item-delete"
+                          ng-if="deleteEventHtml && event.deletable !== false"
+                          ng-bind-html="$sce.trustAsHtml(deleteEventHtml)"
+                          ng-click="eventDeleteClick({$event: event})">
+                  </a>
+                  <a
+                          href="javascript:;"
+                          class="event-item-edit"
+                          ng-if="editEventHtml && event.editable !== false"
+                          ng-bind-html="$sce.trustAsHtml(editEventHtml)"
+                          ng-click="eventEditClick({$event: event})">
+                  </a>
+              </div>
+          </div>
       </div>
     </div>
   </div>

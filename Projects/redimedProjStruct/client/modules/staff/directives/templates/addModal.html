@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{taskModal.dateChosen}}</h3>
+    <h3 class="modal-title">{{dayChosen}}</h3>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -16,43 +16,18 @@
         <div class="form-group">
             <label class="control-label col-md-4" style="text-align: right;margin-top: 5px">Department Code</label>
             <div class="col-md-5">
-                <select class="form-control">
-                    <option>Select Department Code</option>
-                    <option>AAA</option>
-                    <option>BBB</option>
-                    <option>CCC</option>
+                <select ng-model="taskModal.task_department" class="form-control" ng-options="department.department_code_id as department.NAME for department in departments">
+                    <option value="">--Select Department Code--</option>
                 </select>
             </div>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 5px">
-        <div class="form-group">
-            <label class="control-label col-md-4" style="text-align: right;margin-top: 5px">Service Line</label>
-            <div class="col-md-5">
-                <select class="form-control">
-                    <option>Select Service Line</option>
-                    <option>AAA</option>
-                    <option>BBB</option>
-                    <option>CCC</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 5px">
-        <label class="control-label col-md-4" style="text-align: right;margin-top: 5px">Phase</label>
-        <div class="col-md-5">
-            <input type="text" class="form-control">
         </div>
     </div>
     <div class="row" style="margin-top: 5px">
         <div class="form-group">
             <label class="control-label col-md-4" style="text-align: right;margin-top: 5px">Location</label>
             <div class="col-md-5">
-                <select class="form-control">
-                    <option>Select Location</option>
-                    <option>AAA</option>
-                    <option>BBB</option>
-                    <option>CCC</option>
+                <select ng-model="taskModal.task_location" class="form-control" ng-options="location.location_id as location.NAME for location in locations">
+                    <option value="">--Select Location--</option>
                 </select>
             </div>
         </div>
@@ -61,33 +36,20 @@
         <div class="form-group">
             <label class="control-label col-md-4" style="text-align: right;margin-top: 5px">Activity</label>
             <div class="col-md-5">
-                <select class="form-control">
-                    <option>Select Activity</option>
-                    <option>AAA</option>
-                    <option>BBB</option>
-                    <option>CCC</option>
+                <select ng-model="taskModal.task_activity" class="form-control" ng-options="activity.activity_id as activity.NAME for activity in activities">
+                    <option value="">--Select Activity--</option>
                 </select>
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 5px">
-        <label class="control-label col-md-2" style="text-align: right;margin-top: 5px">Planned</label>
-        <div class="col-md-4">
-            <input type="text" class="form-control">
-        </div>
-        <label class="control-label col-md-2" style="text-align: right;margin-top: 5px">Actual</label>
-        <div class="col-md-4">
-            <input type="text" class="form-control">
-        </div>
-    </div>
     <div class="row">
         <label class="control-label col-md-2" style="text-align: right;margin-top: 40px">Start time {{check}}</label>
-        <div class="col-md-4">
-            <timepicker ng-model="taskModal.start_time" hour-step="1" minute-step="30" show-meridian="true"></timepicker>
+        <div class="">
+            <timepicker ng-model="taskModal.startDate" hour-step="1" minute-step="30" show-meridian="true"></timepicker>
         </div>
         <label class="control-label col-md-2" style="text-align: right;margin-top: 40px">End time</label>
-        <div class="col-md-4">
-            <timepicker ng-model="taskModal.end_time" hour-step="1" minute-step="30" show-meridian="true"></timepicker>
+        <div class="">
+            <timepicker ng-model="taskModal.endDate" hour-step="1" minute-step="30" show-meridian="true"></timepicker>
         </div>
     </div>
 </div>

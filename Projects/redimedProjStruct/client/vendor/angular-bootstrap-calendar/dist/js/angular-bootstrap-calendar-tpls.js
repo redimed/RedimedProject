@@ -115,7 +115,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
                     isToday: moment().startOf('day').isSame(startOfMonth),
                     date: startOfMonth.clone(),
                     events: eventsWithIds.filter(function(event) {
-                        return self.eventIsInPeriod(event.starts_at, event.ends_at, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
+                        return self.eventIsInPeriod(event.date, event.date, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
                     })
                 };
 
@@ -142,7 +142,6 @@ angular.module('app.loggedIn.staff.calendar.directive')
                 startOfMonth = startOfMonth.add(1, 'day');
 
             }
-
             return grid;
 
         };
@@ -160,6 +159,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
                     weekDay: weekDays[i],
                     day: $filter('date')(date, 'd'),
                     date: $filter('date')(date, 'd MMM'),
+                    dateChosen: date,
                     isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
                 };
                 if (i == 0) {
@@ -175,6 +175,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
                     weekDay: weekDays[i],
                     day: $filter('date')(date, 'd'),
                     date: $filter('date')(date, 'd MMM'),
+                    dateChosen: date,
                     isToday: moment(date).startOf('day').isSame(moment().startOf('day'))
                 };
                 if (i == 0) {
@@ -210,7 +211,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
                 event.dayOffset = offset;
                 return event;
             });
-            return {columns: columns, events: eventsSorted};
+            return {columns: columns,startWeek: beginningOfWeek, endWeek: endOfWeek};
 
         };
 

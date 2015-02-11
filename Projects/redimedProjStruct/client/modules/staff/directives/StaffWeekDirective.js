@@ -30,8 +30,14 @@ angular.module('app.loggedIn.staff.calendar.directive')
         };
 
         function updateView() {
-          scope.view = calendarHelper.getWeekView(scope.events, scope.currentDay, scope.useIsoWeek);
+            var tomorrow = new Date(scope.currentDay);
+            tomorrow.setDate(scope.currentDay.getDate()+7);
+          scope.view = calendarHelper.getWeekView(scope.events, tomorrow, scope.useIsoWeek);
         }
+
+        scope.backMonth = function(){
+            calendarCtrl.changeView('month',scope.currentDay);
+        };
 
         scope.drillDown = function(day) {
           calendarCtrl.changeView('day', moment(scope.currentDay).clone().date(day).toDate());

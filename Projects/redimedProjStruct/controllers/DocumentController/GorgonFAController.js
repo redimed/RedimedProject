@@ -3,9 +3,6 @@ var db = require('../../models');
 module.exports = {
     insertFA : function(req,res){
         var info = req.body.info;
-
-        console.log(info);
-
         db.gorgonFA.max('id')
             .success(function(max){
                 var id = max + 1;

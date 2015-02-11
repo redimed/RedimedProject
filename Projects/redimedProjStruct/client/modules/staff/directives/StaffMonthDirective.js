@@ -23,6 +23,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek'
       },
+      controller: 'StaffMonthController',
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
         var firstRun = false;
@@ -58,11 +59,9 @@ angular.module('app.loggedIn.staff.calendar.directive')
         scope.weekDays = calendarHelper.getWeekDayNames(false, scope.useIsoWeek);
 
         scope.dayClicked = function(rowIndex, cellIndex) {
-
           var handler = calendarHelper.toggleEventBreakdown(scope.view, rowIndex, cellIndex);
           scope.view = handler.view;
           scope.openEvents = handler.openEvents;
-
         };
 
         scope.drillDown = function(day) {

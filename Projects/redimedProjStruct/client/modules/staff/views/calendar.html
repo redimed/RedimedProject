@@ -1,56 +1,46 @@
-
-<div class="panel">
-    <div class="panel-title">
-
-        <h2 class="text-center">{{calendarControl.getTitle()}}</h2>
-        <div class="row">
-            <div class="col-md-6 text-center">
-                <div class="btn-group">
-                    <button class="btn btn-primary" ng-click="calendarControl.prev()">Previous</button>
-                    <button class="btn btn-default" ng-click="setCalendarToToday()">Today</button>
-                    <button class="btn btn-primary" ng-click="calendarControl.next()">Next</button>
-                </div>
-            </div>
-            <br class="visible-xs visible-sm">
-            <div class="col-md-4 text-center">
-                <div class="btn-group">
-                    <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Month</label>
-                    <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Week</label>
-                </div>
-            </div>
+<div class="portlet yellow box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-pin"></i>
+            <span class="bold" ng-if="calendarView == 'month'">Timesheet of Month</span>
+            <span class="bold" ng-if="calendarView == 'week'">Timesheet of Next Week</span>
         </div>
-        </br>
+        <a ng-show="calendarView == 'month'" class="btn purple-stripe default pull-right" style="color: #800080" ng-click="calendarView = 'week'">Do you want enter info for next week?</a>
     </div>
-    <div class="panel-body">
-        <div ng-class="{'col-md-9 col-md-offset-1': calendarView == 'month','col-md-12': calendarView == 'week'}">
-            <mwl-calendar
-                    calendar-events="events"
-                    calendar-view="calendarView"
-                    calendar-current-day="calendarDay"
-                    calendar-control="calendarControl"
-                    calendar-event-click="eventClicked($event)"
-                    calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-                    calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                    calendar-add-event-html="'<i class=\'glyphicon glyphicon-plus \' style=\'color: #006400; font-size: large\'></i>'"
-                    calendar-edit-event-click="eventEdited($event)"
-                    calendar-delete-event-click="eventDeleted($event)"
-                    calendar-auto-open="true"
-                    calendar-use-iso-week="useIsoWeek"
-                    >
-            </mwl-calendar>
-            <script type="text/ng-template" id="modalContent.html">
-                <div class="modal-header">
-                    <h3 class="modal-title">Event action occurred!</h3>
+    <div class="portlet-body">
+        <div class="panel">
+            <div class="panel-title">
+                <h4 class="text-center bold" style="color: #696969">{{calendarControl.getTitle()}}</h4>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-1" ng-show="calendarView == 'month'">
+                    <a href="javascript:;" ng-click="calendarControl.prev()">
+                        <i class="glyphicon glyphicon-arrow-left" style="color: #808080;font-size: 30px"></i>
+                    </a>
                 </div>
-                <div class="modal-body">
-                    <p>Action: <pre>{{ action }}</pre></p>
-                    <p>Event: <pre>{{ event | json }}</pre></p>
+                <div ng-class="{'col-md-10': calendarView == 'month','col-md-12': calendarView == 'week'}">
+                    <mwl-calendar
+                            calendar-events="events"
+                            calendar-view="calendarView"
+                            calendar-current-day="calendarDay"
+                            calendar-control="calendarControl"
+                            calendar-event-click="eventClicked($event)"
+                            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                            calendar-add-event-html="'<i class=\'glyphicon glyphicon-plus \' style=\'color: #006400; font-size: large\'></i>'"
+                            calendar-edit-event-click="eventEdited($event)"
+                            calendar-delete-event-click="eventDeleted($event)"
+                            calendar-auto-open="true"
+                            calendar-use-iso-week="useIsoWeek"
+                            >
+                    </mwl-calendar>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" ng-click="$modalInstance.close()">OK</button>
+                <div class="col-md-1" ng-show="calendarView == 'month'">
+                    <a href="javascript:;" ng-click="calendarControl.next()">
+                        <i class="glyphicon glyphicon-arrow-right" style="color: #808080;font-size: 30px"></i>
+                    </a>
                 </div>
-            </script>
-
+            </div>
         </div>
     </div>
 </div>

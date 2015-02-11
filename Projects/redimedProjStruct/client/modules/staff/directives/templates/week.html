@@ -9,7 +9,7 @@
             <a
                     href="javascript:;"
                     ng-bind-html="$sce.trustAsHtml(addEventHtml)"
-                    ng-click="eventAddClick(column.date,key)">
+                    ng-click="eventAddClick(column.date,column.dateChosen,key)">
             </a>
         </div>
         <div class="col-md-11 col-md-offset-1">
@@ -21,7 +21,7 @@
                 <a href="javascript:;" ng-click="eventEditClick(key,keyT)"  class="cal-event-week">
                     {{task.task_name}}
                     </br>
-                    <small class="badge pull-right ng-binding">{{task.start_time | date : "h:mma"}} - {{task.end_time | date : "h:mma"}}</small>
+                    <small class="badge pull-right ng-binding">{{task.startDate | date : "h:mma"}} - {{task.endDate | date : "h:mma"}}</small>
                 </a>
             </div>
         </div>
@@ -29,6 +29,6 @@
 </div>
 
 <div class="col-md-3 col-md-offset-5">
-    <button class="btn btn-warning" ng-click="">Cancel</button>
-    <button class="btn btn-danger" ng-click="">Save All</button>
+    <a class="btn btn-warning" href="javascript:;" ui-sref="loggedIn.staff.list">Cancel</a>
+    <button class="btn btn-danger" ng-click="addAllTask(view.startWeek,view.endWeek)">Save All</button>
 </div>
