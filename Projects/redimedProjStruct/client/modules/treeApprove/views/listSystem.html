@@ -1,0 +1,89 @@
+<h3 class="page-title">System List</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.listSystem">Systems</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+</div>
+<div class="portlet green-meadow box">
+    <div class="portlet-title">
+        <a ui-sref="loggedIn.addSystem" class="btn green pull-right" style="margin-top:4px;" ng-click="addSystem()">New system</a>
+        <div class="caption">
+            <i class="fa fa-cogs"></i>List of system
+        </div>
+    </div>
+    <div class="portlet-body">
+        <!-- PAGINATION -->
+        <div style="float: left;">
+            <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
+        </div>
+        <div style="float: right; padding-top: 10px;">
+            <button class="btn btn-sm" ng-click="reset()">Reset</button>
+            <b>Total system: </b>{{list.count}}
+            <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" ng-change="loadList()"></select>
+        </div>
+        <!-- END PAGINATION -->
+
+        <!-- TABLE LIST  -->
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>System name</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th></th>
+                </tr>
+                <!-- SEARCH -->
+                <tr>
+                    <td>
+                        <input class="input-sm" type="text" ng-model="searchObjectMap.data.TYPE_NAME" ng-change="loadList()" </td>
+                        <!-- END SEARCH -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="l in list.result" style="cursor: pointer;">
+                    <td>{{l.TYPE_NAME || "" }}</td>
+                    <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a"|| "" }}</td>
+                    <td>{{l.Last_update_date| date: "dd/MM/yyyy h:mm:ss a"|| "" }}</td>
+                    <td>
+                        <!-- DOPDOWN ACTION -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+
+                                <li class="dropdown">
+                                    <button class="dropdown-toggle btn green" data-toggle="dropdown" role="button" aria-expanded="false">Action
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" style="width: 100px;">
+                                        <li><a ng-click="goTotreeApproveDetail(l.TYPE_ID)">Detail</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a ng-click="editSystem(l.TYPE_ID)">Edit</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a ng-click="deleteSystem(l.TYPE_ID, $index)">Delete</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END DROPDOWN ACTION -->
+                    </td>
+                </tr>
+            </tbody>
+            </tabel>
+            <!-- END TABLE LIST -->
+    </div>
+</div>
+<!-- MODULE ADD SYSTEM -->
+<script type="text/ng-template" id="AddSystem">
+    <add-system on-cancel="getReturnedValue(return)" ng-model="systemIdEdit" on-save="getInfo(return)"></add-system>
+</script>
+<!-- END MODULE ADD SYSTEM -->
