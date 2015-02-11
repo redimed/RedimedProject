@@ -22,16 +22,16 @@
 
         <div class="row">
             <div class="col s12">
-              <ul class="tabs" tabmari>
-                <li class="tab col s6"><a class="active" href="#Infomation">Infomation</a></li>
-                <li class="tab col s6"><a  href="#Injury">Injury</a></li>
-              </ul>
+                <ul class="tabs" tabmari>
+                    <li class="tab col s6"><a class="active" href="#Infomation">Infomation</a></li>
+                    <li class="tab col s6"><a  href="#Injury">Injury</a></li>
+                </ul>
             </div>
-           
-          
-          </div>
-           <div id="Infomation" class="col s12">
-                  <div class="row">
+
+
+        </div>
+        <div id="Infomation" class="col s12">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                          <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
@@ -73,11 +73,11 @@
                     <span>{{worker.Email}}</span>
                 </label>
             </div>
-            </div>
-             
-            </div>
-            <div id="Injury" class="col s12">
-                 <div class="row">
+        </div>
+
+        </div>
+        <div id="Injury" class="col s12">
+            <div class="row">
                 <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
                     <span>
                         <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
@@ -111,14 +111,14 @@
                     </ion-scroll>
                 </label>
             </div>
-            </div>
-                    
+        </div>
+
 
         </div>
 
         <div class="portlet light">
-             <div class="item item-input-inset" >
-                <ion-google-place placeholder="{{location.format_address}}" ng-model="location.format_address" ng-change="test=!test" />     
+            <div class="item item-input-inset" >
+                <ion-google-place placeholder="{{location.format_address}}" ng-model="location.format_address" ng-change="test=!test" />
             </div>
             <div id="map-canvas" mdt-map address="location.format_address" ad="ad" sc="sc" class="col-md-12" lo="test"  style="height: 200px; width: 100%"></div>
             <div class="clearfix"></div>

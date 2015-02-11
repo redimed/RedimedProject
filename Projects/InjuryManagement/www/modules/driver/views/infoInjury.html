@@ -103,13 +103,13 @@
                     </label>
                 </div>
             </div>
-                    
+               <div id="map-canvas" data-tap-disabled="true" driver-map ll="ll"   class="col-md-12"  style="height: 200px; width: 100%"></div>       
 
         </div>
       
         <div class="row">
             <div class="col col-50 col-offset-25 padding-bottom">
-                <button class="button button-block bg-btn-custom" ng-show="worker.STATUS.toLowerCase() == 'new'" ng-click="pickUp(worker.injury_id)">
+                <button class="button button-block bg-btn-custom" geo="geo" ng-show="worker.STATUS.toLowerCase() == 'new'" ng-click="pickUp(worker.injury_id)">
                     Pickup
                 </button>
                 <button class="button button-block bg-btn-custom" ng-show="worker.STATUS.toLowerCase() == 'waiting'" ng-click="pickUpDone(worker.injury_id)">

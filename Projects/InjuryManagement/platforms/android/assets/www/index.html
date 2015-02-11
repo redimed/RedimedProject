@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="lib/ionic/css/ionic.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/easyrtc.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="lib/ion-google-place/ion-google-place.css">
     <link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="lib/materialize/css/materialize.css">
@@ -28,7 +29,7 @@
     <script src="lib/lodash/dist/lodash.compat.min.js"></script>
     <script src="lib/restangular/dist/restangular.min.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
-    <script type="text/javascript" src="lib/jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="lib/hpneo-gmaps-f12b532/gmaps.js"></script>
@@ -47,6 +48,7 @@
     <script src="modules/driver/Driver.js"></script>
     <script src="modules/NFC/NFC.js"></script>
     <script src="modules/phoneCall/phoneCall.js"></script>
+    <script src="modules/bluetooth/Bluetooth.js"></script>
 
     <!--SERVICES-->
     <script src="modules/security/services/securityServices.js"></script>
@@ -57,6 +59,7 @@
     <script src="modules/worker/services/WriteNFC.js"></script>
     <script src="modules/driver/services/DriverServices.js"></script>
     <script src="modules/phoneCall/services/phoneCallService.js"></script>
+    <script src="modules/bluetooth/services/BluetoothServices.js"></script>
 
     <!--CONTROLLERS-->
     <script src="modules/menu/controller/menuController.js"></script>
@@ -71,6 +74,7 @@
     <script src="modules/driver/controller/DriverController.js"></script>
     <script src="modules/NFC/controller/readNFCController.js"></script>
     <script src="modules/phoneCall/controller/phoneCallController.js"></script>
+    <script src="modules/bluetooth/controller/BluetoothController.js"></script>
 </head>
 <body ng-app="starter" class="platform-android platform-cordova platform-webview">
 <ion-nav-view name="root" style="background-color: rgba(0, 0, 0, 0.3);" >

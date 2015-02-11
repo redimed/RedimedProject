@@ -321,6 +321,7 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/restangular/dist/restangular.min.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/restangular/dist/restangular.zip \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/lib/restangular/src/restangular.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/driver \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/menu \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/NFC \
@@ -330,6 +331,14 @@
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/submitinjury \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/user \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/worker \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/Bluetooth.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/controller \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/services \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/views \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/controller/BluetoothController.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/services/BluetoothServices.js \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/views/main.html \
+/Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/bluetooth/views/structure.html \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/driver/controller \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/driver/Driver.js \
 /Users/nguyenhuy/RedimedProject/Projects/InjuryManagement/platforms/android/assets/www/modules/driver/services \

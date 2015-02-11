@@ -23,6 +23,7 @@ angular.module('starter', ['ionic',
     'starter.driver',
     'starter.NFC',
     'starter.phoneCall',
+    'starter.bluetooth',
 ])
     .factory(("ionPlatform"), function( $q ){
         var ready = $q.defer();
@@ -74,7 +75,9 @@ angular.module('starter', ['ionic',
             })
     })
 
-    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, HOST_CONFIG){
+    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, HOST_CONFIG) {
+
+        console.log('run app.js');
 
         easyrtc.setSocketUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port)
 
@@ -82,7 +85,7 @@ angular.module('starter', ['ionic',
             scope: $rootScope,
             animation: 'slide-in-up',
             backdropClickToClose: false
-        }).then(function(modal) {
+        }).then(function (modal) {
             $rootScope.modal = modal
         });
 
@@ -90,12 +93,23 @@ angular.module('starter', ['ionic',
 
         $rootScope.nameCallingJson = [];
 
-        if(localStorageService.get("userInfo")) {
-            signaling.emit('checkApp', localStorageService.get("userInfo").id);
-        }
+        signaling.on('reconnect',function(){
+            if (localStorageService.get("userInfo")) {
+                signaling.emit('reconnected', localStorageService.get("userInfo").id);
+            }
+        })
+
+        signaling.on('reconnect_failed',function(){
+            localStorageService.removeAll();
+            $state.go("security.login",null,{location: "replace", reload: true});
+            socket.removeAllListeners();
+        })
 
         localStorageService.set('mode','read');
         $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams) {
+
+            //signaling.emit('reconnected', localStorageService.get("userInfo").id);
+
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {

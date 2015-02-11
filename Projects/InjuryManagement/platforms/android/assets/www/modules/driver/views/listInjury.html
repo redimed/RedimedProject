@@ -49,7 +49,7 @@
             <!--</div>-->
             <!--</a>-->
 
-            <a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS, listPatient.background, listPatient.letter)"
+            <a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS, listPatient.background, listPatient.letter,listPatient.latitude,listPatient.longitude)"
                class="item item-avatar custom-item-listpatient"
                ng-repeat="listPatient in lstPatient | filter: searchText"
                ng-class="{'new': listPatient.STATUS == 'New', 'waiting': listPatient.STATUS == 'Waiting'}" style="margin: 10px;" ng-hide="listPatient.STATUS == 'Done'">

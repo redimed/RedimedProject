@@ -24,7 +24,7 @@
                     </div>
 
 
-                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.SearchKey || !isShow">
+                <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.SearchKey || !isShow" style="margin-top: -64px;">
                     <a class="item itemsearch"
                        ng-repeat="result in list | filter:testData.data.SearchKey" ng-click="selectInfo(result)">
                         <h3 style="text-decoration: underline;">
@@ -166,7 +166,7 @@
 
                 <label class="item item-input label-custom-field">
                     <span class="input-label span-input-color">Account Holder</span>
-                    <textarea type="text" ng-model="testData.data.Account_holder" name="testData.data.Account_holder"></textarea>
+                    <textarea type="text" class="materialize-textarea" ng-model="testData.data.Account_holder" name="testData.data.Account_holder"></textarea>
 
                 </label>
 
