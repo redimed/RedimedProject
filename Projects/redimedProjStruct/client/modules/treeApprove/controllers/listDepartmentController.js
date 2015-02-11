@@ -186,7 +186,6 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                 size: "md"
             });
             modalInstance.result.then(function(data) {
-                console.log(data);
                 if (data[0].status === "success") {
                     $scope.list.result = data[0].result;
                 }

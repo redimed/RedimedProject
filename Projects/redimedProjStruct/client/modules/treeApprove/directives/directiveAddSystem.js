@@ -16,6 +16,7 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
                         treeApproveService.loadOneSystem(newModel).then(function(response) {
                             if (response.status === "success") {
                                 scope.info = response.result;
+                                scope.info.oldName = scope.info.TYPE_NAME;
                             } else if (response.status === "fail") {
                                 $state.go("loggedIn.listSystem", null, {
                                     "reload": true

@@ -13,7 +13,7 @@ angular.module("app.loggedIn.treeApprove.AddDepartment.directive", [])
                     if (newModel !== null) {
                         scope.addOrUpdateTitle = "Update Department";
                         scope.addOrUpdateButton = "Update";
-                        treeApproveService.loadOnDepartment(newModel).then(function(response) {
+                        treeApproveService.loadOneDepartment(newModel).then(function(response) {
                             if (response.status === "success") {
                                 scope.info = response.result;
                             } else if (response.status === "fail") {

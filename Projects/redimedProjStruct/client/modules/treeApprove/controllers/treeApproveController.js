@@ -62,7 +62,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                         if ($scope.isNew === true) {
                             value.userId = $cookieStore.get("userInfo").id;
                             value.parent = nodeInfo.node.id;
-                            value.GROUP_ID = localStorageService.get("departmenCode");
+                            value.GROUP_ID = localStorageService.get("departmenCode").GROUP_ID;
                             value.GROUP_TYPE = localStorageService.get("idSystem");
                             treeApproveService.insertNode(value).then(function(response) {
                                 if (response.status === "success") {

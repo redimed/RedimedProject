@@ -14,7 +14,7 @@
 </div>
 <div class="portlet green-meadow box">
     <div class="portlet-title">
-        <a ui-sref="loggedIn.addSystem" class="btn green pull-right" style="margin-top:4px;" ng-click="addSystem()">New system</a>
+        <a ui-sref="loggedIn.addSystem" class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="addSystem()">New system</a>
         <div class="caption">
             <i class="fa fa-cogs"></i>List of system
         </div>
@@ -58,17 +58,17 @@
                             <ul class="nav navbar-nav">
 
                                 <li class="dropdown">
-                                    <button class="dropdown-toggle btn green" data-toggle="dropdown" role="button" aria-expanded="false">Action
+                                    <button class="dropdown-toggle btn btn-circle green btn-sm" data-toggle="dropdown" role="button" aria-expanded="false">Action
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu" style="width: 100px;">
-                                        <li><a ng-click="goTotreeApproveDetail(l.TYPE_ID)">Detail</a>
+                                        <li><a ng-click="goTotreeApproveDetail(l.TYPE_NAME)"><i class="fa fa-check"></i>Detail</a>
                                         </li>
                                         <li class="divider"></li>
-                                        <li><a ng-click="editSystem(l.TYPE_ID)">Edit</a>
+                                        <li><a ng-click="editSystem(l.TYPE_NAME)"><i class="fa fa-pencil"></i>Edit</a>
                                         </li>
                                         <li class="divider"></li>
-                                        <li><a ng-click="deleteSystem(l.TYPE_ID, $index)">Delete</a>
+                                        <li><a ng-click="deleteSystem(l.TYPE_NAME, $index)"><i class="fa fa-times"></i>Delete</a>
                                         </li>
                                     </ul>
                                 </li>
