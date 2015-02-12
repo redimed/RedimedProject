@@ -143,6 +143,8 @@ module.exports = {
 	postSearch: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
+        var order = (req.body.order) ? req.body.order : null;
+
 		var fields = req.body.fields;
 
 		var search_data = req.body.search;
@@ -173,7 +175,7 @@ module.exports = {
 			limit: limit,
 			attributes: fields,
 			include: inc_model,
-			order: 'HEADER_ID DESC'
+			order: order
 		}).success(function(result){
 			res.json({"status": "success", "list": result.rows, "count": result.count});
 		})
