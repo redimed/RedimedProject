@@ -15,7 +15,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
         api: 'api/erm/v2/invoice/search',
         method: 'post',
         columns: [
-            {field: 'header_id', is_hide: true},
+            {field: 'header_id', order: 'DESC', is_hide: true},
             {field: 'cal_id', is_hide: true},
             {field: 'STATUS', is_hide: true},
             {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
