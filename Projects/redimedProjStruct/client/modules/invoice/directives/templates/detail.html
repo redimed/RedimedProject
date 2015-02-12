@@ -137,6 +137,7 @@
 	<table class="table table-bordered">
 		<tr>
 			<th> Item No</th>
+			<th> Item Name</th>
 			<th> Time Spent </th>
 			<th> Quantity </th>
 			<th> Price </th>
@@ -144,13 +145,14 @@
 		</tr>
 		<tr ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
 			<td>{{item.invItem.ITEM_CODE}}</td>
+			<td>{{item.invItem.ITEM_NAME}}</td>
 			<td>{{item.TIME_SPENT}}</td>
 			<td>{{item.QUANTITY}}</td>
 			<td class="text-right">${{item.PRICE}}</td>
 			<td class="text-right">${{item.AMOUNT}}</td>
 		</tr>
 		<tr>
-			<td colspan="4"><strong> Total </strong></td>
+			<td colspan="5"><strong> Total </strong></td>
 			<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
 		</tr>
 	</table>

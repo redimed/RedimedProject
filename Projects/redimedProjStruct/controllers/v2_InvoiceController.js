@@ -200,7 +200,7 @@ module.exports = {
 				include:   [
 					{ 
 						model: db.InvItem , as: 'InvItem',
-						attributes: ['ITEM_CODE']
+						attributes: ['ITEM_CODE', 'ITEM_NAME']
 					},
 				]
 			}

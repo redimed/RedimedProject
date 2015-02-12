@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.detail.directive', [])
 
-.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, toastr, $state){
+.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, toastr, $state, $timeout){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -26,7 +26,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					this.is_show = false;
 				},
 				click: function(item) {
-					console.log(item);
 					var postData = {claim_id: item.Claim_id};
 					InvoiceService.update($scope.params.id, postData)
 					.then(function(response){
@@ -66,7 +65,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					InvoiceService.headerDetail(scope.params.id).then(function(response){
 						if(response.status == 'error') 
 							toastr.error('Error Get Detail', 'Error')
-						console.log(response.data)
 						angular.extend(scope.InvoiceMap, response.data);
 						ConfigService.autoConvertData(scope.InvoiceMap);
 
@@ -75,6 +73,10 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						scope.InvoiceMap.patient.full_name = scope.InvoiceMap.patient.Title + '. ' + scope.InvoiceMap.patient.First_name + ' ' + scope.InvoiceMap.patient.Sur_name;
 						scope.InvoiceMap.lines = scope.InvoiceMap.lines.filter(function(item){
 				 			return item.IS_ENABLE == 1;
+				 		});
+
+				 		scope.InvoiceMap.lines.forEach(function(line){
+				 			line.invItem.ITEM_NAME = line.invItem.ITEM_NAME.substring(0, 50);
 				 		})
 
 						for(var i = 0, amount = 0, len = scope.InvoiceMap.lines.length; i < len; ++i) {
@@ -91,7 +93,8 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				 		}
 
 				 		scope.patientClaim.options.search.Patient_id = scope.InvoiceMap.Patient_id;
-				 		scope.patientClaimPanel.reload();
+				 		
+				 		$timeout(scope.patientClaimPanel.reload, 1000);
 					})
 				}
 				scope.InvoiceMap = angular.copy(InvoiceHeaderModel);
@@ -111,8 +114,10 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						if(r==false) return;
 					}
 					InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
-						if(response.status == 'error') toastr.error('Error Get Detail', 'Error')
-						toastr.success('Edit Successfully !!!', 'Success');
+						if(response.status == 'error') 
+							toastr.error('Cannot send to ERP', 'Error')
+						else
+							toastr.success('Edit Successfully !!!', 'Success');
 						init();
 					})
 				}else{
