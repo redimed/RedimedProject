@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
-    .directive("addSystem", function(treeApproveService, toastr, $state) {
+    .directive("addFunction", function(TreeApproveService, toastr, $state) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -11,9 +11,9 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
             link: function(scope, element, attrs) {
                 scope.$watch("ngModel", function(newModel) {
                     if (newModel !== null) {
-                        scope.addOrUpdateTitle = "Update System";
+                        scope.addOrUpdateTitle = "Update Function";
                         scope.addOrUpdateButton = "Update";
-                        treeApproveService.loadOneSystem(newModel).then(function(response) {
+                        TreeApproveService.LoadOneFunction(newModel).then(function(response) {
                             if (response.status === "success") {
                                 scope.info = response.result;
                                 scope.info.oldName = scope.info.TYPE_NAME;
@@ -31,11 +31,11 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
                             }
                         });
                     } else {
-                        scope.addOrUpdateTitle = "Add System";
+                        scope.addOrUpdateTitle = "Add Function";
                         scope.addOrUpdateButton = "Add";
                     }
                 });
             },
-            templateUrl: "modules/treeApprove/directives/templates/addSystem.html"
+            templateUrl: "modules/treeApprove/directives/templates/AddFunction.html"
         };
     });

@@ -6,26 +6,26 @@ angular.module("app.loggedIn.treeApprove", [
     .config(function($stateProvider) {
         $stateProvider
         //LIST SYSTEM
-            .state("loggedIn.listSystem", {
-                url: "/listSystem",
-                templateUrl: "modules/treeApprove/views/listSystem.html",
-                controller: "listSystemController"
+            .state("loggedIn.ListFunction", {
+                url: "/ListFunction",
+                templateUrl: "modules/treeApprove/views/ListFunction.html",
+                controller: "ListFunctionController"
             })
             //END LIST SYSTEM
 
         //DEPARTMENT
-        .state("loggedIn.listDepartment", {
-                url: "/listDepartment",
-                templateUrl: "modules/treeApprove/views/listDepartment.html",
-                controller: "listDepartmentController"
+        .state("loggedIn.ListTree", {
+                url: "/ListTree",
+                templateUrl: "modules/treeApprove/views/ListTree.html",
+                controller: "ListTreeController"
             })
             //END DEPARTMENT
 
         //ADD SYSTEM
-        .state("loggedIn.detailSystem", {
-            url: "/detailSystem",
-            templateUrl: "modules/treeApprove/views/detailSystem.html",
-            controller: "detailSystemController"
+        .state("loggedIn.DetailTree", {
+            url: "/DetailTree",
+            templateUrl: "modules/treeApprove/views/DetailTree.html",
+            controller: "DetailTree"
         });
         //END ADD SYSTEM
     });
