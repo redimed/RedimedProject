@@ -7,28 +7,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/txtStatus"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSwitch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Switch ON/OFF"/>
-
-    <Button
-        android:id="@+id/btnDiscover"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Make Discoverable"/>
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/txtValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Switch ON/OFF"/>
+
+        <Button
+            android:id="@+id/btnDiscover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Make Discoverable"/>
+
         <Button
             android:id="@+id/btnPairList"
             android:layout_width="wrap_content"
@@ -36,10 +48,20 @@
             android:text="List Paired Devices"/>
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Scan"
             android:id="@+id/btnScan"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find And Connect"
+            android:id="@+id/btnFindAndConnect"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disconnect"
+            android:id="@+id/btnDisconnect"/>
     </LinearLayout>
 
     <LinearLayout
@@ -50,12 +72,12 @@
             android:id="@+id/btnSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send Data"/>
+            android:text="Pulse Get Data"/>
         <Button
             android:id="@+id/btnStopSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop Data"/>
+            android:text="Pulse Stop Data"/>
         <Button
             android:id="@+id/btnScaleConfirmation"
             android:layout_width="wrap_content"
@@ -86,32 +108,220 @@
             android:id="@+id/btnSpResult1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"/>
+            android:text="Spirometer Start"/>
         <Button
             android:id="@+id/btnSpPatientInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SN"
+            android:text="Spirometer SN"
             />
         <Button
             android:id="@+id/btnSpResult2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish"
+            android:text="Spirometer Finish"
+            />
+        <Button
+            android:id="@+id/btnSpDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spirometer Delete"
             />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:layout_width="match_parent"
+            android:id="@+id/btnBP1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disconnect"
-            android:id="@+id/btnDisconnect"/>
+            android:text="BP Handshake"/>
+        <Button
+            android:id="@+id/btnBP2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BP Delete"
+            />
+        <Button
+            android:id="@+id/btnBP3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BP Read Data"
+            />
+        <Button
+            android:id="@+id/btnBP4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check Version"
+            />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnUrConfirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Urine Confirmation"/>
+        <Button
+            android:id="@+id/btnUrSynchronizeTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Synchronize Time"
+            />
+        <Button
+            android:id="@+id/btnUrReadTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Read Time"
+            />
+        <Button
+            android:id="@+id/btnUrSingleData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Single Data"
+            />
+        <Button
+            android:id="@+id/btnUrAllData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Data"
+            />
+        <Button
+            android:id="@+id/btnUrDeleteData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Del Data"
+            />
+        <Button
+            android:id="@+id/btnUrCloseBle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close BLE"
+            />
+        <Button
+            android:id="@+id/btnUrShutdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shutdown"
+            />
+        <Button
+            android:id="@+id/btnUrMeasure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Measure"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnBGTestConn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BG Test Conn"/>
+        <Button
+            android:id="@+id/btnBGDeleteData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BG Delete Data"
+            />
+        <Button
+            android:id="@+id/btnBGPowerOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BG Power Off"
+            />
+        <Button
+            android:id="@+id/btnBGBLEOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BG Bluetooth Off"
+            />
+        <Button
+            android:id="@+id/btnBGHistoryData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BG History Data"
+            />
+        <Button
+            android:id="@+id/btnBGData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BG Data"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnMiniECGData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mini ECG Data"/>
+        <Button
+            android:id="@+id/btnMiniECGDeviceInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Device Info."
+            />
+        <Button
+            android:id="@+id/btnMiniECGSetTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Set Time"
+            />
+        <Button
+            android:id="@+id/btnMiniECGCaseInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Case Info."
+            />
+        <Button
+            android:id="@+id/btnMiniECGDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Delete"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnECGDataUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Data Upload"/>
+        <Button
+            android:id="@+id/btnECGFinishRec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Finish Recieving"
+            />
+        <Button
+            android:id="@+id/btnECGFinishRecCon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Finish Rec Continuously"
+            />
+        <Button
+            android:id="@+id/btnECGGetTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Get Time."
+            />
+        <Button
+            android:id="@+id/btnECGStopUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ECG Stop Uploading"
+            />
+    </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
