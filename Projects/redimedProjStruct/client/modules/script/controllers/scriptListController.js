@@ -4,6 +4,7 @@ angular.module('app.loggedIn.script.list.controller',[
     .controller('ScriptListController',function($scope, $stateParams){
         $scope.script_panel = {};
         $scope.script = {};
+        alert('2123');
     
         $scope.scripts = {
             select:0,
@@ -68,6 +69,7 @@ angular.module('app.loggedIn.script.list.controller',[
             success: function (response) {
                 if (response.status == 'success')
                     $scope.script_panel.reload();
+                    $scope.scriptAddForm.close();
             }
         }
        
@@ -82,6 +84,7 @@ angular.module('app.loggedIn.script.list.controller',[
             success: function (response) {
                 if (response.status == 'success')
                     $scope.script_panel.reload();
+                    $scope.scriptEditForm.close();
             }
         }
     
