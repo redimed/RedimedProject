@@ -2802,3 +2802,12 @@ Error at Tue Feb 10 2015 08:11:37 GMT+0700 (SE Asia Standard Time) : {"code":"PR
 Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
 Error at Tue Feb 10 2015 08:11:37 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
 
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Thu Feb 12 2015 08:10:07 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Thu Feb 12 2015 08:10:07 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Thu Feb 12 2015 08:10:07 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+

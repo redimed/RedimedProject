@@ -4,7 +4,7 @@
         <div id="chat-users">
             <div class="chat-header">
                 <div class="pull-left">
-                    <input ng-model="searchUser" ng-change="searchOnlineUser(searchUser)" type="text" placeholder="search">
+                    <input ng-model="searchUser" ng-change="searchOnlineUser(searchUser)" type="text" placeholder="Search User">
                 </div>
             </div>
             <div class="side-widget">
@@ -12,7 +12,7 @@
                 <div class="side-widget-content" >
                     <div ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
                         <div class="user-profile">
-                            <img ng-if="u.img != null"  style="background-color: white;" class="img-circle hide1" src="{{u.img}}"  alt="" width="35" height="35">
+                            <img ng-if="u.img != null"  style="background-color: white;" class="img-circle hide1" ng-src="{{u.img}}"  alt="" width="35" height="35">
                             <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png"  alt="" width="35" height="35">
                         </div>
                         <div class="user-details">
