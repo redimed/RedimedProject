@@ -1,4 +1,5 @@
 var db = require('../models');
+var InvoiceLineModel = require('../v1_models/Cln_invoice_lines.js');
 
 var ERP_REST = require('../helper/ERP_Rest');
 
