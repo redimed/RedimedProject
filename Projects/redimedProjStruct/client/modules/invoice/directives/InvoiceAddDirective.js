@@ -129,6 +129,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 					if(t_item) {
 						return;
 					}
+					item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);
 					item.QUANTITY = 1;
 					item.TIME_SPENT = 0;
 					$scope.InvoiceMap.lines.push(item);
