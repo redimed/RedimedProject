@@ -2,7 +2,7 @@
  * Created by Luan Nguyen on 1/12/2015.
  */
 angular.module("app.loggedIn.im.detail.controller",[])
-    .controller("InjuryDetailController",function($scope,$modal,$filter,$state,$stateParams,InjuryManagementService,toastr){
+    .controller("InjuryDetailController",function($scope,$http,$modal,$filter,$state,$stateParams,InjuryManagementService,toastr){
         $scope.injuryInfo = {};
         $scope.injuryImages = [];
         $scope.loadedImage = false;
@@ -13,7 +13,6 @@ angular.module("app.loggedIn.im.detail.controller",[])
         })
 
         InjuryManagementService.getImageByInjury($stateParams.id).then(function(rs){
-            console.log(rs);
             if(rs.status == 'success')
             {
                 for(var i=0 ; i<rs.data.length; i++)
