@@ -1,11 +1,11 @@
 angular.module("app.loggedIn.treeApprove.detail.controller", [])
-    .controller("detailSystemController", function($scope, $modal, $cookieStore, treeApproveService, localStorageService, toastr, $state) {
+    .controller("DetailTree", function($scope, $modal, $cookieStore, TreeApproveService, localStorageService, toastr, $state) {
         //FUNCTION LOADTREE
         $scope.treeData = [];
         $scope.loadTree = function() {
-            var departmenCode = localStorageService.get("departmenCode");
-            departmenCode.userId = $cookieStore.get("userInfo").id;
-            treeApproveService.loadTreeApprove(departmenCode).then(function(response) {
+            var IdTree = localStorageService.get("IdTree");
+            IdTree.userId = $cookieStore.get("userInfo").id;
+            TreeApproveService.LoadTreeApprove(IdTree).then(function(response) {
                 if (response.status === "fail") {
                     toastr.error("Loading fail!", "Error");
                 } else if (response.status === "findFound" || response.status === "findNull") {
@@ -42,7 +42,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
         var dialogTree = function(nodeInfo) {
             var modalInstance = $modal.open({
                 templateUrl: "AddNode",
-                controller: function($scope, $modalInstance, treeApproveService) {
+                controller: function($scope, $modalInstance, TreeApproveService) {
                     $scope.getReturnedValue = function(value) {
                         if (value) {
                             $modalInstance.close({
@@ -53,18 +53,18 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                     };
                     if (nodeInfo.status === "addNew") {
                         $scope.isNew = true;
-                        $scope.nodeIdEdit = null;
+                        $scope.NodeIdEdit = null;
                     } else if (nodeInfo.status === "edit") {
                         $scope.isNew = false;
-                        $scope.nodeIdEdit = nodeInfo.node;
+                        $scope.NodeIdEdit = nodeInfo.node;
                     }
                     $scope.getInfo = function(value) {
                         if ($scope.isNew === true) {
                             value.userId = $cookieStore.get("userInfo").id;
                             value.parent = nodeInfo.node.id;
-                            value.GROUP_ID = localStorageService.get("departmenCode").GROUP_ID;
-                            value.GROUP_TYPE = localStorageService.get("idSystem");
-                            treeApproveService.insertNode(value).then(function(response) {
+                            value.GROUP_ID = localStorageService.get("IdTree").GROUP_ID;
+                            value.GROUP_TYPE = localStorageService.get("IdFunction");
+                            TreeApproveService.InsertNode(value).then(function(response) {
                                 if (response.status === "success") {
                                     $modalInstance.close({
                                         status: "addSuccess",
@@ -91,7 +91,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
 
                         } else if ($scope.isNew === false) {
                             value.userId = $cookieStore.get("userInfo").id;
-                            treeApproveService.updateNode(value).then(function(response) {
+                            TreeApproveService.UpdateNode(value).then(function(response) {
                                 if (response.status === "fail") {
                                     $modalInstance.close({
                                         status: "editFail",
@@ -241,7 +241,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                 GROUP_ID: node.data.GROUP_ID,
                 NODE_ID: node.data.id
             };
-            treeApproveService.deleteNode(info).then(function(response) {
+            TreeApproveService.DeleteNode(info).then(function(response) {
                 if (response.status === "success") {
                     //PUSH DATA OF TREE
                     var treeData = [];

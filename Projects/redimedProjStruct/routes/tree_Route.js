@@ -1,26 +1,26 @@
-var treeApprove = require("./controllers/treeApproveController/treeApproveController");
-//LIST SYSTEM
-app.post('/api/treeApprove/post-system-list', treeApprove.loadSystem);
-app.post('/api/treeApprove/post-system-one', treeApprove.loadOneSystem);
-app.post('/api/treeApprove/post-system-insert', treeApprove.insertSystem);
-app.post('/api/treeApprove/post-system-delete', treeApprove.deleteSystem);
-app.post('/api/treeApprove/post-system-update', treeApprove.updateSystem);
-//END LIST SYSTEM
+var TreeApprove = require("./controllers/TreeApproveController/TreeApproveController");
+//ROUTE FUNCTION
+app.post('/api/treeApprove/post-function-list', TreeApprove.LoadFunction);
+app.post('/api/treeApprove/post-function-one', TreeApprove.LoadOneFunction);
+app.post('/api/treeApprove/post-function-insert', TreeApprove.InsertFunction);
+app.post('/api/treeApprove/post-function-delete', TreeApprove.DeleteFunction);
+app.post('/api/treeApprove/post-function-update', TreeApprove.UpdateFunction);
+//END ROUTE FUNCTION
 
-//LIST DEPARTMENT
-app.post('/api/treeApprove/post-department-list', treeApprove.loadDepartment);
-app.post('/api/treeApprove/post-department-insert', treeApprove.insertDepartment);
-app.post('/api/treeApprove/post-department-one', treeApprove.loadOneDepartment);
-app.post('/api/treeApprove/post-department-update', treeApprove.updateDepartment);
-app.post('/api/treeApprove/post-department-delete', treeApprove.deleteDepartment);
-//END LIST DEPARTMENT
+//ROUTE TREE
+app.post('/api/treeApprove/post-tree-list', TreeApprove.LoadTree);
+app.post('/api/treeApprove/post-tree-insert', TreeApprove.InsertTree);
+app.post('/api/treeApprove/post-tree-one', TreeApprove.LoadOneTree);
+app.post('/api/treeApprove/post-tree-update', TreeApprove.UpdateTree);
+app.post('/api/treeApprove/post-tree-delete', TreeApprove.DeleteTree);
+//END ROUTE TREE
 
-//LIST TREEAPPROVE
-app.post('/api/treeApprove/get-system-tree', treeApprove.loadTreeApprove);
-app.post('/api/treeApprove/post-node-insert', treeApprove.insertNode);
-app.get('/api/treeApprove/get-company-list', treeApprove.loadCompany);
-app.get('/api/treeApprove/get-site-list', treeApprove.loadSite);
-app.post('/api/treeApprove/post-node-one', treeApprove.loadOneNode);
-app.post('/api/treeApprove/post-node-update', treeApprove.updateNode);
-app.post('/api/treeApprove/post-node-delete', treeApprove.deleteNode);
-//END LIST TREAPPROVE
+//ROUTE TREE DETAIL
+app.post('/api/treeApprove/get-function-tree', TreeApprove.LoadTreeApprove);
+app.post('/api/treeApprove/post-node-insert', TreeApprove.InsertNode);
+app.get('/api/treeApprove/get-company-list', TreeApprove.LoadCompany);
+app.get('/api/treeApprove/get-site-list', TreeApprove.LoadSite);
+app.post('/api/treeApprove/post-node-one', TreeApprove.LoadOneNode);
+app.post('/api/treeApprove/post-node-update', TreeApprove.UpdateNode);
+app.post('/api/treeApprove/post-node-delete', TreeApprove.DeleteNode);
+//END ROUTE TREE DETAIL

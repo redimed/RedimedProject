@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.treeApprove.AddNode.directive", [])
-    .directive("addNode", function(treeApproveService, toastr, $state) {
+    .directive("addNode", function(TreeApproveService, toastr, $state) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -13,7 +13,7 @@ angular.module("app.loggedIn.treeApprove.AddNode.directive", [])
                     if (newModel !== null) {
                         scope.addOrUpdateTitle = "Update Node";
                         scope.addOrUpdateButton = "Update";
-                        treeApproveService.loadOneNode(newModel).then(function(response) {
+                        TreeApproveService.LoadOneNode(newModel).then(function(response) {
                             if (response.status === "error") {
                                 toastr.error("Loading error!", "Error");
                             } else if (response.status === "fail") {
@@ -34,6 +34,6 @@ angular.module("app.loggedIn.treeApprove.AddNode.directive", [])
                     }
                 });
             },
-            templateUrl: "modules/treeApprove/directives/templates/addNode.html"
+            templateUrl: "modules/treeApprove/directives/templates/AddNode.html"
         };
     });

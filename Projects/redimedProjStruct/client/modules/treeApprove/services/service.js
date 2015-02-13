@@ -1,93 +1,93 @@
 angular.module("app.loggedIn.treeApprove.service", [])
-    .factory("treeApproveService", function(Restangular) {
-        var treeApproveService = {};
+    .factory("TreeApproveService", function(Restangular) {
+        var TreeApproveService = {};
         var api = Restangular.all("api");
 
         // MODULE SYSTEM
-        treeApproveService.loadSystem = function(searchObjPost) {
-            var loadSystem = api.all("treeApprove/post-system-list");
-            return loadSystem.post({
+        TreeApproveService.LoadFunction = function(searchObjPost) {
+            var LoadFunction = api.all("treeApprove/post-function-list");
+            return LoadFunction.post({
                 searchObj: searchObjPost
             });
         };
 
-        treeApproveService.deleteSystem = function(systemIdPost, index) {
-            var deleteSystem = api.all("treeApprove/post-system-delete");
-            return deleteSystem.post({
-                info: systemIdPost
+        TreeApproveService.DeleteFunction = function(FunctionIdPost, index) {
+            var DeleteFunction = api.all("treeApprove/post-function-delete");
+            return DeleteFunction.post({
+                info: FunctionIdPost
             });
         };
-        treeApproveService.insertSystem = function(systemPost) {
-            var insertSystem = api.all("treeApprove/post-system-insert");
-            return insertSystem.post({
+        TreeApproveService.InsertFunction = function(systemPost) {
+            var InsertFunction = api.all("treeApprove/post-function-insert");
+            return InsertFunction.post({
                 info: systemPost
             });
         };
 
-        treeApproveService.loadOneSystem = function(idPost) {
-            var loadOneSystem = api.all("treeApprove/post-system-one");
-            return loadOneSystem.post({
+        TreeApproveService.LoadOneFunction = function(idPost) {
+            var LoadOneFunction = api.all("treeApprove/post-function-one");
+            return LoadOneFunction.post({
                 info: idPost
             });
         };
 
-        treeApproveService.updateSystem = function(idPost) {
-            var updateSystem = api.all("treeApprove/post-system-update");
-            return updateSystem.post({
+        TreeApproveService.UpdateFunction = function(idPost) {
+            var UpdateFunction = api.all("treeApprove/post-function-update");
+            return UpdateFunction.post({
                 info: idPost
             });
         };
         // END MODULE SYSTEM
 
         //MODULE DEPARTMENT
-        treeApproveService.loadTreeApprove = function(infoPost) {
-            var loadTreeApprove = api.all("treeApprove/get-system-tree");
-            return loadTreeApprove.post({
+        TreeApproveService.LoadTreeApprove = function(infoPost) {
+            var LoadTreeApprove = api.all("treeApprove/get-function-tree");
+            return LoadTreeApprove.post({
                 info: infoPost
             });
         };
 
-        treeApproveService.deleteDepartment = function(idPost) {
-            var deleteDepartment = api.all("treeApprove/post-department-delete");
-            return deleteDepartment.post({
+        TreeApproveService.DeleteTree = function(idPost) {
+            var DeleteTree = api.all("treeApprove/post-tree-delete");
+            return DeleteTree.post({
                 info: idPost
             });
         };
 
-        treeApproveService.loadDepartment = function(departmenCodePost) {
-            var loadDepartment = api.all("treeApprove/post-department-list");
-            return loadDepartment.post({
-                searchObj: departmenCodePost
+        TreeApproveService.LoadTree = function(TreeCodePost) {
+            var LoadTree = api.all("treeApprove/post-tree-list");
+            return LoadTree.post({
+                searchObj: TreeCodePost
             });
         };
 
-        treeApproveService.loadOneDepartment = function(idPost) {
-            var loadOneDepartment = api.all("treeApprove/post-department-one");
-            return loadOneDepartment.post({
+        TreeApproveService.LoadOneTree = function(idPost) {
+            var LoadOneTree = api.all("treeApprove/post-tree-one");
+            return LoadOneTree.post({
                 info: idPost
             });
         };
 
-        treeApproveService.updateDepartment = function(infoPost) {
-            var updateDepartment = api.all("treeApprove/post-department-update");
-            return updateDepartment.post({
+        TreeApproveService.UpdateTree = function(infoPost) {
+            var UpdateTree = api.all("treeApprove/post-tree-update");
+            return UpdateTree.post({
                 info: infoPost
             });
         };
 
-        treeApproveService.loadCompany = function() {
-            var loadCompany = api.one("treeApprove/get-company-list");
-            return loadCompany.get({});
+        TreeApproveService.LoadCompany = function() {
+            var LoadCompany = api.one("treeApprove/get-company-list");
+            return LoadCompany.get({});
         };
 
-        treeApproveService.loadSite = function() {
-            var loadSite = api.one("treeApprove/get-site-list");
-            return loadSite.get({});
+        TreeApproveService.LoadSite = function() {
+            var LoadSite = api.one("treeApprove/get-site-list");
+            return LoadSite.get({});
         };
 
-        treeApproveService.insertDepartment = function(departmentPost) {
-            var insertDepartment = api.all("treeApprove/post-department-insert");
-            return insertDepartment.post({
+        TreeApproveService.InsertTree = function(departmentPost) {
+            var InsertTree = api.all("treeApprove/post-tree-insert");
+            return InsertTree.post({
                 info: departmentPost
             });
         };
@@ -95,33 +95,33 @@ angular.module("app.loggedIn.treeApprove.service", [])
         //END MODULE DEPARTMENT
 
         //MODULE NODE
-        treeApproveService.insertNode = function(nodePost) {
-            var insertNode = api.all("treeApprove/post-node-insert");
-            return insertNode.post({
+        TreeApproveService.InsertNode = function(nodePost) {
+            var InsertNode = api.all("treeApprove/post-node-insert");
+            return InsertNode.post({
                 info: nodePost
             });
         };
-        treeApproveService.updateNode = function(nodePost) {
-            var updateNode = api.all("treeApprove/post-node-update");
-            return updateNode.post({
-                info: nodePost
-            });
-        };
-
-        treeApproveService.loadOneNode = function(nodePost) {
-            var loadOneNode = api.all("treeApprove/post-node-one");
-            return loadOneNode.post({
+        TreeApproveService.UpdateNode = function(nodePost) {
+            var UpdateNode = api.all("treeApprove/post-node-update");
+            return UpdateNode.post({
                 info: nodePost
             });
         };
 
-        treeApproveService.deleteNode = function(nodePost) {
-            var deleteNode = api.all("treeApprove/post-node-delete");
-            return deleteNode.post({
+        TreeApproveService.LoadOneNode = function(nodePost) {
+            var LoadOneNode = api.all("treeApprove/post-node-one");
+            return LoadOneNode.post({
+                info: nodePost
+            });
+        };
+
+        TreeApproveService.DeleteNode = function(nodePost) {
+            var DeleteNode = api.all("treeApprove/post-node-delete");
+            return DeleteNode.post({
                 info: nodePost
             });
         };
         //END MODULE NODE
 
-        return treeApproveService;
+        return TreeApproveService;
     });

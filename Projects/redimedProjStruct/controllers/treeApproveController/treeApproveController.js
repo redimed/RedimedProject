@@ -6,7 +6,7 @@ var Company = db.Company;
 var RedimedSite = db.RedimedSite;
 module.exports = {
     //MODULE SYSTEM
-    loadSystem: function(req, res) {
+    LoadFunction: function(req, res) {
         var searchObj = req.body.searchObj;
         var searchParam = [];
         var strQuery = '';
@@ -43,7 +43,7 @@ module.exports = {
                 console.log("*****ERROR:" + err + "*****");
             });
     },
-    insertSystem: function(req, res) {
+    InsertFunction: function(req, res) {
         var info = req.body.info || [];
         sys_hierarchies_types.create({
                 TYPE_NAME: info.TYPE_NAME,
@@ -80,7 +80,7 @@ module.exports = {
                 return;
             });
     },
-    deleteSystem: function(req, res) {
+    DeleteFunction: function(req, res) {
         var info = req.body.info || -1;
         var query = "DELETE FROM sys_hierarchies_types where TYPE_NAME = '" + info + "'";
         db.sequelize.query(query)
@@ -100,7 +100,7 @@ module.exports = {
                 return;
             });
     },
-    loadOneSystem: function(req, res) {
+    LoadOneFunction: function(req, res) {
         var info = req.body.info;
         sys_hierarchies_types.find({
                 where: {
@@ -126,7 +126,7 @@ module.exports = {
             });
     },
 
-    updateSystem: function(req, res) {
+    UpdateFunction: function(req, res) {
         var info = req.body.info;
         var TYPE_NAME = info.oldName;
         sys_hierarchies_types.update({
@@ -169,7 +169,7 @@ module.exports = {
     //END MODULE SYSTEM
 
     //MODULE DEPARTMENT
-    loadDepartment: function(req, res) {
+    LoadTree: function(req, res) {
         var searchObj = req.body.searchObj;
         var searchParam = [];
         var strQuery = '';
@@ -217,7 +217,7 @@ module.exports = {
             });
     },
 
-    insertDepartment: function(req, res) {
+    InsertTree: function(req, res) {
         var info = req.body.info || [];
         var typeSystem = info.GROUP_TYPE;
         sys_hierarchy_group.max("GROUP_ID").success(function(maxId) {
@@ -274,7 +274,7 @@ module.exports = {
             });
     },
 
-    deleteDepartment: function(req, res) {
+    DeleteTree: function(req, res) {
         var info = req.body.info;
         var query = "DELETE FROM sys_hierarchy_group WHERE GROUP_ID=" + info;
         db.sequelize.query(query)
@@ -295,7 +295,7 @@ module.exports = {
             });
     },
 
-    loadOneDepartment: function(req, res) {
+    LoadOneTree: function(req, res) {
         var info = req.body.info;
         sys_hierarchy_group.find({
                 where: {
@@ -321,7 +321,7 @@ module.exports = {
             });
     },
 
-    updateDepartment: function(req, res) {
+    UpdateTree: function(req, res) {
         var info = req.body.info;
         sys_hierarchy_group.update({
                 GROUP_NAME: info.GROUP_NAME,
@@ -362,7 +362,7 @@ module.exports = {
     },
 
     //MODULE COMPANY
-    loadCompany: function(req, res) {
+    LoadCompany: function(req, res) {
         Company.findAll({}, {
                 raw: true
             })
@@ -390,7 +390,7 @@ module.exports = {
     //END MODULE COMPANY
 
     //MODULE SITE
-    loadSite: function(req, res) {
+    LoadSite: function(req, res) {
         RedimedSite.findAll({}, {
                 raw: true
             })
@@ -420,7 +420,7 @@ module.exports = {
     //END MODULE DEPARTMENT
 
     //MODULE NODE
-    insertNode: function(req, res) {
+    InsertNode: function(req, res) {
         var info = req.body.info;
         sys_hierarchy_nodes.max("NODE_ID")
             .success(function(maxId) {
@@ -484,7 +484,7 @@ module.exports = {
     //END MODULE NDOE
 
     //MODULE TREEAPPROVE
-    loadTreeApprove: function(req, res) {
+    LoadTreeApprove: function(req, res) {
         var info = req.body.info;
         sys_hierarchy_nodes.findAll({
                 where: {
@@ -577,7 +577,7 @@ module.exports = {
             });
     },
     //END MODULE TREEAPPROVE
-    loadOneNode: function(req, res) {
+    LoadOneNode: function(req, res) {
         var info = req.body.info;
         sys_hierarchy_nodes.find({
                 where: {
@@ -611,7 +611,7 @@ module.exports = {
                 return;
             });
     },
-    updateNode: function(req, res) {
+    UpdateNode: function(req, res) {
         var info = req.body.info;
         sys_hierarchy_nodes.update({
                 NODE_CODE: info.NODE_CODE,
@@ -657,7 +657,7 @@ module.exports = {
             });
     },
 
-    deleteNode: function(req, res) {
+    DeleteNode: function(req, res) {
         var info = req.body.info;
         var query = "DELETE FROM sys_hierarchy_nodes WHERE NODE_ID = " + info.NODE_ID;
         db.sequelize.query(query)

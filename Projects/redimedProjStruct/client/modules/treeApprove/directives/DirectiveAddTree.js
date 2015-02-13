@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.treeApprove.AddDepartment.directive", [])
-    .directive("addDepartment", function(treeApproveService, $state, toastr) {
+    .directive("addTree", function(TreeApproveService, $state, toastr) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -11,9 +11,9 @@ angular.module("app.loggedIn.treeApprove.AddDepartment.directive", [])
             link: function(scope, element, attrs) {
                 scope.$watch("ngModel", function(newModel) {
                     if (newModel !== null) {
-                        scope.addOrUpdateTitle = "Update Department";
+                        scope.addOrUpdateTitle = "Update Tree";
                         scope.addOrUpdateButton = "Update";
-                        treeApproveService.loadOneDepartment(newModel).then(function(response) {
+                        TreeApproveService.LoadOneTree(newModel).then(function(response) {
                             if (response.status === "success") {
                                 scope.info = response.result;
                             } else if (response.status === "fail") {
@@ -27,21 +27,24 @@ angular.module("app.loggedIn.treeApprove.AddDepartment.directive", [])
                             }
                         });
                     } else {
-                        scope.addOrUpdateTitle = "Add Department";
+                        scope.addOrUpdateTitle = "Add Tree";
                         scope.addOrUpdateButton = "Add";
                     }
                 });
                 //get companies
-                treeApproveService.loadCompany().then(function(responsive) {
+                TreeApproveService.LoadCompany().then(function(responsive) {
                     scope.companies = responsive.company;
                     //get sites
-                    treeApproveService.loadSite().then(function(responsive) {
+                    TreeApproveService.LoadSite().then(function(responsive) {
                         scope.sites = responsive.redimedSite;
                     });
                     //end get sites
                 });
                 //end get companies
+
+                /* MODEL OF USER */
+                scope.model = {value: "", name: "THANH"};
             },
-            templateUrl: "modules/treeApprove/directives/templates/addDepartment.html"
+            templateUrl: "modules/treeApprove/directives/templates/AddTree.html"
         };
     });

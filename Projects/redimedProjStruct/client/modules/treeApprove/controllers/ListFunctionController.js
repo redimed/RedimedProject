@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
-    .controller("listSystemController", function($scope, MODE_ROW, treeApproveService, localStorageService, $state, $modal, $cookieStore, toastr) {
+    .controller("ListFunctionController", function($scope, MODE_ROW, TreeApproveService, localStorageService, $state, $modal, $cookieStore, toastr) {
         $scope.info = {};
         //FUNCTION SETPAGE
         $scope.setPage = function() {
@@ -17,7 +17,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
 
         //FUNCTION LOADLIST
         $scope.loadList = function() {
-            treeApproveService.loadSystem($scope.searchObjectMap).then(function(response) {
+            TreeApproveService.LoadFunction($scope.searchObjectMap).then(function(response) {
                 if (response[status] !== "fail") {
                     $scope.list = response;
                 } else {
@@ -28,14 +28,14 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
         //END FUNCTION LOADLIST
 
         //FUNCTION SET SYSTEMTEMP LOCALSTORE
-        $scope.goTotreeApproveDetail = function(idSystem) {
-            localStorageService.set("idSystem", idSystem);
-            $state.go("loggedIn.listDepartment");
+        $scope.goToTree = function(IdFunction) {
+            localStorageService.set("IdFunction", IdFunction);
+            $state.go("loggedIn.ListTree");
         };
         //END FUNCTION SET SYSTEMTEMP LOCALSTORE
 
         //FUNCTION DELETE
-        $scope.deleteSystem = function(typeId, index) {
+        $scope.DeleteFunction = function(typeId, index) {
             //JQUERY CONFIRM
             swal({
                 title: "Are you sure?",
@@ -46,7 +46,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                 confirmButtonText: "Yes",
                 closeOnConfirm: true
             }, function() {
-                treeApproveService.deleteSystem(typeId).then(function(response) {
+                TreeApproveService.DeleteFunction(typeId).then(function(response) {
                     if (response.status === "success") {
                         $scope.list.result.splice(index, 1);
                         toastr.success("Delete success!", "Success");
@@ -67,16 +67,17 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
         //END FUNCTION DELETE
 
         //FUNCTION EDIT SYSTEM
-        $scope.editSystem = function(typeId) {
-            dialogSystem(typeId);
+        $scope.EditFunction = function(typeId) {
+            DialogFunction(typeId);
         };
         //END FUNCTION EDIT SYSTEM
 
         //MODULE SYSTEM
-        $scope.addSystem = function() {
-            dialogSystem(null);
+        $scope.AddFunction = function() {
+            DialogFunction(null);
         };
         //END MODULE SYSTEM
+
         //FUNCTUON INIT
         var init = function() {
             $scope.searchObject = {
@@ -100,9 +101,11 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                     GROUP_NAME: ""
                 }
             };
+
             //SEARCH FUNCTION
             $scope.searchObjectMap = angular.copy($scope.searchSystemsObject);
             //END SEARCH FUNCTION
+
             $scope.list = {};
             $scope.loadList();
             $scope.dateOptions = {
@@ -110,16 +113,17 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                 startingDay: 1
             };
         };
-
         //END FUNCTION INIT
+
         //CALL INIT
         init();
         //END CALL INIT
-        var dialogSystem = function(typeId) {
-            // MODULE ADD SYSTEM
+
+        var DialogFunction = function(typeId) {
+            // MODULE ADD FUNCTION
             var modalInstance = $modal.open({
-                templateUrl: "AddSystem",
-                controller: function($scope, $modalInstance, treeApproveService, localStorageService) {
+                templateUrl: "AddFunction",
+                controller: function($scope, $modalInstance, TreeApproveService, localStorageService) {
                     //open
                     $scope.getReturnedValue = function(value) {
                         if (value) {
@@ -135,36 +139,39 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                     //check edit
                     if (typeId === null) {
                         $scope.isNew = true;
-                        $scope.systemIdEdit = null;
+                        $scope.FunctionIdEdit = null;
                     } else {
                         $scope.isNew = false;
-                        $scope.systemIdEdit = typeId;
+                        $scope.FunctionIdEdit = typeId;
                     }
                     //end check edit
 
-                    //Add new system
+                    //Add new function
                     $scope.getInfo = function(value) {
                         value.userId = $cookieStore.get("userInfo").id;
                         if ($scope.isNew === true) {
-                            //add new system
-                            treeApproveService.insertSystem(value).then(function(responsive) {
+                            //add new function
+                            TreeApproveService.InsertFunction(value).then(function(responsive) {
                                 if (responsive.status === "error") {
                                     var data = [{
                                         "status": "fail",
                                         "result": null
                                     }];
                                     $modalInstance.close(data);
-                                    toastr.error("Add system fail!", "Error");
+                                    toastr.error("Add function fail!", "Error");
                                 } else if (responsive.status === "success") {
+
                                     //get value not reload page
                                     var data = [{
                                         "status": "success",
                                         "result": responsive.result
                                     }];
                                     //end get value not reload page
+
                                     $modalInstance.close(data);
-                                    toastr.success("Add system success!", "success");
+                                    toastr.success("Add function success!", "success");
                                 } else {
+
                                     //catch exception
                                     $state.go("loggedIn.home", null, {
                                         "reload": true
@@ -172,27 +179,31 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                                     toastr.error("Server not responsive!", "Error");
                                 }
                             });
-                            //end Add new system
+                            //end Add new function
+
                         } else if ($scope.isNew === false) {
-                            //update system
-                            treeApproveService.updateSystem(value).then(function(responsive) {
+                            //update function
+                            TreeApproveService.UpdateFunction(value).then(function(responsive) {
                                 if (responsive.status === "error") {
                                     var data = [{
                                         "status": "fail",
                                         "result": null
                                     }];
                                     $modalInstance.close(data);
-                                    toastr.error("Update system fail!", "Error");
+                                    toastr.error("Update function fail!", "Error");
                                 } else if (responsive.status === "success") {
+
                                     //get value not reload page
                                     var data = [{
                                         "status": "success",
                                         "result": responsive.result
                                     }];
                                     //end get value not reload page
+
                                     $modalInstance.close(data);
-                                    toastr.success("Update system success!", "success");
+                                    toastr.success("Update function success!", "success");
                                 } else {
+
                                     //catch exception
                                     $state.go("loggedIn.home", null, {
                                         "reload": true
@@ -200,7 +211,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                                     toastr.error("Server not responsive!", "Error");
                                 }
                             });
-                            //update new system
+                            //update new function
                         }
 
                     };
@@ -214,7 +225,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                     $scope.list.result = data[0].result;
                 }
             });
-            // END MODULE ADD SYSTEM
+            // END MODULE ADD FUNCTION
         };
 
     });

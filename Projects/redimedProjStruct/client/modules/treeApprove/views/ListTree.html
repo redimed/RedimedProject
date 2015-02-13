@@ -1,4 +1,4 @@
-<h3 class="page-title">Department List</h3>
+<h3 class="page-title">Tree List</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -7,20 +7,20 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.listSystem">Systems</a>
+            <a ui-sref="loggedIn.ListFunction">Functions</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.listDepartment">Departments</a>
+            <a ui-sref="loggedIn.ListTree">Trees</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet green-meadow box">
     <div class="portlet-title">
-        <a ui-sref="loggedIn.addSystem" class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="addDepartment()">New department</a>
+        <a ui-sref="loggedIn.addSystem" class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="AddTree()">New tree</a>
         <div class="caption">
-            <i class="fa fa-cogs"></i>List of department
+            <i class="fa fa-cogs"></i>List of tree
         </div>
     </div>
     <div class="portlet-body">
@@ -39,7 +39,7 @@
         <table class="table table-responsive table-hover">
             <thead>
                 <tr>
-                    <th>Department name</th>
+                    <th>Tree name</th>
                     <th>Company name</th>
                     <th>Decription</th>
                     <th></th>
@@ -47,7 +47,7 @@
                 <!-- SEARCH -->
                 <tr>
                     <td>
-                        <input class="input-sm" type="text" ng-model="searchObjectMap.data.GROUP_NAME" ng-change="loadList()">
+                        <input class="input-sm form-control" type="text" ng-model="searchObjectMap.data.GROUP_NAME" ng-change="loadList()">
                     </td>
                     <!-- END SEARCH -->
                 </tr>
@@ -59,25 +59,23 @@
                     <td>{{l.DECRIPTION || ""}}</td>
                     <td>
                         <!-- DOPDOWN ACTION -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-
-                                <li class="dropdown">
-                                    <button class="dropdown-toggle btn btn-circle btn-sm green" data-toggle="dropdown" role="button" aria-expanded="false">Action
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" style="width: 100px;">
-                                        <li><a ng-click="goTotreeApproveDetail(l)"><i class="fa fa-check"></i>Detail</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a ng-click="editDepartment(l.GROUP_ID)"><i class="fa fa-pencil"></i>Edit</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a ng-click="deleteDepartment(l.GROUP_ID, $index)"><i class="fa fa-times"></i>Delete</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-circle btn-sm green dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="goTotreeApproveDetail(l)"><i class="fa fa-check"></i>Detail</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="EditTree(l.GROUP_ID)"><i class="fa fa-pencil"></i>Edit</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="DeleteTree(l.GROUP_ID, $index)"><i class="fa fa-times"></i>Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <!-- END DROPDOWN ACTION -->
                     </td>
@@ -88,7 +86,7 @@
     </div>
 </div>
 <!-- MODULE ADD DEPARTMENT -->
-<script type="text/ng-template" id="AddDepartment">
-    <add-department on-cancel="getReturnedValue(return)" ng-model="departmentIdEdit" on-save="getInfo(return)"></add-department>
+<script type="text/ng-template" id="AddTree">
+    <add-tree on-cancel="getReturnedValue(return)" ng-model="TreeIdEdit" on-save="getInfo(return)"></add-tree>
 </script>
 <!-- END MODULE ADD DEPARTMENT -->

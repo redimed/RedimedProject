@@ -1,6 +1,5 @@
 angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
-    .controller("listDepartmentController", function($scope, MODE_ROW, localStorageService, $state, treeApproveService, $modal, $cookieStore, toastr) {
-        // var idSystem = localStorageService.get("idSystem");
+    .controller("ListTreeController", function($scope, MODE_ROW, localStorageService, $state, TreeApproveService, $modal, $cookieStore, toastr) {
         $scope.info = {};
         //FUNCTION SETPAGE
         $scope.setPage = function() {
@@ -17,7 +16,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
         //END FUNCTION RESET
 
         $scope.loadList = function() {
-            treeApproveService.loadDepartment($scope.searchObjectMap).then(function(response) {
+            TreeApproveService.LoadTree($scope.searchObjectMap).then(function(response) {
                 if (response[status] !== "fail") {
                     $scope.list = response;
                 } else {
@@ -45,7 +44,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                 offset: 0,
                 maxSize: 5,
                 currentPage: 1,
-                GROUP_TYPE: localStorageService.get("idSystem"),
+                GROUP_TYPE: localStorageService.get("IdFunction"),
                 data: {
                     GROUP_NAME: "",
                 }
@@ -68,12 +67,12 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
         init();
         //END CAL INIT FUNCTION
 
-        $scope.goTotreeApproveDetail = function(departmenCode) {
-            localStorageService.set("departmenCode", departmenCode);
-            $state.go("loggedIn.detailSystem");
+        $scope.goTotreeApproveDetail = function(IdTree) {
+            localStorageService.set("IdTree", IdTree);
+            $state.go("loggedIn.DetailTree");
         };
 
-        $scope.deleteDepartment = function(groupId, index) {
+        $scope.DeleteTree = function(groupId, index) {
             //JQUERY CONFIRM
             swal({
                 title: "Are you sure?",
@@ -84,7 +83,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                 confirmButtonText: "Yes",
                 closeOnConfirm: true
             }, function() {
-                treeApproveService.deleteDepartment(groupId).then(function(response) {
+                TreeApproveService.DeleteTree(groupId).then(function(response) {
                     if (response.status === "success") {
                         $scope.list.result.splice(index, 1);
                         toastr.success("Delete success!", "Success");
@@ -102,19 +101,19 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
             //END JQUERY CONFIRM
         };
 
-        $scope.editDepartment = function(idDepartment) {
-            dialogDepartment(idDepartment);
+        $scope.EditTree = function(IdTree) {
+            DialogTree(IdTree);
         };
 
-        $scope.addDepartment = function() {
-            dialogDepartment(null);
+        $scope.AddTree = function() {
+            DialogTree(null);
         };
 
-        var dialogDepartment = function(groupId) {
-            // MODULE ADD SYSTEM
+        var DialogTree = function(groupId) {
+            // MODULE ADD TREE
             var modalInstance = $modal.open({
-                templateUrl: "AddDepartment",
-                controller: function($scope, $modalInstance, treeApproveService, localStorageService, $cookieStore) {
+                templateUrl: "AddTree",
+                controller: function($scope, $modalInstance, TreeApproveService, localStorageService, $cookieStore) {
                     $scope.getReturnedValue = function(value) {
                         if (value) {
                             var data = [{
@@ -126,19 +125,19 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                     };
                     $scope.getInfo = function(value) {
                         value.userId = $cookieStore.get("userInfo").id;
-                        value.GROUP_TYPE = localStorageService.get("idSystem");
+                        value.GROUP_TYPE = localStorageService.get("IdFunction");
                         if ($scope.isNew === true) {
                             //add new
-                            treeApproveService.insertDepartment(value).then(function(responsive) {
+                            TreeApproveService.InsertTree(value).then(function(responsive) {
                                 if (responsive.status === "fail") {
-                                    toastr.error("Add new department fail!", "Error");
+                                    toastr.error("Add new tree fail!", "Error");
                                 } else if (responsive.status === "success") {
                                     var data = [{
                                         "status": "success",
                                         "result": responsive.result
                                     }];
                                     $modalInstance.close(data);
-                                    toastr.success("Add new derpartment success!", "Success");
+                                    toastr.success("Add new tree success!", "Success");
                                 } else {
                                     //catch exception
                                     $state.go("loggedIn.home", null, {
@@ -151,16 +150,16 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                         } else if ($scope.isNew === false) {
 
                             //edit
-                            treeApproveService.updateDepartment(value).then(function(responsive) {
+                            TreeApproveService.UpdateTree(value).then(function(responsive) {
                                 if (responsive.status === "fail") {
-                                    toastr.error("Update department fail!", "Error");
+                                    toastr.error("Update tree fail!", "Error");
                                 } else if (responsive.status === "success") {
                                     var data = [{
                                         "status": "success",
                                         "result": responsive.result
                                     }];
                                     $modalInstance.close(data);
-                                    toastr.success("Update derpartment success!", "Success");
+                                    toastr.success("Update tree success!", "Success");
                                 } else {
                                     //catch exception
                                     $state.go("loggedIn.home", null, {
@@ -176,10 +175,10 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                     //check edit
                     if (groupId === null) {
                         $scope.isNew = true; //add new
-                        $scope.departmentIdEdit = null
+                        $scope.TreeIdEdit = null;
                     } else {
                         $scope.isNew = false; //edit
-                        $scope.departmentIdEdit = groupId;
+                        $scope.TreeIdEdit = groupId;
                     }
                     //end check edit
                 },
@@ -190,6 +189,6 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                     $scope.list.result = data[0].result;
                 }
             });
-            // END MODULE ADD SYSTEM
+            // END MODULE ADD TREE
         };
     });

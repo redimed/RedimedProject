@@ -1,20 +1,18 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form" name="AddSystem">
+    <form method="POST" class="grid-form" name="AddFunction">
         <!-- MAIN INFO -->
         <fieldset>
             <legend>{{addOrUpdateTitle}}</legend>
             <div data-row-span="1">
                 <!-- NAME NODE -->
                 <div data-field-span="1">
-                    <div ng-class="{'has-error': AddSystem.TYPE_NAME.$error.required}">
-                        <label>name of system</label>
-                        <input type="text" name="TYPE_NAME" ng-model="info.TYPE_NAME" ng-required="1">
-                    </div>
+                    <label class="control-label">name of function</label>
+                    <input type="text" ng-model="info.TYPE_NAME" />
                 </div>
                 <!-- END NAME NODE -->
             </div>
         </fieldset>
-        <button class="btn green pull-right btn-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</button>
+        <a class="btn green pull-right btn-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
         <a class="btn btn-danger pull-right btn-sm" ng-click="onCancel({return: true})">Cancel</a>
         <!-- END MAIN INFO -->
     </form>

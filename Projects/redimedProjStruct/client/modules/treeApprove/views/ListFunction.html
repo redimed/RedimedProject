@@ -1,4 +1,4 @@
-<h3 class="page-title">System List</h3>
+<h3 class="page-title">Function List</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -7,16 +7,16 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.listSystem">Systems</a>
+            <a ui-sref="loggedIn.ListFunction">Functions</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet green-meadow box">
     <div class="portlet-title">
-        <a ui-sref="loggedIn.addSystem" class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="addSystem()">New system</a>
+        <a class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="AddFunction()">New function</a>
         <div class="caption">
-            <i class="fa fa-cogs"></i>List of system
+            <i class="fa fa-cogs"></i>List of function
         </div>
     </div>
     <div class="portlet-body">
@@ -35,7 +35,7 @@
         <table class="table table-responsive table-hover">
             <thead>
                 <tr>
-                    <th>System name</th>
+                    <th>Function name</th>
                     <th>Created at</th>
                     <th>Updated at</th>
                     <th></th>
@@ -43,7 +43,7 @@
                 <!-- SEARCH -->
                 <tr>
                     <td>
-                        <input class="input-sm" type="text" ng-model="searchObjectMap.data.TYPE_NAME" ng-change="loadList()" </td>
+                        <input class="input-sm form-control" type="text" ng-model="searchObjectMap.data.TYPE_NAME" ng-change="loadList()" </td>
                         <!-- END SEARCH -->
                 </tr>
             </thead>
@@ -54,25 +54,23 @@
                     <td>{{l.Last_update_date| date: "dd/MM/yyyy h:mm:ss a"|| "" }}</td>
                     <td>
                         <!-- DOPDOWN ACTION -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-
-                                <li class="dropdown">
-                                    <button class="dropdown-toggle btn btn-circle green btn-sm" data-toggle="dropdown" role="button" aria-expanded="false">Action
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" style="width: 100px;">
-                                        <li><a ng-click="goTotreeApproveDetail(l.TYPE_NAME)"><i class="fa fa-check"></i>Detail</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a ng-click="editSystem(l.TYPE_NAME)"><i class="fa fa-pencil"></i>Edit</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a ng-click="deleteSystem(l.TYPE_NAME, $index)"><i class="fa fa-times"></i>Delete</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-circle btn-sm green dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="goToTree(l.TYPE_NAME)"><i class="fa fa-check"></i>Detail</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="EditFunction(l.TYPE_NAME)"><i class="fa fa-pencil"></i>Edit</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="DeleteFunction(l.TYPE_NAME, $index)"><i class="fa fa-times"></i>Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <!-- END DROPDOWN ACTION -->
                     </td>
@@ -83,7 +81,7 @@
     </div>
 </div>
 <!-- MODULE ADD SYSTEM -->
-<script type="text/ng-template" id="AddSystem">
-    <add-system on-cancel="getReturnedValue(return)" ng-model="systemIdEdit" on-save="getInfo(return)"></add-system>
+<script type="text/ng-template" id="AddFunction">
+    <add-function on-cancel="getReturnedValue(return)" ng-model="FunctionIdEdit" on-save="getInfo(return)"></add-function>
 </script>
 <!-- END MODULE ADD SYSTEM -->

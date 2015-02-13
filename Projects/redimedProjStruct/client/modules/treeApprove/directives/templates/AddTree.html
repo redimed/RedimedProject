@@ -6,7 +6,7 @@
             <div data-row-span="3">
                 <!-- NAME TYPE -->
                 <div data-field-span="1">
-                    <label>name of department</label>
+                    <label>name of tree</label>
                     <input type="text" ng-model="info.GROUP_NAME">
                 </div>
                 <!-- END NAME TYPE -->
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </fieldset>
-        <button class="btn btn-default green pull-right input-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</button>
+        <a class="btn btn-default green pull-right input-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
         <a class="btn btn-danger pull-right input-sm" ng-click="onCancel({return: true})">Cancel</a>
         <!-- END MAIN INFO -->
     </form>
