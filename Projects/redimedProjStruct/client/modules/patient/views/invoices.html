@@ -1,10 +1,28 @@
 <h3 class="page-title"> Invoices </h3>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-       <b> Appointments List </b>
-    </div>
-    <div class="panel-body">
-    	 <my-data-table options="invoiceOption" rowclass="invoiceClass" numrows="50"></my_data-table>
+<div class="portlet box red">
+    <div class="portlet-title">
+		<div class="caption">
+           <i class="fa fa-money"></i> <b> Invoices List </b>
+        </div>
+         <div class="pull-right">
+       		<button class="btn btn-default" ng-click="addFormInvoice.open()"><i class="fa fa-plus"></i> Add invoice</button>
+       </div>
+   </div>  
+    <div class="portlet-body">
+    	<my-data-table options="invoiceOption" rowclass="invoiceClass" numrows="50"></my_data-table>
     </div>
 </div>
+
+
+<!--POPUP FORM ADD INVOICE -->
+<div class="mdt-search" style="display: block; width: 100%" ng-if="addFormInvoice.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="addFormInvoice.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="clearfix" style="margin-bottom: 10px"></div>
+    <invoice-add options="options" patient="patient_id" params="invoiceParams" onsuccess="addFormInvoice.success" />
+</div>
+<!--END POPUP FORM ADD INVOICE -->

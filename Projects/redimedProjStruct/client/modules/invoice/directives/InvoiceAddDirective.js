@@ -1,16 +1,25 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function(InvoiceHeaderModel, ConfigService, InvoiceService, CompanyService, ReceptionistService, toastr, $filter, $state){
+.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, CompanyService, ReceptionistService, toastr, $filter, $state){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
 		scope: {
 			options: '=',
 			params: '=',
+			patient: '=',
 			onsuccess: '='
 		},
 		templateUrl: 'modules/invoice/directives/templates/add.html',
 		controller: function($scope) {
+			var init = function(){
+				$scope.isSubmit = false;
+				$scope.InvoiceMap = angular.copy(InvoiceHeaderModel);
+				$scope.InvoiceMap.SITE_ID = 1;
+				$scope.InvoiceMap.STATUS = 'enter'
+				$scope.InvoiceMap.lines = [];
+			}//end init
+			init();
 
 			/*
 			*	SEARCH PATIENT
@@ -162,6 +171,29 @@ angular.module('app.loggedIn.invoice.add.directive', [])
                 }
             }
 
+            // PATIENT_ID 
+            if($scope.patient) {
+            	$scope.InvoiceMap.Patient_id = $scope.patient;
+            	PatientService.get($scope.patient).then(function(response){
+            		var p = response.data;
+            		if(response.data) {
+            			$scope.InvoiceMap.Company_id = p.company_id;
+						$scope.InvoiceMap.patient = {
+							full_name: p.First_name + ' ' + p.Sur_name
+						}
+						CompanyService.get(p.company_id).then(function(response){
+							if( response.status == 'success' && response.data) {
+								var company = response.data;
+								$scope.InvoiceMap.company = {Company_name: company.Company_name};
+							}
+						});
+
+						$scope.patientClaim.options.search.Patient_id = p.Patient_id;
+            		}
+            	})
+			}
+
+
 
 			/*
 			*	FUNCTION 
@@ -198,14 +230,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			}
 		},
 		link: function(scope, element, attrs){
-			var init = function(){
-				scope.isSubmit = false;
-				scope.InvoiceMap = angular.copy(InvoiceHeaderModel);
-				scope.InvoiceMap.SITE_ID = 1;
-				scope.InvoiceMap.STATUS = 'enter'
-				scope.InvoiceMap.lines = [];
-			}//end init
-			init();
+			
 
 			scope.clickAction = function(){
 				if(!scope.isHeaderOk('alert'))
