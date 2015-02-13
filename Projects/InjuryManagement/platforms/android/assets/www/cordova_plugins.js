@@ -27,11 +27,29 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.phonegap.plugins.bluetooth/www/bluetooth.js",
+        "id": "com.phonegap.plugins.bluetooth.bluetooth",
+        "clobbers": [
+            "bluetooth"
+        ]
+    },
+    {
         "file": "plugins/com.plugin.datepicker/www/android/DatePicker.js",
         "id": "com.plugin.datepicker.DatePicker",
         "clobbers": [
             "datePicker"
         ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.toast/www/Toast.js",
+        "id": "nl.x-services.plugins.toast.Toast",
+        "clobbers": [
+            "window.plugins.toast"
+        ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
+        "id": "nl.x-services.plugins.toast.tests"
     },
     {
         "file": "plugins/org.apache.cordova.camera/www/CameraConstants.js",
@@ -269,17 +287,6 @@ module.exports = [
         "clobbers": [
             "chrome.power"
         ]
-    },
-    {
-        "file": "plugins/nl.x-services.plugins.toast/www/Toast.js",
-        "id": "nl.x-services.plugins.toast.Toast",
-        "clobbers": [
-            "window.plugins.toast"
-        ]
-    },
-    {
-        "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
-        "id": "nl.x-services.plugins.toast.tests"
     }
 ];
 module.exports.metadata = 
@@ -289,7 +296,9 @@ module.exports.metadata =
     "com.dooble.audiotoggle": "1.0.0",
     "com.ionic.keyboard": "1.0.3",
     "com.phonegap.plugins.PushPlugin": "2.4.0",
+    "com.phonegap.plugins.bluetooth": "0.9",
     "com.plugin.datepicker": "0.5.0",
+    "nl.x-services.plugins.toast": "2.0.4",
     "org.apache.cordova.camera": "0.3.4",
     "org.apache.cordova.console": "0.2.12",
     "org.apache.cordova.device": "0.2.13",
@@ -299,8 +308,7 @@ module.exports.metadata =
     "org.apache.cordova.geolocation": "0.3.11",
     "org.apache.cordova.inappbrowser": "0.5.4",
     "org.apache.cordova.media": "0.2.15",
-    "org.chromium.power": "1.0.3",
-    "nl.x-services.plugins.toast": "2.0.4"
+    "org.chromium.power": "1.0.3"
 }
 // BOTTOM OF METADATA
 });

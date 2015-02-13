@@ -9,14 +9,14 @@ angular.module('starter.bluetooth',[
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/bluetooth/views/structure.html",
-                        controller: "DriverController"
+                        controller: "BluetoothController"
                     }
                 }
             })
             .state('app.bluetooth.main',{
                 url: "/main",
                 views: {
-                    'content' : {
+                    'main' : {
                         templateUrl: "modules/bluetooth/views/main.html"
                     }
                 }

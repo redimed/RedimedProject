@@ -99,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
     private static boolean isUrineSingleData = false;
     private static boolean isPulseData = false;
     private static boolean isBpData = false;
-    private static int printLen = 100;
+    private static int printLen = 800;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1115,11 +1115,11 @@ public class MainActivity extends ActionBarActivity {
                     String binData = toBinary(readBuf);
                     //String humanData = toHumanData(readBuf);
                     Log.d("","=== Received Data: "+ toHex(readBuf));
-                    Log.d("","=== Received Data: "+toBinary(readBuf) );
+                    //Log.d("","=== Received Data: "+toBinary(readBuf) );
                     //Log.d("",spirometerData(hexData, binData, readBuf));
                     //Log.d("","=== Received Data: " + toHex(readBuf));
                     //Log.d("","=== Received Data: "  + "  :  " + binData + "  :  " );
-                    //ecgData(readBuf);
+                    ecgData(readBuf);
                     //System.out.println(toBinary(readBuf)+" : "+toHex(readBuf));
                     //urineSingleData(hexData, binData, readBuf);
                     //pulseData(hexData, binData, readBuf);
@@ -1128,7 +1128,7 @@ public class MainActivity extends ActionBarActivity {
                     //showMessage(spirometerData(hexData, binData, readBuf),1000);
                     //showMessage(bgData(hexData, binData, readBuf),1000);
                     //showMessage(scaleData(hexData, binData, readBuf),1000);
-                    miniECGData(hexData, binData, readBuf);
+                    //miniECGData(hexData, binData, readBuf);
                     break;
                 }
                 case SOCKET_CONNECTED:{
@@ -2014,7 +2014,7 @@ public class MainActivity extends ActionBarActivity {
     //////////////ECG data////////////
     public static String ecgData(byte[] rawData) {
         //Log.d("","  pulseData = " + hex);
-        byte[] data = new byte[9];
+        byte[] data = new byte[15];
         byte preByte = 0x00;
         boolean isStart = false;
         int count = 0;
@@ -2029,11 +2029,66 @@ public class MainActivity extends ActionBarActivity {
                 count++;
             }
             if(count == 8){
-                int segment = (data[3] & 0x0f) & 0xff;
-                int v = data[3]&0xff;
-                int la = data[4]&0xff;
-                int ra = data[6]&0xff;
-                int qb = data[7]&0xff;
+                byte highestByte = data[1];
+                byte highestBitOfByte2 = getBitRever(new byte[]{highestByte},0);
+                highestBitOfByte2 = (byte)((highestBitOfByte2<<7)|0x7f);
+                byte byte2 = (byte)(highestBitOfByte2&data[2]);
+
+                byte highestBitOfByte3 = getBitRever(new byte[]{highestByte},1);
+                highestBitOfByte3 = (byte)((highestBitOfByte3<<7)|0x7f);
+                byte byte3 = (byte)(highestBitOfByte3&data[3]);
+
+                byte highestBitOfByte4 = getBitRever(new byte[]{highestByte},2);
+                highestBitOfByte4 = (byte)((highestBitOfByte4<<7)|0x7f);
+                byte byte4 = (byte)(highestBitOfByte4&data[4]);
+
+                byte highestBitOfByte5 = getBitRever(new byte[]{highestByte},3);
+                highestBitOfByte5 = (byte)((highestBitOfByte5<<7)|0x7f);
+                byte byte5 = (byte)(highestBitOfByte5&data[5]);
+
+                byte highestBitOfByte6 = getBitRever(new byte[]{highestByte},4);
+                highestBitOfByte6 = (byte)((highestBitOfByte6<<7)|0x7f);
+                byte byte6 = (byte)(highestBitOfByte6&data[6]);
+
+                byte highestBitOfByte7 = getBitRever(new byte[]{highestByte},5);
+                highestBitOfByte7 = (byte)((highestBitOfByte7<<7)|0x7f);
+                byte byte7 = (byte)(highestBitOfByte7&data[7]);
+
+                byte highestBitOfByte8 = getBitRever(new byte[]{highestByte},6);
+                highestBitOfByte8 = (byte)((highestBitOfByte8<<7)|0x7f);
+                byte byte8 = (byte)(highestBitOfByte8&data[8]);
+
+                int segment = (byte2 & 0x0f) & 0xff;
+                byte v_l = byte3;
+                byte v_h = (byte)(byte5 & 0x0f);
+
+                byte la_l= byte4;
+                byte la_h = (byte)((byte5 & 0xf0)>>4);
+
+                byte ra_l = byte6;
+                byte ra_h = (byte)(byte8 & 0x0f);
+
+                byte qb_l = byte7;
+                byte qb_h = (byte)((byte8 & 0xf0)>>4);
+
+                short v_s = (short)(v_h<<8|(v_l& 0xFF));
+                short la_s = (short)(la_h<<8|(la_l& 0xFF));
+                short qb_s = (short)(qb_h<<8|(qb_l& 0xFF));
+                short ra_s = (short)(ra_h<<8|(ra_l& 0xFF));
+
+
+
+
+                data[9] = v_h;
+                data[10] = la_h;
+                data[11] = ra_h;
+                data[12] = qb_h;
+
+                int v = v_s&0xffff;
+                int la = la_s&0xffff;
+                int ra = ra_s&0xffff;
+                int qb = qb_s&0xffff;
+
                 int I = la - ra + 2048;
                 int II = 4096 - ra;
                 int III = 4096 - la;
@@ -2042,7 +2097,7 @@ public class MainActivity extends ActionBarActivity {
                 int AVF = -(ra/2) - (la/2) + 4096;
                 int V = v - (la + ra - 4096)/3;
 
-                Log.d("", " ECG data segment = " + segment + " v = " + v + " la = " + la + " ra = " + ra + " qb = " + qb +
+                Log.d("", toHex(data) + toBinary(data) + " ECG data segment = " + segment + " v = " + v + " la = " + la + " ra = " + ra + " qb = " + qb +
                                 " I = " + I +
                                 " II = " + II +
                                 " III = " + III +

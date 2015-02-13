@@ -77,8 +77,6 @@ angular.module('starter', ['ionic',
 
     .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, HOST_CONFIG) {
 
-        console.log('run app.js');
-
         easyrtc.setSocketUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port)
 
         $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', {

@@ -1,3 +1,44 @@
-<ion-view>
-asdfafdasfasdfasf
+<ion-view title="bluetooth">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon  waves-effect waves-light " style="color:#fff"></button>
+        <a class="button button-icon icon" ui-sref="app.injury.mapCompany" style="color:#fff"><i class="mdi-maps-pin-drop"></i></a>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <a menu-toggle="right" class="button button-icon  waves-effect waves-light" style="color:#fff">
+            <i class="mdi-communication-quick-contacts-dialer small"></i>
+        </a>
+    </ion-nav-buttons>
+
+    <ion-content class="padding has-header">
+
+        <label class="item item-input item-toggle label-custom-field" >
+            <span class="input-label span-input-color">Bluetooth</span>
+            <label class="toggle toggle-balanced">
+                <input type="checkbox" ng-model="toggleBluetooth.checked" ng-change="blueToothChange()">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+            </label>
+            <hr class="customHr">
+        </label>
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="col">
+                <button class="button button-clear waves-effect waves-light red" style="width: 100%; background-color: #FF5E3A !important; color: #f5f5f5;">
+                    <span>Connect to one device and read data</span>
+                </button>
+            </div>
+            <div class="col">
+                <button class="button button-clear waves-effect waves-light blue" style="width: 100%; background-color: #34AADC !important; color: #f5f5f5;">
+                    <span>Connect to many device</span>
+                </button>
+            </div>
+        </div>
+        <ion-lis>
+            <ionitem>
+
+            </ionitem>
+        </ion-lis>
+    </ion-content>
 </ion-view>
