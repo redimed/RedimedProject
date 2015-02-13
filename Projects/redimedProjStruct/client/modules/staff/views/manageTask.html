@@ -1,0 +1,309 @@
+<div ng-controller="testController" class="tabbable-custom nav-justified">
+<ul class="nav nav-tabs nav-justified">
+    <li class="active">
+        <a href="injuryMap.html#tab_1_1_1" data-toggle="tab">
+            <i class="glyphicon glyphicon-user"></i> &nbsp;&nbsp;&nbsp;
+            Staff List </a>
+    </li>
+    <li>
+        <a href="injuryMap.html#tab_1_1_2" data-toggle="tab">
+            <i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;&nbsp;
+            Time</a>
+    </li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="tab_1_1_1">
+<div class="row">
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            <input style="text-align: center; " type="text" max-date="maxDate" class="form-control" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="testDate" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" ng-required="true" close-text="Close"  placeholder="Select Date" />
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input style="text-align: center; " type="text" class="form-control" placeholder="Staff Name" />
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon">Start Time</span>
+            <input style="text-align: center; " placeholder="hh:mm" type="text" class="form-control testTime">
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon">End Time</span>
+            <input style="text-align: center; " placeholder="hh:mm" type="text" class="form-control testTime">
+        </div>
+    </div>
+
+</div>
+<br/>
+<div class="portlet blue-dark box">
+<div class="portlet-title">
+    <div class="caption ">
+        <i class="icon-users"></i>
+        &nbsp;
+        <span class="caption-subject uppercase">Task List</span>
+    </div>
+    <div class="actions">
+        <a href="javascript:;" class="btn green-jungle btn-sm">
+            <i class="fa fa-plus"></i> &nbsp;
+            New Staff</a>
+
+        <a href="javascript:;" class="btn btn-primary btn-sm">
+            <i class="fa fa-refresh"></i> &nbsp;
+            Refresh </a>
+    </div>
+</div>
+<div class="portlet-body">
+    <div>
+        <ul class="mix-filter">
+            <li class=" bold" data-filter="all">
+                All
+                <span class="badge badge-important badge-active"> 15 </span>
+            </li>
+            <li class="bold" data-filter="category_1">
+                Waiting Approved
+                <span class="badge badge-important badge-active"> 15 </span>
+            </li>
+            <li class="bold" data-filter="category_2">
+                Approved
+                <span class="badge badge-important badge-active"> 15 </span>
+            </li>
+            <li class="bold" data-filter="category_3">
+                Overdue
+                <span class="badge badge-important badge-active"> 15 </span>
+            </li>
+            <li class="bold" data-filter="category_3 category_1">
+                Rejected
+                <span class="badge badge-important badge-active"> 15 </span>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <th>
+                    <label style="font-size: 17px;">No.</label>
+                </th>
+                <th>
+                    <label style="font-size: 17px;">First Name</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Middle Name</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Last Name</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Task</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Start</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">End</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Status</label>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="white-space: nowrap; cursor: pointer;">
+                <td  style="vertical-align:middle">
+                    1
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        Medical History
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        07:00 AM
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        09:00 PM
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                                           <span class="label label-md label-warning">
+                                                                    Waiting Approve </span>
+                </td>
+            </tr>
+            <tr style="white-space: nowrap; cursor: pointer;">
+                <td  style="vertical-align:middle">
+                    2
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                    <label >
+                        Medical History
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                    <label >
+                        07:00 AM
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                    <label >
+                        09:00 PM
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                                           <span class="label label-md label-success">
+                                                                    Approved </span>
+                </td>
+            </tr>
+            <tr style="white-space: nowrap; cursor: pointer;">
+                <td  style="vertical-align:middle" >
+                    3
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        Medical History
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        07:00 AM
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        09:00 PM
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                                           <span class="label label-md label-danger">
+                                                                    Rejected </span>
+                </td>
+            </tr>
+            <tr style="white-space: nowrap; cursor: pointer;">
+                <td style="vertical-align:middle" >
+                    4
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle">
+                    <label class="bold">
+                        Statham
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        Medical History
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        07:00 AM
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        09:00 PM
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                                           <span class="label label-md label-info">
+                                                                    Overdue </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="tab_1_1_2">
+
+</div>
+</div>
+</div>
+
+<script>
+    $('.testTime').timepicker({
+        timeSeparator: ':',
+        showLeadingZero: true,
+        showMinutesLeadingZero: true,
+        showPeriod: true,
+        periodSeparator: ' ',
+        hourText: 'Hour',
+        minuteText: 'Minute',
+        amPmText: ['AM', 'PM']
+    })
+
+    function testController($scope){
+
+        $scope.testDate = null;
+        $scope.testTime = new Date();
+
+        $scope.maxDate = new Date();
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+    }
+</script>
