@@ -4,7 +4,6 @@ angular.module('app.loggedIn.script.list.controller',[
     .controller('ScriptListController',function($scope, $stateParams){
         $scope.script_panel = {};
         $scope.script = {};
-        alert('2123');
     
         $scope.scripts = {
             select:0,
@@ -39,7 +38,6 @@ angular.module('app.loggedIn.script.list.controller',[
                     {
                         class: 'fa fa-info', title: 'Edit',
                         callback: function(item){
-                            console.log('this is selected item',item)
                                 $scope.script.id = item.ID;
                                 $scope.scriptEditForm.open();
                         }
@@ -47,7 +45,6 @@ angular.module('app.loggedIn.script.list.controller',[
                     {
                         class: 'fa fa-print', title: 'Print',
                         callback: function(item){
-                            console.log('this is selected item',item)
 //                                $scope.script.id = item.ID;
 //                            $scope.go('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
                             window.open('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
