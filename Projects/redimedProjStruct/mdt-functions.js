@@ -36,6 +36,9 @@ module.exports = {
 					post_fields[i].value = '';
 				sql_where += "IFNULL("+post_fields[i].name+", '') LIKE '%"+post_fields[i].value+"%' AND ";
 			}
+			else if(post_fields[i].type==='number'){
+				sql_where += post_fields[i].name +"="+post_fields[i].value + " AND ";
+			}
 			select_fields.push(post_fields[i].name);
 		}// end for
 

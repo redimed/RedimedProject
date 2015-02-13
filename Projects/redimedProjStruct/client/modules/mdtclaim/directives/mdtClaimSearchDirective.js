@@ -8,6 +8,7 @@ angular.module('app.loggedIn.mdtclaim.search.directive', []).directive('mdtclaim
 		},
 		templateUrl: 'modules/mdtclaim/directives/templates/search.html',
 		link: function(scope, element, attrs){
+			var selectedPatient_id = null;
 			//POPUP
 			scope.closePopup = function(){
 				angular.element("#"+scope.isClose).fadeOut();
@@ -26,7 +27,7 @@ angular.module('app.loggedIn.mdtclaim.search.directive', []).directive('mdtclaim
 					filters: [
 						/*{type: 'text', name: 'Patient_id', value: scope.patientId},*/
 						{type: 'text', name: 'Injury_name', value:''},
-						{type: 'text', name: 'Location', value:''}
+						{type: 'text', name: 'Location', value:''},
 					],
 					select: [
 						'Claim_id', 'Patient_id', 'Injury_name', 'Location'
@@ -35,14 +36,16 @@ angular.module('app.loggedIn.mdtclaim.search.directive', []).directive('mdtclaim
 			}//end init
 			
 			var loadList = function(){
-				mdtClaimService.search(scope.params).then(function(response){
-					if(response.status==='error') toastr.error('Cannot get Seacrh', 'Error')
+				scope.params.selectedPatient_id = selectedPatient_id;
+				mdtClaimService.bookingClaimSearch(scope.params).then(function(response){
+					if(response.status==='error') toastr.error('Cannot get Seacrh', 'Error');
 					scope.list = response;
 				})
 			}
 
 			scope.$watch('patientId', function(newPatientId, oldPatientId){
 				if(typeof newPatientId !== 'undefined'){
+					selectedPatient_id = newPatientId;
 					init();
 					loadList();
 				}

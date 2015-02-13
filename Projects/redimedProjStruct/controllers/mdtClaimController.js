@@ -96,7 +96,29 @@ module.exports = {
 		var select = req.body.select;
 
 		var sql = mdt_functions.commonSearch(post_fields);
-        console.log('Perpare to call find and count all');
+		db.Claim.findAndCountAll({
+			where: [sql],
+			offset: pagination.offset,
+			limit: pagination.limit,
+			attributes: select,
+			order: 'Creation_date DESC'
+		})
+		.success(function(result){
+			if(!result) res.json(500, {'status': 'error', 'message': 'Cannot Get Search'});
+			res.json({'status': 'success', 'data': result.rows, 'count': result.count});
+		})
+		.error(function(error){
+			res.json(500, {'status': 'error', 'message': error});
+		})
+	},
+
+	postBookingClaimSearch: function(req, res){
+		var pagination = req.body.pagination;
+		var post_fields = req.body.filters;
+		var select = req.body.select;
+		var patient_id = {type: 'number', name: 'Patient_id', value:req.body.selectedPatient_id};
+		post_fields.push(patient_id);
+		var sql = mdt_functions.commonSearch(post_fields);
 		db.Claim.findAndCountAll({
 			where: [sql],
 			offset: pagination.offset,
