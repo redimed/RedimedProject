@@ -41,6 +41,9 @@ angular.module("app.loggedIn.treeApprove.AddDepartment.directive", [])
                     //end get sites
                 });
                 //end get companies
+
+                /* MODEL OF USER */
+                scope.model = {value: "", name: "THANH"};
             },
             templateUrl: "modules/treeApprove/directives/templates/AddTree.html"
         };

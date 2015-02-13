@@ -35,6 +35,12 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
                         scope.addOrUpdateButton = "Add";
                     }
                 });
+                // scope.model = [{
+                //     value: "",
+                //     validation: [{
+                //         type: "required"
+                //     }]
+                // }];
             },
             templateUrl: "modules/treeApprove/directives/templates/AddFunction.html"
         };
