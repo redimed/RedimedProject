@@ -71,8 +71,21 @@ module.exports = {
 		});
 	},
 
-	postMedicalResultSummarySearch: function(req, res) {
+	postMrsSearch: function(req, res) {
+		var fields = req.body.fields;
+		var search_data = req.body.search;
+		var patient_id = search_data.patient_id;
 
+		console.log(search_data);
+		db.MedicalSummary.findAll({
+			where: {Patient_Id: patient_id},
+			attributes: fields,
+			order: 'mrs_id DESC'
+		}).success(function(result){
+			res.json({"status": "success", "list": result, "count": result.length});
+		}).error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
 	},
 
 	postFunctionalAssessmentSearch: function(req, res) {
@@ -84,12 +97,38 @@ module.exports = {
 	},
 
 	postCategory2Search: function(req, res) {
+        var fields = req.body.fields;
+        var search_data = req.body.search;
+        var patient_id = search_data.patient_id;
 
-	},
+        console.log(search_data);
+        db.Category2.findAll({
+            where: {patient_id: patient_id},
+            attributes: fields,
+            order: 'cat_id DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result, "count": result.length});
+        }).error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
+    },
 
 	postCategory3Search: function(req, res) {
+        var fields = req.body.fields;
+        var search_data = req.body.search;
+        var patient_id = search_data.patient_id;
 
-	},
+        console.log(search_data);
+        db.Category3.findAll({
+            where: {patient_id: patient_id},
+            attributes: fields,
+            order: 'cat_id DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result, "count": result.length});
+        }).error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
+    },
 
 	postInstantDrugScreenSearch: function(req, res) {
 
