@@ -68,7 +68,7 @@ angular.module('app.loggedIn.isoHierarchyApprovalController.controller',[])
             .then(function(data){
                 if(data.status=='success')
                 {
-                    exlog.alert(data);
+                    //exlog.alert(data);
                     line.STATUS=isoConst.hierarchyApprovalStatus.approved;
                     isoMsg.popup("Approved",isoConst.msgPopupType.success,"Approved Document Success!");
                     if(data.info && data.info=='release')

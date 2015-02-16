@@ -1,4 +1,5 @@
 var db = require('../models');
+var InvoiceLineModel = require('../v1_models/Cln_invoice_lines.js');
 
 var ERP_REST = require('../helper/ERP_Rest');
 
@@ -142,6 +143,8 @@ module.exports = {
 	postSearch: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
+        var order = (req.body.order) ? req.body.order : null;
+
 		var fields = req.body.fields;
 
 		var search_data = req.body.search;
@@ -172,7 +175,7 @@ module.exports = {
 			limit: limit,
 			attributes: fields,
 			include: inc_model,
-			order: 'HEADER_ID DESC'
+			order: order
 		}).success(function(result){
 			res.json({"status": "success", "list": result.rows, "count": result.count});
 		})
@@ -199,7 +202,7 @@ module.exports = {
 				include:   [
 					{ 
 						model: db.InvItem , as: 'InvItem',
-						attributes: ['ITEM_CODE']
+						attributes: ['ITEM_CODE', 'ITEM_NAME']
 					},
 				]
 			}
@@ -267,6 +270,12 @@ module.exports = {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
 		var header = null;
+
+		var err_handle = function(err){
+			console.log('ERROR: ', err)
+			res.json({"status": "error"});
+		};
+
 		db.mdtInvoiceHeader.find({
 			where: {header_id: header_id},
 			include: [
@@ -293,7 +302,7 @@ module.exports = {
 			]
 		}).then(function(iheader){
 			header = iheader;
-			if(!header || !header.lines) {
+			if(!header || !header.lines || header.lines.length == 0) {
 				res.json(500, {"status": "error", "message": 'Missing header / lines'});
 				return;
 			}
@@ -302,29 +311,32 @@ module.exports = {
 	            header_id: header_id
 	        });
 		}).then(function(updated){
-			// SEND TO ERP
 
-			ERP_REST.push_customer(header).then(function(response){
+			if(inv_status !== 'done') {
+				res.json({"status": "success"});
+				return;
+			}
+
+			// SEND TO ERP
+			// send patient 
+			ERP_REST.push_customer(header)
+			.then(function(response){
 				response.data = JSON.parse(response.data);
 				if(response.data.APEX_STATUS == 'success') {
+					// send item 
 					ERP_REST.push_items(header).then(function(response){
-						res.json({"status": "success", "data": response});
-					}, function(err){
-						console.log('ERROR: ', err)
-						res.json({"status": "error", "message": err});
-					})
+						// send invoice
+						ERP_REST.push_invoice(header).then(function(response){
+							res.json({"status": "success", "data": response});
+						}, err_handle)
+					}, err_handle)
 				} else {
 					res.json({"status": "error", "message": 'Can not push customer to ERP !!!'});
 				}
-			}, function(err){
-				res.json({err: err})
-			})
+			}, err_handle)
 			// END SEND TO ERP
 			
-		}).error(function(error){
-			console.log(error)
-			res.json(500, {"status": "error", "message": error});
-		});
+		}).error(err_handle);
 	},
 
 	getTest: function (req, res) {

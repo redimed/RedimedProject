@@ -15,7 +15,11 @@
     <table class="mdt-table table table-bordered">
         <thead>
             <tr>
-                <th ng-repeat="col in options.columns" ng-if="!col.is_hide" width="{{col.width}}">{{col.label || col.field }}</th>
+                <th ng-repeat="col in options.columns" ng-if="!col.is_hide" width="{{col.width}}" ng-click="orderField(col)">
+                    {{col.label || col.field }}
+                    <i ng-show="col.order == 'ASC'" class="fa fa-angle-down"></i>
+                    <i ng-show="col.order == 'DESC'" class="fa fa-angle-up"></i>
+                </th>
                 <th ng-repeat="col in options.more_columns" width="{{col.width}}">{{col.label}}</th>
                 <th ng-if="options.use_actions">Action</th> 
             </tr>

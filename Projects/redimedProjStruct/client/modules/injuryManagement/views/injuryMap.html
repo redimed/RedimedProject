@@ -165,6 +165,9 @@
                     <thead>
                     <tr>
                         <th width="100px">
+                            <a href="javascript:;" ng-click="refreshList()" class="btn btn-sm green">
+                                Refresh &nbsp;<i class="fa fa-refresh"></i>
+                            </a>
                         </th>
                         <th>
                             <label style="font-size: 17px;">Patient Name</label>
@@ -204,13 +207,13 @@
             <div class="div-table-content">
                 <table class="table table-hover table-condensed">
                     <tbody>
-                    <tr style="white-space: nowrap; cursor: pointer;"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
-                        <td width="100px" ng-click="showDetails(im.injury_id)" style="vertical-align:middle" align="center">
+                    <tr style="white-space: nowrap; cursor: pointer;" ng-click="showDetails(im.injury_id)"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
+                        <td width="100px"  style="vertical-align:middle" align="center">
                             <div class="img-image-name" ng-style={"background-color":im.background} >
                                 {{im.First_name | limitTo: 1 | uppercase}}
                             </div>
                         </td>
-                        <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" >
+                        <td style="vertical-align:middle" >
                             <label class="bold">
                                 {{im.FullName}}
                             </label>
@@ -221,7 +224,7 @@
                         <td style="vertical-align:middle" align="center">
                             <label class="bold">{{im.driverUser}}</label>
                         </td>
-                        <td ng-click="showDetails(im.injury_id)" style="vertical-align:middle" align="center">
+                        <td style="vertical-align:middle" align="center">
                             <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn btn-primary btn-md" style="width:100px">
                                 {{im.STATUS}}
                             </a>

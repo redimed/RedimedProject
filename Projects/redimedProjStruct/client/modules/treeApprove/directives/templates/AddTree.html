@@ -1,0 +1,37 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>{{addOrUpdateTitle}}</legend>
+            <div data-row-span="3">
+                <!-- NAME TYPE -->
+                <div data-field-span="1">
+                    <label>name of tree</label>
+                    <input type="text" ng-model="info.GROUP_NAME">
+                </div>
+                <!-- END NAME TYPE -->
+                <!-- COMPANY NAME -->
+                <div data-field-span="1">
+                    <label>company</label>
+                    <select ng-options="company.id as company.Company_name for company in companies" ng-model="info.COMPANY_ID"></select>
+                </div>
+                <!-- END COMPANY NAME -->
+                <!-- SITE NAME -->
+                <div data-field-span="1">
+                    <label>site</label>
+                    <select ng-options="site.id as site.Site_name for site in sites" ng-model="info.SITE_ID"></select>
+                </div>
+                <!-- END SITE NAME -->
+            </div>
+            <div data-row-span="3">
+                <div data-field-span="3">
+                    <label>decription</label>
+                    <textarea ng-model="info.DECRIPTION"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <a class="btn btn-default green pull-right input-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
+        <a class="btn btn-danger pull-right input-sm" ng-click="onCancel({return: true})">Cancel</a>
+        <!-- END MAIN INFO -->
+    </form>
+</div>

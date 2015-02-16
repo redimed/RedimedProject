@@ -24,6 +24,7 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
     		if(data.status=='success')
     		{
     			$scope.userGroupList=data.data;
+                //isoHelper.setSlimCroll(".group-panel");
     		}
     		else
     		{
@@ -167,6 +168,24 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
             });
         }
 
+        $scope.getUserInGroup=function(groupId)
+        {
+            isoService.isoUserGroup.getUsersInGroup(groupId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    $scope.userList=data.data;
+                }
+                else
+                {
+                    $scope.userList=[];
+                }
+                
+            },function(err){
+                $scope.userList=[];
+            });
+        }
+
         /**
          * Lay cac user cua group khi click chon 1 group
          * tannv.dts@gmail.com
@@ -175,20 +194,7 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
         {
             if($scope.selectedGroup)
             {
-                isoService.isoUserGroup.getUsersInGroup($scope.selectedGroup.GROUP_ID)
-                .then(function(data){
-                    if(data.status=='success')
-                    {
-                        $scope.userList=data.data;
-                    }
-                    else
-                    {
-                        $scope.userList=[];
-                    }
-                    
-                },function(err){
-                    $scope.userList=[];
-                });
+                $scope.getUserInGroup($scope.selectedGroup.GROUP_ID);
             }
         });
 
@@ -343,6 +349,25 @@ angular.module('app.loggedIn.iso.userGroup.controller',[])
                 $scope.newGroupItemInfo=angular.copy($scope.newGroupItemInfoTemplate);
                 $("#iso-user-group-content-popup").modal('hide');
             });
+        }
+
+        $scope.deleteGroupItem=function(item)
+        {
+            isoService.isoUserGroup.deleteGroupItem(item.GROUP_ID,item.USER_ID)
+            .then(function(data){
+                if(data.status=='success' && data.info>0)
+                {
+                    isoMsg.popup('ISO User Groups',isoConst.msgPopupType.success,'Delete success!');
+                    $scope.getUserInGroup($scope.selectedGroup.GROUP_ID);
+                    $scope.removeAllPermissionOfUserInGroup($scope.groupItemUpdateInfo.GROUP_ID,$scope.groupItemUpdateInfo.USER_ID);
+                }
+                else
+                {
+                    isoMsg.popup('ISO User Groups',isoConst.msgPopupType.error,'Delete fail!');
+                }
+            },function(err){
+                isoMsg.popup('ISO User Groups',isoConst.msgPopupType.error,'Delete fail!');
+            })
         }
 
     })

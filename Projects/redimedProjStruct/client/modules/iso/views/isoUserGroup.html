@@ -14,7 +14,7 @@
 		</button>
 	</div>
 	
-	<div class="table-responsive">
+	<div class="table-responsive" style="height:400px;overflow:auto;">
 
 		<table class="table table-bordered table-hover ">
 			<tr>
@@ -79,6 +79,14 @@
 
 						<i class="fa fa-pencil"></i>
 						Edit
+					</button>
+
+					<button type='button' 
+							class='btn btn-primary btn-xs' 
+							ng-click="deleteGroupItem(item);">
+
+						<i class="fa fa-times" style="color:red"></i>
+						Delete
 					</button>
 
 				</td>
@@ -213,7 +221,6 @@
 	</form>
 </script>
 
-
 <div id="iso-global-msg-popup" class="modal fade">
 
     <div class="modal-dialog">
@@ -247,3 +254,5 @@
         </div>
     </div>
 </div>
+
+

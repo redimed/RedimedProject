@@ -24,5 +24,9 @@ angular.module('app.loggedIn.mdtclaim.services', [])
 		var funcApi = mdtApi.all('search');
 		return funcApi.post(option);
 	}
+	mdtService.bookingClaimSearch = function(option){
+		var funcApi = mdtApi.all('booking_claim_search');
+		return funcApi.post(option);
+	}
 	return mdtService;
 })

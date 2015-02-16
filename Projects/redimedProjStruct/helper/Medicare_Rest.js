@@ -1,7 +1,7 @@
 var BaseRestClient = require('./k_rest_client');
 
 function Medicare_Rest (options) {
-	var base_rest = BaseRestClient(options.base_url);
+	var base_rest = new BaseRestClient(options.base_url);
 
 	this.verify_medicare = function(data) {
 		return base_rest.post('medicare/verify/pvm', data);

@@ -1,26 +1,37 @@
 angular.module("app.loggedIn.doctor.paperless.controller", [])
 
-.controller("DoctorPaperlessController", function($scope, PatientService, $stateParams, localStorageService){
-	$scope.current_patient = {};
+.controller("DoctorPaperlessController", function($scope, DocumentService, PatientService, $stateParams, localStorageService){
+	var patient_id = $stateParams.patient_id;
 
-	// Init Object
-	var initObject = function(){
-		PatientService.mdtById($stateParams.patient_id).then(function(response){	
-			$scope.current_patient = response.data;
 
-			for(var key in $scope.current_patient){
-				if($scope.current_patient[key]){
-					if(key.indexOf("is") != -1 || key.indexOf("Is") != -1)
-						$scope.current_patient[key] = $scope.current_patient[key].toString();
-					if(key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
-						$scope.current_patient[key] = new Date($scope.current_patient[key]);
-				}
-			}
+	$scope.OptionGorgonMA = DocumentService.optionGorgonMA(patient_id);
 
-			localStorageService.set('tempPatient', $scope.current_patient);
-		})
-	}
+	$scope.OptionGorgonFA = DocumentService.optionGorgonFA(patient_id);
 
-	initObject();
-	// End Init Object
+	$scope.OptionGorgonUQ = DocumentService.optionGorgonUQ(patient_id);
+
+	$scope.OptionGorgonMH = DocumentService.optionGorgonMH(patient_id);
+
+	$scope.OptionMRS = DocumentService.optionMRS(patient_id);
+	
+	// $scope.OptionFA = DocumentService.OptionFA(patient_id);
+	
+	// $scope.OptionMA = DocumentService.OptionMA(patient_id);
+	
+	$scope.OptionCategory2 = DocumentService.optionCategory2(patient_id);
+	
+	$scope.OptionCategory3 = DocumentService.optionCategory3(patient_id);
+	
+	// $scope.OptionIDS = DocumentService.OptionIDS(patient_id);
+	
+	// $scope.Optionform18 = DocumentService.Optionform18(patient_id);
+	
+	// $scope.OptionSA1 = DocumentService.OptionSA1(patient_id);
+	
+	// $scope.OptionSA2 = DocumentService.OptionSA2(patient_id);
+	
+	// $scope.OptionMH = DocumentService.OptionMH(patient_id);
+	
+	// $scope.OptionCOE = DocumentService.OptionCOE(patient_id);
+
 })

@@ -606,7 +606,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
         {
             isoService.treeUser.grantNodePermission(nodeId,accessibleUserId,permission)
             .then(function(data){
-                exlog.alert(data);
+                //exlog.alert(data);
                 if(data.status=='success')
                 {
                     alert("dung roi");
@@ -628,7 +628,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
         {
             isoService.treeUser.checkCanPermission(nodeId,userGrant,userIsGranted,permission)
             .then(function(data){
-                exlog.alert(data);
+                //exlog.alert(data);
             },function(err){
             })
         };

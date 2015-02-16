@@ -2,7 +2,7 @@
  * Created by meditech on 24/09/2014.
  */
 angular.module('app.loggedIn.document.services', [])
-    .factory("DocumentService", function (Restangular) {
+    .factory("DocumentService", function (Restangular, ConfigService) {
         var documentService = {};
         var api = Restangular.all("api");
 
@@ -345,6 +345,145 @@ angular.module('app.loggedIn.document.services', [])
         /**
          * end gorgon medical history
          */
+
+        var strPrefixAPI = 'api/erm/v2/paperless/';
+         /*
+         *  KHANK API
+         */
+        documentService.optionGorgonMA = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'gorgon_ma_search',
+                method: 'post',
+                columns: [
+                    {field: 'GORGON_ID' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionGorgonFA = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'gorgon_fa_search',
+                method: 'post',
+                columns: [
+                    {field: 'id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+
+        documentService.optionGorgonUQ = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'gorgon_uq_search',
+                method: 'post',
+                columns: [
+                    {field: 'Quest_Id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionGorgonMH = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'gorgon_mh_search',
+                method: 'post',
+                columns: [
+                    {field: 'Gorgon_Id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionMRS = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'mrs_search',
+                method: 'post',
+                columns: [
+                    {field: 'mrs_id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionCategory2 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'category2_search',
+                method: 'post',
+                columns: [
+                    {field: 'cat_id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionCategory3 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'category3_search',
+                method: 'post',
+                columns: [
+                    {field: 'cat_id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
 
 
         return documentService;

@@ -12,41 +12,41 @@ module.exports =
 {
     sendEmail: function (req,res,emailInfo) {
 
-       // var transport = nodemailer.createTransport({
-       //     service: 'Gmail',
-       //     auth: {
-       //         user:'tannv.solution@gmail.com',//test
-       //         pass:'redimed123'//test
-       //     }
-       // });
+       var transport = nodemailer.createTransport({
+           service: 'Gmail',
+           auth: {
+               user:'tannv.solution@gmail.com',//test
+               pass:'redimed123'//test
+           }
+       });
 
-       // var mailOptions = {
-       //     from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
-       //     to: emailInfo.recipients, // receiver
-       //     subject: emailInfo.subject, // Subject line
-       //     html: emailInfo.htmlBody
+       var mailOptions = {
+           from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
+           to: emailInfo.recipients, // receiver
+           subject: emailInfo.subject, // Subject line
+           html: emailInfo.htmlBody
 
-       // }
+       }
 
-        var transport = nodemailer.createTransport(smtpTransport({
-            host: "mail.redimed.com.au", // hostname
-            secure: false,
-            port: 25, // port for secure SMTP
-            auth: {
-                user: "programmer2",
-                pass: "Hello8080"
-            },
-            tls: {rejectUnauthorized: false},
-            debug:true
-        }));
+        // var transport = nodemailer.createTransport(smtpTransport({
+        //     host: "mail.redimed.com.au", // hostname
+        //     secure: false,
+        //     port: 25, // port for secure SMTP
+        //     auth: {
+        //         user: "programmer2",
+        //         pass: "Hello8080"
+        //     },
+        //     tls: {rejectUnauthorized: false},
+        //     debug:true
+        // }));
 
-        var mailOptions = {
-            from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
-            to: emailInfo.recipients, // receiver
-            subject: emailInfo.subject, // Subject line
-            html: emailInfo.htmlBody
+        // var mailOptions = {
+        //     from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
+        //     to: emailInfo.recipients, // receiver
+        //     subject: emailInfo.subject, // Subject line
+        //     html: emailInfo.htmlBody
 
-        }
+        // }
 
         transport.sendMail(mailOptions, function(error, response){  //callback
             if(error){

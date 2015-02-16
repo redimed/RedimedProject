@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.injurymanagement949685" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.injurymanagement949685" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="NfcPlugin">
         <param name="android-package" value="com.chariotsolutions.nfc.plugin.NfcPlugin" />
@@ -18,8 +18,14 @@
     <feature name="PushPlugin">
         <param name="android-package" value="com.plugin.gcm.PushPlugin" />
     </feature>
+    <feature name="Bluetooth">
+        <param name="android-package" value="org.apache.cordova.bluetooth.BluetoothPlugin" />
+    </feature>
     <feature name="DatePickerPlugin">
         <param name="android-package" value="com.plugin.datepicker.DatePickerPlugin" />
+    </feature>
+    <feature name="Toast">
+        <param name="android-package" value="nl.xservices.plugins.Toast" />
     </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
@@ -43,9 +49,6 @@
     <feature name="Media">
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
-    <feature name="Toast">
-        <param name="android-package" value="nl.xservices.plugins.Toast" />
-    </feature>
     <name>InjuryManagement</name>
     <description>
     An Ionic Framework and Cordova project.
@@ -59,6 +62,7 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="BackupWebStorage" value="none" />
+    <plugin name="Bluetooth" value="org.apache.cordova.bluetooth.BluetoothPlugin" />
     <icon height="72" src="www/img/icons/android/mipmap-hdpi/ic_launcher.png" width="72" />
     <icon height="48" src="www/img/icons/android/mipmap-mdpi/ic_launcher.png" width="48" />
     <icon height="96" src="www/img/icons/android/mipmap-xdpi/ic_launcher.png" width="96" />

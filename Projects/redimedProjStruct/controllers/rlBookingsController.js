@@ -28,7 +28,7 @@ module.exports =
                 else
                 {
                     console.log("***************************"+JSON.stringify(input.BOOKING_ID));
-                    res.json({status:"success",data:input});
+                    res.json({status:"success",data:input.BOOKING_ID});
                 }
 
             })
@@ -1340,6 +1340,37 @@ module.exports =
                         res.json({status:'success'});
                     }
 
+                });
+        });
+    },
+    /*
+    phan quoc chien 
+    phanquocchien.c1109g@gmail.com
+    change booking
+    */
+    changeBooking:function(req,res){
+        var patientId = req.query.PATIENT_ID;
+        var calId = req.query.CAL_ID;
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID` = ?'
+                ,calId,function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                    
+                        res.json({status:'success'});
+                        var PATIENT = JSON.parse(rows[0].PATIENTS);
+                        console.log("11111111111111111111"+JSON.stringify(PATIENT));
+                        // remove(PATIENT[1]);
+                        console.log("22222222222222222222"+JSON.stringify(PATIENT));
+                    }
                 });
         });
     }

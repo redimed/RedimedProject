@@ -61,6 +61,7 @@ app.post('/api/rlob/rl_bookings/get-items-of-paging-report-status-bookings',rlBo
 app.post('/api/rlob/rl_bookings/update-appointment-calendar',rlBookingsController.cln_appointment_calendar_update);//chien update 
 app.post('/api/rlob/rl_bookings/update-patient-booking',rlBookingsController.updatePatientIdInBooking);//chien update 
 
+app.get('/api/rlob/rl_bookings/test',rlBookingsController.changeBooking);// chien test
 app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: get pass booking have not result
 app.post('/api/rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result',rlBookingsController.getCountReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: count total number of pass booking have not result
 app.post('/api/rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result',rlBookingsController.getItemsOfPageReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: items of page pass booking have not result

@@ -35,15 +35,15 @@ module.exports =
 
     getAdminList: function(req,res){
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
-        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        // var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
         var sql= 
             "SELECT u.`user_name` , ad.`ISENABLE`, ad.`ADMIN_ID`, ad.`ROLE` FROM `iso_admin` ad "+
             "INNER JOIN `users` u "+
-            "ON ad.`ADMIN_ID` = u.`id` WHERE ad.`ADMIN_ID` != ?";
+            "ON ad.`ADMIN_ID` = u.`id`";
 
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,userId,function(err,rows)
+            var query = connection.query(sql,function(err,rows)
             {
                 if(err)
                 {
@@ -99,6 +99,27 @@ module.exports =
             "WHERE ad.`ADMIN_ID` = ?   ";
         req.getConnection(function(err,connection){
             var query = connection.query(sql,[idnew,role,enableAdmin,userId,currentDate,id],function(err,rows){
+                if(err){
+                   res.json({status:'fail'});
+                    isoUtil.exlog(err);
+                }
+                if (rows){
+                     res.json({status:'success'});
+                     isoUtil.exlog("Update Success");
+                }
+            })
+            isoUtil.exlog(query.sql);
+        })
+    },
+    deleteAdmin:function(req,res){
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var id = isoUtil.checkData(req.body.id)?req.body.id:'';
+        isoUtil.exlog(id);
+        var sql =
+           "DELETE FROM `iso_admin` WHERE `ADMIN_ID` = ? ";
+           req.getConnection(function(err,connection){
+            var query = connection.query(sql,id,function(err,rows){
                 if(err){
                    res.json({status:'fail'});
                     isoUtil.exlog(err);

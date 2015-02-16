@@ -337,7 +337,15 @@ module.exports =
 
 
     //check_hierarchy_approver
-    //Kiem tra xem user login co phai la user ben hierarchy approval iso system khong
+    //Kiem tra xem user login co phai la user ben qms hierarchy approval hay khong
+    //neu user thuoc nhieu department thi chi lay ra dong duoc insert dau tien
+    //du lieu luu lai bao gom isoHierarchyApproverInfo:
+    //- sys_hierarchy_user
+    //- node_code
+    //- to_node_id: node tren cap la node nao
+    //- group_id
+    //- group_type
+    //- seq: staff 1->head 2->admin 3
     //tannv.dts@gmail.com
     checkHierarchyIsoApprover:function(req,res,next)
     {
@@ -353,10 +361,12 @@ module.exports =
         }        
 
         var sql=
-            " SELECT huser.*,hnode.`NODE_CODE`,hnode.`TO_NODE_ID`,hnode.`GROUP_ID`,hnode.`GROUP_TYPE`,hnode.seq          "+
-            " FROM `sys_hierarchies_users` huser                                                               "+
-            " INNER JOIN `sys_hierarchy_nodes` hnode ON huser.`NODE_ID`=hnode.`NODE_ID`                        "+
-            " WHERE huser.`ISENABLE`=1 AND huser.`USER_ID`=? AND hnode.`GROUP_TYPE`=?   ";
+            " SELECT huser.*,hnode.`NODE_CODE`,hnode.`TO_NODE_ID`,hnode.`GROUP_ID`,hnode.`GROUP_TYPE`,hnode.seq        "+
+            " FROM `sys_hierarchies_users` huser                                                                       "+
+            " INNER JOIN `sys_hierarchy_nodes` hnode ON huser.`NODE_ID`=hnode.`NODE_ID`                                "+
+            " WHERE huser.`ISENABLE`=1 AND huser.`USER_ID`=? AND hnode.`GROUP_TYPE`=?                                  "+
+            " ORDER BY huser.`CREATION_DATE` ASC                                                                       "+
+            " LIMIT 1                                                                                                  ";
 
         req.getConnection(function(err,connection)
         {
@@ -369,6 +379,7 @@ module.exports =
                         //res.json({status:'success',data:rows});
                         if(req.method=='POST')
                         {
+                            
                             req.body.isoHierarchyApproverInfo=rows[0];
                         }
                         else if(req.method=='GET')
@@ -389,7 +400,7 @@ module.exports =
                     res.json({status:'fail'});
                 }
             });
-
+            isoUtil.exlog("checkHierarchyIsoApprover",query.sql);
         });
     },
 
