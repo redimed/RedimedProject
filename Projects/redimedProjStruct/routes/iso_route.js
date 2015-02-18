@@ -7,6 +7,7 @@ var isoAdminController=require('./controllers/isoController/isoAdminController')
 var isoUserGroupController=require('./controllers/isoController/isoUserGroupController');
 var isoApproverController = require('./controllers/isoController/isoApproverController');
 var isoHierarchyApprovalController = require('./controllers/isoController/isoHierarchyApprovalController');
+var isoRequestEditDocumentController = require('./controllers/isoController/isoRequestEditDocumentController');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -28,6 +29,7 @@ app.get('/api/iso/iso-tree-dir/clone-folder',isoController.getUserPermission,iso
 app.post('/api/iso/iso-tree-dir/getFullVersionDoccument',isoController.getUserPermission,isoTreeDirController.getFullVersionDoccument);
 app.post('/api/iso/iso-tree-dir/getFullCheckinDoccument',isoController.getUserPermission,isoTreeDirController.getFullCheckinDoccument);
 app.get('/api/iso/iso-tree-dir/handlingDownloadVersionDocument',isoController.getUserPermission,isoTreeDirController.handlingDownloadVersionDocument);
+app.post('/api/iso/iso-tree-dir/select-document-info',isoTreeDirController.selectDocumentInfo);
 
 
 
@@ -58,17 +60,17 @@ app.post('/api/iso/iso-check-out-in/approvedAndReject',isoCheckInOutController.a
 app.get('/api/iso/iso-check-out-in/selectIdFromCheckOutIn',isoCheckInOutController.selectIdFromCheckOutIn);
 app.get('/api/iso/iso-check-out-in/downloadNewestVersionDocument',isoController.getUserPermission,isoCheckInOutController.downloadNewestVersionDocument);
 app.post('/api/iso/iso-check-out-in/send-email-all-user-document-release',isoCheckInOutController.sendEmailAllUserDocumentRelease);
-
 //tannv.dts@gmail.com
 app.post('/api/iso/iso-check-out-in/submit-document',isoController.getUserPermission,isoCheckInOutController.checkCanSubmitDocument,isoCheckInOutController.submitDocument);
 app.post('/api/iso/iso-check-out-in/cancel-submit-document',isoController.getUserPermission,isoCheckInOutController.checkCanCancelSubmitDocument,isoCheckInOutController.cancelSubmitDocument);
 app.get('/api/iso/iso-check-out-in/access-approval-page',isoCheckInOutController.checkIsApprover,isoCheckInOutController.accessApprovalPage);
-
 app.get('/api/iso/iso-check-out-in/countOutInStatusPending',isoCheckInOutController.checkIsApprover,isoCheckInOutController.countOutInStatusPending);
 app.get('/api/iso/iso-check-out-in/getAllOutInStatusPending',isoCheckInOutController.checkIsApprover,isoCheckInOutController.getAllOutInStatusPending);
 app.get('/api/iso/iso-check-out-in/downloadFileCheckOutIn',isoCheckInOutController.checkIsApprover,isoCheckInOutController.downloadFileCheckOutIn);
-app.post('/api/iso/iso-check-out-in/approved-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.approvedDocument);
+//app.post('/api/iso/iso-check-out-in/approved-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.approvedDocument);
+app.post('/api/iso/iso-check-out-in/approved-document',isoController.checkAdminTree,isoCheckInOutController.approvedDocument);
 app.post('/api/iso/iso-check-out-in/rejected-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.rejectedDocument);
+app.post('/api/iso/iso-check-out-in/make-current-version',isoController.checkAdminTree,isoCheckInOutController.makeCurrentVersion);
 
 //isoAdminController
 app.post('/api/iso/iso-admin/check-is-admin-iso-system',isoController.checkAdminIsoSystem,isoAdminController.checkIsAdminIsoSystem);
@@ -101,3 +103,11 @@ app.post('/api/iso/iso-hierarchy-approval/approval',isoHierarchyApprovalControll
 app.get('/api/iso/iso-hierarchy-approval/get-all-hierarchy-line-for-user',isoController.checkHierarchyIsoApprover,isoHierarchyApprovalController.getAllHierarchyLineForUser);
 app.get('/api/iso/iso-hierarchy-approval/download-file-check-out-in',isoController.checkHierarchyIsoApprover,isoHierarchyApprovalController.downloadFileCheckOutIn);
 app.post('/api/iso/iso-hierarchy-approval/send-email-notification-approval-to-next-node',isoHierarchyApprovalController.sendEmailNotificationApprovalToNextNode);
+
+//isoRequestEditDocumentController
+app.post('/api/iso/iso-tree-dir/send-request-to-edit-document',isoRequestEditDocumentController.requestEditDocument);
+app.post('/api/iso/iso-request-edit-document/get-all-request-of-user-login',isoRequestEditDocumentController.getAllRequestOfUserLogin);
+app.post('/api/iso/iso-request-edit-document/cancel-request',isoRequestEditDocumentController.cancelRequest);
+app.post('/api/iso/iso-request-edit-document/get-all-request',isoRequestEditDocumentController.getAllRequest);
+app.post('/api/iso/iso-request-edit-document/set-request-is-read',isoRequestEditDocumentController.setRequestIsRead);
+app.post('/api/iso/iso-request-edit-document/set-request-star',isoRequestEditDocumentController.setRequestStar);

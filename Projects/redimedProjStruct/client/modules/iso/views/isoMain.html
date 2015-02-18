@@ -15,11 +15,12 @@
 <div class="tree well">
 
     <script type="text/ng-template" id="nodes_renderer.html">
-        <span >
+        <span>
                 <i ng-if="node.nodes" class="fa fa-minus"></i>
                 <i ng-if="node.NODE_TYPE==nodeType.folder" class="fa fa-folder-open"></i>
-                <i ng-if="node.NODE_TYPE==nodeType.document" class="fa fa-leaf"></i>
+                <span style="border: none;padding: 0px;" ng-click="showDocumentInfo(node.NODE_TYPE,node.NODE_ID);"><i ng-if="node.NODE_TYPE==nodeType.document" class="fa fa-leaf"></i>
                 {{node.NODE_NAME}}
+                </span> 
                 <!-- ____{{node.relativePath}} -->
         </span>
         <div ng-show='node.PERMISSION<isoPermission.notPermission' style="color:#800000;display:inline;font-size:11px">
@@ -122,6 +123,15 @@
                             ng-click="beforeCheckIn();">
                             Check in
                         </button>
+
+                        <button 
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].releaseDocumentOneClick && (selectedTreeNode.SUBMIT_STATUS==null || selectedTreeNode.SUBMIT_STATUS==submitStatus.cancel) && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"
+                            type="button" 
+                            class="btn btn-default iso_action_button"
+                            ng-click="releaseDocumentOneClick()">
+                            Release
+                        </button>
+
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].submitDocument && (selectedTreeNode.SUBMIT_STATUS==null || selectedTreeNode.SUBMIT_STATUS==submitStatus.cancel) && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"
                             type="button" 
@@ -131,11 +141,35 @@
                         </button>
 
                        <button
-                            ng-show="selectedTreeNode.SUBMIT_STATUS==submitStatus.pending && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock"
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].cancelSubmitDocument && (selectedTreeNode.SUBMIT_STATUS==submitStatus.pending && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock)"
                             type="button"
                             class="btn btn-default iso_action_button"
                             ng-click="cancelSubmitDocument();">
                             Cancel Submit Document
+                        </button>
+
+                        <button
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].requestEditDocument"
+                            type="button"
+                            class="btn btn-default iso_action_button"
+                            ng-click="showTreeActionContentPopup(treeActions.requestEditDocument.name);">
+                            Request to Edit Document
+                        </button>
+
+                        <button
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].viewYourRequest"
+                            type="button"
+                            class="btn btn-default iso_action_button"
+                            ng-click="showTreeActionContentPopup(treeActions.viewYourRequest.name);">
+                            View Your Request
+                        </button>
+
+                        <button
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].viewAllRequest"
+                            type="button"
+                            class="btn btn-default iso_action_button"
+                            ng-click="showTreeActionContentPopup(treeActions.viewAllRequest.name);">
+                            View All Request
                         </button>
                     </div>
 
@@ -163,7 +197,7 @@
                             type="button" 
                             class="btn btn-default iso_action_button"
                             ng-click="showTreeActionContentPopup(treeActions.getFullVersionDocument.name);">
-                            Show Version History
+                            Version Control
                         </button>
 
                         <button 
@@ -226,7 +260,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Run</h4>
+                <h4 class="modal-title">{{currentTreeAction.header?currentTreeAction.header:'Run'}}</h4>
             </div>
             <div class="modal-body">
                 <form name='actionContentForm' novalidate>
@@ -247,3 +281,74 @@
 
 </div>
 
+<div class="portlet light" style="position: fixed;width: 500px;top: 0px;right: 0px;display:none" id="document">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-green-sharp bold uppercase">Document Info</span>
+        </div>
+        <div class="tools">
+            <a ng-click="closeDocument()">
+            <i class="fa fa-times" style="font-size: 25px;"></i>
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="user" class="table table-bordered table-striped" style="background: beige;">
+                <tbody>
+                <tr>
+                    <td style="width:50%">
+                         Document ID
+                    </td>
+                    <td style="width:50%">
+                        <a class="editable editable-click">
+                        {{documentInfo.NODE_ID}} </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         Document Code
+                    </td>
+                    <td>
+                        <a class="editable editable-click editable-empty">{{documentInfo.DOC_CODE}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         Document Name
+                    </td>
+                    <td>
+                        <a class="editable editable-click" style="color: rgb(128, 128, 128);">{{documentInfo.NODE_NAME}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         Document Author
+                    </td>
+                    <td>
+                        <a class="editable editable-click">{{documentInfo.Document_Author}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         Last Edited By
+                    </td>
+                    <td>
+                        <a class="editable editable-empty">{{documentInfo.Last_Edited_By}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         Lasted Edited On
+                    </td>
+                    <td>
+                        <a class="editable editable-click" style="color: rgb(128, 128, 128);">{{documentInfo.Lasted_Edited_On}}</a>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

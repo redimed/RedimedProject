@@ -96,8 +96,18 @@ angular.module('app.loggedIn.iso.service',[])
                 var result = api.all("iso/iso-tree-dir/getFullCheckinDoccument");
                 return result.post({nodeId:nodeId});
             },
+            selectDocument:function(nodeId){
+                var result = api.all("iso/iso-tree-dir/select-document-info");
+                return result.post({nodeId:nodeId});
+            },
             handlingDownloadVersionDocument:function(FILE_NAME,CHECK_IN_FOLDER_STORAGE,nodeId){
                 $window.location.href = '/api/iso/iso-tree-dir/handlingDownloadVersionDocument?nodeId='+nodeId+'&FILE_NAME='+FILE_NAME+'&CHECK_IN_FOLDER_STORAGE='+CHECK_IN_FOLDER_STORAGE;
+            },
+
+            sendRequestEditDocument:function(userRequestInfo)
+            {
+                var result = api.all("iso/iso-tree-dir/send-request-to-edit-document");
+                return result.post({userRequestInfo:userRequestInfo});
             }
 
         };
@@ -218,8 +228,13 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all("iso/iso-check-out-in/send-email-all-user-document-release");
                 return result.post({nodeId:nodeId})
-            }
+            },
 
+            makeCurrentVersion:function(nodeId,checkOutInId)
+            {
+                var result = api.all("iso/iso-check-out-in/make-current-version");
+                return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
+            }
         }
 
         isoService.isoAdmin={
@@ -367,5 +382,36 @@ angular.module('app.loggedIn.iso.service',[])
       
         }
 
+        isoService.requestEdit={
+            getAllRequestOfUserLogin:function(nodeId)
+            {
+                var result=api.all("iso/iso-request-edit-document/get-all-request-of-user-login");
+                return result.post({nodeId:nodeId});
+            },
+
+            cancelRequest:function(requestId)
+            {
+                var result = api.all("iso/iso-request-edit-document/cancel-request");
+                return result.post({requestId:requestId});
+            },
+
+            getAllRequest:function(nodeId)
+            {
+                var result=api.all("iso/iso-request-edit-document/get-all-request");
+                return result.post({nodeId:nodeId});
+            },
+
+            setRequestIsRead:function(requestId)
+            {
+                var result=api.all("iso/iso-request-edit-document/set-request-is-read");
+                return result.post({requestId:requestId});
+            },
+
+            setRequestStar:function(requestId,star)
+            {
+                var result=api.all("iso/iso-request-edit-document/set-request-star");
+                return result.post({requestId:requestId,star:star});
+            }
+        }
         return isoService;
     })

@@ -587,6 +587,7 @@ module.exports =
      * Xu ly submit document
      * Vo Duc Giap
      * modify: tannv.dts@gmail.com
+     * modify: tannv.dts@gmail.com: bo phan gui mail
      */
     submitDocument: function(req,res){
         isoUtil.exlog(">>>>>>>>>>>>>>>>> function submit document");
@@ -628,39 +629,46 @@ module.exports =
                 }
                 else
                 {
+                    updateInfo.checkOutInId=checkOutInId;
                     res.json({status:"success",data:updateInfo});
-                    req.getConnection(function(err,connection)
-                    {
-                        var query = connection.query(sqlGetEmail,function(err,data)
-                        {
-                            if(err)
-                            {
-                                isoUtil.exlog(err);
-                                res.json({status:'fail'});
-                            }
-                            else
-                            {
-                                var listEmail = '';
-                                data.forEach(function(item){
-                                    listEmail +=item.Contact_email+','
-                                })
-                                var mailInfo = {
-                                    senders:"REDiMED <healthscreenings@redimed.com.au>",
-                                    recipients:listEmail,
-                                    subject:'Submit ISO Document by '+userInfo.user_name,
-                                    htmlBody:
-                                    "	<p>Hi,</p>                                 "+
-                                    "    <p>                                                                                                 "+
-                                    "    Please Check New Submit Document : http://localhost:3000/#/iso/isoSubmitStatusPending "+
-                                    "    </p>                                                                                                "+
-                                    "    <p>                                                                                                 "+
-                                    "        Thank you                                                                                       "+
-                                    "    </p>   "
-                                };
-                                isoEmail.sendEmail(req,res,mailInfo);
-                            }
-                        });
-                    });
+
+                    //CODE BACKUP KHONG DUOC XOA
+                    //CODE BACKUP KHONG DUOC XOA
+                    //CODE BACKUP KHONG DUOC XOA
+                    //CODE BACKUP KHONG DUOC XOA
+                    //TANNV.DTS@GMAIL.COM
+                    // req.getConnection(function(err,connection)
+                    // {
+                    //     var query = connection.query(sqlGetEmail,function(err,data)
+                    //     {
+                    //         if(err)
+                    //         {
+                    //             isoUtil.exlog(err);
+                    //             res.json({status:'fail'});
+                    //         }
+                    //         else
+                    //         {
+                    //             var listEmail = '';
+                    //             data.forEach(function(item){
+                    //                 listEmail +=item.Contact_email+','
+                    //             })
+                    //             var mailInfo = {
+                    //                 senders:isoUtil.getMailSender(),
+                    //                 recipients:listEmail,
+                    //                 subject:'Submit ISO Document by '+userInfo.user_name,
+                    //                 htmlBody:
+                    //                 "	<p>Hi,</p>                                 "+
+                    //                 "    <p>                                                                                                 "+
+                    //                 "    Please Check New Submit Document : http://localhost:3000/#/iso/isoSubmitStatusPending "+
+                    //                 "    </p>                                                                                                "+
+                    //                 "    <p>                                                                                                 "+
+                    //                 "        Thank you                                                                                       "+
+                    //                 "    </p>   "
+                    //             };
+                    //             isoEmail.sendEmail(req,res,mailInfo);
+                    //         }
+                    //     });
+                    // });
                 }
             });
         });
@@ -969,9 +977,10 @@ module.exports =
     /**
      * Approval document
      * tannv.dts@gmail.com
+     * modify: 17/2/2015 by tannv.dts: admin tren cay thu muc thi duoc approved
      */
     approvedDocument:function(req,res)
-    {
+    {        
         var checkOutInId=isoUtil.checkData(req.body.checkOutInId)?req.body.checkOutInId:'';
         var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
         var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
@@ -1058,7 +1067,13 @@ module.exports =
                                             }
                                             else
                                             {
-                                                res.json({status:'success'})
+                                                var returnInfo={
+                                                    SUBMIT_STATUS:checkOutInUpdateInfo.SUBMIT_STATUS,
+                                                    VERSION_NO:checkOutInUpdateInfo.VERSION_NO,
+                                                    CHECK_IN_STATUS:checkOutInUpdateInfo.CHECK_IN_STATUS,
+                                                    CURRENT_VERSION_ID:treeDirUpdateInfo.CURRENT_VERSION_ID
+                                                }
+                                                res.json({status:'success',data:returnInfo});
                                             }
                                         });
 
@@ -1355,8 +1370,7 @@ module.exports =
                                             // listEmail.substring(0,listEmail.length -1);
                                             isoUtil.exlog('list mai for 1 :',listEmail);
                                             var mailInfo = {
-                                            senders:"REDiMED <tannv.solution@gmail.com>",
-                                            // senders:"REDiMED <healthscreenings@redimed.com.au>",
+                                            senders:isoUtil.getMailSender(),
                                             recipients:listEmail,
                                             subject: contactEmail[0].NODE_NAME + ' new version release ',
                                             htmlBody:
@@ -1386,8 +1400,7 @@ module.exports =
                                             // listEmail.substring(0,listEmail.length -1);
                                             isoUtil.exlog('list mai for 2:',listEmail);
                                             var mailInfo = {
-                                            senders:"REDiMED <tannv.solution@gmail.com>",
-                                            // senders:"REDiMED <healthscreenings@redimed.com.au>",
+                                            senders:isoUtil.getMailSender(),
                                             recipients:listEmail,
                                             subject: contactEmail[0].NODE_NAME + ' new version release ',
                                             htmlBody:
@@ -1417,6 +1430,52 @@ module.exports =
                         isoUtil.exlog("loi send mail",err);
                         res.json({status:'fail'});
                     }
+                }
+            });
+        });
+    },
+
+    makeCurrentVersion:function(req,res)
+    {
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var checkOutInId=isoUtil.checkData(req.body.checkOutInId)?req.body.checkOutInId:'';
+        var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
+        if(!isoUtil.checkListData([userId,nodeId,checkOutInId]))
+        {
+            isoUtil.exlog("makeCurrentVersion","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql="UPDATE `iso_tree_dir` SET ? WHERE `NODE_ID`=? AND `ISENABLE`=1";
+        var updateInfo={
+            CURRENT_VERSION_ID:checkOutInId,
+            LAST_UPDATED_BY:userId,
+            LAST_UPDATED_DATE:currentTime
+        };
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[updateInfo,nodeId],function(err,result)
+            {
+                if(err)
+                {
+                    isoUtil.exlog("makeCurrentVersion",err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(result.affectedRows>0)
+                    {
+                        res.json({status:'success'});
+                    }
+                    else
+                    {
+                        isoUtil.exlog("makeCurrentVersion","Khong co dong nao duoc update");
+                        res.json({status:'fail'});
+                    }
+                             
                 }
             });
         });

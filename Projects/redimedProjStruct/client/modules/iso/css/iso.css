@@ -130,3 +130,18 @@ tannv.dts@gmail.com
 .iso_hierarchy_action_button{
     margin-right: 10px;
 }
+
+.iso_request_star_text{
+    font-weight: bold;
+}
+
+.iso_request_star_button{
+    background-color: #DFDF00;
+}
+
+.iso_wordwrap { 
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
+}

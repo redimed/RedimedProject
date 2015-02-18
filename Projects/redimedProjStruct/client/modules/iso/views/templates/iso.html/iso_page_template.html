@@ -142,45 +142,50 @@ GOBAL POPUP -->
 
 
 <script type="text/ng-template" id="iso_get_full_version_document.html">
-   <div class="table-scrollable" id="content">
-            <table id="tblFullVersion"    show-filter="true" class="table table-hover table-bordered table-responsive">
+   <div class="table-scrollable" id="content" style="height:350px;overflow:scroll;">
+        <table id="tblFullVersion"    show-filter="true" class="table table-hover table-bordered table-responsive">
 
+            <tr >
+            
+                <td width="100px" >
+                    <label >Document Name</label>
+                </td>
+                <td width="200px">
+                    <label >Version No</label>
+                </td>
+                <td align="center" width="100px"  >
+                    <label >Sensorship Date</label>
+                </td>
+                <td align="center" data-title="'Actions'">
+                   <label >Actions</label>
+                </td>
+            </tr>
 
-                <tr >
+            <tr  style="white-space: nowrap; cursor: pointer;" ng-repeat="version in fullVersionDocumentData" >
                 
-                    <td width="200px" >
-                        <label >Document Name</label>
-                    </td>
-                    <td width="200px">
-                        <label >Version No</label>
-                    </td>
-                    <td align="center" width="100px"  >
-                        <label >Sensorship Date</label>
-                    </td>
-                    <td align="center" data-title="'Actions'">
-                       <label >Actions</label>
-                    </td>
-                </tr>
-
-                <tr  style="white-space: nowrap; cursor: pointer;" ng-repeat="version in fullVersionDocumentData" >
-                    
-                    <td width="200px" data-title="'Document Name'" >
-                        
-                        <label >{{version.FILE_NAME}}</label>
-                    </td>
-                    <td width="200px" data-title="'Version No'">
-                        <label >{{version.VERSION_NO}}</label>
-                    </td>
-                    <td align="center" width="100px" data-title="'Sensorship Date'" >
-                        <label >{{version.CENSORSHIP_DATE| date:'yyyy-MM-dd HH:mm:ss '}}</label>
-                    </td>
-                    <td align="center" data-title="'Actions'">
-                        <a style="width: 150px" href="javascript:;" ng-click="downloadVersionNo(version.FILE_NAME,version.CHECK_IN_FOLDER_STORAGE,version.NODE_ID)" class="btn btn-circle blue-steel btn-sm">
-                            <i class="fa fa-pencil"></i> Download Version </a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                <td width="100px" data-title="'Document Name'" >
+                    <label >{{version.NODE_NAME}} </label>
+                    <br/>
+                    <div style="width:100px;" class="iso_wordwrap">({{version.FILE_NAME}})</div>
+                </td>
+                <td width="200px" data-title="'Version No'">
+                    <label >{{version.VERSION_NO}}</label>
+                </td>
+                <td align="center" width="100px" data-title="'Sensorship Date'" >
+                    <label >{{version.CENSORSHIP_DATE| date:'yyyy-MM-dd HH:mm:ss '}}</label>
+                </td>
+                <td align="center" data-title="'Actions'">
+                    <a class="btn btn-default btn-xs" ng-click="downloadVersionNo(version.FILE_NAME,version.CHECK_IN_FOLDER_STORAGE,version.NODE_ID)" >
+                       </i> Download 
+                    </a>
+                    <a class="btn btn-default btn-xs" ng-show="permissionFunction[selectedTreeNode.PERMISSION].makeCurrentVersion && version.IS_CURRENT_VERSION!=1" ng-click="makeCurrentVersion(version.NODE_ID,version.ID)" >
+                       </i> Make Current
+                    </a>
+                    <span ng-show="version.IS_CURRENT_VERSION==1">(Current Version)</span>
+                </td>
+            </tr>
+        </table>
+    </div>
 </script>
 
 <script type="text/ng-template" id="iso_get_full_checkin_document.html">
@@ -221,4 +226,88 @@ GOBAL POPUP -->
 </script>
 
 
+<script type="text/ng-template" id="iso_request_edit_document.html">
+    <div class="form-group">
+        <label >Description:
+        </label>
+        <textarea ng-model="newRequestEditDocument.description" class="form-control" rows="10">
+            
+        </textarea>
+    </div>
+    
+    <button class="btn btn-default" ng-click="sendRequestEditDocument();">Send</button>
+</script>
 
+<script type="text/ng-template" id="iso_view_your_request.html">
+    <div class="table-responsive" style="height:200px;overflow:auto;">
+        <table class="table">
+            <tr>
+                <th>Date submitted:</th>
+                <th></th>
+            </tr>
+            
+            <tr ng-repeat="item in listYourRequest" ng-click="setSelectedYourRequest(item)">
+                <td>
+                    {{item.CREATION_DATE|date:'dd/MM/yyyy HH:mm:ss'}}
+                </td>
+                <td>
+                    <button ng-show="item.IS_READ==0" type='button' 
+                            class='btn btn-primary btn-xs' 
+                            ng-click="cancelYourRequest(item.ID);">
+                        Cancel
+                    </button>
+
+                    <span ng-show="item.IS_READ==1">Had Read</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1" style='font-weight:bold'>Detail:</label>
+        <textarea ng-disabled="'true'" ng-model="selectedYourRequest.DESCRIPTION" class="form-control" rows='10'></textarea>
+      </div>
+    
+</script>
+
+<script type="text/ng-template" id="iso_view_all_request.html">
+    <div class="table-responsive" style="height:200px;overflow:auto;">
+        <table class="table">
+            <tr>
+                <th>Date submitted:</th>
+                <th>Submited by</th>
+                <th></th>
+            </tr>
+            
+            <tr ng-class="{'alert alert-success':item.IS_READ==0,'iso_request_star_text':item.STAR==1}" ng-repeat="item in listAllRequest" ng-click="setSelectedRequest(item)">
+                
+                <td>
+                    {{item.CREATION_DATE|date:'dd/MM/yyyy HH:mm:ss'}}
+                </td>
+                <td>
+                    {{item.user_name}}
+                </td>
+                <td>
+                    <button type='button' 
+                            class='btn btn-default btn-xs'
+                            ng-class="{'iso_request_star_button':item.STAR==1}"
+                            ng-click="setRequestStar(item)">
+                            <i class="fa fa-star"></i>Star
+                    </button>
+                    <button ng-show="item.IS_READ==0" type='button' 
+                            class='btn btn-default btn-xs'
+                            ng-click="setRequestIsRead(item)">
+                        Set is Read
+                    </button>
+                    <span ng-show="item.IS_READ==1">Had Read</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1" style='font-weight:bold'>Detail:</label>
+        <textarea ng-disabled="'true'" ng-model="selectedRequest.DESCRIPTION" class="form-control" rows='10'></textarea>
+      </div>
+    
+</script>
