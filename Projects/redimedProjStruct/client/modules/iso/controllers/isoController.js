@@ -61,7 +61,24 @@ angular.module('app.loggedIn.iso.controller',[])
             }
         },function(err){
             $scope.isIsoApprover=0;
-        })
+        });
+
+        $scope.departmentList=[];
+        isoService.core.getDepartmentList()
+        .then(function(data){
+            if(data.status=='success')
+            {
+                $scope.departmentList=data.data;
+            }
+            else
+            {
+                $scope.departmentList=[];
+            }
+        },function(err){
+            $scope.departmentList=[];
+        });
+
+        $scope.documentTypeList=isoConst.documentTypeList;
         
     })
 	

@@ -479,6 +479,29 @@ module.exports =
         });
     },
 
+    getDepartmentList:function(req,res)
+    {
+        var sql=
+            " SELECT dep.`departmentid` AS DEPARTMENT_ID,                                                    "+
+            " redi.`id` AS SITE_ID,CONCAT(redi.`Site_name`,' - ',dep.`departmentName`) AS DEPARTMENT_NAME    "+
+            " FROM `departments` dep INNER JOIN `redimedsites` redi ON dep.`locationID`=redi.`id`            ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:rows});
+                }
+            });
+            isoUtil.exlog(query.sql);
+        });
+    }
 
 
 }

@@ -145,7 +145,13 @@ var isoConst={
         accept:'ACCEPT',
         reject:'REJECT',
         cancel:'CANCEL'
-    }
+    },
+
+    documentTypeList:
+    [
+        {value:'Procedure'},
+        {value:'User Manual'}
+    ]
 };
 
 

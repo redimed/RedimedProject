@@ -360,6 +360,8 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 $scope.newDocument.nodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.nodeName;
+                $scope.newDocument.departmentId=$scope.newDocument.department.DEPARTMENT_ID;
+                $scope.newDocument.documentTypeValue=$scope.newDocument.documentType.value;
                 $scope.newDocumentBackError=angular.copy($scope.newDocumentBackErrorTemplate);
                 isoService.treeDir.checkDupEntry($scope.newDocument.fatherNodeId,$scope.newDocument.nodeName,$scope.newDocument.docCode)
                 .then(function(data){

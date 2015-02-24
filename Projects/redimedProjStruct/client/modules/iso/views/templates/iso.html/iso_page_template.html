@@ -34,6 +34,23 @@
         <p class="help-block" ng-if="actionContentForm.nameDocumentCode.$error.required">Required!</p>
         <p class="help-block" ng-if="actionContentForm.nameDocumentCode.$error.maxlength">Document code cannot be longer than 20 characters</p>
     </div>
+
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Document type:</label>
+        <select class="form-control" ng-model="newDocument.documentType" ng-options="item.value for item in documentTypeList" required name="documentType">
+            <!-- <option  value="">All</option> -->
+        </select>
+        <p class="help-block" ng-if="actionContentForm.documentType.$error.required">Required!</p>
+    </div>
+
+    <div class="form-group" show-errors='{showSuccess: true}'>
+        <label >Department:</label>
+        <select class="form-control" ng-model="newDocument.department" ng-options="department.DEPARTMENT_NAME for department in departmentList" required name="department">
+            <!-- <option  value="">All</option> -->
+        </select>
+        <p class="help-block" ng-if="actionContentForm.department.$error.required">Required!</p>
+    </div>
+
     <div class="form-group" show-errors='{showSuccess: true}'>
         <label >Description:</label>
         <input type="text" ng-model="newDocument.description" class="form-control" placeholder="Description" ng-maxlength="500" name="Description">

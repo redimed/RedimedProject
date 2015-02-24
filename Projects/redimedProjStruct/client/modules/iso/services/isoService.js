@@ -27,6 +27,12 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all('iso/core/get-users-in-permission-group');
                 return result.post({nodeId:nodeId,groupValue:groupValue});
+            },
+
+            getDepartmentList:function()
+            {
+                var result=api.one('iso/core/get-department-list');
+                return result.get();
             }
         }
 

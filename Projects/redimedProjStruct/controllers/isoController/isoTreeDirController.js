@@ -360,9 +360,13 @@ module.exports =
             DOC_CODE:info.docCode,
             DOC_DATE:moment().format("YYYY-MM-DD HH:mm:ss"),
             DESCRIPTION:info.description,
+            DEPARTMENT_ID:info.departmentId,
+            DOC_TYPE:info.documentTypeValue,
             CREATED_BY:info.createdBy,
             ISENABLE:1
         }
+
+        isoUtil.exlog('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',info,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
         var targetFolder=prefix+info.relativePath;
@@ -1105,10 +1109,14 @@ module.exports =
     selectDocumentInfo:function(req,res){
         var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
         isoUtil.exlog('idddd',req.body);
-        var sql = "SELECT tree.*,us.`user_name` AS Document_Author,uss.`user_name` AS Last_Edited_By FROM `iso_tree_dir` tree "+
-                  "INNER JOIN `users` us ON `tree`.`CREATED_BY` = us.`id` "+
-                  "LEFT JOIN `users` uss ON tree.`LAST_UPDATED_BY` = uss.`id` "+
-                  "WHERE `NODE_ID` = ?";
+        var sql = 
+            " SELECT tree.*,us.`user_name` AS Document_Author,uss.`user_name` AS Last_Edited_By,   "+
+            " dep.`departmentName` AS DEPARTMENT_NAME                                              "+
+            " FROM `iso_tree_dir` tree                                                             "+
+            " LEFT JOIN `users` us ON `tree`.`CREATED_BY` = us.`id`                                "+
+            " LEFT JOIN `users` uss ON tree.`LAST_UPDATED_BY` = uss.`id`                           "+
+            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`               "+
+            " WHERE `NODE_ID` = ?                                                                  ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)

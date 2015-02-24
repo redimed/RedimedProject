@@ -16,6 +16,7 @@ app.get('/api/iso/core/get-user-name-list',isoController.getUserNameList);
 app.get('/api/iso/core/get-count-user-name',isoController.getCountUserName);
 app.post('/api/iso/core/get-users-in-permission-group',isoController.getUsersInPermissionGroup);
 app.get('/api/iso/core/get-new-key',isoController.getNewKey);
+app.get('/api/iso/core/get-department-list',isoController.getDepartmentList);
 //app.get('/api/iso/iso-check-out-in/check-is-hierarchy-iso-approver',isoCheckInOutController.checkHierarchyIsoApprover);
 
 

@@ -311,17 +311,36 @@
                          Document Code
                     </td>
                     <td>
-                        <a class="editable editable-click editable-empty">{{documentInfo.DOC_CODE}}</a>
+                        <a class="editable editable-click">{{documentInfo.DOC_CODE}}</a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                         Document Name
+                         Document Title
                     </td>
                     <td>
-                        <a class="editable editable-click" style="color: rgb(128, 128, 128);">{{documentInfo.NODE_NAME}}</a>
+                        <a class="editable editable-click" >{{documentInfo.NODE_NAME}}</a>
                     </td>
                 </tr>
+
+                <tr>
+                    <td>
+                         Department Ownership
+                    </td>
+                    <td>
+                        <a class="editable editable-click" >{{documentInfo.DEPARTMENT_NAME}}</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                         Document Type
+                    </td>
+                    <td>
+                        <a class="editable editable-click" >{{documentInfo.DOC_TYPE}}</a>
+                    </td>
+                </tr>
+
                 <tr>
                     <td>
                          Document Author
@@ -335,7 +354,7 @@
                          Last Edited By
                     </td>
                     <td>
-                        <a class="editable editable-empty">{{documentInfo.Last_Edited_By}}</a>
+                        <a class="editable editable-click">{{documentInfo.Last_Edited_By}}</a>
                     </td>
                 </tr>
                 <tr>
@@ -343,7 +362,7 @@
                          Lasted Edited On
                     </td>
                     <td>
-                        <a class="editable editable-click" style="color: rgb(128, 128, 128);">{{documentInfo.Lasted_Edited_On}}</a>
+                        <a class="editable editable-click">{{documentInfo.Lasted_Edited_On}}</a>
                     </td>
                 </tr>
                 </tbody>
