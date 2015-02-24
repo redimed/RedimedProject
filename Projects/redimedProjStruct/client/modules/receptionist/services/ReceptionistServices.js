@@ -34,6 +34,11 @@ angular.module("app.loggedIn.receptionist.services", [])
 		return updateApi.post(options);
 	}
 
+	receptionistService.updateStatus = function(options){
+		var updateApi = receptionistApi.all("appointment/updateStatus");
+		return updateApi.post(options);
+	}
+
 
 	/**
 	*	APPOINTMENT ITEM FEE

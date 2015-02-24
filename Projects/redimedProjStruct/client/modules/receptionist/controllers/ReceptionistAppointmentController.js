@@ -1,6 +1,15 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
 .controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, mdtClaimService, localStorageService, sysServiceService) {
+	$scope.cancelStatus = function(data, overId, docId){
+		$scope.selectedCalId = data.cals[docId];
+
+		ReceptionistService.updateStatus({CAL_ID: $scope.selectedCalId, STATUS: "cancel"}).then(function(status){
+			toastr.success("Cancel Status Successfully", "Success");
+			$scope.refreshAppointment();
+		})
+	}
+
 	$scope.modelObjectMap = {};
 	$scope.overviewAppointment = [];
     $scope.addClaimShow = false;
@@ -230,7 +239,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 								from_time: data[i].FROM_TIME, 
 								from_time_map:from_time_map,
 								to_time: data[i].TO_TIME, 
-								to_time_map:to_time_map
+								to_time_map:to_time_map,
 							}
 						);
 
@@ -244,6 +253,9 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 							var service_colors = data[i].SERVICE_COLORS.split(",");
 						}
 
+						if(data[i].status !== null)
+							var statuses = data[i].status.split(",");
+
 						var patients = data[i].PATIENTS.split("|");
 
 						$scope.overviewAppointment[i].doctors = [];
@@ -251,6 +263,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 						$scope.overviewAppointment[i].patients = [];
 						$scope.overviewAppointment[i].service_colors = [];
 						$scope.overviewAppointment[i].services = [];
+						$scope.overviewAppointment[i].statuses = [];
 						for(var j = 0; j < $scope.options.doctors.length; j++){
 							var flag = false;
 							for(var k = 0; k < doctors.length; k++){
@@ -279,12 +292,17 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 								}else{
 									$scope.overviewAppointment[i].patients.push([{Patient_name: "No Patient", Patient_id: 0}]);
 								}
+
+								if(data[i].status !== null){
+									$scope.overviewAppointment[i].statuses.push(statuses[flag]);
+								}
 							}else{
 								$scope.overviewAppointment[i].doctors.push("");
 								$scope.overviewAppointment[i].cals.push("");
 								$scope.overviewAppointment[i].patients.push("");
 								$scope.overviewAppointment[i].service_colors.push("");
 								$scope.overviewAppointment[i].services.push("");
+								$scope.overviewAppointment[i].statuses.push("");
 							}
 						}
 					}// end for

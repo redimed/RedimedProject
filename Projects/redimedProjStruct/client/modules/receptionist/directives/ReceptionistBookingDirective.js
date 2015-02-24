@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.booking.directive", [])
 
-.directive("calendarBooking", function(ClnAppointmentCalendarModel, ReceptionistService, toastr){
+.directive("calendarBooking", function(ClnAppointmentCalendarModel, ReceptionistService, toastr, hotkeys){
 	return {
 		restrict: "EA",
 		scope: {
@@ -15,6 +15,32 @@ angular.module("app.loggedIn.receptionist.booking.directive", [])
 		},
 		templateUrl: "modules/receptionist/directives/templates/booking.html",
 		link: function(scope, element, attrs){
+			/* HOTKEY */
+			hotkeys.add({
+				combo: "esc",
+				description: "Exit this popup",
+				callback: function(){
+					scope.closePopup();
+				}
+			});
+
+			hotkeys.add({
+				combo: "s",
+				description: "Select a Patient",
+				callback: function(){
+					scope.clickPatient({type: 'select'});
+				}
+			});
+
+			hotkeys.add({
+				combo: "a",
+				description: "Add a Patient",
+				callback: function(){
+					scope.clickPatient({type: 'add'});
+				}
+			});
+			/* END HOTKEY */
+
 			//DECLARE
 			if(scope.isClose){
 				var idClose = "#"+scope.isClose;

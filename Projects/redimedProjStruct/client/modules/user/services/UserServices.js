@@ -3,6 +3,13 @@ angular.module("app.loggedIn.user.services", [])
 .factory("UserService", function(Restangular){
     var userService = {};
     var userApi = Restangular.all("api");
+    var mdtUserApi = Restangular.all("api/meditek/v1/user/");
+
+    userService.all = function(){
+        var funcApi = mdtUserApi.one('all');
+        return funcApi.get();
+    }
+
 
     userService.detail = function(username){
         var detailApi = userApi.one("users/loggedin");
