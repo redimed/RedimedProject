@@ -427,6 +427,64 @@ angular.module('app.loggedIn.document.services', [])
             };
         } 
 
+        documentService.optionMRS = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'mrs_search',
+                method: 'post',
+                columns: [
+                    {field: 'mrs_id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionCategory2 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'category2_search',
+                method: 'post',
+                columns: [
+                    {field: 'cat_id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.optionCategory3 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'category3_search',
+                method: 'post',
+                columns: [
+                    {field: 'cat_id' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+
 
         return documentService;
 

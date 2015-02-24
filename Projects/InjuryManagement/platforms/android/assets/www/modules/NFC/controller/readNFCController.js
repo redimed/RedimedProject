@@ -199,7 +199,4 @@ angular.module('starter.NFC.controller',[])
 
             }
         }
-        ref.addEventListener("backbutton", function () {
-            console.log("window.open works well");
-        })
     })

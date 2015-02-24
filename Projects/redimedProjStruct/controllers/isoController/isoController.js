@@ -191,6 +191,71 @@ module.exports =
 
     },
 
+    checkAdminTree:function(req,res,next)
+    {
+        var nodeId=null;
+        if(isoUtil.haveData(req.body))
+        {
+            nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        }
+        if(isoUtil.haveData(req.query))
+        {
+            nodeId=isoUtil.checkData(req.query.nodeId)?req.query.nodeId:'';
+        }
+
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        if(!isoUtil.checkListData([nodeId,userId]))
+        {   
+            res.json({status:'fail'});
+        }
+        var sql=
+            "SELECT treeUser.* FROM iso_tree_users treeUser WHERE treeUser.`ISENABLE`=1 AND treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[nodeId,userId],function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {        
+                        if(isoUtil.checkData(rows[0].PERMISSION) && rows[0].PERMISSION==isoUtil.isoPermission.administrator)  
+                        {
+                            if(req.method=='POST')
+                            {
+                                req.body.isAdminTree=1;
+                            }
+                            if(req.method=='GET')
+                            {
+                                req.query.isAdminTree=1;
+                            }
+                            next();
+                        }   
+                        else
+                        {
+                            isoUtil.exlog("User do not have admin permission in node!");
+                            res.json({status:'fail'});
+                        }         
+                        
+                        
+                    }
+                    else
+                    {
+                        isoUtil.exlog("User do not have permisssion in node!");
+                        res.json({status:'fail'});
+                    }
+                        
+                }
+            });
+            isoUtil.exlog(query.sql);
+        });    
+    },
+
     /**
      * VO DUC GIap
      * MiddleWare Check Admin
@@ -412,8 +477,31 @@ module.exports =
         },function(err){
             res.json({status:'fail'});
         });
-    }
+    },
 
+    getDepartmentList:function(req,res)
+    {
+        var sql=
+            " SELECT dep.`departmentid` AS DEPARTMENT_ID,                                                    "+
+            " redi.`id` AS SITE_ID,CONCAT(redi.`Site_name`,' - ',dep.`departmentName`) AS DEPARTMENT_NAME    "+
+            " FROM `departments` dep INNER JOIN `redimedsites` redi ON dep.`locationID`=redi.`id`            ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:rows});
+                }
+            });
+            isoUtil.exlog(query.sql);
+        });
+    }
 
 
 }

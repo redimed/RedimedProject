@@ -15,7 +15,7 @@ angular.module('app.loggedIn.iso.controller',[])
     	$scope.checkInStatus=isoConst.checkInStatus;
     	$scope.submitStatus=isoConst.submitStatus;
         $scope.isoPermission=isoConst.isoPermission;
-
+        $scope.requestEditStatus=isoConst.requestEditStatus;
         $scope.isIsoAdminSystem=0;
         isoService.isoAdmin.checkIsAdminIsoSystem()
         .then(function(data){
@@ -61,7 +61,24 @@ angular.module('app.loggedIn.iso.controller',[])
             }
         },function(err){
             $scope.isIsoApprover=0;
-        })
+        });
+
+        $scope.departmentList=[];
+        isoService.core.getDepartmentList()
+        .then(function(data){
+            if(data.status=='success')
+            {
+                $scope.departmentList=data.data;
+            }
+            else
+            {
+                $scope.departmentList=[];
+            }
+        },function(err){
+            $scope.departmentList=[];
+        });
+
+        $scope.documentTypeList=isoConst.documentTypeList;
         
     })
 	

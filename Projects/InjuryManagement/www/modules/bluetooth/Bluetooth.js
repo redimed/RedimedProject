@@ -1,23 +1,25 @@
 angular.module('starter.bluetooth',[
     'starter.bluetooth.services',
-    'starter.bluetooth.controller'
+    'starter.bluetooth.mainBlueController',
+    'starter.bluetooth.detailDeviceBlueController'
 ])
     .config(function ($stateProvider){
         $stateProvider
-            .state('app.bluetooth',{
-                url: "/bluetooth",
+            .state('app.mainBluetooth',{
+                url: "/mainBluetooth",
                 views: {
                     'menuContent' : {
-                        templateUrl: "modules/bluetooth/views/structure.html",
-                        controller: "BluetoothController"
+                        templateUrl: "modules/bluetooth/views/main.html",
+                        controller: "mainBlueController"
                     }
                 }
             })
-            .state('app.bluetooth.main',{
-                url: "/main",
+            .state('app.detailDeviceBluetooth',{
+                url: "/detailDevice/:id/:name/:address?status",
                 views: {
-                    'main' : {
-                        templateUrl: "modules/bluetooth/views/main.html"
+                    'menuContent' : {
+                        templateUrl: "modules/bluetooth/views/detailDevice.html",
+                        controller: "detailDeviceBlueController"
                     }
                 }
             })

@@ -55,9 +55,14 @@ var isoConst={
     	checkIn:'checkIn',
     	submitDocument:'submitDocument',
         cancelSubmitDocument:'cancelSubmitDocument',
+        requestEditDocument:'requestEditDocument',
+        viewYourRequest:'viewYourRequest',
+        viewAllRequest:'viewAllRequest',
     	deleteDocument:'deleteDocument',
     	grantDocumentPermission:'grantDocumentPermission',
-    	downloadNewestVersion:'downloadNewestVersion'
+    	downloadNewestVersion:'downloadNewestVersion',
+        releaseDocumentOneClick:'releaseDocumentOneClick',
+        makeCurrentVersion:'makeCurrentVersion'
     },
 
 
@@ -70,13 +75,18 @@ var isoConst={
     		createDocument:true,
     		checkOut:true,
     		checkIn:true,
-    		submitDocument:true,
-            cancelSubmitDocument:true,
+
+    		submitDocument:false,//deactive
+            cancelSubmitDocument:false,//deactive
+
     		deleteDocument:true,
     		grantDocumentPermission:true,
     		downloadNewestVersion:true,
             getFullVersionDoccument:true,
-            getFullCheckinDoccument:true
+            getFullCheckinDoccument:true,
+            viewAllRequest:true,
+            releaseDocumentOneClick:true,
+            makeCurrentVersion:true
     	},
     	'1':{
     		createFolder:true,
@@ -85,22 +95,30 @@ var isoConst={
     		createDocument:true,
     		checkOut:true,
     		checkIn:true,
-    		submitDocument:true,
-            cancelSubmitDocument:true,
+
+    		submitDocument:false,//deactive
+            cancelSubmitDocument:false,//deactive
+
     		deleteDocument:true,
     		downloadNewestVersion:true,
             getFullVersionDoccument:true,
-            getFullCheckinDoccument:true
+            getFullCheckinDoccument:true,
+            requestEditDocument:true,
+            viewYourRequest:true
     	},
     	'2':{
     		cloneToPC:true,
     		checkOut:true,
     		checkIn:true,
-    		submitDocument:true,
-            cancelSubmitDocument:true,
+
+    		submitDocument:false,//deactive
+            cancelSubmitDocument:false,//deactive
+
     		downloadNewestVersion:true,
             getFullVersionDoccument:true,
-            getFullCheckinDoccument:true
+            getFullCheckinDoccument:true,
+            requestEditDocument:true,
+            viewYourRequest:true
     	},
     	'3':{
     		cloneToPC:true,
@@ -120,7 +138,20 @@ var isoConst={
         underReview:'under review',
         approved:'approved',
         rejected:'rejected'
-    }
+    },
+
+    requestEditStatus:{
+        pending:'PENDING',
+        accept:'ACCEPT',
+        reject:'REJECT',
+        cancel:'CANCEL'
+    },
+
+    documentTypeList:
+    [
+        {value:'Procedure'},
+        {value:'User Manual'}
+    ]
 };
 
 

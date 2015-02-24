@@ -118,10 +118,12 @@ angular.module('starter', ['ionic',
             if( toState.name == "app.injury.desInjury" || toState.name == "app.injury.desInjurySuccess" || toState.name == "app.injury.modelBody")
             {
                 $ionicSideMenuDelegate.canDragContent(false);
-            }
-            else
+            } else
             {
                 $ionicSideMenuDelegate.canDragContent(true);
+            }
+            if( toState.name == "app.mainBluetooth" || toState.name == "app.detailDeviceBluetooth" ) {
+                window.bluetooth.enable();
             }
             ionPlatform.ready.then(function (device) {
 
