@@ -24,5 +24,9 @@ angular.module("app.loggedIn.staff.service", [])
             return getDepartmentLocation.get();
         }
 
+        service.getTaskList = function(){
+            return api.one('staff/task/getList').get();
+        }
+
         return service;
     })

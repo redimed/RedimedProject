@@ -1,4 +1,4 @@
-<div ng-controller="testController" class="tabbable-custom nav-justified">
+<div class="tabbable-custom nav-justified">
 <ul class="nav nav-tabs nav-justified">
     <li class="active">
         <a href="injuryMap.html#tab_1_1_1" data-toggle="tab">
@@ -17,7 +17,7 @@
     <div class="col-md-3 col-sm-3">
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-            <input style="text-align: center; " type="text" max-date="maxDate" class="form-control" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="testDate" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" ng-required="true" close-text="Close"  placeholder="Select Date" />
+            <input style="text-align: center; " type="text" class="form-control" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="testDate" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" ng-required="true" close-text="Close"  placeholder="Select Date" />
         </div>
     </div>
     <div class="col-md-3 col-sm-3">
@@ -61,25 +61,33 @@
 <div class="portlet-body">
     <div>
         <ul class="mix-filter">
-            <li class=" bold" data-filter="all">
+            <li ng-click="filterByStatus('all')" class=" bold" data-filter="all">
                 All
-                <span class="badge badge-important badge-active"> 15 </span>
+                <span class="badge badge-important badge-active"> {{statusCount.all}} </span>
             </li>
-            <li class="bold" data-filter="category_1">
+            <li ng-click="filterByStatus('waiting')" class="bold" data-filter="category_1">
                 Waiting Approved
-                <span class="badge badge-important badge-active"> 15 </span>
+                <span class="badge badge-important badge-active"> {{statusCount.waiting}} </span>
             </li>
-            <li class="bold" data-filter="category_2">
+            <li ng-click="filterByStatus('approved')" class="bold" data-filter="category_2">
                 Approved
-                <span class="badge badge-important badge-active"> 15 </span>
+                <span class="badge badge-important badge-active"> {{statusCount.approved}} </span>
             </li>
-            <li class="bold" data-filter="category_3">
+            <li ng-click="filterByStatus('overdue')" class="bold" data-filter="category_3">
                 Overdue
-                <span class="badge badge-important badge-active"> 15 </span>
+                <span class="badge badge-important badge-active"> {{statusCount.overdue}} </span>
             </li>
-            <li class="bold" data-filter="category_3 category_1">
+            <li ng-click="filterByStatus('rejected')" class="bold" data-filter="category_3 category_1">
                 Rejected
-                <span class="badge badge-important badge-active"> 15 </span>
+                <span class="badge badge-important badge-active"> {{statusCount.rejected}} </span>
+            </li>
+            <li ng-click="filterByStatus('success')" class="bold" data-filter="category_3 category_1">
+                Success
+                <span class="badge badge-important badge-active"> {{statusCount.success}} </span>
+            </li>
+            <li ng-click="filterByStatus('progress')" class="bold" data-filter="category_3 category_1">
+                In Progress
+                <span class="badge badge-important badge-active"> {{statusCount.progress}} </span>
             </li>
         </ul>
     </div>
@@ -91,16 +99,13 @@
                     <label style="font-size: 17px;">No.</label>
                 </th>
                 <th>
-                    <label style="font-size: 17px;">First Name</label>
-                </th>
-                <th >
-                    <label style="font-size: 17px;">Middle Name</label>
-                </th>
-                <th >
-                    <label style="font-size: 17px;">Last Name</label>
+                    <label style="font-size: 17px;">Full Name</label>
                 </th>
                 <th >
                     <label style="font-size: 17px;">Task</label>
+                </th>
+                <th>
+                    <label style="font-size: 17px;">Date</label>
                 </th>
                 <th >
                     <label style="font-size: 17px;">Start</label>
@@ -114,164 +119,52 @@
             </tr>
             </thead>
             <tbody>
-            <tr style="white-space: nowrap; cursor: pointer;">
+            <tr ng-repeat="task in taskList" style="white-space: nowrap; cursor: pointer;">
                 <td  style="vertical-align:middle">
-                    1
+                    {{task.num}}
                 </td>
                 <td style="vertical-align:middle" >
                     <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
+                        {{task.Booking_Person}}
                     </label>
                 </td>
                 <td style="vertical-align:middle" >
                     <label >
-                        Medical History
+                        {{task.task}}
                     </label>
                 </td>
                 <td style="vertical-align:middle" >
                     <label >
-                        07:00 AM
+                        {{task.date | date:'dd/MM/yyyy'}}
                     </label>
                 </td>
                 <td style="vertical-align:middle" >
                     <label >
-                        09:00 PM
+                        {{task.startTime | date: 'shortTime'}}
                     </label>
                 </td>
                 <td style="vertical-align:middle" >
-                                           <span class="label label-md label-warning">
-                                                                    Waiting Approve </span>
+                    <label >
+                        {{task.endTime | date: 'shortTime'}}
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <span class="label label-md" ng-style="{'background-color':task.COLOR}">
+                                                                    {{task.STATUS}}</span>
+
                 </td>
             </tr>
-            <tr style="white-space: nowrap; cursor: pointer;">
-                <td  style="vertical-align:middle">
-                    2
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                    <label >
-                        Medical History
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                    <label >
-                        07:00 AM
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                    <label >
-                        09:00 PM
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                                           <span class="label label-md label-success">
-                                                                    Approved </span>
-                </td>
-            </tr>
-            <tr style="white-space: nowrap; cursor: pointer;">
-                <td  style="vertical-align:middle" >
-                    3
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label >
-                        Medical History
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label >
-                        07:00 AM
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label >
-                        09:00 PM
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                                           <span class="label label-md label-danger">
-                                                                    Rejected </span>
-                </td>
-            </tr>
-            <tr style="white-space: nowrap; cursor: pointer;">
-                <td style="vertical-align:middle" >
-                    4
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle">
-                    <label class="bold">
-                        Statham
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label >
-                        Medical History
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label >
-                        07:00 AM
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                    <label >
-                        09:00 PM
-                    </label>
-                </td>
-                <td style="vertical-align:middle" >
-                                           <span class="label label-md label-info">
-                                                                    Overdue </span>
-                </td>
-            </tr>
+
             </tbody>
         </table>
+        <pagination total-items="totalTask"
+                    ng-model="currentPage"
+                    max-size="maxSize"
+                    num-pages="pageNum"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    rotate="false"></pagination>
+
     </div>
 </div>
 </div>
@@ -294,16 +187,4 @@
         amPmText: ['AM', 'PM']
     })
 
-    function testController($scope){
-
-        $scope.testDate = null;
-        $scope.testTime = new Date();
-
-        $scope.maxDate = new Date();
-
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
-        };
-    }
 </script>

@@ -51,7 +51,7 @@ angular.module("app.loggedIn.invoice.list.controller",[
             {field: 'SERVICE_ID', label: 'Service', type: 'custom', fn: function(item){
             	if(item.service) return item.service.SERVICE_NAME;
             }},
-            {field: 'CREATION_DATE', label: 'Created Date', type: 'custom', fn: function(item){
+            {field: 'CREATION_DATE', order: 'ASC', label: 'Created Date', type: 'custom', fn: function(item){
             	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
             }},
             {field: 'STATUS', label: 'Status'},

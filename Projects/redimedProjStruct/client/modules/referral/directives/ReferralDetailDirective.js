@@ -18,6 +18,7 @@ angular.module('app.loggedIn.referral.detail.directive',[])
 
             scope.modelObjectMap = angular.copy(ReferralModel);
             scope.mode = {type: 'add', text: 'Add referral'};
+            scope.modelObjectMap.APPOINTMENT_DATE = ConfigService.getCommonDateDefault(new Date());
 
             if (scope.data) {
                 var data = scope.$eval(scope.data);

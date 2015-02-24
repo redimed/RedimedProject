@@ -28,6 +28,18 @@ angular.module("app.directive.mydatatable.common", [])
                 }
                 return fields;
             }
+
+            var getOrders = function() {
+                var order = [];
+                for (var i = 0, len = options.columns.length; i < len; ++i) {
+                    var col = options.columns[i];
+                    if(col.order) {
+                        order.push([col.field , col.order]);
+                    }
+                }
+                console.log(order)
+                return order;
+            }
             
             var getSearchData = function(){
                 for(var key in options.filters) {
@@ -48,10 +60,12 @@ angular.module("app.directive.mydatatable.common", [])
                 var limit = $scope.page_data.itemPerPage;
                 var offset = ($scope.page_data.currentPage - 1) * limit;
                 var fields = getFields();
+                var orders = getOrders();
                 var opt = {
                     limit: limit,
                     offset: offset,
                     fields: fields,
+                    order: orders
                 };
                 if(options.use_filters) {
                     opt.search = $scope.search;
@@ -68,6 +82,13 @@ angular.module("app.directive.mydatatable.common", [])
                 }
             }
 
+            $scope.orderField = function(col) {
+                if(!col.order) return;
+                 $scope.page_data.currentPage = 1;
+                col.order = (col.order == 'ASC') ? 'DESC' : 'ASC';
+                $scope.ajaxGetData();
+            }
+
             $scope.enterFilter = function(){
                 $scope.page_data.currentPage = 1;
                 $scope.ajaxGetData();
@@ -80,7 +101,6 @@ angular.module("app.directive.mydatatable.common", [])
 
             $scope.displayData = function(data, col){
                 if(!col.format) return data;
-                console.log(col.format)
                 return col.format(data);
             }
 

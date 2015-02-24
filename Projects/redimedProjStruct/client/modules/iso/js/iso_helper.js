@@ -2,6 +2,14 @@
  * Created by meditech on 12/2/2014.
  */
 var isoTest=false;
+
+var isoHelper={
+    setSlimCroll:function(selector)
+    {
+        $(selector).slimscroll({});
+    }
+}
+
 var isoConst={
 	nodeType:{
 		folder:'FOLDER',

@@ -105,49 +105,76 @@ angular.module('starter.security.login.controller',[])
         }
 
         function sigInApp() {
-            UserService.detail().then(function(response) {
-                if(typeof response.userInfo !== 'undefined')
-                    localStorageService.set("userInfo", response.userInfo);
+            $ionicLoading.show({
+                template: "<div class='icon ion-ios7-reloading'></div>"+
+                "<br />"+
+                "<span>Signing...</span>",
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 500,
+                showDelay: 0
+            });
+            SecurityService.login($scope.modelUser).then(function(response) {
+                // signaling.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
+                signaling.emit('updateSocketLogin', response.userInfo.user_name);
+                signaling.on('login_success',function(){
+                    UserService.detail().then(function(response) {
 
-                signaling.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
+                    if(typeof response.userInfo !== 'undefined')
+                        localStorageService.set("userInfo", response.userInfo);
 
-                if(typeof response.companyInfo !== 'undefined')
-                    localStorageService.set("companyInfo", response.companyInfo);
+                    
 
-                if(response.userInfo['function_mobile'] != null){
-                    UserService.getFunction(response.userInfo['function_mobile']).then(function(data){
-                        var rs = data.definition.split('(');
-                        if(rs[0] != null)
+                    if(typeof response.companyInfo !== 'undefined')
+                        localStorageService.set("companyInfo", response.companyInfo);
+
+                    if(response.userInfo['function_mobile'] != null){
+                        UserService.getFunction(response.userInfo['function_mobile']).then(function(data) {
+                            var rs = data.definition.split('(');
+                            if(rs[0] != null)
+                            {
+                                if(rs[1] != null)
+                                {
+                                    var r = rs[1].split(')');
+                                    var params = eval("("+r[0]+")");
+
+                                    $state.go(rs[0],params,{reload:true});
+                                }
+                                else
+                                {
+                                    $state.go(rs[0],{reload:true});
+                                }
+                            }
+                        })
+                    }
+                    else
+                    {
+                        if(localStorageService.get("userInfo").UserType.user_type == "Driver")
                         {
-                            if(rs[1] != null)
-                            {
-                                var r = rs[1].split(')');
-                                var params = eval("("+r[0]+")");
-                                $state.go(rs[0],params,{reload:true});
-                            }
-                            else
-                            {
-                                $state.go(rs[0],{reload:true});
-                            }
-
+                            $ionicLoading.hide();
+                            $state.go('app.driver.list');
                         }
-                    })
-                }
-                else
-                {
-                    if (localStorageService.get("userInfo").UserType.user_type == "Driver")
-                    {
-                        $state.go('app.driver.list');
+                        else if(localStorageService.get("userInfo").UserType.user_type == "Company")
+                        {
+                            $ionicLoading.hide();
+                            $state.go('app.injury.info');
+                        }
+                        else {
+                            $ionicLoading.hide();
+                            $state.go('app.injury.info');
+                        }
                     }
-                    else if (localStorageService.get("userInfo").UserType.user_type == "Company")
-                    {
-                        $state.go('app.injury.info');
-                    }
-                    else {
-                        $state.go('app.injury.info');
-                    }
-                }
+                    $ionicLoading.hide();
+                });
+            })
+                
+            }, function(error) {
                 $ionicLoading.hide();
+                console.log(error);
+                $ionicPopup.alert({
+                    title: "Can't Login",
+                    template: 'Please Check Your Information!'
+                })
             });
         }
 

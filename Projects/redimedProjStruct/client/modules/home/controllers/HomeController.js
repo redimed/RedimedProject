@@ -1,6 +1,6 @@
 
 angular.module("app.loggedIn.home.controller",[])
 
-.controller("HomeController", function($scope,$state,$cookieStore,$modal){
-
+.controller("HomeController", function($scope,$http,$state,$cookieStore,$modal){
+	
 })

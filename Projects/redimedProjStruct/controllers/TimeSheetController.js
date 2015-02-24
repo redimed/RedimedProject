@@ -79,6 +79,8 @@ module.exports = {
 
     getDepartmentLocation: function(req,res)
     {
+        db.timeTaskWeek.find()
+
         db.timeLocation.findAll({raw: true})
             .success(function (location) {
                 if (location === null || location.length === 0) {
@@ -122,6 +124,24 @@ module.exports = {
                 res.json({status:'error'});
                 console.log(err);
             })
+    },
+
+    getTaskList: function(req,res)
+    {
+        db.sequelize.query("SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS "+
+                           "FROM time_tasks t "+
+                           "INNER JOIN time_tasks_week tw ON t.`tasks_week_id` = tw.`task_week_id` "+
+                           "INNER JOIN users u ON u.`id` =  tw.`user_id` "+
+                           "INNER JOIN time_task_status ts ON ts.`stask_status_id` = t.`task_status_id`",null,{raw:true})
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
+
     },
 
     getAllTaskAMonth: function(req,res){

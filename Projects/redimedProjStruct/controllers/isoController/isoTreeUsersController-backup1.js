@@ -300,7 +300,7 @@ function grant2(pos,req,res,listUsers)
     {
         if(!err)
         {
-            var sql=" DELETE FROM `iso_tree_users` WHERE NODE_ID=? AND ACCESSIBLE_USER_ID=? ";
+            var sql=" DELETE FROM `iso_user_group_details` WHERE `GROUP_ID`=? AND USER_ID=? ";
             var query = connection.query(sql,[nodeId,accessibleUserId],function(err,result)
             {
                 if(!err)

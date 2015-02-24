@@ -18,6 +18,8 @@ angular.module('app.loggedIn.script.detail.directive',[])
 
             scope.modelObjectMap = angular.copy(ScriptReferralModel);
             scope.mode = {type: 'add', text: 'Add script'};
+            scope.modelObjectMap.doctordate = ConfigService.getCommonDateDefault(new Date());
+            scope.modelObjectMap.patientDate = ConfigService.getCommonDateDefault(new Date());
 
             if (scope.data) {
                 var data = scope.$eval(scope.data);

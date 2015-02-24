@@ -23,7 +23,7 @@ module.exports =
         //     return;
         // }
 
-		var sql="SELECT * FROM `iso_user_group`";
+		var sql="SELECT * FROM `iso_user_group` order by GROUP_NAME asc";
 		req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,function(err,rows)
@@ -294,6 +294,43 @@ module.exports =
                 }
             });
 
+            isoUtil.exlog(query.sql);
+        }); 
+    },
+
+    deleteGroupItem:function(req,res)
+    {
+        if(!isoUtil.isAdminIsoSystem(req))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var groupId=isoUtil.checkData(req.body.groupId)?req.body.groupId:'';
+        var itemId=isoUtil.checkData(req.body.itemId)?req.body.itemId:'';
+
+        if(!isoUtil.checkListData([groupId,itemId]))
+        {
+            isoUtil.exlog("deleteGroupItem","loi data truyen den");
+            res.json({status:'fail'});
+        }
+
+        var sql="DELETE FROM `iso_user_group_details` WHERE `GROUP_ID`=? AND USER_ID=?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[groupId,itemId],function(err,result)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    isoUtil.exlog("deleteGroupItem","result",result);
+                    res.json({status:'success',info:result.affectedRows});
+                }
+            });
             isoUtil.exlog(query.sql);
         }); 
     }

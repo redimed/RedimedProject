@@ -11,23 +11,28 @@
     </ul>
 </div>
 
-<div class="portlet box blue-hoki">
+<div class="portlet box blue-hoki" id="appt_paperless">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-bars"></i>
+            <i class="fa fa-cogs"></i>
             Paperless
         </div>
     </div>
-    <div class="portlet-body" style="padding-top: 25px;">
+    <div class="portlet-body">
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-            <a  ui-sref="loggedIn.gorgonMA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Gorgon Medical Assessment</a>
+            <a ng-click="tab = 'gorgonMA'">Gorgon Medical Assessment</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-            <a ui-sref="loggedIn.gorgonFA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Gorgon Functional Assessment</a>
+            <a ng-click="tab = 'gorgonFA'">Gorgon Functional Assessment</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-            <a  ui-sref="loggedIn.gorgonUQ({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Gorgon User Questionnaire</a>
+            <a ng-click="tab = 'gorgonUQ'">Gorgon User Questionnaire</a>
         </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+            <a ng-click="tab = 'gorgonMH'">Gorgon Medical History</a>
+        </div>
+
+
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
             <a ui-sref="loggedIn.MRS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Medical Result Summary</a>
         </div>
@@ -59,9 +64,6 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-            <a ui-sref="loggedIn.gorgonMH({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Gorgon Medical History</a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
             <a ui-sref="loggedIn.MH({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Medical History</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
@@ -71,3 +73,72 @@
         <div class="clearfix"></div>
     </div> <!-- END BODY -->
 </div> <!-- END HEAD -->
+
+<!-- gorgonMA -->
+<div class="portlet box blue-hoki" ng-show="tab == 'gorgonMA'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            GorgonMA
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionGorgonMA"></my-data-table>
+    </div>
+</div>
+<!-- end gorgonMA -->
+
+
+<!-- gorgonFA -->
+<div class="portlet box blue-hoki" ng-show="tab == 'gorgonFA'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            GorgonFA
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionGorgonFA"></my-data-table>
+    </div>
+</div>
+<!-- end gorgonFA -->
+
+<!-- gorgonUQ -->
+<div class="portlet box blue-hoki" ng-show="tab == 'gorgonUQ'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            GorgonUQ
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionGorgonUQ"></my-data-table>
+    </div>
+</div>
+<!-- end gorgonUQ -->
+
+<!-- gorgonMH -->
+<div class="portlet box blue-hoki" ng-show="tab == 'gorgonMH'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            GorgonMH
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionGorgonMH"></my-data-table>
+    </div>
+</div>
+<!-- end gorgonMH -->

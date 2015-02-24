@@ -1,7 +1,8 @@
 angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
-                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling, $cordovaGeolocation, $interval, $ionicPlatform){
+                                          $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
+                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, HOST_CONFIG){
         signaling.removeAllListeners();
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
@@ -36,7 +37,6 @@ angular.module("starter.menu.controller",[])
         signaling.on('online', function (userlist) {
             $scope.$apply(function(){
                 $scope.contacts = userlist;
-
                 for(var i = 0 ; i < $scope.contacts.length; i++) {
                     $scope.contacts[i].background = colors[Math.floor(Math.random() * colors.length)];
                     $scope.contacts[i].letter = String($scope.contacts[i].username).substr(0,1).toUpperCase();
@@ -143,6 +143,8 @@ angular.module("starter.menu.controller",[])
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
                     mediaSource.pause();
                     localStorageService.set("idpatient_notice", notification.payload.injury_id)
+
+                    DriverServices.notifi = notification;
                     if(userInfo.UserType.user_type == "Driver") {
                         $state.go('app.driver.detailInjury', {}, {reload: true});
                     }
@@ -232,7 +234,8 @@ angular.module("starter.menu.controller",[])
         getListUserOnline();
 
         $scope.makeCall = function(id) {
-            $state.go('app.phoneCall', { callUser: id, isCaller: true}, {reload: true});
+            window.open('http://'+HOST_CONFIG.host+':'+HOST_CONFIG.port+'/#/renderCall?from='+userInfo.id+'&to='+id+'&isCaller=true&fromMobile=true', '_system', 'toolbar=no');
+            //$state.go('app.phoneCall', { callUser: id, isCaller: true}, {reload: true});
         }
 
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
@@ -252,7 +255,7 @@ angular.module("starter.menu.controller",[])
                                 type: 'button button-balanced',
                                 onTap: function(e) {
                                     media.pause();
-                                    $state.go('app.phoneCall', { callUser: fromId, isCaller: false  }, {reload: true});
+                                    window.open('http://'+HOST_CONFIG.host+':'+HOST_CONFIG.port+'/#/renderCall?from='+fromId+'&to='+userInfo.id+'&isCaller=false&fromMobile=true', '_system', 'toolbar=no');
                                     $scope.popupCall = null;
                                 }
                             },
@@ -278,7 +281,12 @@ angular.module("starter.menu.controller",[])
 
         //$scope.$on('$stateChangeSuccess', function(event, state) {
         //    if(state.name == 'app.injury.info') {
-        //        $ionicPlatform.onHardwareBackButton($scope.logoutApp);
+        //        deRegister = $ionicPlatform.registerBackButtonAction(
+        //            function () {
+        //                alert("Show on the home page")
+        //            }, 100
+        //        );
         //    }
         //});
+        //$scope.$on('$destroy', deRegister);
     })

@@ -68,6 +68,7 @@ angular.module('app.loggedIn.referral.list.controller',[
             success: function (response) {
                 if (response.status == 'success')
                     $scope.referral_panel.reload();
+                    $scope.referralAddForm.close();
             }
         }
        
@@ -82,6 +83,7 @@ angular.module('app.loggedIn.referral.list.controller',[
             success: function (response) {
                 if (response.status == 'success')
                     $scope.referral_panel.reload();
+                    $scope.referralEditForm.close();
             }
         }
     

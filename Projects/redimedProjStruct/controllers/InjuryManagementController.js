@@ -511,6 +511,24 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',error:err})
             })
+    },
+    getDevices: function(req,res){
+      db.MedicalDevice.findAll({raw: true})
+            .success(function(data){
+                var arr = [];
+
+                for(var i=0; i<data.length; i++)
+                {
+                    arr.push({device_id:data[i].device_id,
+                              device_img:data[i].device_img!=null || data[i].device_img!='' ? base64Image(data[i].device_img):'',
+                              device_name:data[i].device_name});
+                }
+
+                res.json({status:'success',data:arr});
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
     }
 };
 

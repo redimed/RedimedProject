@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-lg-12">
+        <h3 class="page-title">Tree detail</h3>
+    </div>
+</div>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.ListFunction">Functions</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.ListTree">Trees</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.DetailTree">Tree detail</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+</div>
+<div class="portlet-body">
+    <div style="background-color: #CCCCCC;">
+        <div id="orgChartContainer">
+            <div id="orgChart"></div>
+        </div>
+    </div>
+</div>
+<!-- MODULE ADD NODE -->
+<script type="text/ng-template" id="AddNode">
+    <add-node on-cancel="getReturnedValue(return)" ng-model="NodeIdEdit" on-save="getInfo(return)"></add-node>
+</script>
+<!-- END MODULE ADD NODE -->

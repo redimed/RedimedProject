@@ -1,7 +1,9 @@
 angular.module("app.loggedIn.patient.invoices.controller", [])
 .controller("PatientInvoicesController", function($scope, $state, $stateParams, PatientService, ConfigService){
 	var patient_id = $stateParams.patient_id;
+    $scope.patient_id = patient_id;
     var cal_id = $stateParams.cal_id;
+    $scope.invoicePanel = {};
 
 	$scope.invoiceClass = function(item) {
         return {
@@ -14,8 +16,9 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
 	$scope.invoiceOption = {
         api: 'api/erm/v2/invoice/search',
         method: 'post',
+        scope: $scope.invoicePanel,
         columns: [
-            {field: 'header_id', is_hide: true},
+            {field: 'header_id', order: 'DESC', is_hide: true},
             {field: 'cal_id', is_hide: true},
             {field: 'STATUS', is_hide: true},
             {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
@@ -49,5 +52,19 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             },
         ],
 	};
+
+    $scope.addFormInvoice = {
+        is_show: false,
+        open: function () {
+            this.is_show = true;
+        },
+        close: function () {
+            this.is_show = false;
+        },
+        success: function(){
+            $scope.addFormInvoice.close();
+            $scope.invoicePanel.reload();
+        }
+    }
 
 });

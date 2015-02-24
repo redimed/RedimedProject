@@ -38,7 +38,6 @@ angular.module('app.loggedIn.script.list.controller',[
                     {
                         class: 'fa fa-info', title: 'Edit',
                         callback: function(item){
-                            console.log('this is selected item',item)
                                 $scope.script.id = item.ID;
                                 $scope.scriptEditForm.open();
                         }
@@ -46,7 +45,6 @@ angular.module('app.loggedIn.script.list.controller',[
                     {
                         class: 'fa fa-print', title: 'Print',
                         callback: function(item){
-                            console.log('this is selected item',item)
 //                                $scope.script.id = item.ID;
 //                            $scope.go('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
                             window.open('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
@@ -68,6 +66,7 @@ angular.module('app.loggedIn.script.list.controller',[
             success: function (response) {
                 if (response.status == 'success')
                     $scope.script_panel.reload();
+                    $scope.scriptAddForm.close();
             }
         }
        
@@ -82,6 +81,7 @@ angular.module('app.loggedIn.script.list.controller',[
             success: function (response) {
                 if (response.status == 'success')
                     $scope.script_panel.reload();
+                    $scope.scriptEditForm.close();
             }
         }
     

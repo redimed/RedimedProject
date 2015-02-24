@@ -162,8 +162,7 @@ angular.module("app.loggedIn.im.map.controller",[])
                     toastr.success("Send Notification Successfully!","Success");
 
                     $scope.map.driverId = null;
-                    //refreshMap();
-                    //refreshList();
+                   
                 }
                 else
                 {
@@ -174,12 +173,14 @@ angular.module("app.loggedIn.im.map.controller",[])
 
         $scope.refreshMap = function(){
             refreshMap();
-            refreshList();
             getOnlineDriver();
         }
 
+        $scope.refreshList = function(){
+            refreshList();
+        }
+
         setInterval(refreshMap,60 * 1000);
-        //setInterval(refreshList,60 * 1000);
         setInterval(getOnlineDriver,60 * 1000);
 
         function refreshMap(){

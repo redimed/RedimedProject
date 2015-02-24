@@ -1,0 +1,47 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>{{addOrUpdateTitle}}</legend>
+            <div data-row-span="4">
+                <!-- NAME NODE -->
+                <div data-field-span="1">
+                    <label>Name</label>
+                    <input type="text" ng-model="info.NODE_CODE">
+                </div>
+                <!-- END NAME NODE -->
+                <!-- ISVALUE NODE -->
+                <div data-field-span="1" class>
+                    <label>Choise is value</label>
+                    <label>
+                        <input type="checkbox" ng-model="info.ISVALUE" ng-true-value="0" ng-false-value="1" ng-checked="!info.ISVALUE"> &nbsp; Is Value
+                    </label>
+                </div>
+                <!-- END ISVALUE NODE -->
+                <!-- FROM VALUE NODE -->
+                <div data-field-span="1">
+                    <label>From value</label>
+                    <input type="text" ng-model="info.FROM_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE">
+                </div>
+                <!-- END FROM VALUE NODE -->
+                <!-- TO VALUE NODE -->
+                <div data-field-span="1">
+                    <label>To value</label>
+                    <input type="text" ng-model="info.TO_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE">
+                </div>
+                <!-- END TO VALUE NODE -->
+            </div>
+            <div data-row-span="1">
+                <!-- DECRIPTION NODE -->
+                <div data-field-span="1">
+                    <label>Decription</label>
+                    <textarea ng-model="info.DECRIPTION"></textarea>
+                </div>
+                <!-- END DECRIPTION NODE -->
+            </div>
+        </fieldset>
+        <a class="btn btn-default green pull-right btn-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
+        <a class="btn btn-danger pull-right btn-sm" ng-click="onCancel({return: true})">Cancel</a>
+        <!-- END MAIN INFO -->
+    </form>
+</div>

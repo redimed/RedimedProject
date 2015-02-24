@@ -34,7 +34,8 @@ angular.module("app.loggedIn.staff", [
                 url: "/manageTask",
                 views: {
                     "main-content": {
-                        templateUrl: "modules/staff/views/manageTask.html"
+                        templateUrl: "modules/staff/views/manageTask.html",
+                        controller:"ManageTaskController"
                     }
                 }
             })
