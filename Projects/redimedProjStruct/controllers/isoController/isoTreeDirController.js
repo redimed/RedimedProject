@@ -6,7 +6,7 @@ var fs = require('fs-extra');//Read js file for import into
 var isoUtil=require('./isoUtilsController');
 var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
-var Archiver = require('archiver');
+var Archiver = require('Archiver');
 var rimraf = require('rimraf');
 
 
@@ -54,11 +54,12 @@ module.exports =
         if(isIsoAdmin!=1)
             isEnable=1;
         isoUtil.exlog(">>>>>>>>>>>>>>>>>>>>>>>>>>",isIsoAdmin);
+        
         var sql=
             " SELECT    tree.*,                                                                                                  "+
             "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                   "+
             "   treeUser.`PERMISSION`,                                                                                           "+
-            "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO                                  "+
+            "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO                              "+
             " FROM iso_tree_dir tree                                                                                             "+
             " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)     "+
             " LEFT JOIN (                                                                                                        "+
@@ -69,8 +70,8 @@ module.exports =
             "               GROUP BY oi.`NODE_ID`                                                                                "+
             "           ) temp ON tempoi.`ID`=temp.ID                                                                            "+
             "       WHERE `tempoi`.`ISENABLE`=1                                                                                  "+
-            "   ) outin ON tree.`NODE_ID`=outin.NODE_ID                                                                          "+
-            " WHERE     tree.`ISENABLE` like ?                                                                                        "+
+            "   ) outin ON tree.`NODE_ID`=outin.NODE_ID                                                                          "+                                                       
+            " WHERE     tree.`ISENABLE` LIKE ?                                                                                   "+
             " GROUP BY tree.`NODE_ID`                                                                                            "+
             " ORDER BY FATHER_NODE_ID DESC ;                                                                                     ";
         req.getConnection(function(err,connection)
@@ -359,9 +360,13 @@ module.exports =
             DOC_CODE:info.docCode,
             DOC_DATE:moment().format("YYYY-MM-DD HH:mm:ss"),
             DESCRIPTION:info.description,
+            DEPARTMENT_ID:info.departmentId,
+            DOC_TYPE:info.documentTypeValue,
             CREATED_BY:info.createdBy,
             ISENABLE:1
         }
+
+        isoUtil.exlog('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',info,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
         var targetFolder=prefix+info.relativePath;
@@ -954,8 +959,11 @@ module.exports =
             return;
         }
         var sql = 
-            "SELECT oi.ID,oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID` FROM `iso_check_out_in` oi "+
-            "WHERE oi.`NODE_ID` = ? AND oi.`ISENABLE` = 1 AND oi.`VERSION_NO` IS NOT NULL";
+            " SELECT oi.ID,oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID`,     "+
+            "   treedir.`NODE_NAME`,IF(oi.ID=treedir.`CURRENT_VERSION_ID`,1,0) AS IS_CURRENT_VERSION                            "+
+            " FROM `iso_check_out_in` oi INNER JOIN `iso_tree_dir` treedir ON oi.`NODE_ID`=`treedir`.`NODE_ID`                  "+
+            " WHERE oi.`NODE_ID` = ? AND oi.`ISENABLE` = 1 AND oi.`VERSION_NO` IS NOT NULL                                      "+
+            " ORDER BY oi.`VERSION_NO`                                                                                          ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)
@@ -1093,5 +1101,40 @@ module.exports =
                 }
             });
         });
-    }    
+    },
+    /**
+     * Select thong tin chi tiet document
+     * phan quoc chien
+     */
+    selectDocumentInfo:function(req,res){
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        isoUtil.exlog('idddd',req.body);
+        var sql = 
+            " SELECT tree.*,us.`user_name` AS Document_Author,uss.`user_name` AS Last_Edited_By,   "+
+            " dep.`departmentName` AS DEPARTMENT_NAME                                              "+
+            " FROM `iso_tree_dir` tree                                                             "+
+            " LEFT JOIN `users` us ON `tree`.`CREATED_BY` = us.`id`                                "+
+            " LEFT JOIN `users` uss ON tree.`LAST_UPDATED_BY` = uss.`id`                           "+
+            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`               "+
+            " WHERE `NODE_ID` = ?                                                                  ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,rows)
+            {
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    
+                    isoUtil.exlog(rows);
+                    res.json({status:'success',data:rows[0]});
+                    
+                }
+            });
+            isoUtil.exlog(query.sql);
+        }); 
+    }
 }

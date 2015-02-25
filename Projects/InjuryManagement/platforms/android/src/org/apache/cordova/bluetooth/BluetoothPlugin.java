@@ -57,6 +57,10 @@ public class BluetoothPlugin extends CordovaPlugin
 
 	private static final String ACTION_WRITE			= "write";
     private static final String ACTION_IS_DISCOVERY_ONE_DEVICE	= "isDiscoveryOneDevice";
+<<<<<<< HEAD
+    private static final String ACTION_RESET_MINIECG_DATA	= "resetMiniEcgData";
+=======
+>>>>>>> FETCH_HEAD
 	/**
 	 * Bluetooth interface
 	 */
@@ -98,6 +102,14 @@ public class BluetoothPlugin extends CordovaPlugin
 	 */
 	private Charset _encoding;
 
+<<<<<<< HEAD
+    /*
+    * use to store mini ecg data PhuongNM
+    */
+    private JSONObject miniEcgValueObject;
+    private int miniEcgCount = 0;
+=======
+>>>>>>> FETCH_HEAD
 	/**
 	 * Initialize the Plugin, Cordova handles this.
 	 *
@@ -112,6 +124,20 @@ public class BluetoothPlugin extends CordovaPlugin
 		_wasDiscoveryCanceled = false;
 
 		_bluetooth = new BluetoothWrapper(cordova.getActivity().getBaseContext(), _handler);
+<<<<<<< HEAD
+
+		miniEcgValueObject = new JSONObject();
+
+		try{
+		    miniEcgValueObject.put("deviceType", "Mini ECG");
+		    miniEcgValueObject.put("rawData", "Mini ECG");
+		}catch(Exception e)
+		{
+
+		}
+
+=======
+>>>>>>> FETCH_HEAD
 	}
 
 	/**
@@ -200,6 +226,13 @@ public class BluetoothPlugin extends CordovaPlugin
 		{
 		    isDiscoveryOneDevice(args, callbackCtx);
 		}
+<<<<<<< HEAD
+		else if(ACTION_RESET_MINIECG_DATA.equals(action))
+		{
+            resetMiniEcgData(args, callbackCtx);
+		}
+=======
+>>>>>>> FETCH_HEAD
 		else
 		{
 			Log.e(LOG_TAG, "Invalid Action[" + action + "]");
@@ -232,12 +265,37 @@ public class BluetoothPlugin extends CordovaPlugin
 		}
 	}
 
+<<<<<<< HEAD
+
+    private void resetMiniEcgData(JSONArray args, CallbackContext callbackCtx)
+    {
+        // TODO Add options to enable with Intent
+
+        try
+        {
+            miniEcgValueObject = new JSONObject();
+            miniEcgValueObject.put("deviceType", "Mini ECG");
+            miniEcgValueObject.put("rawData", "Mini ECG");
+            callbackCtx.success();
+        }
+        catch(Exception e)
+        {
+            this.error(callbackCtx, e.getMessage(), BluetoothError.ERR_UNKNOWN);
+        }
+
+    }
+=======
+>>>>>>> FETCH_HEAD
 	/**
 	 * Is Bluetooth on.
 	 *
 	 * @param args			Arguments given.
 	 * @param callbackCtx	Where to send results.
 	 */
+<<<<<<< HEAD
+
+=======
+>>>>>>> FETCH_HEAD
 	private void isEnabled(JSONArray args, CallbackContext callbackCtx)
 	{
 		try
@@ -1085,6 +1143,18 @@ public class BluetoothPlugin extends CordovaPlugin
         return valInt;
     }
 
+<<<<<<< HEAD
+    private static byte getBitRever(byte[] data, int posIn) {
+        int pos = 7-posIn;
+        int posByte = pos/8;
+        int posBit = pos%8;
+        byte valByte = data[posByte];
+        byte valInt = (byte)(valByte>>(8-(posBit+1)) & 0x0001);
+        return valInt;
+    }
+
+=======
+>>>>>>> FETCH_HEAD
     static final int[] lookup = {0x0, 0x1, 0x3, 0x7, 0xF, 0x1F, 0x3F, 0x7F, 0xFF, 0x1FF, 0x3FF, 0x7FF, 0xFFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF };
 
     /*
@@ -1682,6 +1752,38 @@ public class BluetoothPlugin extends CordovaPlugin
                 + "  \nDATA24 = "  + data24
                 );
 
+<<<<<<< HEAD
+                miniEcgValueObject.put("" + (miniEcgCount++), data0);
+                miniEcgValueObject.put("" + (miniEcgCount++), data1);
+                miniEcgValueObject.put("" + (miniEcgCount++), data2);
+                miniEcgValueObject.put("" + (miniEcgCount++), data3);
+                miniEcgValueObject.put("" + (miniEcgCount++), data4);
+                miniEcgValueObject.put("" + (miniEcgCount++), data5);
+                miniEcgValueObject.put("" + (miniEcgCount++), data6);
+                miniEcgValueObject.put("" + (miniEcgCount++), data7);
+                miniEcgValueObject.put("" + (miniEcgCount++), data8);
+                miniEcgValueObject.put("" + (miniEcgCount++), data9);
+                miniEcgValueObject.put("" + (miniEcgCount++), data10);
+                miniEcgValueObject.put("" + (miniEcgCount++), data11);
+                miniEcgValueObject.put("" + (miniEcgCount++), data12);
+                miniEcgValueObject.put("" + (miniEcgCount++), data13);
+                miniEcgValueObject.put("" + (miniEcgCount++), data14);
+                miniEcgValueObject.put("" + (miniEcgCount++), data15);
+                miniEcgValueObject.put("" + (miniEcgCount++), data16);
+                miniEcgValueObject.put("" + (miniEcgCount++), data17);
+                miniEcgValueObject.put("" + (miniEcgCount++), data18);
+                miniEcgValueObject.put("" + (miniEcgCount++), data19);
+                miniEcgValueObject.put("" + (miniEcgCount++), data20);
+                miniEcgValueObject.put("" + (miniEcgCount++), data21);
+                miniEcgValueObject.put("" + (miniEcgCount++), data22);
+                miniEcgValueObject.put("" + (miniEcgCount++), data23);
+                miniEcgValueObject.put("" + (miniEcgCount++), data24);
+
+                return miniEcgValueObject;
+
+                /*
+=======
+>>>>>>> FETCH_HEAD
                 valueObject.put("deviceType", "Mini ECG");
                 valueObject.put("data0", data0 );
                 valueObject.put("data1", data1 );
@@ -1709,8 +1811,19 @@ public class BluetoothPlugin extends CordovaPlugin
                 valueObject.put("data23", data23 );
                 valueObject.put("data24", data24 );
                 valueObject.put("rawData", hex);
+<<<<<<< HEAD
+                */
+
+
+             }else{
+                valueObject.put("deviceType", _bluetooth.deviceType);
+                valueObject.put("rawData", hex);
+             }
+
+=======
 
              }
+>>>>>>> FETCH_HEAD
         }catch(Exception e){
             try{
                 valueObject.put("deviceType", "Error");
@@ -1727,17 +1840,28 @@ public class BluetoothPlugin extends CordovaPlugin
     }
 
     public static int getValueOfMiniECGData(byte high,byte low,byte highestBitOfHigh,byte highestBitOfLow,int highPosition,int lowPosition){
+<<<<<<< HEAD
+        byte highestBitOfHighByte = getBitRever(new byte[]{highestBitOfHigh},highPosition);
+        highestBitOfHighByte = (byte)((highestBitOfHighByte<<7)|0x7f);
+
+        byte highestBitOfLowByte = getBitRever(new byte[]{highestBitOfLow},lowPosition);
+=======
         byte highestBitOfHighByte = getBit(new byte[]{highestBitOfHigh},highPosition);
         highestBitOfHighByte = (byte)((highestBitOfHighByte<<7)|0x7f);
 
         byte highestBitOfLowByte = getBit(new byte[]{highestBitOfLow},lowPosition);
+>>>>>>> FETCH_HEAD
         highestBitOfLowByte = (byte)((highestBitOfLowByte<<7)|0x7f);
 
         byte highData = (byte)(high&highestBitOfHighByte);
         byte lowData = (byte)(low&highestBitOfLowByte);
         short Data = (short)(highData<<8|(lowData& 0xFF));
 
+<<<<<<< HEAD
+        return  (int)(Data & 0xffff) - 16384;
+=======
         return  (int)(Data & 0xffff);
+>>>>>>> FETCH_HEAD
     }
 
 }

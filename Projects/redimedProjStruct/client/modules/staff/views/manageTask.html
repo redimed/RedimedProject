@@ -1,0 +1,190 @@
+<div class="tabbable-custom nav-justified">
+<ul class="nav nav-tabs nav-justified">
+    <li class="active">
+        <a href="injuryMap.html#tab_1_1_1" data-toggle="tab">
+            <i class="glyphicon glyphicon-user"></i> &nbsp;&nbsp;&nbsp;
+            Staff List </a>
+    </li>
+    <li>
+        <a href="injuryMap.html#tab_1_1_2" data-toggle="tab">
+            <i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;&nbsp;
+            Time</a>
+    </li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="tab_1_1_1">
+<div class="row">
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            <input style="text-align: center; " type="text" class="form-control" name="dob" required datepicker-popup="dd/MM/yyyy" data-ng-model="testDate" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" ng-required="true" close-text="Close"  placeholder="Select Date" />
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input style="text-align: center; " type="text" class="form-control" placeholder="Staff Name" />
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon">Start Time</span>
+            <input style="text-align: center; " placeholder="hh:mm" type="text" class="form-control testTime">
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+            <span class="input-group-addon">End Time</span>
+            <input style="text-align: center; " placeholder="hh:mm" type="text" class="form-control testTime">
+        </div>
+    </div>
+
+</div>
+<br/>
+<div class="portlet blue-dark box">
+<div class="portlet-title">
+    <div class="caption ">
+        <i class="icon-users"></i>
+        &nbsp;
+        <span class="caption-subject uppercase">Task List</span>
+    </div>
+    <div class="actions">
+        <a href="javascript:;" class="btn green-jungle btn-sm">
+            <i class="fa fa-plus"></i> &nbsp;
+            New Staff</a>
+
+        <a href="javascript:;" class="btn btn-primary btn-sm">
+            <i class="fa fa-refresh"></i> &nbsp;
+            Refresh </a>
+    </div>
+</div>
+<div class="portlet-body">
+    <div>
+        <ul class="mix-filter">
+            <li ng-click="filterByStatus('all')" class=" bold" data-filter="all">
+                All
+                <span class="badge badge-important badge-active"> {{statusCount.all}} </span>
+            </li>
+            <li ng-click="filterByStatus('waiting')" class="bold" data-filter="category_1">
+                Waiting Approved
+                <span class="badge badge-important badge-active"> {{statusCount.waiting}} </span>
+            </li>
+            <li ng-click="filterByStatus('approved')" class="bold" data-filter="category_2">
+                Approved
+                <span class="badge badge-important badge-active"> {{statusCount.approved}} </span>
+            </li>
+            <li ng-click="filterByStatus('overdue')" class="bold" data-filter="category_3">
+                Overdue
+                <span class="badge badge-important badge-active"> {{statusCount.overdue}} </span>
+            </li>
+            <li ng-click="filterByStatus('rejected')" class="bold" data-filter="category_3 category_1">
+                Rejected
+                <span class="badge badge-important badge-active"> {{statusCount.rejected}} </span>
+            </li>
+            <li ng-click="filterByStatus('success')" class="bold" data-filter="category_3 category_1">
+                Success
+                <span class="badge badge-important badge-active"> {{statusCount.success}} </span>
+            </li>
+            <li ng-click="filterByStatus('progress')" class="bold" data-filter="category_3 category_1">
+                In Progress
+                <span class="badge badge-important badge-active"> {{statusCount.progress}} </span>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <th>
+                    <label style="font-size: 17px;">No.</label>
+                </th>
+                <th>
+                    <label style="font-size: 17px;">Full Name</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Task</label>
+                </th>
+                <th>
+                    <label style="font-size: 17px;">Date</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Start</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">End</label>
+                </th>
+                <th >
+                    <label style="font-size: 17px;">Status</label>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in taskList" style="white-space: nowrap; cursor: pointer;">
+                <td  style="vertical-align:middle">
+                    {{task.num}}
+                </td>
+                <td style="vertical-align:middle" >
+                    <label class="bold">
+                        {{task.Booking_Person}}
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        {{task.task}}
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        {{task.date | date:'dd/MM/yyyy'}}
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        {{task.startTime | date: 'shortTime'}}
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <label >
+                        {{task.endTime | date: 'shortTime'}}
+                    </label>
+                </td>
+                <td style="vertical-align:middle" >
+                    <span class="label label-md" ng-style="{'background-color':task.COLOR}">
+                                                                    {{task.STATUS}}</span>
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <pagination total-items="totalTask"
+                    ng-model="currentPage"
+                    max-size="maxSize"
+                    num-pages="pageNum"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    rotate="false"></pagination>
+
+    </div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="tab_1_1_2">
+
+</div>
+</div>
+</div>
+
+<script>
+    $('.testTime').timepicker({
+        timeSeparator: ':',
+        showLeadingZero: true,
+        showMinutesLeadingZero: true,
+        showPeriod: true,
+        periodSeparator: ' ',
+        hourText: 'Hour',
+        minuteText: 'Minute',
+        amPmText: ['AM', 'PM']
+    })
+
+</script>

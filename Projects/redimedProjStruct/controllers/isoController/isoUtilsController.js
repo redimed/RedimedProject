@@ -60,8 +60,24 @@ function checkListData(data)
     return true;
 }
 
+var isTestSendMail=true;
+
 module.exports =
 {
+    isTestSendMail:isTestSendMail,
+
+    getMailSender:function()
+    {
+        if(isTestSendMail)
+        {
+            return "REDiMED <vnlegal123@gmail.com>";
+        }
+        else
+        {
+            return "REDiMED <healthscreenings@redimed.com.au>";
+        }
+    },
+
     exlog:exlog,
 
     /**
@@ -165,6 +181,28 @@ module.exports =
             return true;
         }
         
+    },
+
+    isAdminTree:function(req)
+    {
+        var value=0;
+        if(req.method=='GET')
+        {
+            value=checkData(req.query.isAdminTree)?req.query.isAdminTree:0;
+        }
+        if(req.method=='POST')
+        {
+            value=checkData(req.body.isAdminTree)?req.body.isAdminTree:0;
+        }
+        if(value==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     },
 
     isAdminIsoSystem:function(req)

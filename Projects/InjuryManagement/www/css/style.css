@@ -443,11 +443,11 @@ form i.icon.error {
     padding: 0;
     background-color: #ffffff;
 }
-.item-input-wrapper input {
-    color: floralwhite;
-}
 .custom-item-listpatient:active {
     background-color: rgba(137, 140, 144, 0.5) !important;
+}
+.item-input-wrapper input {
+    color: floralwhite;
 }
 .lstinjury-div-info {
     padding-top: 20px;
@@ -1179,7 +1179,50 @@ form i.icon.error {
     width: 100%;
     height: 100%;
 }
-
 /**/
 
+/*list bluetooth device*/
 
+/*shape div*/
+/*.parallelogram {*/
+    /*width: 150px;*/
+    /*height: 80px;*/
+    /*margin: 0 0 0 -35px;*/
+    /*-webkit-transform: skew(30deg);*/
+    /*-moz-transform: skew(-20deg);*/
+    /*-o-transform: skew(-20deg);*/
+    /*background: #fffafa;*/
+    /*overflow:hidden;*/
+    /*position:relative;*/
+/*}*/
+.nameDevice {
+    padding-left: 20px;
+}
+.infoDevice {
+    padding-left: 20px;
+}
+.custom-item-listDevice {
+    padding-left: 10px;
+    background-color: #ffffff;
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 2px;
+}
+.custom-item-listDevice:active {
+    background-color: rgba(137, 140, 144, 0.5) !important;
+}
+.border-top {
+    border-top: 2px solid #ddd !important;
+}
+.status-device {
+    margin-left: 10px;
+}
+.info-device {
+    padding-top: 15px;
+}
+.cus-icon-arrow-R {
+    font-size: 25px;
+    position: absolute;
+    right: 10px;
+    top: 25px;
+}

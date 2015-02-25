@@ -24,14 +24,19 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
         })
 
         StaffService.getAllTaskAMonth(currentYear,month).then(function(response){
-            if(response['status'] == 'fail' || response['status'] == 'error'){
+            if(response['status'] == 'error'){
                 toastr.error("Error", "Error");
+            }else if(response['status'] == 'fail' ){
+
             }else
             {
+                console.log(response);
                 $scope.events = response;
                 angular.forEach($scope.events, function(event){
-                    event.start_time = ConfigService.convertStringToDate(event.start_time);
-                    event.end_time = ConfigService.convertStringToDate(event.end_time);
+                    if(event.start_time != null && event.end_time != null){
+                        event.start_time = ConfigService.convertStringToDate(event.start_time);
+                        event.end_time = ConfigService.convertStringToDate(event.end_time);
+                    }
                 })
             }
         })

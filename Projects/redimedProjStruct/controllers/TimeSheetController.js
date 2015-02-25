@@ -79,6 +79,8 @@ module.exports = {
 
     getDepartmentLocation: function(req,res)
     {
+        db.timeTaskWeek.find()
+
         db.timeLocation.findAll({raw: true})
             .success(function (location) {
                 if (location === null || location.length === 0) {
@@ -124,24 +126,43 @@ module.exports = {
             })
     },
 
+    getTaskList: function(req,res)
+    {
+        db.sequelize.query("SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS "+
+                           "FROM time_tasks t "+
+                           "INNER JOIN time_tasks_week tw ON t.`tasks_week_id` = tw.`task_week_id` "+
+                           "INNER JOIN users u ON u.`id` =  tw.`user_id` "+
+                           "INNER JOIN time_task_status ts ON ts.`stask_status_id` = t.`task_status_id`",null,{raw:true})
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
+
+    },
+
     getAllTaskAMonth: function(req,res){
         var year = req.body.year;
         var month = req.body.month;
         var search = year + '-' + month;
-        db.timeTasks.findAll({where: ["date like ?", search+'%']})
+
+        db.sequelize.query("SELECT time_tasks.`task`,time_tasks.date,time_tasks.`start_time`,time_tasks.`end_time`,time_activity.`NAME` as activity_name, time_department_code.`NAME` as department_name,time_task_status.`color` as status,time_location.`NAME` as location_name FROM `time_tasks` time_tasks INNER JOIN `time_task_status` time_task_status ON time_task_status.`stask_status_id` = time_tasks.`task_status_id` INNER JOIN `time_activity` time_activity ON time_activity.`activity_id` = time_tasks.`activity_id` INNER JOIN `time_department_code` time_department_code ON time_department_code.`department_code_id` = time_tasks.`department_code_id` INNER JOIN `time_location` time_location ON time_location.`location_id` = time_tasks.`location_id` WHERE time_tasks.`isenable` = 1 AND time_tasks.date LIKE ?",
+            null, {raw: true},[search+'%'])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found activity in table");
-                    res.json({status: 'fail'});
+                    res.json({status: 'no task'});
                     return false;
                 }else
                 {
-
                     res.json(task);
                 }
             })
-            .error(function(err){
-                res.json({status:'error'});
+            .error(function (err) {
+                res.json({status: 'error', err: err});
                 console.log(err);
             })
     }
