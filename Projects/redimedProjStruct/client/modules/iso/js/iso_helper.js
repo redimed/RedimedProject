@@ -59,7 +59,9 @@ var isoConst={
 
     isoAdminFunction:{
         restoreFolder:true,
-        restoreDocument:true
+        restoreDocument:true,
+        forceCheckInDocument:true,
+        forceReleaseDocumentOneClick:true
     },
 
     userFunction:{

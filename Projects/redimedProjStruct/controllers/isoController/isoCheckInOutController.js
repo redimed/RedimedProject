@@ -578,6 +578,57 @@ module.exports =
         });
     },
 
+    /**
+     * Vuot qua cac kiem tra submit neu la admin system
+     * tannv.dts@gmail.com
+     */
+    forceSubmitDocument:function(req,res,next)
+    {
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        if(!isoUtil.checkListData([nodeId,userId]))
+        {
+            isoUtil.exlog("checkCanPermission: data not valid");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql =
+            " SELECT outin.`ID`,outin.`USER_CHECK_OUT_IN` FROM `iso_check_out_in` outin        "+
+            " WHERE  (outin.`SUBMIT_STATUS` IS NULL OR outin.`SUBMIT_STATUS` = 'CANCEL')       "+
+            "   AND outin.`CHECK_IN_STATUS`='UNLOCK'                                           "+
+            "   AND outin.`NODE_ID`= ?                                                         "+
+            "   AND outin.`ISENABLE`=1                                                         "+
+            " ORDER BY outin.`CHECK_IN_NO` DESC                                                "+
+            " LIMIT 1                                                                          ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[nodeId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                    isoUtil.exlog(err);
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        req.body.checkOutInId=rows[0].ID;
+                        next();
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+
+        });
+    },
+
     //Giap SubmitDocument
     selectIdFromCheckOutIn: function(req,res){
         var info =req.query.NODE_ID;

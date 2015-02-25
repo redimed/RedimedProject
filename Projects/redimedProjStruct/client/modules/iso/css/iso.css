@@ -73,6 +73,30 @@ tannv.dts@gmail.com
     margin-bottom: 10px;
 }
 
+.iso-action-group.iso_action_type1 button{
+    border : 1px solid #337AB7;
+}
+
+.iso-action-group.iso_action_type2  button{
+    border : 1px solid #5CB85C;
+}
+
+.iso-action-group.iso_action_type3  button{
+    border : 1px solid #5BC0DE;
+}
+.iso-action-group.iso_action_type4  button{
+    border : 1px solid #F0AD4E;
+}
+
+.iso-action-group.iso_action_type5  button{
+    border : 1px solid #D9534F;
+}
+.iso-action-group.iso_action_type_system  button{
+    background-color: #fcf8e3;
+    border : 1px solid #D9534F;
+}
+
+
 
 
 /*select2 custom css
