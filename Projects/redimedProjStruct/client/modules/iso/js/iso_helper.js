@@ -115,12 +115,12 @@ var isoConst={
             makeCurrentVersion:true
     	},
     	'1':{
-    		createFolder:true,
-    		deleteFolder:true,
+    		createFolder:false,
+    		deleteFolder:false,
     		cloneToPC:true,
-    		createDocument:true,
-    		checkOut:true,
-    		checkIn:true,
+    		createDocument:false,
+    		checkOut:false,
+    		checkIn:false,
 
     		submitDocument:false,//deactive
             cancelSubmitDocument:false,//deactive
@@ -134,8 +134,8 @@ var isoConst={
     	},
     	'2':{
     		cloneToPC:true,
-    		checkOut:true,
-    		checkIn:true,
+    		checkOut:false,
+    		checkIn:false,
 
     		submitDocument:false,//deactive
             cancelSubmitDocument:false,//deactive
