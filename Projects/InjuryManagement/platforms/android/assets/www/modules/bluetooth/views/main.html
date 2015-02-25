@@ -10,13 +10,11 @@
         </a>
     </ion-nav-buttons>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ion-content class="has-header">
 
         <label class="item item-input item-button-right label-custom-field padding">
             <span class="input-label span-input-color">Discover device</span>
-            <button class="button button-clear" ng-click="blueToothChange()">
+            <button class="button button-clear" ng-click="disCover()">
                 <i ng-class="{'icon ion-ios7-loop-strong':!isLoad, 'icon ion-loading-c':isLoad}"></i>
             </button>
             <hr class="customHr">
@@ -36,50 +34,9 @@
                                 <i class="icon ion-ios7-circle-filled" ng-class="{'green-text':device.isOnline, 'red-text':!device.isOnline}"></i>
                             </span>
                         </h3>
-                        <!--<span class="infoDevice" style="font-size: 13px">-->
-                             <!--<i class="icon ion-ios7-information-outline"></i> {{device.device_name}}-->
-                            <!--<i class="icon ion-ios7-arrow-forward cus-icon-arrow-R"></i>-->
-                        <!--</span>-->
                     </div>
                 </a>
             </div>
         </ion-list>
-=======
-=======
->>>>>>> FETCH_HEAD
-    <ion-content class="padding has-header">
-
-        <label class="item item-input item-toggle label-custom-field" >
-            <span class="input-label span-input-color">Bluetooth</span>
-            <label class="toggle toggle-balanced">
-                <input type="checkbox" ng-model="toggleBluetooth.checked" ng-change="blueToothChange()">
-                <div class="track">
-                    <div class="handle"></div>
-                </div>
-            </label>
-            <hr class="customHr">
-        </label>
-
-        <div class="row" style="margin-top: 30px;">
-            <div class="col">
-                <button class="button button-clear waves-effect waves-light red" style="width: 100%; background-color: #FF5E3A !important; color: #f5f5f5;">
-                    <span>Connect to one device and read data</span>
-                </button>
-            </div>
-            <div class="col">
-                <button class="button button-clear waves-effect waves-light blue" style="width: 100%; background-color: #34AADC !important; color: #f5f5f5;">
-                    <span>Connect to many device</span>
-                </button>
-            </div>
-        </div>
-        <ion-lis>
-            <ionitem>
-
-            </ionitem>
-        </ion-lis>
-<<<<<<< HEAD
->>>>>>> FETCH_HEAD
-=======
->>>>>>> FETCH_HEAD
     </ion-content>
 </ion-view>

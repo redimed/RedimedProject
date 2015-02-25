@@ -299,14 +299,14 @@ module.exports.metadata =
     "com.phonegap.plugins.bluetooth": "0.9",
     "com.plugin.datepicker": "0.5.0",
     "nl.x-services.plugins.toast": "2.0.4",
-    "org.apache.cordova.camera": "0.3.4",
+    "org.apache.cordova.camera": "0.3.5",
     "org.apache.cordova.console": "0.2.12",
     "org.apache.cordova.device": "0.2.13",
     "org.apache.cordova.dialogs": "0.2.10",
     "org.apache.cordova.file": "1.3.1",
     "org.apache.cordova.file-transfer": "0.4.7",
     "org.apache.cordova.geolocation": "0.3.11",
-    "org.apache.cordova.inappbrowser": "0.5.4",
+    "org.apache.cordova.inappbrowser": "0.6.0",
     "org.apache.cordova.media": "0.2.15",
     "org.chromium.power": "1.0.3"
 }

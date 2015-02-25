@@ -16,7 +16,6 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
         });
 
         if($scope.statusDevice == true) {
-
             bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
         }
 
@@ -52,7 +51,7 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
         }
 
         var onErrorWriteData = function(error) {
-            console.log('Sending message...onError' + error.code +  ' ' + error.message);
+            console.log('Sending message...onError ' + error.code +  ' ' + error.message);
         }
 
 
@@ -164,22 +163,9 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
 
 
         $scope.writeData = function () {
-            //var stmt = string2Bin($scope.objJsondevice[$scope.name].data[0])
-            //var array = [$scope.objJsondevice[$scope.name].data[0]];
-            //console.log(typeof stmt);
-            //console.log(typeof array);
-            //console.log(typeof $scope.objJsondevice[$scope.name].data[0]);
-            var a = "0x7D 0x81 0xA1 0x80 0x80 0x80 0x80 0x80 0x80";
-            bluetooth.write(onSuccessWriteData, onErrorWriteData, a);
+            bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
+            for(var i = 0; i < $scope.objJsondevice[$scope.name].data.length; i++) {
+                bluetooth.write(onSuccessWriteData, onErrorWriteData, $scope.objJsondevice[$scope.name].data[i]);
+            }
         }
-
-        //function string2Bin(str) {
-        //    console.log(str.length);
-        //    var result = [];
-        //    for (var i = 0; i < str.length; i++) {
-        //        result.push(str.charCodeAt(i).toString(2));
-        //    }
-        //    return result;
-        //}
-
     })
