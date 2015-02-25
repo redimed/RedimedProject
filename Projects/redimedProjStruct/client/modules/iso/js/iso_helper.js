@@ -125,7 +125,7 @@ var isoConst={
     		submitDocument:false,//deactive
             cancelSubmitDocument:false,//deactive
 
-    		deleteDocument:true,
+    		deleteDocument:false,//deactive
     		downloadNewestVersion:true,
             getFullVersionDoccument:true,
             getFullCheckinDoccument:true,

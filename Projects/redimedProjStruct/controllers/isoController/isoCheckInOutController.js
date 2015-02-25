@@ -6,6 +6,29 @@ var isoUtil=require('./isoUtilsController');
 var nodemailer = require("nodemailer");
 var isoEmail = require('./isoEmailController');
 
+var trackingTreeDir=function(req,nodeId)
+{
+    var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
+    var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+    var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+    if(!isoUtil.checkListData([userId]))
+    {
+        return;
+    }
+    var sql="UPDATE `iso_tree_dir` SET ? WHERE `NODE_ID`=?";
+    var updateInfo={
+        LAST_UPDATED_BY:userId,
+        LAST_UPDATED_DATE:currentTime
+    }
+    req.getConnection(function(err,connection)
+    {
+        var query = connection.query(sql,[updateInfo,nodeId],function(err,result)
+        {                       
+            return;
+        });
+    });
+}
+
 module.exports =
 {
 
@@ -73,6 +96,7 @@ module.exports =
                                     info.newDocument.CHECK_IN_NO=newRow.CHECK_IN_NO;//001
                                     info.newDocument.CHECK_IN_STATUS=newRow.CHECK_IN_STATUS;//unlock
                                     info.newDocument.SUBMIT_STATUS=null;
+                                    trackingTreeDir(req,info.newDocument.NODE_ID);
 		                            res.json({status:'success',data:info.newDocument});
 		                        }
 		                    });
@@ -445,6 +469,7 @@ module.exports =
                                                                             isoUtil.exlog("Delete temporary file fail!",err);
                                                                         }
                                                                     });
+                                                                    trackingTreeDir(req,nodeId);
                                                                     res.json({status:'success',data:updateInfo});
                                                                 }
                                                                 else

@@ -1114,11 +1114,12 @@ module.exports =
         isoUtil.exlog('idddd',req.body);
         var sql = 
             " SELECT tree.*,us.`user_name` AS Document_Author,uss.`user_name` AS Last_Edited_By,   "+
-            " dep.`departmentName` AS DEPARTMENT_NAME                                              "+
+            " dep.`departmentName` AS DEPARTMENT_NAME, MANAGER.`user_name` AS MANAGER_USER_NAME    "+                                          
             " FROM `iso_tree_dir` tree                                                             "+
             " LEFT JOIN `users` us ON `tree`.`CREATED_BY` = us.`id`                                "+
             " LEFT JOIN `users` uss ON tree.`LAST_UPDATED_BY` = uss.`id`                           "+
             " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`               "+
+            " LEFT JOIN `users` manager ON manager.id=dep.`managerId`                              "+
             " WHERE `NODE_ID` = ?                                                                  ";
         req.getConnection(function(err,connection)
         {
