@@ -503,24 +503,43 @@ angular.module('app.loggedIn.document.services', [])
             };
         } 
 
-        // documentService.OptionSA1 = function (patient_id) {
-        //     return {
-        //         api: strPrefixAPI + 'audiogram1_search',
-        //         method: 'post',
-        //         columns: [
-        //             {field: 'GORGON_ID' , is_hide: true },
-        //             {field: 'TIME_TEST', label: 'Created Date', type: 'custom', fn: function(item){
-        //                 return ConfigService.getCommonDateDefault(item.PATIENT_DATE);
-        //             }},
-        //         ],
-        //         static: true,
-        //         search: { patient_id: patient_id },
-        //         use_actions: true,
-        //         actions: [
-        //             { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
-        //         ]
-        //     };
-        // } 
+        documentService.OptionSA1 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'audiogram1_search',
+                method: 'post',
+                columns: [
+                    {field: 'SA_ID' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.OptionSA2 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'audiogram2_search',
+                method: 'post',
+                columns: [
+                    {field: 'SA_ID' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
 
         documentService.OptionMH = function (patient_id) {
             return {
@@ -543,11 +562,68 @@ angular.module('app.loggedIn.document.services', [])
 
         documentService.OptionCOE = function (patient_id) {
             return {
-                api: strPrefixAPI + 'medical_history_search',
+                api: strPrefixAPI + 'coe_search',
                 method: 'post',
                 columns: [
                     {field: 'coe_id' , is_hide: true },
                     {field: 'coeDate', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        }
+
+        documentService.OptionIDS = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'instant_drug_screen_search',
+                method: 'post',
+                columns: [
+                    {field: 'IDAS_ID' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        }
+
+        documentService.OptionFA = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'functional_assessment_search',
+                method: 'post',
+                columns: [
+                    {field: 'FA_ID' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        }
+
+        documentService.OptionMA = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'medical_assessment_search',
+                method: 'post',
+                columns: [
+                    {field: 'MA_ID' , is_hide: true },
+                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
                     }},
                 ],
