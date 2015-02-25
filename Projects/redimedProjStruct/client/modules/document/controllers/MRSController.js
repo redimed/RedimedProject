@@ -78,7 +78,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                     /**
                      * load data to input
                      */
-                    else if (response['status'] === "findFound" || response['status'] === "findNull") {
+                    if (response[0].status === "findFound" || response[0].status === "findNull") {
                         var data = response[0].data;
                         //set value load
                         $scope.companyName = response[0].nameCompany;
@@ -152,7 +152,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                                         "reload": true
                                     });
                                 }
-                            })
+                            });
                         } else if ($scope.isNew === false) {
                             //edit old mrs
                             DocumentService.editMRS(info).then(function(response) {
@@ -168,7 +168,7 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                             });
                         }
                     }
-                }
+                };
             }
         }
     });
