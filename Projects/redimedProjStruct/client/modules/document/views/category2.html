@@ -5,7 +5,7 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="submit"
+                <button type="submit" ng-show="isNew"
                         ng-disabled="!infoChanged()"
                         class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
@@ -16,7 +16,7 @@
                    ng-disabled="isNew"
                    class="btn btn-primary blue pull-right">Print PDF
                 </a>
-                <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+                <a ng-disabled="!infoChanged()" ng-show="isNew" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
                 </a>
             </div>
         </div>

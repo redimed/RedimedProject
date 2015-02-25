@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat2.controllers', [])
-    .controller("Cat2Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter, $stateParams, localStorageService) {
+    .controller("Cat2Controller", function($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $filter, $stateParams, localStorageService) {
         //Begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -9,36 +9,39 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
-            $state.go('loggedIn.home', null, {'reload': true});
-        }
-        else {
+            $state.go('loggedIn.home', null, {
+                'reload': true
+            });
+        } else {
 
             //Begin signature
             var tempSignature;
             $scope.isSignature = false;
-            $scope.showSignature = function () {
+            $scope.showSignature = function() {
                 $scope.isSignature = !$scope.isSignature;
             }
 
-            $scope.cancelClick = function () {
+            $scope.cancelClick = function() {
                 $scope.isSignature = !$scope.isSignature;
                 $scope.info.Signature = tempSignature;
             };
-            $scope.clearClick = function () {
+            $scope.clearClick = function() {
                 $scope.info.Signature = '';
             };
-            $scope.okClick = function () {
-                $scope.isSignature = !$scope.isSignature;
-                tempSignature = $scope.info.Signature;
-            }
-            //End signature
+            $scope.okClick = function() {
+                    $scope.isSignature = !$scope.isSignature;
+                    tempSignature = $scope.info.Signature;
+                }
+                //End signature
             $scope.today = new Date();
             //Begin value default info
             //var apptInfo = localStorageService.get('tempAppt');
             var patientInfo = localStorageService.get('tempPatient');
             if (patientInfo == null || patientInfo == 'undefined') {
                 toastr.error("Load information fail!", "Error");
-                $state.go("loggedIn.home", null, {"reload": true});
+                $state.go("loggedIn.home", null, {
+                    "reload": true
+                });
             }
             var Patient_ID = patientInfo.Patient_id;
             //var CalID = $scope.apptInfo.CAL_ID;
@@ -217,12 +220,13 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             var oriInfo;
             var info = $scope.info;
             //Begin load cat2
-            DocumentService.loadCat2(info).then(function (response) {
+            DocumentService.loadCat2(info).then(function(response) {
                 if (response['status'] === 'fail') {
-                    $state.go('logged.home', null, {'reload': true});
+                    $state.go('logged.home', null, {
+                        'reload': true
+                    });
                     toastr.error("Load fail!", 'Error');
-                }
-                else if (response[0].status === 'findNull') {
+                } else if (response[0].status === 'findNull') {
                     //Add new cat2
                     $scope.isNew = true;
                     //Get information patient
@@ -232,8 +236,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                     $scope.info.company = response[0].company;
                     $scope.info.Created_by = userInfo.id;
                     oriInfo = angular.copy($scope.info);
-                }
-                else if (response[0].status === 'findFound') {
+                } else if (response[0].status === 'findFound') {
                     //Edit cat2
                     $scope.isNew = false;
                     //Load old cat2
@@ -422,42 +425,42 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             //End load cat2
 
             //Begin button reset, submit, print PDF
-            $scope.resetForm = function () {
+            $scope.resetForm = function() {
                 $scope.info = angular.copy(oriInfo);
                 $scope.cat2Form.$setPristine();
             }
 
-            $scope.infoChanged = function () {
+            $scope.infoChanged = function() {
                 return !angular.equals(oriInfo, $scope.info);
             }
 
-            $scope.submit = function (cat2Form) {
+            $scope.submit = function(cat2Form) {
                 //check validate
                 if (cat2Form.$error.pattern || cat2Form.$error.maxlength || cat2Form.$error.required) {
                     toastr.error("Please Input All Required Information!", "Error");
-                }
-                else {
+                } else {
                     var info = $scope.info;
                     if ($scope.isNew === true) {
-                        DocumentService.insertCat2(info).then(function (response) {
+                        DocumentService.insertCat2(info).then(function(response) {
                             if (response['status'] === 'success') {
                                 //add success
                                 toastr.success("Add new success!", "Success");
-                                $state.go('loggedIn.category2', null, {"reload": true});
-                            }
-                            else if (response['status'] === 'fail') {
+                                $state.go('loggedIn.category2', null, {
+                                    "reload": true
+                                });
+                            } else if (response['status'] === 'fail') {
                                 toastr.error('Add new fail!', "Error");
                             }
                         })
-                    }
-                    else if ($scope.isNew === false) {
-                        DocumentService.editCat2(info).then(function (response) {
+                    } else if ($scope.isNew === false) {
+                        DocumentService.editCat2(info).then(function(response) {
                             if (response['status'] === 'success') {
                                 //update success
                                 toastr.success("Update success!", "Success");
-                                $state.go('loggedIn.category2', null, {"reload": true});
-                            }
-                            else if (response['status'] === 'fail') {
+                                $state.go('loggedIn.category2', null, {
+                                    "reload": true
+                                });
+                            } else if (response['status'] === 'fail') {
                                 //update fail
                                 toastr.error('Update fail!', "Error");
                             }
