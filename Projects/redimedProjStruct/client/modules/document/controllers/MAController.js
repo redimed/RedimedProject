@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
-    .controller("MAController", function ($scope,$filter, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
+    .controller("MAController", function($scope, $filter, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService) {
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -33,23 +33,23 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
         $scope.patientInfo.DOB = $filter('date')($scope.patientInfo.DOB, 'dd/MM/yyyy');
 
 
-        $scope.resetForm = function () {
+        $scope.resetForm = function() {
             $scope.info = angular.copy(oriInfo);
             $scope.MAForm.$setPristine();
         };
-        $scope.clearForm = function () {
+        $scope.clearForm = function() {
             $scope.info = angular.copy(clearInfo);
             $scope.MAForm.$setPristine();
         };
 
-        $scope.infoChanged = function () {
+        $scope.infoChanged = function() {
             return !angular.equals(oriInfo, $scope.info);
         };
-        $scope.infoClear = function () {
+        $scope.infoClear = function() {
             return !angular.equals(clearInfo, $scope.info);
         };
 
-        $scope.getColor = function (err) {
+        $scope.getColor = function(err) {
             if ($scope.showClickedValidation) {
                 if (err) {
                     return 'red';
@@ -57,7 +57,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             }
         };
 
-        $scope.Ratio = function () {
+        $scope.Ratio = function() {
             value = $scope.info.WAIST / $scope.info.HIP;
             if (value > 0 && value < 100) {
                 $scope.info.WHR = value.toFixed(2);
@@ -65,7 +65,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
         };
 
         var weight, height;
-        $scope.mathBMI = function () {
+        $scope.mathBMI = function() {
             height = $scope.info.HEIGHT;
             weight = $scope.info.WEIGHT;
             value = (weight * 10000) / (height * height);
@@ -87,14 +87,15 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             }
         };
 
-        var len, totalCom = '', str;
-        $scope.collectComment = function () {
-            $scope.info.COMMENT_SEC10 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '')+ (($scope.info.COMMENT_SEC9 != null && $scope.info.COMMENT_SEC9 != '') ? $scope.info.COMMENT_SEC9 + '\n' : '') + totalCom;
+        var len, totalCom = '',
+            str;
+        $scope.collectComment = function() {
+            $scope.info.COMMENT_SEC10 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '') + (($scope.info.COMMENT_SEC9 != null && $scope.info.COMMENT_SEC9 != '') ? $scope.info.COMMENT_SEC9 + '\n' : '') + totalCom;
         };
 
-        $scope.totalComment = function () {
+        $scope.totalComment = function() {
             if (!$scope.info.COMMENT_SEC10) {
-                $scope.info.COMMENT_SEC10 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '')+ (($scope.info.COMMENT_SEC9 != null && $scope.info.COMMENT_SEC9 != '') ? $scope.info.COMMENT_SEC9 + '\n' : '');
+                $scope.info.COMMENT_SEC10 = (($scope.info.COMMENT_SEC4 != null && $scope.info.COMMENT_SEC4 != '') ? $scope.info.COMMENT_SEC4 + '\n' : '') + (($scope.info.COMMENT_SEC5 != null && $scope.info.COMMENT_SEC5 != '') ? $scope.info.COMMENT_SEC5 + '\n' : '') + (($scope.info.COMMENT_SEC6 != null && $scope.info.COMMENT_SEC6 != '') ? $scope.info.COMMENT_SEC6 + '\n' : '') + (($scope.info.COMMENT_SEC7 != null && $scope.info.COMMENT_SEC7 != '') ? $scope.info.COMMENT_SEC7 + '\n' : '') + (($scope.info.COMMENT_SEC8 != null && $scope.info.COMMENT_SEC8 != '') ? $scope.info.COMMENT_SEC8 + '\n' : '') + (($scope.info.COMMENT_SEC9 != null && $scope.info.COMMENT_SEC9 != '') ? $scope.info.COMMENT_SEC9 + '\n' : '');
             }
             len = ($scope.info.COMMENT_SEC4 != null ? $scope.info.COMMENT_SEC4.length : 0) + ($scope.info.COMMENT_SEC5 != null ? $scope.info.COMMENT_SEC5.length : 0) + ($scope.info.COMMENT_SEC6 != null ? $scope.info.COMMENT_SEC6.length : 0) + ($scope.info.COMMENT_SEC7 != null ? $scope.info.COMMENT_SEC7.length : 0) + ($scope.info.COMMENT_SEC8 != null ? $scope.info.COMMENT_SEC8.length : 0) + ($scope.info.COMMENT_SEC9 != null ? $scope.info.COMMENT_SEC9.length : 0);
             str = $scope.info.COMMENT_SEC10.replace('\n', '');
@@ -105,7 +106,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
         }
 
         var insert = true;
-        DocumentService.checkMA(Patient_ID, CalID,$scope.patientInfo.company_id).then(function (response) {
+        DocumentService.checkMA(Patient_ID, CalID, $scope.patientInfo.company_id).then(function(response) {
             if (response['status'] === 'insert') {
                 insert = true;
                 $scope.isNew = true;
@@ -202,11 +203,15 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
                 $scope.companyName = response['nameCompany'];
                 oriInfo = angular.copy($scope.info);
             } else if (response['status'] === 'fail') {
-                toastr.error("Fail!", "Error");
-                $state.go('loggedIn.demo', null, {'reload': true});
+                toastr.error("Fail!", "Fail");
+                $state.go('loggedIn.demo', null, {
+                    'reload': true
+                });
             } else if (response['status'] === 'error') {
                 toastr.error("Error!", "Error");
-                $state.go('loggedIn.demo', null, {'reload': true});
+                $state.go('loggedIn.demo', null, {
+                    'reload': true
+                });
             } else if (response['status'] === 'update') {
                 insert = false;
                 $scope.isNew = false;
@@ -220,8 +225,7 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             }
             if ($scope.isNew == true) {
                 clearInfo = angular.copy($scope.info);
-            }
-            else {
+            } else {
                 clearInfo = {
                     PATIENT_ID: Patient_ID,
                     CAL_ID: CalID,
@@ -299,9 +303,9 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
                     ECG_RESULT: null,
                     GP: null,
                     COMMENT_SEC10: null,
-                    DOCTOR_ID: $scope.info.DOCTOR_ID,
-                    DOCTOR_NAME: $scope.info.DOCTOR_NAME,
-                    SIGN: $scope.info.SIGN,
+                    DOCTOR_ID: response['docID'],
+                    DOCTOR_NAME: response['docName'],
+                    SIGN: response['docSign'],
                     Created_by: null,
                     Creation_date: date,
                     Last_updated_by: null,
@@ -312,29 +316,31 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             }
         });
 
-        $scope.submitMA = function (MAForm) {
+        $scope.submitMA = function(MAForm) {
             $scope.showClickedValidation = true;
             if (MAForm.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
             } else {
                 if (insert == true) {
-                    DocumentService.insertMA($scope.info).then(function (response) {
+                    DocumentService.insertMA($scope.info).then(function(response) {
                         if (response['status'] === 'success') {
                             toastr.success("Add new success!", "Success");
                             $scope.isNew = false;
-                            $state.go('loggedIn.MA', null, {'reload': true});
-                        }
-                        else {
+                            $state.go('loggedIn.MA', null, {
+                                'reload': true
+                            });
+                        } else {
                             toastr.error("Add new fail!", "Error");
                         }
                     });
                 } else {
-                    DocumentService.editMA($scope.info).then(function (response) {
+                    DocumentService.editMA($scope.info).then(function(response) {
                         if (response['status'] === 'success') {
                             toastr.success("Edit success!", "Success");
-                            $state.go('loggedIn.MA', null, {'reload': true});
-                        }
-                        else {
+                            $state.go('loggedIn.MA', null, {
+                                'reload': true
+                            });
+                        } else {
                             toastr.error("Edit fail!", "Error");
                         }
                     });
@@ -345,6 +351,3 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
         };
 
     })
-
-
-
