@@ -264,6 +264,19 @@
 
 	<div class="break-row"></div>
 
+	<!--User Id-->
+	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="userid">User</label>
+			<select ng-options="user.id as user.user_name for user in users" 
+                name="userid" ng-model="mdtDoctorMap.User_id" id="userid" float-label>
+                <option value="" disabled selected>User</option>
+            </select>
+		</span>	</div>
+	<!--User Id-->
+
+	<div class="break-row"></div>	
+
 	<!--Signature-->
 	<div class="col-md-6 col-sm-6 col-xs-12">
 		<span>

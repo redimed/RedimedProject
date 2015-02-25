@@ -79,6 +79,11 @@ angular.module('app.loggedIn.iso.controller',[])
         });
 
         $scope.documentTypeList=isoConst.documentTypeList;
+
+        /**
+         * Custom tuy chinh
+         * tannv.dts@gmail.com
+         */
         
     })
 	

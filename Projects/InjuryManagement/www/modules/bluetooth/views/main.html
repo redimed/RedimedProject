@@ -14,7 +14,7 @@
 
         <label class="item item-input item-button-right label-custom-field padding">
             <span class="input-label span-input-color">Discover device</span>
-            <button class="button button-clear" ng-click="blueToothChange()">
+            <button class="button button-clear" ng-click="disCover()">
                 <i ng-class="{'icon ion-ios7-loop-strong':!isLoad, 'icon ion-loading-c':isLoad}"></i>
             </button>
             <hr class="customHr">
@@ -34,10 +34,6 @@
                                 <i class="icon ion-ios7-circle-filled" ng-class="{'green-text':device.isOnline, 'red-text':!device.isOnline}"></i>
                             </span>
                         </h3>
-                        <!--<span class="infoDevice" style="font-size: 13px">-->
-                             <!--<i class="icon ion-ios7-information-outline"></i> {{device.device_name}}-->
-                            <!--<i class="icon ion-ios7-arrow-forward cus-icon-arrow-R"></i>-->
-                        <!--</span>-->
                     </div>
                 </a>
             </div>

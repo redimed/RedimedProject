@@ -3,6 +3,23 @@
  */
 var isoTest=false;
 
+//DE XAC DINH CAC BAN CUSTOM
+var isoCustomList={
+    full:{
+        admin:{value:0,display:'Admin'},
+        create:{value:1,display:'Create'},
+        update:{value:2,display:'Update'},
+        read:{value:3,display:'Read'}
+    },
+    zipQms:{
+        admin:{value:0,display:'Admin'},
+        update:{value:2,display:'Staff'},
+        read:{value:3,display:'Viewer'}
+    }
+}
+var currentIsoCustom=isoCustomList.zipQms;
+
+
 var isoHelper={
     setSlimCroll:function(selector)
     {
@@ -66,6 +83,15 @@ var isoConst={
     },
 
 
+
+    /**
+     * Cac quyen han:
+     * 0: admin
+     * 1:create
+     * 2:update
+     * 3:read
+     * tannv.dts@gmail.com
+     */
     permissionFunction:{
     	'0':{
     		createFolder:true,
@@ -99,7 +125,7 @@ var isoConst={
     		submitDocument:false,//deactive
             cancelSubmitDocument:false,//deactive
 
-    		deleteDocument:true,
+    		deleteDocument:false,//deactive
     		downloadNewestVersion:true,
             getFullVersionDoccument:true,
             getFullCheckinDoccument:true,

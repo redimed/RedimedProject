@@ -297,6 +297,14 @@ angular.module('app.loggedIn.iso.main.controller',[])
             if ($scope.actionContentForm.$valid && $scope.newFolder.nodeName != null && $scope.newFolder.nodeName !="") {
                 $scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.nodeName;
+                if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                {
+                    $scope.newFolder.departmentId=$scope.newFolder.department.DEPARTMENT_ID;
+                }
+                else
+                {
+                    $scope.newFolder.departmentId=$scope.selectedTreeNode.DEPARTMENT_ID;
+                }
                 $scope.newFolderBackError=angular.copy($scope.newFolderBackErrorTemplate);
                 isoService.treeDir.checkDupEntry($scope.newFolder.fatherNodeId,$scope.newFolder.nodeName)
                 .then(function(data){
@@ -327,6 +335,16 @@ angular.module('app.loggedIn.iso.main.controller',[])
                             $scope.selectedTreeNode.nodes={};
                         }
                         $scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(data.data);
+                        if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                        {
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.newFolder.department.DEPARTMENT_ID;
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.newFolder.department.DEPARTMENT_NAME;
+                        }
+                        else
+                        {
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
+                        }
                         $scope.selectedTreeNode.nodes[data.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[data.data.NODE_ID].NODE_NAME;
                         if(!data.data.ACCESSIBLE_USER_ID)
                         {
@@ -360,7 +378,14 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 $scope.newDocument.nodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.nodeName;
-                $scope.newDocument.departmentId=$scope.newDocument.department.DEPARTMENT_ID;
+                if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                {
+                    $scope.newDocument.departmentId=$scope.newDocument.department.DEPARTMENT_ID;
+                }
+                else
+                {
+                    $scope.newDocument.departmentId=$scope.selectedTreeNode.DEPARTMENT_ID;
+                }
                 $scope.newDocument.documentTypeValue=$scope.newDocument.documentType.value;
                 $scope.newDocumentBackError=angular.copy($scope.newDocumentBackErrorTemplate);
                 isoService.treeDir.checkDupEntry($scope.newDocument.fatherNodeId,$scope.newDocument.nodeName,$scope.newDocument.docCode)
@@ -453,6 +478,16 @@ angular.module('app.loggedIn.iso.main.controller',[])
                         $scope.selectedTreeNode.nodes={};
                     }
                     $scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(response.data);
+                    if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                    {
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.newDocument.department.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.newDocument.department.DEPARTMENT_NAME;
+                    }
+                    else
+                    {
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
+                    }
                     $scope.selectedTreeNode.nodes[data.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[data.data.NODE_ID].NODE_NAME;
                 }
                 else

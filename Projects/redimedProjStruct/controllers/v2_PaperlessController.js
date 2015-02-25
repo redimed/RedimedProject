@@ -135,7 +135,20 @@ module.exports = {
 	},
 
 	postForm18Search: function(req, res) {
+		var fields = req.body.fields;
+        var search_data = req.body.search;
+        var patient_id = search_data.patient_id;
 
+        console.log(search_data);
+        db.Form18.findAll({
+            where: {patient_id: patient_id},
+            attributes: fields,
+            order: 'GORGON_ID DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result, "count": result.length});
+        }).error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
 	},
 
 	postAudiogram1Search: function(req, res) {
@@ -149,11 +162,37 @@ module.exports = {
 	
 
 	postMedicalHistorySearch: function(req, res) {
+		var fields = req.body.fields;
+        var search_data = req.body.search;
+        var patient_id = search_data.patient_id;
 
+        console.log(search_data);
+        db.MedicalHistory.findAll({
+            where: {patient_id: patient_id},
+            attributes: fields,
+            order: 'mh_id DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result, "count": result.length});
+        }).error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
 	},
 
 	postCOESearch: function(req, res) {
+		var fields = req.body.fields;
+        var search_data = req.body.search;
+        var patient_id = search_data.patient_id;
 
+        console.log(search_data);
+        db.COE.findAll({
+            where: {patient_id: patient_id},
+            attributes: fields,
+            order: 'coe_id DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result, "count": result.length});
+        }).error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
 	},
 
 

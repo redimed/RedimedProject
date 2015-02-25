@@ -14,7 +14,7 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                  * lay ra danh sach cac user theo tung nhom permission
                  * tannv.dts@gmail.com
                  */
-                
+                $scope.currentIsoCustom=currentIsoCustom;
                 $scope.refreshNodePermission=function()
                 {
                     //Lay danh sach cac user la admin tren node

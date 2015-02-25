@@ -452,8 +452,8 @@ angular.module('app.loggedIn.document.services', [])
                 method: 'post',
                 columns: [
                     {field: 'cat_id' , is_hide: true },
-                    {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
-                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    {field: 'DATE', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.DATE);
                     }},
                 ],
                 static: true,
@@ -471,6 +471,63 @@ angular.module('app.loggedIn.document.services', [])
                 method: 'post',
                 columns: [
                     {field: 'cat_id' , is_hide: true },
+                    {field: 'PATIENT_DATE', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.PATIENT_DATE);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        documentService.Optionform18 = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'form18_search',
+                method: 'post',
+                columns: [
+                    {field: 'GORGON_ID' , is_hide: true },
+                    {field: 'TIME_TEST', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.TIME_TEST);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        } 
+
+        // documentService.OptionSA1 = function (patient_id) {
+        //     return {
+        //         api: strPrefixAPI + 'audiogram1_search',
+        //         method: 'post',
+        //         columns: [
+        //             {field: 'GORGON_ID' , is_hide: true },
+        //             {field: 'TIME_TEST', label: 'Created Date', type: 'custom', fn: function(item){
+        //                 return ConfigService.getCommonDateDefault(item.PATIENT_DATE);
+        //             }},
+        //         ],
+        //         static: true,
+        //         search: { patient_id: patient_id },
+        //         use_actions: true,
+        //         actions: [
+        //             { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+        //         ]
+        //     };
+        // } 
+
+        documentService.OptionMH = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'medical_history_search',
+                method: 'post',
+                columns: [
+                    {field: 'mh_id' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
                     }},
@@ -483,6 +540,25 @@ angular.module('app.loggedIn.document.services', [])
                 ]
             };
         } 
+
+        documentService.OptionCOE = function (patient_id) {
+            return {
+                api: strPrefixAPI + 'medical_history_search',
+                method: 'post',
+                columns: [
+                    {field: 'coe_id' , is_hide: true },
+                    {field: 'coeDate', label: 'Created Date', type: 'custom', fn: function(item){
+                        return ConfigService.getCommonDateDefault(item.Creation_date);
+                    }},
+                ],
+                static: true,
+                search: { patient_id: patient_id },
+                use_actions: true,
+                actions: [
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                ]
+            };
+        }
 
 
 

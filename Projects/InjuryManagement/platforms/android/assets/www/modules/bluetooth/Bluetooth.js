@@ -9,27 +9,17 @@ angular.module('starter.bluetooth',[
                 url: "/mainBluetooth",
                 views: {
                     'menuContent' : {
-<<<<<<< HEAD
                         templateUrl: "modules/bluetooth/views/main.html",
                         controller: "mainBlueController"
-=======
-                        templateUrl: "modules/bluetooth/views/structure.html",
-                        controller: "BluetoothController"
->>>>>>> FETCH_HEAD
                     }
                 }
             })
             .state('app.detailDeviceBluetooth',{
                 url: "/detailDevice/:id/:name/:address?status",
                 views: {
-<<<<<<< HEAD
                     'menuContent' : {
                         templateUrl: "modules/bluetooth/views/detailDevice.html",
                         controller: "detailDeviceBlueController"
-=======
-                    'main' : {
-                        templateUrl: "modules/bluetooth/views/main.html"
->>>>>>> FETCH_HEAD
                     }
                 }
             })

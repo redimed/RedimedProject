@@ -24,14 +24,14 @@ angular.module("app.loggedIn.doctor.paperless.controller", [])
 	
 	// $scope.OptionIDS = DocumentService.OptionIDS(patient_id);
 	
-	// $scope.Optionform18 = DocumentService.Optionform18(patient_id);
+	$scope.Optionform18 = DocumentService.Optionform18(patient_id);
 	
 	// $scope.OptionSA1 = DocumentService.OptionSA1(patient_id);
 	
 	// $scope.OptionSA2 = DocumentService.OptionSA2(patient_id);
 	
-	// $scope.OptionMH = DocumentService.OptionMH(patient_id);
+	$scope.OptionMH = DocumentService.OptionMH(patient_id);
 	
-	// $scope.OptionCOE = DocumentService.OptionCOE(patient_id);
+	$scope.OptionCOE = DocumentService.OptionCOE(patient_id);
 
 })
