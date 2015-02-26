@@ -82,8 +82,8 @@ angular.module('app.loggedIn.document.MH.controllers', [])
                 toastr.error("Load information fail, please try again!", "Error");
             } else {
                 var patient_id = tempPatient.Patient_id;
-                //var cal_id = tempAppt.CAL_ID;
-                var cal_id = -1; //Set default cal_id
+                // var cal_id = -1; //Set default cal_id
+                var cal_id = $stateParams.cal_id; 
                 $scope.info = {
                     patient_id: patient_id,
                     cal_id: cal_id

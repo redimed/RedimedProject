@@ -44,8 +44,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 });
             }
             var Patient_ID = patientInfo.Patient_id;
-            //var CalID = $scope.apptInfo.CAL_ID;
-            var CalID = -1; //Set default cal_id
+            // var CalID = -1; //Set default cal_id
+	    var CalID = $stateParams.cal_id;	
+
             $scope.info = {
                 cat_id: null,
                 cal_id: CalID,

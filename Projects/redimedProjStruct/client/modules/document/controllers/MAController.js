@@ -27,7 +27,9 @@ angular.module('app.loggedIn.document.MA.controllers', ['fcsa-number'])
             value;
 
         $scope.patientInfo = localStorageService.get('tempPatient');
-        CalID = -1;
+       // CalID = -1;
+        CalID = $stateParams.cal_id; 
+
         Patient_ID = $scope.patientInfo.Patient_id;
         sex = $scope.patientInfo.Sex;
         $scope.patientInfo.DOB = $filter('date')($scope.patientInfo.DOB, 'dd/MM/yyyy');

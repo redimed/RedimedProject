@@ -43,8 +43,8 @@ angular.module('app.loggedIn.document.MRS.controllers', [])
                 toastr.error("Load information fail, Please try again", "Error");
             } else {
                 var patient_id = $scope.patientInfo.Patient_id;
-                //var CAL_ID = $scope.apptInfo.CAL_ID;
-                var cal_id = -1; //set default cal_id
+                //var cal_id = -1; //set default cal_id
+                var cal_id = $stateParams.cal_id; 
                 //set value default
 
                 $scope.patientInfo.DOB = $filter('date')($scope.patientInfo.DOB, 'dd/MM/yyyy');
