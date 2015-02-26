@@ -355,6 +355,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'gorgon_ma_search',
                 method: 'post',
                 columns: [
+                    {field: 'CalId', is_hide: true},
                     {field: 'GORGON_ID' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -365,7 +366,7 @@ angular.module('app.loggedIn.document.services', [])
                 use_actions: true,
                 actions: [
                     { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
-                        console.log(item)
+                        $state.go('loggedIn.gorgonMA', {patient_id: patient_id, cal_id: item.CalId})
                     } }
                 ]
             };
@@ -376,6 +377,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'gorgon_fa_search',
                 method: 'post',
                 columns: [
+                    {field: 'CalId', is_hide: true},
                     {field: 'id' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -385,7 +387,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.gorgonFA', {patient_id: patient_id, cal_id: item.CalId})
+                    } }
                 ]
             };
         } 
@@ -396,6 +400,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'gorgon_uq_search',
                 method: 'post',
                 columns: [
+                    {field: 'CalId', is_hide: true},
                     {field: 'Quest_Id' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -405,7 +410,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.gorgonUQ', {patient_id: patient_id, cal_id: item.CalId})
+                    } }
                 ]
             };
         } 
@@ -415,6 +422,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'gorgon_mh_search',
                 method: 'post',
                 columns: [
+                    {field: 'CalId', is_hide: true},
                     {field: 'Gorgon_Id' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -424,7 +432,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                         $state.go('loggedIn.gorgonMH', {patient_id: patient_id, cal_id: item.CalId})
+                    } }
                 ]
             };
         } 
@@ -434,6 +444,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'mrs_search',
                 method: 'post',
                 columns: [
+                    {field: 'cal_id', is_hide: true},
                     {field: 'mrs_id' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -443,7 +454,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.MRS', {patient_id: patient_id, cal_id: item.cal_id})
+                    } }
                 ]
             };
         } 
@@ -453,6 +466,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'category2_search',
                 method: 'post',
                 columns: [
+                    {field: 'cal_id', is_hide: true},
                     {field: 'cat_id' , is_hide: true },
                     {field: 'DATE', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.DATE);
@@ -462,7 +476,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.category2', {patient_id: patient_id, cal_id: item.cal_id})
+                    } }
                 ]
             };
         } 
@@ -472,6 +488,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'category3_search',
                 method: 'post',
                 columns: [
+                    {field: 'cal_id', is_hide: true},
                     {field: 'cat_id' , is_hide: true },
                     {field: 'PATIENT_DATE', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.PATIENT_DATE);
@@ -481,7 +498,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.category3', {patient_id: patient_id, cal_id: item.cal_id})
+                    } }
                 ]
             };
         } 
@@ -491,6 +510,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'form18_search',
                 method: 'post',
                 columns: [
+                    {field: 'CAL_ID', is_hide: true},
                     {field: 'GORGON_ID' , is_hide: true },
                     {field: 'TIME_TEST', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.TIME_TEST);
@@ -500,7 +520,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                         $state.go('loggedIn.Form18', {patient_id: patient_id, cal_id: item.CAL_ID})
+                    } } 
                 ]
             };
         } 
@@ -510,6 +532,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'audiogram1_search',
                 method: 'post',
                 columns: [
+                    {field: 'CAL_ID', is_hide: true},
                     {field: 'SA_ID' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -519,7 +542,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.SA1', {patient_id: patient_id, cal_id: item.CAL_ID})
+                    } }
                 ]
             };
         } 
@@ -529,6 +554,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'audiogram2_search',
                 method: 'post',
                 columns: [
+                    {field: 'CAL_ID', is_hide: true},
                     {field: 'SA_ID' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -538,7 +564,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.SA2', {patient_id: patient_id, cal_id: item.CAL_ID})
+                    } }
                 ]
             };
         } 
@@ -548,6 +576,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'medical_history_search',
                 method: 'post',
                 columns: [
+                    {field: 'cal_id' , is_hide: true },
                     {field: 'mh_id' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -557,7 +586,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.MH', {patient_id: patient_id, cal_id: item.cal_id})
+                    } }
                 ]
             };
         } 
@@ -567,6 +598,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'coe_search',
                 method: 'post',
                 columns: [
+                    {field: 'CalId' , is_hide: true },
                     {field: 'coe_id' , is_hide: true },
                     {field: 'coeDate', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -576,7 +608,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.COE', {patient_id: patient_id, cal_id: item.CalId})
+                    } }
                 ]
             };
         }
@@ -586,6 +620,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'instant_drug_screen_search',
                 method: 'post',
                 columns: [
+                    {field: 'CAL_ID' , is_hide: true },
                     {field: 'IDAS_ID' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -595,7 +630,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.IDS', {patient_id: patient_id, cal_id: item.CAL_ID})
+                    } }
                 ]
             };
         }
@@ -605,6 +642,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'functional_assessment_search',
                 method: 'post',
                 columns: [
+                    {field: 'CAL_ID' , is_hide: true },
                     {field: 'FA_ID' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -614,7 +652,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID})
+                    } }
                 ]
             };
         }
@@ -624,6 +664,7 @@ angular.module('app.loggedIn.document.services', [])
                 api: strPrefixAPI + 'medical_assessment_search',
                 method: 'post',
                 columns: [
+                    {field: 'CAL_ID' , is_hide: true },
                     {field: 'MA_ID' , is_hide: true },
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -633,7 +674,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        $state.go('loggedIn.MA', {patient_id: patient_id, cal_id: item.CAL_ID})
+                    } }
                 ]
             };
         }
