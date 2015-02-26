@@ -19,7 +19,7 @@ angular.module("app.loggedIn.doctor", [
 
     //PAPERLESS
     .state("loggedIn.doctor.paperless", {
-        url: "/doctor/paperless/:patient_id",
+        url: "/doctor/paperless/:patient_id/:cal_id",
         views: {
             "main-content":{
                 templateUrl: "modules/doctor/views/paperless.html",

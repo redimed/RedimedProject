@@ -2,7 +2,7 @@
  * Created by meditech on 24/09/2014.
  */
 angular.module('app.loggedIn.document.services', [])
-    .factory("DocumentService", function (Restangular, ConfigService) {
+    .factory("DocumentService", function (Restangular, ConfigService, $state) {
         var documentService = {};
         var api = Restangular.all("api");
 
@@ -364,7 +364,9 @@ angular.module('app.loggedIn.document.services', [])
                 search: { patient_id: patient_id },
                 use_actions: true,
                 actions: [
-                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {} }
+                    { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
+                        console.log(item)
+                    } }
                 ]
             };
         } 

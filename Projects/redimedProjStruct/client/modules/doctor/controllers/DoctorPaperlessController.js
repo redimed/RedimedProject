@@ -1,8 +1,21 @@
 angular.module("app.loggedIn.doctor.paperless.controller", [])
 
-.controller("DoctorPaperlessController", function($scope, DocumentService, PatientService, $stateParams, localStorageService){
-	var patient_id = $stateParams.patient_id;
+.controller("DoctorPaperlessController", function($scope, $state, DocumentService, PatientService, $stateParams, localStorageService){
+	var patient_id = $scope.patient_id = $stateParams.patient_id;
+	var cal_id = $scope.cal_id = $stateParams.cal_id;
 
+	PatientService.get(patient_id).then(function(response){
+		if(response.data) 
+			localStorageService.set('tempPatient', response.data)
+	})
+	// 
+
+
+	$scope.navigator.add_general = function(){
+		var params = {patient_id: patient_id, cal_id: cal_id};
+		var str_state = 'loggedIn.' + $scope.tab
+		$state.go(str_state, params);
+	}
 
 	$scope.OptionGorgonMA = DocumentService.optionGorgonMA(patient_id);
 
