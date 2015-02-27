@@ -18,11 +18,11 @@ module.exports = {
     },
     edit: function(req,res){
         var f = req.body.f;
-        console.log(f);
         db.Function.update({
             decription: f.decription,
             definition: f.definition,
-            type: f.type
+            isWeb: f.isWeb,
+            isMobile: f.isMobile
         },{function_id: f.function_id})
             .success(function(){
                 res.json({status:"success"});
@@ -36,8 +36,9 @@ module.exports = {
         db.Function.create({
             decription: f.decription,
             definition: f.definition,
-            type: f.type
-        },['decription','definition','type']).success(function(){
+            isWeb: f.isWeb,
+            isMobile: f.isMobile
+        },['decription','definition','isWeb','isMobile']).success(function(){
             res.json({status:"success"});
         })
             .error(function(err){
