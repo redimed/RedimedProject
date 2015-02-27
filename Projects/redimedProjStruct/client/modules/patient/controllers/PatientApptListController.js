@@ -1,6 +1,5 @@
-angular.module("app.loggedIn.patient.recall.controller", [])
-.controller("PatientRecallController", function($scope, $state, $filter, toastr, $stateParams, DoctorService, PatientService, ReceptionistService, ConfigService){
-	zzz = $scope;
+angular.module("app.loggedIn.patient.appt.controller", [])
+.controller("PatientApptListController", function($scope, $state, $filter, toastr, $stateParams, DoctorService, PatientService, ReceptionistService, ConfigService){
 	var patient_id = $stateParams.patient_id;
     var cal_id = $stateParams.cal_id;
 

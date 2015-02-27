@@ -32,8 +32,8 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.referral.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
-        {'name': 'Re-Call', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
+        {'name': 'Appointment List', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
+            'state': 'loggedIn.patient.appt({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},     
  

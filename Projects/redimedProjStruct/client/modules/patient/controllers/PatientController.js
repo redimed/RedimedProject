@@ -16,7 +16,7 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.itemsheet.controller",
     "app.loggedIn.patient.invoices.controller",
     "app.loggedIn.patient.invoice_detail.controller",
-    "app.loggedIn.patient.recall.controller",
+    "app.loggedIn.patient.appt.controller",
     "app.loggedIn.patient.apptdoc.controller",
     "app.loggedIn.patient.listall.controller",
     "app.loggedIn.patient.checkin.controller"
