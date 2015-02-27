@@ -147,6 +147,7 @@ angular.module("app.model", [])
 	Insurer: '', //yes
 	Address: '', //yes
 	Claim_no: '', //yes
+	PO_number: null, //yes
 	Case_manager: '', //yes
 	Isenable: '1', //yes
 	Created_by: null,

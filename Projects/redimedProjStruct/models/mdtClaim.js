@@ -15,6 +15,7 @@ module.exports = function (sequelize, DataTypes) {
         Insurer: DataTypes.STRING(50),
         Address: DataTypes.STRING(50),
         Claim_no: DataTypes.STRING(30),
+        PO_number: DataTypes.STRING(20),
         Case_manager: DataTypes.STRING(50),
         Isenable: DataTypes.INTEGER(11),
         Created_by: DataTypes.INTEGER(11),
