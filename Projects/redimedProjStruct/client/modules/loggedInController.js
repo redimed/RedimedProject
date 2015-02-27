@@ -172,6 +172,17 @@ angular.module("app.loggedIn.controller",[
         });
     }
 
+    $scope.refreshOnlineList = function(){
+        UserService.getOnlineUsers().then(function(rs){
+            $scope.onlineUsers = [];
+            if(rs.data)
+            {
+                $scope.onlineUsers = rs.data;
+                $scope.onlineUsersTemp = rs.data;
+            }
+        })
+    }
+
     $scope.makeCall = function(user){
         UserService.getUserInfo(user.id).then(function(data){
             if(!data.img)

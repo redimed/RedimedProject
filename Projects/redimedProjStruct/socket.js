@@ -302,6 +302,7 @@ module.exports = function(io,cookie,cookieParser) {
 
         });
 
+
         function getOnlineUser(){
             userList = [];
             db.User.findAll({where: "socket IS NOT NULL"},{raw:true})

@@ -23,8 +23,6 @@ app.post('/api/im/getInjuryByCompany',injuryController.getInjuryByCompany);
 app.get('/api/im/getListDriver',injuryController.getListDriverOnline);
 app.post('/api/im/allocateDriver',injuryController.allocateDriver);
 
-app.get('/api/im/getDevices',injuryController.getDevices);
-
 app.get('/api/im/pushSound',function(req,res){
     res.sendfile('./sound/notification.mp3');
 })

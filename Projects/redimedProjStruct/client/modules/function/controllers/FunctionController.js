@@ -97,7 +97,9 @@ angular.module('app.loggedIn.function.controller',[])
         $scope.info = {
             decription: null,
             definition: null,
-            type: null
+            type: null,
+            isWeb: null,
+            isMobile: null
         }
 
         $scope.cancel = function(){
