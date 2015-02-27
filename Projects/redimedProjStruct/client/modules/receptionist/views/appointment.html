@@ -76,7 +76,7 @@
 							status: status, type: 'one'})">
 
 						<ul class="mdt-list-booking-patient">
-							<li ng-repeat="p in status track by $index">
+							<li ng-repeat="p in status track by $index" ng-class="{'cancel-booking': data.statuses[$index] === 'cancel'}">
 								<a ng-click="bookingPatient(data, overviewIndex, doctorIndex)" 
 									ng-if="p.Patient_name === 'No Patient'">
 									No Patient
@@ -106,6 +106,8 @@
 	</li>
 	<li><a ng-click="addWaitingList()">Add Waiting List</a></li>
 	<li><a ng-click="openWaitingList()">Select Waiting List</a></li>
+	<li><a ng-click="cancelStatus(rightSelectedBooking.data, rightSelectedBooking.overId, rightSelectedBooking.docId)">
+		Cancel Status</a></li>
 </ul>
 <!-- END RIGHT CLICK DROPDOWN MENU -->
 

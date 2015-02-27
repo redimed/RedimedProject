@@ -62,12 +62,13 @@ angular.module("app.loggedIn.iso.selectionUserName.directive", [])
 
                 $scope.filterUserName();
 
-
+                $scope.autoInc=0;
                 $scope.getSelectedUserName=function(user)
                 {
                     $scope.selectedUserName.user_name=user.user_name;
                     $scope.selectedUserName.id=user.id;
-
+                    $scope.autoInc++;
+                    $scope.selectedUserName.autoInc=$scope.autoInc;
                     $scope.show=false;
                 }
             }

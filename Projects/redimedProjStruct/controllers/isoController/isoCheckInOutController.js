@@ -6,6 +6,29 @@ var isoUtil=require('./isoUtilsController');
 var nodemailer = require("nodemailer");
 var isoEmail = require('./isoEmailController');
 
+var trackingTreeDir=function(req,nodeId)
+{
+    var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
+    var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+    var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+    if(!isoUtil.checkListData([userId]))
+    {
+        return;
+    }
+    var sql="UPDATE `iso_tree_dir` SET ? WHERE `NODE_ID`=?";
+    var updateInfo={
+        LAST_UPDATED_BY:userId,
+        LAST_UPDATED_DATE:currentTime
+    }
+    req.getConnection(function(err,connection)
+    {
+        var query = connection.query(sql,[updateInfo,nodeId],function(err,result)
+        {                       
+            return;
+        });
+    });
+}
+
 module.exports =
 {
 
@@ -73,6 +96,7 @@ module.exports =
                                     info.newDocument.CHECK_IN_NO=newRow.CHECK_IN_NO;//001
                                     info.newDocument.CHECK_IN_STATUS=newRow.CHECK_IN_STATUS;//unlock
                                     info.newDocument.SUBMIT_STATUS=null;
+                                    trackingTreeDir(req,info.newDocument.NODE_ID);
 		                            res.json({status:'success',data:info.newDocument});
 		                        }
 		                    });
@@ -445,6 +469,7 @@ module.exports =
                                                                             isoUtil.exlog("Delete temporary file fail!",err);
                                                                         }
                                                                     });
+                                                                    trackingTreeDir(req,nodeId);
                                                                     res.json({status:'success',data:updateInfo});
                                                                 }
                                                                 else
@@ -542,6 +567,57 @@ module.exports =
                             isoUtil.exlog("User send request and user check in are different");
                             res.json({status:'fail'});
                         }
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+
+        });
+    },
+
+    /**
+     * Vuot qua cac kiem tra submit neu la admin system
+     * tannv.dts@gmail.com
+     */
+    forceSubmitDocument:function(req,res,next)
+    {
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        if(!isoUtil.checkListData([nodeId,userId]))
+        {
+            isoUtil.exlog("checkCanPermission: data not valid");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql =
+            " SELECT outin.`ID`,outin.`USER_CHECK_OUT_IN` FROM `iso_check_out_in` outin        "+
+            " WHERE  (outin.`SUBMIT_STATUS` IS NULL OR outin.`SUBMIT_STATUS` = 'CANCEL')       "+
+            "   AND outin.`CHECK_IN_STATUS`='UNLOCK'                                           "+
+            "   AND outin.`NODE_ID`= ?                                                         "+
+            "   AND outin.`ISENABLE`=1                                                         "+
+            " ORDER BY outin.`CHECK_IN_NO` DESC                                                "+
+            " LIMIT 1                                                                          ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[nodeId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                    isoUtil.exlog(err);
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        req.body.checkOutInId=rows[0].ID;
+                        next();
                     }
                     else
                     {

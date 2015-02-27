@@ -29,5 +29,16 @@ angular.module("app.loggedIn.staff", [
             })
              //END DASHBOARD HOME
 
+            //Manage Task
+            .state("loggedIn.staff.manage", {
+                url: "/manageTask",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/staff/views/manageTask.html",
+                        controller:"ManageTaskController"
+                    }
+                }
+            })
+            //END Manage Task
 
     })

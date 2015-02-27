@@ -7,7 +7,7 @@ angular.module("app.loggedIn.staff.week.controller", [])
 
         var departmentList,locationList,activityList;
 
-        var startDate,endDate;
+        var startDate,endDate,flag;
 
         StaffService.getDepartmentLocation().then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
@@ -26,6 +26,7 @@ angular.module("app.loggedIn.staff.week.controller", [])
             endDate = angular.copy(dateChosen);
             if(!$scope.tasks[i]){
                 $scope.tasks[i] = [];
+                $scope.tasks[i].task_time = 0;
                 startDate.setHours(7,0,0);
             }else if($scope.tasks[i].length == 0){
                 startDate.setHours(7,0,0);
@@ -61,6 +62,8 @@ angular.module("app.loggedIn.staff.week.controller", [])
             modalInstance.result.then(function(task){
                 task.start_time = ConfigService.getCommonDatetime(task.startDate);
                 task.end_time = ConfigService.getCommonDatetime(task.endDate);
+                var offset = task.endDate - task.startDate;
+                $scope.tasks[i].task_time += Math.round(offset / 1000 / 60/ 30);
                 $scope.tasks[i].push(task);
             })
         };
@@ -100,14 +103,32 @@ angular.module("app.loggedIn.staff.week.controller", [])
 
         $scope.addAllTask = function(startWeek, endWeek)
         {
-            StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
-                if(response['status'] == 'success'){
-                    toastr.success("success","Success");
-                }else
+            flag = true;
+            var i = 0;
+            for(var task in $scope.tasks){
+                i++;
+                if($scope.tasks[task].task_time < 15)
                 {
-                    toastr.error("Error", "Error");
+                    flag = false;
                 }
-            })
+            }
+            console.log("i: " + i + " flag: " + flag);
+            if(flag == false){
+                toastr.error("You must enter 7.5 hours per day", "Error");
+            }else if (i < 5)
+            {
+                toastr.error("You must enter Monday - Friday", "Error");
+            }else{
+                StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("success","Success");
+                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                    }else
+                    {
+                        toastr.error("Error", "Error");
+                    }
+                })
+            }
         }
     })
 

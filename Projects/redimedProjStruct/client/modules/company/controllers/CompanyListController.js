@@ -48,6 +48,12 @@ angular.module("app.loggedIn.company.list.controller", [])
                     // console.log(item)
                 }
             },
+            {
+                class: 'fa fa-user', title: 'Patient List',
+                callback: function(item){
+                    $scope.insurers.patients.open(item.id);
+                }
+            }
         ],
     };
 
@@ -59,6 +65,20 @@ angular.module("app.loggedIn.company.list.controller", [])
         close: function(){
             this.is_show = false;
         }, 
+        patients: {
+            is_show: false,
+            company_id: 0,
+            open: function(id){
+                $scope.insurers.patients.is_show = true;
+                $scope.insurers.patients.company_id = id;
+            },
+            close: function(){
+                $scope.insurers.patients.is_show = false;
+            },
+            selectPatient: function(row){
+                $state.go("loggedIn.patient.appointment", {patient_id: row.Patient_id, cal_id: 1});
+            }
+        },
         panel: {}
     }
 

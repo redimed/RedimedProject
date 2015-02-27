@@ -1,8 +1,8 @@
 <tabset>
-	<tab heading="Admin">
+	<tab heading="{{currentIsoCustom.admin?currentIsoCustom.admin.display:'Admin'}}" ng-if="currentIsoCustom.admin">
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				Group Admin
+				Group {{currentIsoCustom.admin?currentIsoCustom.admin.display:'Admin'}}
 			</div>
 			<div class="panel-body">
 				
@@ -10,10 +10,7 @@
 					<div class='col-md-12'>
 						<div ng-repeat='(key,users) in administratorUserList'>
 							<div style="color:#008000">
-								
-
 								<span ng-if="key=='null'">Single User</span>
-
 								<div ng-if="key!='null'" class="btn-group dropdown">
 						            <a style="color:#008000" type="button" class="dropdown-toggle" data-toggle="dropdown" >
 						                {{key}}
@@ -75,10 +72,10 @@
 			</div>
 		</div>
 	</tab>
-	<tab heading="Create">
+	<tab heading="{{currentIsoCustom.create?currentIsoCustom.create.display:'Create'}}" ng-if="currentIsoCustom.create">
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				Group Create
+				Group {{currentIsoCustom.create?currentIsoCustom.create.display:'Create'}}
 			</div>
 			<div class="panel-body">
 
@@ -151,10 +148,10 @@
 		</div>
 		
 	</tab>
-	<tab heading="Update">
+	<tab heading="{{currentIsoCustom.update?currentIsoCustom.update.display:'Update'}}" ng-if="currentIsoCustom.update">
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				Group Update
+				Group {{currentIsoCustom.update?currentIsoCustom.update.display:'Update'}}
 			</div>
 			<div class="panel-body">
 
@@ -224,10 +221,10 @@
 		</div>
 		
 	</tab>	
-	<tab heading="Read">
+	<tab heading="{{currentIsoCustom.read?currentIsoCustom.read.display:'Read'}}" ng-if="currentIsoCustom.read">
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				Group Read
+				Group {{currentIsoCustom.read?currentIsoCustom.read.display:'Read'}}
 			</div>
 			<div class="panel-body">
 

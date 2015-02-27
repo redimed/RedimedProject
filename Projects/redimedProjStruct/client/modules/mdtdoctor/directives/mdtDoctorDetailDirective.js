@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 
-.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, toastr, $cookieStore){
+.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, UserService, toastr, $cookieStore){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -14,6 +14,11 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 			scope.closePopup = function(){
 				angular.element("#"+scope.params.popupId).fadeOut();
 			}
+
+			scope.users = null;
+			UserService.all().then(function(response){
+				scope.users = response.data;
+			})
 
 			var init = function(){
 				scope.isSubmit = false;

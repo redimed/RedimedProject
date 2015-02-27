@@ -112,3 +112,8 @@ app.post('/api/iso/iso-request-edit-document/cancel-request',isoRequestEditDocum
 app.post('/api/iso/iso-request-edit-document/get-all-request',isoRequestEditDocumentController.getAllRequest);
 app.post('/api/iso/iso-request-edit-document/set-request-is-read',isoRequestEditDocumentController.setRequestIsRead);
 app.post('/api/iso/iso-request-edit-document/set-request-star',isoRequestEditDocumentController.setRequestStar);
+
+//FUNCTION FOR ADMIN SYSTEM
+// app.post('/api/iso/iso-check-out-in/force-check-in-document',multipartMiddleware,isoController.getUserPermission,isoCheckInOutController.checkInDocument);
+app.post('/api/iso/iso-check-out-in/force-submit-document',isoController.checkAdminIsoSystem,isoCheckInOutController.forceSubmitDocument,isoCheckInOutController.submitDocument);
+app.post('/api/iso/iso-check-out-in/force-approved-document',isoController.checkAdminIsoSystem,isoCheckInOutController.approvedDocument);

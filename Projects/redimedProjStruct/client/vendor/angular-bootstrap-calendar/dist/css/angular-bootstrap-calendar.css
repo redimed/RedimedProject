@@ -529,6 +529,28 @@ a.cal-event-week {
   border-bottom: 0px;
 }
 
+.mix-filter {
+    list-style: none;
+    margin: 0 0 0 0;
+    padding: 0;
+}
+
+.mix-filter li {
+    color: #fff;
+    cursor: pointer;
+    padding: 6px 15px;
+    margin-right: 2px;
+    margin-bottom: 5px;
+    background: #8DC63F;
+    display: inline-block;
+}
+
+.mix-filter li:hover,
+.mix-filter li.active {
+    color: #555;
+    background: #99FA42;
+}
+
 @media (max-width: 991px) {
 
   .cal-year-box [class*="span"]:nth-child(2) {

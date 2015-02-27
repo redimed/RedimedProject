@@ -47,8 +47,8 @@ angular.module('app.loggedIn.document.gorgonMH.controllers', [])
                 toastr.error("Load some information fail, please try again!", "Error");
             } else {
                 var patient_id = tempPatient.Patient_id;
-                //var cal_id = tempAppt.CAL_ID;
-                var cal_id = -1;
+               // var cal_id = -1;
+                var cal_id = $stateParams.cal_id; 
                 $scope.info = {
                     Gorgon_Id: null,
                     Patient_Id: patient_id,

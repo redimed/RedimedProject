@@ -7,6 +7,22 @@
         <p class="help-block" ng-if="actionContentForm.nameFolder.$error.required">Required!</p>
         <p class="help-block" ng-if="actionContentForm.nameFolder.$error.maxlength">Folder name cannot be longer than 50 characters</p>
     </div>
+
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID==null" class="form-group" show-errors='{showSuccess: true}'>
+        <label >Department:</label>
+        <select class="form-control" ng-model="newFolder.department" ng-options="department.DEPARTMENT_NAME for department in departmentList" required name="folderDepartment">
+            <!-- <option  value="">All</option> -->
+        </select>
+        <p class="help-block" ng-if="actionContentForm.folderDepartment.$error.required">Required!</p>
+    </div>
+
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID" class="form-group">
+        <label >Department:</label>
+        <input type="text" class="form-control" ng-disabled="'true'" ng-model="selectedTreeNode.DEPARTMENT_NAME">
+    </div>
+
+
+
     <div class="form-group" show-errors='{showSuccess: true}'>
         <label >Description:</label>
         <input type="text" ng-model="newFolder.description" class="form-control" placeholder="Description" ng-maxlength="500" name="description">
@@ -43,12 +59,17 @@
         <p class="help-block" ng-if="actionContentForm.documentType.$error.required">Required!</p>
     </div>
 
-    <div class="form-group" show-errors='{showSuccess: true}'>
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID==null" class="form-group" show-errors='{showSuccess: true}'>
         <label >Department:</label>
         <select class="form-control" ng-model="newDocument.department" ng-options="department.DEPARTMENT_NAME for department in departmentList" required name="department">
             <!-- <option  value="">All</option> -->
         </select>
         <p class="help-block" ng-if="actionContentForm.department.$error.required">Required!</p>
+    </div>
+
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID" class="form-group">
+        <label >Department:</label>
+        <input type="text" class="form-control" ng-disabled="'true'" ng-model="selectedTreeNode.DEPARTMENT_NAME">
     </div>
 
     <div class="form-group" show-errors='{showSuccess: true}'>
@@ -154,6 +175,10 @@ GOBAL POPUP -->
 
 
 <script type="text/ng-template" id="iso_check_in_document.html">
+    <iso-check-in-document selected-tree-node="selectedTreeNode"></iso-check-in-document>
+</script>
+
+<script type="text/ng-template" id="iso_force_check_in_document.html">
     <iso-check-in-document selected-tree-node="selectedTreeNode"></iso-check-in-document>
 </script>
 

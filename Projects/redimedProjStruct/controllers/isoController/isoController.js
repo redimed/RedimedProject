@@ -145,49 +145,84 @@ module.exports =
         {   
             res.json({status:'fail'});
         }
-        var sql=
-            "SELECT treeUser.* FROM iso_tree_users treeUser WHERE treeUser.`ISENABLE`=1 AND treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?";
+        
+        //NHUNG USER CO QUYEN ADMIN SYSTEM CUNG CO QUYEN GIONG QUYEN ADMIN TREN TREE
+        //TANNV.DTS@GMAIL.COM
+        var sql = 
+            "SELECT * FROM `iso_admin` "+
+            "WHERE `ADMIN_ID` = ? AND `ISENABLE` = 1 ";
+        var isAdminIsoSystem=0;
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[nodeId,userId],function(err,rows)
+            var query = connection.query(sql,userId,function(err,rows)
             {
                 if(err)
                 {
-                    isoUtil.exlog({status:'fail',msg:err});
-                    res.json({status:'fail'});
+                    isoUtil.exlog("getUserPermission",query.sql,query.err);
+                    checkAsDefault();
                 }
                 else
                 {
                     if(rows.length>0)
-                    {                      
-                        // if(isoUtil.haveData(req.body))
-                        // {
-                        //     req.body.userLoginPermission=rows[0].PERMISSION;
-                        // }
-                        // if(isoUtil.haveData(req.query))
-                        // {
-                        //     req.query.userLoginPermission=rows[0].PERMISSION;
-                        // }  
+                    {            
+                        isAdminIsoSystem=1;
                         if(req.method=='POST')
                         {
-                            req.body.userLoginPermission=rows[0].PERMISSION;
+                            req.body.userLoginPermission=isoUtil.isoPermission.administrator;
                         }
                         if(req.method=='GET')
                         {
-                            req.query.userLoginPermission=rows[0].PERMISSION;
+                            req.query.userLoginPermission=isoUtil.isoPermission.administrator;
                         }
                         next();
                     }
                     else
                     {
-                        isoUtil.exlog("User do not have permisssion in node!");
-                        res.json({status:'fail'});
+                        checkAsDefault();
                     }
                         
                 }
             });
-            isoUtil.exlog(query.sql);
-        });    
+        });
+        
+        var checkAsDefault=function()
+        {
+            var sql=
+            "SELECT treeUser.* FROM iso_tree_users treeUser WHERE treeUser.`ISENABLE`=1 AND treeUser.`NODE_ID`=? AND treeUser.`ACCESSIBLE_USER_ID`=?";
+            req.getConnection(function(err,connection)
+            {
+                var query = connection.query(sql,[nodeId,userId],function(err,rows)
+                {
+                    if(err)
+                    {
+                        isoUtil.exlog({status:'fail',msg:err});
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        if(rows.length>0)
+                        {                      
+                            if(req.method=='POST')
+                            {
+                                req.body.userLoginPermission=rows[0].PERMISSION;
+                            }
+                            if(req.method=='GET')
+                            {
+                                req.query.userLoginPermission=rows[0].PERMISSION;
+                            }
+                            next();
+                        }
+                        else
+                        {
+                            isoUtil.exlog("User do not have permisssion in node!");
+                            res.json({status:'fail'});
+                        }
+                            
+                    }
+                });
+                isoUtil.exlog(query.sql);
+            }); 
+        }
 
     },
 
@@ -266,36 +301,39 @@ module.exports =
         var sql = 
             "SELECT * FROM `iso_admin` "+
             "WHERE `ADMIN_ID` = ? AND `ISENABLE` = 1 ";
-
-        var query = connection.query(sql,userId,function(err,rows)
+        req.getConnection(function(err,connection)
         {
-            if(err)
+            var query = connection.query(sql,userId,function(err,rows)
             {
-                isoUtil.exlog({status:'fail',msg:err});
-                res.json({status:'fail'});
-            }
-            else
-            {
-                if(rows.length>0)
-                {            
-                    if(req.method=='POST')
-                    {
-                        req.body.isAdminIsoSystem=1;
-                    }
-                    if(req.method=='GET')
-                    {
-                        req.query.isAdminIsoSystem=1;
-                    }    
-                    next();
+                if(err)
+                {
+                    isoUtil.exlog({status:'fail',msg:err});
+                    res.json({status:'fail'});
                 }
                 else
                 {
-                    isoUtil.exlog("Error,You can not be right");
-                    res.json({status:'fail'});
+                    if(rows.length>0)
+                    {            
+                        if(req.method=='POST')
+                        {
+                            req.body.isAdminIsoSystem=1;
+                        }
+                        if(req.method=='GET')
+                        {
+                            req.query.isAdminIsoSystem=1;
+                        }    
+                        next();
+                    }
+                    else
+                    {
+                        isoUtil.exlog("Error,You can not be right");
+                        res.json({status:'fail'});
+                    }
+                        
                 }
-                    
-            }
+            });
         });
+        
     },
 
 	/**

@@ -39,6 +39,30 @@ module.exports =
             );
         });
     },
+    updateStatus: function(req, res){
+        var cal_id = req.body.CAL_ID;
+        var status = req.body.STATUS;
+
+        var sql = "UPDATE cln_appointment_calendar cac"
+                +" SET STATUS='"+status+"'"
+                +" WHERE CAL_ID="+cal_id;
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql, function(err,rows)
+            {
+                if(err)
+                {
+                    console.log("Error Selecting : %s ",err );
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success',data:rows});
+                }
+            });
+        });        
+    },
     bookingUpdate: function(req, res){
         var cal_id = req.body.CAL_ID;
         var arr_time = common_functions.convertFromHoursToDateTime(req.body.ARR_TIME);

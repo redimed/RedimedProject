@@ -5,6 +5,10 @@ var mdtWaitingListController = require('./controllers/mdtWaitingListController')
 var mdtClaimController = require('./controllers/mdtClaimController');
 var mdtAppointmentController = require('./controllers/mdtAppointmentController');
 var mdtCompanyController = require('./controllers/mdtCompanyController');
+var mdtUserController = require('./controllers/mdtUserController');
+
+//MODULE USER
+app.get("/api/meditek/v1/user/all", mdtUserController.getAll);
 
 //MODULE DOCTOR
 app.post("/api/meditek/v1/doctor/search", mdtDoctorController.postSearch);

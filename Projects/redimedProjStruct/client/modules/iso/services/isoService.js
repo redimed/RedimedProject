@@ -240,7 +240,20 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all("iso/iso-check-out-in/make-current-version");
                 return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
-            }
+            },
+
+            forceSubmitDocument:function(nodeId)
+            {
+                var result = api.all("iso/iso-check-out-in/force-submit-document");
+                return result.post({nodeId:nodeId});
+            },
+
+            forceApprovedDocument:function(nodeId,checkOutInId)
+            {
+                var result = api.all("iso/iso-check-out-in/force-approved-document");
+                return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
+            },
+
         }
 
         isoService.isoAdmin={
