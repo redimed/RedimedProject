@@ -54,35 +54,35 @@
         <div class="panel panel-default">
             <table class="table table-condensed" >
                 <thead>
-                <tr>
-                    <th style="text-align:center">
-                        <label style="font-size: 17px;">Injury Date</label>
-                    </th>
-                    <th style="text-align:center">
-                        <label style="font-size: 17px;">Driver</label>
-                    </th>
-                    <th style="text-align:center">
-                        <label style="font-size: 17px;">Status</label>
-                    </th>
-                </tr>
-                <tr>
-                    <th style="text-align:center">
-                        <date-range-picker style="width:200px;" ng-model="search.dateRange" ranged="true" callback="getDateRange(search.dateRange)"></date-range-picker>
-                        <!--<input class="form-control" type="text" />-->
-                    </th>
-                    <th style="text-align:center">
-                        <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />
-                    </th>
-                    <th style="text-align:center">
-                        <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New-->
-                        <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting-->
-                        <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done-->
-                    </th>
-                </tr>
+                    <tr>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Injury Date</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Driver</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Status</label>
+                        </th>
+                    </tr>
+                    <tr ng-if="haveData">
+                        <th style="text-align:center">
+                            <date-range-picker style="width:200px;" ng-model="search.dateRange" ranged="true" callback="getDateRange(search.dateRange)"></date-range-picker>
+                            <!--<input class="form-control" type="text" />-->
+                        </th>
+                        <th style="text-align:center">
+                            <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />
+                        </th>
+                        <th style="text-align:center">
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New-->
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting-->
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done-->
+                        </th>
+                    </tr>
                 </thead>
             </table>
         </div>
-        <div class="div-table-content">
+        <div ng-if="haveData" class="div-table-content">
             <table class="table table-hover table-condensed">
                 <tbody>
                 <tr style="white-space: nowrap; cursor: pointer;" ng-click="showDetails(im.injury_id)"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">

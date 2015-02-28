@@ -5,6 +5,7 @@ angular.module("app.loggedIn.im.list.controller",[])
             driver: "",
             dateRange: null
         }
+        $scope.haveData = false;
 
         var from = $cookieStore.get('fromState');
         var params = {};
@@ -42,14 +43,26 @@ angular.module("app.loggedIn.im.list.controller",[])
 
          InjuryManagementService.getInjuryListByPatient($scope.patient_id).then(function(rs){
             if(rs.status == 'success'){
-                for(var j=0;j<rs.data.length;j++){
-                    if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
-                        rs.data[j].driverUser = '';
+                if(rs.data.length > 0)
+                {
+                    $scope.haveData = true;
+
+                    for(var j=0;j<rs.data.length;j++){
+                        if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
+                            rs.data[j].driverUser = '';
+                    }
+                    $scope.injuryListTemp = rs.data;
+
+                    $scope.injuryList = $scope.injuryListTemp;
                 }
-                $scope.injuryListTemp = rs.data;
+                else
+                {
+                    $scope.haveData = false;
+                }
 
-                $scope.injuryList = $scope.injuryListTemp;
-
+            }else
+            {
+                $scope.haveData = false;
             }
         })
 
@@ -61,13 +74,26 @@ angular.module("app.loggedIn.im.list.controller",[])
             $scope.injuryListTemp = [];
             InjuryManagementService.getInjuryListByPatient($scope.patient_id).then(function(rs) {
                 if (rs.status == 'success') {
-                    for(var j=0;j<rs.data.length;j++){
-                        if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
-                            rs.data[j].driverUser = '';
-                    }
-                    $scope.injuryListTemp = rs.data;
+                    if(rs.data.length > 0)
+                    {
+                        $scope.haveData = true;
 
-                    $scope.injuryList = $scope.injuryListTemp;
+                        for(var j=0;j<rs.data.length;j++){
+                            if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
+                                rs.data[j].driverUser = '';
+                        }
+                        $scope.injuryListTemp = rs.data;
+
+                        $scope.injuryList = $scope.injuryListTemp;
+                    }
+                    else
+                    {
+                        $scope.haveData = false;
+                    }
+                }
+                else
+                {
+                    $scope.haveData = false;
                 }
             })
         }

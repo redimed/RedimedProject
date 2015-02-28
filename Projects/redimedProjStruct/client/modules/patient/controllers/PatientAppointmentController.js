@@ -172,4 +172,5 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
     initObject();
     // End Init Object
+
 })

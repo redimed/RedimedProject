@@ -4,7 +4,10 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		InjuryManagementService.getMedicalDevices().then(function(rs){
 			if(rs.status == "success")
 			{
-				console.log(rs.data);
+				// console.log(rs.data);
 			}
 		})
+
+
+
     })
