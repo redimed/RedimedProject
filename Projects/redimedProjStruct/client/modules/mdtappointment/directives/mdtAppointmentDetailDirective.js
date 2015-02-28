@@ -11,7 +11,6 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 		link: function(scope, element, attrs){
 			var init = function(){
 				scope.isSubmit = false;
-				console.log(scope);
 
 				if(scope.params.permission.edit === true && scope.params.id !== '0'){
 					mdtAppointmentService.byId(scope.params.id).then(function(response){
@@ -30,7 +29,6 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 						ConfigService.system_service_by_clinical(scope.mdtAppointmentMap.CLINICAL_DEPT_ID).then(function(response){
 							scope.serviceList = response;
 						})
-						console.log(scope.mdtAppointmentMap)
 					})
 				}
 				scope.mdtAppointmentMap = angular.copy(mdtAppointmentModel);
