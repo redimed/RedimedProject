@@ -239,11 +239,27 @@ angular.module('app.loggedIn.rlob.services',[])
         }
         //chien 
         //phanquocchien.c1109g@gmail.com
-        //add select 
+        //select Appointment
         rlobService.selectAppointment=function(CAL_ID)
         {
             var Patient=api.one('restful/Appointment/'+ CAL_ID);
             return Patient.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //cancel booking
+        rlobService.cancelBooking=function(CAL_ID,PATIENT_ID)
+        {
+            var result=api.all('rlob/rl_bookings/cancel-booking');
+            return result.post({CAL_ID:CAL_ID,PATIENT_ID:PATIENT_ID});
+        }
+         //chien 
+        //phanquocchien.c1109g@gmail.com
+        //change booking
+        rlobService.changeBooking=function(CAL_ID,PATIENT_ID,PATIENT_NAME)
+        {
+            var result=api.all('rlob/rl_bookings/change-booking');
+            return result.post({CAL_ID:CAL_ID,PATIENT_ID:PATIENT_ID,PATIENT_NAME:PATIENT_NAME});
         }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {

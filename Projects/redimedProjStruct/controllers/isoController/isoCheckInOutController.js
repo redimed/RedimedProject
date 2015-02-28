@@ -129,7 +129,6 @@ module.exports =
      */
     checkOutDocument:function(req,res)
     {
-
         if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.update)===false)
         {
             res.json({status:'fail'});
@@ -236,6 +235,9 @@ module.exports =
             });
         });
     },
+
+
+    
 
     /**
      * Xu ly download check out document
@@ -399,12 +401,14 @@ module.exports =
                         var checkOutInId=rows[0].ID;
                         var checkOutFrom=rows[0].CHECK_OUT_FROM;
                         var sql=
-                            " SELECT outin.*                              "+
-                            " FROM `iso_check_out_in` outin               "+
-                            " WHERE outin.`ID`=? AND outin.`ISENABLE`=1   ";
+                            " SELECT outin.*                                       "+
+                            " FROM `iso_check_out_in` outin                        "+
+                            " WHERE outin.`NODE_ID`=? AND outin.`ISENABLE`=1     "+
+                            " ORDER BY outin.`CHECK_IN_NO` DESC                    "+
+                            " LIMIT 1                                              ";
                         req.getConnection(function(err,connection)
                         {
-                            var query = connection.query(sql,checkOutFrom,function(err,rows)
+                            var query = connection.query(sql,nodeId,function(err,rows)
                             {                       
                                 if(err)
                                 {
@@ -1555,5 +1559,355 @@ module.exports =
                 }
             });
         });
+    },
+
+    /**
+     * Biến tấu từ checkOutDocument function
+     * thay vì chọn lasted checkin làm source thì ỏ đây sẽ lấy checkin theo tuyền chọn của user
+     * tannv.dts@gmail.com
+     */
+    forceCheckOutDocument:function(req,res)
+    {
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.update)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var checkOutInId=isoUtil.checkData(req.body.checkOutInId)?req.body.checkOutInId:'';
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        if(!isoUtil.checkListData([nodeId,userId]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql=
+            " SELECT    outin.`ID`,outin.`NODE_ID`,outin.`CHECK_IN_NO`,   "+
+            "   outin.`CHECK_IN_FOLDER_STORAGE`,outin.FILE_NAME,outin.CHECK_IN_STATUS           "+
+            " FROM `iso_check_out_in` outin                               "+
+            " WHERE outin.`NODE_ID`=? AND outin.`ISENABLE`=1              "+                       
+            " ORDER BY outin.`CHECK_IN_NO` DESC                           "+                       
+            " LIMIT 1                                                     ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,rows)
+            {                       
+                if(err)
+                {
+                    console.log(err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows[0].CHECK_IN_STATUS==isoUtil.isoConst.checkInStatus.lock)
+                    {
+                        res.json({status:'lock'});
+                    }
+                    else if(rows[0].CHECK_IN_STATUS==isoUtil.isoConst.checkInStatus.unlock && rows[0].CHECK_IN_NO!=null)
+                    {
+                        //Biến tấu thay vì lấy lasted checkin thì ở đây sẽ lấy checkin theo tùy chọn user
+                        var sql=
+                            " SELECT    outin.`ID`,outin.`NODE_ID`,outin.`CHECK_IN_NO`,                   "+
+                            "   outin.`CHECK_IN_FOLDER_STORAGE`,outin.FILE_NAME,outin.CHECK_IN_STATUS,outin.FILE_NAME     "+      
+                            " FROM `iso_check_out_in` outin                                               "+
+                            " WHERE outin.`ID`=? AND outin.`ISENABLE`=1                                   ";
+                        req.getConnection(function(err,connection)
+                        {
+                            var query = connection.query(sql,[checkOutInId],function(err,rows)
+                            {
+                                isoUtil.exlog("forceCheckOutDocument",query.sql);
+                                var lastedCheckInId=rows[0].ID;
+                                var lastedCheckInNo=rows[0].CHECK_IN_NO;
+                                var lastedCheckInFolder=rows[0].CHECK_IN_FOLDER_STORAGE;
+                                var lastedFileName=rows[0].FILE_NAME;
+                                //var checkInFolderStorage=rows[0].CHECK_IN_FOLDER_STORAGE;
+                                //var fileName=rows[0].FILE_NAME;
+                                var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
+                                var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                                var newRow={
+                                    NODE_ID:nodeId,
+                                    USER_CHECK_OUT_IN:userInfo.id,
+                                    CHECK_OUT_FROM:lastedCheckInId,
+                                    CHECK_OUT_COMMENT:'No thing',
+                                    CHECK_IN_STATUS:isoUtil.isoConst.checkInStatus.lock,                            
+                                    CREATED_BY:userInfo.id,
+                                    CREATION_DATE:currentDate
+                                }
+                                var sql="insert into iso_check_out_in set ? ";
+
+                                req.getConnection(function(err,connection)
+                                {
+                                    var query = connection.query(sql,newRow,function(err,rows)
+                                    {                       
+                                        if(err)
+                                        {
+                                            console.log(err);
+                                            res.json({status:'fail'});
+                                        }
+                                        else
+                                        {
+                                            var sql="update iso_check_out_in set ? where ID= ? ";
+                                            var oldCheckOutInInfo={
+                                                CHECK_IN_STATUS:isoUtil.isoConst.checkInStatus.lock,
+                                                LAST_UPDATED_BY:userId,
+                                                LAST_UPDATED_DATE:currentDate
+                                            }
+                                            req.getConnection(function(err,connection)
+                                            {
+                                                var query = connection.query(sql,[oldCheckOutInInfo,lastedCheckInId],function(err,rows)
+                                                {                       
+                                                    if(err)
+                                                    {
+                                                        console.log(err);
+                                                        res.json({status:'fail'});
+                                                    }
+                                                    else
+                                                    {
+                                                        isoUtil.exlog("check out success!");
+                                                        res.json({status:'success',data:{CHECK_IN_STATUS:isoUtil.isoConst.checkInStatus.lock,CHECK_IN_NO:null}});
+                                                    }
+                                                });
+                                            });
+                                            
+                                        }
+                                    });
+                                });
+                            });
+                        });    
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                    
+                }
+            });
+        });
+    },
+
+
+    downloadSpecificCheckIn:function(req,res)
+    {
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        var nodeId=isoUtil.checkData(req.query.nodeId)?req.query.nodeId:'';
+        var checkOutInId=isoUtil.checkData(req.query.checkOutInId)?req.query.checkOutInId:'';
+        if(!isoUtil.checkListData([nodeId,checkOutInId]))
+        {
+            res.json({status:'fail'});
+            return;
+        }
+        //get path
+          var sql =
+            " SELECT treeDir.`NODE_NAME`                                                      "+
+            " FROM `iso_node_ancestor` ancestor                                               "+
+            " INNER JOIN `iso_tree_dir` treeDir ON ancestor.`ANCESTOR_ID`=treeDir.`NODE_ID`   "+
+            " WHERE ancestor.`NODE_ID`=?   AND  ancestor.`ISENABLE`=1                         "+
+            " ORDER BY ancestor.`ANCESTOR_ID` ASC                                             ";
+            //get NodeName
+            var sql1 =
+            " SELECT outin.`CHECK_IN_FOLDER_STORAGE`,outin.`FILE_NAME`,treedir.`NODE_NAME`    "+
+            " FROM `iso_check_out_in` outin                                                   "+
+            " INNER JOIN `iso_tree_dir` treedir ON outin.`NODE_ID`=treedir.`NODE_ID`          "+
+            " WHERE outin.`ID`=? AND treedir.`ISENABLE`=1                                     ";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,data)
+            {
+                isoUtil.exlog("downloadSpecificCheckIn",query.sql);
+                if(err)
+                {
+                    isoUtil.exlog("downloadSpecificCheckIn",err,query.sql);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    var Newpath = '';
+                    data.forEach(function(path){
+                        Newpath += '/'+path.NODE_NAME;
+                    });
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sql1,checkOutInId,function(err,data)
+                        {
+                            isoUtil.exlog("downloadSpecificCheckIn",query.sql);
+                            if(err)
+                            {
+                                isoUtil.exlog("downloadSpecificCheckIn",err,query.sql);
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                if(data.length>0)
+                                {
+                                    Newpath += '/'+data[0].NODE_NAME+'/CHECK_IN/'+data[0].CHECK_IN_FOLDER_STORAGE+'/'+data[0].FILE_NAME;
+                                    
+                                    res.download("."+Newpath,function(err,data) {
+                                        if (err) {
+                                            res.json({status: "fail"});
+                                        }else{
+                                            isoUtil.exlog(data);
+                                        }
+                                    })
+                                }
+                                else
+                                {
+                                    res.json({status:'fail'});
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    },
+
+    /**
+     * Tao check in moi khong can phai qua checkout
+     * danh cho admin he thong
+     * tannv.dts@gmail.com
+     */
+    createNewCheckInDocument:function(req,res)
+    {
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+        var nodeId=isoUtil.checkData(req.body.nodeId)?req.body.nodeId:'';
+        var relativePath=isoUtil.checkData(req.body.relativePath)?req.body.relativePath:'';
+        var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
+        if(!isoUtil.checkListData([userId,nodeId,relativePath]))
+        {
+            isoUtil.exlog("createNewCheckIn","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var newRow={
+            NODE_ID:nodeId,
+            USER_CHECK_OUT_IN:userId,
+            CHECK_IN_COMMENT:'CREATE NEW CHECK IN (SKIP CHECK OUT)',
+            // CHECK_IN_NO:'0001',
+            CHECK_IN_DATE:currentTime,
+            // CHECK_IN_FOLDER_STORAGE:'0001'+' '+currentTime,
+            CHECK_IN_STATUS:'UNLOCK',
+            SUBMIT_STATUS:null,
+            CREATED_BY:userId,
+            CREATION_DATE:currentTime,
+            FILE_NAME:req.files.file.name
+        }
+
+        var sql=
+            " SELECT outin.*                                       "+
+            " FROM `iso_check_out_in` outin                        "+
+            " WHERE outin.`NODE_ID`=? AND outin.`ISENABLE`=1     "+
+            " ORDER BY outin.`CHECK_IN_NO` DESC                    "+
+            " LIMIT 1                                              ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,nodeId,function(err,rows)
+            {                       
+                if(err)
+                {
+                    isoUtil.exlog("createNewCheckIn",err,query.sql);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    var newCheckInNoValue=parseInt(rows[0].CHECK_IN_NO)+1;
+                    var newCheckInNo=isoUtil.pad(newCheckInNoValue,4);
+                    newRow.CHECK_IN_NO=newCheckInNo;
+                    newRow.CHECK_IN_FOLDER_STORAGE=newCheckInNo+' '+moment().format("DD-MM-YYYY");
+                    //Xu ly luu tru file va luu thong tin vao database
+                    var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                    var targetFolder=prefix+relativePath+'\\CHECK_IN\\'+newRow.CHECK_IN_FOLDER_STORAGE;
+                    isoUtil.exlog("createNewCheckInDocument",targetFolder);
+                    res.json({status:'success'});
+                    mkdirp(targetFolder, function(err){
+                        if(!err)
+                        {
+                            isoUtil.exlog("create checkin folder success!");
+                            //duong dan tap tin duoc luu tam
+                            var tmp_path = req.files.file.path;
+                            //duong dan ma tap tin se duoc luu co dinh
+                            var target_path =targetFolder+ "\\" + req.files.file.name;
+                            // chuyen file tu thu muc tam sang thu muc co dinh
+                            fs.rename(tmp_path, target_path, function(err) 
+                            {
+                                if (!err)
+                                {
+                                    isoUtil.exlog("Move file from temporary folder to target folder success!");
+                                    //xoa file trong thu muc tam
+                                    fs.unlink(tmp_path, function() 
+                                    {
+                                        if (!err)
+                                        {
+                                            isoUtil.exlog("Delete temporary file success!");
+                                        }
+                                        else
+                                        {
+                                            isoUtil.exlog("Delete temporary file fail!",err);
+                                        }
+                                    });
+                                    //Luu checkin info vao database
+                                    var sql='INSERT INTO ISO_CHECK_OUT_IN SET ? ';
+                                    req.getConnection(function(err,connection)
+                                    {
+                                        var query = connection.query(sql,newRow,function(err,result)
+                                        {                       
+                                            if(err)
+                                            {
+                                                isoUtil.exlog("createNewCheckIn",err,query.sql);
+                                                res.json({status:'fail'});
+                                            }
+                                            else
+                                            {
+                                                var newCheckOutInId=result.insertId;
+                                                trackingTreeDir(req,nodeId);
+                                                var sql="UPDATE `iso_check_out_in` SET `CHECK_IN_STATUS`=? WHERE `NODE_ID`=? AND ID<>?";
+                                                req.getConnection(function(err,connection)
+                                                {
+                                                    var query = connection.query(sql,[isoUtil.isoConst.checkInStatus.lock,nodeId,newCheckOutInId],function(err,result)
+                                                    {                       
+                                                        if(err)
+                                                        {
+                                                            isoUtil.exlog("createNewCheckIn",err,query.sql);
+                                                        }
+                                                        else
+                                                        {
+                                                            isoUtil.exlog("createNewCheckInDocument","Update old checkin success!");
+                                                        }
+                                                    });
+                                                });
+                                                res.json({status:'success',data:newRow});
+                                            }
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    isoUtil.exlog("Move file from temporary folder to target folder fail!");
+                                    res.json({status:'fail'});
+                                } 
+                                
+                            });
+                        }
+                        else
+                        {
+                            isoUtil.exlog("create folder fail!");
+                            res.json({status:'fail'});
+                        }
+                    });
+                }
+            });
+        });
+        
     }
+
+
 }

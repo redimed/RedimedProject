@@ -169,3 +169,7 @@ tannv.dts@gmail.com
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
 }
+
+.iso_modal_lg{
+    width:90%!important;
+};

@@ -452,7 +452,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         }
 
 
-
         /**
          * Show Message dialog using rlobDialog
          * @param styleClass : ten class
@@ -504,9 +503,11 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * Chuyen doi status cua Booking
          * @param status
          */
-        $scope.lob_change_status=function(assId,bookingId,status,scope)
+        $scope.bookingStatus=rlobConstant.bookingStatus;
+        $scope.lob_change_status=function(assId,bookingId,status,scope,calID,patientID)
         {
-
+            // alert(status);
+            // alert($scope.bookingStatus.canel);
             rlobService.getBookingById(bookingId)
                 .then(function(data){
                     if(data.status=='success')
@@ -537,28 +538,96 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 .then(function(data){
                     if(data.status=='success')
                     {
-                        rlobService.changeBookingStatus(bookingId,status)
-                            .then(function(data){
-                                if(data.status=='success')
-                                {
-                                    scope.$modelValue.STATUS=status;
-                                    $scope.selectedBooking.STATUS=status;
-                                    var refId=bookingId;
-                                    $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
-                                    //chien fadeOut booking status
-                                    //phanquocchien.c1109g@gmail.com
-                                    angular.element('#bookingstatus').fadeOut();
-                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
-                                }
-                                else
-                                {
-                                    //chien fadeOut booking status
-                                    //phanquocchien.c1109g@gmail.com
+                        console.log($scope.selectedBooking);
+                        if ($scope.selectedBooking.STATUS == $scope.bookingStatus.canel) {
+                            rlobService.selectAppointment($scope.selectedBooking.CAL_ID).then(function(data){
+                                console.log(data.data.PATIENTS);
+                                if (data.data.PATIENTS === null) {
+                                    var patientName = $scope.selectedBooking.WRK_OTHERNAMES+" "+$scope.selectedBooking.WRK_SURNAME;
+                                    rlobService.changeBooking(calID,patientID,patientName).then(function(data){
+                                        if (data.status == 'success') {
+                                            rlobService.changeBookingStatus(bookingId,status)
+                                            .then(function(data){
+                                                if(data.status=='success'){
+                                                    scope.$modelValue.STATUS=status;
+                                                    $scope.selectedBooking.STATUS=status;
+                                                    var refId=bookingId;
+                                                    $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
+                                                    //chien fadeOut booking status
+                                                    //phanquocchien.c1109g@gmail.com
+                                                    angular.element('#bookingstatus').fadeOut();
+                                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
+                                                }else{
+                                                    //chien fadeOut booking status
+                                                    //phanquocchien.c1109g@gmail.com
+                                                    angular.element('#bookingstatus').fadeOut();
+                                                    $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                                }
+                                            });
+                                        }else{
+                                            //chien fadeOut booking status
+                                            //phanquocchien.c1109g@gmail.com
+                                            angular.element('#bookingstatus').fadeOut();
+                                            $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                        };
+                                    });
+                                }else{
                                     angular.element('#bookingstatus').fadeOut();
                                     $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
-                                }
+                                };
                             });
-                    }
+                        }else{
+                            if (status == $scope.bookingStatus.canel) {
+                                rlobService.cancelBooking(calID,patientID).then(function(data){
+                                    if (data.status == 'success') {
+                                        rlobService.changeBookingStatus(bookingId,status).then(function(data){
+                                            if(data.status=='success')
+                                            {
+                                                scope.$modelValue.STATUS=status;
+                                                $scope.selectedBooking.STATUS=status;
+                                                var refId=bookingId;
+                                                $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
+                                                //chien fadeOut booking status
+                                                //phanquocchien.c1109g@gmail.com
+                                                angular.element('#bookingstatus').fadeOut();
+                                                $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
+                                            }else{
+                                                //chien fadeOut booking status
+                                                //phanquocchien.c1109g@gmail.com
+                                                angular.element('#bookingstatus').fadeOut();
+                                                $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                            };
+                                        });
+                                    }else{
+                                        //chien fadeOut booking status
+                                        //phanquocchien.c1109g@gmail.com
+                                        angular.element('#bookingstatus').fadeOut();
+                                        $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                    };
+                                });
+                            }else{
+                                 rlobService.changeBookingStatus(bookingId,status).then(function(data){
+                                    if(data.status=='success')
+                                    {
+                                        scope.$modelValue.STATUS=status;
+                                        $scope.selectedBooking.STATUS=status;
+                                        var refId=bookingId;
+                                        $scope.rlob_add_notification(assId,refId,$scope.sourceName,$scope.bellType.changeStatus,$scope.notificationType.bell,status);
+                                        //chien fadeOut booking status
+                                        //phanquocchien.c1109g@gmail.com
+                                        angular.element('#bookingstatus').fadeOut();
+                                        $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','success','Changing status to ['+status+'] success!');
+                                    }else{
+                                        //chien fadeOut booking status
+                                        //phanquocchien.c1109g@gmail.com
+                                        angular.element('#bookingstatus').fadeOut();
+                                        $scope.showMsgDialog(".lob-msg-dialog",'Change Booking Status','fail','Changing status to ['+status+'] fail!');
+                                    }
+                                });
+                            };
+                        };
+                    };
+                  
                 })
 
         };
@@ -668,67 +737,81 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId,rlTypeId,specialityId)
         {
-            $http({
-                method:"POST",
-                url:"/api/rlob/rl_bookings/admin/change-appointment-calendar",
-                data:{bookingId:$scope.currentUpdatingItem.bookingId,
-                    newCalId:newCalId,
-                    doctorId:doctorId,
-                    siteId:siteId,
-                    appointmentDate:moment(newAppointmentDateTime).format("YYYY/MM/DD HH:mm"),
-                    rlTypeId:rlTypeId,
-                    specialityId:specialityId
-                }
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                {
-                    $("#lob-change-appointment-calendar-dialog").modal('hide');
-                    $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','success','Change appointment calendar success!');
-                    if(newAppointmentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)
-                    {
-                        $scope.lobAdminSearch.fromDateKey=moment($scope.currentUpdatingItem.appointmentDateTime).format('DD/MM/YYYY');
-                        $scope.lobAdminSearch.toDateKey=moment(newAppointmentDateTime).format("DD/MM/YYYY");
-                    }
-                    else
-                    {
-                        $scope.lobAdminSearch.fromDateKey=moment(newAppointmentDateTime).format("DD/MM/YYYY");
-                        $scope.lobAdminSearch.toDateKey=moment($scope.currentUpdatingItem.appointmentDateTime).format('DD/MM/YYYY');
-                    }
+            var patientName = $scope.selectedBooking.WRK_OTHERNAMES+" "+$scope.selectedBooking.WRK_SURNAME;
+            console.log("cu : "+$scope.selectedBooking.CAL_ID);
+            console.log("moi : "+newCalId);
+            console.log("id : "+$scope.selectedBooking.PATIENT_ID);
+            console.log("name : "+patientName);
+            rlobService.cancelBooking($scope.selectedBooking.CAL_ID,$scope.selectedBooking.PATIENT_ID).then(function(data){
+                if (data.status == 'success') {
+                    rlobService.changeBooking(newCalId,$scope.selectedBooking.PATIENT_ID,patientName).then(function(data){
+                        if (data.status == 'success') {
+                            $http({
+                                method:"POST",
+                                url:"/api/rlob/rl_bookings/admin/change-appointment-calendar",
+                                data:{bookingId:$scope.currentUpdatingItem.bookingId,
+                                    newCalId:newCalId,
+                                    doctorId:doctorId,
+                                    siteId:siteId,
+                                    appointmentDate:moment(newAppointmentDateTime).format("YYYY/MM/DD HH:mm"),
+                                    rlTypeId:rlTypeId,
+                                    specialityId:specialityId
+                                }
+                            })
+                            .success(function(data) {
+                                if(data.status=='success')
+                                {
+                                    $("#lob-change-appointment-calendar-dialog").modal('hide');
+                                    $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','success','Change appointment calendar success!');
+                                    if(newAppointmentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)
+                                    {
+                                        $scope.lobAdminSearch.fromDateKey=moment($scope.currentUpdatingItem.appointmentDateTime).format('DD/MM/YYYY');
+                                        $scope.lobAdminSearch.toDateKey=moment(newAppointmentDateTime).format("DD/MM/YYYY");
+                                    }
+                                    else
+                                    {
+                                        $scope.lobAdminSearch.fromDateKey=moment(newAppointmentDateTime).format("DD/MM/YYYY");
+                                        $scope.lobAdminSearch.toDateKey=moment($scope.currentUpdatingItem.appointmentDateTime).format('DD/MM/YYYY');
+                                    }
 
-                    $http({
-                        method:"GET",
-                        url:"/api/rlob/appointment-calendar/check-same-doctor",
-                        params:{calId1:$scope.currentUpdatingItem.calId,calId2:newCalId}
-                    })
-                    .success(function(data) {
-                        if(data.status=='success')
-                        {
-                            if(data.data>1)
-                            {
-                                $scope.lobAdminSearch.doctorKey=null;
-                            }
-                            //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
-                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
-                        }
-                    })
-                    .error(function (data) {
-                        console.log("error");
-                    })
-                    .finally(function() {
-                        $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
-                        $scope.newAppointmentPositionFlag=true;
-                        $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
-                        $scope.filterBooking();
+                                    $http({
+                                        method:"GET",
+                                        url:"/api/rlob/appointment-calendar/check-same-doctor",
+                                        params:{calId1:$scope.currentUpdatingItem.calId,calId2:newCalId}
+                                    })
+                                    .success(function(data) {
+                                        if(data.status=='success')
+                                        {
+                                            if(data.data>1)
+                                            {
+                                                $scope.lobAdminSearch.doctorKey=null;
+                                            }
+                                            //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
+                                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
+                                        }
+                                    })
+                                    .error(function (data) {
+                                        console.log("error");
+                                    })
+                                    .finally(function() {
+                                        $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
+                                        $scope.newAppointmentPositionFlag=true;
+                                        $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
+                                        $scope.filterBooking();
+                                    });
+                                }
+                            })
+                            .error(function (data) {
+                                console.log("error");
+                            })
+                            .finally(function() {
+
+                            });
+                        };
                     });
-                }
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
+                };
             });
+            
         }
 
         $scope.goToNewAppoinmentPosition=function()

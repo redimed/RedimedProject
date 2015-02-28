@@ -363,7 +363,10 @@
                                     <div ng-if="bookingType=='REDiLEGAL'" class="row form-group" ng-class="{'has-error':bookingForm.DESC_INJURY.$invalid  && hadForcused}">
 
                                         <div class="col-md-12">
-                                            <textarea placeholder="Description of injury" class="form-control" rows="2"
+                                            <label class="control-label">Description of injury:
+                                                <span class="required" aria-required="true">*</span>
+                                            </label>
+                                            <textarea placeholder="" class="form-control" rows="2"
                                                       name="DESC_INJURY"
                                                       ng-maxlength="200"
                                                       ng-model="newBooking.DESC_INJURY" required/>

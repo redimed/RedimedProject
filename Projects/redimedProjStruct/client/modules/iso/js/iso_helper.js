@@ -61,7 +61,8 @@ var isoConst={
         restoreFolder:true,
         restoreDocument:true,
         forceCheckInDocument:true,
-        forceReleaseDocumentOneClick:true
+        forceReleaseDocumentOneClick:true,
+        createNewCheckInDocument:true
     },
 
     userFunction:{
@@ -71,7 +72,9 @@ var isoConst={
     	grantFolderPermission:'cloneFolderPermission',
     	createDocument:'createDocument',
     	checkOut:'checkOut',
+        forceCheckOut:'forceCheckOut',
     	checkIn:'checkIn',
+        createNewCheckInDocument:'createNewCheckInDocument',
     	submitDocument:'submitDocument',
         cancelSubmitDocument:'cancelSubmitDocument',
         requestEditDocument:'requestEditDocument',
@@ -102,8 +105,8 @@ var isoConst={
     		grantFolderPermission:true,
     		createDocument:true,
     		checkOut:true,
-    		checkIn:true,
-
+            forceCheckOut:true,
+            checkIn:true,
     		submitDocument:false,//deactive
             cancelSubmitDocument:false,//deactive
 
@@ -122,6 +125,7 @@ var isoConst={
     		cloneToPC:true,
     		createDocument:false,
     		checkOut:false,
+            forceCheckOut:false,
     		checkIn:false,
 
     		submitDocument:false,//deactive
@@ -137,6 +141,7 @@ var isoConst={
     	'2':{
     		cloneToPC:true,
     		checkOut:false,
+            forceCheckOut:false,
     		checkIn:false,
 
     		submitDocument:false,//deactive

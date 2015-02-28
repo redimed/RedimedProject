@@ -767,34 +767,34 @@
             <ul style="margin-left: -30px;">
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Confirmed'" class="btn btn-primary" >
                     <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
-                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking)">
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Confirmed</span>
                     </a>
                 </li>
 
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Arrived'" class="btn btn-success">
                     <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Arrived</span>
                     </a>
                 </li>
 
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Not Arrived'" class="btn btn-info">
                     <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking)">
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Not Arrived</span>
                     </a>
                 </li>
 
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Completed'" class="btn btn-warning">
                     <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Completed</span>
                     </a>
                 </li>
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Cancel'" class="btn btn-danger">
                     <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Cancel</span>
                     </a>
                 </li>
