@@ -200,6 +200,21 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
+    injuryListByPatient: function(req,res){
+      var patient_id = req.body.patient_id;
+        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
+                            "FROM `im_injury` i " +
+                            "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+                            "LEFT JOIN users u ON u.id = i.driver_id " +
+                            "WHERE i.`cal_id` IS NULL AND i.patient_id = ? "+
+                            "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id])
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
     searchByDate: function(req,res){
         var from = req.body.from;
         var to = req.body.to;
@@ -209,6 +224,23 @@ module.exports = {
         "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
         "LEFT JOIN users u ON u.id = i.driver_id " +
         "WHERE i.`cal_id` IS NULL AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[from,to])
+            .success(function(data){
+                res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
+    searchByDatePatient: function(req,res){
+        var from = req.body.from;
+        var to = req.body.to;
+        var patient_id = req.body.patient_id;
+
+        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
+        "FROM `im_injury` i " +
+        "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+        "LEFT JOIN users u ON u.id = i.driver_id " +
+        "WHERE i.`cal_id` IS NULL AND i.patient_id = ? AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id,from,to])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
