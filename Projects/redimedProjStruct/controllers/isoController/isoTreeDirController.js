@@ -1004,8 +1004,12 @@ module.exports =
             return;
         }
         var sql = 
-            "SELECT oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` FROM `iso_check_out_in` oi "+
-            "WHERE oi.`NODE_ID` = ? AND check_in_no IS NOT NULL AND oi.`ISENABLE` = 1 ";
+            " SELECT oi.ID,oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` , oi.CHECK_OUT_FROM, oi.CHECK_IN_COMMENT,          "+  
+            " oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` ,treedir.`NODE_NAME`, refer.CHECK_IN_NO AS CHECK_IN_BE_CHECKED_OUT   "+                 
+            " FROM `iso_check_out_in` oi                                                                                             "+  
+            " INNER JOIN `iso_tree_dir` treedir ON oi.`NODE_ID`=`treedir`.`NODE_ID`                                                  "+  
+            " LEFT JOIN `iso_check_out_in` refer ON refer.ID=oi.CHECK_OUT_FROM                                                       "+  
+            " WHERE oi.`NODE_ID` = 221 AND oi.check_in_no IS NOT NULL AND oi.`ISENABLE` = 1                                          ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)
@@ -1030,7 +1034,7 @@ module.exports =
      * Vo Duc Giap
      */
     handlingDownloadVersionDocument: function(req,res){
-          if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
         {
             res.json({status:'fail'});
             return;
@@ -1105,6 +1109,8 @@ module.exports =
             });
         });
     },
+
+    
     /**
      * Select thong tin chi tiet document
      * phan quoc chien

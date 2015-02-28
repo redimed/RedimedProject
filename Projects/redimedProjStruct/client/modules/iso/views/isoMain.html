@@ -222,12 +222,21 @@
 
                 <div ng-show='isIsoAdminSystem==1'>
                     <div class='iso-action-group iso_action_type_system'>
+                        <hr/>
                         <button 
                             ng-show="isoAdminFunction.forceCheckInDocument && isIsoAdminSystem==1 && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock && selectedTreeNode.CHECK_IN_NO==null"
                             type="button" 
                             class="btn btn-default iso_action_button "
                             ng-click="showTreeActionContentPopup(treeActions.forceCheckInDocument.name);">
                             Force Check In Document
+                        </button>
+
+                        <button 
+                            ng-show="isoAdminFunction.createNewCheckInDocument && isIsoAdminSystem==1"
+                            type="button" 
+                            class="btn btn-default iso_action_button "
+                            ng-click="showTreeActionContentPopup(treeActions.createNewCheckInDocument.name);">
+                            Create New Check In
                         </button>
 
                         <button 
@@ -272,7 +281,7 @@
 
 
 <div  id="iso-tree-action-content-popup" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog" ng-class="{iso_modal_lg:currentTreeAction.sizeLarge}">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

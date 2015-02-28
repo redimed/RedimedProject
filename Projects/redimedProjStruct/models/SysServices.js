@@ -9,6 +9,7 @@ module.exports = function(sequelize, DataTypes){
 		DESCRIPTION: DataTypes.STRING(250),
 		SERVICE_COLOR: DataTypes.STRING(10),
 		FEE_TYPE_ID: DataTypes.INTEGER(11),
+        IS_REFERRAL: DataTypes.INTEGER(1),
 		Isenable: DataTypes.INTEGER(11),
 		Created_by: DataTypes.INTEGER(11),
 		Creation_date: DataTypes.DATE,

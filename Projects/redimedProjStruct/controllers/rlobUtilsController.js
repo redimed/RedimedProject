@@ -26,6 +26,10 @@ module.exports =
         canel:'Cancel'
     },
 
-    redilegalServiceId:7
-    
+    redilegalServiceId:7,
+
+    calendarStatus:{
+        noAppointment:'No Appointment',
+        booked:'BOOKED'
+    }    
 }

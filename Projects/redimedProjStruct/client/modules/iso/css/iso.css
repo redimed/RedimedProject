@@ -115,7 +115,7 @@ tannv.dts@gmail.com
 }
 
 /*Xu ly an khi node bi delete*/
-.iso_node_deleted span:first-child{
+.iso_node_deleted span{
     display:inline;
     color:#B90000;
 }
@@ -169,3 +169,7 @@ tannv.dts@gmail.com
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
 }
+
+.iso_modal_lg{
+    width:90%!important;
+};

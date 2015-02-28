@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.appointment.controller", [])
 
-.controller("PatientAppointmentController", function($scope, $state, $stateParams, PatientService, ConfigService){
+.controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService){
 	//Detail appt modules
     var patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
@@ -38,9 +38,13 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
             'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},     
- 
+
     ];
     //End detail appt modules
+
+    ReceptionistService.apptDetail($scope.cal_id).then(function(response){
+        console.log(response)
+    });
 
     $scope.changeAppt = function(item) {
         $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: item.CAL_ID});
@@ -89,11 +93,31 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         PatientService.getAppointments(patient_id)
         .then(function(response){
             $scope.list_appt = response.data.appointments;
+
+            if($scope.list_appt.length == 0) {
+                toastr.error('Patient has no Appointments', 'Error')
+                return;
+            }
+
+            var current_appt = null;
             angular.forEach($scope.list_appt, function(item) {
+                if(item.CAL_ID == $scope.cal_id) {
+                    current_appt = item;
+                }
                 item.DATE = ConfigService.getCommonDateDefault(item.FROM_TIME);
                 item.FROM_TIME = ConfigService.convertToTimeStringApp(item.FROM_TIME);
                 item.TO_TIME = ConfigService.convertToTimeStringApp(item.TO_TIME);
-            })
+            });
+
+            // REDIRECT TO THE MOST RECENT APPOINTMENT
+            if(current_appt === null) {
+                $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: $scope.list_appt[0].CAL_ID})
+            }
+
+        }, function(error) {
+            console.log(error)
+            toastr.error(error.data.message, 'Error')
+            $state.go('loggedIn.receptionist.appointment');
         });
 
 		

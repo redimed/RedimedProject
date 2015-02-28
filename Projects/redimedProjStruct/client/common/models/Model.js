@@ -147,6 +147,7 @@ angular.module("app.model", [])
 	Insurer: '', //yes
 	Address: '', //yes
 	Claim_no: '', //yes
+	PO_number: null, //yes
 	Case_manager: '', //yes
 	Isenable: '1', //yes
 	Created_by: null,
@@ -616,6 +617,7 @@ angular.module("app.model", [])
 	DESCRIPTION: '',
 	SERVICE_COLOR: '',
 	FEE_TYPE_ID: '',
+	IS_REFERRAL: '0',
 	Isenable: '1',
 	Created_by: null,
 	Creation_date: null,

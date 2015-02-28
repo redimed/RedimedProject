@@ -254,6 +254,18 @@ angular.module('app.loggedIn.iso.service',[])
                 return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
             },
 
+            forceCheckOutDocument:function(nodeId,checkOutInId)
+            {
+                var result = api.all("iso/iso-check-out-in/force-check-out-document");
+                return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
+            },
+
+            
+            downloadSpecificCheckIn:function(nodeId,checkOutInId)
+            {
+                $window.location.href = '/api/iso/iso-check-out-in/download-specific-check-in?nodeId='+nodeId+'&checkOutInId='+checkOutInId;
+            }
+
         }
 
         isoService.isoAdmin={

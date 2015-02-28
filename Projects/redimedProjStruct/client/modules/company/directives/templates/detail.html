@@ -2,7 +2,7 @@
 
     <div class="row">
         <!-- COMPANY NAME -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.Company_name.$invalid && isSubmit}">
                 <label for="Company_name">Company name</label>
                 <input type="text" id="Company_name" required
@@ -19,7 +19,7 @@
         <!-- END COMPANY NAME -->
 
         <!-- INDUSTRY -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.Industry.$invalid && isSubmit}">
                 <label for="Industry">Industry</label>
                 <input type="text" id="Industry" required
@@ -37,7 +37,7 @@
 
 
         <!-- CODE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="CODE">CODE</label>
                 <input type="text" id="location"
@@ -46,10 +46,8 @@
         </div>
         <!-- CODE -->
 
-        <div class="break-row"></div>
-
         <!-- ADDRESS -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.Addr.$invalid && isSubmit}">
                 <label for="Addr">Address</label>
                 <input type="text" id="Addr" required
@@ -65,8 +63,10 @@
         </div>
         <!-- END ADDRESS -->
 
+         <div class="break-row"></div>
+
         <!-- STATE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="State">State</label>
                 <input type="text" id="postcode"
@@ -76,7 +76,7 @@
         <!-- END STATE -->
 
         <!-- COUNTRY -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="country">Country </label>
                 <select ng-options="country.Country_name as country.Country_name for country in options.countries" 
@@ -87,10 +87,10 @@
         </div>
         <!-- END COUNTRY -->
 
-        <div class="break-row"></div>
+
 
         <!-- POSTCODE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="postcode">Postcode</label>
                 <input type="text" id="postcode"
@@ -100,7 +100,7 @@
         <!-- END POSTCODE -->
 
         <!-- PHONE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Phone">Phone</label>
                 <input type="text" id="postcode"
@@ -109,8 +109,10 @@
         </div>
         <!-- END PHONE -->
 
+        <div class="break-row"></div>
+
         <!-- EMAIL -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.Email.$invalid && isSubmit}">
                 <label for="Email">Email</label>
                 <input type="email" id="Email"
@@ -125,10 +127,10 @@
             <!-- ERROR -->
         </div>
         <!-- END EMAIL -->
-        <div class="break-row"></div>
+     
 
         <!-- SITE MEDICARE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Site_medic">Site Medicare</label>
                 <input type="text" id="Site_medic"
@@ -138,7 +140,7 @@
         <!-- END SITE MEDICARE -->
 
         <!-- SITE MEDIC CONTACT NO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Medic_contact_no">Medicare Contact No</label>
                 <input  id="Medic_contact_no"
@@ -148,7 +150,7 @@
         <!-- END SITE MEDIC CONTACT NO -->
 
         <!-- SITE MEDIC CONTACT NO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="Description">Description</label>
                 <input  type="text" id="Description"
@@ -161,7 +163,7 @@
 
 
         <!-- IS PO -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <input type="checkbox" name="isPO" id="isPO" class="mdt-checkbox" 
                    ng-model="modelObjectMap.isPO" ng-true-value="1" ng-false-value="0">
             <label for="isPO">Is PO</label>
@@ -169,7 +171,7 @@
         <!-- END IS PO -->
 
         <!-- PO NUM -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="PO_number">Po number</label>
                 <input type="text" id="postcode"
@@ -179,7 +181,7 @@
         <!-- END  PO NUM -->
 
         <!-- IMA -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field">
                 <label for="IMA">IMA</label>
                 <input type="text" id="IMA"
@@ -188,20 +190,18 @@
         </div>
         <!-- END IMA -->
 
-        <div class="break-row"></div>
-
-
-
         <!-- IS ADD CONTACT TO RESULT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <input type="checkbox" name="isAddContactEmailToResult" id="isAddContactEmailToResult" class="mdt-checkbox" 
                    ng-model="modelObjectMap.isAddContactEmailToResult" ng-true-value="1" ng-false-value="0">
             <label for="isAddContactEmailToResult">Add Contact Email To Result</label>
         </div>
         <!-- END IS ADD CONTACT TO RESULT -->
 
+        <div class="break-row"></div>
+
         <!-- EMAIL REPORT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.result_email.$invalid && isSubmit}">
                 <label for="result_email">Result Email</label>
                 <input type="email" id="report_to_email"
@@ -219,7 +219,7 @@
 
 
         <!-- REPORT 2 EMAIL REPORT -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.report_to_email.$invalid && isSubmit}">
                 <label for="report_to_email">Report to Email</label>
                 <input type="email" id="report_to_email"
@@ -235,10 +235,9 @@
         </div>
         <!-- END REPORT 2 EMAIL REPORT -->
         
-        <div class="break-row"></div>
-
+       
         <!-- IS INVOICE EMAIL TO INVOICE -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <input type="checkbox" name="isInvoiceEmailToUser" id="isInvoiceEmailToUser" class="mdt-checkbox" 
                    ng-model="modelObjectMap.isInvoiceEmailToUser" ng-true-value="1" ng-false-value="0">
             <label for="isInvoiceEmailToUser">Invoice Email To User</label>
@@ -247,7 +246,7 @@
 
 
         <!-- INVOICE EMAIL -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.invoice_email.$invalid && isSubmit}">
                 <label for="invoice_email">Invoice Email</label>
                 <input type="email" id="invoice_email"
@@ -263,21 +262,30 @@
         </div>
         <!-- END INVOICE EMAIL -->
 
+         <div class="break-row"></div>
 
         <!-- INSURER -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span ng-if="insurerInfo">{{insurerInfo.insurer_name}}</span>
-            <a class="btn btn-link" ng-click="toogleInsurerPanel()">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <span ng-if="modelObjectMap.curInsurer">{{modelObjectMap.curInsurer.insurer_name}}</span>
+            <a class="btn btn-link" ng-click="insurer_module.togglePanel()">
                 <i class="fa fa-search"></i> Search Insurer
             </a>
         </div>
         <!-- END INSURER -->
         
-        
+         <!-- PARENT COMPANY -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <span ng-if="modelObjectMap.parent">{{modelObjectMap.parent.Company_name}}</span>
+            <a class="btn btn-link" ng-click="parent_module.togglePanel()">
+                <i class="fa fa-search"></i> Parent Company
+            </a>
+        </div>
+        <!-- END PARENT COMPANY -->
         
         <div class="break-row" style="margin-top: 15px"></div>
+
         <!-- ACTION -->
-        <div class="col-sm-4 col-xs-6">
+        <div class="col-sm-3 col-xs-6">
             <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
                 <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
                 <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
@@ -289,8 +297,12 @@
         <div class="break-row"></div>
     </div>
 </form>    
+
 <div>
-    <my-data-table ng-if="showInsurerPanel" options="insurer_options" rowclick="clickInsurerRow"><my-data-table>
+    <my-data-table ng-if="insurer_module.is_show" options="insurer_options" rowclick="insurer_module.click"><my-data-table>
 </div>
 
     
+<div>
+    <my-data-table ng-if="parent_module.is_show" options="parent_options" rowclick="parent_module.click"><my-data-table>
+</div>
