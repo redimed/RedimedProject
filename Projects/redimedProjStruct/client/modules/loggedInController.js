@@ -8,9 +8,8 @@ angular.module("app.loggedIn.controller",[
 
     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
-    console.log(from);
-
     UserService.getUserInfo(from).then(function(data){
+        console.log("Get Info: "+from);
         if(data)
         {
             if(typeof $cookieStore.get('userInfo') === 'undefined')
