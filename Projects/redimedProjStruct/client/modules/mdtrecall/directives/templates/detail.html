@@ -1,0 +1,53 @@
+<form name="mdtrecallForm" novalidate>
+<!--ACTION-->
+<div class="row" style="margin-bottom: 15px;">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
+			<i class="fa fa-save"></i> Save
+		</button>
+		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
+			<i class="fa fa-pencil"></i> Edit
+		</button>
+	</div>
+</div>
+<!--END ACTION -->
+
+<div class="row">
+
+	<!--notes-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="notes">Notes</label>
+			<input type="text" placeholder="Notes" name="notes" ng-model="mdtRecallMap.notes" class="form-control" id="notes" float-label>
+		</span>	</div>
+	<!--notes-->
+
+	<!--recall_period-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="remind_before">Remind before</label>
+
+			<select class="form-control" name="recall_period"
+                ng-model="mdtRecallMap.recall_period"
+                ng-options="item.code as item.title for item in options.recall_period"
+           		 float-label>
+                <option disabled value="">-- Recall Period --</option>
+            </select>
+		</span>	</div>
+	<!--recall_period-->
+
+	<!--remind_before-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="remind_before">Remind before</label>
+
+			<select class="form-control" name="remind_before"
+                ng-model="mdtRecallMap.remind_before"
+                ng-options="item.code as item.title for item in options.recall_remind"
+           		 float-label>
+                <option disabled value="">-- Remind Before --</option>
+            </select>
+		</span>	</div>
+	<!--remind_before-->
+</div>
+</form>

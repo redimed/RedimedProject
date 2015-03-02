@@ -1,6 +1,7 @@
 angular.module('app.loggedIn.invoice.detail.directive', [])
 
-.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, toastr, $state, $timeout){
+.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $state, $timeout, $filter){
+	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
 		scope: {
@@ -52,6 +53,63 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                search: {}
 	            },   
 			}
+
+			/*
+			*	SEARCH ITEM
+			*/
+			$scope.itemSearchPanel = {}
+
+			$scope.itemSearch = {
+				is_show: false,
+				open: function() {
+					this.is_show = true;
+				},
+				close: function() {
+					this.is_show = false;
+				},
+				click: function(item) {
+					console.log($scope.InvoiceMap.lines);
+					var t_item = arrGetBy($scope.InvoiceMap.lines, 'ITEM_ID', item.ITEM_ID);
+					if(t_item) {
+						return;
+					}
+					item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);
+					item.QUANTITY = 1;
+					item.TIME_SPENT = 0;
+
+
+					item.invItem = {ITEM_CODE : item.ITEM_CODE, ITEM_NAME: item.ITEM_NAME };
+
+					$scope.InvoiceMap.lines.push(item);
+
+					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){
+	                    if(response.list.length > 0) {
+	                        item.PRICE = response.list[0].SCHEDULE_FEE
+	                        item.has_price = true;
+	                    } else {
+	                        item.PRICE = 0;
+	                        item.has_price = false;
+	                    }
+	                });
+				}
+			}
+
+			$scope.itemSearchOption = {
+                api:'api/erm/v2/items/search',
+                method:'post',
+                scope: $scope.itemSearchPanel,
+                columns: [
+                    {field: 'ITEM_ID', is_hide: true},
+                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+                    {field: 'ITEM_NAME', label: 'Item Name'},    
+            	],
+                use_filters:true,
+                filters:{
+                    ITEM_CODE: {type: 'text'},
+                    ITEM_NAME: {type: 'text'},
+                }
+            }
+
 		},
 		link: function(scope, element, attrs){
 

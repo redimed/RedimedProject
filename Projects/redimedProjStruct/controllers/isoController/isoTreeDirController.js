@@ -1009,7 +1009,7 @@ module.exports =
             " FROM `iso_check_out_in` oi                                                                                             "+  
             " INNER JOIN `iso_tree_dir` treedir ON oi.`NODE_ID`=`treedir`.`NODE_ID`                                                  "+  
             " LEFT JOIN `iso_check_out_in` refer ON refer.ID=oi.CHECK_OUT_FROM                                                       "+  
-            " WHERE oi.`NODE_ID` = 221 AND oi.check_in_no IS NOT NULL AND oi.`ISENABLE` = 1                                          ";
+            " WHERE oi.`NODE_ID` = ? AND oi.check_in_no IS NOT NULL AND oi.`ISENABLE` = 1                                          ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)
