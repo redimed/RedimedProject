@@ -224,7 +224,7 @@
                     <div class='iso-action-group iso_action_type_system'>
                         <hr/>
                         <button 
-                            ng-show="isoAdminFunction.forceCheckInDocument && isIsoAdminSystem==1 && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock && selectedTreeNode.CHECK_IN_NO==null"
+                            ng-show="isoAdminFunction.forceCheckInDocument && isIsoAdminSystem==1 && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock && selectedTreeNode.CHECK_IN_NO==null && selectedTreeNode.NODE_TYPE==nodeType.document"
                             type="button" 
                             class="btn btn-default iso_action_button "
                             ng-click="showTreeActionContentPopup(treeActions.forceCheckInDocument.name);">
@@ -232,7 +232,7 @@
                         </button>
 
                         <button 
-                            ng-show="isoAdminFunction.createNewCheckInDocument && isIsoAdminSystem==1"
+                            ng-show="isoAdminFunction.createNewCheckInDocument && isIsoAdminSystem==1 && selectedTreeNode.NODE_TYPE==nodeType.document"
                             type="button" 
                             class="btn btn-default iso_action_button "
                             ng-click="showTreeActionContentPopup(treeActions.createNewCheckInDocument.name);">
@@ -240,7 +240,7 @@
                         </button>
 
                         <button 
-                            ng-show="isoAdminFunction.forceReleaseDocumentOneClick && isIsoAdminSystem==1 && (selectedTreeNode.SUBMIT_STATUS==null || selectedTreeNode.SUBMIT_STATUS==submitStatus.cancel) && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"
+                            ng-show="isoAdminFunction.forceReleaseDocumentOneClick && isIsoAdminSystem==1 && (selectedTreeNode.SUBMIT_STATUS==null || selectedTreeNode.SUBMIT_STATUS==submitStatus.cancel) && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock && selectedTreeNode.NODE_TYPE==nodeType.document"
                             type="button" 
                             class="btn btn-default iso_action_button "
                             ng-click="forceReleaseDocumentOneClick()">
