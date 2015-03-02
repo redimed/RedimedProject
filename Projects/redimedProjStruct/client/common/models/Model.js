@@ -36,6 +36,7 @@ angular.module("app.model", [])
     User_id: null, // int (11)
     isPO: null, // int (11) r 
     isExtra: null, // int (11) 
+    parent_id: null, /// int (11)
 })
 // END COMPANY
 // 
@@ -739,3 +740,16 @@ angular.module("app.model", [])
 	AssessmentName: '',
 })
 //END GENERAL ASSESSMENT
+
+// RECALL
+.value('mdtRecallModel', {
+	patient_id: null,
+	notes: '',
+	transaction_date: null,
+	recall_period: null,
+	recall_date: null,
+	remind_before: null,
+	created_by: null,
+	last_updated_by: null,
+})
+// END RECALL 

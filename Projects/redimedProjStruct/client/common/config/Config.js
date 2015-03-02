@@ -94,10 +94,32 @@ angular.module('app.config', [])
     {code: 11, title: 'November'},
     {code: 12, title: 'December'},
 ])
-.factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, Restangular) {
+.constant("RECALL_PERIOD", [
+    {code: 1, title: '1 month'},
+    {code: 2, title: '2 months'},
+    {code: 3, title: '3 months'},
+    {code: 6, title: '6 months'},
+    {code: 12, title: '12 months'},
+    {code: 24, title: '24 months'},
+])
+.constant("RECALL_REMIND", [
+    {code: 1, title: '1 month'},
+    {code: 2, title: '2 months'},
+    {code: 3, title: '3 months'},
+])
+
+.factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
+
+    configService.recall_period_option = function(){
+         return RECALL_PERIOD;
+    }
+
+    configService.recall_remind_option = function(){
+         return RECALL_REMIND;
+    }
 
     configService.invoice_status_option = function() {
         return INVOICE_STATUS;
@@ -425,7 +447,7 @@ angular.module('app.config', [])
         var prefix = configService.convertToDate(dateTime);
         var postfix = configService.convertToTimeStringApp (dateTime)
 
-        return postfix + ' ' + prefix;
+        return  prefix + ' ' + postfix;
     }
 
     configService.convertStringToDate = function(dateTime){

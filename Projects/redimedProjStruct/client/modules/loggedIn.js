@@ -22,7 +22,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.department",
     /*AUTO CREATE*/
     'app.loggedIn.invoice',
-
+    'app.loggedIn.mdtrecall',
     'app.loggedIn.mdtappointment',
 
     'app.loggedIn.mdtinsurer',

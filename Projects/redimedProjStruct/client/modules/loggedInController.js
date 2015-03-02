@@ -219,6 +219,9 @@ angular.module("app.loggedIn.controller",[
         month_in_year: ConfigService.month_in_year(),
         date_in_month: ConfigService.date_in_month(),
         invoice_status: ConfigService.invoice_status_option(),
+
+        recall_period: ConfigService.recall_period_option(),
+        recall_remind: ConfigService.recall_remind_option(),
     }
 
     var loadOptionsApi = function(){

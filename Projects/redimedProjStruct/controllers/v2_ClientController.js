@@ -26,6 +26,29 @@ module.exports = {
 		});
 	},
 
+	postRecallSearch: function(req, res){
+		var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+        var fields = req.body.fields;
+		var search_data = req.body.search;
+		var patient_id = search_data.patient_id;
+
+		db.mdtRecall.findAndCountAll({
+			where: {
+				patient_id: patient_id
+			},
+			offset: offset,
+			limit: limit,
+			attributes: fields,
+			order: [['transaction_date', 'DESC'] ]
+		}).success(function(result){
+			res.json({"status": "success", "list": result.rows, "count": result.count});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
+	},
+
 	postRecallAppointments: function(req, res) {
     	var patient_id = req.body.patient_id;
 
@@ -57,7 +80,6 @@ module.exports = {
 		}).error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
-
     },
 
 	postClaims: function(req, res) {

@@ -7,7 +7,7 @@ angular.module("app.loggedIn.patient.controller", [
 
     "app.loggedIn.patient.booking.controller",
     "app.loggedIn.patient.detail.controller",
-    
+    "app.loggedIn.patient.recall.controller",
     "app.loggedIn.patient.outside_referrals.controller",
     "app.loggedIn.patient.referrals.controller",
     "app.loggedIn.patient.appointment.controller",

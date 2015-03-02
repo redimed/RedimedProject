@@ -24,8 +24,8 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 
 
 			angular.forEach($scope.list_appts, function(value, key) {
-				value.FROM_TIME =  ConfigService.convertToDate(value.FROM_TIME);
-				value.TO_TIME =  ConfigService.convertToDate(value.TO_TIME);
+				value.FROM_TIME =  ConfigService.convertToDatetime(value.FROM_TIME);
+				value.TO_TIME =  ConfigService.convertToDatetime(value.TO_TIME);
 				
 				value.PATIENTS = JSON.parse(value.PATIENTS);
 			})

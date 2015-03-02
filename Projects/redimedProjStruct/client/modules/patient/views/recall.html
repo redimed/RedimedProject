@@ -1,0 +1,29 @@
+<h3 class="page-title"> Recall List </h3>
+
+<div class="portlet box red">
+   <div class="portlet-title">
+       <div class="caption">
+            <i class="fa fa-calendar"></i>  Recall List 
+        </div>
+        <div class="pull-right navbar-right">
+              <button  type="button" class="btn btn-default" ng-click="addForm.open()">
+                    <i class="fa fa-plus"></i> New Recall
+              </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+    	<my-data-table numrows="20" options="recall_opt"></my-data-table>
+    </div>
+</div>
+
+<!-- ADD FORM -->
+<div class="mdt-search" style="display: block; width: 50%;" ng-if="addForm.is_show">
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="addForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="break-row" style="margin-bottom: 15px;"></div>
+    <mdtrecall-detail  onsuccess="actionSuccess"  options="options" params="params_add"></mdtrecall-detail>
+</div>
+<!-- END ADD FORM -->

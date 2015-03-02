@@ -168,7 +168,7 @@
 				<td>{{item.ITEM_CODE}}</td>
 				<td>{{item.ITEM_NAME}}</td>
 				<td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /></td>
-				<td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY" /></td>
+				<td><input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /></td>
 				<td class="text-right" ng-if="item.has_price">${{item.PRICE}}</td>
 				<td class="text-right" ng-if="!item.has_price">
 					<input type="number" min="0" class="form-control" ng-model="item.PRICE" />
