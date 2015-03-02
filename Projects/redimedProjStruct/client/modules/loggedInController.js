@@ -8,6 +8,8 @@ angular.module("app.loggedIn.controller",[
 
     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
+    console.log(from);
+
     UserService.getUserInfo(from).then(function(data){
         if(data)
         {
