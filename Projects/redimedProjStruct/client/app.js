@@ -143,6 +143,8 @@ angular.module("app", [
 
     easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
 
+    
+
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))
         {

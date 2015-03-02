@@ -6,6 +6,18 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		var icons = ["fa fa-plus-square","fa fa-medkit","fa fa-heart","fa fa-stethoscope"];
 		$scope.haveData = false;
 
+		$scope.pulseData = {
+			pulse: null,
+			spO2 : null
+		}
+
+		socket.on('getMeasureData',function(data){
+			$scope.$apply(function(){
+				$scope.pulseData.pulse = data.pulse;
+				$scope.pulseData.spO2 = data.spO2;
+			})
+		})
+
 		InjuryManagementService.getMedicalDevices().then(function(rs){
 			if(rs.status == "success")
 			{

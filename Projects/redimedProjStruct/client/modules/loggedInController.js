@@ -50,6 +50,7 @@ angular.module("app.loggedIn.controller",[
         audio.loop = true;
         audio.play();
 
+
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
             {
@@ -94,6 +95,9 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
+    
+
+    
     socket.on("forceLogout",function(){
 
         toastr.error("Someone Is Logged Into Your Account!");

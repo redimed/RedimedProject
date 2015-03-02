@@ -242,6 +242,10 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
+        socket.on("onlineMeasureData",function(data){
+            io.sockets.emit('getMeasureData',data);
+        })
+
         socket.on('lostCookie',function(){
             db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
                 .success(function(){
