@@ -9,7 +9,9 @@ angular.module("app.loggedIn.controller",[
     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
     UserService.getUserInfo(from).then(function(data){
-        console.log("Get Info: "+from);
+        console.log("From: "+from);
+        console.log("To: "+to);
+
         if(data)
         {
             if(typeof $cookieStore.get('userInfo') === 'undefined')
@@ -116,6 +118,9 @@ angular.module("app.loggedIn.controller",[
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
+
+            console.log("From ID: "+fromId);
+
             var options = {
                 body: fromUser + " Is Calling You...",
                 icon: "theme/assets/icon.png",
