@@ -144,6 +144,9 @@ module.exports = function(io,cookie,cookieParser) {
         
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
+            console.log("From User: "+currUser);
+            console.log("To User: "+contactUser);
+
             db.User.find({where:{id: currUser}},{raw:true})
                 .success(function(currentUser){
                     if(currentUser)
@@ -160,8 +163,6 @@ module.exports = function(io,cookie,cookieParser) {
                                         io.to(contact.socketMobile)
                                             .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
                                 }
-                                console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
-                                console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
                             })
                             .error(function(err){
                                 console.log(err);
