@@ -35,7 +35,8 @@ angular.module("app", [
     'ngSanitize',
     'ngMap',
     'btford.socket-io',
-    'dateRangePicker'
+    'dateRangePicker',
+    'angular-flot'
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {

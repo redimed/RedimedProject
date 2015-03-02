@@ -42,5 +42,13 @@ angular.module("app.loggedIn.im.services",[])
             return api.one('im/getDevices').get();
         }
 
+        imService.getDeviceDataByPatient = function(id,patientId){
+            return api.all('medicalDevice/getData').post({id:id,patient_id:patientId});
+        }
+
+        imService.editDeviceMeasure = function(info,id){
+            return api.all('medicalDevice/edit').post({id:id,info:info});
+        }
+
         return imService;
     })

@@ -37,7 +37,9 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
-            'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},     
+            'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},
+        {'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',
+            'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},     
 
     ];
     //End detail appt modules
