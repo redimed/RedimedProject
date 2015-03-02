@@ -9,19 +9,16 @@ angular.module("app.loggedIn.controller",[
     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
     UserService.getUserInfo(from).then(function(data){
-        console.log("From: "+from);
-        console.log("To: "+to);
 
         if(data)
         {
-            if(typeof $cookieStore.get('userInfo') === 'undefined')
-            {
-                delete data.img;
-                $cookieStore.put('userInfo',data);
+            delete data.img;
+            $cookieStore.put('userInfo',data);
 
-                if(fromMobile){
-                    socket.emit("mobileConnect",data.id);
-                }
+            console.log("User Info: " + $cookieStore.get("userInfo"));
+
+            if(fromMobile){
+                socket.emit("mobileConnect",data.id);
             }
 
             if(isCaller){
