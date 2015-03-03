@@ -68,7 +68,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					this.is_show = false;
 				},
 				click: function(item) {
-					console.log($scope.InvoiceMap.lines);
 					var t_item = arrGetBy($scope.InvoiceMap.lines, 'ITEM_ID', item.ITEM_ID);
 					if(t_item) {
 						return;
@@ -76,7 +75,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);
 					item.QUANTITY = 1;
 					item.TIME_SPENT = 0;
-
+					item.IS_ENABLE = 1;
 
 					item.invItem = {ITEM_CODE : item.ITEM_CODE, ITEM_NAME: item.ITEM_NAME };
 

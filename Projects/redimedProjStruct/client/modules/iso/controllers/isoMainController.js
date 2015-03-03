@@ -917,6 +917,24 @@ angular.module('app.loggedIn.iso.main.controller',[])
         {
             $scope.selectedRequest=item;
         }
+
+        $scope.getNumberOfRequestUnread=function(nodeId)
+        {
+            isoService.requestEdit.getNumberOfRequestUnread(nodeId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    if(data.data>0)
+                        $scope.selectedTreeNode.NUM_OF_REQUEST=data.data;
+                    else
+                        $scope.selectedTreeNode.NUM_OF_REQUEST=null;
+                }
+                
+            },function(err){
+
+            });
+        }
+
         $scope.setRequestIsRead=function(item)
         {
             isoService.requestEdit.setRequestIsRead(item.ID)
@@ -924,6 +942,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 if(data.status=='success')
                 {
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,"Update success!");
+                    $scope.getNumberOfRequestUnread(item.NODE_ID);
                     item.IS_READ=1;
                 }
                 else
@@ -933,6 +952,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
             },function(err){
                 msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,"Update fail!");
             });
+
         }
         $scope.setRequestStar=function(item)
         {
@@ -943,6 +963,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 {
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,"Update success!");
                     item.STAR=star;
+                    $scope.getNumberOfRequestUnread(item.NODE_ID);
                 }
                 else
                 {

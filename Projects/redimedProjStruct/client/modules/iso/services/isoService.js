@@ -265,7 +265,6 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 $window.location.href = '/api/iso/iso-check-out-in/download-specific-check-in?nodeId='+nodeId+'&checkOutInId='+checkOutInId;
             }
-
         }
 
         isoService.isoAdmin={
@@ -442,6 +441,11 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result=api.all("iso/iso-request-edit-document/set-request-star");
                 return result.post({requestId:requestId,star:star});
+            },
+
+            getNumberOfRequestUnread:function(nodeId){
+                var result = api.one("iso/iso-request-edit-document/get-number-of-request-unread");
+                return result.get({nodeId:nodeId});
             }
         }
         return isoService;
