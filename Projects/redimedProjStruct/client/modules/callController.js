@@ -62,9 +62,7 @@ angular.module("app.call.controller",[
             audio.pause();
             disconnect();
 
-            if(typeof fromMobile !== 'undefined' && fromMobile)
-                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel',fromMobile:true});
-            else
+            
                 socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
 
             
@@ -154,15 +152,11 @@ angular.module("app.call.controller",[
 
                 if($scope.isCaller == true)
                 {
-                    if(typeof fromMobile !== 'undefined' && fromMobile)
-                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',fromMobile:true});
-                    else
+                    
                         socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call'});
                 }
                 if($scope.isCaller == false){
-                    if(typeof fromMobile !== 'undefined' && fromMobile)
-                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId,fromMobile:true})
-                    else
+                    
                         socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId})
                 }
 

@@ -85,9 +85,7 @@ angular.module("app.loggedIn.controller",[
                 notify.close();
             $modalInstance.close();
 
-            if(fromMobile == 'true')
-                socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore',fromMobile:true});
-            else
+            
                 socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
@@ -99,7 +97,7 @@ angular.module("app.loggedIn.controller",[
 
             if(!userInfo.img)
                 userInfo.img = "theme/assets/icon.png"
-            
+
             $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false},{reload:true});
 
         }
@@ -156,9 +154,6 @@ angular.module("app.loggedIn.controller",[
                             },
                             notify: function(){
                                 return notification;
-                            },
-                            fromMobile: function(){
-                                return typeof message.fromMobile !== 'undefined' && message.fromMobile ? 'true' : 'false';
                             }
                         },
                         backdrop: 'static',
