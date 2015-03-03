@@ -269,19 +269,34 @@ module.exports = {
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
-
 		var lines = req.body.lines;
 
-		console.log(lines)
+		console.log(' LINES ... ', lines)
 
 		var header = null;
-
 		var err_handle = function(err){
 			console.log('ERROR: ', err)
 			res.json({"status": "error"});
 		};
 
-		db.mdtInvoiceHeader.find({
+		// GET NEW ITEM 
+		// var iLines = [];
+		for(var i = 0, len = lines.length; i < len; ++i) {
+			var line = lines[i];
+			line.HEADER_ID = header_id;
+			line.AMOUNT = line.QUANTITY * line.PRICE;
+			// if(line.appt_item_id == null)
+			// 	iLines.push(line);
+		} 
+
+		// DELETE LINES 
+		db.mdtInvoiceLine.destroy({HEADER_ID: header_id})
+		.then(function(data){
+			// INSERT LINES
+			return db.mdtInvoiceLine.bulkCreate(lines);
+		}).then(function(data){
+			// FIND HEADER
+			return db.mdtInvoiceHeader.find({
 			where: {header_id: header_id},
 			include: [
 				{ 
@@ -292,7 +307,19 @@ module.exports = {
 						},
 					]
 				},
-			]
+				{
+					model: db.Company, as: 'Company',
+				},
+				{
+					model: db.Insurer, as: 'Insurer',
+				},
+				{	
+					model: db.mdtRedimedsites, as: 'Site',
+				}, 
+				{	
+					model: db.Patient, as: 'Patient',
+				},
+			]})
 		}).then(function(iheader){
 			header = iheader;
 			if(!header || !header.lines || header.lines.length == 0) {
@@ -300,6 +327,7 @@ module.exports = {
 				return;
 			}
 			var amount = header.getAmount();
+			// UPDATE AMOUNT & STATUS
 	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status}, {
 	            header_id: header_id
 	        });
@@ -328,7 +356,6 @@ module.exports = {
 				}
 			}, err_handle)
 			// END SEND TO ERP
-			
 		}).error(err_handle);
 	},
 
