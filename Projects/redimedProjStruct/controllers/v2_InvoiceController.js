@@ -269,6 +269,11 @@ module.exports = {
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
+
+		var lines = req.body.lines;
+
+		console.log(lines)
+
 		var header = null;
 
 		var err_handle = function(err){
@@ -286,18 +291,6 @@ module.exports = {
 							model: db.InvItem, as: 'InvItem',
 						},
 					]
-				},
-				{
-					model: db.Company, as: 'Company',
-				},
-				{
-					model: db.Insurer, as: 'Insurer',
-				},
-				{	
-					model: db.mdtRedimedsites, as: 'Site',
-				}, 
-				{	
-					model: db.Patient, as: 'Patient',
 				},
 			]
 		}).then(function(iheader){

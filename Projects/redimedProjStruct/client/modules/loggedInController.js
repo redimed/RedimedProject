@@ -9,16 +9,16 @@ angular.module("app.loggedIn.controller",[
     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
     UserService.getUserInfo(from).then(function(data){
+
         if(data)
         {
-            if(typeof $cookieStore.get('userInfo') === 'undefined')
-            {
-                delete data.img;
-                $cookieStore.put('userInfo',data);
+            delete data.img;
+            $cookieStore.put('userInfo',data);
 
-                if(fromMobile){
-                    socket.emit("mobileConnect",data.id);
-                }
+            console.log("User Info: " + $cookieStore.get("userInfo"));
+
+            if(fromMobile){
+                socket.emit("mobileConnect",data.id);
             }
 
             if(isCaller){
@@ -49,6 +49,7 @@ angular.module("app.loggedIn.controller",[
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
         audio.play();
+
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
@@ -94,6 +95,9 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
+    
+
+    
     socket.on("forceLogout",function(){
 
         toastr.error("Someone Is Logged Into Your Account!");
@@ -111,6 +115,9 @@ angular.module("app.loggedIn.controller",[
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
+
+            console.log("From ID: "+fromId);
+
             var options = {
                 body: fromUser + " Is Calling You...",
                 icon: "theme/assets/icon.png",
@@ -219,6 +226,9 @@ angular.module("app.loggedIn.controller",[
         month_in_year: ConfigService.month_in_year(),
         date_in_month: ConfigService.date_in_month(),
         invoice_status: ConfigService.invoice_status_option(),
+
+        recall_period: ConfigService.recall_period_option(),
+        recall_remind: ConfigService.recall_remind_option(),
     }
 
     var loadOptionsApi = function(){

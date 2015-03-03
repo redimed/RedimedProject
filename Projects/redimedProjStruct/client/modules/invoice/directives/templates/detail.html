@@ -129,34 +129,63 @@
 </div>
 
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-       <b> Invoice Items </b>
-    </div>
-   
-	<table class="table table-bordered">
-		<tr>
-			<th> Item No</th>
-			<th> Item Name</th>
-			<th> Time Spent </th>
-			<th> Quantity </th>
-			<th> Price </th>
-			<th> Amount </th>
-		</tr>
-		<tr ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
-			<td>{{item.invItem.ITEM_CODE}}</td>
-			<td>{{item.invItem.ITEM_NAME}}</td>
-			<td>{{item.TIME_SPENT}}</td>
-			<td>{{item.QUANTITY}}</td>
-			<td class="text-right">${{item.PRICE}}</td>
-			<td class="text-right">${{item.AMOUNT}}</td>
-		</tr>
-		<tr>
-			<td colspan="5"><strong> Total </strong></td>
-			<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
-		</tr>
-	</table>
+<div class="portlet box red">
+	<div class="portlet-title">
+	    <div class="caption">
+	        <i class="fa fa-medkit"></i> Invoice Items
+	    </div>
+	    <div class="pull-right navbar-right" ng-hide="statusDisable">
+            <button ng-click="itemSearch.open()" class="btn btn-default"><i class="fa fa-search"></i> Choose Item </button>
+        </div>
+	</div>
+	<div class="portlet-body">
+		<table class="table table-bordered">
+			<tr>
+				<th> Item No</th>
+				<th> Item Name</th>
+				<th> Time Spent </th>
+				<th> Quantity </th>
+				<th> Price </th>
+				<th> Amount </th>
+			</tr>
+			<tr ng-if="statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
+				<td>{{item.invItem.ITEM_CODE}}</td>
+				<td>{{item.invItem.ITEM_NAME}}</td>
+				<td>{{item.TIME_SPENT}}</td>
+				<td>{{item.QUANTITY}}</td>
+				<td class="text-right">${{item.PRICE}}</td>
+				<td class="text-right">${{item.AMOUNT}}</td>
+			</tr>
 
+			<tr ng-if="!statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
+				<td>{{item.invItem.ITEM_CODE}}</td>
+				<td>{{item.invItem.ITEM_NAME}}</td>
+
+				<td>
+					<span ng-if="item.appt_item_id">{{item.TIME_SPENT}}</span>
+					<input  ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" />
+				</td>
+
+				<td>
+					<span ng-if="item.appt_item_id">{{item.QUANTITY}}</span>
+					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.QUANTITY" />
+				</td>
+
+				<td class="text-right">
+					<span ng-if="item.appt_item_id">${{item.PRICE}}</span>
+					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.PRICE" />
+				</td>
+				<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
+			</tr>
+
+
+
+			<tr>
+				<td colspan="5"><strong> Total </strong></td>
+				<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
+			</tr>
+		</table>
+	</div>
 </div>
 
 
@@ -170,3 +199,14 @@
     <my-data-table options="patientClaim.options" rowclick="patientClaim.click"></my-data-table>
 </div>
  <!-- END POPUP PATIENT CLAIM  -->
+
+ <!-- POPUP SEARCH-ITEM  -->
+<div class="mdt-search" style="display: block;" ng-if="itemSearch.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="itemSearch.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="itemSearch.click"></my-data-table>
+</div>
+ <!-- POPUP SEARCH-ITEM  -->

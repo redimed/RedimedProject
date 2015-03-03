@@ -35,7 +35,8 @@ angular.module("app", [
     'ngSanitize',
     'ngMap',
     'btford.socket-io',
-    'dateRangePicker'
+    'dateRangePicker',
+    'angular-flot'
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
@@ -141,6 +142,8 @@ angular.module("app", [
 .run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
     easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
+
+    
 
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))

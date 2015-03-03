@@ -1,1 +1,180 @@
+<style>
+	a {
+		text-decoration: inherit;
+	}
+
+	.demo-placeholder {
+		width: 100%;
+		height: 100%;
+		font-size: 14px;
+		line-height: 1.2em;
+	}
+</style>
 <h3 class="page-title">Medical Devices</h3>
+<div class="tabbable-custom nav-justified">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active">
+            <a href="bluetooth.html#tab_1_1_1" data-toggle="tab">
+                <i class="fa fa-history"></i> &nbsp;&nbsp;&nbsp;
+                Medical History</a>
+        </li>
+        <li>
+            <a href="bluetooth.html#tab_1_1_2" data-toggle="tab">
+                <i class="fa fa-database"></i>&nbsp;&nbsp;&nbsp;
+                Online Data</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1_1">
+			<div class="row">
+				<div ng-click="showHistory(device)" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
+					<a href="javascript:;"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
+						<div class="visual">
+							<i class="{{device.icon}}"></i>
+						</div>
+						<div class="details">
+							<div class="number" style="font-size: 26px;">
+								{{device.device_name}}
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<!-- <div id="site_activities_loading">
+				<img src="theme/assets/admin/layout2/img/loading.gif" alt="loading"/>
+			</div> -->
+			
+
+			<div ng-if="haveData" class="portlet blue-chambray box">
+			    <div class="portlet-title">
+			        <div class="caption ">
+			            <i class="icon-list"></i>
+			            <span class="caption-subject uppercase">Device: {{currDevice}}</span>
+			        </div>
+			    </div>
+			    <div class="portlet-body">
+
+				    <!-- div >
+						<div id="pulseChart" style="height: 228px;">
+						</div>
+					</div> -->
+					<flot dataset="myData" options="myChartOptions" height="300px"></flot>
+
+		            <div class="table-scrollable" id="content">
+			            <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
+			                <tr ng-repeat="f in $data track by $index ">
+			                	<td style="text-align:center" width="30%;" data-title="'Patient Name'">
+			                        <label>{{f.FullName}}</label>
+			                    </td>
+			                    <td style="text-align:center" width="10%;" data-title="'Measure Date'" sortable="'measure_date'" >
+			                        <label>{{f.measure_date | date:'dd/MM/yyyy'}}</label>
+			                    </td>
+			                    <td style="text-align:center" width="30%" data-title="'Measure Data'" >
+			                        <label ng-repeat="(key,val) in f.jsonData">
+			                        	{{key | uppercase}}:{{val}} 
+			                        	<br/>
+		                        	</label>
+			                    </td>
+			                    <td style="text-align:center" width="30%" data-title="'Notes'" >
+			                        <label></label>
+			                        <a onaftersave="updateMeasure(f)" href="#" editable-text="f.notes">
+			                        	{{ f.notes || 'Empty' }}
+			                        </a>
+			                    </td>
+			                </tr>
+
+			            </table>
+			        </div>
+		        </div>
+	        </div>
+	        
+        </div>
+        <div class="tab-pane" id="tab_1_1_2">
+            <div class="row">
+                <div class="row">
+                    <div style="text-align: center;" class="col-md-6">
+                        <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">Pulse</span>
+                    </div>
+                    <div style="text-align: center;" class="col-md-6">
+                        <span style="font-size: 30px; font-weight: lighter; color: #4CD964">SpO2</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="text-align: center;"  class="col-md-6">
+                        <span style="font-size: 60px; font-weight: bold;color: #1AD6FD">{{pulseData.pulse}}</span>
+                    </div>
+                    <div style="text-align: center;"  class="col-md-6">
+                        <span style="font-size: 60px; font-weight: bold;color: #4CD964">{{pulseData.spO2}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+   //  	$(function() {
+
+			// var Pulse = [],
+			// 	SpO2 = [];
+
+			// for (var i = 0; i < 14; i += 0.5) {
+			// 	sin.push([i, Math.sin(i)]);
+			// 	cos.push([i, Math.cos(i)]);
+			// }
+
+			// var plot = $.plot("#placeholder", [
+			// 	{ data: sin, label: "Pulse"},
+			// 	{ data: cos, label: "Sp02"}
+			// ], {
+			// 	series: {
+			// 		lines: {
+			// 			show: true
+			// 		},
+			// 		points: {
+			// 			show: true
+			// 		}
+			// 	},
+			// 	grid: {
+			// 		hoverable: true,
+			// 		clickable: true
+			// 	},
+			// 	yaxis: {
+			// 		min: -1.2,
+			// 		max: 1.2
+			// 	}
+			// });
+
+			// $("<div id='tooltip'></div>").css({
+			// 	position: "absolute",
+			// 	display: "none",
+			// 	border: "1px solid #fdd",
+			// 	padding: "2px",
+			// 	"background-color": "#fee",
+			// 	opacity: 0.80
+			// }).appendTo("body");
+
+			// $("#placeholder").bind("plothover", function (event, pos, item) {
+				
+			// 		if (item) {
+			// 			var x = item.datapoint[0].toFixed(2),
+			// 				y = item.datapoint[1].toFixed(2);
+
+			// 			$("#tooltip").html(item.series.label + " of " + x + " = " + y)
+			// 				.css({top: item.pageY+5, left: item.pageX+5})
+			// 				.fadeIn(200);
+			// 		} else {
+			// 			$("#tooltip").hide();
+			// 		}
+				
+			// });
+
+			// $("#placeholder").bind("plotclick", function (event, pos, item) {
+			// 	if (item) {
+			// 		plot.highlight(item.series, item.datapoint);
+			// 	}
+			// });
+
+		// });
+    </script>
