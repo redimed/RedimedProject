@@ -37,6 +37,7 @@ module.exports = function(io,cookie,cookieParser) {
                 socketMobile: socket.id
             },{id:id})
                 .success(function(){
+                    socket.emit("mobileConnectSuccess");
                     getOnlineUser();
                 })
                 .error(function(err){
@@ -155,13 +156,22 @@ module.exports = function(io,cookie,cookieParser) {
                             .success(function(contact){
                                 if(contact)
                                 {
-                                    if(contact.socket)
-                                        io.to(contact.socket)
-                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                    if(message.fromMobile !== 'undefined' && message.fromMobile)
+                                    {
+                                        console.log("====================From Mobile==============");
 
-                                    if(contact.socketMobile)
-                                        io.to(contact.socketMobile)
-                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                        if(contact.socketMobile)
+                                            io.to(contact.socketMobile)
+                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                    }
+                                    else
+                                    {
+                                        console.log("====================From Web==============");
+
+                                        if(contact.socket)
+                                            io.to(contact.socket)
+                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                    }
                                 }
                             })
                             .error(function(err){

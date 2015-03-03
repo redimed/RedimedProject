@@ -18,33 +18,41 @@ angular.module("app.loggedIn.controller",[
             console.log("User Info: " + $cookieStore.get("userInfo"));
 
             if(fromMobile){
+
                 socket.emit("mobileConnect",data.id);
-            }
 
-            if(isCaller){
-                UserService.getUserInfo(to).then(function(rs){
-                    if(!rs.img)
-                         rs.img = "theme/assets/icon.png"
+                socket.on("mobileConnectSuccess",function(){
+                    console.log("Mobile Socket Success");
 
-                     $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+                    if(isCaller)
+                    {
+                        UserService.getUserInfo(to).then(function(rs){
+                            if(!rs.img)
+                                 rs.img = "theme/assets/icon.png"
+
+                             $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+                        })
+                    }
+                    else
+                    {
+                        UserService.getUserInfo(from).then(function(rs){
+                            if(!rs.img)
+                                 rs.img = "theme/assets/icon.png"
+
+                            $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
+                        })
+                    }
                 })
             }
-            else
-            {
-                UserService.getUserInfo(from).then(function(rs){
-                    if(!rs.img)
-                         rs.img = "theme/assets/icon.png"
 
-                    $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
-                })
-            }
+            
         }
                
     })
 
 })
 
-.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify){
+.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify,fromMobile){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
@@ -76,7 +84,11 @@ angular.module("app.loggedIn.controller",[
             if(notify != null)
                 notify.close();
             $modalInstance.close();
-            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
+
+            if(fromMobile == 'true')
+                socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore',fromMobile:true});
+            else
+                socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
         $scope.acceptCall = function(){
@@ -87,6 +99,7 @@ angular.module("app.loggedIn.controller",[
 
             if(!userInfo.img)
                 userInfo.img = "theme/assets/icon.png"
+            
             $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false},{reload:true});
 
         }
@@ -143,6 +156,9 @@ angular.module("app.loggedIn.controller",[
                             },
                             notify: function(){
                                 return notification;
+                            },
+                            fromMobile: function(){
+                                return typeof message.fromMobile !== 'undefined' && message.fromMobile ? 'true' : 'false';
                             }
                         },
                         backdrop: 'static',

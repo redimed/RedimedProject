@@ -29,35 +29,7 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 			}
 		})
 
-		var sin = [], cos = [];
-
-		for (var i = 0; i < 14; i += 0.5) {
-			sin.push([i, Math.sin(i)]);
-			cos.push([i, Math.cos(i)]);
-		}
-
-		$scope.myData = [
-				{ data: sin, label: "Pulse"},
-				{ data: cos, label: "Sp02"}
-			];
-		$scope.myChartOptions = {
-			series: {
-				lines: {
-					show: true
-				},
-				points: {
-					show: true
-				}
-			},
-			grid: {
-				hoverable: true,
-				clickable: true
-			},
-			yaxis: {
-				min: -1.2,
-				max: 1.2
-			}
-		};
+		
 
 		$scope.updateMeasure = function(measure){
 			var m = {};
@@ -70,6 +42,96 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 					toastr.error("Edit Failed!");
 			})
 		}
+
+		var sin = [], cos = [];
+
+		var data1 = [
+                    ['DEC', 300],
+                    ['JAN', 600],
+                    ['FEB', 1100],
+                    ['MAR', 1200],
+                    ['APR', 860],
+                    ['MAY', 1200],
+                    ['JUN', 1450],
+                    ['JUL', 1800],
+                    ['AUG', 1200],
+                    ['SEP', 600]
+                ];
+
+        var data2 = [
+                    ['DEC', 500],
+                    ['JAN', 700],
+                    ['FEB', 100],
+                    ['MAR', 1000],
+                    ['APR', 300],
+                    ['MAY', 500],
+                    ['JUN', 1000],
+                    ['JUL', 1200],
+                    ['AUG', 1800],
+                    ['SEP', 1000]
+                ];
+
+
+		$scope.chartData = [
+				{ 	
+					data: data1, 
+					label: "Pulse",
+					lines: {
+            			fill: 0.6,
+            			lineWidth: 0
+        				},
+        			color: ['red']
+        		},
+				{ 	
+					data: data2, 
+					label: "SpO2",
+					lines: {
+            			fill: 0.6,
+            			lineWidth: 0
+        				},
+        			color: ['blue']
+        		},
+			];
+		$scope.chartOptions = {
+			series: {
+				lines: {
+					show: true
+				},
+				points: {
+					show: true
+				}
+			},
+			xaxis: {
+                tickLength: 0,
+                tickDecimals: 0,
+                mode: "categories",
+                min: 0,
+                font: {
+                    lineHeight: 14,
+                    style: "normal",
+                    variant: "small-caps",
+                    color: "#6F7B8A"
+                }
+            },
+            yaxis: {
+                ticks: 5,
+                tickDecimals: 0,
+                tickColor: "#eee",
+                font: {
+                    lineHeight: 14,
+                    style: "normal",
+                    variant: "small-caps",
+                    color: "#6F7B8A"
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: true,
+                tickColor: "#eee",
+                borderColor: "#eee",
+                borderWidth: 1
+            }
+		};
 
 		$scope.showHistory = function(device){
 			$scope.data = null;
@@ -89,6 +151,9 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 						}
 
 						$scope.data = rs.data;
+
+
+						
 
 						if($scope.data != null)
 						{

@@ -61,7 +61,13 @@ angular.module("app.call.controller",[
         $scope.cancelCall = function(){
             audio.pause();
             disconnect();
-            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+
+            if(typeof fromMobile !== 'undefined' && fromMobile)
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel',fromMobile:true});
+            else
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+
+            
             if(typeof from !== 'undefined')
                 $state.go(from.fromState.name,params,{location: "replace", reload: true});
 
@@ -147,9 +153,17 @@ angular.module("app.call.controller",[
             var connectSuccess = function(rtcId) {
 
                 if($scope.isCaller == true)
-                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call'});
+                {
+                    if(typeof fromMobile !== 'undefined' && fromMobile)
+                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',fromMobile:true});
+                    else
+                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call'});
+                }
                 if($scope.isCaller == false){
-                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId})
+                    if(typeof fromMobile !== 'undefined' && fromMobile)
+                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId,fromMobile:true})
+                    else
+                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId})
                 }
 
             }
