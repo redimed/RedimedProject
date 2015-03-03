@@ -20,9 +20,17 @@
                 <i ng-if="node.NODE_TYPE==nodeType.folder" class="fa fa-folder-open"></i>
                 <span style="border: none;padding: 0px;" ng-click="showDocumentInfo(node.NODE_TYPE,node.NODE_ID);"><i ng-if="node.NODE_TYPE==nodeType.document" class="fa fa-leaf"></i>
                 {{node.NODE_NAME}}
+                    <!-- <span class="badge" style="background-color: rgb(252, 244, 244);color: red; border-color: rgb(247, 124, 124);order-radius: 5px;">
+                        
+                    </span> -->
+                    <span ng-show="node.PERMISSION==isoPermission.administrator && node.NUM_OF_REQUEST"  class="iso_badge">
+                        <i class="fa fa-envelope-o"></i>{{node.PERMISSION==isoPermission.administrator?node.NUM_OF_REQUEST:''}}
+                    </span>
+                    
                 </span> 
                 <!-- ____{{node.relativePath}} -->
         </span>
+
         <div ng-show='node.PERMISSION<isoPermission.notPermission' style="color:#800000;display:inline;font-size:11px">
            {{node.ACCESSIBLE_USER_ID?'(':''}}
            {{node.PERMISSION==0?'A':''}}

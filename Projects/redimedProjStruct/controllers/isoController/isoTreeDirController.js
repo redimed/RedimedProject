@@ -60,7 +60,7 @@ module.exports =
             "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                  "+
             "   treeUser.`PERMISSION`,                                                                                          "+
             "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO,                            "+
-            "   dep.`departmentName` as DEPARTMENT_NAME                                                                         "+
+            "   dep.`departmentName` AS DEPARTMENT_NAME ,request.NUM_OF_REQUEST                                                 "+                       
             " FROM iso_tree_dir tree                                                                                            "+
             " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)    "+
             " LEFT JOIN (                                                                                                       "+
@@ -72,7 +72,14 @@ module.exports =
             "           ) temp ON tempoi.`ID`=temp.ID                                                                           "+
             "       WHERE `tempoi`.`ISENABLE`=1                                                                                 "+
             "   ) outin ON tree.`NODE_ID`=outin.NODE_ID                                                                         "+
-            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`                                            "+           
+            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`                                            "+
+            " LEFT JOIN                                                                                                         "+
+            " (                                                                                                                 "+
+            "   SELECT request.`NODE_ID`,COUNT(request.`ID`) AS NUM_OF_REQUEST                                                  "+
+            "   FROM `iso_request_edit_document` request                                                                        "+
+            "   WHERE request.`IS_READ`=0 AND request.`ISENABLE`=1                                                              "+
+            "   GROUP BY request.`NODE_ID`                                                                                      "+
+            " )  request ON tree.`NODE_ID`=request.NODE_ID                                                                      "+
             " WHERE     tree.`ISENABLE` LIKE ?                                                                                  "+
             " GROUP BY tree.`NODE_ID`                                                                                           "+
             " ORDER BY FATHER_NODE_ID DESC ;                                                                                    ";
