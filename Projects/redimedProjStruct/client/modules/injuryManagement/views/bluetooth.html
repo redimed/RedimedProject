@@ -9,6 +9,7 @@
 		font-size: 14px;
 		line-height: 1.2em;
 	}
+
 </style>
 <h3 class="page-title">Medical Devices</h3>
 <div class="tabbable-custom nav-justified">
@@ -55,12 +56,13 @@
 			    </div>
 			    <div class="portlet-body">
 
-				    <!-- div >
-						<div id="pulseChart" style="height: 228px;">
-						</div>
-					</div> -->
-					<flot dataset="chartData" options="chartOptions" height="300px"></flot>
-
+				    <div class="row" style="text-align: center;">
+						<label style="font-size: 30px;font-weight: bold;">
+							{{chartTitle}}
+						</label>
+					</div>
+					<flot id="flotChart" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
+					<br/>
 		            <div class="table-scrollable" id="content">
 			            <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
 			                <tr ng-repeat="f in $data track by $index ">
@@ -112,69 +114,3 @@
             </div>
         </div>
     </div>
-
-    <script>
-   //  	$(function() {
-
-			// var Pulse = [],
-			// 	SpO2 = [];
-
-			// for (var i = 0; i < 14; i += 0.5) {
-			// 	sin.push([i, Math.sin(i)]);
-			// 	cos.push([i, Math.cos(i)]);
-			// }
-
-			// var plot = $.plot("#placeholder", [
-			// 	{ data: sin, label: "Pulse"},
-			// 	{ data: cos, label: "Sp02"}
-			// ], {
-			// 	series: {
-			// 		lines: {
-			// 			show: true
-			// 		},
-			// 		points: {
-			// 			show: true
-			// 		}
-			// 	},
-			// 	grid: {
-			// 		hoverable: true,
-			// 		clickable: true
-			// 	},
-			// 	yaxis: {
-			// 		min: -1.2,
-			// 		max: 1.2
-			// 	}
-			// });
-
-			// $("<div id='tooltip'></div>").css({
-			// 	position: "absolute",
-			// 	display: "none",
-			// 	border: "1px solid #fdd",
-			// 	padding: "2px",
-			// 	"background-color": "#fee",
-			// 	opacity: 0.80
-			// }).appendTo("body");
-
-			// $("#placeholder").bind("plothover", function (event, pos, item) {
-				
-			// 		if (item) {
-			// 			var x = item.datapoint[0].toFixed(2),
-			// 				y = item.datapoint[1].toFixed(2);
-
-			// 			$("#tooltip").html(item.series.label + " of " + x + " = " + y)
-			// 				.css({top: item.pageY+5, left: item.pageX+5})
-			// 				.fadeIn(200);
-			// 		} else {
-			// 			$("#tooltip").hide();
-			// 		}
-				
-			// });
-
-			// $("#placeholder").bind("plotclick", function (event, pos, item) {
-			// 	if (item) {
-			// 		plot.highlight(item.series, item.datapoint);
-			// 	}
-			// });
-
-		// });
-    </script>

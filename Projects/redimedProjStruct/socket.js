@@ -244,8 +244,8 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
-        socket.on("onlineMeasureData",function(data){
-            io.sockets.emit('getMeasureData',data);
+        socket.on("onlineMeasureData",function(info){
+            io.sockets.emit('getMeasureData',info);
         })
 
         socket.on('lostCookie',function(){
