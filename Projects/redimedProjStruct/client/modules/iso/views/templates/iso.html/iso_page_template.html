@@ -7,6 +7,22 @@
         <p class="help-block" ng-if="actionContentForm.nameFolder.$error.required">Required!</p>
         <p class="help-block" ng-if="actionContentForm.nameFolder.$error.maxlength">Folder name cannot be longer than 50 characters</p>
     </div>
+
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID==null" class="form-group" show-errors='{showSuccess: true}'>
+        <label >Department:</label>
+        <select class="form-control" ng-model="newFolder.department" ng-options="department.DEPARTMENT_NAME for department in departmentList" required name="folderDepartment">
+            <!-- <option  value="">All</option> -->
+        </select>
+        <p class="help-block" ng-if="actionContentForm.folderDepartment.$error.required">Required!</p>
+    </div>
+
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID" class="form-group">
+        <label >Department:</label>
+        <input type="text" class="form-control" ng-disabled="'true'" ng-model="selectedTreeNode.DEPARTMENT_NAME">
+    </div>
+
+    
+
     <div class="form-group" show-errors='{showSuccess: true}'>
         <label >Description:</label>
         <input type="text" ng-model="newFolder.description" class="form-control" placeholder="Description" ng-maxlength="500" name="description">
@@ -43,12 +59,17 @@
         <p class="help-block" ng-if="actionContentForm.documentType.$error.required">Required!</p>
     </div>
 
-    <div class="form-group" show-errors='{showSuccess: true}'>
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID==null" class="form-group" show-errors='{showSuccess: true}'>
         <label >Department:</label>
         <select class="form-control" ng-model="newDocument.department" ng-options="department.DEPARTMENT_NAME for department in departmentList" required name="department">
             <!-- <option  value="">All</option> -->
         </select>
         <p class="help-block" ng-if="actionContentForm.department.$error.required">Required!</p>
+    </div>
+
+    <div ng-if="selectedTreeNode.DEPARTMENT_ID" class="form-group">
+        <label >Department:</label>
+        <input type="text" class="form-control" ng-disabled="'true'" ng-model="selectedTreeNode.DEPARTMENT_NAME">
     </div>
 
     <div class="form-group" show-errors='{showSuccess: true}'>
@@ -154,9 +175,17 @@ GOBAL POPUP -->
 
 
 <script type="text/ng-template" id="iso_check_in_document.html">
+    <iso-check-in-document selected-tree-node="selectedTreeNode" ></iso-check-in-document>
+</script>
+
+<script type="text/ng-template" id="iso_force_check_in_document.html">
     <iso-check-in-document selected-tree-node="selectedTreeNode"></iso-check-in-document>
 </script>
 
+<script type="text/ng-template" id="iso_create_new_check_in_document.html">
+    <iso-check-in-document selected-tree-node="selectedTreeNode" is-create-new-check-in="true"></iso-check-in-document>
+</script>
+<!-- is-create-new-check-in="true" -->
 
 <script type="text/ng-template" id="iso_get_full_version_document.html">
    <div class="table-scrollable" id="content" style="height:350px;overflow:scroll;">
@@ -164,13 +193,13 @@ GOBAL POPUP -->
 
             <tr >
             
-                <td width="100px" >
+                <td  >
                     <label >Document Name</label>
                 </td>
-                <td width="200px">
+                <td >
                     <label >Version No</label>
                 </td>
-                <td align="center" width="100px"  >
+                <td   >
                     <label >Sensorship Date</label>
                 </td>
                 <td align="center" data-title="'Actions'">
@@ -180,23 +209,23 @@ GOBAL POPUP -->
 
             <tr  style="white-space: nowrap; cursor: pointer;" ng-repeat="version in fullVersionDocumentData" >
                 
-                <td width="100px" data-title="'Document Name'" >
+                <td  data-title="'Document Name'" >
                     <label >{{version.NODE_NAME}} </label>
                     <br/>
-                    <div style="width:100px;" class="iso_wordwrap">({{version.FILE_NAME}})</div>
+                    <div  class="iso_wordwrap">({{version.FILE_NAME}})</div>
                 </td>
-                <td width="200px" data-title="'Version No'">
+                <td data-title="'Version No'">
                     <label >{{version.VERSION_NO}}</label>
                 </td>
-                <td align="center" width="100px" data-title="'Sensorship Date'" >
+                <td  data-title="'Sensorship Date'" >
                     <label >{{version.CENSORSHIP_DATE| date:'yyyy-MM-dd HH:mm:ss '}}</label>
                 </td>
-                <td align="center" data-title="'Actions'">
-                    <a class="btn btn-default btn-xs" ng-click="downloadVersionNo(version.FILE_NAME,version.CHECK_IN_FOLDER_STORAGE,version.NODE_ID)" >
-                       </i> Download 
+                <td data-title="'Actions'">
+                    <a class="btn btn-circle blue-steel btn-sm"  ng-click="downloadVersionNo(version.FILE_NAME,version.CHECK_IN_FOLDER_STORAGE,version.NODE_ID)" >
+                       <i class="fa fa-download"></i> Download 
                     </a>
-                    <a class="btn btn-default btn-xs" ng-show="permissionFunction[selectedTreeNode.PERMISSION].makeCurrentVersion && version.IS_CURRENT_VERSION!=1" ng-click="makeCurrentVersion(version.NODE_ID,version.ID)" >
-                       </i> Make Current
+                    <a class="btn btn-circle blue-steel btn-sm"  ng-show="permissionFunction[selectedTreeNode.PERMISSION].makeCurrentVersion && version.IS_CURRENT_VERSION!=1" ng-click="makeCurrentVersion(version.NODE_ID,version.ID)" >
+                        Make Current
                     </a>
                     <span ng-show="version.IS_CURRENT_VERSION==1">(Current Version)</span>
                 </td>
@@ -206,36 +235,65 @@ GOBAL POPUP -->
 </script>
 
 <script type="text/ng-template" id="iso_get_full_checkin_document.html">
-   <div  id="content">
+   <div  class="table-scrollable" id="content" style="height:350px;overflow:scroll;">
             <table id="tblFullVersion"  show-filter="true" class="table table-hover table-bordered table-responsive">
                 <tr>
-                    <td width="200px" >
+                    <td >
                         <label >Document Name</label>
                     </td>
-                    <td width="200px">
-                        <label >Checkin No</label>
+
+                    <td >
+                        <label>Check out from</label>
                     </td>
-                    <td align="center" width="100px"  >
-                        <label >Checkin Date Date</label>
+
+                    <td >
+                        <label >Check in No</label>
                     </td>
+                    
+                    <td align="center"  >
+                        <label >Check in Date </label>
+                    </td>
+
+                    <td>
+                        Check in comment
+                    </td>
+
+
                     <td align="center" >
                        <label >Actions</label>
                     </td>
                 </tr>
                 <tr  style="white-space: nowrap; cursor: pointer;" ng-repeat="check in fullCheckinDocumentData" >
                 
-                    <td width="200px" >
-                        <label >{{check.FILE_NAME}}</label>
+                    <td >
+                        <label >{{check.NODE_NAME}} </label>
+                        <br/>
+                        <div class="iso_wordwrap">({{check.FILE_NAME}})</div>
                     </td>
-                    <td width="200px" >
+                    
+                    <td >
+                        <label >{{check.CHECK_IN_BE_CHECKED_OUT?'Check in':''}} {{check.CHECK_IN_BE_CHECKED_OUT}}</label>
+                    </td>
+
+                    <td  >
                         <label >{{check.CHECK_IN_NO}}</label>
                     </td>
-                    <td align="center" width="100px"  >
+                    
+                    <td align="center" >
                         <label >{{check.CHECK_IN_DATE| date:'yyyy-MM-dd HH:mm:ss '}}</label>
                     </td>
+
+                    <td>
+                        <div class="iso_wordwrap">{{check.CHECK_IN_COMMENT}}</div>
+                    </td>
                     <td align="center" data-title="'Actions'">
-                        <a style="width: 150px" href="javascript:;" ng-click="downloadVersionNo(check.FILE_NAME,check.CHECK_IN_FOLDER_STORAGE,check.NODE_ID)" class="btn btn-circle blue-steel btn-sm">
-                            <i class="fa fa-pencil"></i> Download Version </a>
+                        <a href="javascript:;" ng-click="downloadSpecificCheckIn(check)" class="btn btn-circle blue-steel btn-sm">
+                            <i class="fa fa-download"></i> Download 
+                        </a>
+
+                        <a ng-show="permissionFunction[selectedTreeNode.PERMISSION].forceCheckOut && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"  href="javascript:;" ng-click="forceCheckOutDocument(check)" class="btn btn-circle blue-steel btn-sm">
+                            <i class="fa fa-pencil"></i> Check out
+                        </a>
                     </td>
                 </tr>
             </table>

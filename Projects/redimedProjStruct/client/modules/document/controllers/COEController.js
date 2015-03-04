@@ -2,7 +2,7 @@
  * Created by thanh on 11/16/2014.
  */
 angular.module('app.loggedIn.document.COE.controllers', [])
-    .controller("COEController", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, localStorageService,$filter) {
+    .controller("COEController", function ($scope, $state, DocumentService, $http, $stateParams, $cookieStore, toastr, localStorageService,$filter) {
         //Decalration
             var insert = true;
         //================================================================
@@ -58,7 +58,8 @@ angular.module('app.loggedIn.document.COE.controllers', [])
 //        $scope.apptInfo = localStorageService.get('tempAppt');
         $scope.patientInfo = localStorageService.get('tempPatient');
         var Patient_ID =$scope.patientInfo.Patient_id;
-        var CalID = -1; //$scope.apptInfo.CAL_ID;
+        //var CalID = -1; //$scope.apptInfo.CAL_ID;
+        var CalID =  $stateParams.cal_id;
         var date = new Date();
         var today = $filter('date')(date,'dd/MM/yyyy');
         //============================================================================

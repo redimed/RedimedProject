@@ -1,0 +1,111 @@
+<style type="text/css">
+    .rowWaiting {
+        background-color: rgba(255, 220, 96, 0.44);
+    }
+
+    .rowDone {
+        background-color: rgba(117, 255, 186, 0.35);
+    }
+
+
+    table {
+        table-layout:fixed;
+    }
+
+    .div-table-content {
+        height:600px;
+        overflow-y:auto;
+    }
+
+</style>
+<h3 class="page-title">Injury List</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.home">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:;">Injury Management</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a>Injury List</a>
+        </li>
+    </ul>
+</div>
+<div class="portlet blue-chambray box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="fa fa-list"></i>
+            <span class="caption-subject uppercase">Injury List</span>
+        </div>
+        <div class="actions">
+            <a href="javascript:;" ng-click="refreshList()" class="btn btn-sm green">
+                    Refresh &nbsp;<i class="fa fa-refresh"></i>
+            </a>
+            <!-- <a href="javascript:;" ng-click="goBack()" class="btn btn-sm grey">
+                    Back &nbsp;<i class="fa fa-backward"></i>
+            </a> -->
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="panel panel-default">
+            <table class="table table-condensed" >
+                <thead>
+                    <tr>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Injury Date</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Driver</label>
+                        </th>
+                        <th style="text-align:center">
+                            <label style="font-size: 17px;">Status</label>
+                        </th>
+                    </tr>
+                    <tr ng-if="haveData">
+                        <th style="text-align:center">
+                            <date-range-picker style="width:200px;" ng-model="search.dateRange" ranged="true" callback="getDateRange(search.dateRange)"></date-range-picker>
+                            <!--<input class="form-control" type="text" />-->
+                        </th>
+                        <th style="text-align:center">
+                            <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />
+                        </th>
+                        <th style="text-align:center">
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New-->
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting-->
+                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done-->
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div ng-if="haveData" class="div-table-content">
+            <table class="table table-hover table-condensed">
+                <tbody>
+                <tr style="white-space: nowrap; cursor: pointer;" ng-click="showDetails(im.injury_id)"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
+                    <td style="vertical-align:middle" align="center">
+                        {{im.injury_date | date:'dd/MM/yyyy'}}
+                    </td>
+                    <td style="vertical-align:middle" align="center">
+                        <label class="bold">{{im.driverUser}}</label>
+                    </td>
+                    <td style="vertical-align:middle" align="center">
+                        <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn btn-primary btn-md" style="width:100px">
+                            {{im.STATUS}}
+                        </a>
+                        <a ng-show="im.STATUS == 'Waiting'" href="javascript:;" class="btn btn-warning btn-md" style="width:100px">
+                            {{im.STATUS}}
+                        </a>
+                        <a ng-show="im.STATUS == 'Done'" href="javascript:;" class="btn btn-success btn-md" style="width:100px">
+                            {{im.STATUS}}
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+</div>  
+

@@ -56,7 +56,8 @@ angular.module("app.loggedIn.iso.directive", [])
             transclude:true,
             required:['^ngModel'],
             scope: {
-                selectedTreeNode:'='
+                selectedTreeNode:'=',
+                isCreateNewCheckIn:'='
             },
             templateUrl: 'modules/iso/directives/isoCheckInDocument.html',
             controller: function ($scope,isoService,FileUploader)
@@ -65,12 +66,23 @@ angular.module("app.loggedIn.iso.directive", [])
                     checkInComment:''
                 }
 
-
                 //---------------------------------------------------------------
                 //HANDLE UPLOAD FILES
-                var uploader = $scope.uploader = new FileUploader({
-                    url: '/api/iso/iso-check-out-in/check-in-document'
-                });
+                if($scope.isCreateNewCheckIn===true)
+                {
+                    
+                    var uploader = $scope.uploader = new FileUploader({
+                        url: '/api/iso/iso-check-out-in/create-new-check-in-document'
+                    });
+                }
+                else
+                {
+                    var uploader = $scope.uploader = new FileUploader({
+                        url: '/api/iso/iso-check-out-in/check-in-document'
+                    });
+                }
+
+                
                 // FILTERS
                 uploader.filters.push({
                     name: 'customFilter',

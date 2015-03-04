@@ -5,6 +5,10 @@ var mdtWaitingListController = require('./controllers/mdtWaitingListController')
 var mdtClaimController = require('./controllers/mdtClaimController');
 var mdtAppointmentController = require('./controllers/mdtAppointmentController');
 var mdtCompanyController = require('./controllers/mdtCompanyController');
+var mdtUserController = require('./controllers/mdtUserController');
+
+//MODULE USER
+app.get("/api/meditek/v1/user/all", mdtUserController.getAll);
 
 //MODULE DOCTOR
 app.post("/api/meditek/v1/doctor/search", mdtDoctorController.postSearch);
@@ -42,6 +46,13 @@ app.post('/api/meditek/v1/mdttimetable/generate', mdtTimetableController.generat
 app.post('/api/meditek/v1/mdttimetable/remove', mdtTimetableController.remove);
 
 /*AUTO CREATE*/
+var mdtRecallController = require('./controllers/mdtRecallController');
+
+app.post('/api/meditek/v1/mdtrecall/search', mdtRecallController.postSearch);
+app.post('/api/meditek/v1/mdtrecall/add', mdtRecallController.postAdd);
+app.post('/api/meditek/v1/mdtrecall/edit', mdtRecallController.postEdit);
+app.post('/api/meditek/v1/mdtrecall/byId', mdtRecallController.postById);
+
 var mdtInsurerController = require('./controllers/mdtInsurerController');
 
 app.post('/api/meditek/v1/mdtinsurer/search', mdtInsurerController.postSearch);

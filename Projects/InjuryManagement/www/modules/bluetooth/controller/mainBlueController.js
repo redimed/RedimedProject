@@ -1,49 +1,46 @@
 angular.module('starter.bluetooth.mainBlueController',[])
 
-    .controller('mainBlueController', function($scope, $stateParams, BluetoothServices, $timeout){
-
-        var bluetooth = window.bluetooth;
+    .controller('mainBlueController', function($scope, $stateParams, BluetoothServices){
 
         $scope.isLoad = false;
         $scope.listDiscover = [];
         $scope.listDiscoverScan = [];
 
-        $scope.blueToothChange = function() {
-            $scope.isLoad = !$scope.isLoad;
-            bluetooth.startDiscovery(onDeviceDiscovered, onDiscoveryFinished, onError);
-        };
-
-        function onDeviceDiscovered(result) {
-            var arr = result.name.split(" ");
-            for(var i=0; i<$scope.listDiscover.length; i++) {
-                if($scope.listDiscover[i].device_id == arr[0]) {
-                    $scope.listDiscover[i].isOnline = true;
-                    $scope.listDiscover[i].address = result.address;
-                    $scope.listDiscover[i].name = arr[1];
-                } else {
-                    $scope.listDiscover[i].isOnline = false;
+        BluetoothServices.getlistDevice().then( function (result) {
+            if(result.status.toLowerCase() == 'success') {
+                for(var i=0; i<result.data.length; i++) {
+                    result.data[i].isOnline = false;
                 }
+                $scope.listDiscover = result.data;
+                onDiscover();
             }
-        }
+        })
 
-        function onDiscoveryFinished() {
-            $scope.isLoad = false;
-        }
+        function onDiscover() {
+            console.log('starting Discovery');
 
-        function onError(result) {
-            console.log('onError discovery device: ', result);
-        }
-
-        function init() {
-            BluetoothServices.getlistDevice().then( function (result) {
-                if(result.status.toLowerCase() == 'success') {
-                    for(var i=0; i<result.data.length; i++) {
-                        result.data[i].isOnline = false;
+            $scope.isLoad = true;
+            function onDeviceDiscovered(result) {
+                var arr = result.name.split(" ");
+                for(var i=0; i<$scope.listDiscover.length; i++) {
+                    if($scope.listDiscover[i].device_id == arr[0]) {
+                        $scope.listDiscover[i].isOnline = true;
+                        $scope.listDiscover[i].address = result.address;
+                        $scope.listDiscover[i].name = arr[1];
+                    } else {
+                        $scope.listDiscover[i].isOnline = false;
                     }
-                    $scope.listDiscover = result.data;
                 }
-            })
+                console.log('function Device Discovered ', result);
+            }
+            function onDiscoveryFinished() {
+                $scope.isLoad = false;
+                console.log('On Discovery Finished');
+            }
+            window.bluetooth.startDiscovery(onDeviceDiscovered, onDiscoveryFinished, onDiscoveryFinished);
         }
 
-        init();
+        $scope.disCover = function() {
+            onDiscover();
+        }
     })

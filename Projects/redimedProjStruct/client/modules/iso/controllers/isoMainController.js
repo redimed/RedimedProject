@@ -179,12 +179,13 @@ angular.module('app.loggedIn.iso.main.controller',[])
             createDocument:{name:'createDocument',url:'iso_create_document_template.html',header:'Create Document'},
             grantNodePermission:{name:'grantNodePermission',url:'iso_grant_node_permission.html',header:'Grant Node Permission'},
             checkInDocument:{name:'checkInDocument',url:'iso_check_in_document.html',header:'Check In Document'},
-            getFullVersionDocument:{name:'getFullVersionDocument',url:'iso_get_full_version_document.html',header:'Version Control'},
-            getFullCheckinDocument:{name:'getFullCheckinDocument',url:'iso_get_full_checkin_document.html',header:'Check In History'},
+            getFullVersionDocument:{name:'getFullVersionDocument',url:'iso_get_full_version_document.html',header:'Version Control',sizeLarge:true},
+            getFullCheckinDocument:{name:'getFullCheckinDocument',url:'iso_get_full_checkin_document.html',header:'Check In History',sizeLarge:true},
             requestEditDocument:{name:'requestEditDocument',url:'iso_request_edit_document.html',header:'Request to Edit Document'},
             viewYourRequest:{name:'viewYourRequest',url:'iso_view_your_request.html',header:'Your Requests'},
-            viewAllRequest:{name:'viewAllRequest',url:'iso_view_all_request.html',header:'All Requests'}
-            
+            viewAllRequest:{name:'viewAllRequest',url:'iso_view_all_request.html',header:'All Requests'},
+            forceCheckInDocument:{name:'forceCheckInDocument',url:'iso_force_check_in_document.html',header:'Force Check In Document'},
+            createNewCheckInDocument:{name:'createNewCheckInDocument',url:'iso_create_new_check_in_document.html',header:'Create New Check In Document (skip Check Out)'}
         };
         //action hien tai dang dc thao tac
         $scope.currentTreeAction={};
@@ -277,6 +278,12 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     $scope.currentTreeAction=$scope.treeActions.viewAllRequest;
                     $scope.getAllRequest($scope.selectedTreeNode.NODE_ID);
                     break;
+                case $scope.treeActions.forceCheckInDocument.name:
+                    $scope.currentTreeAction=$scope.treeActions.forceCheckInDocument;
+                    break;
+                case $scope.treeActions.createNewCheckInDocument.name:
+                    $scope.currentTreeAction=$scope.treeActions.createNewCheckInDocument;
+                    break;
 
             }
             $("#iso-tree-actions-menu-popup").modal('hide');
@@ -297,6 +304,14 @@ angular.module('app.loggedIn.iso.main.controller',[])
             if ($scope.actionContentForm.$valid && $scope.newFolder.nodeName != null && $scope.newFolder.nodeName !="") {
                 $scope.newFolder.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newFolder.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newFolder.nodeName;
+                if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                {
+                    $scope.newFolder.departmentId=$scope.newFolder.department.DEPARTMENT_ID;
+                }
+                else
+                {
+                    $scope.newFolder.departmentId=$scope.selectedTreeNode.DEPARTMENT_ID;
+                }
                 $scope.newFolderBackError=angular.copy($scope.newFolderBackErrorTemplate);
                 isoService.treeDir.checkDupEntry($scope.newFolder.fatherNodeId,$scope.newFolder.nodeName)
                 .then(function(data){
@@ -327,6 +342,16 @@ angular.module('app.loggedIn.iso.main.controller',[])
                             $scope.selectedTreeNode.nodes={};
                         }
                         $scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(data.data);
+                        if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                        {
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.newFolder.department.DEPARTMENT_ID;
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.newFolder.department.DEPARTMENT_NAME;
+                        }
+                        else
+                        {
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
+                            $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
+                        }
                         $scope.selectedTreeNode.nodes[data.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[data.data.NODE_ID].NODE_NAME;
                         if(!data.data.ACCESSIBLE_USER_ID)
                         {
@@ -360,7 +385,14 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 $scope.newDocument.nodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newDocument.fatherNodeId=$scope.selectedTreeNode.NODE_ID;
                 $scope.newDocument.relativePath=$scope.selectedTreeNode.relativePath+'\\'+$scope.newDocument.nodeName;
-                $scope.newDocument.departmentId=$scope.newDocument.department.DEPARTMENT_ID;
+                if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                {
+                    $scope.newDocument.departmentId=$scope.newDocument.department.DEPARTMENT_ID;
+                }
+                else
+                {
+                    $scope.newDocument.departmentId=$scope.selectedTreeNode.DEPARTMENT_ID;
+                }
                 $scope.newDocument.documentTypeValue=$scope.newDocument.documentType.value;
                 $scope.newDocumentBackError=angular.copy($scope.newDocumentBackErrorTemplate);
                 isoService.treeDir.checkDupEntry($scope.newDocument.fatherNodeId,$scope.newDocument.nodeName,$scope.newDocument.docCode)
@@ -453,6 +485,16 @@ angular.module('app.loggedIn.iso.main.controller',[])
                         $scope.selectedTreeNode.nodes={};
                     }
                     $scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(response.data);
+                    if($scope.selectedTreeNode.DEPARTMENT_ID==null)
+                    {
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.newDocument.department.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.newDocument.department.DEPARTMENT_NAME;
+                    }
+                    else
+                    {
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
+                    }
                     $scope.selectedTreeNode.nodes[data.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[data.data.NODE_ID].NODE_NAME;
                 }
                 else
@@ -796,6 +838,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 {
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Send request fail!');
                 }   
+                $("#iso-tree-action-content-popup").modal('hide');
             },function(err){
                 msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Send request fail!');
             });
@@ -874,6 +917,24 @@ angular.module('app.loggedIn.iso.main.controller',[])
         {
             $scope.selectedRequest=item;
         }
+
+        $scope.getNumberOfRequestUnread=function(nodeId)
+        {
+            isoService.requestEdit.getNumberOfRequestUnread(nodeId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    if(data.data>0)
+                        $scope.selectedTreeNode.NUM_OF_REQUEST=data.data;
+                    else
+                        $scope.selectedTreeNode.NUM_OF_REQUEST=null;
+                }
+                
+            },function(err){
+
+            });
+        }
+
         $scope.setRequestIsRead=function(item)
         {
             isoService.requestEdit.setRequestIsRead(item.ID)
@@ -881,6 +942,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 if(data.status=='success')
                 {
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,"Update success!");
+                    $scope.getNumberOfRequestUnread(item.NODE_ID);
                     item.IS_READ=1;
                 }
                 else
@@ -890,6 +952,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
             },function(err){
                 msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,"Update fail!");
             });
+
         }
         $scope.setRequestStar=function(item)
         {
@@ -900,6 +963,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 {
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,"Update success!");
                     item.STAR=star;
+                    $scope.getNumberOfRequestUnread(item.NODE_ID);
                 }
                 else
                 {
@@ -955,6 +1019,54 @@ angular.module('app.loggedIn.iso.main.controller',[])
         }
 
         /**
+         * Force release document
+         * release document boi admin he thong, khong can thong qua nguoi checkin
+         * tannv.dts@gmail.com
+         */
+        $scope.forceReleaseDocumentOneClick=function()
+        {
+            isoService.checkOutIn.forceSubmitDocument($scope.selectedTreeNode.NODE_ID)
+            .then(function(data)
+            {
+                if(data.status=='success'){
+                    //Approved Document
+                    var checkOutInId=data.data.checkOutInId;
+                    isoService.checkOutIn.forceApprovedDocument($scope.selectedTreeNode.NODE_ID,checkOutInId)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            msgPopup("Force Release",isoConst.msgPopupType.success,"Force Release Document Success");
+                            $scope.selectedTreeNode.SUBMIT_STATUS=data.data.SUBMIT_STATUS;
+                            $scope.selectedTreeNode.CHECK_IN_STATUS=data.data.CHECK_IN_STATUS;
+                            $scope.selectedTreeNode.CURRENT_VERSION_ID=data.data.CURRENT_VERSION_ID;
+                            isoService.checkOutIn.sendEmailNotificationNewDocumentVersion($scope.selectedTreeNode.NODE_ID)
+                            .then(function(data){
+
+                            },function(err){
+
+                            });
+                        }
+                        else
+                        {
+                            msgPopup("Force Release",isoConst.msgPopupType.error,"Force Release Error");
+                        }
+                    },function(err){
+                        msgPopup("Force Release",isoConst.msgPopupType.error,"Force Release Error");
+                    });
+                }
+                else
+                {
+                    msgPopup("Force Release",isoConst.msgPopupType.error,"Force Release Document Error");
+                }
+                
+            },function(err){
+                msgPopup("Force Release",isoConst.msgPopupType.error,"Force Release Document Error");
+            });
+            
+        }
+
+
+        /**
          * Set check_out_in is current version
          * tannv.dts@gmail.com
          */
@@ -974,6 +1086,42 @@ angular.module('app.loggedIn.iso.main.controller',[])
             },function(err){
                 msgPopup("Make Current Version",isoConst.msgPopupType.error,"Make Current Version Error");
             });
+        }
+
+        /**
+         * check out tu mot checkin do nguoi dung chon
+         * tannv.dts@gmail.com
+         */
+        $scope.forceCheckOutDocument=function(item)
+        {
+            isoService.checkOutIn.forceCheckOutDocument(item.NODE_ID,item.ID)
+            .then(function(data){
+                $("#iso-tree-actions-menu-popup").modal('hide');
+                if(data.status=='success')
+                {
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,'Check out success, document has locked');
+                    
+                    //Sau khi checkout thi khong cho checkout nua, tru phi document duoc checkin moi
+                    $scope.selectedTreeNode.CHECK_IN_STATUS=data.data.CHECK_IN_STATUS;//lock
+                    $scope.selectedTreeNode.CHECK_IN_NO=data.data.CHECK_IN_NO;
+                    isoService.checkOutIn.downloadSpecificCheckIn(item.NODE_ID,item.ID);
+                }
+                else if(data.status=='lock')
+                {
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Document is locked');
+                }
+                else
+                {
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Check out fail!');
+                }
+            },function(err){
+                msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Check out fail!');
+            })
+        };
+
+        $scope.downloadSpecificCheckIn=function(item)
+        {
+            isoService.checkOutIn.downloadSpecificCheckIn(item.NODE_ID,item.ID);
         }
 
     })

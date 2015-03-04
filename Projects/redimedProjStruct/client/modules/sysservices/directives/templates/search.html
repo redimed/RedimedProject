@@ -8,8 +8,9 @@
                     <th>SERVICE NAME</th>
                     <th>SERVICE DESCRIPTION</th>
                     <th>COLOR</th>
-                    <th>SERVICE STATUS</th>
                     <th>FEE TYPE</th>
+                    <th>IS REFERRAL</th>
+                    <th>SERVICE STATUS</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,11 +26,14 @@
                     <td>{{l.SERVICE_NAME}}</td>
                     <td>{{l.DESCRIPTION}}</td>
                     <td style="background:{{l.SERVICE_COLOR}};"></td>
-                    <td>
+                    <td>{{l.feeType.FEE_TYPE_NAME}}</td>
+
+                    <td><input type="checkbox" disabled ng-checked="l.IS_REFERRAL == 1" /></td>
+                    <td> 
                         <span ng-if="l.Isenable===1">Enable</span>
                         <span ng-if="l.Isenable!==1">Disable</span>
                     </td>
-                    <td>{{l.feeType.FEE_TYPE_NAME}}</td>
+                    
                 </tr>
             </tbody>
         </table>

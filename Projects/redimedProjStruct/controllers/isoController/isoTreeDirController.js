@@ -6,7 +6,7 @@ var fs = require('fs-extra');//Read js file for import into
 var isoUtil=require('./isoUtilsController');
 var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
-var Archiver = require('Archiver');
+var Archiver = require('archiver');
 var rimraf = require('rimraf');
 
 
@@ -56,24 +56,33 @@ module.exports =
         isoUtil.exlog(">>>>>>>>>>>>>>>>>>>>>>>>>>",isIsoAdmin);
         
         var sql=
-            " SELECT    tree.*,                                                                                                  "+
-            "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                   "+
-            "   treeUser.`PERMISSION`,                                                                                           "+
-            "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO                              "+
-            " FROM iso_tree_dir tree                                                                                             "+
-            " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)     "+
-            " LEFT JOIN (                                                                                                        "+
-            "       SELECT tempoi.* FROM `iso_check_out_in` tempoi                                                               "+
-            "       INNER JOIN (                                                                                                 "+
-            "               SELECT oi.`NODE_ID`,MAX(oi.ID) AS ID FROM iso_check_out_in oi                                        "+
-            "               WHERE oi.`ISENABLE`=1                                                                                "+
-            "               GROUP BY oi.`NODE_ID`                                                                                "+
-            "           ) temp ON tempoi.`ID`=temp.ID                                                                            "+
-            "       WHERE `tempoi`.`ISENABLE`=1                                                                                  "+
-            "   ) outin ON tree.`NODE_ID`=outin.NODE_ID                                                                          "+                                                       
-            " WHERE     tree.`ISENABLE` LIKE ?                                                                                   "+
-            " GROUP BY tree.`NODE_ID`                                                                                            "+
-            " ORDER BY FATHER_NODE_ID DESC ;                                                                                     ";
+            " SELECT    tree.*,                                                                                                 "+
+            "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                  "+
+            "   treeUser.`PERMISSION`,                                                                                          "+
+            "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO,                            "+
+            "   dep.`departmentName` AS DEPARTMENT_NAME ,request.NUM_OF_REQUEST                                                 "+                       
+            " FROM iso_tree_dir tree                                                                                            "+
+            " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)    "+
+            " LEFT JOIN (                                                                                                       "+
+            "       SELECT tempoi.* FROM `iso_check_out_in` tempoi                                                              "+
+            "       INNER JOIN (                                                                                                "+
+            "               SELECT oi.`NODE_ID`,MAX(oi.ID) AS ID FROM iso_check_out_in oi                                       "+
+            "               WHERE oi.`ISENABLE`=1                                                                               "+
+            "               GROUP BY oi.`NODE_ID`                                                                               "+
+            "           ) temp ON tempoi.`ID`=temp.ID                                                                           "+
+            "       WHERE `tempoi`.`ISENABLE`=1                                                                                 "+
+            "   ) outin ON tree.`NODE_ID`=outin.NODE_ID                                                                         "+
+            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`                                            "+
+            " LEFT JOIN                                                                                                         "+
+            " (                                                                                                                 "+
+            "   SELECT request.`NODE_ID`,COUNT(request.`ID`) AS NUM_OF_REQUEST                                                  "+
+            "   FROM `iso_request_edit_document` request                                                                        "+
+            "   WHERE request.`IS_READ`=0 AND request.`ISENABLE`=1                                                              "+
+            "   GROUP BY request.`NODE_ID`                                                                                      "+
+            " )  request ON tree.`NODE_ID`=request.NODE_ID                                                                      "+
+            " WHERE     tree.`ISENABLE` LIKE ?                                                                                  "+
+            " GROUP BY tree.`NODE_ID`                                                                                           "+
+            " ORDER BY FATHER_NODE_ID DESC ;                                                                                    ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[accessibleUserId,isEnable],function(err,rows)
@@ -124,6 +133,7 @@ module.exports =
             NODE_TYPE:info.nodeType,
             NODE_NAME:info.nodeName,
             DESCRIPTION:info.description,
+            DEPARTMENT_ID:info.departmentId,
             CREATED_BY:userInfo.id,
             ISENABLE:1
         }
@@ -1001,8 +1011,12 @@ module.exports =
             return;
         }
         var sql = 
-            "SELECT oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` FROM `iso_check_out_in` oi "+
-            "WHERE oi.`NODE_ID` = ? AND check_in_no IS NOT NULL AND oi.`ISENABLE` = 1 ";
+            " SELECT oi.ID,oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` , oi.CHECK_OUT_FROM, oi.CHECK_IN_COMMENT,          "+  
+            " oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` ,treedir.`NODE_NAME`, refer.CHECK_IN_NO AS CHECK_IN_BE_CHECKED_OUT   "+                 
+            " FROM `iso_check_out_in` oi                                                                                             "+  
+            " INNER JOIN `iso_tree_dir` treedir ON oi.`NODE_ID`=`treedir`.`NODE_ID`                                                  "+  
+            " LEFT JOIN `iso_check_out_in` refer ON refer.ID=oi.CHECK_OUT_FROM                                                       "+  
+            " WHERE oi.`NODE_ID` = ? AND oi.check_in_no IS NOT NULL AND oi.`ISENABLE` = 1                                          ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)
@@ -1027,7 +1041,7 @@ module.exports =
      * Vo Duc Giap
      */
     handlingDownloadVersionDocument: function(req,res){
-          if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
         {
             res.json({status:'fail'});
             return;
@@ -1102,6 +1116,8 @@ module.exports =
             });
         });
     },
+
+    
     /**
      * Select thong tin chi tiet document
      * phan quoc chien
@@ -1111,11 +1127,12 @@ module.exports =
         isoUtil.exlog('idddd',req.body);
         var sql = 
             " SELECT tree.*,us.`user_name` AS Document_Author,uss.`user_name` AS Last_Edited_By,   "+
-            " dep.`departmentName` AS DEPARTMENT_NAME                                              "+
+            " dep.`departmentName` AS DEPARTMENT_NAME, MANAGER.`user_name` AS MANAGER_USER_NAME    "+                                          
             " FROM `iso_tree_dir` tree                                                             "+
             " LEFT JOIN `users` us ON `tree`.`CREATED_BY` = us.`id`                                "+
             " LEFT JOIN `users` uss ON tree.`LAST_UPDATED_BY` = uss.`id`                           "+
             " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`               "+
+            " LEFT JOIN `users` manager ON manager.id=dep.`managerId`                              "+
             " WHERE `NODE_ID` = ?                                                                  ";
         req.getConnection(function(err,connection)
         {

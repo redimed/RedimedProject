@@ -36,6 +36,7 @@ angular.module("app.model", [])
     User_id: null, // int (11)
     isPO: null, // int (11) r 
     isExtra: null, // int (11) 
+    parent_id: null, /// int (11)
 })
 // END COMPANY
 // 
@@ -147,6 +148,7 @@ angular.module("app.model", [])
 	Insurer: '', //yes
 	Address: '', //yes
 	Claim_no: '', //yes
+	PO_number: null, //yes
 	Case_manager: '', //yes
 	Isenable: '1', //yes
 	Created_by: null,
@@ -616,6 +618,7 @@ angular.module("app.model", [])
 	DESCRIPTION: '',
 	SERVICE_COLOR: '',
 	FEE_TYPE_ID: '',
+	IS_REFERRAL: '0',
 	Isenable: '1',
 	Created_by: null,
 	Creation_date: null,
@@ -737,3 +740,16 @@ angular.module("app.model", [])
 	AssessmentName: '',
 })
 //END GENERAL ASSESSMENT
+
+// RECALL
+.value('mdtRecallModel', {
+	patient_id: null,
+	notes: '',
+	transaction_date: null,
+	recall_period: null,
+	recall_date: null,
+	remind_before: null,
+	created_by: null,
+	last_updated_by: null,
+})
+// END RECALL 

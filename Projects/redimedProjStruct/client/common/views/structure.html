@@ -6,9 +6,18 @@
                 <div class="pull-left">
                     <input ng-model="searchUser" ng-change="searchOnlineUser(searchUser)" type="text" placeholder="Search User">
                 </div>
+
             </div>
             <div class="side-widget">
-                <div class="side-widget-title">Online Users</div>
+                <div class="side-widget-title">
+                    Online Users
+                    <div class="pull-right">
+                        <a href="javascript:;" ng-click="refreshOnlineList()" class="btn btn-circle btn-sm blue">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </div>
+                    <hr style="background-color: #B0B0B9; height: 1px; border: 0" />
+                </div>
                 <div class="side-widget-content" >
                     <div ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
                         <div class="user-profile">

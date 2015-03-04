@@ -20,9 +20,17 @@
                 <i ng-if="node.NODE_TYPE==nodeType.folder" class="fa fa-folder-open"></i>
                 <span style="border: none;padding: 0px;" ng-click="showDocumentInfo(node.NODE_TYPE,node.NODE_ID);"><i ng-if="node.NODE_TYPE==nodeType.document" class="fa fa-leaf"></i>
                 {{node.NODE_NAME}}
+                    <!-- <span class="badge" style="background-color: rgb(252, 244, 244);color: red; border-color: rgb(247, 124, 124);order-radius: 5px;">
+                        
+                    </span> -->
+                    <span ng-show="node.PERMISSION==isoPermission.administrator && node.NUM_OF_REQUEST"  class="iso_badge">
+                        <i class="fa fa-envelope-o"></i>{{node.PERMISSION==isoPermission.administrator?node.NUM_OF_REQUEST:''}}
+                    </span>
+                    
                 </span> 
                 <!-- ____{{node.relativePath}} -->
         </span>
+
         <div ng-show='node.PERMISSION<isoPermission.notPermission' style="color:#800000;display:inline;font-size:11px">
            {{node.ACCESSIBLE_USER_ID?'(':''}}
            {{node.PERMISSION==0?'A':''}}
@@ -31,7 +39,7 @@
            {{node.PERMISSION==3?'R':''}}
            {{node.ACCESSIBLE_USER_ID?')':''}}  
         </div>
-        <a ng-show="node.ACCESSIBLE_USER_ID && node.PERMISSION<isoPermission.notPermission" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
+        <a ng-show="(node.ACCESSIBLE_USER_ID && node.PERMISSION<isoPermission.notPermission)||isIsoAdminSystem==1" ng-click="showTreeActionsMenuPopup(node);">actions </a>    
         
         <ul>
             <li ng-show='node.ISENABLE==1 || isIsoAdminSystem==1' ng-class="{node_accessible:node.ACCESSIBLE_USER_ID && node.PERMISSION<isoPermission.notPermission,iso_node_deleted:node.ISENABLE==0}" ng-repeat="(key,node) in node.nodes" iso-notice-finish-render-directory-tree ng-include="'nodes_renderer.html'">
@@ -57,7 +65,7 @@
             </div>  
             <div class="modal-body">
                 <div ng-show='selectedTreeNode.ISENABLE==1 && selectedTreeNode.NODE_TYPE==nodeType.folder'>
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type1'>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].createFolder"
                             type="button" 
@@ -84,7 +92,7 @@
 
                     </div>
 
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type2'>
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].grantFolderPermission"
                             type="button" 
@@ -94,7 +102,7 @@
                         </button>
                     </div>
 
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type3'>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].createDocument"
                             type="button" 
@@ -108,7 +116,7 @@
 
 
                 <div ng-show='selectedTreeNode.ISENABLE==1 && selectedTreeNode.NODE_TYPE==nodeType.document'>
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type1'>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].checkOut && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock"
                             type="button" 
@@ -173,7 +181,7 @@
                         </button>
                     </div>
 
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type2'>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].deleteDocument"
                             type="button" 
@@ -191,7 +199,7 @@
 
                     </div>
 
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type3'>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].getFullVersionDoccument"
                             type="button" 
@@ -209,7 +217,7 @@
                         </button>
                     </div>
 
-                    <div class='iso-action-group'>
+                    <div class='iso-action-group iso_action_type4'>
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].downloadNewestVersion && selectedTreeNode.CURRENT_VERSION_ID!=null"
                             type="button" 
@@ -219,29 +227,54 @@
                     </div>
                 </div>
 
-                <div ng-show='selectedTreeNode.ISENABLE==0 && selectedTreeNode.NODE_TYPE==nodeType.folder'>
-                    <div class='iso-action-group'>
+
+                <div ng-show='isIsoAdminSystem==1'>
+                    <div class='iso-action-group iso_action_type_system'>
+                        <hr/>
                         <button 
-                            ng-show="isoAdminFunction.restoreFolder"
+                            ng-show="isoAdminFunction.forceCheckInDocument && isIsoAdminSystem==1 && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.lock && selectedTreeNode.CHECK_IN_NO==null && selectedTreeNode.NODE_TYPE==nodeType.document"
                             type="button" 
-                            class="btn btn-default iso_action_button"
+                            class="btn btn-default iso_action_button "
+                            ng-click="showTreeActionContentPopup(treeActions.forceCheckInDocument.name);">
+                            Force Check In Document
+                        </button>
+
+                        <button 
+                            ng-show="isoAdminFunction.createNewCheckInDocument && isIsoAdminSystem==1 && selectedTreeNode.NODE_TYPE==nodeType.document"
+                            type="button" 
+                            class="btn btn-default iso_action_button "
+                            ng-click="showTreeActionContentPopup(treeActions.createNewCheckInDocument.name);">
+                            Create New Check In
+                        </button>
+
+                        <button 
+                            ng-show="isoAdminFunction.forceReleaseDocumentOneClick && isIsoAdminSystem==1 && (selectedTreeNode.SUBMIT_STATUS==null || selectedTreeNode.SUBMIT_STATUS==submitStatus.cancel) && selectedTreeNode.CHECK_IN_STATUS==checkInStatus.unlock && selectedTreeNode.NODE_TYPE==nodeType.document"
+                            type="button" 
+                            class="btn btn-default iso_action_button "
+                            ng-click="forceReleaseDocumentOneClick()">
+                            Force Release Document
+                        </button>
+
+                        <button 
+                            ng-show="isoAdminFunction.restoreFolder && isIsoAdminSystem==1 &&  selectedTreeNode.ISENABLE==0 && selectedTreeNode.NODE_TYPE==nodeType.folder"
+                            type="button" 
+                            class="btn btn-default iso_action_button "
                             ng-click="restoreNode();">
                             Restore Folder
                         </button>
-                    </div>
-                </div>
 
-                <div ng-show='selectedTreeNode.ISENABLE==0 && selectedTreeNode.NODE_TYPE==nodeType.document'>
-                    <div class='iso-action-group'>
                         <button 
-                            ng-show="isoAdminFunction.restoreDocument"
+                            ng-show="isoAdminFunction.restoreDocument && isIsoAdminSystem==1 && selectedTreeNode.ISENABLE==0 && selectedTreeNode.NODE_TYPE==nodeType.document"
                             type="button" 
-                            class="btn btn-default iso_action_button"
+                            class="btn btn-default iso_action_button "
                             ng-click="restoreNode();">
                             Restore Document
                         </button>
                     </div>
                 </div>
+
+
+
             </div>
 
             
@@ -256,7 +289,7 @@
 
 
 <div  id="iso-tree-action-content-popup" class="modal fade">
-    <div class="modal-dialog">
+    <div class="modal-dialog" ng-class="{iso_modal_lg:currentTreeAction.sizeLarge}">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -338,6 +371,15 @@
                     </td>
                     <td>
                         <a class="editable editable-click" >{{documentInfo.DOC_TYPE}}</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                         Department Owner
+                    </td>
+                    <td>
+                        <a class="editable editable-click" >{{documentInfo.MANAGER_USER_NAME}}</a>
                     </td>
                 </tr>
 

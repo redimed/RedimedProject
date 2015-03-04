@@ -60,7 +60,7 @@ function checkListData(data)
     return true;
 }
 
-var isTestSendMail=true;
+var isTestSendMail=false;
 
 module.exports =
 {

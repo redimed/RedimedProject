@@ -10,13 +10,14 @@ angular.module("app.loggedIn.company.detail.directive", [])
                 templateUrl: "modules/company/directives/templates/detail.html",
                 link: function (scope, element, attrs) {
                     var loadData = function (id) {
-                        CompanyService.detail(id).then(function (data) {
-                            angular.extend(scope.modelObjectMap, data.row);
+                        CompanyService.detail(id).then(function (response) {
+                            console.log(response)
+                            angular.extend(scope.modelObjectMap, response.row);
 
-                            if(data.row.insurer_data) {
-                               scope.insurerInfo = {};
-                               angular.extend( scope.insurerInfo, data.row.insurer_data);
-                            }
+                            // if(response.row.insurer_data) {
+                            //    scope.insurerInfo = {};
+                            //    angular.extend( scope.insurerInfo, response.row.insurer_data);
+                            // }
 
                             for (var key in scope.modelObjectMap) {
                                 if (scope.modelObjectMap[key]) {
@@ -42,36 +43,71 @@ angular.module("app.loggedIn.company.detail.directive", [])
                     /**
                      *  INSURER 
                      */
-
-                    scope.showInsurerPanel = false;
-
-                    scope.toogleInsurerPanel = function () {
-                        scope.showInsurerPanel = !scope.showInsurerPanel;
-                    }
-
                     scope.insurer_options = {
                         api: 'api/erm/v2/insurers/search',
                         method: 'post',
                         columns: [
                             {field: 'id', is_hide: true},
-                            {field: 'insurer_name', label: 'Company Name'},
+                            {field: 'insurer_name', label: 'Insurer Name'},
                             {field: 'address', label: 'Address'},
                             {field: 'suburb', label: 'Suburb'},
                         ],
                     };
 
+                    scope.insurer_module = {
+                        is_show: false,
+                        togglePanel: function() {
+                            scope.parent_module.is_show = false;
+                            scope.insurer_module.is_show = !scope.insurer_module.is_show;
+                        },
+                        click: function(item){
+                            scope.modelObjectMap.Insurer = item.id;
+                            scope.modelObjectMap.curInsurer = item;
+                            scope.insurer_module.togglePanel();
+                            //scope.toogleInsurerPanel();
+                        }
+                    } 
+                    /*
+                    *   END INSURER
+                    */
 
-                    scope.clickInsurerRow = function (item) {
-                        scope.modelObjectMap.Insurer = item.id;
-                        scope.insurerInfo = item;
-                        
-                        console.log(scope.insurerInfo ,  scope.modelObjectMap);
-                        scope.toogleInsurerPanel();
-//                        console.log(item);
-                    }
+                    /**
+                     *  PARENT 
+                     */
+                    scope.parent_options = {
+                        api: 'api/erm/v2/companies/search',
+                        method: 'post',
+                        columns: [
+                            {db_field: 'companies.id', field: 'id', is_hide: true},
+                            {field: 'Company_name', label: 'Company Name'},
+                            {field: 'Industry'},
+                            {field: 'Addr', label: 'Address'},
+                        ],
+                    };
 
-                    var addProcess = function (postData) {
-                        delete postData.insurer_data;
+                    scope.parent_module = {
+                        is_show: false,
+                        togglePanel: function() {
+                            scope.insurer_module.is_show = false;
+                            scope.parent_module.is_show = !scope.parent_module.is_show;
+                        },
+                        click: function(item){
+                            scope.modelObjectMap.parent_id = item.id;
+                            scope.modelObjectMap.parent = item;
+                            scope.parent_module.togglePanel();
+                        }
+                    } 
+                      /**
+                     *  END PARENT 
+                     */
+
+
+
+                    var addProcess = function (data) {
+                        var postData = angular.copy(data);
+                        delete postData.curInsurer;
+                        delete postData.parent;
+
                         CompanyService.insert(postData).then(function (response) {
                             if (response.status === 'success') {
                                 toastr.success("Added a new Company", "Success");
@@ -85,11 +121,14 @@ angular.module("app.loggedIn.company.detail.directive", [])
                         })
                     }
 
-                    var editProcess = function (postData) {
-                        var id = postData.id;
+                    var editProcess = function (data) {
+                        var postData = angular.copy(data);
+
                         delete postData.id;
-                        delete postData.insurer_data;
-                        CompanyService.update(id, postData).then(function (response) {
+                        delete postData.curInsurer;
+                        delete postData.parent;
+
+                        CompanyService.update(data.id, postData).then(function (response) {
                             if (response.status === 'success') {
                                 toastr.success("Edit Company Successfully", "Success");
                                 scope.isSubmit = false;

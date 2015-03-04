@@ -4,6 +4,8 @@ angular.module("app.loggedIn.receptionist.services", [])
 	var receptionistService = {};
 	var receptionistApi = Restangular.all("api/erm");
 
+	var restfulAPI = Restangular.all("api/restful");
+
 	receptionistService.getAppointmentList = function(options){
 		var appointmentApi = receptionistApi.all("appointment/get");
 		return appointmentApi.post(options);
@@ -34,6 +36,11 @@ angular.module("app.loggedIn.receptionist.services", [])
 		return updateApi.post(options);
 	}
 
+	receptionistService.updateStatus = function(options){
+		var updateApi = receptionistApi.all("appointment/updateStatus");
+		return updateApi.post(options);
+	}
+
 
 	/**
 	*	APPOINTMENT ITEM FEE
@@ -58,6 +65,15 @@ angular.module("app.loggedIn.receptionist.services", [])
 		var updateApi = receptionistApi.all("v2/appt/item_fee_appt");
 		return updateApi.post({service_id: service_id, list_id: list_id});
 	}
+
+	/*
+	*	RESTFUL 
+	*/
+	receptionistService.getReferral = function (appt_id, patient_id) {
+		var instanceApi = restfulAPI.one("Referral");
+		return instanceApi.get({CAL_ID: appt_id, patient_id: patient_id});
+	}
+
 
 	return receptionistService;
 })

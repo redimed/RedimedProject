@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.patient.listall.controller',[])
-	.controller('PatientListAllController', function($scope){
+	.controller('PatientListAllController', function($scope, $state){
 		$scope.patient_panel={};
 
 		var selectedID = null;
@@ -36,8 +36,9 @@ angular.module('app.loggedIn.patient.listall.controller',[])
                 	{
                         class: 'fa fa-info', title: 'Edit',
                         callback: function(item){
-                            console.log('this is selected item',item)
-                                $scope.patientEditForm.open(item.Patient_id);
+                            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: 1});
+                            //console.log('this is selected item',item)
+                               // $scope.patientEditForm.open(item.Patient_id);
                         }
                     },
                 ]

@@ -141,6 +141,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 					item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);
 					item.QUANTITY = 1;
 					item.TIME_SPENT = 0;
+					item.IS_ENABLE = 1;
+					
 					$scope.InvoiceMap.lines.push(item);
 
 					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){

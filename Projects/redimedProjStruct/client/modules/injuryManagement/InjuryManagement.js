@@ -25,6 +25,26 @@ angular.module("app.loggedIn.im",[
 
         })
 
+        .state('loggedIn.im.list',{
+            url:"/im/list/:patient_id",
+            views:{
+                "main-content":{
+                    templateUrl:"modules/injuryManagement/views/injuryList.html",
+                    controller:"InjuryListController"
+                }
+            }
+        })
+
+        .state('loggedIn.im.bluetooth',{
+            url:"/im/bluetooth/:patient_id",
+            views:{
+                "main-content":{
+                    templateUrl:"modules/injuryManagement/views/bluetooth.html",
+                    controller:"BluetoothController"
+                }
+            }
+        })
+
         .state("loggedIn.im.detail",{
             url:"/im/details/:id",
             views:{

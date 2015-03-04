@@ -153,10 +153,6 @@ angular.module("starter.menu.controller",[])
                     }
                 })
             }
-            //else if (notification.event == "error")
-            //    console.log(notification.msg, "Push notification error event");
-            //
-            //else console.log(notification.event, "Push notification handler - Unprocessed Event");
         }
 
         //iOS.
@@ -191,7 +187,7 @@ angular.module("starter.menu.controller",[])
         function getLocation() {
             if(localStorageService.get("userInfo")) {
                 if(localStorageService.get("userInfo").UserType.user_type == 'Driver') {
-                    var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: true};
+                    var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: false};
                     $cordovaGeolocation.getCurrentPosition(posOptions)
                         .then(function (position) {
                             var driverLocation = [];
@@ -208,7 +204,7 @@ angular.module("starter.menu.controller",[])
                             });
                             signaling.emit('location', driverLocation);
                         }, function (err) {
-                            console.log("Error " + err);
+                            //console.log(JSON.stringify(err));
                         });
                 }
             }

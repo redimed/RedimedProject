@@ -1139,7 +1139,11 @@ module.exports =
                     }
                     else
                     {
-                        res.json({status:'success'});
+                        if (rows.changedRows > 0) {
+                            res.json({status:'success'});
+                        }else{
+                            res.json({status:'fail'});
+                        };
                     }
 
                 });
@@ -1310,7 +1314,11 @@ module.exports =
                     }
                     else
                     {
-                        res.json({status:'success'});
+                        if (rows.changedRows > 0) {
+                            res.json({status:'success'});
+                        }else{
+                            res.json({status:'fail'});
+                        };
                     }
 
                 });
@@ -1337,7 +1345,11 @@ module.exports =
                     }
                     else
                     {
-                        res.json({status:'success'});
+                        if (rows.changedRows > 0) {
+                            res.json({status:'success'});
+                        }else{
+                            res.json({status:'fail'});
+                        };
                     }
 
                 });
@@ -1346,11 +1358,11 @@ module.exports =
     /*
     phan quoc chien 
     phanquocchien.c1109g@gmail.com
-    change booking
+    cancel booking
     */
-    changeBooking:function(req,res){
-        var patientId = req.query.PATIENT_ID;
-        var calId = req.query.CAL_ID;
+    cancelBooking:function(req,res){
+        var patientId = req.body.PATIENT_ID;
+        var calId = req.body.CAL_ID;
         req.getConnection(function(err,connection)
         {
             var query = connection.query(
@@ -1364,12 +1376,186 @@ module.exports =
                     }
                     else
                     {
-                    
-                        res.json({status:'success'});
-                        var PATIENT = JSON.parse(rows[0].PATIENTS);
-                        console.log("11111111111111111111"+JSON.stringify(PATIENT));
-                        // remove(PATIENT[1]);
-                        console.log("22222222222222222222"+JSON.stringify(PATIENT));
+                        if (rows.length>0) {
+                            console.log(rows[0]);
+                            console.log(rows[0].PATIENTS);
+                            var PATIENT = JSON.parse(rows[0].PATIENTS);
+                            if (PATIENT != null) {
+                                if (PATIENT.length <= 1) {
+                                    console.log(PATIENT[0].Patient_id)
+                                    if (patientId == PATIENT[0].Patient_id) {
+                                        console.log("nhooooooo" +PATIENT.length);
+                                        PATIENT = null;
+                                        console.log("22222222222222222222"+JSON.stringify(PATIENT));
+                                        var STATUS = rlobUtil.calendarStatus.noAppointment;
+                                        req.getConnection(function(err,connection)
+                                        {
+                                            var query = connection.query(
+                                                'UPDATE `cln_appointment_calendar` SET `STATUS` = ?,`NOTES` = NULL, `PATIENTS` = ? WHERE `CAL_ID` = ?'
+                                                ,[STATUS,PATIENT,calId],function(err,rows)
+                                                {
+                                                    if(err)
+                                                    {
+                                                        console.log("Error Selecting : %s ",err );
+                                                        res.json({status:'fail'});
+                                                    }
+                                                    else
+                                                    {
+                                                        if (rows.changedRows > 0) {
+                                                            /*
+                                                            phan quoc chien
+                                                            phanquocchien.c1109g@gmail.com
+                                                            delete appt patients
+                                                             */
+                                                            req.getConnection(function(err,connection)
+                                                            {
+                                                                var query = connection.query(
+                                                                    'DELETE FROM `cln_appt_patients`WHERE `Patient_id` = ? AND `CAL_ID` = ?'
+                                                                    ,[patientId,calId],function(err,rows)
+                                                                    {
+                                                                        if(err)
+                                                                        {
+                                                                            console.log("Error Selecting : %s ",err );
+                                                                            res.json({status:'fail'});
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            console.log("delete delete"+JSON.stringify(rows));
+                                                                            res.json({status:'success'});
+                                                                        }
+
+                                                                    });
+                                                            });
+                                                        }else{
+                                                            res.json({status:'fail'});
+                                                        };
+                                                    }
+                                                });
+                                        });
+                                    }else{
+                                        res.json({status:'fail'});
+                                    };
+                                }else{
+                                    console.log("lonnnnnnn" + PATIENT.length);
+                                    var PATIENT1 = PATIENT.filter(function(el){ return el.Patient_id != patientId; });
+                                    console.log("lonnnnnnn" + PATIENT1.length);
+                                    if (PATIENT1.length < PATIENT.length) {
+                                        var PATIENTNEW = JSON.stringify(PATIENT1);
+                                        console.log("22222222222222222222"+JSON.stringify(PATIENTNEW));
+                                        req.getConnection(function(err,connection)
+                                        {
+                                            var query = connection.query(
+                                                'UPDATE `cln_appointment_calendar` SET `PATIENTS` = ?,`NOTES` = NULL WHERE `CAL_ID` = ?'
+                                                ,[PATIENTNEW,calId],function(err,rows)
+                                                {
+                                                    if(err)
+                                                    {
+                                                        console.log("Error Selecting : %s ",err );
+                                                        res.json({status:'fail'});
+                                                    }
+                                                    else
+                                                    {
+                                                        // console.log("aaaaaaaaaaaaa"+JSON.stringify(rows.changedRows));
+                                                        if (rows.changedRows > 0) {
+                                                            /*
+                                                            phan quoc chien
+                                                            phanquocchien.c1109g@gmail.com
+                                                            delete appt patients
+                                                             */
+                                                            req.getConnection(function(err,connection)
+                                                            {
+                                                                var query = connection.query(
+                                                                    'DELETE FROM `cln_appt_patients`WHERE `Patient_id` = ? AND `CAL_ID` = ?'
+                                                                    ,[patientId,calId],function(err,rows)
+                                                                    {
+                                                                        if(err)
+                                                                        {
+                                                                            console.log("Error Selecting : %s ",err );
+                                                                            res.json({status:'fail'});
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            console.log("delete delete"+JSON.stringify(rows));
+                                                                            res.json({status:'success'});
+                                                                        }
+
+                                                                    });
+                                                            });
+                                                        }else{
+                                                            res.json({status:'fail'});
+                                                        };
+                                                    }
+
+                                                });
+                                        });
+                                    }else{
+                                        res.json({status:'fail'});
+                                    };
+                                };
+                            }else{
+                                res.json({status:'fail'});
+                            };
+                        }else{
+                            res.json({status:'fail'});
+                        };
+                    }
+                });
+        });
+    },
+    /*
+    phan quoc chien 
+    phanquocchien.c1109g@gmail.com
+    change booking
+    */
+    changeBooking:function(req,res){
+        var patientId = req.body.PATIENT_ID;
+        var calId = req.body.CAL_ID;
+        var patientName = req.body.PATIENT_NAME;
+        var PATIENT = '[{"Patient_id":'+patientId+',"Patient_name":"'+patientName+'"}]';
+        var NOTES = rlobUtil.sourceType.REDiLEGAL;
+        var STATUS = rlobUtil.calendarStatus.booked;
+        console.log(PATIENT);
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'UPDATE `cln_appointment_calendar` SET `STATUS` = ?,`NOTES` = ?, `PATIENTS` = ? WHERE `CAL_ID` = ?'
+                ,[STATUS,NOTES,PATIENT,calId],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        if (rows.changedRows > 0) {
+                            /*
+                            phan quoc chien
+                            phanquocchien.c1109g@gmail.com
+                            delete appt patients
+                             */
+                            req.getConnection(function(err,connection)
+                            {
+                                var query = connection.query(
+                                    'INSERT INTO `sakila`.`cln_appt_patients`(`Patient_id`,`CAL_ID`,`Creation_date`)VALUES (?,?,NOW())'
+                                    ,[patientId,calId],function(err,rows)
+                                    {
+                                        if(err)
+                                        {
+                                            console.log("Error Selecting : %s ",err );
+                                            res.json({status:'fail'});
+                                        }
+                                        else
+                                        {
+                                            console.log("delete delete"+JSON.stringify(rows));
+                                            res.json({status:'success'});
+                                        }
+
+                                    });
+                            });
+                        }else{
+                            res.json({status:'fail'});
+                        };
                     }
                 });
         });

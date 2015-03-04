@@ -9,46 +9,55 @@ angular.module("app.loggedIn.controller",[
     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
     UserService.getUserInfo(from).then(function(data){
+
         if(data)
         {
-            if(typeof $cookieStore.get('userInfo') === 'undefined')
-            {
-                delete data.img;
-                $cookieStore.put('userInfo',data);
+            delete data.img;
+            $cookieStore.put('userInfo',data);
 
-                if(fromMobile){
-                    socket.emit("mobileConnect",data.id);
-                }
-            }
+            console.log("User Info: " + $cookieStore.get("userInfo"));
 
-            if(isCaller){
-                UserService.getUserInfo(to).then(function(rs){
-                    if(!rs.img)
-                         rs.img = "theme/assets/icon.png"
+            if(fromMobile){
 
-                     $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+                socket.emit("mobileConnect",data.id);
+
+                socket.on("mobileConnectSuccess",function(){
+                    console.log("Mobile Socket Success");
+
+                    if(isCaller)
+                    {
+                        UserService.getUserInfo(to).then(function(rs){
+                            if(!rs.img)
+                                 rs.img = "theme/assets/icon.png"
+
+                             $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+                        })
+                    }
+                    else
+                    {
+                        UserService.getUserInfo(from).then(function(rs){
+                            if(!rs.img)
+                                 rs.img = "theme/assets/icon.png"
+
+                            $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
+                        })
+                    }
                 })
             }
-            else
-            {
-                UserService.getUserInfo(from).then(function(rs){
-                    if(!rs.img)
-                         rs.img = "theme/assets/icon.png"
 
-                    $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
-                })
-            }
+            
         }
                
     })
 
 })
 
-.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify){
+.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify,fromMobile){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
         audio.play();
+
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
@@ -75,7 +84,9 @@ angular.module("app.loggedIn.controller",[
             if(notify != null)
                 notify.close();
             $modalInstance.close();
-            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
+
+            
+                socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
         $scope.acceptCall = function(){
@@ -86,6 +97,7 @@ angular.module("app.loggedIn.controller",[
 
             if(!userInfo.img)
                 userInfo.img = "theme/assets/icon.png"
+
             $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false},{reload:true});
 
         }
@@ -94,6 +106,9 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
+    
+
+    
     socket.on("forceLogout",function(){
 
         toastr.error("Someone Is Logged Into Your Account!");
@@ -111,6 +126,9 @@ angular.module("app.loggedIn.controller",[
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
+
+            console.log("From ID: "+fromId);
+
             var options = {
                 body: fromUser + " Is Calling You...",
                 icon: "theme/assets/icon.png",
@@ -172,6 +190,17 @@ angular.module("app.loggedIn.controller",[
         });
     }
 
+    $scope.refreshOnlineList = function(){
+        UserService.getOnlineUsers().then(function(rs){
+            $scope.onlineUsers = [];
+            if(rs.data)
+            {
+                $scope.onlineUsers = rs.data;
+                $scope.onlineUsersTemp = rs.data;
+            }
+        })
+    }
+
     $scope.makeCall = function(user){
         UserService.getUserInfo(user.id).then(function(data){
             if(!data.img)
@@ -208,6 +237,9 @@ angular.module("app.loggedIn.controller",[
         month_in_year: ConfigService.month_in_year(),
         date_in_month: ConfigService.date_in_month(),
         invoice_status: ConfigService.invoice_status_option(),
+
+        recall_period: ConfigService.recall_period_option(),
+        recall_remind: ConfigService.recall_remind_option(),
     }
 
     var loadOptionsApi = function(){

@@ -27,7 +27,7 @@
 </div>
 
 
-<div class="mdt-search" style="display: block;" ng-if="addForm.is_show">
+<div class="mdt-search" style="display: block; width: 75%;" ng-if="addForm.is_show">
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="addForm.close()">
             <i class="fa fa-times"></i>
@@ -38,7 +38,7 @@
 </div>
 
 
-<div class="mdt-search" style="display: block;" ng-if="editForm.is_show">
+<div class="mdt-search" style="display: block;; width: 75%;" ng-if="editForm.is_show">
     <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="editForm.close()">
             <i class="fa fa-times"></i>
@@ -55,4 +55,16 @@
         </button>
     </div>
     <my-data-table options="insurers_option" numrows="10">
+</div>
+
+<div class="mdt-search" style="display: block;" ng-show="insurers.patients.is_show">
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="insurers.patients.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="break-row" style="margin-bottom: 15px;"></div>
+    <patient-search-by-company company-id="insurers.patients.company_id" 
+        click-row="insurers.patients.selectPatient(row)">
+    </patient-search-by-company>
 </div>

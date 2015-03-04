@@ -39,6 +39,8 @@ angular.module('app.loggedIn.mdtoutreferral.detail.directive', [])
 										scope.mdtoutreferralMap[key] = scope.mdtoutreferralMap[key].toString();
 									if(key.indexOf('date') != -1 || key.indexOf('Date') != -1 || key.indexOf('DATE') != -1)
 										scope.mdtoutreferralMap[key] = new Date(scope.mdtoutreferralMap[key]);
+										scope.mdtoutreferralMap.last_updated_by = $cookieStore.get("userInfo").id;
+
 								}
 							}//end for
 

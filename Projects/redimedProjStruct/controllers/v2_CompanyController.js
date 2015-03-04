@@ -14,31 +14,43 @@ module.exports = {
 		// query.left_join('cln_insurers', null, 'companies.Insurer = cln_insurers.id');
 		// var sql =  query.toString();
 
-		var k_sql = req.k_sql;
+		// var k_sql = req.k_sql;
 
-		var company_data = {};
+		// var company_data = {};
 
-		var sql = CompanyModel.sql_get(id);
+		// var sql = CompanyModel.sql_get(id);
 
-		k_sql.exec_row(sql, function(data){
-			company_data = data;	
-			if(!company_data.Insurer) {
-				res.json({status: 'success', row: company_data});
-				return; 
-			}
+		// k_sql.exec_row(sql, function(data){
+		// 	company_data = data;	
+		// 	if(!company_data.Insurer) {
+		// 		res.json({status: 'success', row: company_data});
+		// 		return; 
+		// 	}
 
-			var sql =  InsurerModel.sql_get(company_data.Insurer);
-			k_sql.exec_row(sql, function(data2){
-				company_data.insurer_data = data2;
-				res.json({status: 'success', row: company_data});	
-			},function(err){
-				res.json({status: 'error'});
-			})
-		},function(err){
-			res.json({status: 'error'});
+		// 	var sql =  InsurerModel.sql_get(company_data.Insurer);
+		// 	k_sql.exec_row(sql, function(data2){
+		// 		company_data.insurer_data = data2;
+		// 		res.json({status: 'success', row: company_data});	
+		// 	},function(err){
+		// 		res.json({status: 'error'});
+		// 	})
+		// },function(err){
+		// 	res.json({status: 'error'});
+		// });
+
+		db.Company.find({
+			where: {id: id},
+			include: [
+				{ model: db.Insurer , as: 'curInsurer'},
+				{ model: db.Company , as: 'Parent'},
+			]
 		})
-
-
+		.success(function(result){
+			res.json({'status':'success', row:result});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		});
 	},
 	postGetAll : function (req, res) {
 		var fields = req.body.fields;

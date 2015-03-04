@@ -37,6 +37,7 @@ module.exports = function(io,cookie,cookieParser) {
                 socketMobile: socket.id
             },{id:id})
                 .success(function(){
+                    socket.emit("mobileConnectSuccess");
                     getOnlineUser();
                 })
                 .error(function(err){
@@ -144,6 +145,9 @@ module.exports = function(io,cookie,cookieParser) {
         
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
+            console.log("From User: "+currUser);
+            console.log("To User: "+contactUser);
+
             db.User.find({where:{id: currUser}},{raw:true})
                 .success(function(currentUser){
                     if(currentUser)
@@ -153,15 +157,13 @@ module.exports = function(io,cookie,cookieParser) {
                                 if(contact)
                                 {
                                     if(contact.socket)
-                                        io.to(contact.socket)
-                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                            io.to(contact.socket)
+                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
                                     if(contact.socketMobile)
-                                        io.to(contact.socketMobile)
-                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                            io.to(contact.socketMobile)
+                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
                                 }
-                                console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
-                                console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
                             })
                             .error(function(err){
                                 console.log(err);
@@ -242,6 +244,10 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
+        socket.on("onlineMeasureData",function(data){
+            io.sockets.emit('getMeasureData',data);
+        })
+
         socket.on('lostCookie',function(){
             db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
                 .success(function(){
@@ -301,6 +307,7 @@ module.exports = function(io,cookie,cookieParser) {
                 socket.removeAllListeners();
 
         });
+
 
         function getOnlineUser(){
             userList = [];

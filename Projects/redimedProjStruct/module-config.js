@@ -29,6 +29,8 @@ eval(fs.readFileSync('./routes/v1_erm.js')+'');
 //
 eval(fs.readFileSync('./routes/injury_management_route.js')+'');
 
+eval(fs.readFileSync('./routes/medical_device_route.js')+'');
+
 //meditek
 eval(fs.readFileSync('./routes/mdt_route.js')+'');
 
