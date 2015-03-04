@@ -11,12 +11,17 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 			spO2 : null
 		}
 
-		socket.on('getMeasureData',function(info){
-			console.log(info);
+		socket.on('getMeasureData',function(rs){
+			var data = angular.copy(rs.info);
+		    delete data['deviceType'];
+		    delete data['rawData'];
+
 			$scope.$apply(function(){
-				$scope.pulseData.pulse = data.pulse;
-				$scope.pulseData.spO2 = data.spO2;
+				$scope.onlineDevice = rs.info.deviceType;
+				$scope.onlineData = data;
 			})
+
+			
 		})
 
 		InjuryManagementService.getMedicalDevices().then(function(rs){

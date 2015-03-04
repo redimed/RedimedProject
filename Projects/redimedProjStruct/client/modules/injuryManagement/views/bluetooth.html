@@ -42,11 +42,6 @@
 				</div>
 			</div>
 
-			<!-- <div id="site_activities_loading">
-				<img src="theme/assets/admin/layout2/img/loading.gif" alt="loading"/>
-			</div> -->
-			
-
 			<div ng-if="haveData" class="portlet blue-chambray box">
 			    <div class="portlet-title">
 			        <div class="caption ">
@@ -61,7 +56,7 @@
 							{{chartTitle}}
 						</label>
 					</div>
-					<flot id="flotChart" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
+					<flot dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
 					<br/>
 		            <div class="table-scrollable" id="content">
 			            <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
@@ -94,23 +89,37 @@
         </div>
         <div class="tab-pane" id="tab_1_1_2">
             <div class="row">
-                <div class="row">
+            	<div class="row" style="text-align: center">
+            		<label style="font-size: 30px;font-weight: bold;">
+						{{onlineDevice}}
+					</label>
+            	</div>
+                <div class="row" ng-repeat = "(key,val) in onlineData">
                     <div style="text-align: center;" class="col-md-6">
-                        <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">Pulse</span>
+                        <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">{{key | uppercase}}</span>
                     </div>
                     <div style="text-align: center;" class="col-md-6">
-                        <span style="font-size: 30px; font-weight: lighter; color: #4CD964">SpO2</span>
+	                    <div class="number" data-percent="{{val}}">
+							<span style="font-size: 30px; font-weight: lighter; color: #4CD964">{{val}}</span>
+							<!-- <input class="knob" data-min="0" data-max="100" value="{{val}}"> -->
+						</div>
                     </div>
                 </div>
-                <div class="row">
-                    <div style="text-align: center;"  class="col-md-6">
-                        <span style="font-size: 60px; font-weight: bold;color: #1AD6FD">{{pulseData.pulse}}</span>
-                    </div>
-                    <div style="text-align: center;"  class="col-md-6">
-                        <span style="font-size: 60px; font-weight: bold;color: #4CD964">{{pulseData.spO2}}</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
+
+     <script type="text/javascript">
+		// $(document).ready(function() {  
+  //           if (!jQuery().knob || Metronic.isIE8()) {
+  //               return;
+  //           }
+
+  //           $(".knob").knob({
+  //               'dynamicDraw': true,
+  //               'thickness': 0.2,
+  //               'tickColorizeValues': true,
+  //               'skin': 'tron'
+  //           });  
+	 //    });
+  //   </script>
