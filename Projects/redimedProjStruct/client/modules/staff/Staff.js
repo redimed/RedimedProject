@@ -41,4 +41,16 @@ angular.module("app.loggedIn.staff", [
             })
             //END Manage Task
 
+            //View Task
+            .state("loggedIn.staff.view", {
+                url: "/viewTask",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/staff/views/viewTask.html",
+                        controller:"ViewTaskController"
+                    }
+                }
+            })
+        //END View Task
+
     })

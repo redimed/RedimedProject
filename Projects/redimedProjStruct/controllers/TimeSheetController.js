@@ -79,8 +79,6 @@ module.exports = {
 
     getDepartmentLocation: function(req,res)
     {
-        db.timeTaskWeek.find()
-
         db.timeLocation.findAll({raw: true})
             .success(function (location) {
                 if (location === null || location.length === 0) {
@@ -126,6 +124,37 @@ module.exports = {
             })
     },
 
+    checkTaskWeek: function(req,res){
+        var startWeek = req.body.startWeek;
+        db.timeTaskWeek.find({where:{start_date : startWeek,user_id : 1}},{raw: true})
+            .success(function (result) {
+                if (result === null || result.length === 0) {
+                    res.json({data: 'no'});
+                }else
+                {
+                    db.timeTasks.findAll({where:{tasks_week_id : result.task_week_id}},{raw: true})
+                        .success(function (tasks) {
+                            if (tasks === null || tasks.length === 0) {
+                                console.log("Not found tasks in table");
+                                res.json({status: 'fail'});
+                                return false;
+                            }else
+                            {
+                                res.json({data: tasks});
+                            }
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
     getTaskList: function(req,res)
     {
         db.sequelize.query("SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS "+
@@ -149,11 +178,11 @@ module.exports = {
         var month = req.body.month;
         var search = year + '-' + month;
 
-        db.sequelize.query("SELECT time_tasks.`task`,time_tasks.date,time_tasks.`start_time`,time_tasks.`end_time`,time_activity.`NAME` as activity_name, time_department_code.`NAME` as department_name,time_task_status.`color` as status,time_location.`NAME` as location_name FROM `time_tasks` time_tasks INNER JOIN `time_task_status` time_task_status ON time_task_status.`stask_status_id` = time_tasks.`task_status_id` INNER JOIN `time_activity` time_activity ON time_activity.`activity_id` = time_tasks.`activity_id` INNER JOIN `time_department_code` time_department_code ON time_department_code.`department_code_id` = time_tasks.`department_code_id` INNER JOIN `time_location` time_location ON time_location.`location_id` = time_tasks.`location_id` WHERE time_tasks.`isenable` = 1 AND time_tasks.date LIKE ?",
+        db.sequelize.query("SELECT time_tasks.date,time_task_status.`color` as status FROM `time_tasks` time_tasks INNER JOIN `time_task_status` time_task_status ON time_task_status.`stask_status_id` = time_tasks.`task_status_id` WHERE time_tasks.`isenable` = 1 AND time_tasks.date LIKE ?",
             null, {raw: true},[search+'%'])
             .success(function (task) {
                 if (task === null || task.length === 0) {
-                    console.log("Not found activity in table");
+                    console.log("Not found task in table");
                     res.json({status: 'no task'});
                     return false;
                 }else
