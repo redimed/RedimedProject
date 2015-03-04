@@ -2,7 +2,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
 .controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService){
 	//Detail appt modules
-    var patient_id = $stateParams.patient_id;
+    var patient_id =  $scope.patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
     $scope.cal_id = $stateParams.cal_id;
 
@@ -40,7 +40,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.appt({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
-	   {'name': 'Recall', 'color': 'red-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
+	   {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
             'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},   
 
 
@@ -48,7 +48,23 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
     //End detail appt modules
 
     ReceptionistService.apptDetail($scope.cal_id).then(function(response){
-        console.log(response)
+        $scope.appointment = response.data;
+        if(!response.data || !response.data.service) {
+            return;
+        }
+   
+        if($scope.appointment.service.IS_REFERRAL == 1){
+            // check refferal is exist
+            return ReceptionistService.getReferral($scope.cal_id , $scope.patient_id)
+        }
+    }).then(function(response){
+        if(!response) {
+            return;
+        }
+
+        if(response.data.length == 0) {
+            $scope.warning_refferal = true;
+        }
     });
 
     $scope.changeAppt = function(item) {

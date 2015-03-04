@@ -16,6 +16,9 @@ module.exports = {
 					model: db.Doctor, as: 'Doctor',
 					attributes: ['NAME']
 				},
+				{
+					model: db.SysServices, as: 'Service'
+				},
 			]
 		}).success(function(appt){
 			if(!appt) {
