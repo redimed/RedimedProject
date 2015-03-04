@@ -14,17 +14,19 @@ function ERP_Rest (options) {
 		return base_rest.get('dataar/ar/invoiceline/');
 	}
 
-	// http://192.168.10.42:8080/apex/datahr/hr/vendor_customers/
 	var push_customer = function(data) {
-		return base_rest.post('datahr/hr/vendor_customers/', data);
+		return base_rest.post('ar/SYNCUSTOMERS/', data);
+		//return base_rest.post('datahr/hr/vendor_customers/', data);
 	}
 
 	var push_item = function(data){
-		return base_rest.post('datainv/inv/', data);
+		return base_rest.post('ar/SYNITEMS/', data);
+		//return base_rest.post('datainv/inv/', data);
 	}
 
 	var push_invoice_line = function(data) {
-		return base_rest.post2('dataar/ar/inv/', data);
+		return base_rest.post2('ar/INSERTBILLING/', data);
+		//return base_rest.post2('dataar/ar/inv/', data);
 	}
 
 	var push_items = function(items){
@@ -163,7 +165,7 @@ function ERP_Rest (options) {
 }
 
 var ERP = new ERP_Rest({
-	base_url: '192.168.10.42:8080/apex/'
+	base_url: '192.168.40.12:8080/apex/'
 });
 
 module.exports = ERP;
