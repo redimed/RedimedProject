@@ -1,46 +1,159 @@
-<div class="portlet yellow box">
+<div class="portlet box blue-dark">
     <div class="portlet-title">
         <div class="caption">
-            <i class="icon-pin"></i>
-            <span class="bold" ng-if="calendarView == 'month'">Timesheet of Month</span>
-            <span class="bold" ng-if="calendarView == 'week'">Timesheet of Next Week</span>
+            <i class="fa fa-gift"></i>Record Working Time: Mr
         </div>
-        <a ng-show="calendarView == 'month'" class="btn purple-stripe default pull-right" style="color: #800080" ng-click="calendarView = 'week'">Do you want enter info for next week?</a>
+        <div class="actions">
+            <a href="javascript:;" class="btn btn-primary btn-sm">
+                <i class="fa fa-refresh"></i> &nbsp;
+                Refresh </a>
+        </div>
     </div>
-    <div class="portlet-body">
-        <div class="panel">
-            <div class="panel-title">
-                <h4 class="text-center bold" style="color: #696969">{{calendarControl.getTitle()}}</h4>
-            </div>
-            <div class="panel-body">
-                <div class="col-md-1" ng-show="calendarView == 'month'">
-                    <a href="javascript:;" ng-click="calendarControl.prev()">
-                        <i class="glyphicon glyphicon-arrow-left" style="color: #808080;font-size: 30px"></i>
-                    </a>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="form_layouts.html#" class="horizontal-form">
+            <div class="form-body">
+                <h4 class="form-section bold" style="color: #ba9217">Calendar</h4>
+                <div style="text-align: center">
+                        <span class="label label-md bold" style="background-color: mediumseagreen">Complete</span>
+                        <span class="label label-md bold" style="background-color: mediumseagreen">Approved</span>
+                        <span class="label label-md bold" style="background-color: #FFE495;color: #000000">Current Selection</span>
+                        <span class="label label-md bold" style="background-color: #ffb848">Not Submitted</span>
+                        <span class="label label-md bold" style="background-color: #26c281">Submitted</span>
+                        <span class="label label-md bold" style="background-color: #8b0000">Reject</span>
+                        <span class="label label-md bold" style="background-color: #e8fde7;color: #266400">Today</span>
+                    </div>
+                <div class="row">
+                    <div class="col-md-1 col-md-offset-1">
+                        <a href="javascript:;" ng-click="calendarControl.prev()">
+                            <i class="glyphicon glyphicon-arrow-left" style="color: #808080;font-size: 30px;"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="col-md-4">
+                            <h5 class="text-center bold" style="color: #696969">{{calendarControl.getTitle(preDay)}}</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-center bold" style="color: #696969">{{calendarControl.getTitle(calendarDay)}}</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-center bold" style="color: #696969">{{calendarControl.getTitle(nextDay)}}</h5>
+                        </div>
+                        <mwl-calendar
+                                calendar-events="events"
+                                calendar-view="calendarView"
+                                calendar-view-week="viewWeek"
+                                calendar-current-day="calendarDay"
+                                calendar-pre-day="preDay"
+                                calendar-next-day="nextDay"
+                                calendar-control="calendarControl"
+                                calendar-event-click="eventClicked($event)"
+                                calendar-auto-open="true"
+                                calendar-use-iso-week="useIsoWeek"
+                                >
+                        </mwl-calendar>
+                    </div>
+                    <div class="col-md-1" ng-show="calendarView == 'month'">
+                        <a href="javascript:;" ng-click="calendarControl.next()">
+                            <i class="glyphicon glyphicon-arrow-right" style="color: #808080;font-size: 30px"></i>
+                        </a>
+                    </div>
                 </div>
-                <div ng-class="{'col-md-10': calendarView == 'month','col-md-12': calendarView == 'week'}">
-                    <mwl-calendar
-                            calendar-events="events"
-                            calendar-view="calendarView"
-                            calendar-current-day="calendarDay"
-                            calendar-control="calendarControl"
-                            calendar-event-click="eventClicked($event)"
-                            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
-                            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
-                            calendar-add-event-html="'<i class=\'glyphicon glyphicon-plus \' style=\'color: #006400; font-size: large\'></i>'"
-                            calendar-edit-event-click="eventEdited($event)"
-                            calendar-delete-event-click="eventDeleted($event)"
-                            calendar-auto-open="true"
-                            calendar-use-iso-week="useIsoWeek"
-                            >
-                    </mwl-calendar>
+                <!--/row-->
+                <h4 class="form-section bold" style="margin-top: 1px;color: #ba9217;margin-bottom: 10px">Time</h4>
+                <div class="row" style="margin-bottom: 10px">
+                    <label class="col-md-1">Week From</label>
+                    <div class="col-md-2">
+                        <input class="week-picker"/>
+                    </div>
+                    <div class="col-md-4 col-md-offset-5">
+                        <span class="btn btn-sm yellow" ng-click="">Save</span>
+                        <span class="btn btn-sm purple" ng-click="">Submit Displayed Week</span>
+                        <span class="btn btn-sm green" ng-click="">Submit All</span>
+                        <span class="btn btn-sm btn-danger" ng-click="">Exit</span>
+                        <span class="btn btn-sm btn-primary" ng-click=""><i class="fa fa-refresh"></i> &nbsp;Refresh</span>
+                    </div>
                 </div>
-                <div class="col-md-1" ng-show="calendarView == 'month'">
-                    <a href="javascript:;" ng-click="calendarControl.next()">
-                        <i class="glyphicon glyphicon-arrow-right" style="color: #808080;font-size: 30px"></i>
-                    </a>
-                </div>
-            </div>
+                <div>
+                <table class="table table-responsive table-hover">
+                  <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <label style="font-size: 14px" class="bold">Date</label>
+                            </th>
+                            <th >
+                                <label style="font-size: 14px" class="bold">Location</label>
+                            </th>
+                            <th>
+                                <label style="font-size: 14px" class="bold">Department</label>
+                            </th>
+                            <th >
+                                <label style="font-size: 14px" class="bold">Activity</label>
+                            </th>
+                            <th >
+                                <label style="font-size: 14px" class="bold">Billing codes</label>
+                            </th>
+                            <th >
+                                <label style="font-size: 14px" class="bold">Time Charge</label>
+                            </th>
+                            <th >
+                                <label style="font-size: 14px" class="bold">Task</label>
+                            </th>
+                            <th >
+                                <label style="font-size: 14px" class="bold">Item Codes</label>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="clickable" id="row{{$index}}" ng-repeat="(key,task) in tasks track by $index">
+                            <td><i data-toggle="collapse" data-target=".row1" class="fa fa-chevron-down pointer"></i>
+                                <label ng-show="false"></label>
+                            </td>
+                            <td><span class="btn btn-sm btn-warning" ng-click="addRow()">Add new</span></td>
+                            <td>{{task.dateChosen | date : 'EEE, dd MMM'}}</td>
+                            <td>
+                                <select ng-model="task.task_location" class="form-control" ng-options="location.location_id as location.NAME for location in locations">
+                                    <option value="">--Select Location--</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-model="task.task_department" class="form-control" ng-options="department.department_code_id as department.NAME for department in departments">
+                                    <option value="">--Select Department Code--</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-model="task.task_activity" class="form-control" ng-options="activity.activity_id as activity.NAME for activity in activities">
+                                    <option value="">--Select Activity--</option>
+                                </select>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <textarea class="form-control" ng-model="task.task_name"></textarea>
+                            </td>
+                            <td>
+                                <span ng-click="itemSearch.open()" class="btn btn-sm btn-warning"><i class="fa fa-search"></i> Choose Item </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
+            </div>
+        </form>
+        <!-- END FORM-->
     </div>
 </div>
+
+<!-- POPUP SEARCH-ITEM  -->
+<div class="mdt-search" style="display: block;" ng-if="itemSearch.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="itemSearch.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="itemSearch.click"></my-data-table>
+</div>
+<!-- POPUP SEARCH-ITEM  -->
+

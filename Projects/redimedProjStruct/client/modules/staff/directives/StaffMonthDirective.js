@@ -16,10 +16,6 @@ angular.module('app.loggedIn.staff.calendar.directive')
         events: '=calendarEvents',
         currentDay: '=calendarCurrentDay',
         eventClick: '=calendarEventClick',
-        eventEditClick: '=calendarEditEventClick',
-        eventDeleteClick: '=calendarDeleteEventClick',
-        editEventHtml: '=calendarEditEventHtml',
-        deleteEventHtml: '=calendarDeleteEventHtml',
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek'
       },
@@ -27,6 +23,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
         var firstRun = false;
+          var test;
 
         scope.$sce = $sce;
 
@@ -35,8 +32,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
         };
 
         function updateView() {
-          scope.view = calendarHelper.getMonthView(scope.events, scope.currentDay, scope.useIsoWeek);
-
+          scope.view=calendarHelper.getMonthView(scope.events, scope.currentDay, scope.useIsoWeek);
           //Auto open the calendar to the current day if set
           if (scope.autoOpen && !firstRun) {
             scope.view.forEach(function(week, rowIndex) {
@@ -56,7 +52,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
         scope.$watch('currentDay', updateView);
         scope.$watch('events', updateView, true);
 
-        scope.weekDays = calendarHelper.getWeekDayNames(false, scope.useIsoWeek);
+        scope.weekDays = calendarHelper.getWeekDayNames(true, scope.useIsoWeek);
 
         scope.dayClicked = function(rowIndex, cellIndex) {
           var handler = calendarHelper.toggleEventBreakdown(scope.view, rowIndex, cellIndex);
