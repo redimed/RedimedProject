@@ -37,6 +37,35 @@ module.exports = {
         });
 	},
 
+    postDoctorLeave: function(req, res) {
+        var doctor_id = req.body.doctor_id;
+        var from_time = req.body.from_time;
+        var to_time = req.body.to_time;
+
+        db.Appointment.destroy({
+            DOCTOR_ID: doctor_id,
+            FROM_TIME: { gte: from_time },
+            TO_TIME: { lte: to_time },
+            PATIENTS: null,
+        })
+        .then(function(result){
+            return db.Appointment.findAll({
+                where: {
+                    DOCTOR_ID: doctor_id,
+                    FROM_TIME: { gte: from_time },
+                    TO_TIME: { lte: to_time },
+                    PATIENTS: { ne: null},
+                }
+            })
+        })
+        .then(function(result){
+            res.json({status:'success',data:result});
+        })
+        .error(function(err){
+            res.json({status:'error',data:err});
+        })
+    },
+
     postDeleteDate: function(req, res) {
         var doctor_id = req.body.doctor_id;
         var date = req.body.date;
