@@ -232,6 +232,15 @@ angular.module("app.directive.common", [
     }
 })
 
+.directive('knob', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $(element).val(scope.number).knob();
+        }
+    };
+})
+
 
 // SELECT FROM DATE TO DATE
     /*.directive("inputDate", function(){

@@ -36,6 +36,7 @@ angular.module("app", [
     'ngMap',
     'btford.socket-io',
     'dateRangePicker',
+    'angular-svg-round-progress',
     'angular-flot'
     // 'angular-underscore'
 ])

@@ -3,11 +3,21 @@
 		text-decoration: inherit;
 	}
 
-	.demo-placeholder {
-		width: 100%;
-		height: 100%;
-		font-size: 14px;
-		line-height: 1.2em;
+	 .prog-wrapper{
+		position: relative !important;
+		margin:20px auto !important;
+		font-size: 40px !important;
+	}
+
+	.prog{
+		position: absolute !important;
+		width: 100% !important;
+		height: 100% !important;
+		line-height: 6em !important;
+		font-size:33px !important;
+		text-align: center !important;
+		color: #bbb !important;
+		font-weight: 100 !important;
 	}
 
 </style>
@@ -50,7 +60,6 @@
 			        </div>
 			    </div>
 			    <div class="portlet-body">
-
 				    <div class="row" style="text-align: center;">
 						<label style="font-size: 30px;font-weight: bold;">
 							{{chartTitle}}
@@ -89,21 +98,31 @@
         </div>
         <div class="tab-pane" id="tab_1_1_2">
             <div class="row">
-            	<div class="row" style="text-align: center">
+            	<div class="row" style="text-align: center;">
             		<label style="font-size: 30px;font-weight: bold;">
-						{{onlineDevice}}
+						{{onlineDevice	}}
 					</label>
             	</div>
-                <div class="row" ng-repeat = "(key,val) in onlineData">
-                    <div style="text-align: center;" class="col-md-6">
-                        <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">{{key | uppercase}}</span>
-                    </div>
-                    <div style="text-align: center;" class="col-md-6">
-	                    <div class="number" data-percent="{{val}}">
-							<span style="font-size: 30px; font-weight: lighter; color: #4CD964">{{val}}</span>
-							<!-- <input class="knob" data-min="0" data-max="100" value="{{val}}"> -->
+                <div class="row" >
+                    <div ng-repeat = "(key,val) in onlineData" style="text-align: center;" class="col-md-6">
+						<div class="prog-wrapper" style="font-size: 33px;">
+							<div class="prog">{{val == null || val == '' ? 0 : val}}</div>
+							<div
+							    round-progress
+							    max="100"
+							    current="{{val == null || val == '' ? 0 : val}}"
+							    color="#F2404E"
+							    bgcolor="#eaeaea"
+							    radius="100"
+							    stroke="15"
+							    semi="true"
+							    rounded="true"
+							    iterations="50"
+							    animation="easeOutCubic"></div>
 						</div>
+						<span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">{{key | uppercase}}</span>
                     </div>
+                    
                 </div>
             </div>
         </div>

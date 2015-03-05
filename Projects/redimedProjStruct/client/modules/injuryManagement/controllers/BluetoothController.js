@@ -6,6 +6,12 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		var icons = ["fa fa-plus-square","fa fa-medkit","fa fa-heart","fa fa-stethoscope"];
 		$scope.haveData = false;
 
+		$scope.chartDateRange = null;
+
+		$scope.showChart = function(range){
+			console.log(range);
+		}
+
 		$scope.pulseData = {
 			pulse: null,
 			spO2 : null
@@ -120,6 +126,7 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 						{
 							case "pulse oximeter":
 							{
+
 								var pulse = [], spO2 = [];
 								
 								for(var i=0; i<$scope.data.length;i++)
@@ -131,6 +138,8 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 										spO2.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.spO2])
 									}
 								}
+
+								console.log(pulse);
 
 								$scope.chartData = [
 									{ 	
