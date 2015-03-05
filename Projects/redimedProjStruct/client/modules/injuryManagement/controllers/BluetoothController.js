@@ -18,16 +18,16 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		}
 
 		socket.on('getMeasureData',function(rs){
-			var data = angular.copy(rs.info);
-		    delete data['deviceType'];
-		    delete data['rawData'];
+			if(rs.info){
+				var data = angular.copy(rs.info);
+			    delete data['deviceType'];
+			    delete data['rawData'];
 
-			$scope.$apply(function(){
-				$scope.onlineDevice = rs.info.deviceType;
-				$scope.onlineData = data;
-			})
-
-			
+				$scope.$apply(function(){
+					$scope.onlineDevice = rs.info.deviceType;
+					$scope.onlineData = data;
+				})
+			}
 		})
 
 		InjuryManagementService.getMedicalDevices().then(function(rs){
