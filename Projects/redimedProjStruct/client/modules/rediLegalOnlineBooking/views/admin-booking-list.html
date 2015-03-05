@@ -307,13 +307,13 @@
                         </a>
                     </li>
 
-                    <li>
+                    <li ng-show="node.STATUS == bookingStatus.confirmed">
                         <a class="pointer" role="menuitem" tabindex="3"
                            ng-click="showDialogChangeAppointmentCalendar(selectedBooking.BOOKING_ID,selectedBooking.CAL_ID,selectedBooking.APPOINTMENT_DATE,selectedBooking.ASS_ID)">
                             Change Appointment Calendar
                         </a>
 
-                    </li>
+                    </li>   
                     <!--chien set status
                     phanquocchien.c1109g@gmail.com-->
                     <li>
@@ -467,7 +467,7 @@
                                 </a>
                             </li>
 
-                            <li>
+                            <li ng-show="node.STATUS == bookingStatus.confirmed">
                                 <a class="pointer" role="menuitem" tabindex="2"
                                    ng-click="showDialogChangeAppointmentCalendar(node.BOOKING_ID,node.CAL_ID,node.APPOINTMENT_DATETIME,node.ASS_ID)">
                                     Change appointment calendar
@@ -554,8 +554,7 @@
 
             <div ng-class="selectedBooking.style_class" class="alert alert-info" role="alert" style="text-align: center;text-decoration: underline">
                 Booking Status: {{selectedBooking.STATUS}} <br />
-                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}<br/>
-                <!-- <a id="testclick" ng-click="setBookingIdInPaperless(selectedBooking.BOOKING_ID)">chien test</a> -->
+                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}
             </div>
 
 
