@@ -730,6 +730,7 @@ module.exports =
         }); 
     },
 
+
     /**
      * xu ly download folder
      * tannv.dts@gmail.com
@@ -738,6 +739,7 @@ module.exports =
     {
         if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
         {
+            isoUtil.exlog("handlingCloneFolder","khong dung quyen han");
             res.json({status:'fail'});
             return;
         }
@@ -758,7 +760,7 @@ module.exports =
         }
         if(!isoUtil.checkListData([nodeId,userId]))
         {
-            isoUtil.exlog("loi data roi");
+            isoUtil.exlog("handlingCloneFolder","loi data truyen den");
             res.json({status:'fail'});
             return;
         }
@@ -778,6 +780,7 @@ module.exports =
             {
                 if(err)
                 {
+                    isoUtil.exlog("handlingCloneFolder","loi query",query.sql);
                     res.json({status:'fail'});
                 }
                 else
@@ -808,8 +811,9 @@ module.exports =
                                             //linkZip = prefix+'temp\\'+idFolder;
                                             fs.copy(filePathStore,filePathTarget,function(err)
                                             {
-                                                if(err)
+                                                /*if(err)
                                                 {
+                                                    isoUtil.exlog("handlingCloneFolder","Khong the copy file",filePathStore);
                                                     cleanTempFolder(zipPath);
                                                     res.json({status:'fail'});
                                                 }
@@ -821,8 +825,18 @@ module.exports =
                                                     }
                                                     else
                                                     {
+                                                        isoUtil.exlog("handlingCloneFolder",'downloadPackName',downloadPackName);
                                                         res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                                     }
+                                                }*/
+                                                if(index<rows.length-1)
+                                                {
+                                                    createNode(index+1);
+                                                }
+                                                else
+                                                {
+                                                    isoUtil.exlog("handlingCloneFolder",'downloadPackName',downloadPackName);
+                                                    res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                                 }
                                             })
                                         }
@@ -835,6 +849,7 @@ module.exports =
                                             }
                                             else
                                             {
+                                                isoUtil.exlog("handlingCloneFolder",'downloadPackName',downloadPackName);
                                                 res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                             }
                                         }
@@ -847,13 +862,14 @@ module.exports =
                                         }
                                         else
                                         {
-                                            res.json({status:'success',data:{zipPath:zipPath}});
+                                            res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                         }
                                     }
                                     
                                 }
                                 else
                                 {
+                                    isoUtil.exlog("handlingCloneFolder","Khong the tao thu muc",folderWillCreate);
                                     cleanTempFolder(zipPath);
                                     res.json({status:'fail'});
                                 }
@@ -864,6 +880,7 @@ module.exports =
                     }
                     else
                     {
+                        isoUtil.exlog("handlingCloneFolder","query khong co du lieu",query.sql);
                         res.json({status:'fail'});
                     }
                 }
