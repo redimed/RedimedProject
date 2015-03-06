@@ -1,8 +1,10 @@
 angular.module("app.loggedIn.patient.detail.controller", [])
 
-.controller("PatientDetailController", function($scope, $state, $stateParams, PatientService){
+.controller("PatientDetailController", function($scope, $state, $stateParams, PatientService, FileUploader){
 	//init
 	$scope.current_patient = {};
+		
+	
 
 	//PARAMS
 	$scope.params = {
@@ -10,7 +12,7 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 			create: false,
 			edit: true
 		},
-		id: $stateParams.patient_id
+		id: $stateParams.patient_id,
 	}
 	//END PARAMS
 
@@ -18,6 +20,7 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 	var initObject = function(){
 		PatientService.mdtById($stateParams.patient_id).then(function(response){	
 			$scope.current_patient = response.data;
+			console.log($scope.current_patient);
 
 			for(var key in $scope.current_patient){
 				if($scope.current_patient[key]){

@@ -1,6 +1,8 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
+
+
 module.exports = {
 	postAdd: function(req, res){
 		var postData = req.body;
@@ -27,7 +29,7 @@ module.exports = {
 		var patient_id = req.body.Patient_id;
 		delete req.body.Patient_id;
 		var postData = req.body;
-
+		console.log(postData);
 		//COMPANY CASE
 		var sql_company = "";
 		if(postData.company_id !== null){

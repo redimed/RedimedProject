@@ -22,6 +22,7 @@ var io = require('socket.io')(server);
 var _ = require('lodash-node');
 var easyrtc = require("easyrtc");
 
+
 server.listen(3000);
 
 require('./socket')(io,cookie,cookieParser);
@@ -83,9 +84,10 @@ app.use(passport.session());
 
 
 var clientDir = path.join(__dirname, 'client');
-
+var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
+app.use('/img/patient/avt', express.static(uploadedFile));
 /**
  * K Library
  */

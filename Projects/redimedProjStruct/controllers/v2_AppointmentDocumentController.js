@@ -148,7 +148,6 @@ module.exports = {
 			}
 
 			 var path=data.document_path+data.server_name;
-
 			    res.download(path,function(err){
 			    	console.log(err);
 			    });
