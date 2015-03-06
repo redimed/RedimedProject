@@ -19,8 +19,17 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		        autoUpload: false,
 		        removeAfterUpload: true,
 		        onAfterAddingFile: function(item){
-		        	if(this.queue.length > 1)
-		        	this.queue.splice(0,1);
+		        	var arr = item.file.name.split(".");
+		        	var ext = arr[arr.length - 1];
+		        	if(ext==="jpg" || ext==="jpeg" || ext==="png"){
+		        		if(this.queue.length > 1)
+		        		this.queue.splice(0,1);
+		        	}
+		        	else{
+		        		toastr.error("Only jpg, jpeg and png accepted","Invalid format!");
+		        		this.queue = [];
+		        	}
+		        	
 		        },
 		        onCompleteItem: function(item, response, status, headers){
 		        	if(response.status==="success" && response.isEditMode===true){
@@ -30,7 +39,12 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		        	}
 		        }
 			});
-			
+
+			// uploader.filters.push(function(item) {
+			// 	console.log(item);
+   // 				return item.type == 'image/jpeg' || item.type == 'image/png';
+			// });
+
 			if(!!$stateParams.patient_id){
 				uploader.formData[0] = {patient_id: $stateParams.patient_id, file_name:(new Date()).getTime(), editMode:true};
 			}

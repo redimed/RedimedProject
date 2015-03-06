@@ -43,8 +43,7 @@
         <div ng-repeat="item in uploader.queue" ng-if="uploader.queue.length>0">
             <div ng-thumb="{ file: item._file, height:100, width:150}">{{item._file.name}}</div>
         </div>
-        <img src="{{modelObjectMap.avatar}}" width="100%" height="auto" ng-show="!uploader || uploader.queue.length===0"/>
-        <button ng-click="displaylog()">Log</button>
+        <img src="{{modelObjectMap.avatar}}" width="150px" height="100px" ng-show="!uploader || uploader.queue.length===0"/>
         
         <button style="margin-right: 0;" type="button" class="btn btn-default green" ng-click="openUploader()">
                   <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
