@@ -812,8 +812,92 @@ angular.module("app.directive.common", [
                     scope.$eval(attrs.ngEnter);
                 });
 
-                event.preventDefault();
+                    event.preventDefault();
+                }
+            });
+        };
+    })
+    /* directive LE HOAI THANH */
+    .directive("customInput", function() {
+        return {
+            restrict: "EA",
+            required: "ngModel",
+            scope: {
+                ngModel: "=",
+                customInput: "="
+            },
+            link: function(scope, elem, attrs) {
+                // array error defined
+                var arrayError = {
+                    "required": "Field is required!",
+                    "emailValid": "Email is valid!",
+                    "maxlength": "Too long!"
+                };
+                //listener customInput
+                scope.$watch("customInput", function(newCustomInput, oldCustomInput) {
+                    if (newCustomInput !== undefined &&
+                        newCustomInput !== null &&
+                        newCustomInput.length !== 0 &&
+                        newCustomInput.validation !== undefined &&
+                        newCustomInput.validation !== null &&
+                        newCustomInput.validation.length !== 0) {
+                        _.forEach(newCustomInput.validation, function(validation) {
+                            switch (validation.type) {
+                                case "required":
+                                    if (newCustomInput.value === null || newCustomInput.value === undefined || newCustomInput.value === "") {
+                                        elem.parent().find("label").append("&nbsp<i class='fa fa-star' style='color: #f3565d'></i>");
+
+                                    } else {
+                                        elem.parent().find("label").append("&nbsp<i class='fa fa-star' style='color: #1bbc9b'></i>");
+                                    }
+                                    break;
+                            }
+                        });
+
+                        //listener ngModel in customInput
+                        scope.$watch("ngModel", function(newNgModel, oldNgModel) {
+                            _.forEach(scope.customInput.validation, function(validation) {
+                                if (typeof validation !== undefined && typeof validation !== null) {
+                                    switch (validation.type) {
+                                        case "required":
+                                            if (newNgModel === "" ||
+                                                newNgModel === null ||
+                                                newNgModel === undefined) {
+                                                //check exist after add tooltopster
+                                                if (elem.parent().hasClass("tooltipstered")) {
+                                                    angular.element(elem.parent()).tooltipster("destroy");
+                                                }
+                                                //set color tag i
+                                                elem.parent().find("i").css("color", "#f3565d");
+
+                                                //set color error
+                                                elem.parent().find("label").css("color", "#f3565d");
+
+                                                //add tooltipster
+                                                angular.element(elem.parent()).tooltipster({
+                                                    theme: "tooltip-error-theme",
+                                                    contentAsHTML: true,
+                                                    content: arrayError["required"]
+                                                });
+                                                scope.customInput.valid = true;
+
+                                            } else if (elem.parent().hasClass("tooltipstered")) {
+                                                angular.element(elem.parent()).tooltipster("destroy");
+                                                angular.element(elem.parent()).removeAttr("title");
+                                                elem.parent().find("label").css("color", "#404040");
+                                                elem.parent().find("i").css("color", "#1bbc9b");
+                                                scope.customInput.valid = false;
+                                            }
+                                            break;
+                                    }
+                                }
+                            });
+                        });
+                    }
+
+                });
+                //end listener customInput
             }
-        });
-    };
-});
+        };
+    });
+/* end directive LE HOAI THANH */
