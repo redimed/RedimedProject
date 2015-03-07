@@ -150,6 +150,15 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 									if(key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
 										scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
 								}
+								if(!scope.modelObjectMap.avatar || scope.modelObjectMap.avatar === ""){
+									if(!scope.modelObjectMap.Sex || scope.modelObjectMap.Sex === ""){
+										scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+									}
+									else{
+										if(scope.modelObjectMap.Sex === "Male") scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+										else scope.modelObjectMap.avatar = "img/patient/avt/female_default.png"
+									}
+								}
 							}
 
 							scope.verifiedMedicare();
