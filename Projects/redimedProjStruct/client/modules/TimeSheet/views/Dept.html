@@ -44,11 +44,6 @@
 
                         <th>
                             <div class="th">
-                                Manage name
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
                                 Action
                             </div>
                         </th>
@@ -61,8 +56,10 @@
                             <input type="text " id="GROUP_NAME" ng-model="searchObjectMap.data.GROUP_NAME " ng-change="loadList(GROUP_NAME) " class="form-control input-sm ">
                         </td>
                         <!-- END DEPT NAME -->
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()" style="margin-top:5px;">
+                            </select>
+                        </td>
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
@@ -73,7 +70,6 @@
                     <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
                         <td>{{l.departmentName || " " }}</td>
                         <td>{{l.name}}</td>
-                        <td>{{l.user_name}}</td>
                         <td style="text-align:center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">

@@ -12,7 +12,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.TimeSheetListNode">Group User</a>
+            <a ui-sref="loggedIn.TimeSheetListNode">List user</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
@@ -23,7 +23,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>List of Group
+            <i class="fa fa-cogs"></i>List of user
             <a ng-click="resetNode()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -134,12 +134,12 @@
                             </th>
                             <th>
                                 <div class="th">
-                                    Company
+                                    Department
                                 </div>
                             </th>
                             <th>
                                 <div class="th">
-                                    User types
+                                    Location
                                 </div>
                             </th>
                             <th>
@@ -167,11 +167,11 @@
                                 <input type="text " id="user_name" ng-model="searchObjectMapUser.data.user_name " ng-change="loadListUser(user_name) " class="form-control input-sm " style="margin-top:5px;">
                             </td>
                             <td>
-                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['companies.id']" ng-options="itemCompany.id as itemCompany.Company_name for itemCompany in company" ng-change="loadListUser()" style="margin-top:5px;">
+                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['departments.departmentid']" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in dept" ng-change="loadListUser()" style="margin-top:5px;">
                                 </select>
                             </td>
                             <td>
-                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['user_type.ID']" ng-options="itemUserType.ID as itemUserType.user_type for itemUserType in userType" ng-change="loadListUser()" style="margin-top:5px;">
+                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['time_location.location_id']" ng-options="itemLocal.location_id as itemLocal.NAME for itemLocal in local" ng-change="loadListUser()" style="margin-top:5px;">
                                 </select>
                             </td>
                             <td></td>
@@ -188,11 +188,11 @@
                         </tr>
                         <tr ng-repeat="l in listUser.result " style="cursor: pointer; ">
                             <td>
-                                <input type="checkbox" ng-model="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status)" ng-checked="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status==1">
+                                <input type="checkbox" ng-model="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status)" ng-checked="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status==1 || checkAll==2">
                             </td>
                             <td>{{l.user_name || " " }}</td>
-                            <td>{{l.Company_name}}</td>
-                            <td>{{(l.user_type==="" || l.user_type===null)?"Not type":l.user_type}}</td>
+                            <td>{{(l.departmentName==="" || l.departmentName===null)?"Not dept":l.departmentName}}</td>
+                            <td>{{(l.name==="" || l.name===null)?"Not location":l.name}}</td>
                             <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                             <td style="text-align:center;">
                                 <!-- DOPDOWN ACTION -->
@@ -230,7 +230,7 @@
 
         <!-- POPUP USER -->
         <script type="text/ng-template" id="AddUser">
-            <add-user ng-model="idUser" on-cancel="closeClick(return)" on-save="saveClick(return)"></add-user>
+            <add-user ng-model="listNew" on-cancel="closeClick(return)" on-save="saveClick(return)"></add-user>
         </script>
         <!-- END POOUP USER
 

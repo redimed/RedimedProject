@@ -27,6 +27,7 @@ angular.module("app.loggedIn.TimeSheet.AddDept.Directive", [])
                             toastr.error("Server not response!", "Error");
                         }
                     });
+                    //end load location
                     if (newModel !== null && newModel !== undefined) {
                         scope.addOrUpdateTitle = "Update Dept";
                         scope.addOrUpdateButton = "Update";

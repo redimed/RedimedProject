@@ -85,7 +85,7 @@
                             </tr>
                             <tr ng-repeat="l in list.result " style="cursor: pointer; ">
                                 <td>
-                                    <input type="checkbox" ng-model="checkList[l.id].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.id, checkList[l.id].status)" ng-checked="checkList[l.id].status==1">
+                                    <input type="checkbox" ng-model="checkList[l.id].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.id, checkList[l.id].status)" ng-checked="checkList[l.id].status==1 || checkAll==2">
                                 </td>
                                 <td>{{l.user_name || " " }}</td>
                                 <td>{{(l.Company_name==="" || l.Company_name===null)?"Not company":l.Company_name}}</td>

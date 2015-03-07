@@ -127,7 +127,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
             if ($scope.searchUserObject.NODE_ID !== -1) {
                 $scope.titleUser = $scope.NODE_CODE;
             } else {
-                $scope.titleUser = "Not Role is selected";
+                $scope.titleUser = "Not role is selected";
             }
             //end settile lisuser
         };
@@ -193,8 +193,8 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                     Creation_date: ""
                 },
                 select: {
-                    "companies.id": "",
-                    "user_type.ID": ""
+                    "time_location.location_id": "",
+                    "departments.departmentid": ""
                 },
                 data: {
                     user_name: ""
@@ -253,23 +253,38 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
             $(idInput).focus();
         };
         //END FUNCTION CREATIONDATEDESC
-        //LOAD SELECT
-        TimeSheetService.LoadSelectUser().then(function(response) {
+
+        //LOAD LOCATION
+        TimeSheetService.LoadLocation().then(function(response) {
             if (response.status === "error") {
-                $scope.company = response.company;
-                $scope.userType = response.userType;
-            } else if (response.status === "success") {
-                $scope.company = response.company;
-                $scope.userType = response.userType;
-            } else {
-                //catch exception
-                $state.go("loggedIn.TimeSheetTree", null, {
+                $state.go("loggedIn.TimeSheetDept", null, {
                     "reload": true
                 });
-                toastr.error("Loading fail!", "Error");
+                toastr.error("Server response error!", "Error");
+            } else if (response.status === "success") {
+                $scope.local = response.result;
+            } else {
+                //catch exception
+                $state.go("loggedIn.TimeSheetDept", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
             }
         });
-        //END LOAD SELECT
+        //END LOAD LOCATION
+
+        //LOAD DEPT
+        TimeSheetService.LoadDepartMent().then(function(response) {
+            if (response.status === "error") {
+                toastr.error("Server respose error!", "Error");
+            } else if (response.status === "success") {
+                $scope.dept = response.result;
+            } else {
+                //try catch exception
+                toastr.error("Server not reponse!", "Error");
+            }
+        });
+        //END LOAD DEPT
 
         // PROCESS DELETE
         $scope.checkChange = function(NODE_ID, USER_ID, DEPARTMENT_CODE_ID, status) {
@@ -406,10 +421,8 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                         });
                         TimeSheetService.AddUser($scope.info).then(function(response) {
                             if (response.status === "success") {
-                                toastr.success("Add user success", "Success");
-                                modalInstance.close({
-                                    status: "success"
-                                });
+                                toastr.success("Add user success!", "Success");
+                                $scope.listNew = response.result;
                             } else if (response.status === "error") {
                                 modalInstance.close({
                                     status: "error"
@@ -433,6 +446,9 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                 },
                 size: "lg"
             });
+            modalInstance.result.then(function(data) {
+                $scope.loadListUser();
+            });
         };
         //END DIALOG
 
@@ -448,10 +464,10 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                         });
                     };
                     $scope.saveClick = function(info) {
-                            modalInstance.close({
-                                status: "update"
-                            });
-                        };
+                        modalInstance.close({
+                            status: "update"
+                        });
+                    };
                 },
                 size: "lg"
             });

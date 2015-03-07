@@ -14,12 +14,31 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
         };
         //END FUNCTION
 
+        //load location
+        TimeSheetService.LoadLocation().then(function(response) {
+            if (response.status === "error") {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Server response error!", "Error");
+            } else if (response.status === "success") {
+                $scope.location = response.result;
+            } else {
+                //catch exception
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
+            }
+        });
+        //end load location
+
         //FUNCTION LOADLIST
         $scope.loadList = function(idInput) {
             $scope.list.loading = true;
             TimeSheetService.LoadDept($scope.searchObjectMap).then(function(response) {
                 if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetListNode", null, {
+                    $state.go("loggedIn.TimeSheetHome", null, {
                         "reload": true
                     });
                     toastr.error("Server response error!", "Error");
@@ -27,7 +46,7 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                 } else if (response.status === "success") {
                     $scope.list = response;
                 } else {
-                    $state.go("loggedIn.TimeSheetListNode", null, {
+                    $state.go("loggedIn.TimeSheetHome", null, {
                         "reload": true
                     });
                     toastr.error("Server not response!", "Error");
@@ -50,6 +69,9 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                 },
                 data: {
                     "departments.departmentName": ""
+                },
+                select: {
+                    "time_location.location_id": null
                 }
             };
             $scope.searchObjectMap = angular.copy($scope.searchObject);

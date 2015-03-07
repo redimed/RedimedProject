@@ -13,7 +13,7 @@
                 <!-- LOCATION NAME -->
                 <div data-field-span="6">
                     <label>Location</label>
-                    <select ng-options="local.location_id as (local.street_address +', '+ local.city)  for local in location" ng-model="info.locationID"></select>
+                    <select ng-options="local.location_id as local.NAME for local in location" ng-model="info.locationID"></select>
                 </div>
                 <!-- END LOCATION NAME -->
         </fieldset>

@@ -33,6 +33,11 @@
                         </th>
                         <th>
                             <div class="th">
+                                Description
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
                                 Creation Date&nbsp;
                                 <span class="glyphicon glyphicon-chevron-up" ng-click="loadList('ASC')" ng-class="{'active': searchObjectMap.order==='ASC'}">
                             </span>
@@ -50,6 +55,7 @@
                         </td>
                         <!-- END FUNCTION NAME -->
                         <td></td>
+                        <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
                         <td colspan="4 ">
@@ -58,6 +64,7 @@
                     </tr>
                     <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
                         <td>{{l.GROUP_NAME || " " }}</td>
+                        <td>{{(l.DECRIPTION === "" || l.DECRIPTION === null)?"Not Decription":l.DECRIPTION}}</td>
                         <td>{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                     </tr>
                 </tbody>

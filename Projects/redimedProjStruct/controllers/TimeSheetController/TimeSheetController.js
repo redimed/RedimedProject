@@ -6,7 +6,7 @@ var User = db.User;
 var UserType = db.UserType;
 var Company = db.Company;
 var Departments = db.Departments;
-var Location = db.Location;
+var Location = db.timeLocation;
 module.exports = {
     //MODULE TREE
     LoadTreeTimeSheet: function(req, res) {
@@ -165,27 +165,27 @@ module.exports = {
         strQuery += whereSelect;
         strQuery = strQuery.substring(0, strQuery.length - 5);
         searchParam.unshift(strQuery);
-        var querySelectDel = "SELECT users.user_name, users.id,sys_hierarchies_users.NODE_ID,sys_hierarchies_users.DEPARTMENT_CODE_ID, users.Creation_date, companies.Company_name, " +
-            "user_type.user_type FROM sys_hierarchies_users " +
+        var querySelectDel = "SELECT users.user_name, users.id,sys_hierarchies_users.NODE_ID,sys_hierarchies_users.DEPARTMENT_CODE_ID, users.Creation_date, " +
+            "time_location.name, departments.departmentName FROM sys_hierarchies_users " +
             "INNER JOIN users ON sys_hierarchies_users.USER_ID = users.id " +
-            "LEFT JOIN companies ON users.company_id = companies.id " +
-            "LEFT JOIN user_type ON users.user_type = user_type.user_type " +
+            "INNER JOIN departments ON departments.departmentid = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
+            "INNER JOIN time_location ON time_location.location_id = departments.locationID " +
             "WHERE sys_hierarchies_users.NODE_ID = " + strQuery + order;
         db.sequelize.query(querySelectDel)
             .success(function(resultSelect) {
-                var querySelect = "SELECT users.user_name, users.id,sys_hierarchies_users.NODE_ID,sys_hierarchies_users.DEPARTMENT_CODE_ID, users.Creation_date, companies.Company_name, " +
-                    "user_type.user_type FROM sys_hierarchies_users " +
+                var querySelect = "SELECT users.user_name, users.id,sys_hierarchies_users.NODE_ID,sys_hierarchies_users.DEPARTMENT_CODE_ID, users.Creation_date, " +
+                    "time_location.name, departments.departmentName FROM sys_hierarchies_users " +
                     "INNER JOIN users ON sys_hierarchies_users.USER_ID = users.id " +
-                    "LEFT JOIN companies ON users.company_id = companies.id " +
-                    "LEFT JOIN user_type ON users.user_type = user_type.user_type " +
+                    "INNER JOIN departments ON departments.departmentid = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
+                    "INNER JOIN time_location ON time_location.location_id = departments.locationID " +
                     "WHERE sys_hierarchies_users.NODE_ID = " + strQuery + order + " " + " limit " +
                     searchObj.limit + " offset " + searchObj.offset;
                 db.sequelize.query(querySelect)
                     .success(function(result) {
                         var queryCount = "SELECT count(users.user_name) as count FROM sys_hierarchies_users " +
                             "INNER JOIN users ON sys_hierarchies_users.USER_ID = users.id " +
-                            "LEFT JOIN companies ON users.company_id = companies.id " +
-                            "LEFT JOIN user_type ON users.user_type = user_type.user_type " +
+                            "INNER JOIN departments ON departments.departmentid = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
+                            "INNER JOIN time_location ON time_location.location_id = departments.locationID " +
                             "WHERE sys_hierarchies_users.NODE_ID = " + strQuery;
                         db.sequelize.query(queryCount)
                             .success(function(count) {
@@ -296,7 +296,9 @@ module.exports = {
     },
     LoadDepartMent: function(req, res) {
         Departments.findAll({
-                departmentType: "Time Sheet"
+                where: {
+                    departmentType: "Time Sheet"
+                }
             }, {
                 raw: true
             })
@@ -465,14 +467,34 @@ module.exports = {
         var queryAddUser = "INSERT INTO sys_hierarchies_users VALUE " + arrayUser;
         db.sequelize.query(queryAddUser)
             .success(function(result) {
-                res.json({
-                    status: "success"
-                });
+                sys_hierarchies_users.findAll({
+                        where: {
+                            NODE_ID: info.NODE_ID,
+                            DEPARTMENT_CODE_ID: info.departmentid
+                        }
+                    }, {
+                        raw: true
+                    })
+                    .success(function(result) {
+                        res.json({
+                            status: "success",
+                            result: result
+                        });
+
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: []
+                        });
+                    });
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
                 res.json({
-                    status: "error"
+                    status: "error",
+                    result: []
                 });
             });
     },
@@ -592,6 +614,7 @@ module.exports = {
         var searchObj = req.body.searchObj;
         var strOrder = "ORDER BY ";
         var strSearch = " AND ";
+        var strQuery = " AND ";
         //ORDER
         for (var key in searchObj.order) {
             if (searchObj.order[key] !== undefined && searchObj.order[key] !== null && searchObj.order[key] !== "") {
@@ -603,27 +626,44 @@ module.exports = {
         }
         //END ORDER
 
+        //get filter
+        for (var keyFilter in searchObj.select) {
+            if (searchObj.select[keyFilter] !== undefined && searchObj.select[keyFilter] !== null && searchObj.select[keyFilter] !== "") {
+                strQuery += keyFilter + " = " + searchObj.select[keyFilter] + " and ";
+            }
+        }
+        //end get filter
+
         //SEARCH
         for (var keySearch in searchObj.data) {
             if (searchObj.data[keySearch] !== undefined && searchObj.data[keySearch] !== null && searchObj.data[keySearch]) {
-                strSearch += key + " like '%" + searchObj.data[keySearch] + "%' ";
+                strSearch += key + " like '%" + searchObj.data[keySearch] + "%' and ";
             }
         }
+
         if (strSearch.length === 5) {
             strSearch = "";
+        } else {
+            strSearch = strSearch.substring(0, strSearch.length - 5);
+        }
+
+        if (strQuery.length === 5) {
+            strQuery = "";
+        } else {
+            strQuery = strQuery.substring(0, strQuery.length - 5);
         }
         //END SEARCH
 
-        var querySearch = "SELECT departments.departmentid, departments.departmentName, locations.street_address, locations.city, users.user_name " +
+        var querySearch = "SELECT departments.departmentid, departments.departmentName, time_location.name, users.user_name " +
             "FROM departments LEFT JOIN users ON departments.managerId = users.id " +
-            "LEFT JOIN locations ON locations.location_id = departments.locationID " +
+            "LEFT JOIN time_location ON time_location.location_id = departments.locationID " +
             "WHERE departments.departmentType = 'Time Sheet' " +
-            strSearch + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
+            strSearch + strQuery + " " + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
         var queryCount = "SELECT COUNT(departments.departmentid) AS count " +
             "FROM departments LEFT JOIN users ON departments.managerId = users.id " +
-            "LEFT JOIN locations ON locations.location_id = departments.locationID " +
+            "LEFT JOIN time_location ON time_location.location_id = departments.locationID " +
             "WHERE departments.departmentType = 'Time Sheet' " +
-            strSearch;
+            strSearch + strQuery;
         db.sequelize.query(querySearch)
             .success(function(result) {
                 db.sequelize.query(queryCount)

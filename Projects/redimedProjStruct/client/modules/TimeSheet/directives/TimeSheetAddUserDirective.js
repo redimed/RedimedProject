@@ -68,6 +68,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         maxSize: 5,
                         currentPage: 1,
                         NODE_ID: -1,
+                        departmentid: -1,
                         order: {
                             "users.user_name": "",
                             "users.Creation_date": ""
@@ -204,6 +205,12 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                     }
                 };
                 //END SOME FUNCTION IN PAGE
+
+                //WATCH addAgain
+                scope.$watch('ngModel', function(newModel, oldModel) {
+                    scope.loadList();
+                });
+                //END WATCH addAgain
             },
             templateUrl: "modules/TimeSheet/directives/templates/addUser.html"
         };

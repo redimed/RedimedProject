@@ -56,7 +56,7 @@ module.exports = {
     InsertFunction: function(req, res) {
         var info = req.body.info || [];
         sys_hierarchies_types.create({
-                TYPE_NAME: info.TYPE_NAME,
+                TYPE_NAME: info.model[0].value,
                 Created_by: info.userId
             }, {
                 raw: true
