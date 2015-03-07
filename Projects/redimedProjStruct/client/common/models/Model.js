@@ -131,7 +131,8 @@ angular.module("app.model", [])
 	test: null,
 	company_id: null, //yes
 	passport: '', //yes
-	driver_license: '' //yes
+	driver_license: '', //yes
+	avatar: ''
 })
 // END PATIENT MODEL
 

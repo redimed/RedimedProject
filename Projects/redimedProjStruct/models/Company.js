@@ -41,8 +41,8 @@ module.exports = function(sequelize,DataTypes){
         Site_medic : DataTypes.STRING(100) ,
         User_id : DataTypes.INTEGER(11) ,
         isPO : DataTypes.INTEGER(11) ,
-        isExtra: DataTypes.INTEGER(11),
-        parent_id: DataTypes.INTEGER(11)
+        isExtra: DataTypes.INTEGER(11)
+
     },{
         tableName: 'companies',
         createdAt:'Creation_date',
@@ -61,11 +61,6 @@ module.exports = function(sequelize,DataTypes){
                 Company.belongsTo(models.Insurer, {
                     as: 'curInsurer', 
                     foreignKey: 'Insurer'
-                });
-
-                Company.belongsTo(models.Company, {
-                    as: 'Parent', 
-                    foreignKey: 'parent_id'
                 });
             }
         }

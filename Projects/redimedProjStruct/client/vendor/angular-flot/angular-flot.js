@@ -31,6 +31,9 @@ angular.module('angular-flot', []).directive('flot', function() {
         width: width,
         height: height
       });
+
+      
+
       init = function() {
         var plotObj;
         plotObj = $.plot(plotArea, scope.dataset, scope.options);
@@ -52,6 +55,29 @@ angular.module('angular-flot', []).directive('flot', function() {
       onOptionsChanged = function() {
         return plot = init();
       };
+
+      plotArea.bind("plothover", function(event, pos, item) {
+        $("<div id='tooltip'></div>").css({
+          position: "absolute",
+          display: "none",
+          border: "1px solid #fdd",
+          padding: "2px",
+          "background-color": "#fee",
+          opacity: 0.80
+        }).appendTo("body");
+
+        if (item) {
+           var x = item.datapoint[0],
+             y = item.datapoint[1];
+
+           $("#tooltip").html(item.series.label + " = " + y)
+             .css({top: item.pageY+5, left: item.pageX+5})
+             .fadeIn(200);
+         } else {
+           $("#tooltip").hide();
+         }
+      });
+
       return scope.$watch('options', onOptionsChanged, true);
     }
   };

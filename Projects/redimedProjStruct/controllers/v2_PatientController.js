@@ -2,6 +2,8 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 var Medicare_Rest = require('../helper/Medicare_Rest');
+var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 module.exports ={
 	postSearch: function(req,res){
@@ -108,5 +110,65 @@ module.exports ={
 		}, function(err){
 			res.json(500, {"status": "error", "message": error});
 		})
-	}
+	},
+
+	uploadUploadAvt: function(req,res){
+		var UPLOAD_PATH = db.Patient.getUploadPath();
+		var file_name = req.body.file_name;
+		var tmp_path = req.files.file.path;
+		var target_path = UPLOAD_PATH + file_name;
+		console.log("this is body", req.body); 
+		console.log("running here 1");
+		if(req.body.editMode === 'true'){
+			console.log("running here 2");
+			file_name = req.body.file_name+ "-" + req.files.file.name;
+			target_path = UPLOAD_PATH + file_name;
+			db.Patient.find(req.body.patient_id)
+			.success(function(patient){
+				if(!!patient.avatar && patient.avatar!==""){
+					var remove_path = "uploadFile/PatientPicture/"+patient.avatar.split("/")[3];
+					fs.exists(remove_path,function(exists){
+						if(exists){
+							console.log('this is remove path', remove_path);
+							fs.unlink(remove_path, function(err){
+								if (err) throw err;
+							})
+						}
+					})
+				}
+				mkdirp(UPLOAD_PATH, function (err) {
+					fs.rename(tmp_path, target_path, function(err) {
+						if (err) throw err;
+			            fs.unlink(tmp_path, function() { // delete 
+			            	if (err){ 
+			                 console.log(err)
+			                 throw err;
+			                }
+			                res.json({status:"success",img_path:"img/patient/avt/"+file_name, isEditMode:true});
+			            });
+					});
+				});
+			})
+			.error(function(err){
+				res.json(500,{"status": "error", "message": err});
+			})
+		}
+		else{
+			mkdirp(UPLOAD_PATH, function (err) {
+					fs.rename(tmp_path, target_path, function(err) {
+						if (err) throw err;
+			            fs.unlink(tmp_path, function() { // delete 
+			            	if (err){ 
+			                 console.log(err)
+			                 throw err;
+			                }
+			                res.json({status:"success",img_path:"img/patient/avt/"+file_name, isEditMode:false});
+			            });
+					});
+				});
+		}
+		
+		
+		
+	},
 }

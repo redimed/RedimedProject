@@ -5,4 +5,5 @@ angular.module("app.loggedIn.patient.directives", [
 	"app.loggedIn.patient.waiting_list.directive",
 	"app.loggedIn.patient.search.directive",
 	"app.loggedIn.patient.companies.directive",
+	"app.loggedIn.patient.ngthumb.directive"
 ])

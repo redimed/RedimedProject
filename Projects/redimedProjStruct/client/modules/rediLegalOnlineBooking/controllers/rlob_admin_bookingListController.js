@@ -809,6 +809,10 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                             });
                         };
                     });
+                }
+                else{
+                    $("#lob-change-appointment-calendar-dialog").modal('hide');
+                    $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','fail','Change appointment calendar fail!');
                 };
             });
             
@@ -1148,9 +1152,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         });
         
         $scope.check = function(aa){
-            $scope.bookingMessage.message = aa;
-        };
-        $scope.test = function(aa){
             $scope.bookingMessage.message = aa;
         };
         //chien set booking id in paperless

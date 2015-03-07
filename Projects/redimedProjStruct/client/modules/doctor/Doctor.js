@@ -115,8 +115,16 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
-
-    //
+  // TIMETABLE DETAIL LEAVE
+    .state("loggedIn.doctor.timetable.detail.leave", {
+        url: "/leave",
+        views: {
+            "main-content-timetable": {
+                templateUrl: "modules/doctor/views/timetable-leave.html",
+                controller: "DoctorTimetableDetailLeaveController"
+            }
+        }
+    })
 
 	// ITEM SHEET
 	.state("loggedIn.doctor.items", {
