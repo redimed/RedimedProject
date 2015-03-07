@@ -15,14 +15,22 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
         };
         //END FUNCTION RESET
 
-        $scope.loadList = function() {
+        $scope.loadList = function(idInput) {
+            if (idInput === "DESC") {
+                $scope.searchObjectMap.order = "DESC";
+            } else if (idInput === "ASC") {
+                $scope.searchObjectMap.order = "ASC";
+            }
+
             TreeApproveService.LoadTree($scope.searchObjectMap).then(function(response) {
                 if (response[status] !== "fail") {
                     $scope.list = response;
                 } else {
+                    $scope.list = response;
                     toastr.error("Loading fail!", "Error");
                 }
             });
+            $(idInput).focus();
         };
 
         //FUNCTION INIT
@@ -44,6 +52,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
                 offset: 0,
                 maxSize: 5,
                 currentPage: 1,
+                order: "DESC",
                 GROUP_TYPE: localStorageService.get("IdFunction"),
                 data: {
                     GROUP_NAME: "",
@@ -72,7 +81,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
             $state.go("loggedIn.DetailTree");
         };
 
-        $scope.DeleteTree = function(groupId, index) {
+        $scope.DeleteTree = function(groupId) {
             //JQUERY CONFIRM
             swal({
                 title: "Are you sure?",
@@ -85,7 +94,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
             }, function() {
                 TreeApproveService.DeleteTree(groupId).then(function(response) {
                     if (response.status === "success") {
-                        $scope.list.result.splice(index, 1);
+                        $scope.loadList();
                         toastr.success("Delete success!", "Success");
                     } else if (response.status === "fail") {
                         toastr.error("Delete fail!", "Error");

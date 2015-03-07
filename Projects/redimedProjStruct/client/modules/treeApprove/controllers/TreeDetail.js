@@ -157,6 +157,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                     });
                     toastr.error("Server not response!", "500");
                 } else if (data.status === "editSuccess") {
+
                     //PUSH DATA OF TREE
                     var treeData = [];
                     angular.forEach(data.result, function(nodeOfTree, index) {
@@ -178,6 +179,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                     //DRAW TREE
                     $scope.org_chart(treeData);
                     //END DRAW TREE
+
                     toastr.success("Update node success!", "Success");
                 }
             });
@@ -216,7 +218,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                             $scope.deleteNode(node);
                             //end call delete node
                         } else {
-                            toastr.error("Can not delete root!", "Error");
+                            toastr.error("Can not delete root!", "Fail");
                         }
 
                     });

@@ -70,8 +70,12 @@ angular.module("app.loggedIn", [
     "app.loggedIn.staff",
 
     // MODULE TREEAPPROVE
-    'app.loggedIn.treeApprove'
+    'app.loggedIn.treeApprove',
     // END MODULE TREE APPROVE
+
+    //MODULE TIMESHEET
+    'app.loggedIn.TimeSheet'
+    //END MODULE TIMESHEET
 ])
 
 .config(function($stateProvider) {

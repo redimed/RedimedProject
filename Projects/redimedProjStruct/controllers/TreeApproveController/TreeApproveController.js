@@ -19,28 +19,38 @@ module.exports = {
         strQuery = strQuery.substring(0, strQuery.length - 5);
         searchParam.unshift(strQuery);
         sys_hierarchies_types.findAndCountAll({
-                order: 'Creation_date DESC',
+                order: 'Creation_date ' + searchObj.order,
                 offset: searchObj.offset,
                 limit: searchObj.limit,
                 where: searchParam
+            }, {
+                raw: true
             })
             .success(function(data) {
-                if (data === null || data === undefined || data.length === 0) {
+                if (data.count === 0) {
                     res.json({
-                        status: "fail"
+                        status: "fail",
+                        result: searchObj.data.TYPE_NAME === "" ? null : [],
+                        count: 0
                     });
+                    return;
                 } else {
                     res.json({
+                        status: "success",
                         count: data.count,
                         result: data.rows
                     });
+                    return;
                 }
             })
             .error(function(err) {
-                res.json({
-                    "status": "error"
-                });
                 console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    "status": "error",
+                    result: null,
+                    count: 0
+                });
+                return;
             });
     },
     InsertFunction: function(req, res) {
@@ -130,7 +140,7 @@ module.exports = {
         var info = req.body.info;
         var TYPE_NAME = info.oldName;
         sys_hierarchies_types.update({
-                TYPE_NAME: info.TYPE_NAME,
+                TYPE_NAME: info.model[0].value,
                 Last_updated_by: info.userId
             }, {
                 TYPE_NAME: TYPE_NAME
@@ -168,7 +178,7 @@ module.exports = {
     },
     //END MODULE SYSTEM
 
-    //MODULE DEPARTMENT
+    //MODULE TREE
     LoadTree: function(req, res) {
         var searchObj = req.body.searchObj;
         var searchParam = [];
@@ -181,12 +191,14 @@ module.exports = {
         }
         strQuery = strQuery.substring(0, strQuery.length - 5);
         searchParam.unshift(strQuery);
-        var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id" + " where " + searchParam + " ORDER BY CREATION_DATE DESC " + " limit " + searchObj.limit + " offset " + searchObj.offset;
+        var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id" + " where " + searchParam + " ORDER BY CREATION_DATE " + searchObj.order + " limit " + searchObj.limit + " offset " + searchObj.offset;
         db.sequelize.query(query)
             .success(function(data) {
                 if (data === undefined || data === null || data.length === 0) {
                     res.json({
-                        status: "fail"
+                        status: "fail",
+                        result: searchObj.data.GROUP_NAME === "" ? null : [],
+                        count: 0
                     });
                     return;
                 } else {
@@ -205,7 +217,9 @@ module.exports = {
                         .error(function(err) {
                             console.log("*****ERROR:" + err + "*****");
                             res.json({
-                                status: "fail"
+                                status: "fail",
+                                result: null,
+                                count: 0
                             });
                             return;
                         });
@@ -213,6 +227,11 @@ module.exports = {
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "fail",
+                    result: null,
+                    count: 0
+                });
                 return;
             });
     },
@@ -524,7 +543,6 @@ module.exports = {
                                             raw: true
                                         })
                                         .success(function(result2) {
-                                            console.log(result2);
                                             res.json({
                                                 status: "findNull",
                                                 result: result2
