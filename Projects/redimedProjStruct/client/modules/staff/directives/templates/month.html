@@ -13,7 +13,8 @@
                         ng-class="{pointer: day.events.length > 0}"
                         >
                     <div class="cal-month-day"
-                         ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-inmonth': day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6, 'cal-day-today': day.isToday}">
+                         ng-class="{'cal-day-outmonth': !day.inMonth, 'cal-day-weekend': $index == 5 || $index == 6, 'cal-day-today': day.isToday}"
+                            ng-style="{'background-color': $index < 5 ? day.events[0].STATUS : null}" style="background-color: ">
                         <span class="pull-right" data-cal-date>{{ day.label }}</span>
                     </div>
                 </div>

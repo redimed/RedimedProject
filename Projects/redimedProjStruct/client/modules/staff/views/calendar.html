@@ -3,11 +3,6 @@
         <div class="caption">
             <i class="fa fa-gift"></i>Record Working Time: Mr
         </div>
-        <div class="actions">
-            <a href="javascript:;" class="btn btn-primary btn-sm">
-                <i class="fa fa-refresh"></i> &nbsp;
-                Refresh </a>
-        </div>
     </div>
     <div class="portlet-body form">
         <!-- BEGIN FORM-->
@@ -16,12 +11,12 @@
                 <h4 class="form-section bold" style="color: #ba9217">Calendar</h4>
                 <div style="text-align: center">
                         <span class="label label-md bold" style="background-color: mediumseagreen">Complete</span>
-                        <span class="label label-md bold" style="background-color: mediumseagreen">Approved</span>
-                        <span class="label label-md bold" style="background-color: #FFE495;color: #000000">Current Selection</span>
+                        <span class="label label-md bold" style="background-color: #3CB371">Approved</span>
+                        <span class="label label-md bold" style="background-color: #F9A97B">Current Selection</span>
                         <span class="label label-md bold" style="background-color: #ffb848">Not Submitted</span>
-                        <span class="label label-md bold" style="background-color: #26c281">Submitted</span>
-                        <span class="label label-md bold" style="background-color: #8b0000">Reject</span>
-                        <span class="label label-md bold" style="background-color: #e8fde7;color: #266400">Today</span>
+                        <span class="label label-md bold" style="background-color: #baaa5a">Submitted</span>
+                        <span class="label label-md bold" style="background-color: #DF5755">Reject</span>
+                        <span class="label label-md bold" style="border: 3px solid blue;color: #000000">Today</span>
                     </div>
                 <div class="row">
                     <div class="col-md-1 col-md-offset-1">
@@ -61,20 +56,12 @@
                 </div>
                 <!--/row-->
                 <h4 class="form-section bold" style="margin-top: 1px;color: #ba9217;margin-bottom: 10px">Time</h4>
-                <div class="row" style="margin-bottom: 10px">
-                    <label class="col-md-1">Week From</label>
-                    <div class="col-md-2">
-                        <input class="week-picker"/>
-                    </div>
-                    <div class="col-md-4 col-md-offset-5">
-                        <span class="btn btn-sm yellow" ng-click="">Save</span>
-                        <span class="btn btn-sm purple" ng-click="">Submit Displayed Week</span>
-                        <span class="btn btn-sm green" ng-click="">Submit All</span>
-                        <span class="btn btn-sm btn-danger" ng-click="">Exit</span>
-                        <span class="btn btn-sm btn-primary" ng-click=""><i class="fa fa-refresh"></i> &nbsp;Refresh</span>
-                    </div>
+                <div class="pull-right">
+                    <label>Week From</label>
+                    <input class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
+                    <span class="btn btn-sm blue-dark" ng-click=""><i class="fa fa-refresh"></i> &nbsp;Refresh</span>
+                    <span class="btn btn-sm blue-dark" ng-click="">Exit</span>
                 </div>
-                <div>
                 <table class="table table-responsive table-hover">
                   <thead>
                         <tr>
@@ -93,9 +80,6 @@
                                 <label style="font-size: 14px" class="bold">Activity</label>
                             </th>
                             <th >
-                                <label style="font-size: 14px" class="bold">Billing codes</label>
-                            </th>
-                            <th >
                                 <label style="font-size: 14px" class="bold">Time Charge</label>
                             </th>
                             <th >
@@ -107,39 +91,41 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="clickable" id="row{{$index}}" ng-repeat="(key,task) in tasks track by $index">
-                            <td><i data-toggle="collapse" data-target=".row1" class="fa fa-chevron-down pointer"></i>
-                                <label ng-show="false"></label>
-                            </td>
-                            <td><span class="btn btn-sm btn-warning" ng-click="addRow()">Add new</span></td>
-                            <td>{{task.dateChosen | date : 'EEE, dd MMM'}}</td>
+                        <tr ng-class="{'clickable' : task.order == 1,'collapse row{{task.date | date : test}}' : task.order != 1}" ng-repeat="(key,task) in tasks track by $index">
+                            <td><i  data-toggle="collapse" data-target=".row{{task.date | date : test}}" class="fa fa-chevron-down pointer"></i></td>
+                            <td><span class="btn btn-sm blue-dark" ng-click="addRow()">Add new</span></td>
+                            <td><i class="fa fa-trash pointer" style="font-size: 20px"></i> &nbsp;{{task.date | date : 'EEE, dd MMM'}}</td>
                             <td>
-                                <select ng-model="task.task_location" class="form-control" ng-options="location.location_id as location.NAME for location in locations">
+                                <select ng-model="task.location_id" class="form-control" ng-options="location.location_id as location.NAME for location in locations">
                                     <option value="">--Select Location--</option>
                                 </select>
                             </td>
                             <td>
-                                <select ng-model="task.task_department" class="form-control" ng-options="department.department_code_id as department.NAME for department in departments">
+                                <select ng-model="task.department_code_id" class="form-control" ng-options="department.department_code_id as department.NAME for department in departments">
                                     <option value="">--Select Department Code--</option>
                                 </select>
                             </td>
                             <td>
-                                <select ng-model="task.task_activity" class="form-control" ng-options="activity.activity_id as activity.NAME for activity in activities">
+                                <select ng-model="task.activity_id" class="form-control" ng-options="activity.activity_id as activity.NAME for activity in activities">
                                     <option value="">--Select Activity--</option>
                                 </select>
                             </td>
-                            <td></td>
-                            <td></td>
                             <td>
-                                <textarea class="form-control" ng-model="task.task_name"></textarea>
+                                <input class="form-control" ng-model="task.time_charge"/></td>
+                            <td>
+                                <input class="form-control" ng-model="task.task"/>
                             </td>
                             <td>
-                                <span ng-click="itemSearch.open()" class="btn btn-sm btn-warning"><i class="fa fa-search"></i> Choose Item </span>
+                                <span ng-click="itemSearch.open()" class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Choose Item </span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-        </div>
+            </div>
+            <div class="form-actions right">
+                <span class="btn btn-sm blue-dark" ng-click="">Save</span>
+                <span class="btn btn-sm blue-dark" ng-click="">Submit Displayed Week</span>
+                <span class="btn btn-sm blue-dark" ng-click="">Submit All</span>
             </div>
         </form>
         <!-- END FORM-->

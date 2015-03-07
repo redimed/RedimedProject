@@ -176,10 +176,17 @@ module.exports = {
     getAllTaskAMonth: function(req,res){
         var year = req.body.year;
         var month = req.body.month;
-        var search = year + '-' + month;
+        var monthNext = month + 2;
+        var yearNext = year;
+        if(monthNext > 12){
+            monthNext = monthNext -12;
+            yearNext = year + 1;
+        }
 
-        db.sequelize.query("SELECT time_tasks.date,time_task_status.`color` as status FROM `time_tasks` time_tasks INNER JOIN `time_task_status` time_task_status ON time_task_status.`stask_status_id` = time_tasks.`task_status_id` WHERE time_tasks.`isenable` = 1 AND time_tasks.date LIKE ?",
-            null, {raw: true},[search+'%'])
+        db.sequelize.query("SELECT time_tasks_week.`start_date`, time_tasks_week.`end_date`,time_task_status.`color` AS STATUS " +
+                            "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status " +
+            "ON time_task_status.`stask_status_id` = time_tasks_week.`task_status_id` WHERE time_tasks_week.`start_date` BETWEEN ? AND ?",
+            null, {raw: true},[year + '-' + month + '-01',yearNext + '-' + monthNext + '-31'])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found task in table");

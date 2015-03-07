@@ -19,7 +19,6 @@ angular.module('app.loggedIn.staff.calendar.directive')
         autoOpen: '=calendarAutoOpen',
         useIsoWeek: '=calendarUseIsoWeek'
       },
-      controller: 'StaffMonthController',
       link: function postLink(scope, element, attrs, calendarCtrl) {
 
         var firstRun = false;

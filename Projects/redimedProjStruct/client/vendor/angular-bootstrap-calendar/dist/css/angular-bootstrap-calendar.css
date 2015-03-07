@@ -455,10 +455,14 @@ span[data-cal-date]:hover {
   cursor: default;
 }
 .cal-day-today {
-  background-color: #e8fde7;
+    BORDER-RIGHT: blue 3px solid;
+    BORDER-TOP: blue 3px solid;
+    BORDER-LEFT: blue 3px solid;
+    BORDER-BOTTOM: blue 3px solid;
 }
 .cal-day-today span[data-cal-date] {
-  color: darkgreen;
+
+    margin-top: 1px;
 }
 .cal-month-box .cal-day-today span[data-cal-date] {
   font-size: 1.5em;
