@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         departmentName: DataTypes.STRING(100),
         locationID: DataTypes.INTEGER(11),
         managerId: DataTypes.INTEGER(11),
-        departmentType: DataTypes.INTEGER(11)
+        departmentType: DataTypes.STRING(200)
     }, {
         tableName: 'departments',
         timestamps: false

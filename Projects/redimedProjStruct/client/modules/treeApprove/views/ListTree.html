@@ -74,24 +74,20 @@
                         <td>{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                         <td style="text-align: center;">
                             <!-- DOPDOWN ACTION -->
-                            <div class="btn-group" role="group" aria-label="...">
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-circle btn-sm green dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a ng-click="goTotreeApproveDetail(l)"><i class="fa fa-check"></i>Detail</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a ng-click="EditTree(l.GROUP_ID)"><i class="fa fa-pencil"></i>Edit</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a ng-click="DeleteTree(l.GROUP_ID)"><i class="fa fa-times"></i>Delete</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <li class="dropdown btn-group">
+                                <button class="dropdown-toggle btn btn-circle btn-sm green" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="goTotreeApproveDetail(l)"><i class="fa fa-check"></i>Detail</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="EditTree(l.GROUP_ID)"><i class="fa fa-pencil"></i>Edit</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a ng-click="DeleteTree(l.GROUP_ID)"><i class="fa fa-times"></i>Delete</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <!-- END DROPDOWN ACTION -->
                         </td>
                     </tr>
