@@ -22,15 +22,10 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                     time_charge: null
                 };
 
-
         $scope.calendarView = 'month';
         $scope.calendarDay = new Date();
         $scope.preDay = moment($scope.calendarDay).subtract(1, 'month').toDate();
         $scope.nextDay = moment($scope.calendarDay).add(1, 'month').toDate();
-
-        if(!$scope.tasks){
-            $scope.tasks = [];
-        }
 
         StaffService.getDepartmentLocation().then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
@@ -104,22 +99,10 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             })
         }
 
-        $scope.addRow = function(index,date){
-            task={
-                order: 2,
-                task : null,
-                date : date,
-                department_code_id: null,
-                location_id: null,
-                activity_id: null,
-                time_charge: null
-            };
-            $scope.tasks.splice(index + 1, 0,task); ;
-        }
 
-        var flag;
-        $scope.delTask = function(index){
-            $scope.tasks.splice(index,1);
+        var startDate,endDate,flag;
+        $scope.delTask = function(i,j){
+            $scope.tasks[i].splice(j,1);
         }
 
         $scope.addAllTask = function()
@@ -185,37 +168,7 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
         /*
          *	SEARCH ITEM
          */
-        $scope.itemSearchPanel = {}
-
-        $scope.itemSearch = {
-            is_show: false,
-            open: function() {
-                this.is_show = true;
-            },
-            close: function() {
-                this.is_show = false;
-            },
-            click: function(item) {
-                console.log(item);
-
-            }
-        }
-
-        $scope.itemSearchOption = {
-            api:'api/erm/v2/items/search',
-            method:'post',
-            scope: $scope.itemSearchPanel,
-            columns: [
-                {field: 'ITEM_ID', is_hide: true},
-                {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
-                {field: 'ITEM_NAME', label: 'Item Name'},
-            ],
-            use_filters:true,
-            filters:{
-                ITEM_CODE: {type: 'text'},
-                ITEM_NAME: {type: 'text'}
-            }
-        }
+        
 
 
         $scope.setCalendarToToday = function() {
@@ -292,5 +245,40 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 $(this).find('td a').removeClass('ui-state-hover');
             });
         });
+    })
+
+    .controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr){
+        $scope.itemSearchPanel = {}
+
+        $scope.itemSearch = {
+            is_show: false,
+            open: function() {
+                this.is_show = true;
+            },
+            close: function() {
+                this.is_show = false;
+            },
+            click: function(item) {
+                console.log(item);
+
+            }
+        }
+
+        $scope.itemSearchOption = {
+            api:'api/erm/v2/items/search',
+            method:'post',
+            scope: $scope.itemSearchPanel,
+            columns: [
+                {field: 'ITEM_ID', is_hide: true},
+                {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+                {field: 'ITEM_NAME', label: 'Item Name'},
+            ],
+            use_filters:true,
+            filters:{
+                ITEM_CODE: {type: 'text'},
+                ITEM_NAME: {type: 'text'}
+            }
+        }
+
     })
 
