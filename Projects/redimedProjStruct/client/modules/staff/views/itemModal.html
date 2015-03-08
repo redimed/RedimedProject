@@ -1,0 +1,33 @@
+<!-- <div class="table-scrollable" id="content">
+    <table id="tblMenu" ng-table="tableParams"  show-filter="true" class="table table-hover table-bordered table-responsive">
+        <tr  style="white-space: nowrap; cursor: pointer;" ng-repeat="m in $data | orderBy:'menu_id'" ng-class="{selected : m.menu_id == selectedId}">
+            <td width="200px" data-title="'Description'" sortable="'description'" ng-click="showChild(m)"  filter="{ 'description': 'text' }">
+                <label >{{m.description}}</label>
+            </td>
+            <td width="300px" data-title="'Definition'" sortable="'definition'" ng-click="showChild(m)"  filter="{ 'definition': 'text' }">
+                <label >{{m.definition}}</label>
+            </td>
+            <td align="center" width="100px" data-title="'Enable'" ng-click="showChild(m)"  >
+                <label ng-if="m.isEnable===1" ><input  type="checkbox" disabled   checked /></label>
+                <label ng-if="m.isEnable!==1" ><input  type="checkbox" disabled  /></label>
+            </td>
+            <td align="center" width="100px" data-title="'For Website'" ng-click="showChild(m)"  >
+                <label ng-if="m.isWeb===1" ><input  type="checkbox" disabled   checked /></label>
+                <label ng-if="m.isWeb!==1" ><input  type="checkbox" disabled  /></label>
+            </td>
+            <td align="center" width="100px" data-title="'For Mobile'" ng-click="showChild(m)"  >
+                <label ng-if="m.isMobile===1" ><input  type="checkbox" disabled   checked /></label>
+                <label ng-if="m.isMobile!==1" ><input  type="checkbox" disabled  /></label>
+            </td>
+            <td align="center" data-title="'Actions'">
+                <a style="width: 75px" href="javascript:;" ng-click="editMenu(m)" class="btn btn-circle blue-steel btn-sm">
+                    <i class="fa fa-pencil"></i> Edit </a>
+                <a style="width: 75px" href="javascript:;" ng-click="deleteRootMenu(m)" class="btn btn-circle red-flamingo btn-sm">
+                    <i class="fa fa-times"></i> Delete </a>
+            </td>
+
+        </tr>
+
+
+    </table>
+</div> -->

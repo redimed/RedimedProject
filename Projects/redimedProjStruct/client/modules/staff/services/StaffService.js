@@ -16,7 +16,7 @@ angular.module("app.loggedIn.staff.service", [])
 
         service.editTask = function(task){
             var editTask = api.all('staff/editTask');
-            return editTask.post({task:task});
+            return editTask.post({allTask:task});
         }
 
         service.getDepartmentLocation = function(){

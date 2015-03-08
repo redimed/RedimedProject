@@ -4,6 +4,7 @@ module.exports = function (sequelize, DataTypes) {
         start_date : DataTypes.DATE,
         end_date : DataTypes.DATE,
         user_id : DataTypes.INTEGER(11),
+        task_status_id: DataTypes.INTEGER(11),
 //        creation_date : DataTypes.DATE,
 //        last_update_date : DataTypes.DATE,
         created_by : DataTypes.INTEGER(11),

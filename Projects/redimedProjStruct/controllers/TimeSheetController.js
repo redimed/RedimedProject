@@ -12,32 +12,32 @@ module.exports = {
         db.timeTaskWeek.create({
             start_date : startWeek,
             end_date : endWeek,
-            user_id : 1
+            user_id : 1,
+            task_status_id : 5
         },{raw:true})
             .success(function(data){
                 db.timeTaskWeek.max('task_week_id')
                     .success(function(max){
                         for(var tasks in allTask){
-                            for(var task in allTask[tasks]){
-                                db.timeTasks.create({
-                                    tasks_week_id : max,
-                                    "department_code_id" : allTask[tasks][task].task_department,
-                                    "task" : allTask[tasks][task].task_name,
-                                    "date": allTask[tasks][task].dateChosen,
-                                    "location_id" : allTask[tasks][task].task_location,
-                                    "activity_id" : allTask[tasks][task].task_activity,
-                                    "start_time" : allTask[tasks][task].start_time,
-                                    "end_time" : allTask[tasks][task].end_time,
-                                    "task_status_id" : 1
+
+                            db.timeTasks.create({
+                                tasks_week_id : max,
+                                "department_code_id" : allTask[tasks].department_code_id,
+                                "task" : allTask[tasks].task,
+                                "date": allTask[tasks].date,
+                                "location_id" : allTask[tasks].location_id,
+                                "activity_id" : allTask[tasks].activity_id,
+                                "time_charge" : allTask[tasks].time_charge
+                            })
+                                .success(function(data){
+                                    res.json({status:'success'});
                                 })
-                                    .success(function(data){
-                                        res.json({status:'success'});
-                                    })
-                                    .error(function(err){
-                                        res.json({status:'error'});
-                                        console.log(err);
-                                    })
-                            }
+                                .error(function(err){
+                                    res.json({status:'error'});
+                                    console.log(err);
+                                })
+
+
                         }
                     })
                     .error(function(err){
@@ -50,32 +50,34 @@ module.exports = {
                 console.log(err);
             })
 
-
-
-
     },
 
     editTask: function(req,res)
     {
-        var task = req.body.task;
 
-        db.timeTasks.update({
-            "department_code_id" : task.task_department,
-            "task" : task.task_name,
-            "location_id" : task.task_location,
-            "activity_id" : task.task_activity,
-            "start_time" : task.start_time,
-            "end_time" : task.end_time,
-            "task_status_id" : task.status
-        },{tasks_id : task.tasks_id})
-            .success(function(data){
-                res.json({status:'success'});
-            })
-            .error(function(err){
-                res.json({status:'error'});
-                console.log(err);
-            })
-    },
+        var allTask = req.body.allTask;
+
+        for(var i=0; i<allTask.length;i++){
+
+            db.timeTasks.update({
+                "department_code_id" : allTask[i].department_code_id,
+                "task" : allTask[i].task,
+                "date": allTask[i].date,
+                "location_id" : allTask[i].location_id,
+                "activity_id" : allTask[i].activity_id,
+                "time_charge" : allTask[i].time_charge
+            },{tasks_id : allTask[i].tasks_id})
+                .success(function(data){
+                    res.json({status:'success'});
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
+
+        }
+
+   },
 
     getDepartmentLocation: function(req,res)
     {

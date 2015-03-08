@@ -8,8 +8,19 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             $scope.tasks = [];
         }
 
-        var startWeek,
-            task;
+        $scope.isEdit = false;
+
+        var startWeek;
+
+        $scope.task={
+                    order: null,
+                    task : null,
+                    date : null,
+                    department_code_id: null,
+                    location_id: null,
+                    activity_id: null,
+                    time_charge: null
+                };
 
         $scope.calendarView = 'month';
         $scope.calendarDay = new Date();
@@ -40,24 +51,30 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 }else
                 {
                     if(response['data'] != 'no'){
+                        console.log("aaaaaaaa");
+                         $scope.isEdit = true;
+
                         angular.forEach(response['data'], function(data){
                             $scope.tasks.push(data);
                         })
                     }else{
+                        console.log("bbbbbb");
+                         $scope.isEdit = false;
+
                         $scope.viewWeek = calendarHelper.getWeekView(date, true);
                         angular.forEach($scope.viewWeek.columns, function(data){
-                            task={
-                                order: 1,
-                                task : null,
-                                date : data.dateChosen,
-                                department_code_id: null,
-                                location_id: null,
-                                activity_id: null,
-                                time_charge: null
-                            };
-                            $scope.tasks.push(task);
+                            $scope.task={
+                                        order: 1,
+                                        task : null,
+                                        date : data.dateChosen,
+                                        department_code_id: null,
+                                        location_id: null,
+                                        activity_id: null,
+                                        time_charge: null
+                                    };
+
+                            $scope.tasks.push($scope.task);
                         })
-                        console.log($scope.tasks)
                     }
                 }
             })
@@ -88,8 +105,10 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             $scope.tasks[i].splice(j,1);
         }
 
-        $scope.addAllTask = function(startWeek, endWeek)
+        $scope.addAllTask = function()
         {
+            // console.log($scope.tasks);
+
             flag = true;
             var i = 0;
             for(var task in $scope.tasks){
@@ -106,16 +125,44 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             {
                 toastr.error("You must enter Monday - Friday", "Error");
             }else{
-                StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
-                    if(response['status'] == 'success'){
-                        toastr.success("success","Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
-                    }else
-                    {
-                        toastr.error("Error", "Error");
-                    }
-                })
+                console.log($scope.isEdit);
+                if(!$scope.isEdit)
+                {
+                    StaffService.addAllTask($scope.tasks,$scope.viewWeek.startWeek, $scope.viewWeek.endWeek).then(function(response){
+                        if(response['status'] == 'success'){
+                            toastr.success("success","Success");
+                            $state.go('loggedIn.staff.list', null, {'reload': true});
+                        }else
+                        {
+                            toastr.error("Error", "Error");
+                        }
+                    })
+                }
+                else
+                {
+                    // console.log($scope.tasks);
+                    StaffService.editTask($scope.tasks).then(function(response){
+                        if(response['status'] == 'success'){
+                            toastr.success("Edit Success");
+                            $state.go('loggedIn.staff.list', null, {'reload': true});
+                        }else
+                        {
+                            toastr.error("Error", "Error");
+                        }
+                    })
+                }
+                
             }
+        }
+
+        $scope.chooseItem = function(task)
+        {
+            console.log(task);
+            var modalInstance = $modal.open({
+                templateUrl: "modules/staff/views/itemModal.html",
+                controller:'ItemController',
+                size:'md'
+            })
         }
 
         /*
