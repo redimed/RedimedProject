@@ -24,7 +24,6 @@ angular.module('app.loggedIn.staff.calendar.directive',[])
         useIsoWeek: '=calendarUseIsoWeek'
       },
       controller: function($scope) {
-
         var self = this;
           $scope.useIsoWeek = true;
         this.titleFunctions = {};

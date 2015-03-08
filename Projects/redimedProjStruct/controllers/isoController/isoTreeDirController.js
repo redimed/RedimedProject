@@ -6,7 +6,7 @@ var fs = require('fs-extra');//Read js file for import into
 var isoUtil=require('./isoUtilsController');
 var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
-var Archiver = require('Archiver');
+var Archiver = require('archiver');
 var rimraf = require('rimraf');
 
 

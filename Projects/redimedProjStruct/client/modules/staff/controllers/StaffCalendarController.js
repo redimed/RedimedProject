@@ -3,18 +3,13 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
     .controller("StaffCalendarController", function($rootScope,$scope, $filter, ConfigService, $modal,calendarHelper, moment,StaffService,$state,toastr){
         var currentYear = moment().year();
         var currentMonth = moment().month();
-
+        $scope.test = 'dd';
         if(!$scope.tasks){
             $scope.tasks = [];
         }
 
-        var month,
-            startWeek,
+        var startWeek,
             task;
-        month = currentMonth + 1;
-        if(month < 10){
-            month = '0' + month;
-        }
 
         $scope.calendarView = 'month';
         $scope.calendarDay = new Date();
@@ -32,6 +27,7 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 $scope.activities = response['activity'];
                 $scope.viewWeek = calendarHelper.getWeekView($scope.calendarDay, true);
                 checkTaskWeek($scope.viewWeek.startWeek);
+                getTaskMonth(currentYear,currentMonth);
             }
         })
 
@@ -44,22 +40,13 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 {
                     if(response['data'] != 'no'){
                         angular.forEach(response['data'], function(data){
-                            task={
-                                task_name : data.task,
-                                dateChosen : data.date,
-                                task_department: data.department_code_id,
-                                task_location: data.location_id,
-                                task_activity: data.activity_id,
-                                task_time: data.time_charge
-                            };
-                            $scope.tasks.push(task);
+                            $scope.tasks.push(data);
                         })
                     }else{
-                        date = new Date(date.substr(8,2),date.substr(0,4),date.substr(5,2)-1)
                         $scope.viewWeek = calendarHelper.getWeekView(date, true);
                         angular.forEach($scope.viewWeek, function(data){
                             task={
-                                task_name : null,
+                                task : null,
                                 dateChosen : data.dateChosen,
                                 task_department: null,
                                 task_location: null,
@@ -73,26 +60,25 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             })
         }
 
+        var dateFrom;
         $scope.changeDate = function(){
-            checkTaskWeek($scope.dateWeekFrom);
+            dateFrom = new Date($scope.dateWeekFrom.substr(6,4),$scope.dateWeekFrom.substr(3,2) - 1,$scope.dateWeekFrom.substr(0,2));
+            checkTaskWeek(dateFrom);
         }
 
-        StaffService.getAllTaskAMonth(currentYear,month).then(function(response){
-            if(response['status'] == 'error'){
-                toastr.error("Error", "Error");
-            }else if(response['status'] == 'no task' ){
-                toastr.error("no task", "Error");
-            }else
-            {
-                $scope.events = response;
-                angular.forEach($scope.events, function(event){
-                    if(event.start_time != null && event.end_time != null){
-                        event.start_time = ConfigService.convertStringToDate(event.start_time);
-                        event.end_time = ConfigService.convertStringToDate(event.end_time);
-                    }
-                })
-            }
-        })
+        function getTaskMonth(currentYear,currentMonth){
+            StaffService.getAllTaskAMonth(currentYear,currentMonth).then(function(response){
+                if(response['status'] == 'error'){
+                    toastr.error("Error", "Error");
+                }else if(response['status'] == 'no task' ){
+                    toastr.error("no task", "Error");
+                }else
+                {
+                    $scope.events = response;
+                }
+            })
+        }
+
 
         var startDate,endDate,flag;
         $scope.delTask = function(i,j){
@@ -186,27 +172,19 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 }, 1);
             }
 
-
-            var firstDay = $('.selector').datepicker('option', 'firstDay');
-            $('.selector').datepicker('option', 'firstDay', 1);
-
             var setDates = function (input) {
                 var $input = $(input);
                 var date = $input.datepicker('getDate');
+                var firstDay = $input.datepicker( "option", "firstDay");
+                $input.datepicker( "option", "dateFormat", "dd-mm-yy" );
+                $input.datepicker('option', 'firstDay', 1);
                 if (date !== null) {
-                    var firstDay = $input.datepicker( "option", "firstDay");
-//                    $input.datepicker('option', 'firstDay', 1);
                     var dayAdjustment = date.getDay() - firstDay;
                     if (dayAdjustment < 0) {
                         dayAdjustment += 7;
                     }
                     startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
                     endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
-
-                    var inst = $input.data('datepicker');
-                    var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-//                    $('#startDate').text($.datepicker.formatDate(dateFormat, startDate, inst.settings));
-//                    $('#endDate').text($.datepicker.formatDate(dateFormat, endDate, inst.settings));
                     $input.datepicker("setDate", startDate);
                 }
             }

@@ -1,0 +1,74 @@
+<!-- HEADER -->
+<nav class="nav nav-pills">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ui-sref="loggedIn.TimeSheetHome">Time Sheet</a>
+        </div>
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1 ">
+            <ul class="nav navbar-nav ">
+                <!-- APPROVE -->
+                <li class="dropdown ">
+                    <a class="dropdown-toggle " data-toggle="dropdown " role="button " aria-expanded="false ">Approve task<span style="color: #AA0000;">(5 new)</span><span class="caret "></span></a>
+                    <ul class="dropdown-menu " role="menu ">
+                        <li><a ui-sref="loggedIn.TimeSheetDept">Waitting(5)</a>
+                        </li>
+                        <li><a ui-sref="loggedIn.TimeSheetDept">Approve history</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END APPROVE -->
+
+                <!-- MANAGE TASK -->
+                <li class="dropdown ">
+                    <a class="dropdown-toggle " data-toggle="dropdown " role="button " aria-expanded="false ">My task<span style="color: #AA0000;">(2 new)</span><span class="caret "></span></a>
+                    <ul class="dropdown-menu " role="menu ">
+                        <li><a ui-sref="loggedIn.TimeSheetDept">Task list<span class="blue"></span></a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END MANAGE TASK -->
+
+                <!-- MANAGE DEPT -->
+                <li class="dropdown ">
+                    <a class="dropdown-toggle " data-toggle="dropdown " role="button " aria-expanded="false ">Manager dept<span class="caret "></span></a>
+                    <ul class="dropdown-menu " role="menu ">
+                        <li><a ui-sref="loggedIn.TimeSheetDept">Dept list</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END MANAGE DEPT -->
+
+                <!-- MANAGE USER -->
+                <li class="dropdown ">
+                    <a class="dropdown-toggle " data-toggle="dropdown " role="button " aria-expanded="false ">Manager user<span class="caret "></span></a>
+                    <ul class="dropdown-menu " role="menu ">
+                        <li><a>Admin list</a>
+                        </li>
+                        <li><a ui-sref="loggedIn.TimeSheetTree">User list</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END MANAGE USER -->
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END HEADER -->
+
+<!-- INFO SYS -->
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Time Sheet</h3>
+    </div>
+    <div class="panel-body">
+        <p>Time - Sheet is one of current functions in MYOB, With Time - Sheet system, the Board of Management could monitor the employee’s actual working hours and control the direct labor costs as well as in-direct.
+        </p>
+    </div>
+</div>
+<!-- END INFO SYS -->

@@ -81,7 +81,6 @@ angular.module('app.loggedIn.staff.calendar.directive')
                     if (day < 0) day = 6;
                     return day;
                 }
-            if(events){
                 var dayArr = [];
                 var grid = [];
                 dayArr.push(moment(currentDay).subtract(1, 'month').toDate());
@@ -122,7 +121,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
                             isToday: moment().startOf('day').isSame(startOfMonth),
                             date: startOfMonth.clone(),
                             events: eventsWithIds.filter(function(event) {
-                                return self.eventIsInPeriod(event.date, event.date, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
+                                return self.eventIsInPeriod(event.start_date, event.end_date, startOfMonth.clone().startOf('day'), startOfMonth.clone().endOf('day'));
                             })
                         };
 
@@ -150,7 +149,6 @@ angular.module('app.loggedIn.staff.calendar.directive')
 
                     }
                 }
-            }
             return grid;
 
         };

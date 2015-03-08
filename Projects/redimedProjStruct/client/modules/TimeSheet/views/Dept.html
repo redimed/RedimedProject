@@ -1,0 +1,114 @@
+<h3 class="page-title">Tree List</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.TimeSheetHome">Time Sheet</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">Depts</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+</div>
+<div class="portlet box green-meadow">
+    <div class="portlet-title">
+        <a class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="addDept()">New Dept</a>
+        <div class="caption">
+            <i class="fa fa-cogs"></i>List of dept
+            <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="panel-body table-dynamic">
+            <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+            </center>
+            <table class="responsive table table-bordered" ng-show="!list.loading">
+                <thead ng-show="list.result!==null">
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="deptASC()" ng-class="{'active': searchObjectMap.order['departments.departmentName']==='ASC'}">
+                            </span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="deptDESC()" ng-class="{ 'active': searchObjectMap.order['departments.departmentName']==='DESC' } ">
+                            </span> Dept name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Location
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Action
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                        <!-- DEPT NAME -->
+                        <td>
+                            <input type="text " id="GROUP_NAME" ng-model="searchObjectMap.data.GROUP_NAME " ng-change="loadList(GROUP_NAME) " class="form-control input-sm ">
+                        </td>
+                        <!-- END DEPT NAME -->
+                        <td>
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()" style="margin-top:5px;">
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr ng-show="list.result===null">
+                        <td colspan="4 ">
+                            <h4>There is no items</h4>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
+                        <td>{{l.departmentName || " " }}</td>
+                        <td>{{l.name}}</td>
+                        <td style="text-align:center;">
+                            <!-- DOPDOWN ACTION -->
+                            <li class="dropdown btn-group">
+                                <button class="dropdown-toggle btn btn-circle btn-sm green" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="editDept(l.departmentid)"><i class="fa fa-pencil"></i>Edit</a>
+                                    </li>
+                                    <li><a ng-click="deleteDept(l.departmentid)"><i class="fa fa-times"></i>Delete</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END DROPDOWN ACTION -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                <div class="row ">
+                    <div class="col-ms-6 page-num-info ">
+                        <div class="col-md-4 col-sm-5 ">
+                            <div class="input-group ">
+                                <span class="input-group-addon bold " style="background-color: #fff; border:none; ">Total: {{list.count}}</span>
+
+                                <span class="input-group-addon " style="background-color: #fff; border:none; ">Show</span>
+                                <select class="form-control " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                </select>
+                                <span class="input-group-addon " style="background-color: #fff; border:none; ">entries per page</span>
+                            </div>
+                        </div>
+                        <div class="col-ms-6 text-right pagination-container ">
+                            <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                            <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                        </div>
+                    </div>
+            </footer>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="AddDept">
+        <add-dept ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></add-dept>
+    </script>

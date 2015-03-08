@@ -29,6 +29,7 @@ var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
 
+
 server.listen(3000);
 
 require('./socket')(io,cookie,cookieParser,opentok);
@@ -90,9 +91,10 @@ app.use(passport.session());
 
 
 var clientDir = path.join(__dirname, 'client');
-
+var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
+app.use('/img/patient/avt', express.static(uploadedFile));
 /**
  * K Library
  */

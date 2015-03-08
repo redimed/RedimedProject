@@ -1,0 +1,52 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>Update User</legend>
+            <div data-row-span="12">
+                <!-- NAME DEPARTMENT -->
+                <div data-field-span="6">
+                    <label>name of department</label>
+                    <select ng-model="departmentid" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in department" ng-change="loadDept()">
+                    </select>
+                </div>
+                <!-- END NAME DEPARTMENT -->
+                <!-- NAME ROLE -->
+                <div data-field-span="6">
+                    <label>name of role</label>
+                    <select ng-model="NODE_ID" ng-options="itemRole.NODE_ID as itemRole.NODE_CODE for itemRole in node" ng-change="loadRole()"></select>
+                </div>
+                <!-- END NAME ROLE -->
+            </div>
+            <div data-row-span="12">
+                <!-- NAME USER -->
+                <div data-field-span="3">
+                    <label>name of user</label>
+                    <input type="text" ng-model="info.user_name" readonly="true">
+                </div>
+                <!-- END NAME USER -->
+                <!-- NAME EMAIL -->
+                <div data-field-span="3">
+                    <label>name of email</label>
+                    <input type="text" ng-model="info.Contact_email" readonly="true">
+                </div>
+                <!-- END NAME EMAIL -->
+                <!-- NAME COMPANY -->
+                <div data-field-span="3">
+                    <label>name of conpany</label>
+                    <input type="text" ng-model="info.Company_name" readonly="true">
+                </div>
+                <!-- END NAME CONPANY -->
+                <!-- NAME USER TYPE -->
+                <div data-field-span="3">
+                    <label>name of user type</label>
+                    <input type="text" ng-model="info.user_type" readonly="true">
+                </div>
+                <!-- END NAME USER TYPE -->
+            </div>
+        </fieldset>
+        <a class="btn blue pull-right input-sm" ng-click="onSave({return: 'checkList'})">Update</a>
+        <a class="btn red pull-right input-sm" ng-click="onCancel({return: 'true'})">Close</a>
+        <!-- END MAIN INFO -->
+    </form>
+</div>

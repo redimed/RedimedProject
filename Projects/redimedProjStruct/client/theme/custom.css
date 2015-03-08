@@ -940,7 +940,100 @@ table.timetable-table td:last-child {
   justify-content: center;
   flex-direction: column;
 }
+/*css custom by thanh*/
 
-.cancel-booking{
-    text-decoration: line-through;
+.glyphicon-chevron-up:before {
+    content: "\e113"
 }
+.glyphicon-chevron-down:before {
+    content: "\e114"
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+    position: absolute;
+    color: #999;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover, .table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
+    color: #31c0be;
+    cursor: pointer;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active, .table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
+    color: #31c0be;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up {
+    top: 4px;
+    right: 5px;
+}
+.table-dynamic .table-filters {
+    margin: 10px 0;
+    padding: 8px;
+}
+.table-dynamic .filter-result-info {
+    padding: 7px;
+}
+.table-dynamic .table-bordered {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.table-dynamic .table-bordered thead th {
+    position: relative;
+    padding: 0;
+}
+.table-dynamic .table-bordered thead th>.th {
+    position: relative;
+    padding: 8px 20px 8px 8px;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+    position: absolute;
+    color: #999;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover, .table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
+    color: #31c0be;
+    cursor: pointer;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active, .table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
+    color: #31c0be;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up {
+    top: 4px;
+    right: 5px;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+    top: 18px;
+    right: 6px;
+}
+.table-dynamic .table-footer {
+    margin: 10px 0;
+    padding: 8px;
+}
+.table-dynamic .page-num-info span {
+    padding: 6px;
+}
+.table-dynamic .pagination-container ul {
+    margin: 0;
+}
+.table-dynamic .pagination-container ul li:hover {
+    cursor: pointer;
+}
+.table-dynamic .table-bordered tr:hover {
+    background: #EEEEEE;
+}
+.table-dynamic .table-bordered tr:active {
+    background: #F5F5F5;
+}
+/*tooltipster*/
+
+.tooltip-error-theme {
+    border-radius: 5px;
+    background: #f3565d;
+    color: #fff;
+}
+/* Use this next selector to style things like font-size and line-height: */
+
+.tooltip-error-theme .tooltipster-content {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 8px 10px;
+}
+/*end tooltipster*/
+/*end css custom by thanh*/
