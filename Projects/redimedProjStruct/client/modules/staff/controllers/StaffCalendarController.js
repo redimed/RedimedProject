@@ -4,17 +4,16 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
         var currentYear = moment().year();
         var currentMonth = moment().month();
         $scope.test = 'dd';
-        if(!$scope.tasks){
-            $scope.tasks = [];
-        }
-
         var startWeek,
             task;
-
         $scope.calendarView = 'month';
         $scope.calendarDay = new Date();
         $scope.preDay = moment($scope.calendarDay).subtract(1, 'month').toDate();
         $scope.nextDay = moment($scope.calendarDay).add(1, 'month').toDate();
+
+        if(!$scope.tasks){
+            $scope.tasks = [];
+        }
 
         StaffService.getDepartmentLocation().then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
@@ -57,7 +56,6 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                             };
                             $scope.tasks.push(task);
                         })
-                        console.log($scope.tasks)
                     }
                 }
             })
@@ -82,10 +80,22 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             })
         }
 
+        $scope.addRow = function(index,date){
+            task={
+                order: 2,
+                task : null,
+                date : date,
+                department_code_id: null,
+                location_id: null,
+                activity_id: null,
+                time_charge: null
+            };
+            $scope.tasks.splice(index + 1, 0,task); ;
+        }
 
-        var startDate,endDate,flag;
-        $scope.delTask = function(i,j){
-            $scope.tasks[i].splice(j,1);
+        var flag;
+        $scope.delTask = function(index){
+            $scope.tasks.splice(index,1);
         }
 
         $scope.addAllTask = function(startWeek, endWeek)
