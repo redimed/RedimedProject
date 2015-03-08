@@ -32,6 +32,7 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
         })
 
         function checkTaskWeek(date){
+            $scope.tasks=[];
             startWeek = $filter('date')(date, 'yyyy-MM-dd');
             StaffService.checkTaskWeek(startWeek).then(function(response){
                 if(response['status'] == 'fail' || response['status'] == 'error'){
@@ -44,17 +45,19 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                         })
                     }else{
                         $scope.viewWeek = calendarHelper.getWeekView(date, true);
-                        angular.forEach($scope.viewWeek, function(data){
+                        angular.forEach($scope.viewWeek.columns, function(data){
                             task={
+                                order: 1,
                                 task : null,
-                                dateChosen : data.dateChosen,
-                                task_department: null,
-                                task_location: null,
-                                task_activity: null,
-                                task_time: null
+                                date : data.dateChosen,
+                                department_code_id: null,
+                                location_id: null,
+                                activity_id: null,
+                                time_charge: null
                             };
                             $scope.tasks.push(task);
                         })
+                        console.log($scope.tasks)
                     }
                 }
             })
