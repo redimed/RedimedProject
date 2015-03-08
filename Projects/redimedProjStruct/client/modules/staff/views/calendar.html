@@ -66,7 +66,6 @@
                   <thead>
                         <tr>
                             <th></th>
-                            <th></th>
                             <th>
                                 <label style="font-size: 14px" class="bold">Date</label>
                             </th>
@@ -91,10 +90,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-class="{'clickable' : task.order == 1,'collapse row{{task.date | date : test}}' : task.order != 1}" ng-repeat="(key,task) in tasks track by $index">
-                            <td><i  data-toggle="collapse" data-target=".row{{task.date | date : test}}" class="fa fa-chevron-down pointer"></i></td>
-                            <td><span class="btn btn-sm blue-dark" ng-click="addRow()">Add new</span></td>
-                            <td><i class="fa fa-trash pointer" style="font-size: 20px"></i> &nbsp;{{task.date | date : 'EEE, dd MMM'}}</td>
+                        <tr ng-repeat="(key,task) in tasks track by $index">
+                            <td><span ng-if="task.order == 1" class="btn btn-sm blue-dark" ng-click="addRow($index,task.date)">Add new</span></td>
+                            <td><i class="fa fa-trash pointer" ng-click="delTask($index)" style="font-size: 20px"></i> &nbsp;{{task.date | date : 'EEE, dd MMM'}}</td>
                             <td>
                                 <select ng-model="task.location_id" class="form-control" ng-options="location.location_id as location.NAME for location in locations">
                                     <option value="">--Select Location--</option>
