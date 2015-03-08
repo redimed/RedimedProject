@@ -1,62 +1,64 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
-    var from = $location.search().from;
-    var to = $location.search().to;
-    var isCaller = ($location.search().isCaller == 'true') ? true : false;
+// .controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+//     var from = $location.search().from;
+//     var to = $location.search().to;
+//     var isCaller = ($location.search().isCaller == 'true') ? true : false;
 
-    var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
+//     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
-    UserService.getUserInfo(from).then(function(data){
+//     UserService.getUserInfo(from).then(function(data){
 
-        if(data)
-        {
-            delete data.img;
-            $cookieStore.put('userInfo',data);
+//         if(data)
+//         {
+//             delete data.img;
+//             $cookieStore.put('userInfo',data);
 
-            console.log("User Info: " + $cookieStore.get("userInfo"));
+//             console.log("User Info: " + $cookieStore.get("userInfo"));
 
-            if(fromMobile){
+//             if(fromMobile){
 
-                socket.emit("mobileConnect",data.id);
+//                 socket.emit("mobileConnect",data.id);
 
-                socket.on("mobileConnectSuccess",function(){
-                    console.log("Mobile Socket Success");
+//                 socket.on("mobileConnectSuccess",function(){
+//                     console.log("Mobile Socket Success");
 
-                    if(isCaller)
-                    {
-                        UserService.getUserInfo(to).then(function(rs){
-                            if(!rs.img)
-                                 rs.img = "theme/assets/icon.png"
+//                     if(isCaller)
+//                     {
+//                         UserService.getUserInfo(to).then(function(rs){
+//                             if(!rs.img)
+//                                  rs.img = "theme/assets/icon.png"
 
-                             $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
-                        })
-                    }
-                    else
-                    {
-                        UserService.getUserInfo(from).then(function(rs){
-                            if(!rs.img)
-                                 rs.img = "theme/assets/icon.png"
+//                              $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+//                         })
+//                     }
+//                     else
+//                     {
+//                         UserService.getUserInfo(from).then(function(rs){
+//                             if(!rs.img)
+//                                  rs.img = "theme/assets/icon.png"
 
-                            $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
-                        })
-                    }
-                })
-            }
+//                             $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
+//                         })
+//                     }
+//                 })
+//             }
 
             
-        }
+//         }
                
-    })
+//     })
 
-})
+// })
 
-.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify,fromMobile){
+.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
         audio.play();
+
+        console.log(opentokRoom);
 
 
         socket.on("messageReceived",function(fromId,fromUser,message){
@@ -98,7 +100,7 @@ angular.module("app.loggedIn.controller",[
             if(!userInfo.img)
                 userInfo.img = "theme/assets/icon.png"
 
-            $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false},{reload:true});
+            $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false,opentokInfo: opentokRoom},{reload:true});
 
         }
 
@@ -106,9 +108,6 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
-    
-
-    
     socket.on("forceLogout",function(){
 
         toastr.error("Someone Is Logged Into Your Account!");
@@ -122,12 +121,9 @@ angular.module("app.loggedIn.controller",[
         socket.removeAllListeners();
     })
 
-
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
-
-            console.log("From ID: "+fromId);
 
             var options = {
                 body: fromUser + " Is Calling You...",
@@ -154,6 +150,14 @@ angular.module("app.loggedIn.controller",[
                             },
                             notify: function(){
                                 return notification;
+                            },
+                            opentokRoom: function(){
+                                var opentokRoom = {
+                                        apiKey: message.apiKey,
+                                        sessionId: message.sessionId,
+                                        token: message.token
+                                    }
+                                return opentokRoom;
                             }
                         },
                         backdrop: 'static',
@@ -205,7 +209,7 @@ angular.module("app.loggedIn.controller",[
         UserService.getUserInfo(user.id).then(function(data){
             if(!data.img)
                 data.img = "theme/assets/icon.png"
-            $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true},{reload:true});
+            $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true,opentokInfo:null},{reload:true});
         })
 
     }

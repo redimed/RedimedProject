@@ -553,7 +553,7 @@ module.exports = {
                 {
                     arr.push({id: data[i].id,
                               device_id:data[i].device_id,
-                              device_img:data[i].device_img!=null || data[i].device_img!='' ? base64Image(data[i].device_img):'',
+                              // device_img:data[i].device_img!=null || data[i].device_img!='' ? base64Image(data[i].device_img):'',
                               device_name:data[i].device_name});
                 }
 

@@ -20,11 +20,18 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('lodash-node');
-var easyrtc = require("easyrtc");
+
+// var easyrtc = require("easyrtc");
+
+var apiKey = "45172682";
+var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
+
+var OpenTok = require('opentok'),
+    opentok = new OpenTok(apiKey, apiSecret);
 
 server.listen(3000);
 
-require('./socket')(io,cookie,cookieParser);
+require('./socket')(io,cookie,cookieParser,opentok);
 
 var myIceServers = [
     {url: "stun:stun.l.google.com:19302"},
@@ -36,21 +43,21 @@ var myIceServers = [
 ];
 
 // EasyRTC configs
-easyrtc.setOption("appIceServers", myIceServers);
+// easyrtc.setOption("appIceServers", myIceServers);
 
-var easyrtcServer = easyrtc.listen(
-    app,
-    io,
-    {logLevel:"debug", logDateEnable:true},
-    function(err, rtc) {
-        rtc.setOption("roomDefaultName", "Redimed");
+// var easyrtcServer = easyrtc.listen(
+//     app,
+//     io,
+//     {logLevel:"debug", logDateEnable:true},
+//     function(err, rtc) {
+//         rtc.setOption("roomDefaultName", "Redimed");
 
-    }
-);
+//     }
+// );
 
-easyrtc.on("getIceConfig", function(connectionObj, callback){
-    callback(null, myIceServers);
-});
+// easyrtc.on("getIceConfig", function(connectionObj, callback){
+//     callback(null, myIceServers);
+// });
 
 
 app.set('views', path.join(__dirname, 'views'));

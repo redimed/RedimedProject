@@ -115,7 +115,8 @@ angular.module("app", [
             params: {
                 callUserInfo: null,
                 callUser : null,
-                isCaller: null
+                isCaller: null,
+                opentokInfo: null
             },
             views:{
                 "root":{

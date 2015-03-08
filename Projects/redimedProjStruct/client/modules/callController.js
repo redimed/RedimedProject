@@ -14,25 +14,15 @@ angular.module("app.call.controller",[
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
 
-        var fromMobile = $location.search().fromMobile;
+        var publisher = null;
+        var session = null;
 
         var audio = new Audio('theme/assets/phone_calling.mp3');
-
-        if($scope.isCaller){
-            audio.loop = true;
-            audio.play();
-        }
 
         var from = $cookieStore.get('fromState');
         var params = {};
 
-        var disconnect = function() {
-            easyrtc.hangupAll();
-            easyrtc.closeLocalStream();
-            easyrtc.disconnect();
-
-            socket.removeAllListeners();
-        }
+        var fromMobile = $location.search().fromMobile;
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login',null,{location: "replace"});
@@ -49,44 +39,98 @@ angular.module("app.call.controller",[
                     params[key] = value;
                 })
             }
-
             if($stateParams.callUser == null || typeof $stateParams === 'undefined')
             {
-                    disconnect();
-                    $state.go(from.fromState.name,params,{location: "replace",reload: true});
-
+                disconnect();
+                $state.go(from.fromState.name,params,{location: "replace",reload: true});
             }
         }
 
-        $scope.cancelCall = function(){
-            audio.pause();
-            disconnect();
+        if($scope.isCaller)
+        {   
 
-            
-                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+            audio.loop = true;
+            audio.play();
 
-            
-            if(typeof from !== 'undefined')
-                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+            socket.emit("generateSession",$scope.userInfo.id);
 
-            if(typeof fromMobile !== 'undefined' && fromMobile)
-                 $window.close();
+            socket.on("generateSessionSuccess",function(opentokRoom){
+
+                var apiKey = opentokRoom.apiKey;
+                var sessionId = opentokRoom.sessionId;
+                var token = opentokRoom.token;
+
+                var publisherProperties = 
+                {
+                    resolution: '1280x720',
+                    insertMode: "append"
+                };
+
+                publisher = OT.initPublisher('selfVideo',publisherProperties);
+
+                session = OT.initSession( apiKey, sessionId ); 
+                session.on({
+                    'streamCreated': function( event ){
+                        session.subscribe( event.stream, "callerVideo",{
+                            insertMode: "append",
+                            resolution: "1280x720",
+                            width: '100%',
+                            height: '100%'
+                        });
+                    }
+                });
+                session.connect(token, function(error) {
+                    if (error) 
+                    {
+                        console.log(error.message);
+                    } 
+                    else 
+                    {
+                        session.publish( publisher );
+                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
+                    }
+                });
+               
+            })
         }
+        else
+        {
+            if($stateParams.opentokInfo != null)
+            {
+                var info = $stateParams.opentokInfo;
 
-        $scope.muteAudio = function(){
-            $scope.isAudioMuted = !$scope.isAudioMuted;
-            if($scope.isAudioMuted)
-                easyrtc.enableMicrophone(false);
-            else
-                easyrtc.enableMicrophone(true)
-        }
+                var publisherProperties = 
+                {
+                    resolution: '1280x720',
+                    insertMode: "append"
+                };
 
-        $scope.muteVideo = function(){
-            $scope.isVideoMuted = !$scope.isVideoMuted;
-            if($scope.isVideoMuted)
-                easyrtc.enableCamera(false);
-            else
-                easyrtc.enableCamera(true)
+                publisher = OT.initPublisher('selfVideo',publisherProperties);
+
+                session = OT.initSession( info.apiKey, info.sessionId ); 
+                session.on({
+                    'streamCreated': function( event ){
+                        session.subscribe( event.stream, "callerVideo",{
+                            insertMode: "append",
+                            resolution: "1280x720",
+                            width: '100%',
+                            height: '100%'
+                        });
+                    }
+                });
+                session.connect(info.token, function(error) {
+                    if (error) 
+                    {
+                        console.log(error.message);
+                    } 
+                    else 
+                    {
+                        session.publish( publisher );
+                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'})
+                    }
+                });
+            }
+
         }
 
         socket.on("messageReceived",function(fromId,fromUser,message){
@@ -94,15 +138,13 @@ angular.module("app.call.controller",[
             {
                 audio.pause();
                 $scope.isAccept = true;
-                if(message.rtcId){
-                    performCall(message.rtcId);
-                }
             }
             if(message.type === 'ignore')
             {
                 audio.pause();
                 toastr.error("Call Have Been Rejected!");
                 disconnect();
+
                 if(typeof from !== 'undefined')
                     $state.go(from.fromState.name,params,{location: "replace", reload: true});
 
@@ -125,49 +167,41 @@ angular.module("app.call.controller",[
 
         })
 
-        function performCall(easyRtcId) {
-            easyrtc.hangupAll();
-            var acceptedCB = function(accepted, easyrtcid) {
-                };
-            var successCB = function(to) {
-                console.log("Call Success: ",to);
-            };
-            var failureCB = function(errCode, errMsg) {
-                toastr.error(errMsg);
-                disconnect();
-                 if(typeof from !== 'undefined')
-                    $state.go(from.fromState.name,params,{location: "replace", reload: true});
+        $scope.cancelCall = function(){
+            audio.pause();
+            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+            disconnect();
+            
+            if(typeof from !== 'undefined')
+                $state.go(from.fromState.name,params,{location: "replace", reload: true});
 
-                if(typeof fromMobile !== 'undefined' && fromMobile)
-                     $window.close();
-            };
-
-            easyrtc.call(easyRtcId, successCB, failureCB, acceptedCB);
+            if(typeof fromMobile !== 'undefined' && fromMobile)
+                 $window.close();
         }
 
-
-
-        function init(){
-            var connectSuccess = function(rtcId) {
-
-                if($scope.isCaller == true)
-                {
-                    
-                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call'});
-                }
-                if($scope.isCaller == false){
-                    
-                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer',rtcId:rtcId})
-                }
-
-            }
-            var connectFailure = function(errorCode, errText) {
-                easyrtc.showError(errorCode, errText);
-            }
-
-            easyrtc.dontAddCloseButtons(true);
-            easyrtc.easyApp("easyrtc.audioVideo",'selfVideo',['callerVideo'], connectSuccess, connectFailure);
+        $scope.muteAudio = function(){
+            $scope.isAudioMuted = !$scope.isAudioMuted;
+            if($scope.isAudioMuted)
+                publisher.publishAudio(false);
+            else
+                publisher.publishAudio(true);
         }
-        init();
+
+        $scope.muteVideo = function(){
+            $scope.isVideoMuted = !$scope.isVideoMuted;
+            if($scope.isVideoMuted)
+                publisher.publishVideo(false);
+            else
+                publisher.publishVideo(true);
+        }
+
+        var disconnect = function() {
+            if (publisher) {
+                session.unpublish(publisher);
+            }
+            publisher = null;
+
+            socket.removeAllListeners();
+        }
 
     })
