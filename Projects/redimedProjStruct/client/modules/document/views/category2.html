@@ -1,5 +1,4 @@
 ﻿<!--BEGIN FORM-->
-
 <form method="post" name="cat2Form" ng-submit="submit(cat2Form)" accessible-form novalidate>
     <!--BUTTON SUBMIT-->
     <div class="caption">
@@ -34,7 +33,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" type="checkbox" ng-model="info.has_declaration" ng-true-value="1" ng-false-value="0" ng-checked="info.has_declaration===1"/>
             </div>
             <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Has the declaration sections on pages 3 and 6 of the Health Assessment Form been signed by the candidate.</label>
         </div>
@@ -45,7 +44,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" type="checkbox" ng-model="info.has_safety" ng-true-value="1" ng-false-value="0" ng-checked="info.has_safety===1" />
             </div>
             <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Has the Safety Critical Worker - Health Questionaire been completed.</label>
 
@@ -57,7 +56,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" ng-true-value="1" ng-false-value="0" type="checkbox" ng-model="info.has_following" ng-checked="info.has_following===1"/>
             </div>
             <div class="col-md-10 col-sm-10 bold">
                 <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been ordered.
@@ -76,7 +75,7 @@
         <div class="col-md-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" ng-true-value="1" ng-false-value="0" type="checkbox" ng-model="info.audiometric" ng-checked="info.audiometric===1"/>
             </div>
             <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Audiometric Examination Conducted. (Unless already organised by the employer)</label>
         </div>
