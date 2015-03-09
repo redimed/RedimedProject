@@ -88,6 +88,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
 
                 //load list
                 scope.loadList = function(user_name) {
+                    scope.checkAll = -1;
                     scope.list.loading = true;
                     //loadList
                     TimeSheetService.LoadUser(scope.searchObjectMap).then(function(response) {

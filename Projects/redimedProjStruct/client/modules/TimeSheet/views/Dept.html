@@ -1,4 +1,4 @@
-<h3 class="page-title">Tree List</h3>
+<h3 class="page-title">Dept List</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -12,10 +12,10 @@
         </li>
     </ul>
 </div>
-<div class="portlet box green-meadow">
+<div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="addDept()">New Dept</a>
-        <div class="caption">
+        <a class="btn blue pull-right btn-xs" style="margin-top:10px;" ng-click="addDept()">New Dept</a>
+        <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>List of dept
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -57,24 +57,24 @@
                         </td>
                         <!-- END DEPT NAME -->
                         <td>
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()" style="margin-top:5px;">
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
                             </select>
                         </td>
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
                         <td colspan="4 ">
-                            <h4>There is no items</h4>
+                            <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
                         <td>{{l.departmentName || " " }}</td>
                         <td>{{l.name}}</td>
                         <td style="text-align:center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <button class="dropdown-toggle btn btn-circle btn-sm green" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
-                                </button>
+                                <a class="dropdown-toggle" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a ng-click="editDept(l.departmentid)"><i class="fa fa-pencil"></i>Edit</a>
                                     </li>
@@ -91,14 +91,12 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                            <div class="input-group ">
-                                <span class="input-group-addon bold " style="background-color: #fff; border:none; ">Total: {{list.count}}</span>
+                                <span class="custom-timesheet">Total: {{list.count}}</span>
 
-                                <span class="input-group-addon " style="background-color: #fff; border:none; ">Show</span>
-                                <select class="form-control " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                <span class="custom-timesheet">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
                                 </select>
-                                <span class="input-group-addon " style="background-color: #fff; border:none; ">entries per page</span>
-                            </div>
+                                <span class="custom-timesheet">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>

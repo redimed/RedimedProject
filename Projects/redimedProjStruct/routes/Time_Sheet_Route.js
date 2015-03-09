@@ -9,6 +9,7 @@ app.post("/api/TimeSheet/post-node-select", TimeSheet.LoadNodeSelect);
 app.post("/api/TimeSheet/post-user-list", TimeSheet.LoadUser);
 app.post("/api/TimeSheet/post-user-add", TimeSheet.AddUser);
 app.post("/api/TimeSheet/post-user-one", TimeSheet.LoadOneUser);
+app.post("/api/TimeSheet/post-user-update", TimeSheet.UpdateUser);
 app.post("/api/TimeSheet/post-role-where", TimeSheet.LoadRoleWhere);
 app.post("/api/TimeSheet/post-dept-where", TimeSheet.LoadDeptWhere);
 

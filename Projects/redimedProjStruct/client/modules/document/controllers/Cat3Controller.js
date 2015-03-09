@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.document.cat3.controllers', [])
-    .controller("Cat3Controller", function ($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
+    .controller("Cat3Controller", function($scope, DocumentService, $rootScope, $http, $cookieStore, toastr, $state, $stateParams, localStorageService) {
         //begin date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -10,24 +10,25 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
-            $state.go('loggedIn.home', null, {"reload": true});
-        }
-        else {
+            $state.go('loggedIn.home', null, {
+                "reload": true
+            });
+        } else {
             //begin signature
             var tempSignature;
             $scope.isSignature = false;
-            $scope.showSignature = function () {
+            $scope.showSignature = function() {
                 $scope.isSignature = !$scope.isSignature;
             }
 
-            $scope.cancelClick = function () {
+            $scope.cancelClick = function() {
                 $scope.isSignature = !$scope.isSignature;
                 $scope.info.PATIENT_SIGNATURE = tempSignature;
             };
-            $scope.clearClick = function () {
+            $scope.clearClick = function() {
                 $scope.info.PATIENT_SIGNATURE = '';
             };
-            $scope.okClick = function () {
+            $scope.okClick = function() {
                 $scope.isSignature = !$scope.isSignature;
                 tempSignature = $scope.info.PATIENT_SIGNATURE;
             }
@@ -37,10 +38,11 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
             //var tempAppt = localStorageService.get('tempAppt');
             var tempPatient = localStorageService.get('tempPatient');
             if (tempPatient === 'undefined' || tempPatient == null) {
-                $state.go('loggedIn.home', null, {"reload": true});
+                $state.go('loggedIn.home', null, {
+                    "reload": true
+                });
                 toastr.error("Load information fail, please try again!", "Error");
-            }
-            else {
+            } else {
                 var patient_id = tempPatient.Patient_id;
                 // var cal_id = -1;//set value default cal_id
                 var cal_id = $stateParams.cal_id;
@@ -49,6 +51,9 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                     cat_id: null,
                     cal_id: cal_id,
                     patient_id: patient_id,
+                    has_declaration: null,
+                    has_following: null,
+                    audiometric: null,
                     q1_4: null,
                     q1_4_c: null,
                     q1_5_1: null,
@@ -152,12 +157,13 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                 };
                 var oriInfo;
                 var info = $scope.info;
-                DocumentService.loadCat3(info).then(function (response) {
+                DocumentService.loadCat3(info).then(function(response) {
                     // throw exception
                     if (response['status'] === 'fail') {
-                        $state.go('loggedIn.home', null, {"reload": true});
-                    }
-                    else {
+                        $state.go('loggedIn.home', null, {
+                            "reload": true
+                        });
+                    } else {
                         if (response[0].status === 'findNull') {
                             // Add new category 3
                             $scope.isNew = true;
@@ -167,8 +173,7 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                             $scope.info.company = response[0].company;
                             $scope.info.Created_by = userInfo.id;
                             oriInfo = angular.copy($scope.info);
-                        }
-                        else if (response[0].status === 'findFound') {
+                        } else if (response[0].status === 'findFound') {
                             var data = response[0].data;
                             $scope.isNew = false;
                             var timeAppt = (((new Date(response[0].appt.FROM_TIME)).getHours()) % 12 <= 9 ? '0' + ((new Date(response[0].appt.FROM_TIME)).getHours()) % 12 : ((new Date(response[0].appt.FROM_TIME)).getHours()) % 12) + ' : ' + (((new Date(response[0].appt.FROM_TIME)).getMinutes()) <= 9 ? '0' + ((new Date(response[0].appt.FROM_TIME)).getMinutes()) : ((new Date(response[0].appt.FROM_TIME)).getMinutes())) + (((new Date(response[0].appt.FROM_TIME)).getHours()) > 12 ? ' PM' : ' AM');
@@ -182,6 +187,9 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                                 cat_id: data.cat_id,
                                 cal_id: data.cal_id,
                                 patient_id: data.patient_id,
+                                has_declaration: data.has_declaration,
+                                has_following: data.has_following,
+                                audiometric: data.audiometric,
                                 q1_4: data.q1_4,
                                 q1_4_c: data.q1_4_c,
                                 q1_5_1: data.q1_5_1,
@@ -287,56 +295,59 @@ angular.module('app.loggedIn.document.cat3.controllers', [])
                         }
                         // throw exception.
                         else {
-                            $state.go('loggedIn.home', null, {"reload": true});
+                            $state.go('loggedIn.home', null, {
+                                "reload": true
+                            });
                         }
 
                     }
 
                 })
-                $scope.resetForm = function () {
+                $scope.resetForm = function() {
                     $scope.info = angular.copy(oriInfo);
                     $scope.category3Form.$setPristine();
                 }
 
-                $scope.infoChanged = function () {
+                $scope.infoChanged = function() {
                     return !angular.equals(oriInfo, $scope.info);
                 }
-                $scope.submit = function (category3Form) {
+                $scope.submit = function(category3Form) {
                     if (category3Form.$error.pattern || category3Form.$error.maxlength) {
                         toastr.error("Please Input All Required Information!", "Error");
-                    }
-                    else {
+                    } else {
                         var info = $scope.info;
                         if ($scope.isNew === true) {
                             /**
                              * add new cat3
                              */
-                            DocumentService.insertCat3(info).then(function (response) {
+                            DocumentService.insertCat3(info).then(function(response) {
                                 if (response['status'] === 'success') {
 
                                     toastr.success("Add new success!", "Success");
-                                    $state.go('loggedIn.category3', null, {"reload": true});
-                                }
-                                else if (response['status'] === 'fail')
+                                    $state.go('loggedIn.category3', null, {
+                                        "reload": true
+                                    });
+                                } else if (response['status'] === 'fail')
                                     toastr.error("Add new fail!", "Error");
 
                             });
-                        }
-                        else if ($scope.isNew == false) {
-                            DocumentService.editCat3(info).then(function (response) {
+                        } else if ($scope.isNew === false) {
+                            DocumentService.editCat3(info).then(function(response) {
                                 if (response['status'] === 'success') {
                                     toastr.success("Update success!", "Success");
 
-                                    $state.go('loggedIn.category3', null, {"reload": true});
-                                }
-                                else if (response['status'] === 'fail') {
+                                    $state.go('loggedIn.category3', null, {
+                                        "reload": true
+                                    });
+                                } else if (response['status'] === 'fail') {
                                     toastr.error("Update fail!", "Error");
-                                }
-                                else {
+                                } else {
                                     /**
                                      * throw new exception
                                      */
-                                    $state.go('loggedIn.home', null, {"reload": true});
+                                    $state.go('loggedIn.home', null, {
+                                        "reload": true
+                                    });
                                 }
                             });
                         }

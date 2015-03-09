@@ -29,23 +29,21 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 $scope.info.Signature = '';
             };
             $scope.okClick = function() {
-                    $scope.isSignature = !$scope.isSignature;
-                    tempSignature = $scope.info.Signature;
-                }
-                //End signature
+                $scope.isSignature = !$scope.isSignature;
+                tempSignature = $scope.info.Signature;
+            };
+            //End signature
             $scope.today = new Date();
             //Begin value default info
-            //var apptInfo = localStorageService.get('tempAppt');
             var patientInfo = localStorageService.get('tempPatient');
-            if (patientInfo == null || patientInfo == 'undefined') {
+            if (patientInfo === null || patientInfo === 'undefined') {
                 toastr.error("Load information fail!", "Error");
                 $state.go("loggedIn.home", null, {
                     "reload": true
                 });
             }
             var Patient_ID = patientInfo.Patient_id;
-            // var CalID = -1; //Set default cal_id
-	    var CalID = $stateParams.cal_id;	
+            var CalID = $stateParams.cal_id;
 
             $scope.info = {
                 cat_id: null,
@@ -53,6 +51,10 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                 DocId: null,
                 patient_id: Patient_ID,
                 Signature: null,
+                has_declaration: null,
+                has_safety: null,
+                has_following: null,
+                audiometric: null,
                 q1_4: null,
                 q1_4_c: null,
                 q1_5_1: null,
@@ -255,6 +257,10 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                         DocId: data.DocId,
                         patient_id: data.patient_id,
                         Signature: data.Signature,
+                        has_declaration: data.has_declaration,
+                        has_safety: data.has_safety,
+                        has_following: data.has_following,
+                        audiometric: data.audiometric,
                         q1_4: data.q1_4,
                         q1_4_c: data.q1_4_c,
                         q1_5_1: data.q1_5_1,
@@ -429,11 +435,11 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
             $scope.resetForm = function() {
                 $scope.info = angular.copy(oriInfo);
                 $scope.cat2Form.$setPristine();
-            }
+            };
 
             $scope.infoChanged = function() {
                 return !angular.equals(oriInfo, $scope.info);
-            }
+            };
 
             $scope.submit = function(cat2Form) {
                 //check validate
@@ -441,6 +447,13 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                     toastr.error("Please Input All Required Information!", "Error");
                 } else {
                     var info = $scope.info;
+                    info.q4_2_9 = $scope.info.q3_1_4_3_1 + $scope.info.q3_1_4_3_2 + $scope.info.q3_1_4_3_3 + $scope.info.q3_1_4_3_4 +
+                        $scope.info.q3_1_4_3_5 + $scope.info.q3_1_4_3_6 + $scope.info.q3_1_4_3_7 + $scope.info.q3_1_4_3_8;
+                    info.q4_2_11 = $scope.info.q3_1_5_1 + $scope.info.q3_1_5_2 + $scope.info.q3_1_5_3 +
+                        $scope.info.q3_1_5_4 + $scope.info.q3_1_5_5 + $scope.info.q3_1_5_6 + $scope.info.q3_1_5_7 +
+                        $scope.info.q3_1_5_8 + $scope.info.q3_1_5_9 + $scope.info.q3_1_5_10;
+                    info.q4_2_12_1 = $scope.info.q3_1_6_1 + $scope.info.q3_1_6_2 + $scope.info.q3_1_6_3 + $scope.info.q3_1_6_4 + $scope.info.q3_1_6_5 +
+                        $scope.info.q3_1_6_6 + $scope.info.q3_1_6_7 + $scope.info.q3_1_6_8 + $scope.info.q3_1_6_9 + $scope.info.q3_1_6_10;
                     if ($scope.isNew === true) {
                         DocumentService.insertCat2(info).then(function(response) {
                             if (response['status'] === 'success') {
@@ -452,7 +465,7 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                             } else if (response['status'] === 'fail') {
                                 toastr.error('Add new fail!', "Error");
                             }
-                        })
+                        });
                     } else if ($scope.isNew === false) {
                         DocumentService.editCat2(info).then(function(response) {
                             if (response['status'] === 'success') {

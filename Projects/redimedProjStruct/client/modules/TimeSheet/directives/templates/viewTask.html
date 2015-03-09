@@ -1,0 +1,157 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>View Task
+                <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
+            </legend>
+            <div data-row-span="12">
+                <div data-field-span="3">
+                    <label>Client:</label>
+                    <input type="text" value="LOC" style="font-size:13px;">
+                </div>
+                <div data-field-span="3">
+                    <label>Employee: </label>
+                    <input type="text" value="Bastick Adam" style="font-size:13px;">
+                </div>
+                <div data-field-span="3">
+                    <label>From:</label>
+                    <input type="text" ng-model="info.FROM" name="consentDate1" datepicker-popup="dd/MM/yyyy" is-open="openConsentDate1" ng-click="openConsentDate1 = true" datepicker-options="dateOptions" close-text="Close" style="font-size:13px;">
+                </div>
+                <div data-field-span="3">
+                    <label>To:</label>
+                    <input type="text" ng-model="info.TO" name="consentDate2" datepicker-popup="dd/MM/yyyy" is-open="openConsentDate2" ng-click="openConsentDate2= true" datepicker-options="dateOptions" close-text="Close" style="font-size:13px;">
+                </div>
+            </div>
+            <div data-row-span="12">
+                <div class="panel-body table-dynamic">
+                    <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                    </center>
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
+                        <thead ng-show="list.result!==null">
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Date
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Task
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Comments
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Estimatedtime
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Approved
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Hours Spent
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Hours type
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Approve all
+                                        <input type="checkbox"> Reject all
+                                        <input type="checkbox">
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                                <td></td>
+                                <td>
+                                    <input type="text" class="form-control input-sm">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
+                                    </select>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
+                                    </select>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr ng-show="list.result===null">
+                                <td colspan="4 ">
+                                    <h4 class="custom-timesheet">There is no items</h4>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
+                                <td style="text-align: center;">
+                                    <!-- DOPDOWN ACTION -->
+                                    <li class="dropdown btn-group">
+                                        <a class="dropdown-toggle blue" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a ng-click="viewTask()"><i class="glyphicon glyphicon-zoom-in"></i>View</a>
+                                            </li>
+                                            <li><a ng-click="editDept(l.departmentid)"><i class="glyphicon glyphicon-ok"></i>Approve</a>
+                                            </li>
+                                            <li><a ng-click="editDept(l.departmentid)"><i class="glyphicon glyphicon-remove"></i>Reject</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- END DROPDOWN ACTION -->
+                                </td>
+                                <td>{{l.emloyee}}</td>
+                                <td>{{date | date: "dd/MM/yyyy"}}</td>
+                                <td>01:00</td>
+                                <td>{{l.approver}}</td>
+                                <td>Time Sheet</td>
+                                <td>{{l.status}}</td>
+                                <td>{{date | date: "dd/MM/yyyy"}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                        <div class="row ">
+                            <div class="col-ms-6 page-num-info ">
+                                <div class="col-md-4 col-sm-5 ">
+                                    <div class="input-group ">
+                                        <span class="custom-timesheet">Total: {{list.count}}</span>
+
+                                        <span class="custom-timesheet">Show</span>
+                                        <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
+                                        </select>
+                                        <span class="custom-timesheet">entries per page</span>
+                                    </div>
+                                </div>
+                                <div class="col-ms-6 text-right pagination-container ">
+                                    <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                                    <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                                </div>
+                            </div>
+                    </footer>
+                    </div>
+                </div>
+                <!-- END TABLE LIST USER IN GROUP -->
+        </fieldset>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: checkList})">Add</a>
+        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
+        <!-- END MAIN INFO -->
+    </form>
+    </div>

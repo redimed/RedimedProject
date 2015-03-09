@@ -1,5 +1,5 @@
 <ion-view hide-nav-bar="true">
-    <ion-content class="content-scroll-custom">
+    <div class="content content-scroll-custom">
 
         <div class="waiting-screen" ng-show="isCaller && !isAccept">
             <div style="border: 1px solid rgba(255, 255, 255, .1); border-radius: 50%; width: 400px; height: 400px;" class="waiting-screen" ></div>
@@ -71,9 +71,13 @@
 
         </div>
 
-        <video autoplay="autoplay" id="selfVideo" muted="muted" volume="0" class="selfVideo"></video>
+        <div id="selfVideo" class="selfVideo"></div>
 
-        <video ng-show="!isCaller || isAccept" autoplay="autoplay" id="callerVideo" class="callerVideo"></video>
+        <div ng-show="!isCaller || isAccept" id="callerVideo" class="callerVideo"> </div>
 
-    </ion-content>
+        <!--<video autoplay="autoplay" id="selfVideo" muted="muted" volume="0" class="selfVideo"></video>-->
+
+        <!--<video ng-show="!isCaller || isAccept" autoplay="autoplay" id="callerVideo" class="callerVideo"></video>-->
+
+    </div>
 </ion-view>

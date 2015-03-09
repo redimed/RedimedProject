@@ -18,11 +18,11 @@ var inc_common_model =  [
 	},
 	{ 
 		model: db.Doctor , as: 'Doctor',
-		attributes: ['NAME'],
+		attributes: ['NAME',"CLINICAL_DEPT_ID"],
 	},
 	{ 
 		model: db.SysServices , as: 'Service',
-		attributes: ['SERVICE_NAME'],
+		attributes: ['SERVICE_ID','SERVICE_NAME'],
 	},
 ];
 
@@ -269,6 +269,7 @@ module.exports = {
 	postSave : function(req, res) {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
+		var service_id = req.body.service_id;
 		var lines = req.body.lines;
 
 		console.log(' LINES ... ', lines)
@@ -328,7 +329,7 @@ module.exports = {
 			}
 			var amount = header.getAmount();
 			// UPDATE AMOUNT & STATUS
-	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status}, {
+	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status, SERVICE_ID:service_id}, {
 	            header_id: header_id
 	        });
 		}).then(function(updated){
