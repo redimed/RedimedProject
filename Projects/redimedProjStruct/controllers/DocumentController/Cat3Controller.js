@@ -131,7 +131,7 @@ module.exports = {
                             status: 'fail'
                         });
                         return false;
-                    })
+                    });
             })
             .error(function(err) {
                 console.log("******************* ERROR:" + err + ' *******************');
@@ -149,9 +149,8 @@ module.exports = {
                     cat_id: cat_id,
                     cal_id: info.cal_id,
                     patient_id: info.patient_id,
-                    has_declaration: info.declaration,
-                    has_safety: info.has_safety,
-                    has_following: info.following,
+                    has_declaration: info.has_declaration,
+                    has_following: info.has_following,
                     audiometric: info.audiometric,
                     q1_4: info.q1_4,
                     q1_4_c: info.q1_4_c,
@@ -283,8 +282,7 @@ module.exports = {
         Category3.update({
             cal_id: info.cal_id,
             patient_id: info.patient_id,
-            has_declaration: info.declaration,
-            has_safety: info.has_safety,
+            has_declaration: info.has_declaration,
             has_following: info.has_following,
             audiometric: info.audiometric,
             q1_4: info.q1_4,

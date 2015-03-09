@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="5505"/>
+	<property name="ireport.y" value="816"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -629,6 +629,13 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="90" y="195" width="150" height="28" uuid="a516b7d7-1fbb-4776-a206-db297e5ff2ad"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rail Cate 2]]></text>
+			</staticText>
 		</band>
 		<band height="802">
 			<image>
@@ -722,6 +729,13 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<reportElement x="276" y="761" width="263" height="15" uuid="dcda93fa-215d-4c12-a28e-a25c45bd8ec1"/>
 				<textFieldExpression><![CDATA[$F{q1_5_3_c}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="68" y="47" width="150" height="28" uuid="d6d09fe8-f4a3-421e-813d-ad3591ad6586"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rail Cate 2]]></text>
+			</staticText>
 		</band>
 		<band height="802">
 			<image>
@@ -2069,25 +2083,25 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="681" width="78" height="17" uuid="7969e49f-bd7d-4c66-ab8f-628fbbbf9a86"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{q4_2_10_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_10_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="709" width="83" height="16" uuid="6b59e7ed-8af6-4705-b95a-874dbf36c979"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{q4_2_10_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_10_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="108" y="627" width="141" height="20" uuid="1edf2ee1-c6c2-4f1f-903f-69aa11ea8a9e"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{q4_2_9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_9}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="379" y="182" width="141" height="14" uuid="240f94d6-6df7-4395-83b0-ec7cc1f0aff3"/>
-				<textFieldExpression><![CDATA[$F{q4_2_11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_11}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="383" y="385" width="145" height="14" uuid="1a120ea4-c101-4b1d-8db7-d8a7ae4f0097"/>
-				<textFieldExpression><![CDATA[$F{q4_2_12_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_12_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="190" y="141" width="9" height="9" uuid="c46c46cc-dcbc-4230-b2e5-131c2160893a">
@@ -2413,22 +2427,22 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="333" y="528" width="32" height="17" uuid="116ba7e3-0967-449d-b50b-df6838f722f8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="383" y="528" width="32" height="17" uuid="350fa485-c703-4809-af52-cde324eca8a9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="430" y="528" width="32" height="17" uuid="b01b6926-9f0e-454b-90fa-779657d28502"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_3}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="480" y="528" width="32" height="17" uuid="a5fd66ec-cf25-464c-8c99-4862f1da7ea6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_4}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="539" width="58" height="17" uuid="a7eeaea3-d1de-4fc6-9112-864e5b12f64d"/>
