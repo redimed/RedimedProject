@@ -38,8 +38,8 @@ var rlobConstant={
 
     bookingType:{
 
-        REDiLEGAL:{alias:'rlob',name:'REDiLEGAL'},
-        Vaccination:{alias:'vaccinob',name:'Vaccination'}
+        REDiLEGAL:{alias:'rlob',name:'REDiLEGAL',display:'Medico-Legal'},
+        Vaccination:{alias:'vaccinob',name:'Vaccination',display:'Vaccination'}
     },
 
     notifyJsColor:{

@@ -539,7 +539,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     $scope.mailTemplate={
                         REDiLEGAL:{
                             label:'Please contact us to make an appointment',
-                            recepient : "redilegal@redimed.com.au",
+                            recepient : "medicolegal@redimed.com.au",
                             options:{
                                 subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
                                 body:
