@@ -1,5 +1,4 @@
 ﻿<!--BEGIN FORM-->
-
 <form method="post" name="cat2Form" ng-submit="submit(cat2Form)" accessible-form novalidate>
     <!--BUTTON SUBMIT-->
     <div class="caption">
@@ -22,7 +21,7 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <p style="font-size: xx-large;text-align: center;font-weight: bolder">Category 2 (Safety Critical Worker)
+                <p style="font-size: xx-large;text-align: center;font-weight: bolder">Rail Cate 2 (Safety Critical Worker)
                 </p>
 
                 <p class="uppercase" style="font-size: xx-large;text-align: center;font-weight: bolder">Authorised health professional health assessment check list</p>
@@ -34,7 +33,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" type="checkbox" ng-model="info.has_declaration" ng-true-value="1" ng-false-value="0" ng-checked="info.has_declaration===1" />
             </div>
             <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Has the declaration sections on pages 3 and 6 of the Health Assessment Form been signed by the candidate.</label>
         </div>
@@ -45,7 +44,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" type="checkbox" ng-model="info.has_safety" ng-true-value="1" ng-false-value="0" ng-checked="info.has_safety===1" />
             </div>
             <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Has the Safety Critical Worker - Health Questionaire been completed.</label>
 
@@ -57,7 +56,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" ng-true-value="1" ng-false-value="0" type="checkbox" ng-model="info.has_following" ng-checked="info.has_following===1" />
             </div>
             <div class="col-md-10 col-sm-10 bold">
                 <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been ordered.
@@ -76,7 +75,7 @@
         <div class="col-md-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox" />
+                <input class="form-control" ng-true-value="1" ng-false-value="0" type="checkbox" ng-model="info.audiometric" ng-checked="info.audiometric===1" />
             </div>
             <label class="control-label col-md-10 col-sm-10 bold" style="margin-top: 10px;">Audiometric Examination Conducted. (Unless already organised by the employer)</label>
         </div>
@@ -86,7 +85,7 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <p style="font-size: xx-large;text-align: center;font-weight: bolder">Category 2 (Safety Critical Worker)
+                <p style="font-size: xx-large;text-align: center;font-weight: bolder">Rail Cate 2 (Safety Critical Worker)
                 </p>
 
                 <p class="uppercase" style="font-size: xx-large;text-align: center;font-weight: bolder">health assessment form
@@ -3697,10 +3696,10 @@
                                                 <div class="col-md-4 col-sm-4">
                                                     <div class="btn-group">
                                                         <label class="btn">
-                                                            <input type="radio" ng-model="info.q4_2_13_2" value="1" /> Yes
+                                                            <input type="radio" ng-model="info.q4_2_13_1_5" value="1" /> Yes
                                                         </label>
                                                         <label class="btn">
-                                                            <input type="radio" ng-model="info.q4_2_13_2" value="0" /> No
+                                                            <input type="radio" ng-model="info.q4_2_13_1_5" value="0" /> No
                                                         </label>
                                                     </div>
                                                 </div>
@@ -3717,10 +3716,10 @@
                                     <div class="col-md-4 col-sm-5">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.q4_2_13_3" value="1" /> Normal
+                                                <input type="radio" ng-model="info.q4_2_13_2" ng-value="1" /> Normal
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.q4_2_13_3" value="0" /> Abnormal
+                                                <input type="radio" ng-model="info.q4_2_13_2" ng-value="0" /> Abnormal
                                             </label>
                                         </div>
                                     </div>
@@ -3730,6 +3729,24 @@
                                 <div class="row">
                                     <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
                                         <label class="control-label" style="margin-left: 10px;"><span class="bold">13.3 Colour Vision:</span> (Ishihara: ≥ 2 errors/12 plates is a fail)</label>
+                                    </div>
+                                    <div class="col-md-4 col-sm-5">
+                                        <div class="btn-group">
+                                            <label class="btn">
+                                                <input type="radio" ng-model="info.q4_2_13_3" value="1" /> Pass
+                                            </label>
+                                            <label class="btn">
+                                                <input type="radio" ng-model="info.q4_2_13_3" value="0" /> Fail
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                </br>
+
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
+                                        <label class="control-label bold" style="margin-left: 10px;">13.4 Near Vision Test
+                                        </label>
                                     </div>
                                     <div class="col-md-4 col-sm-5">
                                         <div class="btn-group">
@@ -3746,34 +3763,16 @@
 
                                 <div class="row">
                                     <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
-                                        <label class="control-label bold" style="margin-left: 10px;">13.4 Near Vision Test
-                                        </label>
-                                    </div>
-                                    <div class="col-md-4 col-sm-5">
-                                        <div class="btn-group">
-                                            <label class="btn">
-                                                <input type="radio" ng-model="info.q4_2_13_5" value="1" /> Pass
-                                            </label>
-                                            <label class="btn">
-                                                <input type="radio" ng-model="info.q4_2_13_5" value="0" /> Fail
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                </br>
-
-                                <div class="row">
-                                    <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
                                         <label class="control-label bold" style="margin-left: 10px;">13.5 Far Vision Test
                                         </label>
                                     </div>
                                     <div class="col-md-4 col-sm-5">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" name='s3_q5_5' ng-model="info.s3_q5_5" value="1" /> Pass
+                                                <input type="radio" name='q4_2_13_5' ng-model="info.q4_2_13_5" value="1" /> Pass
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" name='s3_q5_5' ng-model="info.s3_q5_5" value="0" /> Fail
+                                                <input type="radio" name='q4_2_13_5' ng-model="info.q4_2_13_5" value="0" /> Fail
                                             </label>
                                         </div>
                                     </div>
