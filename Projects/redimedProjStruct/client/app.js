@@ -37,19 +37,23 @@ angular.module("app", [
     'btford.socket-io',
     'dateRangePicker',
     'angular-svg-round-progress',
-    'angular-flot'
+    'angular-flot',
+    'luegg.directives',
+    'irontec.simpleChat'
+
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {
     var host = location.hostname;
     var port = location.port;
 
-    var socket = io.connect('http://'+host+'/',{
+    var socket = io.connect('https://'+host+'/',{
         'port':port,
         'reconnect': true,
         'reconnection delay': 2000,
         'max reconnection attempts': 10000,
-        'force new connection':true
+        'force new connection':true,
+        'secure': true
     });
 
     var socketFactory = socketFactory({
@@ -143,10 +147,6 @@ angular.module("app", [
 //When update any route
 .run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
-    easyrtc.setSocketUrl("http://"+location.hostname+":"+location.port);
-
-    
-
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))
         {
@@ -216,13 +216,6 @@ angular.module("app", [
         }
     })
 
-    $rootScope.$on("$locationChangeStart",function(event, next, current){
-        if (easyrtc.webSocket) {
-            easyrtc.hangupAll();
-            easyrtc.closeLocalStream();
-            easyrtc.disconnect();
-        }
-    });
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
 
