@@ -46,7 +46,9 @@ angular.module('app.loggedIn.document.gorgonFA.controllers', [])
         $scope.patientInfo = localStorageService.get('tempPatient');
         //var doctorInfo = $cookieStore.get('doctorInfo');
         var Patient_ID = $scope.patientInfo.Patient_id;
-        var CalID = -1; // $scope.apptInfo.CAL_ID;
+        // var CalID = -1; // $scope.apptInfo.CAL_ID;
+        var CalID = $stateParams.cal_id; 
+
         var sex = $scope.patientInfo.Sex;
         //============================================================================
         // Math on interface

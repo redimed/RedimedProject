@@ -73,6 +73,30 @@ tannv.dts@gmail.com
     margin-bottom: 10px;
 }
 
+.iso-action-group.iso_action_type1 button{
+    border : 1px solid #337AB7;
+}
+
+.iso-action-group.iso_action_type2  button{
+    border : 1px solid #5CB85C;
+}
+
+.iso-action-group.iso_action_type3  button{
+    border : 1px solid #5BC0DE;
+}
+.iso-action-group.iso_action_type4  button{
+    border : 1px solid #F0AD4E;
+}
+
+.iso-action-group.iso_action_type5  button{
+    border : 1px solid #D9534F;
+}
+.iso-action-group.iso_action_type_system  button{
+    background-color: #fcf8e3;
+    border : 1px solid #D9534F;
+}
+
+
 
 
 /*select2 custom css
@@ -91,7 +115,7 @@ tannv.dts@gmail.com
 }
 
 /*Xu ly an khi node bi delete*/
-.iso_node_deleted span:first-child{
+.iso_node_deleted span{
     display:inline;
     color:#B90000;
 }
@@ -144,4 +168,14 @@ tannv.dts@gmail.com
    white-space: -moz-pre-wrap; /* Firefox */   
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
+}
+
+.iso_modal_lg{
+    width:90%!important;
+}
+
+.iso_badge{
+    /*background-color: rgb(252, 244, 244)!important;*/
+    color: red!important;
+    border:none!important;
 }

@@ -4,21 +4,84 @@ var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
 var users = [];
-module.exports = function(io,cookie,cookieParser) {
+module.exports = function(io,cookie,cookieParser,opentok) {
     var userList = [];
     var ua = null;
+
+    var apiKey = "45172682";
 
     io.use(parser);
 
     io.on('connection', function (socket) {
 
-        console.log("IP: ",socket.request.connection.remoteAddress);
+        // console.log("IP: ",socket.request.connection.remoteAddress);
 
         var header = socket.request.headers;
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
-        console.log(ua);
+        // console.log(ua);
+
+        socket.on("generateSession",function(id){
+            opentok.createSession(function(err, session) {
+                if (err) 
+                    return console.log(err);
+
+                var token = session.generateToken();
+
+                var opentokRoom = {
+                    apiKey: apiKey,
+                    sessionId: session.sessionId,
+                    token: token
+                }
+
+                socket.emit("generateSessionSuccess",opentokRoom);
+            });
+        });
+
+        socket.on('sendMessage', function (currUser,contactUser, message) {
+            db.User.find({where:{id: currUser}},{raw:true})
+                .success(function(currentUser){
+                    if(currentUser)
+                    {
+                        db.User.find({where:{id:contactUser}},{raw:true})
+                            .success(function(contact){
+                                if(contact)
+                                {
+                                    if(contact.socket)
+                                    {
+                                        if(message.type == 'call')
+                                        {
+                                            console.log("Call From: "+currUser);
+                                            
+                                           var token = opentok.generateToken(message.sessionId);
+
+                                           message.apiKey = apiKey;
+                                           message.token = token;
+
+                                           io.to(contact.socket)
+                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                        }
+                                        else
+                                        {
+                                            io.to(contact.socket)
+                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                        }
+                                    }
+
+                                }
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                    }
+
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        });
+
 
         socket.on('reconnected',function(id){
             db.User.update({
@@ -37,6 +100,7 @@ module.exports = function(io,cookie,cookieParser) {
                 socketMobile: socket.id
             },{id:id})
                 .success(function(){
+                    socket.emit("mobileConnectSuccess");
                     getOnlineUser();
                 })
                 .error(function(err){
@@ -141,38 +205,8 @@ module.exports = function(io,cookie,cookieParser) {
 
         })
 
-        
 
-        socket.on('sendMessage', function (currUser,contactUser, message) {
-            db.User.find({where:{id: currUser}},{raw:true})
-                .success(function(currentUser){
-                    if(currentUser)
-                    {
-                        db.User.find({where:{id:contactUser}},{raw:true})
-                            .success(function(contact){
-                                if(contact)
-                                {
-                                    if(contact.socket)
-                                        io.to(contact.socket)
-                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
-                                    if(contact.socketMobile)
-                                        io.to(contact.socketMobile)
-                                            .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
-                                }
-                                console.log("Current User: "+currentUser.user_name+" ---- "+ JSON.stringify(message));
-                                console.log("Contact User: "+contact.user_name+" ---- "+JSON.stringify(message));
-                            })
-                            .error(function(err){
-                                console.log(err);
-                            })
-                    }
-
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        });
 
         socket.on('logout', function (username,id,userType,info) {
            db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
@@ -242,6 +276,10 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
+        socket.on("onlineMeasureData",function(info){
+            io.sockets.emit('getMeasureData',info);
+        })
+
         socket.on('lostCookie',function(){
             db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
                 .success(function(){
@@ -301,6 +339,7 @@ module.exports = function(io,cookie,cookieParser) {
                 socket.removeAllListeners();
 
         });
+
 
         function getOnlineUser(){
             userList = [];

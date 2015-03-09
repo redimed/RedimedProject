@@ -29,6 +29,8 @@ eval(fs.readFileSync('./routes/v1_erm.js')+'');
 //
 eval(fs.readFileSync('./routes/injury_management_route.js')+'');
 
+eval(fs.readFileSync('./routes/medical_device_route.js')+'');
+
 //meditek
 eval(fs.readFileSync('./routes/mdt_route.js')+'');
 
@@ -38,3 +40,6 @@ eval(fs.readFileSync('./routes/iso_route.js')+'');
 eval(fs.readFileSync('./routes/timeSheet_route.js')+'');
 //treeApprove
 eval(fs.readFileSync('./routes/Tree_Route.js') + '');
+
+//TimeSheet
+eval(fs.readFileSync('./routes/Time_Sheet_Route.js') + '');

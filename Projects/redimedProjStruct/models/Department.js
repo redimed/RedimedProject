@@ -1,14 +1,17 @@
-module.exports = function(sequelize, DataTypes){
-	 var Department = sequelize.define('Department', {
-		departmentid: DataTypes.INTEGER(11),
-		departmentName: DataTypes.STRING(100),
-		locationID: DataTypes.INTEGER(11),
-		managerId: DataTypes.INTEGER(11),
-	}, {
-		tableName: 'departments',
-		createdAt: 'Creation_date',
-		updatedAt: 'Last_update_date'
-	});
+module.exports = function(sequelize, DataTypes) {
+    var Departments = sequelize.define('Departments', {
+        departmentid: {
+            type: DataTypes.INTEGER(11),
+            primaryKey: true
+        },
+        departmentName: DataTypes.STRING(100),
+        locationID: DataTypes.INTEGER(11),
+        managerId: DataTypes.INTEGER(11),
+        departmentType: DataTypes.STRING(200)
+    }, {
+        tableName: 'departments',
+        timestamps: false
+    });
 
-	return Department;
-}
+    return Departments;
+};

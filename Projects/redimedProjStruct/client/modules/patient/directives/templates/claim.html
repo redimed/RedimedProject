@@ -160,14 +160,7 @@
     </div>
     <!-- END CASE MANAGER -->
 
-    <!-- IS ENABLE -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" 
-            ng-model="modelObjectMap.Isenable" ng-true-value="1" ng-false-value="0">
-        <label for="isenable">Is Enable</label>
-    </div>
-    <!-- END IS ENABLE -->
-
+   
     <!-- IS CURRENT -->
     <div class="col-md-4 col-sm-6 col-xs-12">
         <input type="checkbox" name="iscurrent" id="iscurrent" class="mdt-checkbox" 
@@ -175,6 +168,27 @@
         <label for="iscurrent">Is Current</label>
     </div>
     <!-- END IS CURRENT -->
+
+     <!-- PO NUMBER -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <span class="field">
+            <label for="PO_number">PO Number</label>
+            <input type="text" id="PO_number"
+                name="PO_number" ng-model="modelObjectMap.PO_number" 
+                placeholder="PO Number" float-label />
+        </span>
+    </div>
+    <!-- END PO NUMBER  -->
+
+    <div class="break-row"></div>
+     <!-- IS ENABLE -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" 
+            ng-model="modelObjectMap.Isenable" ng-true-value="1" ng-false-value="0">
+        <label for="isenable">Is Enable</label>
+    </div>
+    <!-- END IS ENABLE -->
+
 
     <div class="break-row"></div>
 </div>

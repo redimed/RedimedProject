@@ -22,7 +22,9 @@ angular.module('app.loggedIn.document.IDS.controllers', [])
 
         var patientInfo = localStorageService.get('tempPatient');
         var Patient_ID = patientInfo.Patient_id;
-        var CalID = -1; // $scope.apptInfo.CAL_ID;
+        //var CalID = -1; // $scope.apptInfo.CAL_ID;
+        var CalID = $stateParams.cal_id; 
+
 
         $scope.dateOptions = {
             formatYear: 'yy',

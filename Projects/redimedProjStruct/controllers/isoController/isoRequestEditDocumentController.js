@@ -241,6 +241,47 @@ module.exports =
 	            }
 	        });
 	    });
+	},
+
+	getNumberOfRequestUnread:function(req,res)
+	{
+		var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+	    var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+	    var nodeId=isoUtil.checkData(req.query.nodeId)?req.query.nodeId:'';
+	    if(!isoUtil.checkListData([userId,nodeId]))
+	    {
+	    	isoUtil.exlog("getNumberOfRequestUnread","Loi data truyen den");
+	    	res.json({status:'fail'});
+	    	return;
+	    }
+
+	    var sql=
+	    	" SELECT COUNT (request.ID) AS NUM_OF_REQUEST                                  "+
+			" FROM `iso_request_edit_document` request                                     "+
+			" WHERE request.`NODE_ID`=? AND request.`IS_READ`=0 AND request.`ISENABLE`=1   ";
+
+		req.getConnection(function(err,connection)
+	    {
+	        var query = connection.query(sql,[nodeId],function(err,rows)
+	        {
+	            if(err)
+	            {
+	                isoUtil.exlog("getNumberOfRequestUnread",err);
+	                res.json({status:'fail'});
+	            }
+	            else
+	            {
+	            	if(rows.length>0)
+	            	{
+	            		res.json({status:'success',data:rows[0].NUM_OF_REQUEST});
+	            	}
+	            	else
+	            	{
+	            		res.json({status:'success',data:0});
+	            	}
+	            }
+	        });
+	    });
 	}
 
 

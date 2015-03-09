@@ -240,6 +240,30 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all("iso/iso-check-out-in/make-current-version");
                 return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
+            },
+
+            forceSubmitDocument:function(nodeId)
+            {
+                var result = api.all("iso/iso-check-out-in/force-submit-document");
+                return result.post({nodeId:nodeId});
+            },
+
+            forceApprovedDocument:function(nodeId,checkOutInId)
+            {
+                var result = api.all("iso/iso-check-out-in/force-approved-document");
+                return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
+            },
+
+            forceCheckOutDocument:function(nodeId,checkOutInId)
+            {
+                var result = api.all("iso/iso-check-out-in/force-check-out-document");
+                return result.post({nodeId:nodeId,checkOutInId:checkOutInId});
+            },
+
+            
+            downloadSpecificCheckIn:function(nodeId,checkOutInId)
+            {
+                $window.location.href = '/api/iso/iso-check-out-in/download-specific-check-in?nodeId='+nodeId+'&checkOutInId='+checkOutInId;
             }
         }
 
@@ -417,6 +441,11 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result=api.all("iso/iso-request-edit-document/set-request-star");
                 return result.post({requestId:requestId,star:star});
+            },
+
+            getNumberOfRequestUnread:function(nodeId){
+                var result = api.one("iso/iso-request-edit-document/get-number-of-request-unread");
+                return result.get({nodeId:nodeId});
             }
         }
         return isoService;

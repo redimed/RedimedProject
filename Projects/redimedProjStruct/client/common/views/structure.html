@@ -6,11 +6,20 @@
                 <div class="pull-left">
                     <input ng-model="searchUser" ng-change="searchOnlineUser(searchUser)" type="text" placeholder="Search User">
                 </div>
+
             </div>
             <div class="side-widget">
-                <div class="side-widget-title">Online Users</div>
+                <div class="side-widget-title">
+                    Online Users
+                    <div class="pull-right">
+                        <a href="javascript:;" ng-click="refreshOnlineList()" class="btn btn-circle btn-sm blue">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </div>
+                    <hr style="background-color: #B0B0B9; height: 1px; border: 0" />
+                </div>
                 <div class="side-widget-content" >
-                    <div ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
+                    <div ng-click="openChat(u)" ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
                         <div class="user-profile">
                             <img ng-if="u.img != null"  style="background-color: white;" class="img-circle hide1" ng-src="{{u.img}}"  alt="" width="35" height="35">
                             <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png"  alt="" width="35" height="35">
@@ -34,6 +43,15 @@
             </div>
         </div>
     </div>
+    <!-- <irontec-simple-chat
+          messages="vm.messages"
+          username="vm.username"
+          input-placeholder-text="You can write here"
+          submit-button-text="Send your message"
+          title="Super Awesome Chat"
+          theme="material"
+          submit-function="vm.sendMessage">
+    </irontec-simple-chat> -->
 </div>
 <!--END RIGHT SIDE MENU-->
 

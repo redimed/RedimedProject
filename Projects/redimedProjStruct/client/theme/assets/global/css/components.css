@@ -1396,18 +1396,13 @@ Statistic lists
 Chart tooltips
 ***/
 .chart-tooltip {
-  clear: both;
-  z-index: 100;
-  background-color: #736e6e !important;
-  padding: 5px !important;
-  color: #fff;
-}
-.chart-tooltip .label {
-  clear: both;
-  display: block;
-  margin-bottom: 2px;
-}
-
+    position: "absolute",
+    display: "none",
+    border: "1px solid #fdd",
+    padding: "2px",
+    "background-color": "#fee",
+    opacity: 0.80
+  }
 /***
 Mini chart containers
 ***/
@@ -10881,3 +10876,4 @@ Transparent Button
   background: transparent;
   color: #888;
 }
+

@@ -78,6 +78,11 @@
 <mdt-appointment-detail params="appt_params" options="options"></mdt-appointment-detail>
 <!-- END APPOINTMENT INFO -->
 
+<div ng-if="warning_refferal" class="alert alert-danger" role="alert" style="font-size: 30px;">
+	<i class="fa fa-bell"></i> 
+	Need make a refferal. 
+	<a ui-sref="{{'loggedIn.patient.referral.list({patient_id:' + patient_id + ', cal_id:' + cal_id + '})'}}"> DO IT NOW !!!</a>
+</div>
 
 <div class="row">
 	<div class="col-lg-12" style="padding: 0">
@@ -98,7 +103,7 @@
 			</a>
 		</div>
 
-		<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="module in patient_apt_modules">
+		<div ng-if="list_appt.length > 0" class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="module in patient_apt_modules">
 			<a class="dashboard-stat dashboard-stat-light {{module.color}}" style="text-decoration: none;"
 				ui-sref="{{module.state}}">
 				<div class="visual">

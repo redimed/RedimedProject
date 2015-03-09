@@ -307,13 +307,13 @@
                         </a>
                     </li>
 
-                    <li>
+                    <li ng-show="node.STATUS == bookingStatus.confirmed">
                         <a class="pointer" role="menuitem" tabindex="3"
                            ng-click="showDialogChangeAppointmentCalendar(selectedBooking.BOOKING_ID,selectedBooking.CAL_ID,selectedBooking.APPOINTMENT_DATE,selectedBooking.ASS_ID)">
                             Change Appointment Calendar
                         </a>
 
-                    </li>
+                    </li>   
                     <!--chien set status
                     phanquocchien.c1109g@gmail.com-->
                     <li>
@@ -467,7 +467,7 @@
                                 </a>
                             </li>
 
-                            <li>
+                            <li ng-show="node.STATUS == bookingStatus.confirmed">
                                 <a class="pointer" role="menuitem" tabindex="2"
                                    ng-click="showDialogChangeAppointmentCalendar(node.BOOKING_ID,node.CAL_ID,node.APPOINTMENT_DATETIME,node.ASS_ID)">
                                     Change appointment calendar
@@ -554,8 +554,7 @@
 
             <div ng-class="selectedBooking.style_class" class="alert alert-info" role="alert" style="text-align: center;text-decoration: underline">
                 Booking Status: {{selectedBooking.STATUS}} <br />
-                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}<br/>
-                <!-- <a id="testclick" ng-click="setBookingIdInPaperless(selectedBooking.BOOKING_ID)">chien test</a> -->
+                Documents Status : {{selectedBooking.DOCUMENT_STATUS}}
             </div>
 
 
@@ -767,34 +766,34 @@
             <ul style="margin-left: -30px;">
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Confirmed'" class="btn btn-primary" >
                     <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
-                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking)">
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Confirmed</span>
                     </a>
                 </li>
 
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Arrived'" class="btn btn-success">
                     <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Arrived</span>
                     </a>
                 </li>
 
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Not Arrived'" class="btn btn-info">
                     <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking)">
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Not Arrived</span>
                     </a>
                 </li>
 
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Completed'" class="btn btn-warning">
                     <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Completed</span>
                     </a>
                 </li>
                 <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Cancel'" class="btn btn-danger">
                     <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Cancel</span>
                     </a>
                 </li>

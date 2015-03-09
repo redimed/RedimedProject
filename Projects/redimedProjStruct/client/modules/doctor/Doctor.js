@@ -19,7 +19,7 @@ angular.module("app.loggedIn.doctor", [
 
     //PAPERLESS
     .state("loggedIn.doctor.paperless", {
-        url: "/doctor/paperless/:patient_id",
+        url: "/doctor/paperless/:patient_id/:cal_id",
         views: {
             "main-content":{
                 templateUrl: "modules/doctor/views/paperless.html",
@@ -115,8 +115,16 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
-
-    //
+  // TIMETABLE DETAIL LEAVE
+    .state("loggedIn.doctor.timetable.detail.leave", {
+        url: "/leave",
+        views: {
+            "main-content-timetable": {
+                templateUrl: "modules/doctor/views/timetable-leave.html",
+                controller: "DoctorTimetableDetailLeaveController"
+            }
+        }
+    })
 
 	// ITEM SHEET
 	.state("loggedIn.doctor.items", {

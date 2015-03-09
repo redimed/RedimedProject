@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function(sysStateService, PatientService, CompanyService, ConfigService, toastr, PatientModel){
+.directive("patientDetail", function($stateParams, sysStateService, PatientService, CompanyService, ConfigService, toastr, PatientModel, FileUploader, $timeout){
 	return{
 		restrict: "EA",
 		scope: {
@@ -12,6 +12,57 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
+			var avt_path = '';
+
+			var uploader = scope.uploader = new FileUploader({
+				url: '/api/erm/v2/patient/upload_avt',
+		        autoUpload: false,
+		        removeAfterUpload: true,
+		        onAfterAddingFile: function(item){
+		        	var arr = item.file.name.split(".");
+		        	var ext = arr[arr.length - 1];
+		        	if(ext==="jpg" || ext==="jpeg" || ext==="png"){
+		        		if(this.queue.length > 1)
+		        		this.queue.splice(0,1);
+		        	}
+		        	else{
+		        		toastr.error("Only jpg, jpeg and png accepted","Invalid format!");
+		        		this.queue = [];
+		        	}
+		        	
+		        },
+		        onCompleteItem: function(item, response, status, headers){
+		        	if(response.status==="success" && response.isEditMode===true){
+		        		avt_path = response.img_path;
+		        		console.log('replace success');
+		        		clickAction();
+		        	}
+		        }
+			});
+
+			// uploader.filters.push(function(item) {
+			// 	console.log(item);
+   // 				return item.type == 'image/jpeg' || item.type == 'image/png';
+			// });
+
+			if(!!$stateParams.patient_id){
+				uploader.formData[0] = {patient_id: $stateParams.patient_id, file_name:(new Date()).getTime(), editMode:true};
+			}
+			
+
+
+			
+
+			scope.openUploader = function(){
+	             $timeout(function () {
+	                $('#patient_photo_upload').click();
+	            }, 100);
+        	};
+
+        	scope.displaylog = function(){
+        		console.log('this is uploader', scope.uploader);
+        	}
+
 			if(scope.isClose){
 				var idClose = "#"+scope.isClose;
 			}
@@ -99,6 +150,15 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 									if(key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
 										scope.modelObjectMap[key] = new Date(scope.modelObjectMap[key]);
 								}
+								if(!scope.modelObjectMap.avatar || scope.modelObjectMap.avatar === ""){
+									if(!scope.modelObjectMap.Sex || scope.modelObjectMap.Sex === ""){
+										scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+									}
+									else{
+										if(scope.modelObjectMap.Sex === "Male") scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+										else scope.modelObjectMap.avatar = "img/patient/avt/female_default.png"
+									}
+								}
 							}
 
 							scope.verifiedMedicare();
@@ -134,7 +194,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			//END POPUP
 
 			// ACTION
-			scope.clickAction = function(){
+			var clickAction = function(){
 				scope.isSubmit = true;
 
 				//ACCORDION
@@ -153,7 +213,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 						}
 					}
 					// END DATE
-
+					postData.avatar = avt_path;
 					if(scope.params.permission.edit === true){
 						PatientService.mdtEdit(postData).then(function(response){
 							 if (response.status != 'success') {
@@ -172,12 +232,19 @@ angular.module("app.loggedIn.patient.detail.directive", [])
                         	}
 						})
 					}else{
+						var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
+						postData.avatar = "img/patient/avt/" + upload_file_name;
 						PatientService.mdtAdd(postData).then(function (data) {
 	                        if (data.status != 'success') {
 	                            toastr.error("Cannot Insert!", "Error");
 	                            return;
 	                        }
+
 	                        toastr.success('Insert Patient Successfully !!!', "Success");
+	                        if(uploader.queue.length > 0){
+	                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
+								uploader.uploadItem(uploader.queue[0]);
+							}
 	                        if(scope.params.isAtAllPatient!== true){
 	                        	//return
 		                        scope.patient = {};
@@ -203,6 +270,23 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				}//end if
 			}
 			// END ACTION
+			scope.buttonclick = function(){
+				if(scope.params.permission.edit === true){
+					if(uploader.queue.length > 0){
+						uploader.uploadItem(uploader.queue[0]);
+					}
+					else{
+						clickAction();
+					}
+				}
+				else{
+					clickAction();
+				}
+				
+			}
+			scope.removeUpload = function(){
+				uploader.queue = [];
+			}
 		}
 	} // END RETURN
 }) // END DIRECTIVE PATIENT DETAIL

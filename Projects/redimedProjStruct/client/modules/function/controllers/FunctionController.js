@@ -97,7 +97,8 @@ angular.module('app.loggedIn.function.controller',[])
         $scope.info = {
             decription: null,
             definition: null,
-            type: null
+            isWeb: "1",
+            isMobile: "0"
         }
 
         $scope.cancel = function(){
@@ -131,11 +132,16 @@ angular.module('app.loggedIn.function.controller',[])
             function_id: functionId,
             decription: null,
             definition: null,
-            type: null
+            isWeb: null,
+            isMobile: null
         }
 
         FunctionService.getFunctionInfo(functionId).then(function(data){
+            console.log(data);
             $scope.info = data;
+            $scope.info.isWeb = data.isWeb == 1 ? "1" : "0";
+            $scope.info.isMobile = data.isMobile == 1 ? "1" : "0";
+
         })
 
         $scope.cancel = function(){

@@ -4,7 +4,8 @@
 angular.module('app.loggedIn.document.SA2.controllers', [])
     .controller("SA2Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams, localStorageService) {
         $scope.patientInfo = localStorageService.get('tempPatient');
-        var CalID = -1;//$scope.apptInfo.CAL_ID;
+       // var CalID = -1;//$scope.apptInfo.CAL_ID;
+        var CalID = $stateParams.cal_id; 
         var Patient_ID = $scope.patientInfo.Patient_id;
 
         $scope.dateOptions = {

@@ -15,16 +15,29 @@ var compress = require('compression');
 var db = require('./models');
 var restful = require('sequelize-restful');
 var useragent = require('express-useragent');
+
+var pkey = fs.readFileSync('key/key.pem');
+var pcert = fs.readFileSync('key/cert.pem');
+
+var credentials = {key: pkey, cert: pcert};
 //Create application management
 var app = express();
-var server = require('http').Server(app);
+
+var server = require('https').createServer(credentials,app);
 var io = require('socket.io')(server);
 var _ = require('lodash-node');
-var easyrtc = require("easyrtc");
+
+var apiKey = "45172682";
+var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
+
+
+var OpenTok = require('opentok'),
+    opentok = new OpenTok(apiKey, apiSecret);
+
 
 server.listen(3000);
 
-require('./socket')(io,cookie,cookieParser);
+require('./socket')(io,cookie,cookieParser,opentok);
 
 var myIceServers = [
     {url: "stun:stun.l.google.com:19302"},
@@ -35,22 +48,6 @@ var myIceServers = [
     {url: "turn:172.17.19.101:3478", "username":"redimed", "credential":"redimed123"}
 ];
 
-// EasyRTC configs
-easyrtc.setOption("appIceServers", myIceServers);
-
-var easyrtcServer = easyrtc.listen(
-    app,
-    io,
-    {logLevel:"debug", logDateEnable:true},
-    function(err, rtc) {
-        rtc.setOption("roomDefaultName", "Redimed");
-
-    }
-);
-
-easyrtc.on("getIceConfig", function(connectionObj, callback){
-    callback(null, myIceServers);
-});
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -83,9 +80,10 @@ app.use(passport.session());
 
 
 var clientDir = path.join(__dirname, 'client');
-
+var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
+app.use('/img/patient/avt', express.static(uploadedFile));
 /**
  * K Library
  */

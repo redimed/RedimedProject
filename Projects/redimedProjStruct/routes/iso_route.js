@@ -72,6 +72,8 @@ app.get('/api/iso/iso-check-out-in/downloadFileCheckOutIn',isoCheckInOutControll
 app.post('/api/iso/iso-check-out-in/approved-document',isoController.checkAdminTree,isoCheckInOutController.approvedDocument);
 app.post('/api/iso/iso-check-out-in/rejected-document',isoCheckInOutController.checkIsApprover,isoCheckInOutController.rejectedDocument);
 app.post('/api/iso/iso-check-out-in/make-current-version',isoController.checkAdminTree,isoCheckInOutController.makeCurrentVersion);
+app.post('/api/iso/iso-check-out-in/force-check-out-document',isoController.getUserPermission,isoCheckInOutController.forceCheckOutDocument);
+app.get('/api/iso/iso-check-out-in/download-specific-check-in',isoController.getUserPermission,isoCheckInOutController.downloadSpecificCheckIn);
 
 //isoAdminController
 app.post('/api/iso/iso-admin/check-is-admin-iso-system',isoController.checkAdminIsoSystem,isoAdminController.checkIsAdminIsoSystem);
@@ -112,3 +114,11 @@ app.post('/api/iso/iso-request-edit-document/cancel-request',isoRequestEditDocum
 app.post('/api/iso/iso-request-edit-document/get-all-request',isoRequestEditDocumentController.getAllRequest);
 app.post('/api/iso/iso-request-edit-document/set-request-is-read',isoRequestEditDocumentController.setRequestIsRead);
 app.post('/api/iso/iso-request-edit-document/set-request-star',isoRequestEditDocumentController.setRequestStar);
+app.get('/api/iso/iso-request-edit-document/get-number-of-request-unread',isoRequestEditDocumentController.getNumberOfRequestUnread);
+
+//FUNCTION FOR ADMIN SYSTEM
+// app.post('/api/iso/iso-check-out-in/force-check-in-document',multipartMiddleware,isoController.getUserPermission,isoCheckInOutController.checkInDocument);
+app.post('/api/iso/iso-check-out-in/force-submit-document',isoController.checkAdminIsoSystem,isoCheckInOutController.forceSubmitDocument,isoCheckInOutController.submitDocument);
+app.post('/api/iso/iso-check-out-in/force-approved-document',isoController.checkAdminIsoSystem,isoCheckInOutController.approvedDocument);
+app.post('/api/iso/iso-check-out-in/create-new-check-in-document',multipartMiddleware,isoController.checkAdminIsoSystem,isoCheckInOutController.createNewCheckInDocument);
+// app.post('/api/iso/iso-check-out-in/create-new-check-in-document',multipartMiddleware,isoCheckInOutController.createNewCheckInDocument);

@@ -940,7 +940,127 @@ table.timetable-table td:last-child {
   justify-content: center;
   flex-direction: column;
 }
+/*css custom by thanh*/
 
-.cancel-booking{
-    text-decoration: line-through;
+.custom-timesheet {
+    font-size: 12px;
 }
+.glyphicon-chevron-up:before {
+    content: "\e113"
+}
+.glyphicon-chevron-down:before {
+    content: "\e114"
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+    position: absolute;
+    color: #999;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover, .table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
+    color: #31c0be;
+    cursor: pointer;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active, .table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
+    color: #31c0be;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up {
+    top: 4px;
+    right: 5px;
+}
+.table-dynamic .table-filters {
+    margin: 10px 0;
+    padding: 8px;
+}
+.table-dynamic .filter-result-info {
+    padding: 7px;
+}
+.table-dynamic .table-bordered {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+}
+.table-dynamic .table-bordered thead th {
+    position: relative;
+    padding: 0;
+}
+.table-dynamic .table-bordered thead th>.th {
+    position: relative;
+    padding: 4px 4px 4px 4px;
+    height: 25px;
+    font-size: 12px;
+}
+.table-dynamic .table-bordered tbody tr {
+    position: relative;
+    padding: 4px 4px 4px 4px;
+    height: 10px;
+}
+.table-dynamic .table-bordered tbody tr td input>.checkbox {
+    height: 15px;
+    width: 15px;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+    position: absolute;
+    color: #999;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover, .table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
+    color: #31c0be;
+    cursor: pointer;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active, .table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
+    color: #31c0be;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up {
+    top: 0px;
+    right: 5px;
+}
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+    top: 11px;
+    right: 6px;
+}
+.table-dynamic .table-footer {
+    margin: 10px 0;
+    padding: 8px;
+}
+.table-dynamic .page-num-info span {
+    padding: 6px;
+}
+.table-dynamic .pagination-container ul {
+    margin: 0;
+}
+.table-dynamic .pagination-container ul li:hover {
+    cursor: pointer;
+}
+
+.table-dynamic .table-bordered tr:active {
+    background: #F5F5F5;
+}
+/*tooltipster*/
+
+.tooltip-error-theme {
+    border-radius: 5px;
+    background: #f3565d;
+    color: #fff;
+}
+/* Use this next selector to style things like font-size and line-height: */
+
+.tooltip-error-theme .tooltipster-content {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 8px 10px;
+}
+.table-dynamic .table-bordered>thead>tr>th, .table-dynamic .table-bordered>tbody>tr>th, .table-dynamic .table-bordered>tfoot>tr>th, .table-dynamic .table-bordered>thead>tr>td, .table-dynamic .table-bordered>tbody>tr>td, .table-dynamic .table-bordered>tfoot>tr>td {
+    padding: 2px 5px 2px 5px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.odd {
+    background-color: #fafafa;
+}
+.table-dynamic .table-bordered>thead>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox], .table-dynamic .table-bordered>thead>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>td>input[type=checkbox] {
+    margin: 4px 1px 1px 10px;
+    margin-top: 1px \9;
+    line-height: normal;
+}
+/*end tooltipster*/
+/*end css custom by thanh*/

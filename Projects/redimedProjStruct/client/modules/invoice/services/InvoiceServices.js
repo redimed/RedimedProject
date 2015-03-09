@@ -11,7 +11,7 @@ angular.module('app.loggedIn.invoice.services', [])
 
 	mdtService.save = function(id, postData){
 		var funcApi = mdtApi.all('invoice/save');
-		return funcApi.post({ header_id: id, status:postData.STATUS});
+		return funcApi.post({ header_id: id, status:postData.STATUS, lines: postData.lines, service_id: postData.SERVICE_ID });
 	}
 
 	mdtService.update = function(id, postData){

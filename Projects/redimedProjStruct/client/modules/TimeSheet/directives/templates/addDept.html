@@ -1,0 +1,25 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>{{addOrUpdateTitle}}</legend>
+            <div data-row-span="12">
+                <!-- NAME DEPT -->
+                <div data-field-span="6">
+                    <label>name of Dept</label>
+                    <input type="text" ng-model="info.departmentName" style="font-size:13px;">
+                </div>
+                <!-- END NAME DEPT -->
+                <!-- LOCATION NAME -->
+                <div data-field-span="6">
+                    <label>Location</label>
+                    <select ng-options="local.location_id as local.NAME for local in location" ng-model="info.locationID" style="font-size:13px;"></select>
+                </div>
+                <!-- END LOCATION NAME -->
+            </div>
+        </fieldset>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
+        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Cancel</a>
+        <!-- END MAIN INFO -->
+    </form>
+</div>

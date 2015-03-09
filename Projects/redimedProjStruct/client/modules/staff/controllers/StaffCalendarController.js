@@ -1,107 +1,158 @@
 angular.module("app.loggedIn.staff.calendar.controller", [])
 
-    .controller("StaffCalendarController", function($rootScope,$scope, ConfigService, $modal, moment,StaffService,$state,toastr){
+    .controller("StaffCalendarController", function($rootScope,$scope, $filter, ConfigService, $modal,calendarHelper, moment,StaffService,$state,toastr){
         var currentYear = moment().year();
         var currentMonth = moment().month();
-
-        var departmentList,locationList,activityList;
-        var month;
-        month = currentMonth + 1;
-        if(month < 10){
-            month = '0' + month;
+        $scope.test = 'dd';
+        if(!$scope.tasks){
+            $scope.tasks = [];
         }
+
+        $scope.isEdit = false;
+
+        var startWeek,endWeek;
+
+        $scope.task={
+                    order: null,
+                    task : null,
+                    date : null,
+                    department_code_id: null,
+                    location_id: null,
+                    activity_id: null,
+                    time_charge: null
+                };
+
+        $scope.calendarView = 'month';
+        $scope.calendarDay = new Date();
+        $scope.preDay = moment($scope.calendarDay).subtract(1, 'month').toDate();
+        $scope.nextDay = moment($scope.calendarDay).add(1, 'month').toDate();
 
         StaffService.getDepartmentLocation().then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
                 toastr.error("Error", "Error");
-                $state.go('loggedIn.staff.list', null, {'reload': true});
+                $state.go('loggedIn.home', null, {'reload': true});
             }else
             {
-                departmentList = response['department'];
-                locationList = response['location'];
-                activityList = response['activity'];
+                $scope.departments = response['department'];
+                $scope.locations = response['location'];
+                $scope.activities = response['activity'];
+                $scope.viewWeek = calendarHelper.getWeekView($scope.calendarDay, true);
+                checkTaskWeek($scope.viewWeek.startWeek);
+                getTaskMonth(currentYear,currentMonth);
             }
         })
 
-        StaffService.getAllTaskAMonth(currentYear,month).then(function(response){
-            if(response['status'] == 'error'){
-                toastr.error("Error", "Error");
-            }else if(response['status'] == 'fail' ){
-
-            }else
-            {
-                console.log(response);
-                $scope.events = response;
-                angular.forEach($scope.events, function(event){
-                    if(event.start_time != null && event.end_time != null){
-                        event.start_time = ConfigService.convertStringToDate(event.start_time);
-                        event.end_time = ConfigService.convertStringToDate(event.end_time);
+        function checkTaskWeek(date){
+            $scope.tasks=[];
+            startWeek = $filter('date')(date, 'yyyy-MM-dd');
+            StaffService.checkTaskWeek(startWeek).then(function(response){
+                if(response['status'] == 'fail' || response['status'] == 'error'){
+                    toastr.error("Error", "Error");
+                }else
+                {
+                    if(response['data'] != 'no'){
+                         $scope.isEdit = true;
+                        angular.forEach(response['data'], function(data){
+                            data.isEdit = true;
+                            $scope.tasks.push(data);
+                        })
+                    }else{
+                         $scope.isEdit = false;
+                        $scope.viewWeek = calendarHelper.getWeekView(date, true);
+                        angular.forEach($scope.viewWeek.columns, function(data){
+                            $scope.task={
+                                        order: 1,
+                                        task : null,
+                                        date : data.dateChosen,
+                                        department_code_id: null,
+                                        location_id: null,
+                                        activity_id: null,
+                                        time_charge: null
+                                    };
+                            $scope.tasks.push($scope.task);
+                        })
                     }
-                })
-            }
-        })
-
-        $scope.calendarView = 'month';
-        $scope.calendarDay = new Date();
-
-        function showModal(action, event) {
-            $modal.open({
-                templateUrl: 'modules/staff/directives/templates/addModal.html',
-                controller: function($scope, $modalInstance) {
-                    $scope.$modalInstance = $modalInstance;
-                    $scope.action = action;
-                    $scope.event = event;
                 }
-            });
+            })
         }
 
-        $scope.eventClicked = function(event) {
-            showModal('Clicked', event);
-        };
+        $scope.addRow = function(index,date,weekID){
+            task={
+                tasks_week_id: weekID,
+                order: 2,
+                task : null,
+                date : date,
+                department_code_id: null,
+                location_id: null,
+                activity_id: null,
+                time_charge: null,
+                isEdit: false
+            };
+            $scope.tasks.splice(index + 1, 0,task); ;
+        }
 
-        $scope.eventEdited = function(event) {
-            console.log(event);
-            var modalInstance = $modal.open({
-                templateUrl: 'modules/staff/directives/templates/addModal.html',
-                controller: function($scope,$modalInstance){
-                    $scope.$modalInstance = $modalInstance;
-                    $scope.departments = departmentList;
-                    $scope.activities = activityList;
-                    $scope.locations = locationList;
-                    $scope.taskModal={
-                        tasks_id: event.tasks_id,
-                        task_name : event.task,
-                        dateChosen : event.date,
-                        task_department: event.department_code_id,
-                        task_location: event.location_id,
-                        task_activity: event.activity_id,
-                        startDate : event.start_time,
-                        endDate : event.end_time,
-                        start_time : event.start_time,
-                        end_time : event.end_time
-                    };
-                    $scope.addTask = function(){
-                        $modalInstance.close($scope.taskModal);
-                    };
+        var dateFrom;
+        $scope.changeDate = function(){
+            dateFrom = new Date($scope.dateWeekFrom.substr(6,4),$scope.dateWeekFrom.substr(3,2) - 1,$scope.dateWeekFrom.substr(0,2));
+            checkTaskWeek(dateFrom);
+        }
+
+        function getTaskMonth(currentYear,currentMonth){
+            StaffService.getAllTaskAMonth(currentYear,currentMonth).then(function(response){
+                if(response['status'] == 'error'){
+                    toastr.error("Error", "Error");
+                }else if(response['status'] == 'no task' ){
+                    toastr.error("no task", "Error");
+                }else
+                {
+                    $scope.events = response;
                 }
-            });
+            })
+        }
 
-            modalInstance.result.then(function(task){
-                StaffService.editTask(task).then(function(response){
-                    if(response['status'] == 'fail' || response['status'] == 'error'){
-                        toastr.error("Error", "Error");
+        $scope.delTask = function(index){
+            $scope.tasks.splice(index,1);
+        }
+
+        $scope.addAllTask = function()
+        {
+            if(!$scope.isEdit)
+            {
+                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+                StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("success","Success");
+                        $state.go('loggedIn.staff.list', null, {'reload': true});
                     }else
                     {
-                        toastr.success("success", "success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                        toastr.error("Error", "Error");
                     }
                 })
-            })
-        };
+            }
+            else
+            {
+                StaffService.editTask($scope.tasks).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("Edit Success");
+                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                    }else
+                    {
+                        toastr.error("Error", "Error");
+                    }
+                })
+            }
+        }
 
-        $scope.eventDeleted = function(event) {
-            showModal('Deleted', event);
-        };
+        $scope.chooseItem = function(task)
+        {
+            console.log(task);
+            var modalInstance = $modal.open({
+                templateUrl: "modules/staff/views/itemModal.html",
+                controller:'ItemController',
+                size:'md'
+            })
+        }
 
         $scope.setCalendarToToday = function() {
             $scope.calendarDay = new Date();
@@ -113,4 +164,104 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
 
             event[field] = !event[field];
         };
+
+        $(function() {
+            var startDate;
+            var endDate;
+
+            var selectCurrentWeek = function () {
+                window.setTimeout(function () {
+                    $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
+                }, 1);
+            }
+
+            var setDates = function (input) {
+                var $input = $(input);
+                var date = $input.datepicker('getDate');
+                var firstDay = $input.datepicker( "option", "firstDay");
+                $input.datepicker( "option", "dateFormat", "dd-mm-yy" );
+                $input.datepicker('option', 'firstDay', 1);
+                if (date !== null) {
+                    var dayAdjustment = date.getDay() - firstDay;
+                    if (dayAdjustment < 0) {
+                        dayAdjustment += 7;
+                    }
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
+                    $input.datepicker("setDate", startDate);
+                }
+            }
+
+            $('.week-picker').datepicker({
+                beforeShow: function () {
+                    $('#ui-datepicker-div').addClass('ui-weekpicker');
+                    selectCurrentWeek();
+                },
+                onClose: function () {
+                    $('#ui-datepicker-div').removeClass('ui-weekpicker');
+                },
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                onSelect: function (dateText, inst) {
+                    setDates(this);
+                    selectCurrentWeek();
+                    $(this).change();
+                },
+                beforeShowDay: function (date) {
+                    var cssClass = '';
+                    if (date >= startDate && date <= endDate)
+                        cssClass = 'ui-datepicker-current-day';
+                    return [true, cssClass];
+                },
+                onChangeMonthYear: function (year, month, inst) {
+                    selectCurrentWeek();
+                }
+            });
+
+            setDates('.week-picker');
+
+            var $calendarTR = $('.ui-weekpicker .ui-datepicker-calendar tr');
+            $calendarTR.live('mousemove', function () {
+                $(this).find('td a').addClass('ui-state-hover');
+            });
+            $calendarTR.live('mouseleave', function () {
+                $(this).find('td a').removeClass('ui-state-hover');
+            });
+        });
     })
+
+    .controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr){
+        $scope.itemSearchPanel = {}
+
+        $scope.itemSearch = {
+            is_show: false,
+            open: function() {
+                this.is_show = true;
+            },
+            close: function() {
+                this.is_show = false;
+            },
+            click: function(item) {
+                console.log(item);
+
+            }
+        }
+
+        $scope.itemSearchOption = {
+            api:'api/erm/v2/items/search',
+            method:'post',
+            scope: $scope.itemSearchPanel,
+            columns: [
+                {field: 'ITEM_ID', is_hide: true},
+                {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+                {field: 'ITEM_NAME', label: 'Item Name'},
+            ],
+            use_filters:true,
+            filters:{
+                ITEM_CODE: {type: 'text'},
+                ITEM_NAME: {type: 'text'}
+            }
+        }
+
+    })
+

@@ -11,6 +11,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.rlob", //Redi Legal Online Booking
     "app.loggedIn.vaccinob", //Vaccination Online Booking
     "app.loggedIn.iso", //ISO manage files
+    "app.loggedIn.payroll",//PAYROLL (TANNV.DTS@GMAIL.COM)
     "app.loggedIn.company", // COMPANY MODULE
     "app.loggedIn.doctor", // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
@@ -22,7 +23,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.department",
     /*AUTO CREATE*/
     'app.loggedIn.invoice',
-
+    'app.loggedIn.mdtrecall',
     'app.loggedIn.mdtappointment',
 
     'app.loggedIn.mdtinsurer',
@@ -69,8 +70,12 @@ angular.module("app.loggedIn", [
     "app.loggedIn.staff",
 
     // MODULE TREEAPPROVE
-    'app.loggedIn.treeApprove'
+    'app.loggedIn.treeApprove',
     // END MODULE TREE APPROVE
+
+    //MODULE TIMESHEET
+    'app.loggedIn.TimeSheet'
+    //END MODULE TIMESHEET
 ])
 
 .config(function($stateProvider) {

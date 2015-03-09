@@ -19,7 +19,6 @@ angular.module('app.loggedIn.waworkcover.general.directive',[])
                     PatientService.mdtById(scope.params.patientInfo).then(function(res){
                         if(res.status === 'success'){
                             if(!!res.data){
-                                console.log('this is patient info', res.data);
                                 scope.patient = res.data;
                                 scope.patient.fullname = scope.patient.First_name;
                                 if(!!scope.patient.Middle_name){
@@ -32,13 +31,11 @@ angular.module('app.loggedIn.waworkcover.general.directive',[])
                                     CompanyService.mdtById(scope.patient.company_id).then(function(res2){
                                         if(res2.status === 'success'){
                                             if(!!res2.data){
-                                                console.log('this is res2 data', res2.data);
                                                 scope.companyInfo = res2.data;
                                                 if(!!scope.companyInfo.Insurer){
                                                     //GET INSURER INFO
                                                     InsurerService.detail(scope.companyInfo.Insurer).then(function(res3){
                                                         if(res3.status === "success"){
-                                                            console.log('this is res3', res3);
                                                             if(!!res3.row){
                                                                 scope.insurer = res3.row;
                                                             }

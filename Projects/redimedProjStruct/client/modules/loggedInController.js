@@ -1,54 +1,65 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-.controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
-    var from = $location.search().from;
-    var to = $location.search().to;
-    var isCaller = ($location.search().isCaller == 'true') ? true : false;
+// .controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+//     var from = $location.search().from;
+//     var to = $location.search().to;
+//     var isCaller = ($location.search().isCaller == 'true') ? true : false;
 
-    var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
+//     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
 
-    UserService.getUserInfo(from).then(function(data){
-        if(data)
-        {
-            if(typeof $cookieStore.get('userInfo') === 'undefined')
-            {
-                delete data.img;
-                $cookieStore.put('userInfo',data);
+//     UserService.getUserInfo(from).then(function(data){
 
-                if(fromMobile){
-                    socket.emit("mobileConnect",data.id);
-                }
-            }
+//         if(data)
+//         {
+//             delete data.img;
+//             $cookieStore.put('userInfo',data);
 
-            if(isCaller){
-                UserService.getUserInfo(to).then(function(rs){
-                    if(!rs.img)
-                         rs.img = "theme/assets/icon.png"
+//             console.log("User Info: " + $cookieStore.get("userInfo"));
 
-                     $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
-                })
-            }
-            else
-            {
-                UserService.getUserInfo(from).then(function(rs){
-                    if(!rs.img)
-                         rs.img = "theme/assets/icon.png"
+//             if(fromMobile){
 
-                    $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
-                })
-            }
-        }
+//                 socket.emit("mobileConnect",data.id);
+
+//                 socket.on("mobileConnectSuccess",function(){
+//                     console.log("Mobile Socket Success");
+
+//                     if(isCaller)
+//                     {
+//                         UserService.getUserInfo(to).then(function(rs){
+//                             if(!rs.img)
+//                                  rs.img = "theme/assets/icon.png"
+
+//                              $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
+//                         })
+//                     }
+//                     else
+//                     {
+//                         UserService.getUserInfo(from).then(function(rs){
+//                             if(!rs.img)
+//                                  rs.img = "theme/assets/icon.png"
+
+//                             $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
+//                         })
+//                     }
+//                 })
+//             }
+
+            
+//         }
                
-    })
+//     })
 
-})
+// })
 
-.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify){
+.controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
         audio.play();
+
+        console.log(opentokRoom);
+
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
@@ -75,7 +86,9 @@ angular.module("app.loggedIn.controller",[
             if(notify != null)
                 notify.close();
             $modalInstance.close();
-            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
+
+            
+                socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
         $scope.acceptCall = function(){
@@ -86,7 +99,8 @@ angular.module("app.loggedIn.controller",[
 
             if(!userInfo.img)
                 userInfo.img = "theme/assets/icon.png"
-            $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false},{reload:true});
+
+            $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false,opentokInfo: opentokRoom},{reload:true});
 
         }
 
@@ -107,10 +121,10 @@ angular.module("app.loggedIn.controller",[
         socket.removeAllListeners();
     })
 
-
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
+
             var options = {
                 body: fromUser + " Is Calling You...",
                 icon: "theme/assets/icon.png",
@@ -136,6 +150,14 @@ angular.module("app.loggedIn.controller",[
                             },
                             notify: function(){
                                 return notification;
+                            },
+                            opentokRoom: function(){
+                                var opentokRoom = {
+                                        apiKey: message.apiKey,
+                                        sessionId: message.sessionId,
+                                        token: message.token
+                                    }
+                                return opentokRoom;
                             }
                         },
                         backdrop: 'static',
@@ -145,6 +167,48 @@ angular.module("app.loggedIn.controller",[
             })
         }
     })
+
+    $scope.vm = {
+        messages: [
+            {
+              'username': 'username1',
+              'content': 'Hi!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            }
+          ],
+        username : 'username1',
+        sendMessage: function(message, username) {
+            if(message && message !== '' && username) {
+              vm.messages.push({
+                'username': username,
+                'content': message
+              });
+            }
+          }
+    };
+
+    $scope.openChat = function(user){
+        console.log(user);
+    }
 
     $scope.userImg = null;
     $scope.onlineUsers = [];
@@ -172,11 +236,22 @@ angular.module("app.loggedIn.controller",[
         });
     }
 
+    $scope.refreshOnlineList = function(){
+        UserService.getOnlineUsers().then(function(rs){
+            $scope.onlineUsers = [];
+            if(rs.data)
+            {
+                $scope.onlineUsers = rs.data;
+                $scope.onlineUsersTemp = rs.data;
+            }
+        })
+    }
+
     $scope.makeCall = function(user){
         UserService.getUserInfo(user.id).then(function(data){
             if(!data.img)
                 data.img = "theme/assets/icon.png"
-            $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true},{reload:true});
+            $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true,opentokInfo:null},{reload:true});
         })
 
     }
@@ -208,6 +283,9 @@ angular.module("app.loggedIn.controller",[
         month_in_year: ConfigService.month_in_year(),
         date_in_month: ConfigService.date_in_month(),
         invoice_status: ConfigService.invoice_status_option(),
+
+        recall_period: ConfigService.recall_period_option(),
+        recall_remind: ConfigService.recall_remind_option(),
     }
 
     var loadOptionsApi = function(){

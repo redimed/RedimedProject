@@ -78,7 +78,7 @@
     <script src="theme/assets/global/plugins/angular/angular-cookies.min.js"></script>
     <script src="theme/assets/global/plugins/angular/angular-filter.min.js"></script>
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.3/es5-shim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.27.1/es6-shim.min.js"></script>
         <script src="theme/assets/global/plugins/angular/angular-file-upload.min.js"></script>
         <script src="theme/assets/global/plugins/angular/angular-mailto.js"></script>
         <!---------------------->
@@ -95,6 +95,8 @@
     <script type="text/javascript" src="vendor/jquery-minicolors/jquery.minicolors.min.js"></script>
     <link rel="stylesheet" type="text/css" href="vendor/jquery-minicolors/jquery.minicolors.css">
     <!--END JQUERY MINI COLOR PICKER-->
+
+    <script type="text/javascript" src="lib/jquery-knob/js/jquery.knob.js"></script>
 	
 	<!-- ANGULAR STRAP -->
         <!--<script type="text/javascript" src="vendor/angular-strap/dist/angular-strap.min.js"></script>
@@ -229,7 +231,7 @@
     <script type="text/javascript" src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
     <!-- END ANGULAR X-EDITABLE -->
 
-
+    <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src="theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
@@ -466,6 +468,19 @@ RLOB PAPERLESS STRUCTURE -->
 <!-- ISO END MODULE -->
 <!-- -------------------------------------------------------------------------------------------------------------- -->
 
+<!-- HR_PAYROLL START MODULE -->
+<!-- -------------------------------------------------------------------------------------------------------------- -->
+<link rel="stylesheet" href="modules/hrPayroll/css/payroll.css">
+<script src="modules/hrPayroll/libs/payroll_helper.js"></script>
+<script src="modules/hrPayroll/payroll.js"></script>
+<script src="modules/hrPayroll/controllers/payrollController.js"></script>
+<script src="modules/hrPayroll/directives/payrollDirective.js"></script>
+<script src="modules/hrPayroll/services/payrollService.js"></script>
+
+
+<!-- HR_PAYROLL END MODULE -->
+<!-- -------------------------------------------------------------------------------------------------------------- -->
+
     <!--END MODULE REDI-LEGAL ONLINE BOOKING -->
 	
 	
@@ -520,6 +535,7 @@ RLOB PAPERLESS STRUCTURE -->
         <script type="text/javascript" src="modules/doctor/controllers/DoctorTimetableDetailController.js"></script>
         <script type="text/javascript" src="modules/doctor/controllers/DoctorTimetableDetailCalendarController.js"></script>
         <script type="text/javascript" src="modules/doctor/controllers/DoctorTimetableDetailProfileController.js"></script>
+        <script type="text/javascript" src="modules/doctor/controllers/DoctorTimetableDetailLeaveController.js"></script>
         <script type="text/javascript" src="modules/doctor/controllers/DoctorPaperlessController.js"></script>
 
         <script type="text/javascript" src="modules/doctor/controllers/DoctorTimetableDetailCasualController.js"></script>
@@ -568,12 +584,13 @@ RLOB PAPERLESS STRUCTURE -->
         <script type="text/javascript" src="modules/patient/directives/PatientOutsideReferral.js"></script>
         <script type="text/javascript" src="modules/patient/directives/PatientSearch.js"></script>
         <script type="text/javascript" src="modules/patient/directives/PatientCompanies.js"></script>
+        <script type="text/javascript" src="modules/patient/directives/ngThumb.js"></script>
         
         <script type="text/javascript" src="modules/patient/controllers/PatientController.js"></script>
         <script type="text/javascript" src="modules/patient/controllers/PatientListController.js"></script>
         <script type="text/javascript" src="modules/patient/controllers/PatientAppointmentController.js"></script>
         <script type="text/javascript" src="modules/patient/controllers/PatientCompaniesController.js"></script>    
-
+        <script src="modules/patient/controllers/PatientRecallController.js"></script> 
         <script type="text/javascript" src="modules/patient/controllers/PatientInvoicesController.js"></script>
         <script type="text/javascript" src="modules/patient/controllers/PatientInvoiceDetailController.js"></script>
 
@@ -589,7 +606,7 @@ RLOB PAPERLESS STRUCTURE -->
         <script src="modules/patient/controllers/PatientReferralsController.js" type="text/javascript"></script>
         <script src="modules/patient/controllers/PatientOutsideReferralsController.js" type="text/javascript"></script>
         <script src="modules/patient/controllers/PatientItemSheetController.js" type="text/javascript"></script>
-        <script src="modules/patient/controllers/PatientRecallController.js" type="text/javascript"></script>
+        <script src="modules/patient/controllers/PatientApptListController.js" type="text/javascript"></script>
         <script src="modules/patient/controllers/PatientApptDocController.js" type="text/javascript"></script>
         <script src="modules/patient/controllers/PatientListAllController.js" type="text/javascript"></script>
         <script src="modules/patient/controllers/PatientCheckinController.js" type="text/javascript"></script>
@@ -674,6 +691,13 @@ RLOB PAPERLESS STRUCTURE -->
         <!-- END TIMETABLE -->
 
         <!--AUTO CREATE-->
+    <script type='text/javascript' src='modules/mdtrecall/mdtRecall.js'></script>
+    <script type='text/javascript' src='modules/mdtrecall/services/mdtRecallServices.js'></script>
+    <script type='text/javascript' src='modules/mdtrecall/directives/mdtRecallDirectives.js'></script>
+    <script type='text/javascript' src='modules/mdtrecall/directives/mdtRecallDetailDirective.js'></script>
+    <script type='text/javascript' src='modules/mdtrecall/directives/mdtRecallSearchDirective.js'></script>
+
+
     <script type='text/javascript' src='modules/invoice/Invoice.js'></script>
     <script type='text/javascript' src='modules/invoice/services/InvoiceServices.js'></script>
     <script type='text/javascript' src='modules/invoice/controllers/InvoiceController.js'></script>
@@ -803,9 +827,14 @@ RLOB PAPERLESS STRUCTURE -->
         <!-- END SYS_SERVICES MODULE -->
 
         <!-- STAFF -->
+        <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js"></script>
+        <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js"></script>
+        <link href="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css" type="text/css" rel="stylesheet"/>
+
         <script type="text/javascript" src="modules/staff/Staff.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/StaffControllers.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/TaskController.js"></script>
+        <script type="text/javascript" src="modules/staff/controllers/ViewTaskController.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/StaffCalendarController.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/StaffWeekController.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/StaffMonthController.js"></script>
@@ -827,12 +856,25 @@ RLOB PAPERLESS STRUCTURE -->
 
         <script type="text/javascript" src="lib/desktop-notify.js"></script>
         <link rel="stylesheet" type="text/css" href="lib/EasyRTC/easyrtc.css" />
-        <script type="text/javascript" src="lib/EasyRTC/easyrtc.js"></script>
+        <script type="text/javascript" src="lib/EasyRTC/opentok.min.js"></script>
+        
+        <script src="vendor/angularjs-scroll-glue/src/scrollglue.js"></script>
+
+        <link rel="stylesheet" href="vendor/angular-bootstrap-simple-chat/src/css/style.css">
+        <script src="vendor/angular-bootstrap-simple-chat/src/scripts/index.js"></script>
+
+        <script src="lib/flot/jquery.flot.min.js" type="text/javascript"></script>
+        <script src="lib/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+        <script src="lib/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+        <script src="vendor/angular-svg-round-progressbar/build/roundProgress.js" type="text/javascript"></script>
+        <script src="vendor/angular-flot/angular-flot.js"></script>
 
         <script type="text/javascript" src="modules/injuryManagement/InjuryManagement.js"></script>
         <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryManagementController.js"></script>
         <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryMapController.js"></script>
+        <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryListController.js"></script>
         <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryDetailController.js"></script>
+        <script type="text/javascript" src="modules/injuryManagement/controllers/BluetoothController.js"></script>
         <script type="text/javascript" src="modules/injuryManagement/services/InjuryManagementService.js"></script>
         <!--END INJURY MANAGEMENT MODULE-->
 
@@ -876,8 +918,11 @@ RLOB PAPERLESS STRUCTURE -->
         <!-- END CUSTOM CSS -->
 
  <!-- CALENDAR -->
+        <link rel="stylesheet" href="vendor/angular-bootstrap-calendar/dist/js/datePicker.css">
         <link rel="stylesheet" href="vendor/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css">
         <script src="vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+        <script src="vendor/angular-bootstrap-calendar/dist/js/datePicker.js"></script>
+        <script src="vendor/angular-bootstrap-calendar/dist/js/date.js"></script>
         <!-- END CALENDAR -->
 
     <link rel="stylesheet" type="text/css" href="theme/BootSideMenu.css" />
@@ -897,6 +942,27 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/treeApprove/services/Service.js"></script>
     <!-- END MODULE TREEAPPROVE -->
 
+    <!-- MODULE TIME SHEET -->
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetControllers.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetHomeController.js"></script>
+
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetDirectives.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetAddUserDirective.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetUpUserDirective.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetAddDeptDirective.js">
+    </script>
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewTaskDirective.js"></script>
+
+    <script type="text/javascript" src="modules/TimeSheet/services/TimeSheetServices.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetTreeController.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetDeptController.js">
+    </script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveTaskController.js">
+    </script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetListNodeController.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/TimeSheet.js"></script>
+    <!-- END MODULE TIME SHEET -->
+
     <!-- JQUERY ORGCHART -->
     <script type="text/javascript" src="vendor/jquery.orgChart-master/jquery.orgchart.js"></script>
     <link rel="stylesheet" type="text/css" href="vendor/jquery.orgchart-master/jquery.orgchart.css" />
@@ -907,6 +973,10 @@ RLOB PAPERLESS STRUCTURE -->
     <link rel="stylesheet" type="text/css" href="vendor/sweetalert-master/lib/sweet-alert.css" />
     <!-- END JQUERY CONFIRM -->
     <!-- ========================================================== END MODULE ================================================= -->
+    <!-- TOOLTIPS -->
+    <link rel="stylesheet" type="text/css" href="vendor/tooltipster-master/css/tooltipster.css">
+    <script type="text/javascript" src="vendor/tooltipster-master/js/jquery.tooltipster.js"></script>
+    <!-- END TOOLTIPS -->
 </head>
 
 <body>

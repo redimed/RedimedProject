@@ -6,7 +6,7 @@ var fs = require('fs-extra');//Read js file for import into
 var isoUtil=require('./isoUtilsController');
 var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
-var Archiver = require('Archiver');
+var Archiver = require('archiver');
 var rimraf = require('rimraf');
 
 
@@ -60,7 +60,7 @@ module.exports =
             "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                  "+
             "   treeUser.`PERMISSION`,                                                                                          "+
             "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO,                            "+
-            "   dep.`departmentName` as DEPARTMENT_NAME                                                                         "+
+            "   dep.`departmentName` AS DEPARTMENT_NAME ,request.NUM_OF_REQUEST                                                 "+                       
             " FROM iso_tree_dir tree                                                                                            "+
             " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)    "+
             " LEFT JOIN (                                                                                                       "+
@@ -72,7 +72,14 @@ module.exports =
             "           ) temp ON tempoi.`ID`=temp.ID                                                                           "+
             "       WHERE `tempoi`.`ISENABLE`=1                                                                                 "+
             "   ) outin ON tree.`NODE_ID`=outin.NODE_ID                                                                         "+
-            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`                                            "+           
+            " LEFT JOIN `departments` dep ON dep.`departmentid`=tree.`DEPARTMENT_ID`                                            "+
+            " LEFT JOIN                                                                                                         "+
+            " (                                                                                                                 "+
+            "   SELECT request.`NODE_ID`,COUNT(request.`ID`) AS NUM_OF_REQUEST                                                  "+
+            "   FROM `iso_request_edit_document` request                                                                        "+
+            "   WHERE request.`IS_READ`=0 AND request.`ISENABLE`=1                                                              "+
+            "   GROUP BY request.`NODE_ID`                                                                                      "+
+            " )  request ON tree.`NODE_ID`=request.NODE_ID                                                                      "+
             " WHERE     tree.`ISENABLE` LIKE ?                                                                                  "+
             " GROUP BY tree.`NODE_ID`                                                                                           "+
             " ORDER BY FATHER_NODE_ID DESC ;                                                                                    ";
@@ -723,6 +730,7 @@ module.exports =
         }); 
     },
 
+
     /**
      * xu ly download folder
      * tannv.dts@gmail.com
@@ -731,6 +739,7 @@ module.exports =
     {
         if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
         {
+            isoUtil.exlog("handlingCloneFolder","khong dung quyen han");
             res.json({status:'fail'});
             return;
         }
@@ -751,7 +760,7 @@ module.exports =
         }
         if(!isoUtil.checkListData([nodeId,userId]))
         {
-            isoUtil.exlog("loi data roi");
+            isoUtil.exlog("handlingCloneFolder","loi data truyen den");
             res.json({status:'fail'});
             return;
         }
@@ -771,6 +780,7 @@ module.exports =
             {
                 if(err)
                 {
+                    isoUtil.exlog("handlingCloneFolder","loi query",query.sql);
                     res.json({status:'fail'});
                 }
                 else
@@ -801,8 +811,9 @@ module.exports =
                                             //linkZip = prefix+'temp\\'+idFolder;
                                             fs.copy(filePathStore,filePathTarget,function(err)
                                             {
-                                                if(err)
+                                                /*if(err)
                                                 {
+                                                    isoUtil.exlog("handlingCloneFolder","Khong the copy file",filePathStore);
                                                     cleanTempFolder(zipPath);
                                                     res.json({status:'fail'});
                                                 }
@@ -814,8 +825,18 @@ module.exports =
                                                     }
                                                     else
                                                     {
+                                                        isoUtil.exlog("handlingCloneFolder",'downloadPackName',downloadPackName);
                                                         res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                                     }
+                                                }*/
+                                                if(index<rows.length-1)
+                                                {
+                                                    createNode(index+1);
+                                                }
+                                                else
+                                                {
+                                                    isoUtil.exlog("handlingCloneFolder",'downloadPackName',downloadPackName);
+                                                    res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                                 }
                                             })
                                         }
@@ -828,6 +849,7 @@ module.exports =
                                             }
                                             else
                                             {
+                                                isoUtil.exlog("handlingCloneFolder",'downloadPackName',downloadPackName);
                                                 res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                             }
                                         }
@@ -840,13 +862,14 @@ module.exports =
                                         }
                                         else
                                         {
-                                            res.json({status:'success',data:{zipPath:zipPath}});
+                                            res.json({status:'success',data:{downloadPackName:downloadPackName}});
                                         }
                                     }
                                     
                                 }
                                 else
                                 {
+                                    isoUtil.exlog("handlingCloneFolder","Khong the tao thu muc",folderWillCreate);
                                     cleanTempFolder(zipPath);
                                     res.json({status:'fail'});
                                 }
@@ -857,6 +880,7 @@ module.exports =
                     }
                     else
                     {
+                        isoUtil.exlog("handlingCloneFolder","query khong co du lieu",query.sql);
                         res.json({status:'fail'});
                     }
                 }
@@ -1004,8 +1028,12 @@ module.exports =
             return;
         }
         var sql = 
-            "SELECT oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` ,oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` FROM `iso_check_out_in` oi "+
-            "WHERE oi.`NODE_ID` = ? AND check_in_no IS NOT NULL AND oi.`ISENABLE` = 1 ";
+            " SELECT oi.ID,oi.`FILE_NAME`,oi.`VERSION_NO`,oi.`CENSORSHIP_DATE`, oi.`CHECK_IN_FOLDER_STORAGE` , oi.CHECK_OUT_FROM, oi.CHECK_IN_COMMENT,          "+  
+            " oi.`NODE_ID`, oi.`CHECK_IN_NO`,oi.`CHECK_IN_DATE` ,treedir.`NODE_NAME`, refer.CHECK_IN_NO AS CHECK_IN_BE_CHECKED_OUT   "+                 
+            " FROM `iso_check_out_in` oi                                                                                             "+  
+            " INNER JOIN `iso_tree_dir` treedir ON oi.`NODE_ID`=`treedir`.`NODE_ID`                                                  "+  
+            " LEFT JOIN `iso_check_out_in` refer ON refer.ID=oi.CHECK_OUT_FROM                                                       "+  
+            " WHERE oi.`NODE_ID` = ? AND oi.check_in_no IS NOT NULL AND oi.`ISENABLE` = 1                                          ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,nodeId,function(err,rows)
@@ -1030,7 +1058,7 @@ module.exports =
      * Vo Duc Giap
      */
     handlingDownloadVersionDocument: function(req,res){
-          if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
+        if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
         {
             res.json({status:'fail'});
             return;
@@ -1105,6 +1133,8 @@ module.exports =
             });
         });
     },
+
+    
     /**
      * Select thong tin chi tiet document
      * phan quoc chien

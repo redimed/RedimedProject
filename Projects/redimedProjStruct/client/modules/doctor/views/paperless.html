@@ -50,7 +50,7 @@
             <a ng-click="tab = 'IDS'">Instant Drug Screen</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-            <a ng-click="tab = 'form18'">Form 18</a>
+            <a ng-click="tab = 'Form18'">Form 18</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
             <a ng-click="tab = 'SA1'">Audiogram 1</a>
@@ -112,7 +112,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
-            GorgonMA
+            Gorgon Medical Assessment
         </div>
          <div class="pull-right navbar-right">
             <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
@@ -130,7 +130,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
-            GorgonFA
+            Gorgon Functional Assessment
         </div>
          <div class="pull-right navbar-right">
             <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
@@ -147,7 +147,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
-            GorgonUQ
+            Gorgon User Questionnaire
         </div>
          <div class="pull-right navbar-right">
             <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
@@ -164,7 +164,7 @@
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
-            GorgonMH
+            Gorgon Medical History
         </div>
          <div class="pull-right navbar-right">
             <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
@@ -192,6 +192,40 @@
     </div>
 </div>
 <!-- end MRS -->
+
+<!-- FA -->
+<div class="portlet box blue-hoki" ng-show="tab == 'FA'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            Functional Assessment
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionFA"></my-data-table>
+    </div>
+</div>
+<!-- end FA -->
+
+<!-- MA -->
+<div class="portlet box blue-hoki" ng-show="tab == 'MA'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            Medical Assessment
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionMA"></my-data-table>
+    </div>
+</div>
+<!-- end MA -->
 
 <!-- category2 -->
 <div class="portlet box blue-hoki" ng-show="tab == 'category2'">
@@ -228,7 +262,7 @@
 <!-- end category3 -->
 
 <!-- IDS -->
-<!-- <div class="portlet box blue-hoki" ng-show="tab == 'IDS'">
+<div class="portlet box blue-hoki" ng-show="tab == 'IDS'">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
@@ -241,11 +275,11 @@
     <div class="portlet-body">
         <my-data-table options="OptionIDS"></my-data-table>
     </div>
-</div> -->
+</div>
 <!-- end IDS -->
 
 <!-- Form18 -->
-<div class="portlet box blue-hoki" ng-show="tab == 'form18'">
+<div class="portlet box blue-hoki" ng-show="tab == 'Form18'">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
@@ -262,7 +296,7 @@
 <!-- end Form18 -->
 
 <!-- Audiogram1 -->
-<!-- <div class="portlet box blue-hoki" ng-show="tab == 'SA1'">
+<div class="portlet box blue-hoki" ng-show="tab == 'SA1'">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>
@@ -275,8 +309,25 @@
     <div class="portlet-body">
         <my-data-table options="OptionSA1"></my-data-table>
     </div>
-</div> -->
+</div>
 <!-- end Audiogram1 -->
+
+<!-- Audiogram2 -->
+<div class="portlet box blue-hoki" ng-show="tab == 'SA2'">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>
+            Audiogram 2
+        </div>
+         <div class="pull-right navbar-right">
+            <a class="btn btn-sm blue" ng-click="navigator.add_general()"><i class="fa fa-plus"></i> Add New</a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <my-data-table options="OptionSA2"></my-data-table>
+    </div>
+</div>
+<!-- end Audiogram2 -->
 
 <!-- MH -->
 <div class="portlet box blue-hoki" ng-show="tab == 'MH'">

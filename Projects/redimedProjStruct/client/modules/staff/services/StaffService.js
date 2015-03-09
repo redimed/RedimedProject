@@ -16,12 +16,17 @@ angular.module("app.loggedIn.staff.service", [])
 
         service.editTask = function(task){
             var editTask = api.all('staff/editTask');
-            return editTask.post({task:task});
+            return editTask.post({allTask:task});
         }
 
         service.getDepartmentLocation = function(){
             var getDepartmentLocation = api.one('staff/getDepartmentLocation');
             return getDepartmentLocation.get();
+        }
+
+        service.checkTaskWeek = function(startWeek){
+            var checkTaskWeek = api.all('staff/checkTaskWeek');
+            return checkTaskWeek.post({startWeek:startWeek});
         }
 
         service.getTaskList = function(){

@@ -1,6 +1,9 @@
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
     var Category2 = sequelize.define('Category2', {
-        "cat_id": {type: DataTypes.INTEGER(11), primaryKey: true},
+        "cat_id": {
+            type: DataTypes.INTEGER(11),
+            primaryKey: true
+        },
         "cal_id": DataTypes.INTEGER(11),
         "DocId": DataTypes.INTEGER(11),
         "patient_id": DataTypes.INTEGER(11),
@@ -167,6 +170,8 @@ module.exports = function (sequelize, DataTypes) {
         "r5_2": DataTypes.STRING(200),
         "DATE": DataTypes.DATE,
         "DOCTOR_ID": DataTypes.INTEGER(11),
+        "Creation_date": DataTypes.DATE,
+        "Last_update_date": DataTypes.DATE,
         "Created_by": DataTypes.INTEGER(11),
         "Last_updated_by": DataTypes.INTEGER(11)
 
@@ -177,5 +182,3 @@ module.exports = function (sequelize, DataTypes) {
     });
     return Category2;
 };
-
-

@@ -12,76 +12,110 @@
         </li>
     </ul>
 </div>
-<div class="portlet green-meadow box">
+<div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="AddFunction()">New function</a>
-        <div class="caption">
+        <a class="btn blue pull-right btn-xs" style="margin-top:10px;" ng-click="AddFunction()">New function</a>
+        <div class="caption" style="font-size:13px;">
             <i class="fa fa-cogs"></i>List of function
+            <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
     <div class="portlet-body">
-        <!-- PAGINATION -->
-        <div style="float: left;">
-            <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
-        </div>
-        <div style="float: right; padding-top: 10px;">
-            <button class="btn btn-sm" ng-click="reset()">Reset</button>
-            <b>Total system: </b>{{list.count}}
-            <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" ng-change="loadList()"></select>
-        </div>
-        <!-- END PAGINATION -->
+        <div class="panel-body table-dynamic">
+            <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+            </center>
+            <table class="responsive table table-bordered" ng-show="!list.loading">
+                <thead ng-show="list.result!==null">
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Function name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Creation Date&nbsp;
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="loadList('ASC')" ng-class="{'active': searchObjectMap.order==='ASC'}">
+                            </span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="loadList('DESC')" ng-class="{ 'active': searchObjectMap.order==='DESC' } ">
+                            </span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th ">
+                                Action
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                        <!-- FUNCTION NAME -->
+                        <td>
+                            <input type="text " id="TYPE_NAME " ng-model="searchObjectMap.data.TYPE_NAME " ng-change="loadList(TYPE_NAME) " class="form-control input-sm ">
+                        </td>
+                        <!-- END FUNCTION NAME -->
 
-        <!-- TABLE LIST  -->
-        <table class="table table-responsive table-hover">
-            <thead>
-                <tr>
-                    <th>Function name</th>
-                    <th>Created at</th>
-                    <th>Updated at</th>
-                    <th></th>
-                </tr>
-                <!-- SEARCH -->
-                <tr>
-                    <td>
-                        <input class="input-sm form-control" type="text" ng-model="searchObjectMap.data.TYPE_NAME" ng-change="loadList()" </td>
-                        <!-- END SEARCH -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="l in list.result" style="cursor: pointer;">
-                    <td>{{l.TYPE_NAME || "" }}</td>
-                    <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a"|| "" }}</td>
-                    <td>{{l.Last_update_date| date: "dd/MM/yyyy h:mm:ss a"|| "" }}</td>
-                    <td>
-                        <!-- DOPDOWN ACTION -->
-                        <div class="btn-group" role="group" aria-label="...">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-circle btn-sm green dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <!-- NOT DATA -->
+                    <tr ng-show="list.result === null">
+                        <td colspan="4">
+                            <h4>There is no items</h4>
+                        </td>
+                    </tr>
+                    <!-- END NOT DATA -->
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; ">
+                        <td>{{l.TYPE_NAME || " " }}</td>
+                        <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                        <td style="text-align: center;">
+                            <!-- DOPDOWN ACTION -->
+                            <li class="dropdown btn-group">
+                                <a class="dropdown-toggle" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
                                     <li><a ng-click="goToTree(l.TYPE_NAME)"><i class="fa fa-check"></i>Detail</a>
                                     </li>
                                     <li class="divider"></li>
                                     <li><a ng-click="EditFunction(l.TYPE_NAME)"><i class="fa fa-pencil"></i>Edit</a>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a ng-click="DeleteFunction(l.TYPE_NAME, $index)"><i class="fa fa-times"></i>Delete</a>
+                                    <li><a ng-click="DeleteFunction(l.TYPE_NAME)"><i class="fa fa-times"></i>Delete</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </li>
+                            <!-- END DROPDOWN ACTION -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                <div class="row ">
+                    <div class="col-ms-6 page-num-info ">
+                        <div class="col-md-4 col-sm-5 ">
+                                <span class="bold custom-timesheet">Total: {{list.count}}</span>
+
+                                <span class="custom-timesheet">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                </select>
+                                <span class="custom-timesheet">entries per page</span>
                         </div>
-                        <!-- END DROPDOWN ACTION -->
-                    </td>
-                </tr>
-            </tbody>
-            </tabel>
-            <!-- END TABLE LIST -->
+                        <div class="col-ms-6 text-right pagination-container ">
+                            <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                            <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            </div>
+        </div>
     </div>
-</div>
-<!-- MODULE ADD SYSTEM -->
-<script type="text/ng-template" id="AddFunction">
-    <add-function on-cancel="getReturnedValue(return)" ng-model="FunctionIdEdit" on-save="getInfo(return)"></add-function>
-</script>
-<!-- END MODULE ADD SYSTEM -->
+
+    <!-- MODULE ADD FUNCTION -->
+    <script type="text/ng-template " id="AddFunction ">
+        <add-function on-cancel="getReturnedValue(return) " ng-model="FunctionIdEdit " on-save="getInfo(return) "></add-function>
+    </script>
+    <!-- END MODULE ADD FUNCTION -->

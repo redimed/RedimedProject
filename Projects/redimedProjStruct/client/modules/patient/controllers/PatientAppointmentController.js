@@ -1,8 +1,8 @@
 angular.module("app.loggedIn.patient.appointment.controller", [])
 
-.controller("PatientAppointmentController", function($scope, $state, $stateParams, PatientService, ConfigService){
+.controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService){
 	//Detail appt modules
-    var patient_id = $stateParams.patient_id;
+    var patient_id =  $scope.patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
     $scope.cal_id = $stateParams.cal_id;
 
@@ -14,7 +14,11 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.claim.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.outside_referral({patient_id:' + $stateParams.patient_id + '})'}
+            'state': 'loggedIn.patient.outside_referral({patient_id:' + $stateParams.patient_id + '})'},  
+        {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
+            'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},
+        {'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',
+            'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},    
     ];
 
     $scope.patient_apt_modules = [
@@ -23,7 +27,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
          {'name': 'ItemSheet', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
             'state': 'loggedIn.patient.itemsheet({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
         {'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
         {'name': 'Workcover', 'icon': 'fa fa-paper-plane-o', 'color': 'green-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.workcover({patient_id:' + $stateParams.patient_id + ', cal_id: '+  $stateParams.cal_id +'})'},
         {'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
@@ -32,13 +36,36 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.referral.list({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
-        {'name': 'Re-Call', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
+        {'name': 'Appointment List', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
+            'state': 'loggedIn.patient.appt({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},     
- 
+            'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
+	   {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
+            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},   
+
+
     ];
     //End detail appt modules
+
+    ReceptionistService.apptDetail($scope.cal_id).then(function(response){
+        $scope.appointment = response.data;
+        if(!response.data || !response.data.service) {
+            return;
+        }
+   
+        if($scope.appointment.service.IS_REFERRAL == 1){
+            // check refferal is exist
+            return ReceptionistService.getReferral($scope.cal_id , $scope.patient_id)
+        }
+    }).then(function(response){
+        if(!response) {
+            return;
+        }
+
+        if(response.data.length == 0) {
+            $scope.warning_refferal = true;
+        }
+    });
 
     $scope.changeAppt = function(item) {
         $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: item.CAL_ID});
@@ -87,11 +114,31 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         PatientService.getAppointments(patient_id)
         .then(function(response){
             $scope.list_appt = response.data.appointments;
+
+            if($scope.list_appt.length == 0) {
+                toastr.error('Patient has no Appointments', 'Error')
+                return;
+            }
+
+            var current_appt = null;
             angular.forEach($scope.list_appt, function(item) {
+                if(item.CAL_ID == $scope.cal_id) {
+                    current_appt = item;
+                }
                 item.DATE = ConfigService.getCommonDateDefault(item.FROM_TIME);
                 item.FROM_TIME = ConfigService.convertToTimeStringApp(item.FROM_TIME);
                 item.TO_TIME = ConfigService.convertToTimeStringApp(item.TO_TIME);
-            })
+            });
+
+            // REDIRECT TO THE MOST RECENT APPOINTMENT
+            if(current_appt === null) {
+                $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: $scope.list_appt[0].CAL_ID})
+            }
+
+        }, function(error) {
+            console.log(error)
+            toastr.error(error.data.message, 'Error')
+            $state.go('loggedIn.receptionist.appointment');
         });
 
 		
@@ -146,4 +193,5 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
     initObject();
     // End Init Object
+
 })

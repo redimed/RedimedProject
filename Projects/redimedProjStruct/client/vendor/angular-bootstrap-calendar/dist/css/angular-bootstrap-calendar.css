@@ -381,7 +381,7 @@
 .day-highlight.dh-event-special {
   background-color: #ffe6ff;
 }
-.cal-row-head [class*="cal-cell"]:first-child,
+/*.cal-row-head [class*="cal-cell"]:first-child,*/
 .cal-row-head [class*="cal-cell"] {
   font-weight: bolder;
   text-align: center;
@@ -396,7 +396,7 @@
   background-color: #fafafa;
 }
 .cal-month-day {
-  height: 100px;
+  height: 30px;
 }
 [class*="cal-cell"]:hover, .cell-focus {
   background-color: #F8B0AF;
@@ -404,12 +404,12 @@
 }
 .cal-year-box [class*="span"],
 .cal-month-box [class*="cal-cell"] {
-  min-height: 100px;
+  max-height: 30px; /*quynh edit*/
   border-right: 1px solid #e1e1e1;
   position: relative;
 }
 .cal-year-box [class*="span"] {
-  min-height: 60px;
+  min-height: 30px;
 }
 .cal-year-box .row [class*="col-"]:last-child,
 .cal-month-box .cal-row [class*="cal-cell"]:last-child {
@@ -443,8 +443,9 @@ span[data-cal-date] {
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
-  margin-top: 15px;
-  margin-right: 15px;
+  margin-top: 5px;
+  margin-right: 5px;
+    /*quynh edit*/
 }
 span[data-cal-date]:hover {
   opacity: 1;
@@ -454,13 +455,18 @@ span[data-cal-date]:hover {
   cursor: default;
 }
 .cal-day-today {
-  background-color: #e8fde7;
+    BORDER-RIGHT: blue 3px solid;
+    BORDER-TOP: blue 3px solid;
+    BORDER-LEFT: blue 3px solid;
+    BORDER-BOTTOM: blue 3px solid;
 }
 .cal-day-today span[data-cal-date] {
-  color: darkgreen;
+
+    margin-top: 1px;
 }
 .cal-month-box .cal-day-today span[data-cal-date] {
-  font-size: 1.9em;
+  font-size: 1.5em;
+  /*quynh edit*/
 }
 .cal-day-holiday span[data-cal-date] {
   color: #800080;
@@ -549,6 +555,30 @@ a.cal-event-week {
 .mix-filter li.active {
     color: #555;
     background: #99FA42;
+}
+
+
+a.dp-choose-date {
+    float: left;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    /*margin: 5px 3px 0;*/
+    display: block;
+    text-indent: -2000px;
+    overflow: hidden;
+    background: url(calendar.png) no-repeat;
+}
+a.dp-choose-date.dp-disabled {
+    background-position: 0 -20px;
+    cursor: default;
+}
+ /*makes the input field shorter once the date picker code*/
+ /** has run (to allow space for the calendar icon*/
+
+input.dp-applied {
+    width: 140px;
+    float: left;
 }
 
 @media (max-width: 991px) {

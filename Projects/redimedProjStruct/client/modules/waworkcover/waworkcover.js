@@ -58,7 +58,7 @@ angular.module('app.loggedIn.waworkcover', [
                     url: '/wa/workcover/:patient_id/:cal_id/first/:action/:wc_id',
                     views: {
                         'main-content': {
-                            templateUrl: 'modules/waWorkCover/views/first.html',
+                            templateUrl: 'modules/waworkcover/views/first.html',
                             controller: 'WaWorkCoverFirstController'
                         }
                     }
@@ -67,7 +67,7 @@ angular.module('app.loggedIn.waworkcover', [
                     url: '/wa/workcover/:patient_id/:cal_id/progress/:action/:wc_id',
                     views: {
                         'main-content': {
-                            templateUrl: 'modules/waWorkCover/views/progress.html',
+                            templateUrl: 'modules/waworkcover/views/progress.html',
                             controller: 'WaWorkCoverProgressController'
                         }
                     }
@@ -76,7 +76,7 @@ angular.module('app.loggedIn.waworkcover', [
                     url: '/wa/workcover/:patient_id/:cal_id/final/:action/:wc_id',
                     views: {
                         'main-content': {
-                            templateUrl: 'modules/waWorkCover/views/final.html',
+                            templateUrl: 'modules/waworkcover/views/final.html',
                             controller: 'WaWorkCoverFinalController'
                         }
                     }
