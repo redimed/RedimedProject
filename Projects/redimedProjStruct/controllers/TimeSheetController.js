@@ -2,6 +2,7 @@
  * Created by meditech on 19/09/2014.
  */
 var db = require('../models');
+var moment = require('moment');
 module.exports = {
     addAllTask: function(req,res)
     {
@@ -19,12 +20,12 @@ module.exports = {
                 db.timeTaskWeek.max('task_week_id')
                     .success(function(max){
                         for(var tasks in allTask){
-
                             db.timeTasks.create({
                                 tasks_week_id : max,
                                 "department_code_id" : allTask[tasks].department_code_id,
                                 "task" : allTask[tasks].task,
-                                "date": allTask[tasks].date,
+                                "order": allTask[tasks].order,
+                                "date": moment(allTask[tasks].date).format('YYYY-MM-DD'),
                                 "location_id" : allTask[tasks].location_id,
                                 "activity_id" : allTask[tasks].activity_id,
                                 "time_charge" : allTask[tasks].time_charge
@@ -54,11 +55,9 @@ module.exports = {
 
     editTask: function(req,res)
     {
-
         var allTask = req.body.allTask;
 
         for(var i=0; i<allTask.length;i++){
-
             db.timeTasks.update({
                 "department_code_id" : allTask[i].department_code_id,
                 "task" : allTask[i].task,
