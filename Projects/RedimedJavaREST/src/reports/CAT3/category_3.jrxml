@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1152"/>
+	<property name="ireport.y" value="240"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -421,9 +421,9 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="68" y="232" width="150" height="28" uuid="1127b032-0ac9-4a84-8b72-2cb56d971989"/>
+				<reportElement positionType="Float" mode="Opaque" x="68" y="228" width="150" height="32" uuid="1127b032-0ac9-4a84-8b72-2cb56d971989"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Black" size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Arial Black" size="22" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Rail Cate 3]]></text>
 			</staticText>
@@ -521,9 +521,9 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<textFieldExpression><![CDATA[$F{q1_5_3_c}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="73" y="48" width="150" height="28" uuid="ec6ba09c-ead2-4108-bdb7-103e73917438"/>
+				<reportElement positionType="Float" mode="Opaque" x="73" y="47" width="150" height="32" uuid="ec6ba09c-ead2-4108-bdb7-103e73917438"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Black" size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Arial Black" size="22" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Rail Cate 3]]></text>
 			</staticText>
