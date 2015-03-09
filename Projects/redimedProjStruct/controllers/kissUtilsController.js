@@ -44,11 +44,11 @@ function checkData(value)
     return (value!==undefined && value!==null && value!=='');
 }
 
-function checkListData(data)
+function checkListData()
 {
-    for(var i=0;i<data.length;i++)
+    for (var i = 0; i < arguments.length; i++) 
     {
-        if(data[i]===undefined || data[i]===null || data[i]==='')
+        if(arguments[i]===undefined || arguments[i]===null || arguments[i]==='')
             return false;
     }
     return true;
@@ -99,6 +99,18 @@ module.exports =
                 }
             });
         });
+    },
+
+    checkIsNumber:function(value)
+    {
+        if(isNaN(value))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     
 }

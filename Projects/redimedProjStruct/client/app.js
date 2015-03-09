@@ -36,7 +36,9 @@ angular.module("app", [
     'ngMap',
     'btford.socket-io',
     'dateRangePicker',
-    'angular-flot'
+    'angular-flot',
+    'infinite-scroll'//tannv.dts@gmail.com
+    
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {

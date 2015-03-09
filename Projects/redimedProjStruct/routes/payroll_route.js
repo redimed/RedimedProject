@@ -6,3 +6,5 @@ var multipartMiddleware = multipart();
 app.get('/api/pr/core/test',prController.test);
 app.get('/api/pr/fornightly-tax/test',prFornightlyTaxController.testReadExcel);
 app.post('/api/pr/fornightly-tax/import-tax-list',multipartMiddleware,prFornightlyTaxController.importTaxList);
+app.get('/api/pr/fornightly-tax/get-all-taxlist-header',prFornightlyTaxController.getAllTaxListHeader);
+app.post('/api/pr/fornightly-tax/get-taxlist-detail',prFornightlyTaxController.getTaxListDetail);

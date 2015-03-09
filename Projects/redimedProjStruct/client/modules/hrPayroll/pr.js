@@ -9,6 +9,7 @@ angular.module('app.loggedIn.pr',
         ,'app.loggedIn.pr.service'
         ,'app.loggedIn.pr.directive'
         ,'app.loggedIn.pr.prImportTaxList.directive'
+        ,'app.loggedIn.pr.prTaxList.controller'
         ])
     .config(function($stateProvider){
         $stateProvider
@@ -16,5 +17,11 @@ angular.module('app.loggedIn.pr',
                 url:'/pr',
                 templateUrl: "modules/hrPayroll/views/pr.html",
                 controller: "prController"
+            })
+
+            .state("loggedIn.pr.prTaxList",{
+                url:'/taxlist',
+                templateUrl: "modules/hrPayroll/views/prTaxList.html",
+                controller: "prTaxListController"
             })
     });
