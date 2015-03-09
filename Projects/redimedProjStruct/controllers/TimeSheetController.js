@@ -37,8 +37,6 @@ module.exports = {
                                     res.json({status:'error'});
                                     console.log(err);
                                 })
-
-
                         }
                     })
                     .error(function(err){
@@ -58,22 +56,41 @@ module.exports = {
         var allTask = req.body.allTask;
 
         for(var i=0; i<allTask.length;i++){
-            db.timeTasks.update({
-                "department_code_id" : allTask[i].department_code_id,
-                "task" : allTask[i].task,
-                "date": allTask[i].date,
-                "location_id" : allTask[i].location_id,
-                "activity_id" : allTask[i].activity_id,
-                "time_charge" : allTask[i].time_charge
-            },{tasks_id : allTask[i].tasks_id})
-                .success(function(data){
-                    res.json({status:'success'});
+            if(allTask[i].isEdit == true){
+                db.timeTasks.update({
+                    "department_code_id" : allTask[i].department_code_id,
+                    "task" : allTask[i].task,
+                    "date": allTask[i].date,
+                    "location_id" : allTask[i].location_id,
+                    "activity_id" : allTask[i].activity_id,
+                    "time_charge" : allTask[i].time_charge
+                },{tasks_id : allTask[i].tasks_id})
+                    .success(function(data){
+                        res.json({status:'success'});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            }else{
+                db.timeTasks.create({
+                    tasks_week_id : allTask[i].tasks_week_id,
+                    "department_code_id" : allTask[i].department_code_id,
+                    "task" : allTask[i].task,
+                    "order": allTask[i].order,
+                    "date": moment(allTask[i].date).format('YYYY-MM-DD'),
+                    "location_id" : allTask[i].location_id,
+                    "activity_id" : allTask[i].activity_id,
+                    "time_charge" : allTask[i].time_charge
                 })
-                .error(function(err){
-                    res.json({status:'error'});
-                    console.log(err);
-                })
-
+                    .success(function(data){
+                        res.json({status:'success'});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            }
         }
 
    },

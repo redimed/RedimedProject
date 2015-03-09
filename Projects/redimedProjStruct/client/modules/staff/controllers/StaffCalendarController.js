@@ -53,6 +53,7 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                     if(response['data'] != 'no'){
                          $scope.isEdit = true;
                         angular.forEach(response['data'], function(data){
+                            data.isEdit = true;
                             $scope.tasks.push(data);
                         })
                     }else{
@@ -75,15 +76,17 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             })
         }
 
-        $scope.addRow = function(index,date){
+        $scope.addRow = function(index,date,weekID){
             task={
+                tasks_week_id: weekID,
                 order: 2,
                 task : null,
                 date : date,
                 department_code_id: null,
                 location_id: null,
                 activity_id: null,
-                time_charge: null
+                time_charge: null,
+                isEdit: false
             };
             $scope.tasks.splice(index + 1, 0,task); ;
         }
