@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="816"/>
+	<property name="ireport.y" value="144"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -632,7 +632,7 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<staticText>
 				<reportElement positionType="Float" mode="Opaque" x="90" y="195" width="150" height="28" uuid="a516b7d7-1fbb-4776-a206-db297e5ff2ad"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Black" size="18" isBold="true"/>
+					<font fontName="Arial Black" size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Rail Cate 2]]></text>
 			</staticText>
@@ -732,7 +732,7 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<staticText>
 				<reportElement positionType="Float" mode="Opaque" x="68" y="47" width="150" height="28" uuid="d6d09fe8-f4a3-421e-813d-ad3591ad6586"/>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Black" size="18" isBold="true"/>
+					<font fontName="Arial Black" size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Rail Cate 2]]></text>
 			</staticText>
