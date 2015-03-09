@@ -15,7 +15,7 @@ angular.module('starter.bluetooth',[
                 }
             })
             .state('app.detailDeviceBluetooth',{
-                url: "/detailDevice/:id/:name/:address?status",
+                url: "/detailDevice/:deviceType/:address",
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/bluetooth/views/detailDevice.html",

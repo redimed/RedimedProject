@@ -59,8 +59,10 @@ public class BluetoothWrapper
 	public static final int MSG_DEVICE_BONDED			= 11;
 	public static final int MSG_DEVICE_CONNECTED        = 12;
 
+
 	public static final String DATA_DEVICE_ADDRESS 		= "DeviceAddress";
 	public static final String DATA_DEVICE_NAME			= "DeviceName";
+	public static final String DATA_DEVICE_TYPE			= "DeviceType";
 	public static final String DATA_BYTES				= "Bytes";
 	public static final String DATA_BYTES_READ			= "BytesRead";
 	public static final String DATA_UUIDS				= "Uuids";
@@ -532,7 +534,7 @@ public class BluetoothWrapper
             }else if(deviceName.contains("BC0")){
                 deviceType = "Urine Test";
             }else if(deviceName.contains("SpO2")){
-                deviceType = "Pluse Oximeter";
+                deviceType = "Pulse Oximeter";
             }else if(deviceName.contains("BG0")){
                 deviceType = "Blood Glucose";
             }else if(deviceName.contains("NIBP")){
@@ -768,7 +770,7 @@ public class BluetoothWrapper
                     }else if(deviceName.contains("BC0")){
                         deviceName = "Urine Test";
                     }else if(deviceName.contains("SpO2")){
-                        deviceName = "Pluse Oximeter";
+                        deviceName = "Pulse Oximeter";
                     }else if(deviceName.contains("BG0")){
                         deviceName = "Blood Glucose";
                     }else if(deviceName.contains("NIBP")){
@@ -783,13 +785,16 @@ public class BluetoothWrapper
                     }
 
 
+
 					//Only view medical devices that we know
 					if(!_deviceList.contains(device.getName()) && device.getName() != null && !deviceName.contains("Unknown") ){
 
                         _deviceList.add(device.getName());
                         Bundle bundle = new Bundle();
+                        bundle.putString(DATA_DEVICE_TYPE, deviceName);
                         bundle.putString(DATA_DEVICE_NAME,device.getName() + " (" + deviceName + ")");
                         bundle.putString(DATA_DEVICE_ADDRESS, device.getAddress());
+
 
                         Message msg = _handler.obtainMessage(MSG_DEVICE_FOUND);
                         msg.setData(bundle);

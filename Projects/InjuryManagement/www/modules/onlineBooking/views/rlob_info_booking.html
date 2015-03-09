@@ -1,9 +1,9 @@
 <ion-view title="Add Worker">
     <ion-nav-buttons>
-        <button menu-toggle="left" class="button button-icon icon ion-navicon waves-effect waves-light" style="color:#fff"></button>
+        <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff"></button>
     </ion-nav-buttons>
     <div class="bar bar-subheader">
-        <button class="button button-icon icon ion-ios7-arrow-back  waves-effect waves-light "  ui-sref="app.chooseAppointmentCalendar"  >
+        <button class="button button-icon icon ion-ios7-arrow-back  "  ui-sref="app.chooseAppointmentCalendar"  >
             Back
         </button>
         <h1 class="title">Detail Booking</h1>
@@ -13,7 +13,7 @@
             <div class="portlet yellow-crusta box">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="small mdi-action-event "></i>
+                        <i class="fa fa-calendar-o fa-2x "></i>
                         Summary of Booking
                     </div>
 
@@ -63,21 +63,12 @@
                         <div class="col s6">
                                 <textarea class="form-control ng-pristine ng-valid ng-valid-maxlength" ng-model="description" ></textarea>
                         </div>
-                        
                     </div>
                     <div class="portlet light">
-                       
-                        
-                            <a class="btn-floating btn-small waves-effect waves-light #26a69a"><i class="mdi-maps-place"></i></a>
-
+                            <a class="btn-floating btn-small  #26a69a"><i class="fa fa-location-arrow"></i></a>
                            <div id="map-canvas" class="col-md-12" style="height: 200px; width: 100%"></div>
-                                <div class="clearfix"></div>
-
-                       
+                                <div class="clearfix"></div>  
                     </div>
-                   
-
-
                     <div class="footer_injury">
                         <ion-scroll direction="x">
                             <a class="button button-clear button-positive"
@@ -88,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <button class="button button-full button-energized waves-effect waves-light" ng-click="addbooking(description)">
+            <button class="button button-full button-energized " ng-click="addbooking(description)">
                 Add Booking
             </button>
         </ion-list>

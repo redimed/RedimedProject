@@ -4,25 +4,25 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
 
         var bluetooth = window.bluetooth;
 
-        $scope.idDevice = $stateParams.id;
-        $scope.statusDevice = ($stateParams.status == 'true') ? true : false;
         $scope.address = $stateParams.address;
-        $scope.name = $stateParams.name;
+        $scope.deviceType = $stateParams.deviceType;
         $scope.objJsondevice = {};
         $scope.dataReceive = [];
+        $scope.isShowGif = true;
+        $scope.showButton = false;
 
         $http.get('js/medicalDevice.json').success(function(rs) {
             $scope.objJsondevice = rs.medicalDevice;
         });
 
-        if($scope.statusDevice == true) {
-            bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
-        }
+        //if($scope.statusDevice == true) {
+        bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
+        //}
 
         //function getUuid
         function onSuccesUuid(results) {
 
-            console.log(results);
+            console.log('GetUuid Success ' + JSON.stringify(results));
 
             var opts = {
                 address: results.address,
@@ -32,17 +32,18 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
         }
 
         function onErrorUuid(results) {
-            console.log('error' + results);
+            console.log('GetUuid Error ' + JSON.stringify(results));
         }
 
         //function Connection
         function onSuccesConn(result) {
-            console.log('success ', JSON.stringify(result));
+            console.log('Connection Success ', JSON.stringify(result));
             bluetooth.startConnectionManager(onDataReadDevice, onConnectionLostReadData);
+            writeData();
         }
 
         function onErrorConn(result) {
-            console.log('error ', result);
+            console.log('Connection Error ', result);
         }
 
         //function write data
@@ -56,7 +57,7 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
 
 
         function onDataReadDevice(message) {
-            console.log('output data to console...', message);
+            console.log('output data to console... ', message);
 
             $scope.dataReceive = message;
 
@@ -158,14 +159,18 @@ angular.module('starter.bluetooth.detailDeviceBlueController',[])
         }
 
         function onConnectionLostReadData() {
+            $scope.$apply(function(){
+                $scope.isShowGif = false;
+                $scope.showButton = true;
+            })
             console.log('lost connection');
         }
 
 
-        $scope.writeData = function () {
+        function writeData() {
             bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
-            for(var i = 0; i < $scope.objJsondevice[$scope.name].data.length; i++) {
-                bluetooth.write(onSuccessWriteData, onErrorWriteData, $scope.objJsondevice[$scope.name].data[i]);
+            for(var i = 0; i < $scope.objJsondevice[$scope.deviceType].data.length; i++) {
+                bluetooth.write(onSuccessWriteData, onErrorWriteData, $scope.objJsondevice[$scope.deviceType].data[i]);
             }
         }
     })

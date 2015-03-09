@@ -23,7 +23,9 @@ angular.module('starter', ['ionic',
     'starter.driver',
     'starter.NFC',
     'starter.phoneCall',
-    'starter.bluetooth',
+    'ion-google-place',
+    'ngAutocomplete',
+    'starter.bluetooth'
 ])
     .factory(("ionPlatform"), function( $q ){
         var ready = $q.defer();
@@ -38,7 +40,7 @@ angular.module('starter', ['ionic',
     })
 
     .factory('signaling', function (socketFactory, HOST_CONFIG) {
-        var socket = io.connect("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/");
+        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/",{'secure':true});
 
         var socketFactory = socketFactory({
             ioSocket: socket
@@ -49,7 +51,7 @@ angular.module('starter', ['ionic',
 
     .config(function($stateProvider, $urlRouterProvider, RestangularProvider, HOST_CONFIG) {
 
-        RestangularProvider.setBaseUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
+        RestangularProvider.setBaseUrl("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state("init", {
@@ -77,7 +79,6 @@ angular.module('starter', ['ionic',
 
     .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, HOST_CONFIG) {
 
-        easyrtc.setSocketUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port)
 
         $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', {
             scope: $rootScope,
@@ -105,9 +106,6 @@ angular.module('starter', ['ionic',
 
         localStorageService.set('mode','read');
         $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams) {
-
-            //signaling.emit('reconnected', localStorageService.get("userInfo").id);
-
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {

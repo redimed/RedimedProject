@@ -876,11 +876,13 @@ public class BluetoothPlugin extends CordovaPlugin
 					try
 					{
 						String name 	= msg.getData().getString(BluetoothWrapper.DATA_DEVICE_NAME);
+						String deviceType 	= msg.getData().getString(BluetoothWrapper.DATA_DEVICE_TYPE);
 						String address 	= msg.getData().getString(BluetoothWrapper.DATA_DEVICE_ADDRESS);
 
 						JSONObject device = new JSONObject();
 						device.put("name", name);
 						device.put("address", address);
+                        device.put("deviceType", deviceType);
 
 						// Send one device at a time, keeping callback to be used again
 						if(_discoveryCallback != null)
@@ -952,10 +954,12 @@ public class BluetoothPlugin extends CordovaPlugin
 					{
 						String name 	= msg.getData().getString(BluetoothWrapper.DATA_DEVICE_NAME);
 						String address 	= msg.getData().getString(BluetoothWrapper.DATA_DEVICE_ADDRESS);
+                        String deviceType 	= msg.getData().getString(BluetoothWrapper.DATA_DEVICE_TYPE);
 
 						JSONObject bondedDevice = new JSONObject();
 						bondedDevice.put("name", name);
 						bondedDevice.put("address", address);
+                        bondedDevice.put("deviceType", deviceType);
 
 						if(_pairingCallback != null)
 						{
@@ -1273,7 +1277,7 @@ public class BluetoothPlugin extends CordovaPlugin
         String value = "";
 
         try{
-            if(_bluetooth.deviceType.contains("Pluse Oximeter") && hex.substring(0,3).contains("01")){
+            if(_bluetooth.deviceType.contains("Pulse Oximeter") && hex.substring(0,3).contains("01")){
 
                 byte highByte = rawData[1];
 
@@ -1296,7 +1300,7 @@ public class BluetoothPlugin extends CordovaPlugin
                 value = "  pulseRate = " + pulseRateInInt +
                         "  spO2InInt = " + spO2InInt;
 
-                valueObject.put("deviceType", "PULSE");
+                valueObject.put("deviceType", "Pulse Oximeter");
                 valueObject.put("pulse", pulseRateInInt);
                 valueObject.put("spO2", spO2InInt);
                 valueObject.put("rawData", hex);
@@ -1333,7 +1337,7 @@ public class BluetoothPlugin extends CordovaPlugin
                 + " bpmInInt = "  + bpmInInt
                 + " mmHgInInt = "  + mmHgInInt;
 
-                valueObject.put("deviceType", "BP");
+                valueObject.put("deviceType", "Blood Pressure");
                 valueObject.put("sys", sysInInt);
                 valueObject.put("dia", diaInInt);
                 valueObject.put("bpm", bpmInInt);

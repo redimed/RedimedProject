@@ -1,7 +1,7 @@
 <ion-view title="Add Worker">
     <ion-nav-buttons>
      
-         <button class="button button-icon icon ion-ios7-arrow-back  waves-effect waves-light "   style="color:#fff" ng-click="backdescInjury()">
+         <button class="button button-icon icon ion-ios7-arrow-back  "   style="color:#fff" ng-click="backdescInjury()">
             Back
         </button>
     </ion-nav-buttons>
@@ -39,21 +39,21 @@
                 </div>
                 <div ng-repeat="location in appointmentsFilter">
                         <div class="col-md-2" style="width: 800px">
-                            <i class="mdi-maps-place small " style="color:#b71c1c"></i>
+                            <i class="fa fa-map-marker fa-2x " style="color:#b71c1c"></i>
                             <span class="text-primary" style="margin: 12px">{{location.SITE_NAME}}</span>
                         </div></br>
                         <div ng-repeat="doctor in location.DOCTOR_ITEMS">
                                     <div class="col-md-2" style="width: 1050px">
-                                        <i class="mdi-action-account-circle small " style="color:#b71c1c"></i>
+                                        <i class="fa fa-user-md fa-2x " style="color:#b71c1c"></i>
                                         <span class="text-primary" style="margin: 12px">{{doctor.DOCTOR_NAME}}</span>
                                     </div>
                                     </br>
-                                    <div class="col s12">
-                                        <i class="mdi-action-alarm small col s2" style="float: left; color:#b71c1c" ></i>
-                                            <div class="col s10">
+                                    <div class="col-md-2">
+                                        <i class="fa fa-calendar fa-2x " style="float: left; color:#b71c1c" ></i>
+                                            <div class="col s10" style="margin-left:16px">
                                                     <div class="grid-example col s12 m6" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
                                                        <a ng-repeat="appointment in doctor.APPOINTMENT_ITEMS"
-                                                           class="btn btn-sm blue filter-submit margin-bottom waves-effect waves-light"
+                                                           class="btn btn-sm blue filter-submit margin-bottom "
                                                            style="margin-left: 10px;margin-bottom: 10px;"
                                                            ng-click="selectAppointmentCalendar(appointment,doctor.DOCTOR_NAME,location.SITE_NAME)">
                                                             {{ appointment.APPOINTMENT_TIME }}

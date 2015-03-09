@@ -9,12 +9,21 @@ angular.module('ion-google-place', [])
         function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $document) {
             return {
                 require: '?ngModel',
-                restrict: 'E',
+                restrict: 'EA',
                 template: '<input type="text" readonly="readonly" class="ion-google-place" autocomplete="off">',
                 replace: true,
                 link: function(scope, element, attrs, ngModel) {
                     scope.locations = [];
                     var geocoder = new google.maps.Geocoder();
+                   // console.log(scope.searchQuery)
+                   // 
+                   
+                    attrs.$observe('placeholder',function(value){
+                        scope.searchQuery = value;
+                    })
+                    
+                  
+
                     var searchEventTimeout = undefined;
 
                     var POPUP_TPL = [
@@ -56,20 +65,26 @@ angular.module('ion-google-place', [])
                         };
 
                         scope.$watch('searchQuery', function(query){
-                            if (searchEventTimeout) $timeout.cancel(searchEventTimeout);
-                            searchEventTimeout = $timeout(function() {
-                                if(!query) return;
-                                if(query.length < 3);
-                                geocoder.geocode({ address: query }, function(results, status) {
-                                    if (status == google.maps.GeocoderStatus.OK) {
-                                        scope.$apply(function(){
-                                            scope.locations = results;
-                                        });
-                                    } else {
-                                        // @TODO: Figure out what to do when the geocoding fails
-                                    }
-                                });
-                            }, 350); // we're throttling the input by 350ms to be nice to google's API
+                          
+                            if(typeof query !== 'undefined' && query !== null){
+                                console.log(query)
+                                if (searchEventTimeout) $timeout.cancel(searchEventTimeout);
+                                searchEventTimeout = $timeout(function() {
+                                    if(!query) return;
+                                    if(query.length < 3);
+                                    geocoder.geocode({ address: query }, function(results, status) {
+                                        if (status == google.maps.GeocoderStatus.OK) {
+                                            scope.$apply(function(){
+                                                scope.locations = results;
+                                            });
+                                        } else {
+                                            // @TODO: Figure out what to do when the geocoding fails
+                                        }
+                                    });
+                                }, 350); // we're throttling the input by 350ms to be nice to google's API
+                            }
+
+
                         });
 
                         var onClick = function(e){

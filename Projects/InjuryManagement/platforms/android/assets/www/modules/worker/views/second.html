@@ -1,6 +1,12 @@
 <ion-view title="Add Worker">
     <ion-nav-buttons>
-        <button menu-toggle="left" class="button button-icon icon ion-navicon  waves-effect waves-light " style="color:#fff"></button>
+        <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff"></button>
+    </ion-nav-buttons>
+     <ion-nav-buttons side="right">
+          <a menu-toggle="right" class="button button-icon  " style="color:#fff">
+            <i class="fa fa-phone-square"></i>
+        </a>
+
     </ion-nav-buttons>
         <div class="bar bar-subheader">
             <button class="button button-icon icon ion-ios7-arrow-back" ui-sref="app.worker.main">&nbsp;Back</button>
@@ -100,9 +106,9 @@
                 
 
                 <div class="padding-right padding-left" style="padding-top: 40px;float:right">
-                    <button type="submit" class="btn waves-effect waves-light" ng-click="submit(workerForm, second)">
+                    <button type="submit" class="button button-positive " ng-click="submit(workerForm, second)">
                         Submit
-                         <i class="mdi-content-send right"></i>
+                         <i class="fa fa-chevron-circle-right"></i>
                     </button>
                 </div>
             </ion-list>

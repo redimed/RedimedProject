@@ -41,17 +41,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/nl.x-services.plugins.toast/www/Toast.js",
-        "id": "nl.x-services.plugins.toast.Toast",
-        "clobbers": [
-            "window.plugins.toast"
-        ]
-    },
-    {
-        "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
-        "id": "nl.x-services.plugins.toast.tests"
-    },
-    {
         "file": "plugins/org.apache.cordova.camera/www/CameraConstants.js",
         "id": "org.apache.cordova.camera.Camera",
         "clobbers": [
@@ -298,7 +287,7 @@ module.exports.metadata =
     "com.phonegap.plugins.PushPlugin": "2.4.0",
     "com.phonegap.plugins.bluetooth": "0.9",
     "com.plugin.datepicker": "0.5.0",
-    "nl.x-services.plugins.toast": "2.0.4",
+    "com.tokbox.cordova.opentok": "1.0.3",
     "org.apache.cordova.camera": "0.3.5",
     "org.apache.cordova.console": "0.2.12",
     "org.apache.cordova.device": "0.2.13",
