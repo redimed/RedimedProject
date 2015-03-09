@@ -22,7 +22,7 @@
 <!-- TABLE LIST GROUP -->
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <div class="caption">
+        <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>List of user
             <a ng-click="resetNode()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -70,10 +70,10 @@
                     </tr>
                     <tr ng-show="listNode.result===null">
                         <td colspan="4 ">
-                            <h4>There is no items</h4>
+                            <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in listNode.result " style="cursor: pointer; " ng-click="focusNode(l.NODE_ID, l.NODE_CODE)">
+                    <tr ng-repeat="l in listNode.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="focusNode(l.NODE_ID, l.NODE_CODE)">
                         <td>{{l.NODE_CODE || " " }}</td>
                         <td>{{(l.FROM_VALUE===null || l.FROM_VALUE==="")?"Not Value":l.FROM_VALUE}}</td>
                         <td>{{(l.TO_VALUE===null || l.TO_VALUE==="")?"Not Value":l.TO_VALUE}}</td>
@@ -84,14 +84,12 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                            <div class="input-group ">
-                                <span class="input-group-addon bold " style="background-color: #fff; border:none; ">Total: {{listNode.count}}</span>
+                            <span class="bold custom-timesheet">Total: {{listNode.count}}</span>
 
-                                <span class="input-group-addon " style="background-color: #fff; border:none; ">Show</span>
-                                <select class="form-control " ng-model="searchObjectMapNode.limit " ng-change="loadListNode() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
-                                </select>
-                                <span class="input-group-addon " style="background-color: #fff; border:none; ">entries per page</span>
-                            </div>
+                            <span class="custom-timesheet">Show</span>
+                            <select class="custom-timesheet" ng-model="searchObjectMapNode.limit " ng-change="loadListNode() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                            </select>
+                            <span class="custom-timesheet">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
@@ -107,8 +105,8 @@
     <!-- TABLE LIST USER IN GROUP -->
     <div class="portlet box grey-cascade">
         <div class="portlet-title">
-            <a class="btn btn-sm blue pull-right" style="margin-top:7px;" ng-click="addUser()" ng-hide="searchUserObject.NODE_ID===-1">Add user</a>
-            <div class="caption">
+            <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ng-click="addUser()" ng-hide="searchUserObject.NODE_ID===-1">Add user</a>
+            <div class="caption" style="font-size:13px;">
                 <i class="fa fa-cogs"></i>{{titleUser}}
                 <a ng-click="resetUser()"><i class="glyphicon glyphicon-refresh"></i></a>
             </div>
@@ -161,34 +159,34 @@
                     <tbody>
                         <tr ng-show="listUser.result!==null || (listUser.result.length!==0 && listUser.result!==null)">
                             <td>
-                                <input type="checkbox" class="form-control" ng-model="checkAll" ng-true-value="2" ng-false-value="-1" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkAll)">
+                                <input type="checkbox" class="checkbox" ng-model="checkAll" ng-true-value="2" ng-false-value="-1" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkAll)">
                             </td>
                             <td>
-                                <input type="text " id="user_name" ng-model="searchObjectMapUser.data.user_name " ng-change="loadListUser(user_name) " class="form-control input-sm " style="margin-top:5px;">
+                                <input type="text " id="user_name" ng-model="searchObjectMapUser.data.user_name " ng-change="loadListUser(user_name) " class="form-control input-sm ">
                             </td>
                             <td>
-                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['departments.departmentid']" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in dept" ng-change="loadListUser()" style="margin-top:5px;">
+                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['departments.departmentid']" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in dept" ng-change="loadListUser()">
                                 </select>
                             </td>
                             <td>
-                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['time_location.location_id']" ng-options="itemLocal.location_id as itemLocal.NAME for itemLocal in local" ng-change="loadListUser()" style="margin-top:5px;">
+                                <select class="form-control input-sm" ng-model="searchObjectMapUser.select['time_location.location_id']" ng-options="itemLocal.location_id as itemLocal.NAME for itemLocal in local" ng-change="loadListUser()">
                                 </select>
                             </td>
                             <td></td>
                             <td style="text-align:center;">
-                                <button type="button" class="btn btn-circle btn-sm red" style="margin-top:5px;" ng-disabled="!isChecked" ng-click="deleteUser()">
+                                <button type="button" class="btn btn-circle btn-xs red" ng-disabled="!isChecked" ng-click="deleteUser()">
                                     Delete
                                 </button>
                             </td>
                         </tr>
                         <tr ng-show="listUser.result===null">
                             <td colspan="4 ">
-                                <h4>There is no items</h4>
+                                <h4 class="custom-timesheet">There is no items</h4>
                             </td>
                         </tr>
-                        <tr ng-repeat="l in listUser.result " style="cursor: pointer; ">
+                        <tr ng-repeat="l in listUser.result " ng-class-odd="'odd'" style="cursor: pointer; ">
                             <td>
-                                <input type="checkbox" ng-model="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status)" ng-checked="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status==1 || checkAll==2">
+                                <input type="checkbox" class="checkbox" ng-model="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status)" ng-checked="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status==1 || checkAll==2">
                             </td>
                             <td>{{l.user_name || " " }}</td>
                             <td>{{(l.departmentName==="" || l.departmentName===null)?"Not dept":l.departmentName}}</td>
@@ -196,7 +194,7 @@
                             <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                             <td style="text-align:center;">
                                 <!-- DOPDOWN ACTION -->
-                                <a type="button" class="btn btn-circle btn-sm blue" style="margin-top:5px;" ng-click="editUser(l.NODE_ID, l.id, l.DEPARTMENT_CODE_ID)">
+                                <a type="button" class="btn btn-circle btn-xs blue" ng-click="editUser(l.NODE_ID, l.id, l.DEPARTMENT_CODE_ID)">
                                     <i class="fa fa-pencil"></i>&nbsp;Edit
                                 </a>
                                 <!-- END DROPDOWN ACTION -->
@@ -208,14 +206,12 @@
                     <div class="row ">
                         <div class="col-ms-6 page-num-info ">
                             <div class="col-md-4 col-sm-5 ">
-                                <div class="input-group ">
-                                    <span class="input-group-addon bold " style="background-color: #fff; border:none; ">Total: {{listUser.count}}</span>
+                                <span class="bold custom-timesheet">Total: {{listUser.count}}</span>
 
-                                    <span class="input-group-addon " style="background-color: #fff; border:none; ">Show</span>
-                                    <select class="form-control " ng-model="searchObjectMapUser.limit " ng-change="loadListUser() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
-                                    </select>
-                                    <span class="input-group-addon " style="background-color: #fff; border:none; ">entries per page</span>
-                                </div>
+                                <span class="custom-timesheet">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMapUser.limit " ng-change="loadListUser() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                </select>
+                                <span class="custom-timesheet">entries per page</span>
                             </div>
                             <div class="col-ms-6 text-right pagination-container ">
                                 <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>

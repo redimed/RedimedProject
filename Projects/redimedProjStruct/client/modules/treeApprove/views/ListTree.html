@@ -16,10 +16,10 @@
         </li>
     </ul>
 </div>
-<div class="portlet box green-meadow">
+<div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn green pull-right btn-sm" style="margin-top:7px;" ng-click="AddTree()">New tree</a>
-        <div class="caption">
+        <a class="btn blue pull-right btn-xs" style="margin-top:10px;" ng-click="AddTree()">New tree</a>
+        <div class="caption" style="font-size:13px;">
             <i class="fa fa-cogs"></i>List of tree
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -66,17 +66,17 @@
                     </tr>
                     <tr ng-show="list.result===null">
                         <td colspan="4 ">
-                            <h4>There is no items</h4>
+                            <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " style="cursor: pointer; ">
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; ">
                         <td>{{l.GROUP_NAME || " " }}</td>
                         <td>{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                         <td style="text-align: center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <button class="dropdown-toggle btn btn-circle btn-sm green" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
-                                </button>
+                                <a class="dropdown-toggle" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a ng-click="goTotreeApproveDetail(l)"><i class="fa fa-check"></i>Detail</a>
                                     </li>
@@ -97,14 +97,12 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                            <div class="input-group ">
-                                <span class="input-group-addon bold " style="background-color: #fff; border:none; ">Total: {{list.count}}</span>
+                                <span class="bold custom-timesheet">Total: {{list.count}}</span>
 
-                                <span class="input-group-addon " style="background-color: #fff; border:none; ">Show</span>
-                                <select class="form-control " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                <span class="custom-timesheet">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
                                 </select>
-                                <span class="input-group-addon " style="background-color: #fff; border:none; ">entries per page</span>
-                            </div>
+                                <span class="custom-timesheet">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>

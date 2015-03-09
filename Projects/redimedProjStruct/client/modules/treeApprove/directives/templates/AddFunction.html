@@ -7,13 +7,13 @@
                 <!-- NAME NODE -->
                 <div data-field-span="1">
                     <label>Name of function</label>
-                    <input type="text" ng-model="info.model[0].value" custom-input="info.model[0]">
+                    <input type="text" ng-model="info.model[0].value" custom-input="info.model[0]" style="font-size:13px;">
                 </div>
                 <!-- END NAME NODE -->
             </div>
         </fieldset>
-        <a class="btn green pull-right btn-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
-        <a class="btn btn-danger pull-right btn-sm" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
+        <a class="btn btn-danger pull-right btn-xs" ng-click="onCancel({return: true})">Cancel</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

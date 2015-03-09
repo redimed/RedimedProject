@@ -114,6 +114,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
         //END FUNCTION ORDER DESC FROM VALUE
         //FUNCTION FUCUSNODE
         $scope.focusNode = function(nodeId, nameNode) {
+            notReload = false;
             $scope.NODE_CODE = nameNode;
             localStorageService.set("idRole", nodeId);
             $scope.searchUserObject.NODE_ID = nodeId;
@@ -152,6 +153,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
 
         //FUNCTION LOADLISTPAGE USER
         $scope.loadListUser = function(idInput) {
+            $scope.checkAll = -1;
             $scope.listUser.loading = true;
             TimeSheetService.LoadUserTimeSheet($scope.searchObjectMapUser).then(function(response) {
                 if (response.status === "fail") {
@@ -464,12 +466,24 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                         });
                     };
                     $scope.saveClick = function(info) {
-                        modalInstance.close({
-                            status: "update"
+                        TimeSheetService.UpdateUser(info).then(function(response) {
+                            if (response.status === "error") {
+                                toastr.error("Update user fail!", "Error");
+                            } else if (response.status === "success") {
+                                modalInstance.close({
+                                    status: "success"
+                                });
+                                toastr.success("Update user success!", "Success");
+                            }
                         });
                     };
                 },
                 size: "lg"
+            });
+            modalInstance.result.then(function(data) {
+                if (data.status === "success") {
+                    $scope.loadListUser();
+                }
             });
         };
         //END DIALOG UPDATE USER

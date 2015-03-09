@@ -24,5 +24,10 @@ angular.module("app.loggedIn.TimeSheet", [
                 url: "/TimeSheetDept",
                 templateUrl: "modules/TimeSheet/views/dept.html",
                 controller: "TimeSheetDeptController"
+            })
+            .state("loggedIn.ApproveTask", {
+                url: "/ApproveTask",
+                templateUrl: "modules/TimeSheet/views/ApproveTask.html",
+                controller: "ApproveTask"
             });
     });

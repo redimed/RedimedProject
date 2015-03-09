@@ -7,7 +7,7 @@
                 <!-- NAME NODE -->
                 <div data-field-span="1">
                     <label>Name</label>
-                    <input type="text" ng-model="info.NODE_CODE">
+                    <input type="text" ng-model="info.NODE_CODE" style="font-size:13px;">
                 </div>
                 <!-- END NAME NODE -->
                 <!-- ISVALUE NODE -->
@@ -21,13 +21,13 @@
                 <!-- FROM VALUE NODE -->
                 <div data-field-span="1">
                     <label>From value</label>
-                    <input type="text" ng-model="info.FROM_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE">
+                    <input type="text" ng-model="info.FROM_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE" style="font-size:13px;">
                 </div>
                 <!-- END FROM VALUE NODE -->
                 <!-- TO VALUE NODE -->
                 <div data-field-span="1">
                     <label>To value</label>
-                    <input type="text" ng-model="info.TO_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE">
+                    <input type="text" ng-model="info.TO_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE" style="font-size:13px;">
                 </div>
                 <!-- END TO VALUE NODE -->
             </div>
@@ -35,13 +35,13 @@
                 <!-- DECRIPTION NODE -->
                 <div data-field-span="1">
                     <label>Decription</label>
-                    <textarea ng-model="info.DECRIPTION"></textarea>
+                    <textarea ng-model="info.DECRIPTION" style="font-size:13px;"></textarea>
                 </div>
                 <!-- END DECRIPTION NODE -->
             </div>
         </fieldset>
-        <a class="btn btn-default green pull-right btn-sm" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
-        <a class="btn btn-danger pull-right btn-sm" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
+        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Cancel</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

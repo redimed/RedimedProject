@@ -9,14 +9,14 @@
                 <!-- NAME DEPARTMENT -->
                 <div data-field-span="3">
                     <label>name of department</label>
-                    <select ng-model="searchObjectMap.departmentid" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in department" ng-change="loadList()">
+                    <select ng-model="searchObjectMap.departmentid" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in department" ng-change="loadList()" style="font-size:13px;">
                     </select>
                 </div>
                 <!-- END NAME DEPARTMENT -->
                 <!-- NAME ROLE -->
                 <div data-field-span="3">
                     <label>name of role</label>
-                    <select ng-model="searchObjectMap.NODE_ID" ng-options="itemRole.NODE_ID as itemRole.NODE_CODE for itemRole in node" ng-change="loadList()"></select>
+                    <select ng-model="searchObjectMap.NODE_ID" ng-options="itemRole.NODE_ID as itemRole.NODE_CODE for itemRole in node" ng-change="loadList()" style="font-size:13px;"></select>
                 </div>
                 <!-- END NAME ROLE -->
             </div>
@@ -63,29 +63,29 @@
                         <tbody>
                             <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                                 <td>
-                                    <input type="checkbox" class="form-control" ng-model="checkAll" ng-true-value="2" ng-false-value="-1" ng-change="checkChange(l.id, checkAll)">
+                                    <input type="checkbox" class="checkbox" ng-model="checkAll" ng-true-value="2" ng-false-value="-1" ng-change="checkChange(l.id, checkAll)">
                                 </td>
                                 <td>
                                     <input type="text " id="user_name" ng-model="searchObjectMap.data.user_name " ng-change="loadList(user_name) " class="form-control input-sm " style="margin-top:5px;">
                                 </td>
                                 <td>
-                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['users.company_id']" ng-options="itemCompany.id as itemCompany.Company_name for itemCompany in company" ng-change="loadList()" style="margin-top:5px;">
+                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['users.company_id']" ng-options="itemCompany.id as itemCompany.Company_name for itemCompany in company" ng-change="loadList()" style="margin-top:5px; font-size:13px;">
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['users.user_type']" ng-options="itemUserType.ID as itemUserType.user_type for itemUserType in userType" ng-change="loadList()" style="margin-top:5px;">
+                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['users.user_type']" ng-options="itemUserType.ID as itemUserType.user_type for itemUserType in userType" ng-change="loadList()" style="margin-top:5px; font-size:13px;">
                                     </select>
                                 </td>
                                 <td></td>
                             </tr>
                             <tr ng-show="list.result===null">
                                 <td colspan="4 ">
-                                    <h4>There is no items</h4>
+                                    <h4 class="custom-timesheet">There is no items</h4>
                                 </td>
                             </tr>
-                            <tr ng-repeat="l in list.result " style="cursor: pointer; ">
+                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; ">
                                 <td>
-                                    <input type="checkbox" ng-model="checkList[l.id].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.id, checkList[l.id].status)" ng-checked="checkList[l.id].status==1 || checkAll==2">
+                                    <input type="checkbox" ng-model="checkList[l.id].status" ng-true-value="1" ng-false-value="0" class="checkbox" ng-change="checkChange(l.id, checkList[l.id].status)" ng-checked="checkList[l.id].status==1 || checkAll==2">
                                 </td>
                                 <td>{{l.user_name || " " }}</td>
                                 <td>{{(l.Company_name==="" || l.Company_name===null)?"Not company":l.Company_name}}</td>
@@ -99,12 +99,12 @@
                             <div class="col-ms-6 page-num-info ">
                                 <div class="col-md-4 col-sm-5 ">
                                     <div class="input-group ">
-                                        <span class="input-group-addon bold " style="background-color: #fff; border:none; ">Total: {{list.count}}</span>
+                                        <span class="input-group-addon bold custom-timesheet" style="background-color: #fff; border:none; ">Total: {{list.count}}</span>
 
-                                        <span class="input-group-addon " style="background-color: #fff; border:none; ">Show</span>
-                                        <select class="form-control" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                        <span class="input-group-addon custom-timesheet" style="background-color: #fff; border:none; ">Show</span>
+                                        <select class="form-control" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px;">
                                         </select>
-                                        <span class="input-group-addon " style="background-color: #fff; border:none; ">entries per page</span>
+                                        <span class="input-group-addon custom-timesheet" style="background-color: #fff; border:none; ">entries per page</span>
                                     </div>
                                 </div>
                                 <div class="col-ms-6 text-right pagination-container ">
@@ -117,8 +117,8 @@
                 </div>
                 <!-- END TABLE LIST USER IN GROUP -->
         </fieldset>
-        <a class="btn blue pull-right input-sm" ng-click="onSave({return: checkList})">Add</a>
-        <a class="btn red pull-right input-sm" ng-click="onCancel({return: true})">Close</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: checkList})">Add</a>
+        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
         <!-- END MAIN INFO -->
     </form>
     </div>

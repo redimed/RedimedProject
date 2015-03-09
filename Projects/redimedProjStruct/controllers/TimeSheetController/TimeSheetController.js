@@ -528,6 +528,34 @@ module.exports = {
             });
     },
 
+    UpdateUser: function(req, res) {
+        var info = req.body.info;
+        var NODE_ID = info.NODE_ID;
+        var USER_ID = info.USER_ID;
+        var DEPARTMENT_CODE_ID = info.departmentid;
+        sys_hierarchies_users.update({
+                NODE_ID: NODE_ID,
+                DEPARTMENT_CODE_ID: DEPARTMENT_CODE_ID,
+            }, {
+                NODE_ID: info.oldNodeId,
+                USER_ID: USER_ID,
+                DEPARTMENT_CODE_ID: info.oldDeptId
+            })
+            .success(function(ressult) {
+                res.json({
+                    status: "success"
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+
     LoadRoleWhere: function(req, res) {
         var info = req.body.info;
         var queryNotIn = "SELECT NODE_ID FROM sys_hierarchies_users WHERE USER_ID = " + info.USER_ID + " AND DEPARTMENT_CODE_ID = " + info.DEPARTMENT_ID;

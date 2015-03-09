@@ -62,6 +62,13 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
+        TimeSheetService.UpdateUser = function(info) {
+            var UpdateUser = api.all("TimeSheet/post-user-update");
+            return UpdateUser.post({
+                info: info
+            });
+        };
+
         TimeSheetService.LoadOneUser = function(info) {
             var LoadOneUser = api.all("TimeSheet/post-user-one");
             return LoadOneUser.post({
@@ -115,7 +122,7 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 info: info
             });
         };
-        
+
         TimeSheetService.UpdateDept = function(info) {
             var UpdateDept = api.all("TimeSheet/post-dept-update");
             return UpdateDept.post({
