@@ -52,6 +52,8 @@ module.exports = function(io,cookie,cookieParser,opentok) {
                                     {
                                         if(message.type == 'call')
                                         {
+                                            console.log("Call From: "+currUser);
+                                            
                                            var token = opentok.generateToken(message.sessionId);
 
                                            message.apiKey = apiKey;

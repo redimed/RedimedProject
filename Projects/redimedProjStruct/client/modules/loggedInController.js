@@ -168,6 +168,48 @@ angular.module("app.loggedIn.controller",[
         }
     })
 
+    $scope.vm = {
+        messages: [
+            {
+              'username': 'username1',
+              'content': 'Hi!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            },
+            {
+              'username': 'username2',
+              'content': 'Hello!'
+            }
+          ],
+        username : 'username1',
+        sendMessage: function(message, username) {
+            if(message && message !== '' && username) {
+              vm.messages.push({
+                'username': username,
+                'content': message
+              });
+            }
+          }
+    };
+
+    $scope.openChat = function(user){
+        console.log(user);
+    }
+
     $scope.userImg = null;
     $scope.onlineUsers = [];
     $scope.onlineUsersTemp = [];
