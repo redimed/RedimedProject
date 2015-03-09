@@ -98,27 +98,26 @@
                         <div class="row ">
                             <div class="col-ms-6 page-num-info ">
                                 <div class="col-md-4 col-sm-5 ">
-                                    <div class="input-group ">
-                                        <span class="input-group-addon bold custom-timesheet" style="background-color: #fff; border:none; ">Total: {{list.count}}</span>
+                                    <span class="bold custom-timesheet">Total: {{list.count}}</span>
 
-                                        <span class="input-group-addon custom-timesheet" style="background-color: #fff; border:none; ">Show</span>
-                                        <select class="form-control" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px;">
-                                        </select>
-                                        <span class="input-group-addon custom-timesheet" style="background-color: #fff; border:none; ">entries per page</span>
-                                    </div>
+                                    <span class="custom-timesheet">Show</span>
+                                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
+                                    </select>
+                                    <span class="custom-timesheet">entries per page</span>
                                 </div>
                                 <div class="col-ms-6 text-right pagination-container ">
                                     <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
                                     <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
                                 </div>
                             </div>
+                        </div>
                     </footer>
-                    </div>
                 </div>
-                <!-- END TABLE LIST USER IN GROUP -->
+            </div>
+            <!-- END TABLE LIST USER IN GROUP -->
         </fieldset>
         <a class="btn blue pull-right btn-xs" ng-click="onSave({return: checkList})">Add</a>
         <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
         <!-- END MAIN INFO -->
     </form>
-    </div>
+</div>
