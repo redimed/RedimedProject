@@ -27,12 +27,12 @@ angular.module('starter.phoneCall.controller',[])
         var src = "/android_asset/www/phone_calling.mp3";
         var media = null;
         var loop = function (status) {
-            if (status === Media.MEDIA_STOPPED) {
-                media.play();
-            }
-            else if (status === Media.MEDIA_PAUSED) {
-                media.pause();
-            }
+            // if (status === Media.MEDIA_STOPPED) {
+            //     media.play();
+            // }
+            // else if (status === Media.MEDIA_PAUSED) {
+            //     media.pause();
+            // }
         };
 
         UserService.getUserInfo($stateParams.callUser).then( function(data) {
@@ -44,9 +44,9 @@ angular.module('starter.phoneCall.controller',[])
 
         if($scope.isCaller)
         {
-            AudioToggle.setAudioMode(AudioToggle.SPEAKER);
-            media = new Media(src, null, null, loop);
-            media.play();
+            // AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+            // media = new Media(src, null, null, loop);
+            // media.play();
 
             var publisherProperties =
             {
@@ -144,17 +144,20 @@ angular.module('starter.phoneCall.controller',[])
         $scope.cancelCall = function () {
             publisher.publishAudio(false);
             publisher.publishVideo(false);
-            if(offMedia || publisher) {
-                media.pause();
-                session.unpublish(publisher);
-                signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
-                $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
-            }
-            else {
-                session.unpublish(publisher);
-                signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
-                $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
-            }
+            // if(offMedia || publisher) {
+            //     media.pause();
+            //     session.unpublish(publisher);
+            //     signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
+            //     $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
+            // }
+            // else {
+            //     session.unpublish(publisher);
+            //     signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
+            //     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+            // }
+            session.unpublish(publisher);
+            signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
+            $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
             publisher = null;
             signaling.removeAllListeners();
         };
@@ -166,11 +169,11 @@ angular.module('starter.phoneCall.controller',[])
         function onMessageReceive (fromId, fromUser, message) {
             switch (message.type) {
                 case 'answer':
-                    media.pause();
+                    // media.pause();
                     $scope.isAccept = true;
                     break;
                 case 'ignore':
-                    media.pause();
+                    // media.pause();
                     session.unpublish(publisher);
                     publisher = null;
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});

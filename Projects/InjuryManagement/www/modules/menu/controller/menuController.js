@@ -18,12 +18,12 @@ angular.module("starter.menu.controller",[])
         var src = "/android_asset/www/receive_phone.mp3";
         var media = null;
         var loop = function (status) {
-            if (status === Media.MEDIA_STOPPED) {
-                media.play();
-            }
-            else if (status === Media.MEDIA_PAUSED) {
-                media.pause();
-            }
+            // if (status === Media.MEDIA_STOPPED) {
+            //     media.play();
+            // }
+            // else if (status === Media.MEDIA_PAUSED) {
+            //     media.pause();
+            // }
         };
         var stopInterval;
 
@@ -250,12 +250,12 @@ angular.module("starter.menu.controller",[])
         }
 
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
-            AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+            // AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             console.log(JSON.stringify(message));
             switch (message.type) {
                 case 'call':
-                    media = new Media(src, null, null, loop);
-                    media.play();
+                    // media = new Media(src, null, null, loop);
+                    // media.play();
                     if ($state.current.name === 'app.phoneCall') { return; };
 
                     $scope.popupCall = $ionicPopup.show({
@@ -266,7 +266,7 @@ angular.module("starter.menu.controller",[])
                                 text: '<b>answer</b>',
                                 type: 'button button-balanced',
                                 onTap: function(e) {
-                                    media.pause();
+                                    // media.pause();
                                     $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
                                         tokenID: message.token, isCaller: false }, {reload: true});
                                     $scope.popupCall = null;
@@ -276,7 +276,7 @@ angular.module("starter.menu.controller",[])
                             { text: '<b>ignore</b>',
                                 type: 'button button-assertive',
                                 onTap: function(e) {
-                                    media.pause();
+                                    // media.pause();
                                     signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
                                 }
                             },
@@ -285,7 +285,7 @@ angular.module("starter.menu.controller",[])
                     break;
                 case 'cancel':
                     if($scope.popupCall != null) {
-                        media.pause();
+                        // media.pause();
                         $scope.popupCall.close();
                     }
                     break;
