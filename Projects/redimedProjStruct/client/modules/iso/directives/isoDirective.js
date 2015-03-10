@@ -268,9 +268,6 @@ angular.module("app.loggedIn.iso.directive", [])
             $scope.setListReply=function(IDREQUEST){
                 isoService.replyEdit.getAllReplyEditDocument(IDREQUEST).then(function(data){
                     if (data.status == 'success') {
-                        for (var i = 0; i < data.data.length; i++) {
-                            data.data[i].REPLY_DATE_TEMP = moment(data.data[i].REPLY_DATE).format("MMM Do YYYY");
-                        }
                         $scope.listReplyEditDocument = data.data;
                         console.log($scope.listReplyEditDocument);
                     };
