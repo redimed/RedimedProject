@@ -478,48 +478,48 @@ angular.module('starter.injury.controller', ['ngCordova'])
         var session = null;
 
 
-        document.addEventListener("deviceready", onDeviceReady, false);
+        // document.addEventListener("deviceready", onDeviceReady, false);
 
-        function onDeviceReady(){
+        // function onDeviceReady(){
 
-            console.log('onDeviceReady');
-            var apiKey = "45172682";
-            var sessionId = "2_MX40NTE3MjY4Mn5-MTQyNTg2OTAzOTU3MX5oY2JpOWVlZWRRM05NeTQva3dRMTBZWkF-fg";
-            var token = "T1==cGFydG5lcl9pZD00NTE3MjY4MiZzaWc9OGQxYTMwOWI1ZmRjNDAxNjI1YWY0NTkxMDBjNmY4YWVhY2JiZmUyNjpyb2xlPW1vZGVyYXRvciZzZXNzaW9uX2lkPTJfTVg0ME5URTNNalk0TW41LU1UUXlOVGcyT1RBek9UVTNNWDVvWTJKcE9XVmxaV1JSTTA1TmVUUXZhM2RSTVRCWldrRi1mZyZjcmVhdGVfdGltZT0xNDI1ODY5MDUxJm5vbmNlPTAuNjc5ODA0NjIwNDcyMzk5NiZleHBpcmVfdGltZT0xNDI4NDYxMDMw"
+        //     console.log('onDeviceReady');
+        //     var apiKey = "45172682";
+        //     var sessionId = "2_MX40NTE3MjY4Mn5-MTQyNTg2OTAzOTU3MX5oY2JpOWVlZWRRM05NeTQva3dRMTBZWkF-fg";
+        //     var token = "T1==cGFydG5lcl9pZD00NTE3MjY4MiZzaWc9OGQxYTMwOWI1ZmRjNDAxNjI1YWY0NTkxMDBjNmY4YWVhY2JiZmUyNjpyb2xlPW1vZGVyYXRvciZzZXNzaW9uX2lkPTJfTVg0ME5URTNNalk0TW41LU1UUXlOVGcyT1RBek9UVTNNWDVvWTJKcE9XVmxaV1JSTTA1TmVUUXZhM2RSTVRCWldrRi1mZyZjcmVhdGVfdGltZT0xNDI1ODY5MDUxJm5vbmNlPTAuNjc5ODA0NjIwNDcyMzk5NiZleHBpcmVfdGltZT0xNDI4NDYxMDMw"
 
-            var publisherProperties =
-            {
-                resolution: '1280x720',
-                insertMode: "append"
-            };
+        //     var publisherProperties =
+        //     {
+        //         resolution: '1280x720',
+        //         insertMode: "append"
+        //     };
 
-            publisher = TB.initPublisher('selfVideo', publisherProperties);
-            session = TB.initSession( apiKey, sessionId );
-            session.on({
-                'streamCreated': function( event ){
-                    session.subscribe( event.stream, "callerVideo",{
-                        insertMode: "append",
-                        resolution: "1280x720"
-                        //width: '100%',
-                        //height: '100%'
-                    });
-                }
-            });
-            session.connect(token, function(error) {
-                console.log('connect error ', error);
-                if (error)
-                {
-                    console.log(error.message);
-                }
-                else
-                {
-                    console.log('else connection')
-                    session.publish( publisher );
-                    //signaling.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
-                }
-            });
+        //     publisher = TB.initPublisher('selfVideo', publisherProperties);
+        //     session = TB.initSession( apiKey, sessionId );
+        //     session.on({
+        //         'streamCreated': function( event ){
+        //             session.subscribe( event.stream, "callerVideo",{
+        //                 insertMode: "append",
+        //                 resolution: "1280x720"
+        //                 //width: '100%',
+        //                 //height: '100%'
+        //             });
+        //         }
+        //     });
+        //     session.connect(token, function(error) {
+        //         console.log('connect error ', error);
+        //         if (error)
+        //         {
+        //             console.log(error.message);
+        //         }
+        //         else
+        //         {
+        //             console.log('else connection')
+        //             session.publish( publisher );
+        //             //signaling.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
+        //         }
+        //     });
 
-        }
+        // }
     })
 /**
  * Vo duc giap

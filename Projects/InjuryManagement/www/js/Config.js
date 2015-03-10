@@ -976,7 +976,7 @@ angular.module('app.config', [])
 
     .constant('HOST_CONFIG', {
         //'host':'testapp.redimed.com.au',
-        'host':'192.168.133.19',
+        'host':'testapp.redimed.com.au',
         'port':'3000'
     })
 

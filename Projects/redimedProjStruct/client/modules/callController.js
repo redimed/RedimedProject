@@ -147,9 +147,6 @@ angular.module("app.call.controller",[
 
                 if(typeof from !== 'undefined')
                     $state.go(from.fromState.name,params,{location: "replace", reload: true});
-
-                if(typeof fromMobile !== 'undefined' && fromMobile)
-                     $window.close();
             }
             if(message.type === 'cancel')
             {
@@ -159,9 +156,6 @@ angular.module("app.call.controller",[
                 
                 if(typeof from !== 'undefined')
                     $state.go(from.fromState.name,params,{location: "replace", reload: true});
-
-                if(typeof fromMobile !== 'undefined' && fromMobile)
-                     $window.close();
 
             }
 
@@ -175,8 +169,6 @@ angular.module("app.call.controller",[
             if(typeof from !== 'undefined')
                 $state.go(from.fromState.name,params,{location: "replace", reload: true});
 
-            if(typeof fromMobile !== 'undefined' && fromMobile)
-                 $window.close();
         }
 
         $scope.muteAudio = function(){
