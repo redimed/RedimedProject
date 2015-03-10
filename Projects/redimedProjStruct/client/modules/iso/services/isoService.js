@@ -448,5 +448,42 @@ angular.module('app.loggedIn.iso.service',[])
                 return result.get({nodeId:nodeId});
             }
         }
+        isoService.replyEdit={
+            insertReplyEditDocument:function(IDREQUEST,DESCRIPTION)
+            {
+                var result=api.all("iso/iso-reply-edit-document/insert-iso-reply-edit-document");
+                return result.post({IDREQUEST:IDREQUEST,DESCRIPTION:DESCRIPTION});
+            },
+            getAllReplyEditDocument:function(IDREQUEST)
+            {
+                var result=api.all("iso/iso-reply-edit-document/get-list-iso-reply-edit-document");
+                return result.post({IDREQUEST:IDREQUEST});
+            },
+            updateAdminReply:function(ID,VALUE)
+            {
+                var result=api.all("iso/iso-reply-edit-document/update-admin-reply");
+                return result.post({ID:ID,VALUE:VALUE});
+            },
+            updateStaffReply:function(ID,VALUE)
+            {
+                var result=api.all("iso/iso-reply-edit-document/updete-staff-reply");
+                return result.post({ID:ID,VALUE:VALUE});
+            },
+            getNumberStaffReplyOfRequest:function(nodeId)
+            {
+                var result=api.one("iso/iso-reply-edit-document/get-number-staff-reply-of-request");
+                return result.get({nodeId:nodeId});
+            },
+            getNumberAdminReplyOfRequest:function(nodeId)
+            {
+                var result=api.one("iso/iso-reply-edit-document/get-number-admin-reply-of-request");
+                return result.get({nodeId:nodeId});
+            },
+            getHaveNewReply:function(ID)
+            {
+                var result=api.one("iso/iso-reply-edit-document/get-have-new-reply");
+                return result.get({ID:ID});
+            }
+        }
         return isoService;
     })

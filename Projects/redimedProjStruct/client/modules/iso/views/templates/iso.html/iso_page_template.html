@@ -314,10 +314,11 @@ GOBAL POPUP -->
 </script>
 
 <script type="text/ng-template" id="iso_view_your_request.html">
-    <div class="table-responsive" style="height:200px;overflow:auto;">
-        <table class="table">
+    <div class="table-responsive" style="max-height: 200px;overflow: overlay;">
+        <table class="table" style="width: 98%;">
             <tr>
                 <th>Date submitted:</th>
+                <th></th>
                 <th></th>
             </tr>
             
@@ -331,26 +332,32 @@ GOBAL POPUP -->
                             ng-click="cancelYourRequest(item.ID);">
                         Cancel
                     </button>
-
                     <span ng-show="item.IS_READ==1">Had Read</span>
+                </td>
+                <td style="color: red;">
+                    <i class="fa fa-comment-o" ng-show="item.HAVE_NEW_ADMIN_REPLY === 1"></i>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-show="selectedYourRequest.DESCRIPTION != null">
         <label for="exampleInputEmail1" style='font-weight:bold'>Detail:</label>
-        <textarea ng-disabled="'true'" ng-model="selectedYourRequest.DESCRIPTION" class="form-control" rows='10'></textarea>
-      </div>
+        <div class="note note-info">
+            <label>{{selectedYourRequest.DESCRIPTION}}</label>
+        </div>
+        <iso-reply-edit-document request-data="selectedYourRequest.ID" admin-data="selectedTreeNode.PERMISSION"></iso-reply-edit-document>
+    </div>
     
 </script>
 
 <script type="text/ng-template" id="iso_view_all_request.html">
-    <div class="table-responsive" style="height:200px;overflow:auto;">
-        <table class="table">
+    <div class="table-responsive" style="max-height: 200px;overflow: overlay;">
+        <table class="table" style="width: 98%;">
             <tr>
                 <th>Date submitted:</th>
                 <th>Submited by</th>
+                <th></th>
                 <th></th>
             </tr>
             
@@ -376,13 +383,18 @@ GOBAL POPUP -->
                     </button>
                     <span ng-show="item.IS_READ==1">Had Read</span>
                 </td>
+                <td style="color: red;">
+                    <i class="fa fa-comment-o" ng-show="item.HAVE_NEW_STAFF_REPLY === 1"></i>
+                </td>
             </tr>
         </table>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" ng-show="selectedRequest.DESCRIPTION != null">
         <label for="exampleInputEmail1" style='font-weight:bold'>Detail:</label>
-        <textarea ng-disabled="'true'" ng-model="selectedRequest.DESCRIPTION" class="form-control" rows='10'></textarea>
-      </div>
-    
+        <div class="note note-success">
+            <label>{{selectedRequest.DESCRIPTION}}</label>
+        </div>
+        <iso-reply-edit-document request-data="selectedRequest.ID" admin-data="selectedTreeNode.PERMISSION"></iso-reply-edit-document>
+    </div>
 </script>

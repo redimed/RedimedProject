@@ -33,9 +33,11 @@ module.exports =
      */
 	getTreeDir:function(req,res)
 	{
+        var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
         var accessibleUserId=isoUtil.checkData(req.body.accessibleUserId)?req.body.accessibleUserId:-10;
         var isIsoAdmin=isoUtil.checkData(req.body.isIsoAdmin)?req.body.isIsoAdmin:0;
-        if(!isoUtil.checkListData([accessibleUserId,isIsoAdmin]))
+        if(!isoUtil.checkListData([accessibleUserId,userId,isIsoAdmin]))
         {
             res.json({status:'fail'});
             return;
@@ -60,7 +62,7 @@ module.exports =
             "   treeUser.`ACCESSIBLE_USER_ID`,                                                                                  "+
             "   treeUser.`PERMISSION`,                                                                                          "+
             "   outin.USER_CHECK_OUT_IN,outin.CHECK_IN_STATUS,outin.SUBMIT_STATUS,outin.CHECK_IN_NO,                            "+
-            "   dep.`departmentName` AS DEPARTMENT_NAME ,request.NUM_OF_REQUEST                                                 "+                       
+            "   dep.`departmentName` AS DEPARTMENT_NAME ,request.NUM_OF_REQUEST,request2.NUM_ADMIN_REPLY_OF_REQUEST,request3.NUM_STAFF_REPLY_OF_REQUEST "+                       
             " FROM iso_tree_dir tree                                                                                            "+
             " LEFT JOIN `iso_tree_users` treeUser ON (tree.`NODE_ID`=treeUser.`NODE_ID` AND treeUser.`ACCESSIBLE_USER_ID`=?)    "+
             " LEFT JOIN (                                                                                                       "+
@@ -80,12 +82,26 @@ module.exports =
             "   WHERE request.`IS_READ`=0 AND request.`ISENABLE`=1                                                              "+
             "   GROUP BY request.`NODE_ID`                                                                                      "+
             " )  request ON tree.`NODE_ID`=request.NODE_ID                                                                      "+
+            "LEFT JOIN                                                                                                          "+
+            " (                                                                                                                 "+
+            "   SELECT request2.NODE_ID,SUM(request2.`HAVE_NEW_ADMIN_REPLY`) AS NUM_ADMIN_REPLY_OF_REQUEST                      "+                                               
+            "   FROM `iso_request_edit_document` request2                                                                       "+
+            "   WHERE request2.`ISENABLE`=1 AND request2.`USER_ID` = ?                                                          "+
+            "   GROUP BY request2.`NODE_ID`                                                                                     "+                        
+            " )  request2 ON tree.`NODE_ID`=request2.NODE_ID                                                                    "+
+            "LEFT JOIN                                                                                                          "+
+            " (                                                                                                                 "+
+            "   SELECT request3.NODE_ID,SUM(request3.`HAVE_NEW_STAFF_REPLY`) AS NUM_STAFF_REPLY_OF_REQUEST                      "+                                               
+            "   FROM `iso_request_edit_document` request3                                                                       "+
+            "   WHERE request3.`ISENABLE`=1                                                                                     "+
+            "   GROUP BY request3.`NODE_ID`                                                                                     "+                        
+            " )  request3 ON tree.`NODE_ID`=request3.NODE_ID                                                                    "+
             " WHERE     tree.`ISENABLE` LIKE ?                                                                                  "+
             " GROUP BY tree.`NODE_ID`                                                                                           "+
             " ORDER BY FATHER_NODE_ID DESC ;                                                                                    ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[accessibleUserId,isEnable],function(err,rows)
+            var query = connection.query(sql,[accessibleUserId,userId,isEnable],function(err,rows)
             {
                 if(err)
                 {
@@ -730,7 +746,6 @@ module.exports =
         }); 
     },
 
-
     /**
      * xu ly download folder
      * tannv.dts@gmail.com
@@ -739,7 +754,6 @@ module.exports =
     {
         if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.read)===false)
         {
-            isoUtil.exlog("handlingCloneFolder","khong dung quyen han");
             res.json({status:'fail'});
             return;
         }

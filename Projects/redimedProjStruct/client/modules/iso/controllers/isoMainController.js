@@ -200,6 +200,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                * phanquocchien.c1109g@gmail.com
                * set new folder and document 
                */
+            console.log($scope.selectedTreeNode.PERMISSION);
             $scope.newFolder=angular.copy($scope.newFolderBlank);
             $scope.newDocument=angular.copy($scope.newDocumentBlank);
             $scope.newRequestEditDocument=angular.copy($scope.newRequestEditDocumentBlank);
@@ -272,11 +273,15 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     break;
                 case $scope.treeActions.viewYourRequest.name:
                     $scope.currentTreeAction=$scope.treeActions.viewYourRequest;
+                    $scope.selectedYourRequest.DESCRIPTION = null;
                     $scope.getAllYourRequest($scope.selectedTreeNode.NODE_ID);
+                    console.log($scope.selectedTreeNode.NODE_ID);
                     break;
                 case $scope.treeActions.viewAllRequest.name:
                     $scope.currentTreeAction=$scope.treeActions.viewAllRequest;
+                    $scope.selectedRequest.DESCRIPTION = null;
                     $scope.getAllRequest($scope.selectedTreeNode.NODE_ID);
+                    console.log($scope.selectedTreeNode.NODE_ID);
                     break;
                 case $scope.treeActions.forceCheckInDocument.name:
                     $scope.currentTreeAction=$scope.treeActions.forceCheckInDocument;
@@ -873,6 +878,13 @@ angular.module('app.loggedIn.iso.main.controller',[])
         $scope.setSelectedYourRequest=function(item)
         {
             $scope.selectedYourRequest=item;
+            isoService.replyEdit.updateAdminReply(item.ID,0).then(function(data){
+                if (data.status == "success") {
+                    console.log($scope.selectedTreeNode.NODE_ID);
+                    $scope.getHaveNewReply(item.ID);
+                    $scope.getNumberAdminReplyOfRequest(item.NODE_ID);
+                };
+            });
         }
         $scope.cancelYourRequest=function(id)
         {
@@ -903,6 +915,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 if(data.status=='success')
                 {
                     $scope.listAllRequest=data.data;
+                    console.log($scope.listAllRequest);
                 }
                 else
                 {
@@ -916,6 +929,14 @@ angular.module('app.loggedIn.iso.main.controller',[])
         $scope.setSelectedRequest=function(item)
         {
             $scope.selectedRequest=item;
+            console.log($scope.selectedRequest);
+            isoService.replyEdit.updateStaffReply(item.ID,0).then(function(data){
+                if (data.status == "success") {
+                    console.log(item);
+                    $scope.getHaveNewReply(item.ID);
+                    $scope.getNumberStaffReplyOfRequest(item.NODE_ID);
+                };
+            });
         }
 
         $scope.getNumberOfRequestUnread=function(nodeId)
@@ -928,6 +949,78 @@ angular.module('app.loggedIn.iso.main.controller',[])
                         $scope.selectedTreeNode.NUM_OF_REQUEST=data.data;
                     else
                         $scope.selectedTreeNode.NUM_OF_REQUEST=null;
+                }
+                
+            },function(err){
+
+            });
+        }
+        /*
+            phan quoc chien
+            phanquocchien.c1109g@gmail.com
+            get number staff reply of request
+         */
+        $scope.getNumberStaffReplyOfRequest=function(nodeId)
+        {
+            isoService.replyEdit.getNumberStaffReplyOfRequest(nodeId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    console.log(data.data);
+                    if (data.data.NUM_STAFF_REPLY_OF_REQUEST > 0) 
+                    {
+                        $scope.selectedTreeNode.NUM_STAFF_REPLY_OF_REQUEST=data.data.NUM_STAFF_REPLY_OF_REQUEST;
+                    }
+                    else
+                    {
+                        $scope.selectedTreeNode.NUM_STAFF_REPLY_OF_REQUEST=0;
+                    };
+                }
+                
+            },function(err){
+
+            });
+        } 
+        /*
+            phan quoc chien
+            phanquocchien.c1109g@gmail.com
+            get number admin reply of request
+         */
+        $scope.getNumberAdminReplyOfRequest=function(nodeId)
+        {
+            isoService.replyEdit.getNumberAdminReplyOfRequest(nodeId)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    console.log(data.data);
+                    if(data.data.NUM_ADMIN_REPLY_OF_REQUEST > 0)
+                    {
+                        $scope.selectedTreeNode.NUM_ADMIN_REPLY_OF_REQUEST=data.data.NUM_ADMIN_REPLY_OF_REQUEST;
+                    }
+                    else
+                    {
+                        $scope.selectedTreeNode.NUM_ADMIN_REPLY_OF_REQUEST=0;
+                    }
+                }
+                
+            },function(err){
+
+            });
+        } 
+        /*
+            phan quoc chien
+            phanquocchien.c1109g@gmail.com
+            get item HAVE_NEW_STAFF_REPLY and HAVE_NEW_ADMIN_REPLY
+         */
+        $scope.getHaveNewReply=function(ID)
+        {
+            isoService.replyEdit.getHaveNewReply(ID)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    console.log(data.data);
+                    $scope.selectedRequest.HAVE_NEW_STAFF_REPLY = data.data.HAVE_NEW_STAFF_REPLY;
+                    $scope.selectedYourRequest.HAVE_NEW_ADMIN_REPLY = data.data.HAVE_NEW_ADMIN_REPLY;
                 }
                 
             },function(err){
@@ -1118,7 +1211,6 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Check out fail!');
             })
         };
-
         $scope.downloadSpecificCheckIn=function(item)
         {
             isoService.checkOutIn.downloadSpecificCheckIn(item.NODE_ID,item.ID);
