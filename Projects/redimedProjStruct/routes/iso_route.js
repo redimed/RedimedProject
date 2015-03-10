@@ -131,4 +131,4 @@ app.post('/api/iso/iso-reply-edit-document/update-admin-reply',isoReplyEditDocum
 app.post('/api/iso/iso-reply-edit-document/updete-staff-reply',isoReplyEditDocumentController.updateStaffReply);
 app.get('/api/iso/iso-reply-edit-document/get-number-staff-reply-of-request',isoReplyEditDocumentController.getNumberStaffReplyOfRequest);
 app.get('/api/iso/iso-reply-edit-document/get-number-admin-reply-of-request',isoReplyEditDocumentController.getNumberAdminReplyOfRequest);
-app.get('/api/iso/iso-reply-edit-document/get-have-new-reply',isoReplyEditDocumentController.getHaveNewReply);
+// app.get('/api/iso/iso-reply-edit-document/get-have-new-reply',isoReplyEditDocumentController.getHaveNewReply);

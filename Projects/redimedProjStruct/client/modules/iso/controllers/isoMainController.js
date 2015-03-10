@@ -881,7 +881,8 @@ angular.module('app.loggedIn.iso.main.controller',[])
             isoService.replyEdit.updateAdminReply(item.ID,0).then(function(data){
                 if (data.status == "success") {
                     console.log($scope.selectedTreeNode.NODE_ID);
-                    $scope.getHaveNewReply(item.ID);
+                    $scope.selectedYourRequest.HAVE_NEW_ADMIN_REPLY = 0;
+                    // $scope.getHaveNewReply(item.ID);
                     $scope.getNumberAdminReplyOfRequest(item.NODE_ID);
                 };
             });
@@ -933,7 +934,8 @@ angular.module('app.loggedIn.iso.main.controller',[])
             isoService.replyEdit.updateStaffReply(item.ID,0).then(function(data){
                 if (data.status == "success") {
                     console.log(item);
-                    $scope.getHaveNewReply(item.ID);
+                    $scope.selectedRequest.HAVE_NEW_STAFF_REPLY = 0;
+                    // $scope.getHaveNewReply(item.ID);
                     $scope.getNumberStaffReplyOfRequest(item.NODE_ID);
                 };
             });
@@ -1012,21 +1014,21 @@ angular.module('app.loggedIn.iso.main.controller',[])
             phanquocchien.c1109g@gmail.com
             get item HAVE_NEW_STAFF_REPLY and HAVE_NEW_ADMIN_REPLY
          */
-        $scope.getHaveNewReply=function(ID)
-        {
-            isoService.replyEdit.getHaveNewReply(ID)
-            .then(function(data){
-                if(data.status=='success')
-                {
-                    console.log(data.data);
-                    $scope.selectedRequest.HAVE_NEW_STAFF_REPLY = data.data.HAVE_NEW_STAFF_REPLY;
-                    $scope.selectedYourRequest.HAVE_NEW_ADMIN_REPLY = data.data.HAVE_NEW_ADMIN_REPLY;
-                }
+        // $scope.getHaveNewReply=function(ID)
+        // {
+        //     isoService.replyEdit.getHaveNewReply(ID)
+        //     .then(function(data){
+        //         if(data.status=='success')
+        //         {
+        //             console.log(data.data);
+        //             $scope.selectedRequest.HAVE_NEW_STAFF_REPLY = data.data.HAVE_NEW_STAFF_REPLY;
+        //             $scope.selectedYourRequest.HAVE_NEW_ADMIN_REPLY = data.data.HAVE_NEW_ADMIN_REPLY;
+        //         }
                 
-            },function(err){
+        //     },function(err){
 
-            });
-        }
+        //     });
+        // }
 
         $scope.setRequestIsRead=function(item)
         {

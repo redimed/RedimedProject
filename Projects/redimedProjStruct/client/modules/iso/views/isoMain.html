@@ -24,16 +24,14 @@
                         
                     </span> -->
                     <span ng-show="node.PERMISSION==isoPermission.administrator && node.NUM_OF_REQUEST"  class="iso_badge">
-                        <i class="fa fa-envelope-o"></i>{{node.PERMISSION==isoPermission.administrator?node.NUM_OF_REQUEST:''}}
+                        <i class="fa fa-pencil-square-o"></i>{{node.PERMISSION==isoPermission.administrator?node.NUM_OF_REQUEST:''}}
                         
                     </span>
                     <span style="margin-left: -10px;" ng-show="node.PERMISSION==isoPermission.administrator && node.NUM_STAFF_REPLY_OF_REQUEST >=1"  class="iso_badge">
-                        <i class="fa fa-comment-o"></i>{{node.NUM_STAFF_REPLY_OF_REQUEST}}
-                        
+                        <i class="fa fa-reply"></i>
                     </span>
                     <span ng-show="node.PERMISSION!=isoPermission.administrator && node.NUM_ADMIN_REPLY_OF_REQUEST >=1"  class="iso_badge">
-                        <i class="fa fa-comment-o"></i>{{node.NUM_ADMIN_REPLY_OF_REQUEST}}
-                        
+                        <i class="fa fa-reply"></i>
                     </span>
                 </span> 
                 <!-- ____{{node.relativePath}} -->

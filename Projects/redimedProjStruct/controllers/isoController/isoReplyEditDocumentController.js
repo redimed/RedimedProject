@@ -211,43 +211,43 @@ module.exports =
 	        });
 	    });
 	},
-	getHaveNewReply:function(req,res)
-	{
-		var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
-	    var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
-	    var ID=isoUtil.checkData(req.query.ID)?req.query.ID:'';
-	    if(!isoUtil.checkListData([userId,ID]))
-	    {
-	    	isoUtil.exlog("getHaveNewReply","Loi data truyen den");
-	    	res.json({status:'fail'});
-	    	return;
-	    }
+	// getHaveNewReply:function(req,res)
+	// {
+	// 	var userInfo=isoUtil.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+	//     var userId=isoUtil.checkData(userInfo.id)?userInfo.id:'';
+	//     var ID=isoUtil.checkData(req.query.ID)?req.query.ID:'';
+	//     if(!isoUtil.checkListData([userId,ID]))
+	//     {
+	//     	isoUtil.exlog("getHaveNewReply","Loi data truyen den");
+	//     	res.json({status:'fail'});
+	//     	return;
+	//     }
 
-	    var sql=
-	    	" SELECT `HAVE_NEW_ADMIN_REPLY`,`HAVE_NEW_STAFF_REPLY` FROM `iso_request_edit_document` WHERE `ID` = ? AND `ISENABLE`=1 ";
+	//     var sql=
+	//     	" SELECT `HAVE_NEW_ADMIN_REPLY`,`HAVE_NEW_STAFF_REPLY` FROM `iso_request_edit_document` WHERE `ID` = ? AND `ISENABLE`=1 ";
 
-		req.getConnection(function(err,connection)
-	    {
-	        var query = connection.query(sql,[ID],function(err,rows)
-	        {
-	            if(err)
-	            {
-	                isoUtil.exlog("getHaveNewReply",err);
-	                res.json({status:'fail'});
-	            }
-	            else
-	            {
-	            	if(rows.length>0)
-	            	{
-	                	isoUtil.exlog("getHaveNewReply",rows[0]);
-	            		res.json({status:'success',data:rows[0]});
-	            	}
-	            	else
-	            	{
-	            		res.json({status:'success',data:0});
-	            	}
-	            }
-	        });
-	    });
-	}
+	// 	req.getConnection(function(err,connection)
+	//     {
+	//         var query = connection.query(sql,[ID],function(err,rows)
+	//         {
+	//             if(err)
+	//             {
+	//                 isoUtil.exlog("getHaveNewReply",err);
+	//                 res.json({status:'fail'});
+	//             }
+	//             else
+	//             {
+	//             	if(rows.length>0)
+	//             	{
+	//                 	isoUtil.exlog("getHaveNewReply",rows[0]);
+	//             		res.json({status:'success',data:rows[0]});
+	//             	}
+	//             	else
+	//             	{
+	//             		res.json({status:'success',data:0});
+	//             	}
+	//             }
+	//         });
+	//     });
+	// }
 }
