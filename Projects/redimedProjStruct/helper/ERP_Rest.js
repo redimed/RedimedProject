@@ -120,7 +120,7 @@ function ERP_Rest (options) {
 			data.VS_NAME = p.Title + '. ' +  p.First_name + ' ' + p.Sur_name;
 			data.ADDRESS = p.Address1;
 			data.S_PHONE = p.Mobile //? p.Mobile: '';
-			data.CUS_NUMBER1 = header.company.Patient_id;
+			data.CUS_NUMBER1 = header.Patient_id;
 			data.CUS_CHAR20 = 'patient';
 		}
 		data.S_VS_SITE_NAME = header.site.Site_name;
