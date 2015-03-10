@@ -543,7 +543,17 @@ angular.module("app.loggedIn.rlob.directive", [])
                             options:{
                                 subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
                                 body:
-                                    "Please booking for me..."
+                                    " I would like to make a booking for       \n"+
+                                    " Claim Number:                            \n"+
+                                    " Injured Workers's Name:                  \n"+
+                                    " Contact Number:                          \n"+
+                                    " Address:                                 \n"+
+                                    " Date of Birth:                           \n"+
+                                    " Date of Injury:                          \n"+
+                                    " Description of Injury:                   \n"+
+                                    " Location of Appointment:                 \n"+
+                                    " Timeframe for Appointment:               \n\n"+
+                                    " Please note that this booking is not confirmed in our system until approved by REDIMED."
                             }
 
                         },
