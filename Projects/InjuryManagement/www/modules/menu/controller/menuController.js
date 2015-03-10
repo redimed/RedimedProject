@@ -137,7 +137,7 @@ angular.module("starter.menu.controller",[])
         //Android.
         function handleAndroid(notification) {
             if (notification.event == "message") {
-                mediaSource = new Media("http://testapp.redimed.com.au:3000/api/im/pushSound");
+                mediaSource = new Media("https://testapp.redimed.com.au:3000/api/im/pushSound");
                 mediaSource.play();
 
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
@@ -229,13 +229,29 @@ angular.module("starter.menu.controller",[])
 
         getListUserOnline();
 
+        $scope.infoState = function() {
+            $state.go('app.profile');
+        }
+
         $scope.makeCall = function(id) {
-            window.open('http://'+HOST_CONFIG.host+':'+HOST_CONFIG.port+'/#/renderCall?from='+userInfo.id+'&to='+id+'&isCaller=true&fromMobile=true', '_system', 'toolbar=no');
-            //$state.go('app.phoneCall', { callUser: id, isCaller: true}, {reload: true});
+
+            signaling.emit("generateSession", userInfo.id);
+
+            signaling.on("generateSessionSuccess",function(opentokRoom){
+
+                var apikey = opentokRoom.apiKey;
+                var sessionid = opentokRoom.sessionId;
+                var token = opentokRoom.token;
+
+                $state.go('app.phoneCall', { callUser: id, apiKey: apikey, sessionID: sessionid, tokenID: token, isCaller: true }, {reload: true});
+
+            });
+
         }
 
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
             AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+            console.log(JSON.stringify(message));
             switch (message.type) {
                 case 'call':
                     media = new Media(src, null, null, loop);
@@ -251,7 +267,8 @@ angular.module("starter.menu.controller",[])
                                 type: 'button button-balanced',
                                 onTap: function(e) {
                                     media.pause();
-                                    window.open('http://'+HOST_CONFIG.host+':'+HOST_CONFIG.port+'/#/renderCall?from='+fromId+'&to='+userInfo.id+'&isCaller=false&fromMobile=true', '_system', 'toolbar=no');
+                                    $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
+                                        tokenID: message.token, isCaller: false }, {reload: true});
                                     $scope.popupCall = null;
                                 }
                             },
@@ -274,15 +291,4 @@ angular.module("starter.menu.controller",[])
                     break;
             }
         });
-
-        //$scope.$on('$stateChangeSuccess', function(event, state) {
-        //    if(state.name == 'app.injury.info') {
-        //        deRegister = $ionicPlatform.registerBackButtonAction(
-        //            function () {
-        //                alert("Show on the home page")
-        //            }, 100
-        //        );
-        //    }
-        //});
-        //$scope.$on('$destroy', deRegister);
     })

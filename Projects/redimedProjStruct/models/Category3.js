@@ -1,18 +1,17 @@
 /**
- * Created by thanh on 10/10/2014.
- */
-
-/**
  * begin module category 3
- * @param sequelize
- * @param DataTypes
- * @returns {*}
  */
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
     var Category3 = sequelize.define("Category3", {
-        "cat_id": {type: DataTypes.INTEGER(11), primaryKey: true},
+        "cat_id": {
+            type: DataTypes.INTEGER(11),
+            primaryKey: true
+        },
         "cal_id": DataTypes.INTEGER(11),
         "patient_id": DataTypes.INTEGER(11),
+        "has_declaration": DataTypes.INTEGER(11),
+        "has_following": DataTypes.INTEGER(11),
+        "audiometric": DataTypes.INTEGER(11),
         "q1_4": DataTypes.INTEGER(11),
         "q1_4_c": DataTypes.STRING(200),
         "q1_5_1": DataTypes.INTEGER(11),

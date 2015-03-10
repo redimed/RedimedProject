@@ -1,5 +1,5 @@
 angular.module('starter.injury', [
-    'starter.injury.add.controller',
+    'starter.injury.controller',
     'starter.injury.services',
 ])
 
@@ -11,7 +11,7 @@ angular.module('starter.injury', [
                     'menuContent' :
                     {
                         templateUrl: "modules/submitinjury/views/structure.html",
-                        controller: "InjuryAddController"
+                        controller: "InjuryController"
                     }
                 }
             })

@@ -5,7 +5,7 @@ angular.module('starter.phoneCall',[
     .config(function ($stateProvider) {
         $stateProvider
             .state('app.phoneCall',{
-                url: "/phoneCall/:callUser?isCaller",
+                url: "/phoneCall/:callUser/:apiKey/:sessionID/:tokenID:?isCaller",
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/phoneCall/views/main.html",

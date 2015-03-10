@@ -942,6 +942,9 @@ table.timetable-table td:last-child {
 }
 /*css custom by thanh*/
 
+.custom-timesheet {
+    font-size: 12px;
+}
 .glyphicon-chevron-up:before {
     content: "\e113"
 }
@@ -973,6 +976,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    font-size: 12px;
 }
 .table-dynamic .table-bordered thead th {
     position: relative;
@@ -980,7 +984,18 @@ table.timetable-table td:last-child {
 }
 .table-dynamic .table-bordered thead th>.th {
     position: relative;
-    padding: 8px 20px 8px 8px;
+    padding: 4px 4px 4px 4px;
+    height: 25px;
+    font-size: 12px;
+}
+.table-dynamic .table-bordered tbody tr {
+    position: relative;
+    padding: 4px 4px 4px 4px;
+    height: 10px;
+}
+.table-dynamic .table-bordered tbody tr td input>.checkbox {
+    height: 15px;
+    width: 15px;
 }
 .table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
     position: absolute;
@@ -994,11 +1009,11 @@ table.timetable-table td:last-child {
     color: #31c0be;
 }
 .table-dynamic .table-bordered thead th .glyphicon-chevron-up {
-    top: 4px;
+    top: 0px;
     right: 5px;
 }
 .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
-    top: 18px;
+    top: 11px;
     right: 6px;
 }
 .table-dynamic .table-footer {
@@ -1014,9 +1029,7 @@ table.timetable-table td:last-child {
 .table-dynamic .pagination-container ul li:hover {
     cursor: pointer;
 }
-.table-dynamic .table-bordered tr:hover {
-    background: #EEEEEE;
-}
+
 .table-dynamic .table-bordered tr:active {
     background: #F5F5F5;
 }
@@ -1034,6 +1047,20 @@ table.timetable-table td:last-child {
     font-size: 12px;
     line-height: 16px;
     padding: 8px 10px;
+}
+.table-dynamic .table-bordered>thead>tr>th, .table-dynamic .table-bordered>tbody>tr>th, .table-dynamic .table-bordered>tfoot>tr>th, .table-dynamic .table-bordered>thead>tr>td, .table-dynamic .table-bordered>tbody>tr>td, .table-dynamic .table-bordered>tfoot>tr>td {
+    padding: 2px 5px 2px 5px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.odd {
+    background-color: #fafafa;
+}
+.table-dynamic .table-bordered>thead>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox], .table-dynamic .table-bordered>thead>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>td>input[type=checkbox] {
+    margin: 4px 1px 1px 10px;
+    margin-top: 1px \9;
+    line-height: normal;
 }
 /*end tooltipster*/
 /*end css custom by thanh*/

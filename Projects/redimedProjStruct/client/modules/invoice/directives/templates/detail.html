@@ -39,10 +39,21 @@
 	<!--Insurer_id-->
 
 	<!--SERVICE_ID-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
+	<!-- <div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
 			<label>Service</label>
 			<input type="text" disabled placeholder="Service" ng-model="InvoiceMap.service.SERVICE_NAME" class="form-control" float-label>
+		</span>	
+	</div> -->
+	<!--SERVICE_ID-->
+	<!--SERVICE_ID-->
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<span class="field">
+			<label>Service</label>
+			<select class="form-control" name="SERVICE_ID" id="SERVICE_ID"
+				ng-model="InvoiceMap.SERVICE_ID"
+				ng-options="item.SERVICE_ID as item.SERVICE_NAME for item in opt_services" float-label>
+			</select>
 		</span>	
 	</div>
 	<!--SERVICE_ID-->

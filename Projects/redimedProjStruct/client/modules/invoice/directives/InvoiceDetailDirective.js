@@ -55,6 +55,34 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			}
 
 			/*
+			*	SEARCH DOCTOR
+			*/
+
+			// $scope.doctorSearch = {
+			// 	is_show: false,
+			// 	open: function() {
+			// 		this.is_show = true;
+			// 	},
+			// 	close: function() {
+			// 		this.is_show = false;
+			// 	},
+			// 	click: function(item) {
+			// 		$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
+			// 		$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
+
+			// 		$scope.InvoiceMap.doctor = {
+			// 			NAME: item.NAME
+			// 		}
+			// 		$scope.doctorSearch.close();
+			// 		// LOAD SERVICE
+
+			// 		ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
+			// 			$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
+			// 		});
+			// 	}
+			// }
+
+			/*
 			*	SEARCH ITEM
 			*/
 			$scope.itemSearchPanel = {}
@@ -80,8 +108,8 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					item.invItem = {ITEM_CODE : item.ITEM_CODE, ITEM_NAME: item.ITEM_NAME };
 
 					$scope.InvoiceMap.lines.push(item);
-
 					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){
+
 	                    if(response.list.length > 0) {
 	                        item.PRICE = response.list[0].SCHEDULE_FEE
 	                        item.has_price = true;
@@ -125,7 +153,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						angular.extend(scope.InvoiceMap, response.data);
 						ConfigService.autoConvertData(scope.InvoiceMap);
 
-
+						console.log("this is InvoiceMap", scope.InvoiceMap);
 						// INIT FIELD 
 						scope.InvoiceMap.patient.full_name = scope.InvoiceMap.patient.Title + '. ' + scope.InvoiceMap.patient.First_name + ' ' + scope.InvoiceMap.patient.Sur_name;
 						scope.InvoiceMap.lines = scope.InvoiceMap.lines.filter(function(item){
@@ -150,6 +178,10 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				 		}
 
 				 		scope.patientClaim.options.search.Patient_id = scope.InvoiceMap.Patient_id;
+
+				 		ConfigService.system_service_by_clinical(scope.InvoiceMap.doctor.CLINICAL_DEPT_ID).then(function(response){
+							scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
+						});
 				 		
 				 		$timeout(scope.patientClaimPanel.reload, 1000);
 					})
@@ -160,23 +192,28 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			init();
 
 			scope.clickAction = function(){
-			
+				console.log('this is edit data', scope.InvoiceMap);
 				// var postData = angular.copy(scope.InvoiceMap);
 				// for(var key in postData){
 				// 	if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
 				// }//end for
 				if(scope.params.permission.edit === true){
-					if(scope.InvoiceMap.STATUS==='done'){
-						var r = confirm("You cannot change this invoice information once you change the status to \"Done\". \n Are you sure?");
-						if(r==false) return;
+					if(!scope.InvoiceMap.lines || scope.InvoiceMap.lines.length===0){
+						toastr.error("Missing header / lines","Error!");
 					}
-					InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
-						if(response.status == 'error') 
-							toastr.error('Cannot send to ERP', 'Error')
-						else
-							toastr.success('Edit Successfully !!!', 'Success');
-						init();
-					})
+					else{
+						if(scope.InvoiceMap.STATUS==='done'){
+							var r = confirm("You cannot change this invoice information once you change the status to \"Done\". \n Are you sure?");
+							if(r==false) return;
+						}
+						InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
+							if(response.status == 'error') 
+								toastr.error('Cannot send to ERP', 'Error')
+							else
+								toastr.success('Edit Successfully !!!', 'Success');
+							init();
+						})
+					}
 				}else{
 					InvoiceService.add(postData).then(function(data){
 						if(data.status == 'error') toastr.error('Cannot Insert', 'Error')

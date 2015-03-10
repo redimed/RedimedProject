@@ -4,16 +4,11 @@
         <!--BEGIN BUTTON -->
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <button type="submit"
-                        ng-disabled="!infoChanged()"
-                        class="btn green pull-right">{{isNew?"Add new":"Update"}}
+                <button type="submit" ng-disabled="!infoChanged()" class="btn green pull-right">{{isNew?"Add new":"Update"}}
                 </button>
                 <!--BEGIN PRINT PDF-->
 
-                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/CAT3/{{info.cat_id}}/{{info.cal_id}}/{{info.patient_id}}"
-                   target="_blank"
-                   ng-disabled="isNew"
-                   class="btn btn-primary blue pull-right">Print PDF
+                <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/CAT3/{{info.cat_id}}/{{info.cal_id}}/{{info.patient_id}}" target="_blank" ng-disabled="isNew" class="btn btn-primary blue pull-right">Print PDF
                 </a>
                 <!--END PRINT PDF-->
                 <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
@@ -27,12 +22,9 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <p style="font-size: x-large;text-align: center;font-weight: bolder">CATEGORY 3 (Around the Track
-                    Personnel
-                    Operating in an Uncontrolled Environment)</p>
+                <p style="font-size: x-large;text-align: center;font-weight: bolder">Rail Cate 3 (Around the Track Personnel Operating in an Uncontrolled Environment)</p>
 
-                <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">Authorised health
-                    professional health assessment check list</p>
+                <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">Authorised health professional health assessment check list</p>
             </div>
         </div>
     </div>
@@ -41,12 +33,10 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox"/>
+                <input class="form-control" type="checkbox" ng-model="info.has_declaration" ng-true-value="1" ng-false-value="0" ng-checked="info.has_declaration===1" />
             </div>
             <div class="col-md-10 col-sm-10">
-                <label class="control-label bold" style="margin-top: 10px;">Has the declaration sections on
-                    pages of
-                    the Health Assessment Form been signed by the candidate.</label>
+                <label class="control-label bold" style="margin-top: 10px;">Has the declaration sections on pages of the Health Assessment Form been signed by the candidate.</label>
             </div>
         </div>
     </div>
@@ -56,11 +46,11 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox"/>
+                <input class="form-control" type="checkbox" ng-model="info.has_following" ng-true-value="1" ng-false-value="0" ng-checked="info.has_following===1" />
             </div>
             <div class="col-md-9 col-sm-9 bold">
-                <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been
-                    ordered.</label>
+                <label class="control-label bold" style="margin-top: 10px;">Have the following pathology tests been ordered.
+                </label>
                 <ul>
                     <li>Urine drug screen</li>
                     <li>Alcohol Breath Test</li>
@@ -75,12 +65,9 @@
         <div class="col-md-12 col-sm-12">
             <div class="col-md-1 col-sm-1"></div>
             <div class="col-md-1 col-sm-1">
-                <input class="form-control" type="checkbox"/>
+                <input class="form-control" type="checkbox" ng-model="info.audiometric" ng-true-value="1" ng-false-value="0" ng-checked="info.audiometric===1" />
             </div>
-            <label class="control-label col-md-9 col-sm-9 bold" style="margin-top: 10px;">Audiometric Examination
-                Conducted.
-                (Unless
-                already organised by the employer)</label>
+            <label class="control-label col-md-9 col-sm-9 bold" style="margin-top: 10px;">Audiometric Examination Conducted. (Unless already organised by the employer)</label>
         </div>
     </div>
     </br>
@@ -88,12 +75,10 @@
     <div class="caption">
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">health assessment
-                    form</p>
+                <p class="uppercase" style="font-size: x-large;text-align: center;font-weight: bolder">health assessment form
+                </p>
 
-                <p style="font-size: x-large;text-align: center;font-weight: bolder">CATEGORY 3 (Around the Track
-                    Personnel
-                    Operating in an Uncontrolled Environment)</p>
+                <p style="font-size: x-large;text-align: center;font-weight: bolder">Rail Cate 3 (Around the Track Personnel Operating in an Uncontrolled Environment)</p>
             </div>
         </div>
     </div>
@@ -115,8 +100,8 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12" style="background-color: lightgrey; vertical-align: middle;">
-                                <label class="control-label bold">1.1 Employee/Applicant
-                                    Details</label>
+                                <label class="control-label bold">1.1 Employee/Applicant Details
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -128,13 +113,15 @@
                                 <label class="control-label">Surname:&nbsp;
                                     <span class="text-info">
                                     {{(info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name}}
-                                </span></label>
+                                </span>
+                                </label>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label class="control-label">First name:&nbsp;
                                     <span class="text-info">
                                     {{(info.patient.First_name==null||info.patient.First_name=='')?'':info.patient.First_name}}
-                                </span></label>
+                                </span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -186,8 +173,7 @@
                     <!--BEGIN 1.2 EMPLOYER DETAILS-->
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12"
-                                 style="background-color: lightgrey; vertical-align: middle;">
+                            <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
                                 <label class="control-label bold">1.2 Employer Details</label>
                             </div>
                         </div>
@@ -211,8 +197,7 @@
                                 <label class="control-label">Date of Request:</label>
                             </div>
                             <div class="col-md-4 col-sm-4">
-                                <label class="control-label">Phone:&nbsp;<span
-                                        class="text-info">
+                                <label class="control-label">Phone:&nbsp;<span class="text-info">
                                     {{(info.company.Phone==null||info.company.Phone=='')?'':info.company.Phone}}
                                 </span>
                                 </label>
@@ -236,10 +221,8 @@
                     <!--BEGIN 1.3 HEALTH ASSESMENT APPOITMENT DEATAILS-->
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12"
-                                 style="background-color: lightgrey; vertical-align: middle;">
-                                <label class="control-label bold">1.3 Health Assessment
-                                    Appointment Details</label>
+                            <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
+                                <label class="control-label bold">1.3 Health Assessment Appointment Details</label>
                             </div>
                         </div>
                     </div>
@@ -270,8 +253,7 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-6">
-                                <label class="control-label">Phone:&nbsp;<span
-                                        class="text-info">
+                                <label class="control-label">Phone:&nbsp;<span class="text-info">
                                     {{(info.doctor.Phone==null||info.doctor.Phone=='')?'':info.doctor.Phone}}
                                 </span>
                                 </label>
@@ -316,10 +298,8 @@
                     <!--BEGIN 1.4 DESCRIPTION-->
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12"
-                                 style="background-color: lightgrey; vertical-align: middle;">
-                                <label class="control-label bold">1.4 Description of Duties (or
-                                    see attached Job Description or Task Risk Assessment)</label>
+                            <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
+                                <label class="control-label bold">1.4 Description of Duties (or see attached Job Description or Task Risk Assessment)</label>
                             </div>
                         </div>
                     </div>
@@ -328,14 +308,11 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-1 col-sm-1">
-                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0"
-                                       ng-model="info.q1_4"
-                                       ng-checked="info.q1_4"/>
+                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.q1_4" ng-checked="info.q1_4" />
                             </div>
                             <div class="col-md-11 col-sm-11">
-                                <label class="control-label" style="margin-top: 10px;">Rail Safety Worker Risk
-                                    Assessment
-                                    Attached</label>
+                                <label class="control-label" style="margin-top: 10px;">Rail Safety Worker Risk Assessment Attached
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -346,8 +323,7 @@
                             </div>
                             <div ng-class="{'has-error':category3Form.q1_4_c.$error.maxlength}">
                                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
-                                    <textarea class="form-control" name="q1_4_c"
-                                              ng-model="info.q1_4_c" ng-maxlength="200"></textarea>
+                                    <textarea class="form-control" name="q1_4_c" ng-model="info.q1_4_c" ng-maxlength="200"></textarea>
 
                                     <div class="help-block" ng-show="category3Form.q1_4_c.$error.maxlength">
                                         <label class="control-label">Too long!</label>
@@ -362,10 +338,8 @@
                     <!--BEGIN 1.5 TYPE OF ASSESMENT REQUIRED-->
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <div class="col-md-12 col-sm-12"
-                                 style="background-color: lightgrey; vertical-align: middle;">
-                                <label class="control-label bold">1.5 Type of Assessment
-                                    Required </label>
+                            <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
+                                <label class="control-label bold">1.5 Type of Assessment Required </label>
                             </div>
                         </div>
                     </div>
@@ -374,44 +348,34 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-1 col-sm-1">
-                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0"
-                                       ng-model="info.q1_5_1"
-                                       ng-checked="info.q1_5_1"/>
+                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.q1_5_1" ng-checked="info.q1_5_1" />
                             </div>
-                            <label class="col-md-11 col-sm-11" style="margin-top: 10px">Pre-employment/Change of
-                                Category
-                                Health Assessment</label>
+                            <label class="col-md-11 col-sm-11" style="margin-top: 10px">Pre-employment/Change of Category Health Assessment</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-1 col-sm-1">
-                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0"
-                                       ng-model="info.q1_5_2"
-                                       ng-checked="info.q1_5_2"/>
+                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.q1_5_2" ng-checked="info.q1_5_2" />
                             </div>
-                            <label class="col-md-11 col-sm-11" style="margin-top: 10px">Periodic Health
-                                Assessment</label>
+                            <label class="col-md-11 col-sm-11" style="margin-top: 10px">Periodic Health Assessment
+                            </label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-1 col-sm-1">
-                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0"
-                                       ng-model="info.q1_5_3"
-                                       ng-checked="info.q1_5_3"/>
+                                <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.q1_5_3" ng-checked="info.q1_5_3" />
                             </div>
-                            <label class="col-md-11 col-sm-11" style="margin-top: 10px">Triggered Health Assessment
-                                (specify
-                                reason)</label>
+                            <label class="col-md-11 col-sm-11" style="margin-top: 10px">Triggered Health Assessment (specify reason)
+                            </label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div ng-class="{'has-error':category3Form.q1_5_3_c.$error.maxlength}">
                                 <div class="col-md-8 col-sm-8" style="margin-left: 15px;">
-                                    <textarea class="form-control" name="q1_5_3_c"
-                                              ng-model="info.q1_5_3_c" ng-maxlength="200"></textarea>
+                                    <textarea class="form-control" name="q1_5_3_c" ng-model="info.q1_5_3_c" ng-maxlength="200"></textarea>
 
                                     <div class="help-block" ng-show="category3Form.q1_5_3_c.$error.maxlength">
                                         <label class="control-label">Too long!</label>
@@ -445,8 +409,8 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-12 col-sm-12" style="background-color: lightgrey; vertical-align: middle;">
-                            <label class="control-label bold">2.1 Important information to the
-                                employee/applicant</label>
+                            <label class="control-label bold">2.1 Important information to the employee/applicant
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -457,105 +421,64 @@
                                 <div class="col-md-6 col-sm-6">
                                     <ul>
                                         <li>
-                                            You are required to attend a health assessment as a condition of your
-                                            employment, to assess your fitness for undertaking rail safety work.
+                                            You are required to attend a health assessment as a condition of your employment, to assess your fitness for undertaking rail safety work.
                                         </li>
                                         <li>
-                                            The health assessment must be completed by the day show in section 1.3 of
-                                            this
-                                            form to ensure that you able to carry out your normal duties.
+                                            The health assessment must be completed by the day show in section 1.3 of this form to ensure that you able to carry out your normal duties.
                                         </li>
                                         <li>
-                                            Take glasses, hearing aids or any other aids required for safety critical
-                                            work
-                                            to the appointment.
+                                            Take glasses, hearing aids or any other aids required for safety critical work to the appointment.
                                         </li>
                                         <li>
-                                            Take all medication that you are currently taking to the appointment or a
-                                            list
-                                            of such medication.
+                                            Take all medication that you are currently taking to the appointment or a list of such medication.
                                         </li>
                                         <li>
                                             Take photo identification with you to the appointment.
                                             </br>
-                                            As you are a <span class="bold">Around the Track Personnel (ATTP) in an Uncontrolled Environment (Category 3)</span>
-                                            you will required to have a hearing and vision test and breathing test
-                                            (spirometry)
+                                            As you are a <span class="bold">Around the Track Personnel (ATTP) in an Uncontrolled Environment (Category 3)</span> you will required to have a hearing and vision test and breathing test (spirometry)
                                             </br>
-                                            You should not be exposed to loud noise 16 hours prior to the audiometric
-                                            test.
+                                            You should not be exposed to loud noise 16 hours prior to the audiometric test.
                                             </br>
-                                            A urine sample will also be required for drug screening purposes. Avoid
-                                            excessive intake of water prior to providing urine sample.
+                                            A urine sample will also be required for drug screening purposes. Avoid excessive intake of water prior to providing urine sample.
                                         </li>
 
                                     </ul>
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                                        What happens if the examining health professional ind a problem with your
-                                        health?
+                                        What happens if the examining health professional ind a problem with your health?
                                     </p>
 
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                        If the examining health professional finds or suspects something is wrong with
-                                        your
-                                        health that you this not know about, they will ask your permission to inform
-                                        your
-                                        own health professional. The examining health professional will not treat any
-                                        medical condition but will give you a letter to take to your own health
-                                        professional.
+                                        If the examining health professional finds or suspects something is wrong with your health that you this not know about, they will ask your permission to inform your own health professional. The examining health professional will not treat any medical condition but will give you a letter to take to your own health professional.
                                         </br>
-                                        If the examining health professional finds that you do not meet all relevant
-                                        medical
-                                        criteria, your supervisor will discuss with you the appropriate action to be
-                                        taken.
+                                        If the examining health professional finds that you do not meet all relevant medical criteria, your supervisor will discuss with you the appropriate action to be taken.
                                     </p>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <p style="margin-left: 13px;margin-right: 13px;font-weight: bold">
-                                        DISCLOSURE O HEALTH INFORMATION - PLEASE READ CAREFULLY AND SIGN TO INDICATE
-                                        YOUR
-                                        UNDERS TANDING OF HOW YOUR HEALTH INORMATION IS REPORTED, STORED AND ACCESSED
+                                        DISCLOSURE O HEALTH INFORMATION - PLEASE READ CAREFULLY AND SIGN TO INDICATE YOUR UNDERS TANDING OF HOW YOUR HEALTH INORMATION IS REPORTED, STORED AND ACCESSED
                                     </p>
 
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                        The details of your health assessment will remain confidential and will only be
-                                        reported to your employer in terms of your fitness for duty.
+                                        The details of your health assessment will remain confidential and will only be reported to your employer in terms of your fitness for duty.
                                         </br>
-                                        The examining health professional will retain all detailed health assessment
-                                        papers
-                                        including your responses to the questionnaire, test results and the completed
-                                        record
-                                        of clinical findings.
+                                        The examining health professional will retain all detailed health assessment papers including your responses to the questionnaire, test results and the completed record of clinical findings.
                                         </br>
-                                        The Examining Health Professional will review the clinical findings and test
-                                        result
-                                        and will provide a recommendation to your employer only in terms of your fitness
-                                        for
-                                        duty.
+                                        The Examining Health Professional will review the clinical findings and test result and will provide a recommendation to your employer only in terms of your fitness for duty.
                                         </br>
-                                        The Examining Health Professional will maintain confidentiality of the records
-                                        and
-                                        will ensure they are not made available to, or discussed with any other person
-                                        within your company other than that person authorised to receive such results.
+                                        The Examining Health Professional will maintain confidentiality of the records and will ensure they are not made available to, or discussed with any other person within your company other than that person authorised to receive such results.
                                         </br>
-                                        Other than the above, no information will be disclosed to any other person or
-                                        organisation without your written permission except where:
+                                        Other than the above, no information will be disclosed to any other person or organisation without your written permission except where:
                                         </br>
                                     </p>
                                     <ul>
-                                        <li>A notifiable disease is diagnosed wich must, by law, be reported to the
-                                            state
-                                            authorities.
+                                        <li>A notifiable disease is diagnosed wich must, by law, be reported to the state authorities.
                                         </li>
                                         <li>A report is subpoenaed by a court of law or</li>
-                                        <li>The rail safety regulator (or another person) is required to conduct an
-                                            inquiry
-                                            into a railway accident or incident.
+                                        <li>The rail safety regulator (or another person) is required to conduct an inquiry into a railway accident or incident.
                                         </li>
                                     </ul>
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                        You have the right to access your health records, including those held by
-                                        the examining health professional and reports held by your employer.
+                                        You have the right to access your health records, including those held by the examining health professional and reports held by your employer.
                                     </p>
 
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold; text-align: center">
@@ -568,25 +491,19 @@
                                         ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
                                         ((info.patient.Middle_name==null||info.patient.Middle_name=='')?'':info.patient.Middle_name) +
                                         ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
-                                        ((info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name)}}</span>
-                                        &nbsp;
+                                        ((info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name)}}</span> &nbsp;
                                     </p>
 
                                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                                        Certify that I have read and understand the above statement concerning the
-                                        health
-                                        information provide here in.
+                                        Certify that I have read and understand the above statement concerning the health information provide here in.
                                     </p>
 
                                     <div class="row">
                                         <div class="col-md-2 col-sm-2">
-                                            <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature"
-                                               class="btn green">Signature</a>
+                                            <a href="javascript:;" ng-click="showSignature()" ng-show="!isSignature" class="btn green">Signature</a>
                                         </div>
-                                        <div class="col-md-10 col-sm-10"
-                                             ng-show="info.PATIENT_SIGNATURE!=null && info.PATIENT_SIGNATURE!='' && !isSignature">
-                                            <img src="" ng-src="{{info.PATIENT_SIGNATURE}}" alt=""
-                                                 style="width: 200px;height: 70px;"/>
+                                        <div class="col-md-10 col-sm-10" ng-show="info.PATIENT_SIGNATURE!=null && info.PATIENT_SIGNATURE!='' && !isSignature">
+                                            <img src="" ng-src="{{info.PATIENT_SIGNATURE}}" alt="" style="width: 200px;height: 70px;" />
                                         </div>
                                     </div>
                                 </div>
@@ -594,9 +511,7 @@
 
                             <div class="row" style="text-align: center;" ng-show="isSignature">
                                 <div class="col-md-12 col-sm-12">
-                                    <canvas width="500" height="400" id="canvas"
-                                            signature ng-model="info.PATIENT_SIGNATURE"
-                                            style="background-color: #8eece8">
+                                    <canvas width="500" height="400" id="canvas" signature ng-model="info.PATIENT_SIGNATURE" style="background-color: #8eece8">
                                     </canvas>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
@@ -621,11 +536,7 @@
                                 <label class="control-label">Date:</label>
                             </div>
                             <div class="col-md-3 col-sm-4">
-                                <input type="text" class="form-control" name="PATIENT_DATE"
-                                       datepicker-popup="dd/MM/yyyy" ng-model="info.PATIENT_DATE"
-                                       is-open="openDOB" ng-click="openDOB = true"
-                                       datepicker-options="dateOptions"
-                                       close-text="Close"/>
+                                <input type="text" class="form-control" name="PATIENT_DATE" datepicker-popup="dd/MM/yyyy" ng-model="info.PATIENT_DATE" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" />
                             </div>
                         </div>
 
@@ -653,69 +564,42 @@
                 <!--BEGIN INSTRUCTIONS TO THE EXAMINING HEALTH PROFESSIONAL-->
                 <div class="portlet-body form">
                     <div style="background-color: lightgrey; height: 35px">
-                        <label class="control-label bold" style="margin-left: 10px;">3.1 Instructions to the Examining
-                            Health
-                            Professional</label>
+                        <label class="control-label bold" style="margin-left: 10px;">3.1 Instructions to the Examining Health Professional
+                        </label>
                     </div>
                     </br>
                     <ul>
                         <li>
-                            You are requested to conduct a category 3 health assessment to assess the
-                            employee/applicants fitness for rail
-                            safety duties in accordance with the National Standard for Health Assessment of Rail Safety
-                            Worker, Volume 2:
-                            Assessment
-                            Procedures and Medical Criteria.
+                            You are requested to conduct a category 3 health assessment to assess the employee/applicants fitness for rail safety duties in accordance with the National Standard for Health Assessment of Rail Safety Worker, Volume 2: Assessment Procedures and Medical Criteria.
                         </li>
                         <li>
-                            You must sight photo identification of the employee/applicant (eg Drivers Licence, Rail
-                            Safety Worker's Card)
+                            You must sight photo identification of the employee/applicant (eg Drivers Licence, Rail Safety Worker's Card)
                         </li>
                         <li>Please perform the assessment and record the finding in section 4.2 of this form.</li>
                         <li>
-                            Should the employee/applicant be assessed as Temporarily/Permanently Unfit for Duty, please
-                            contact the employer
-                            or
-                            person who arranged this health assessment immediately so that appropriate actions can be
-                            taken.
+                            Should the employee/applicant be assessed as Temporarily/Permanently Unfit for Duty, please contact the employer or person who arranged this health assessment immediately so that appropriate actions can be taken.
                         </li>
                         <li>
-                            Category 3 Around the Track Personnel in an Uncontrolled Environment/applicants are required
-                            to have audiometric
-                            and
-                            vision testing as part of this health assessment. The employee/applicant has been advised of
-                            these requirements
-                            in section 2
-                            of this form.
+                            Category 3 Around the Track Personnel in an Uncontrolled Environment/applicants are required to have audiometric and vision testing as part of this health assessment. The employee/applicant has been advised of these requirements in section 2 of this form.
                             </br>
-                            These test will be arranged separately and reports forwarded to you if facilities are not
-                            available at your
-                            practice.
+                            These test will be arranged separately and reports forwarded to you if facilities are not available at your practice.
                         </li>
                         <li>
-                            You may need to contact the employee/applicants nominated health professional to discuss
-                            conditions that may
-                            effect
-                            their fitness for rail safety work. Such contact should be made with the workers signed
-                            consent.
+                            You may need to contact the employee/applicants nominated health professional to discuss conditions that may effect their fitness for rail safety work. Such contact should be made with the workers signed consent.
                         </li>
                     </ul>
                     <p style="margin-left: 13px;margin-right: 13px;margin-top: 10px;">
-                        For more detailed information about the conduct of health assessments for rail safety employees
-                        see Volume 2
-                        of the National Standard for Health Assessment of Rail Safety Workers.
+                        For more detailed information about the conduct of health assessments for rail safety employees see Volume 2 of the National Standard for Health Assessment of Rail Safety Workers.
                     </p>
                     <!--END 3.1 INSTRUCTIONS TO THE EXAMINING HEALTH PROFESSIONAL-->
                     <!--BEGIN 3.2 CATEGORY 3 ATTP HEALTH ASSESSMENT-->
                     <div style="background-color: lightgrey; height: auto;">
-                        <label class="control-label bold" style="margin-left: 10px; text-align: left;">3.2 Category 3
-                            ATTP Health Assessment
-                            Examination - Examining Health Professional To Complete</label>
+                        <label class="control-label bold" style="margin-left: 10px; text-align: left;">3.2 Category 3 ATTP Health Assessment Examination - Examining Health Professional To Complete</label>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <label class="control-label bold text-info" style="margin-left: 10px;">1. Cardiovascular
-                                System:</label>
+                            <label class="control-label bold text-info" style="margin-left: 10px;">1. Cardiovascular System:
+                            </label>
                         </div>
                     </div>
                     <div class="row">
@@ -733,8 +617,7 @@
                             <div ng-class="{'has-error':category3Form.s3_q1_1_1.$error.pattern}">
 
                                 <div class="col-md-2 col-sm-2">
-                                    <input type="text" class="form-control" name="s3_q1_1_1" ng-model="info.s3_q1_1_1"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                    <input type="text" class="form-control" name="s3_q1_1_1" ng-model="info.s3_q1_1_1" ng-pattern="/^(0|[1-9][0-9]*)$/" />
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-2" style="margin-top: 5px;">
@@ -745,9 +628,7 @@
                             </div>
                             <div ng-class="{'has-error':category3Form.s3_q1_1_2.$error.pattern}">
                                 <div class="col-md-2 col-sm-2">
-                                    <input type="text" class="form-control" name="s3_q1_1_2" ng-model="info.s3_q1_1_2"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/"
-                                            />
+                                    <input type="text" class="form-control" name="s3_q1_1_2" ng-model="info.s3_q1_1_2" ng-pattern="/^(0|[1-9][0-9]*)$/" />
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-2" style="margin-top: 5px;">
@@ -783,17 +664,16 @@
                         </div>
                         <div ng-class="{'has-error':category3Form.s3_q1_2_1.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q1_2_1" ng-model="info.s3_q1_2_1"
-                                       ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                <input type="text" class="form-control" name="s3_q1_2_1" ng-model="info.s3_q1_2_1" ng-pattern="/^(0|[1-9][0-9]*)$/" />
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name="s3_q1_2_2" ng-model="info.s3_q1_2_2" value="1"/> Regular
+                                    <input type="radio" name="s3_q1_2_2" ng-model="info.s3_q1_2_2" value="1" /> Regular
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name="s3_q1_2_2" ng-model="info.s3_q1_2_2" value="0"/> Irregular
+                                    <input type="radio" name="s3_q1_2_2" ng-model="info.s3_q1_2_2" value="0" /> Irregular
                                 </label>
                             </div>
                         </div>
@@ -817,10 +697,10 @@
                         <div class="col-md-4 col-sm-7">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name="s3_q1_3" ng-model="info.s3_q1_3" value="1"/> Normal
+                                    <input type="radio" name="s3_q1_3" ng-model="info.s3_q1_3" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q1_3' ng-model="info.s3_q1_3" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q1_3' ng-model="info.s3_q1_3" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -833,10 +713,10 @@
                         <div class="col-md-4 col-sm-7">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q1_4' ng-model="info.s3_q1_4" value="1"/> Normal
+                                    <input type="radio" name='s3_q1_4' ng-model="info.s3_q1_4" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q1_4' ng-model="info.s3_q1_4" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q1_4' ng-model="info.s3_q1_4" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -886,51 +766,42 @@
                             </div>
                             <div ng-class="{'has-error':category3Form.s3_q2_1_1.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_1" ng-model="info.s3_q2_1_1"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_1" ng-model="info.s3_q2_1_1" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_1_2.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_2" ng-model="info.s3_q2_1_2"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_2" ng-model="info.s3_q2_1_2" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_1_3.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_3" ng-model="info.s3_q2_1_3"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_3" ng-model="info.s3_q2_1_3" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error':  category3Form.s3_q2_1_4.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_4" ng-model="info.s3_q2_1_4"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_4" ng-model="info.s3_q2_1_4" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_1_5.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_5" ng-model="info.s3_q2_1_5"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/"
-                                           style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_5" ng-model="info.s3_q2_1_5" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_1_6.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_6" ng-model="info.s3_q2_1_6"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_6" ng-model="info.s3_q2_1_6" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_1_7.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_7" ng-model="info.s3_q2_1_7"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_7" ng-model="info.s3_q2_1_7" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_1_8.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_1_8" ng-model="info.s3_q2_1_8"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_1_8" ng-model="info.s3_q2_1_8" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <!--begin require 2.hearing-->
@@ -953,8 +824,8 @@
         category3Form.s3_q2_2_6.$error.pattern || category3Form.s3_q2_2_7.$error.pattern ||
         category3Form.s3_q2_2_8.$error.pattern">
                                     <div class="col-md-2 col-sm-3">
-                                        <label class="control-label" style="margin-left: 5px;">Required is
-                                            number!</label>
+                                        <label class="control-label" style="margin-left: 5px;">Required is number!
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -969,51 +840,42 @@
                             </div>
                             <div ng-class="{'has-error':category3Form.s3_q2_2_1.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_1" ng-model="info.s3_q2_2_1"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_1" ng-model="info.s3_q2_2_1" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_2_2.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_2" ng-model="info.s3_q2_2_2"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_2" ng-model="info.s3_q2_2_2" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_2_3.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_3" ng-model="info.s3_q2_2_3"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_3" ng-model="info.s3_q2_2_3" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error':  category3Form.s3_q2_2_4.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_4" ng-model="info.s3_q2_2_4"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_4" ng-model="info.s3_q2_2_4" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_2_5.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_5" ng-model="info.s3_q2_2_5"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/"
-                                           style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_5" ng-model="info.s3_q2_2_5" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_2_6.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_6" ng-model="info.s3_q2_2_6"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_6" ng-model="info.s3_q2_2_6" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_2_7.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_7" ng-model="info.s3_q2_2_7"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_7" ng-model="info.s3_q2_2_7" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q2_2_8.$error.pattern}">
                                 <div class="col-md-1 col-sm-1">
-                                    <input type="text" class="form-control" name="s3_q2_2_8" ng-model="info.s3_q2_2_8"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px"/>
+                                    <input type="text" class="form-control" name="s3_q2_2_8" ng-model="info.s3_q2_2_8" ng-pattern="/^(0|[1-9][0-9]*)$/" style="width: 60px" />
                                 </div>
                             </div>
                         </div>
@@ -1021,18 +883,16 @@
                     </br>
                     <div class="row">
                         <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
-                            <label class="control-label bold" style="margin-left: 10px;text-align: left;">Has the
-                                applicant been quite for
-                                the past 16
-                                hours?</label>
+                            <label class="control-label bold" style="margin-left: 10px;text-align: left;">Has the applicant been quite for the past 16 hours?
+                            </label>
                         </div>
                         <div class="col-md-3 col-sm-3">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q2_3' ng-model="info.s3_q2_3" value="1"/> Yes
+                                    <input type="radio" name='s3_q2_3' ng-model="info.s3_q2_3" value="1" /> Yes
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q2_3' ng-model="info.s3_q2_3" value="0"/> No
+                                    <input type="radio" name='s3_q2_3' ng-model="info.s3_q2_3" value="0" /> No
                                 </label>
                             </div>
                         </div>
@@ -1040,23 +900,23 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <label class="control-label bold text-info" style="margin-left: 10px;">3.
-                                Neurological/Musculoskeletal:</label>
+                            <label class="control-label bold text-info" style="margin-left: 10px;">3. Neurological/Musculoskeletal:
+                            </label>
                         </div>
                     </div>
                     </br>
                     <div class="row">
                         <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
-                            <label class="control-label bold" style="margin-left: 10px;">3.1 Cervical spine
-                                rotation:</label>
+                            <label class="control-label bold" style="margin-left: 10px;">3.1 Cervical spine rotation:
+                            </label>
                         </div>
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_1' ng-model="info.s3_q3_1" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_1' ng-model="info.s3_q3_1" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_1' ng-model="info.s3_q3_1" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_1' ng-model="info.s3_q3_1" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1069,10 +929,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_2' ng-model="info.s3_q3_2" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_2' ng-model="info.s3_q3_2" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_2' ng-model="info.s3_q3_2" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_2' ng-model="info.s3_q3_2" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1090,10 +950,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_3_1' ng-model="info.s3_q3_3_1" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_3_1' ng-model="info.s3_q3_3_1" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_3_1' ng-model="info.s3_q3_3_1" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_3_1' ng-model="info.s3_q3_3_1" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1105,10 +965,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_3_2' ng-model="info.s3_q3_3_2" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_3_2' ng-model="info.s3_q3_3_2" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_3_2' ng-model="info.s3_q3_3_2" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_3_2' ng-model="info.s3_q3_3_2" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1126,10 +986,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_4_1' ng-model="info.s3_q3_4_1" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_4_1' ng-model="info.s3_q3_4_1" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_4_1' ng-model="info.s3_q3_4_1" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_4_1' ng-model="info.s3_q3_4_1" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1141,10 +1001,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_4_2' ng-model="info.s3_q3_4_2" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_4_2' ng-model="info.s3_q3_4_2" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_4_2' ng-model="info.s3_q3_4_2" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_4_2' ng-model="info.s3_q3_4_2" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1157,10 +1017,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_5' ng-model="info.s3_q3_5" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_5' ng-model="info.s3_q3_5" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_5' ng-model="info.s3_q3_5" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_5' ng-model="info.s3_q3_5" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1173,10 +1033,10 @@
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_6' ng-model="info.s3_q3_6" value="1"/> Normal
+                                    <input type="radio" name='s3_q3_6' ng-model="info.s3_q3_6" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q3_6' ng-model="info.s3_q3_6" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q3_6' ng-model="info.s3_q3_6" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1184,16 +1044,16 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
-                            <label class="control-label text-info bold text-info" style="margin-left: 10px;">4.
-                                Chest/Lungs:</label>
+                            <label class="control-label text-info bold text-info" style="margin-left: 10px;">4. Chest/Lungs:
+                            </label>
                         </div>
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q4' ng-model="info.s3_q4" value="1"/> Normal
+                                    <input type="radio" name='s3_q4' ng-model="info.s3_q4" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q4' ng-model="info.s3_q4" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q4' ng-model="info.s3_q4" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1255,9 +1115,7 @@
                                             <span class="input-group-addon">6/</span>
 
                                             <div ng-class="{'has-error': category3Form.s3_q5_1_1_1.$error.pattern}">
-                                                <input type="text" class="form-control" name="s3_q5_1_1_1"
-                                                       ng-model="info.s3_q5_1_1_1"
-                                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                                <input type="text" class="form-control" name="s3_q5_1_1_1" ng-model="info.s3_q5_1_1_1" ng-pattern="/^0|[1-9]\d*$/" />
                                             </div>
                                         </div>
                                     </div>
@@ -1266,9 +1124,7 @@
                                             <span class="input-group-addon">6/</span>
 
                                             <div ng-class="{'has-error': category3Form.s3_q5_1_1_2.$error.pattern}">
-                                                <input type="text" class="form-control" name="s3_q5_1_1_2"
-                                                       ng-model="info.s3_q5_1_1_2"
-                                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                                <input type="text" class="form-control" name="s3_q5_1_1_2" ng-model="info.s3_q5_1_1_2" ng-pattern="/^0|[1-9]\d*$/" />
                                             </div>
                                         </div>
                                     </div>
@@ -1277,9 +1133,7 @@
                                             <span class="input-group-addon">6/</span>
 
                                             <div ng-class="{'has-error': category3Form.s3_q5_1_1_3.$error.pattern}">
-                                                <input type="text" class="form-control" name="s3_q5_1_1_3"
-                                                       ng-model="info.s3_q5_1_1_3"
-                                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                                <input type="text" class="form-control" name="s3_q5_1_1_3" ng-model="info.s3_q5_1_1_3" ng-pattern="/^0|[1-9]\d*$/" />
                                             </div>
                                         </div>
                                     </div>
@@ -1288,9 +1142,7 @@
                                             <span class="input-group-addon">6/</span>
 
                                             <div ng-class="{'has-error': category3Form.s3_q5_1_1_4.$error.pattern}">
-                                                <input type="text" class="form-control" name="s3_q5_1_1_4"
-                                                       ng-model="info.s3_q5_1_1_4"
-                                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                                <input type="text" class="form-control" name="s3_q5_1_1_4" ng-model="info.s3_q5_1_1_4" ng-pattern="/^0|[1-9]\d*$/" />
                                             </div>
                                         </div>
                                     </div>
@@ -1329,16 +1181,16 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                     <div class="col-md-3 col-sm-4">
-                                        <label class="control-label bold" style="margin-top: 5px;">Are contact lenses
-                                            worn?</label>
+                                        <label class="control-label bold" style="margin-top: 5px;">Are contact lenses worn?
+                                        </label>
                                     </div>
                                     <div class="col-md-4 col-sm-4">
                                         <div class="btn-group">
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.q4_2_13_2" value="1"/> Yes
+                                                <input type="radio" ng-model="info.s3_q5_1_2" value="1" /> Yes
                                             </label>
                                             <label class="btn">
-                                                <input type="radio" ng-model="info.q4_2_13_2" value="0"/> No
+                                                <input type="radio" ng-model="info.s3_q5_1_2" value="0" /> No
                                             </label>
                                         </div>
                                     </div>
@@ -1349,16 +1201,15 @@
                     </br>
                     <div class="row">
                         <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
-                            <label class="control-label " style="margin-left: 10px;"><span class="bold">5.2 Visual Fields:</span>
-                                (Confrontation to each eye)</label>
+                            <label class="control-label " style="margin-left: 10px;"><span class="bold">5.2 Visual Fields:</span> (Confrontation to each eye)</label>
                         </div>
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_2' ng-model="info.s3_q5_2" value="1"/> Normal
+                                    <input type="radio" name='s3_q5_2' ng-model="info.s3_q5_2" value="1" /> Normal
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_2' ng-model="info.s3_q5_2" value="0"/> Abnormal
+                                    <input type="radio" name='s3_q5_2' ng-model="info.s3_q5_2" value="0" /> Abnormal
                                 </label>
                             </div>
                         </div>
@@ -1366,16 +1217,15 @@
                     </br>
                     <div class="row">
                         <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
-                            <label class="control-label" style="margin-left: 10px;"><span class="bold">5.3 Colour Vision:</span>
-                                (Ishihara: ≥ 2 errors/12 plates is a fail)</label>
+                            <label class="control-label" style="margin-left: 10px;"><span class="bold">5.3 Colour Vision:</span> (Ishihara: ≥ 2 errors/12 plates is a fail)</label>
                         </div>
                         <div class="col-md-3 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_3' ng-model="info.s3_q5_3" value="1"/> Pass
+                                    <input type="radio" name='s3_q5_3' ng-model="info.s3_q5_3" value="1" /> Pass
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_3' ng-model="info.s3_q5_3" value="0"/> Fail
+                                    <input type="radio" name='s3_q5_3' ng-model="info.s3_q5_3" value="0" /> Fail
                                 </label>
                             </div>
                         </div>
@@ -1388,10 +1238,10 @@
                         <div class="col-md-3 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_4' ng-model="info.s3_q5_4" value="1"/> Pass
+                                    <input type="radio" name='s3_q5_4' ng-model="info.s3_q5_4" value="1" /> Pass
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_4' ng-model="info.s3_q5_4" value="0"/> Fail
+                                    <input type="radio" name='s3_q5_4' ng-model="info.s3_q5_4" value="0" /> Fail
                                 </label>
                             </div>
                         </div>
@@ -1404,10 +1254,10 @@
                         <div class="col-md-3 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_5' ng-model="info.s3_q5_5" value="1"/> Pass
+                                    <input type="radio" name='s3_q5_5' ng-model="info.s3_q5_5" value="1" /> Pass
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_5' ng-model="info.s3_q5_5" value="0"/> Fail
+                                    <input type="radio" name='s3_q5_5' ng-model="info.s3_q5_5" value="0" /> Fail
                                 </label>
                             </div>
                         </div>
@@ -1415,16 +1265,16 @@
                     </br>
                     <div class="row">
                         <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
-                            <label class="control-label bold" style="margin-left: 10px;">5.6 Screen Based
-                                Examination</label>
+                            <label class="control-label bold" style="margin-left: 10px;">5.6 Screen Based Examination
+                            </label>
                         </div>
                         <div class="col-md-3 col-sm-5">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_6' ng-model="info.s3_q5_6" value="1"/> Pass
+                                    <input type="radio" name='s3_q5_6' ng-model="info.s3_q5_6" value="1" /> Pass
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q5_6' ng-model="info.s3_q5_6" value="0"/> Fail
+                                    <input type="radio" name='s3_q5_6' ng-model="info.s3_q5_6" value="0" /> Fail
                                 </label>
                             </div>
                         </div>
@@ -1433,15 +1283,14 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <label class="control-label bold text-info" style="margin-left: 10px;">6. Drug
-                                Screen:</label>
+                            <label class="control-label bold text-info" style="margin-left: 10px;">6. Drug Screen:
+                            </label>
                         </div>
                     </div>
                     <div ng-class="{'has-error': category3Form.s3_q6_c.$error.maxlength}">
                         <div class="row">
                             <div class="col-md-8 col-sm-8" style="margin-left: 10px;">
-                                <textarea class="form-control" name="s3_q6_c" ng-model="info.s3_q6_c"
-                                          ng-maxlength="200"></textarea>
+                                <textarea class="form-control" name="s3_q6_c" ng-model="info.s3_q6_c" ng-maxlength="200"></textarea>
                             </div>
                         </div>
                         <div class="help-block" ng-show="category3Form.s3_q6_c.$error.maxlength">
@@ -1459,8 +1308,7 @@
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_1.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_1" ng-model="info.s3_q6_1"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_1" ng-model="info.s3_q6_1" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1486,17 +1334,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_2_1' ng-model="info.s3_q6_2_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_2_1' ng-model="info.s3_q6_2_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_2_1' ng-model="info.s3_q6_2_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_2_1' ng-model="info.s3_q6_2_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_2_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_2_2" ng-model="info.s3_q6_2_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_2_2" ng-model="info.s3_q6_2_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1">
@@ -1517,13 +1364,13 @@
                     </br>
                     <div class="row">
                         <div class="col-md-3 col-sm-4" style="margin-top: 5px;">
-                            <label class="control-label bold" style="margin-left: 10px;">Barbiturates
-                                (non-AS4308):</label>
+                            <label class="control-label bold" style="margin-left: 10px;">Barbiturates (non-AS4308):
+                            </label>
                         </div>
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_3_1' ng-model="info.s3_q6_3_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_3_1' ng-model="info.s3_q6_3_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
                                     <input type="radio" name='s3_q6_3_1' ng-model="info.s3_q6_3_1" value="0"> POS
@@ -1532,8 +1379,7 @@
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_3_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_3_2" ng-model="info.s3_q6_3_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_3_2" ng-model="info.s3_q6_3_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1559,17 +1405,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_4_1' ng-model="info.s3_q6_4_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_4_1' ng-model="info.s3_q6_4_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_4_1' ng-model="info.s3_q6_4_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_4_1' ng-model="info.s3_q6_4_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_4_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_4_2" ng-model="info.s3_q6_4_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_4_2" ng-model="info.s3_q6_4_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1595,17 +1440,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_5_1' ng-model="info.s3_q6_5_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_5_1' ng-model="info.s3_q6_5_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_5_1' ng-model="info.s3_q6_5_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_5_1' ng-model="info.s3_q6_5_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_5_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_5_2" ng-model="info.s3_q6_5_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_5_2" ng-model="info.s3_q6_5_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1631,17 +1475,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_6_1' ng-model="info.s3_q6_6_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_6_1' ng-model="info.s3_q6_6_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_6_1' ng-model="info.s3_q6_6_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_6_1' ng-model="info.s3_q6_6_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_6_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_6_2" ng-model="info.s3_q6_6_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_6_2" ng-model="info.s3_q6_6_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1667,17 +1510,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_7_1' ng-model="info.s3_q6_7_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_7_1' ng-model="info.s3_q6_7_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_7_1' ng-model="info.s3_q6_7_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_7_1' ng-model="info.s3_q6_7_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_7_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_7_2" ng-model="info.s3_q6_7_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_7_2" ng-model="info.s3_q6_7_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1703,17 +1545,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_8_1' ng-model="info.s3_q6_8_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_8_1' ng-model="info.s3_q6_8_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_8_1' ng-model="info.s3_q6_8_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_8_1' ng-model="info.s3_q6_8_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_8_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_8_2" ng-model="info.s3_q6_8_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_8_2" ng-model="info.s3_q6_8_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1739,17 +1580,16 @@
                         <div class="col-md-3 col-sm-4">
                             <div class="btn-group">
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_9_1' ng-model="info.s3_q6_9_1" value="1"/> NEG
+                                    <input type="radio" name='s3_q6_9_1' ng-model="info.s3_q6_9_1" value="1" /> NEG
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s3_q6_9_1' ng-model="info.s3_q6_9_1" value="0"/> POS
+                                    <input type="radio" name='s3_q6_9_1' ng-model="info.s3_q6_9_1" value="0" /> POS
                                 </label>
                             </div>
                         </div>
                         <div ng-class="{'has-error': category3Form.s3_q6_9_2.$error.pattern}">
                             <div class="col-md-2 col-sm-2">
-                                <input type="text" class="form-control" name="s3_q6_9_2" ng-model="info.s3_q6_9_2"
-                                       ng-pattern="/^0|[1-9]\d*$/"/>
+                                <input type="text" class="form-control" name="s3_q6_9_2" ng-model="info.s3_q6_9_2" ng-pattern="/^0|[1-9]\d*$/" />
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1" style="margin-top: 5px;">
@@ -1781,8 +1621,7 @@
                             </div>
                             <div ng-class="{'has-error': category3Form.s3_q7_1.$error.pattern}">
                                 <div class="col-md-2 col-sm-3">
-                                    <input type="text" class="form-control" name="s3_q7_1" ng-model="info.s3_q7_1"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                    <input type="text" class="form-control" name="s3_q7_1" ng-model="info.s3_q7_1" ng-pattern="/^(0|[1-9][0-9]*)$/" />
 
                                     <div class="help-block" ng-show="category3Form.s3_q7_1.$error.pattern">
                                         <label class="control-label">Required is number!</label>
@@ -1797,8 +1636,7 @@
                             </div>
                             <div class="col-md-2 col-sm-3">
                                 <div ng-class="{'has-error': category3Form.s3_q7_2.$error.pattern}">
-                                    <input type="text" class="form-control" name="s3_q7_2" ng-model="info.s3_q7_2"
-                                           ng-pattern="/^(0|[1-9][0-9]*)$/"/>
+                                    <input type="text" class="form-control" name="s3_q7_2" ng-model="info.s3_q7_2" ng-pattern="/^(0|[1-9][0-9]*)$/" />
 
                                     <div class="help-block" ng-show="category3Form.s3_q7_2.$error.pattern">
                                         <label class="control-label">Required is number!</label>
@@ -1833,16 +1671,13 @@
                 </div>
                 <div class="portlet-body form">
                     <p style="margin-left: 70px;margin-right: 70px;font-size: medium">
-                        <span class="bold"> Note Comments</span> on any relevant findings detected in the examination,
-                        making reference to the requirements of the standard.
+                        <span class="bold"> Note Comments</span> on any relevant findings detected in the examination, making reference to the requirements of the standard.
                     </p>
 
                     <div ng-class="{'has-error': category3Form.s4_c.$error.maxlength}">
                         <div class="row">
                             <div class="col-md-11 col-sm-11" style="margin-left: 40px">
-                                <textarea class="form-control" style="height: 350px" name="s4_c"
-                                          ng-model="info.s4_c"
-                                          ng-maxlength="500"></textarea>
+                                <textarea class="form-control" style="height: 350px" name="s4_c" ng-model="info.s4_c" ng-maxlength="500"></textarea>
 
                                 <div class="help-block" ng-show="category3Form.s4_c.$error.maxlength">
                                     <label class="control-label">Too long!</label>
@@ -1861,8 +1696,8 @@
                                         ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
                                         ((info.patient.Middle_name==null||info.patient.Middle_name=='')?'':info.patient.Middle_name) +
                                         ((info.patient.First_name==null||info.patient.First_name=='')?'':' ') +
-                                        ((info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name)}}</span>
-                                    &nbsp;</label>
+                                        ((info.patient.Sur_name==null||info.patient.Sur_name=='')?'':info.patient.Sur_name)}}</span> &nbsp;
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -1870,15 +1705,12 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-12 col-sm-12">
                                 <label class="btn">
-                                    <input type="radio" name='s4_1' ng-model="info.s4_1" ng-value="1"/> give
+                                    <input type="radio" name='s4_1' ng-model="info.s4_1" ng-value="1" /> give
                                 </label>
                                 <label class="btn">
-                                    <input type="radio" name='s4_1' ng-model="info.s4_1" ng-value="0"/> do not give
+                                    <input type="radio" name='s4_1' ng-model="info.s4_1" ng-value="0" /> do not give
                                 </label>
-                                <label class="control-label">(please indicate) permission for the examining
-                                    health
-                                    professional to contact my treating doctor(s) to discuss or clarify information
-                                    relating to my current health status.</label>
+                                <label class="control-label">(please indicate) permission for the examining health professional to contact my treating doctor(s) to discuss or clarify information relating to my current health status.</label>
                             </div>
                         </div>
                     </div>
@@ -1889,8 +1721,7 @@
                             </div>
                             <div ng-show="info.PATIENT_SIGNATURE!==''&&info.PATIENT_SIGNATURE!==null">
                                 <div class="col-md-2 col-sm-3">
-                                    <img src="" ng-src="{{info.PATIENT_SIGNATURE}}" alt=""
-                                         style="width: 100%; height: 70px;"/>
+                                    <img src="" ng-src="{{info.PATIENT_SIGNATURE}}" alt="" style="width: 100%; height: 70px;" />
                                 </div>
                             </div>
                             <div class="col-md-1 col-sm-1" style="margin-top: 5px;width: auto;">
@@ -1903,17 +1734,13 @@
                     </div>
                     <hr>
                     <p style="margin-left: 50px;margin-right: 50px;font-size: medium" class="bold">
-                        I certify that I have examined the person named in accordance with the medical standards
-                        contained
-                        in the National Standard for Health Assessment of Rail Safety Workers, Volume 2: Assessment
-                        Procedures and Medical, and in my opinion the worker / applicant is (tick as appropriate):
+                        I certify that I have examined the person named in accordance with the medical standards contained in the National Standard for Health Assessment of Rail Safety Workers, Volume 2: Assessment Procedures and Medical, and in my opinion the worker / applicant is (tick as appropriate):
                     </p>
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-7" style="margin-top: 5px;">
-                                <label class="control-label">Name of Examining Health Professional:&nbsp;<span
-                                        class="text-info">{{info.doctor.NAME}}</span> </label>
+                                <label class="control-label">Name of Examining Health Professional:&nbsp;<span class="text-info">{{info.doctor.NAME}}</span> </label>
                             </div>
                             <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto;">
                                 <label class="control-label">Signature:</label>
@@ -1921,10 +1748,8 @@
                         </div>
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-6 col-sm-7"></div>
-                            <div class="col-md-6 col-sm-5"
-                                 ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
-                                <img src="" alt="" ng-src="{{info.doctor.Signature}}"
-                                     style="width: 200px;; height: 70px;"/>
+                            <div class="col-md-6 col-sm-5" ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
+                                <img src="" alt="" ng-src="{{info.doctor.Signature}}" style="width: 200px;; height: 70px;" />
                             </div>
                         </div>
                     </div>
@@ -1942,25 +1767,18 @@
                         </div>
                     </div>
                     <p style="margin-left: 50px;margin-right: 50px;font-size: medium">
-                        <span class="bold">Note to examining Health Professional</span> - The results of this health
-                        examination are
+                        <span class="bold">Note to examining Health Professional</span> - The results of this health examination are
                         <span class="bold">not</span> to be returned to the company who arranged the health assessment,
-                        <span class="bold">only</span> the Recommendation of Examining Health Professional Form (page
-                        10). A
-                        copy of
-                        these forms may be retained for your records.
+                        <span class="bold">only</span> the Recommendation of Examining Health Professional Form (page 10). A copy of these forms may be retained for your records.
                     </p>
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-5 col-sm-7" style="margin-top: 10px;width: auto;">
-                                <label class="control-label bold">I have sighted the employee
-                                    / applicant's photo ID</label>
+                                <label class="control-label bold">I have sighted the employee / applicant's photo ID</label>
                             </div>
                             <div class="col-md-1 col-sm-1">
-                                <input class="form-control" name="s4_2" type="checkbox" ng-true-value="1"
-                                       ng-false-value="0"
-                                       ng-model="info.s4_2" ng-checked="info.s4_2"/>
+                                <input class="form-control" name="s4_2" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.s4_2" ng-checked="info.s4_2" />
                             </div>
                         </div>
                     </div>
@@ -1984,15 +1802,8 @@
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    <p class="text-info"
-                       style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
-                        I certify that I have reviewed the Health Assessment Examination Form for the person named in
-                        accordance with
-                        the
-                        medical standards contained in the National Standard for Health Assessment of Rail Safety
-                        Workers, Volume 2:
-                        Assessment Procedures and Medical, and in my opinion the worker / applicant is (tick as
-                        appropriate):
+                    <p class="text-info" style="margin-left: 13px;margin-right: 13px;margin-top: 10px;font-weight: bold">
+                        I certify that I have reviewed the Health Assessment Examination Form for the person named in accordance with the medical standards contained in the National Standard for Health Assessment of Rail Safety Workers, Volume 2: Assessment Procedures and Medical, and in my opinion the worker / applicant is (tick as appropriate):
                     </p>
 
                     <div class="row">
@@ -2025,9 +1836,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="col-md-2 col-sm-2">
-                                <input class="form-control" type="checkbox" ng-model="info.r1_1" ng-true-value="1"
-                                       ng-false="0"
-                                       ng-checked="info.r1_1"/>
+                                <input class="form-control" type="checkbox" ng-model="info.r1_1" ng-true-value="1" ng-false="0" ng-checked="info.r1_1" />
                             </div>
                             <div class="col-md-10 col-sm-10">
                                 <label class="bold" style="margin-top: 10px">Fit for Duty</label>
@@ -2035,29 +1844,24 @@
                                 <label style="margin-top: 10px">Meets all relevant medical criteria for;</label>
                             </div>
                             <div class="col-md-2 col-sm-2">
-                                <input class="form-control" type="checkbox" ng-model="info.r1_2" ng-true-value="1"
-                                       ng-fasle-value="0"
-                                       ng-checked="info.r1_2"/>
+                                <input class="form-control" type="checkbox" ng-model="info.r1_2" ng-true-value="1" ng-fasle-value="0" ng-checked="info.r1_2" />
                             </div>
-                            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Category 3 (Non Safety Critical
-                                Worker-Uncontrolled
-                                Environment)</label>
+                            <label class="col-md-10 col-sm-10" style="margin-top: 10px">Category 3 (Non Safety Critical Worker-Uncontrolled Environment)
+                            </label>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <label class="bold" style="margin-top: 10px">I recommended: </label>
 
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input type="checkbox" class="form-control" ng-model="info.r1_3" ng-true-value="1"
-                                           ng-false-value="0" ng-checked="info.r1_3"/>
+                                    <input type="checkbox" class="form-control" ng-model="info.r1_3" ng-true-value="1" ng-false-value="0" ng-checked="info.r1_3" />
                                 </div>
                                 <div class="col-md-5 col-sm-5" style="width: auto;margin-top: 10px;">
                                     <label class="control-label">Medical review in</label>
                                 </div>
                                 <div ng-class="{'has-error': category3Form.r1_4_y.$error.pattern}">
                                     <div class="col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" name="r1_4_y" ng-model="info.r1_4_y"
-                                               ng-pattern="/^[0-9]+$/"/>
+                                        <input type="text" class="form-control" name="r1_4_y" ng-model="info.r1_4_y" ng-pattern="/^[0-9]+$/" />
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
@@ -2076,46 +1880,36 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r1_5" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r1_5"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r1_5" ng-true-value="1" ng-false="0" ng-checked="info.r1_5" />
                                 </div>
-                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Local doctor
-                                    referral</label>
+                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Local doctor referral
+                                </label>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r1_6" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r1_6"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r1_6" ng-true-value="1" ng-false="0" ng-checked="info.r1_6" />
                                 </div>
-                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Conditional on corrective
-                                    lenses</label>
+                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Conditional on corrective lenses
+                                </label>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r1_7" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r1_7"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r1_7" ng-true-value="1" ng-false="0" ng-checked="info.r1_7" />
                                 </div>
-                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Conditional on hearing
-                                    aid</label>
+                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Conditional on hearing aid
+                                </label>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r1_8" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r1_8"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r1_8" ng-true-value="1" ng-false="0" ng-checked="info.r1_8" />
                                 </div>
-                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Other condition
-                                    (specify): </label>
+                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Other condition (specify): </label>
                             </div>
                             <div ng-class="{'has-error': category3Form.r1_8_c.$error.maxlength}">
                                 <div class="row">
                                     <div class="col-md-2 col-sm-2"></div>
                                     <div class="col-md-9 col-sm-9">
-                                        <textarea class="form-control" name="r1_8_c" ng-model="info.r1_8_c"
-                                                  ng-maxlength="200"></textarea>
+                                        <textarea class="form-control" name="r1_8_c" ng-model="info.r1_8_c" ng-maxlength="200"></textarea>
 
                                         <div class="help-block" ng-show="category3Form.r1_8_c.$error.maxlength">
                                             <label class="control-label">Too long!</label>
@@ -2130,24 +1924,17 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="col-md-2 col-sm-2">
-                                <input class="form-control" type="checkbox" ng-model="info.r2_1" ng-true-value="1"
-                                       ng-false="0"
-                                       ng-checked="info.r2_1"/>
+                                <input class="form-control" type="checkbox" ng-model="info.r2_1" ng-true-value="1" ng-false="0" ng-checked="info.r2_1" />
                             </div>
                             <div class="col-md-10 col-sm-10">
                                 <label class="bold" style="margin-top: 10px">Fit for Duty, Subject to Review</label>
                                 </br>
                                 <label style="margin-top: 10px">
-                                    Does not meet all medical criteria, but could perform
-                                    the inherent requirements of the position if the condition is sufficiently under
-                                    control
-                                    and worker / applicant is more frequently reviewed than prescribed under periodic
-                                    review
+                                    Does not meet all medical criteria, but could perform the inherent requirements of the position if the condition is sufficiently under control and worker / applicant is more frequently reviewed than prescribed under periodic review
                                 </label>
                                 </br>
                                 <label style="margin-top: 10px; font-style: italic">
-                                    If pre employment-Recruitment &amp; Selection process suspended. Risk Assessment
-                                    required prior to engagement
+                                    If pre employment-Recruitment &amp; Selection process suspended. Risk Assessment required prior to engagement
                                 </label>
                             </div>
                         </div>
@@ -2156,17 +1943,14 @@
 
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input type="checkbox" class="form-control" ng-model="info.r2_2" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r2_2"/>
+                                    <input type="checkbox" class="form-control" ng-model="info.r2_2" ng-true-value="1" ng-false="0" ng-checked="info.r2_2" />
                                 </div>
                                 <div class="col-md-5 col-sm-5" style="width: auto;margin-top:10px;">
                                     <label class="control-label">Medical review in</label>
                                 </div>
                                 <div ng-class="{'has-error': category3Form.r2_2_y.$error.pattern}">
                                     <div class="col-md-3 col-sm-3">
-                                        <input type="text" class="form-control" name="r2_2_y" ng-model="info.r2_2_y"
-                                               ng-pattern="/^[0-9]+$/"/>
+                                        <input type="text" class="form-control" name="r2_2_y" ng-model="info.r2_2_y" ng-pattern="/^[0-9]+$/" />
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-sm-2">
@@ -2185,35 +1969,27 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r2_3" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r2_3"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r2_3" ng-true-value="1" ng-false="0" ng-checked="info.r2_3" />
                                 </div>
                                 <label class="col-md-10 col-sm-10" style="margin-top: 10px">Specialist referral</label>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r2_4" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r2_4"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r2_4" ng-true-value="1" ng-false="0" ng-checked="info.r2_4" />
                                 </div>
-                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Local doctor
-                                    referral</label>
+                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Local doctor referral
+                                </label>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r2_5" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r2_5"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r2_5" ng-true-value="1" ng-false="0" ng-checked="info.r2_5" />
                                 </div>
-                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Company Medical Officer
-                                    referral</label>
+                                <label class="col-md-10 col-sm-10" style="margin-top: 10px">Company Medical Officer referral
+                                </label>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <input class="form-control" type="checkbox" ng-model="info.r2_6" ng-true-value="1"
-                                           ng-false="0"
-                                           ng-checked="info.r2_6"/>
+                                    <input class="form-control" type="checkbox" ng-model="info.r2_6" ng-true-value="1" ng-false="0" ng-checked="info.r2_6" />
                                 </div>
                                 <label class="col-md-10 col-sm-10" style="margin-top: 10px">Laboratory tests </label>
                             </div>
@@ -2226,8 +2002,7 @@
                                     </div>
                                     <div class="col-md-5 col-sm-4">
                                         <div ng-class="{'has-error': category3Form.r2_7_c.$error.maxlength}">
-                                            <input type="text" class="form-control" name="r2_7_c" ng-model="info.r2_7_c"
-                                                   ng-maxlength="50">
+                                            <input type="text" class="form-control" name="r2_7_c" ng-model="info.r2_7_c" ng-maxlength="50">
 
                                             <div class="help-block" ng-show="category3Form.r2_7_c.$error.maxlength">
                                                 <label class="control-label">Too long!</label>
@@ -2243,36 +2018,28 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="col-md-2 col-sm-2">
-                                <input class="form-control" type="checkbox" ng-model="info.r3_1" ng-true-value="1"
-                                       ng-false="0"
-                                       ng-checked="info.r3_1"/>
+                                <input class="form-control" type="checkbox" ng-model="info.r3_1" ng-true-value="1" ng-false="0" ng-checked="info.r3_1" />
                             </div>
                             <div class="col-md-10 col-sm-10">
-                                <label class="bold" style="margin-top: 10px">Fit for Duty, Subject to Job
-                                    Modification</label>
+                                <label class="bold" style="margin-top: 10px">Fit for Duty, Subject to Job Modification
+                                </label>
                                 </br>
                                 <label style="margin-top: 10px">
-                                    Does not meet all medical criteria, but could perform the inherent requirements of
-                                    the
-                                    position if suitable modifications were made to the duties
+                                    Does not meet all medical criteria, but could perform the inherent requirements of the position if suitable modifications were made to the duties
                                 </label>
                                 </br>
                                 <label style="margin-top: 10px; font-style: italic">
-                                    If pre employment-Recruitment &amp; Selection process suspended. Risk Assessment
-                                    required prior to engagement
+                                    If pre employment-Recruitment &amp; Selection process suspended. Risk Assessment required prior to engagement
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <label class="bold" style="margin-top: 10px">I recommend the following job
-                                modifications: </label>
+                            <label class="bold" style="margin-top: 10px">I recommend the following job modifications: </label>
 
                             <div class="row">
                                 <div class="col-md-10 col-sm-10">
                                     <div ng-class="{'has-error': category3Form.r3_2_c.$error.maxlength}">
-                                        <textarea style="margin-left: 20px;height: 100px" class="form-control"
-                                                  name="r3_2_c"
-                                                  ng-model="info.r3_2_c" ng-maxlength="200"></textarea>
+                                        <textarea style="margin-left: 20px;height: 100px" class="form-control" name="r3_2_c" ng-model="info.r3_2_c" ng-maxlength="200"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -2294,42 +2061,28 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="col-md-2 col-sm-2">
-                                <input class="form-control" type="checkbox" ng-model="info.r4_1" ng-true-value="1"
-                                       ng-false="0"
-                                       ng-checked="info.r4_1">
+                                <input class="form-control" type="checkbox" ng-model="info.r4_1" ng-true-value="1" ng-false="0" ng-checked="info.r4_1">
                             </div>
                             <div class="col-md-10 col-sm-10">
-                                <label class="bold" style="margin-top: 10px">Temporarily Unfit for Duty, Subject to
-                                    Review</label>
+                                <label class="bold" style="margin-top: 10px">Temporarily Unfit for Duty, Subject to Review
+                                </label>
                                 </br>
                                 <label style="margin-top: 10px">
-                                    Does not meet all medical criteria and cannot perform the inherent requirements of
-                                    the
-                                    position, but may perform alternative duties. May return to full duty pending
-                                    improvement
-                                    in condition, response to treatment, confirmed diagnosis of undifferentiated illness
+                                    Does not meet all medical criteria and cannot perform the inherent requirements of the position, but may perform alternative duties. May return to full duty pending improvement in condition, response to treatment, confirmed diagnosis of undifferentiated illness
                                 </label>
                                 </br>
                                 <label style="margin-top: 10px; font-style: italic">
-                                    If pre employment — Recruitment &amp; Selection process ceased. May reapply for
-                                    position
-                                    when noticeable improvement in condition is verified by applicant's doctor.
-                                    Re-examination
-                                    for pre-employment will be required.
+                                    If pre employment — Recruitment &amp; Selection process ceased. May reapply for position when noticeable improvement in condition is verified by applicant's doctor. Re-examination for pre-employment will be required.
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <label class="bold" style="margin-top: 10px">I recommend the following in terms of
-                                management and
-                                review: </label>
+                            <label class="bold" style="margin-top: 10px">I recommend the following in terms of management and review: </label>
 
                             <div ng-class="{'has-error': category3Form.r4_2_c.$error.maxlength}">
                                 <div class="row">
                                     <div class="col-md-10 col-sm-10">
-                                        <textarea style="margin-left: 20px;height: 100px" class="form-control"
-                                                  name="r4_2_c"
-                                                  ng-model="info.r4_2_c" ng-maxlength="200"></textarea>
+                                        <textarea style="margin-left: 20px;height: 100px" class="form-control" name="r4_2_c" ng-model="info.r4_2_c" ng-maxlength="200"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -2351,9 +2104,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="col-md-2 col-sm-2">
-                                <input class="form-control" type="checkbox" ng-model="info.r5_1" ng-true-value="1"
-                                       ng-false="0"
-                                       ng-checked="info.r5_1"/>
+                                <input class="form-control" type="checkbox" ng-model="info.r5_1" ng-true-value="1" ng-false="0" ng-checked="info.r5_1" />
                             </div>
                             <div class="col-md-10 col-sm-10">
                                 <label class="bold" style="margin-top: 10px">Permanently Unfit for Duty</label>
@@ -2368,15 +2119,12 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <label class="bold" style="margin-top: 10px">I recommend the following job
-                                modifications: </label>
+                            <label class="bold" style="margin-top: 10px">I recommend the following job modifications: </label>
 
                             <div ng-class="{'has-error': category3Form.r5_2.$error.maxlength}">
                                 <div class="row">
                                     <div class="col-md-10 col-sm-10">
-                                        <textarea style="margin-left: 20px;height: 100px" class="form-control"
-                                                  name="r5_2"
-                                                  ng-model="info.r5_2" ng-maxlength="200"></textarea>
+                                        <textarea style="margin-left: 20px;height: 100px" class="form-control" name="r5_2" ng-model="info.r5_2" ng-maxlength="200"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -2397,8 +2145,8 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-5 col-sm-7" style="margin-top: 5px;">
-                                <label class="control-label">Name of Examining Health Professional: &nbsp; <span
-                                        class="text-info">{{(info.doctor.NAME==null||info.doctor.NAME=='')?'':info.doctor.NAME}}</span></label>
+                                <label class="control-label">Name of Examining Health Professional: &nbsp; <span class="text-info">{{(info.doctor.NAME==null||info.doctor.NAME=='')?'':info.doctor.NAME}}</span>
+                                </label>
                             </div>
                             <div class="col-md-1 col-sm-2" style="margin-top: 5px;width: auto">
                                 <label class="control-label">Signature:</label>
@@ -2406,10 +2154,8 @@
                         </div>
                         <div class="col-md-12 col-sm-12">
                             <div class="col-md-5 col-sm-7"></div>
-                            <div class="col-md-7 col-sm-5"
-                                 ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
-                                <img src="" alt="" ng-src="{{info.doctor.Signature}}"
-                                     style="width: 200px; height: 70px;"/>
+                            <div class="col-md-7 col-sm-5" ng-show="info.doctor.Signature!==null&&info.doctor.Signature!==''">
+                                <img src="" alt="" ng-src="{{info.doctor.Signature}}" style="width: 200px; height: 70px;" />
                             </div>
                         </div>
                     </div>

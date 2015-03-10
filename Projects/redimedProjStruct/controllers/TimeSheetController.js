@@ -2,6 +2,8 @@
  * Created by meditech on 19/09/2014.
  */
 var db = require('../models');
+var moment = require('moment');
+var chainer = new db.Sequelize.Utils.QueryChainer;
 module.exports = {
     addAllTask: function(req,res)
     {
@@ -19,26 +21,25 @@ module.exports = {
                 db.timeTaskWeek.max('task_week_id')
                     .success(function(max){
                         for(var tasks in allTask){
-
-                            db.timeTasks.create({
-                                tasks_week_id : max,
-                                "department_code_id" : allTask[tasks].department_code_id,
-                                "task" : allTask[tasks].task,
-                                "date": allTask[tasks].date,
-                                "location_id" : allTask[tasks].location_id,
-                                "activity_id" : allTask[tasks].activity_id,
-                                "time_charge" : allTask[tasks].time_charge
-                            })
-                                .success(function(data){
-                                    res.json({status:'success'});
+                            chainer.add(
+                                db.timeTasks.create({
+                                    tasks_week_id : max,
+                                    "department_code_id" : allTask[tasks].department_code_id,
+                                    "task" : allTask[tasks].task,
+                                    "order": allTask[tasks].order,
+                                    "date": moment(allTask[tasks].date).format('YYYY-MM-DD'),
+                                    "location_id" : allTask[tasks].location_id,
+                                    "activity_id" : allTask[tasks].activity_id,
+                                    "time_charge" : allTask[tasks].time_charge
                                 })
-                                .error(function(err){
-                                    res.json({status:'error'});
-                                    console.log(err);
-                                })
-
-
+                            )
                         }
+                        chainer.runSerially().success(function(){
+                            res.json({status:'success'});
+                        }).error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
                     })
                     .error(function(err){
                         res.json({status:'error'});
@@ -54,29 +55,41 @@ module.exports = {
 
     editTask: function(req,res)
     {
-
         var allTask = req.body.allTask;
 
         for(var i=0; i<allTask.length;i++){
-
-            db.timeTasks.update({
-                "department_code_id" : allTask[i].department_code_id,
-                "task" : allTask[i].task,
-                "date": allTask[i].date,
-                "location_id" : allTask[i].location_id,
-                "activity_id" : allTask[i].activity_id,
-                "time_charge" : allTask[i].time_charge
-            },{tasks_id : allTask[i].tasks_id})
-                .success(function(data){
-                    res.json({status:'success'});
-                })
-                .error(function(err){
-                    res.json({status:'error'});
-                    console.log(err);
-                })
-
+            if(allTask[i].isEdit == true){
+                chainer.add(
+                    db.timeTasks.update({
+                        "department_code_id" : allTask[i].department_code_id,
+                        "task" : allTask[i].task,
+                        "date": allTask[i].date,
+                        "location_id" : allTask[i].location_id,
+                        "activity_id" : allTask[i].activity_id,
+                        "time_charge" : allTask[i].time_charge
+                    },{tasks_id : allTask[i].tasks_id})
+                )
+            }else{
+                chainer.add(
+                    db.timeTasks.create({
+                        tasks_week_id : allTask[i].tasks_week_id,
+                        "department_code_id" : allTask[i].department_code_id,
+                        "task" : allTask[i].task,
+                        "order": allTask[i].order,
+                        "date": moment(allTask[i].date).format('YYYY-MM-DD'),
+                        "location_id" : allTask[i].location_id,
+                        "activity_id" : allTask[i].activity_id,
+                        "time_charge" : allTask[i].time_charge
+                    })
+                )
+            }
         }
-
+        chainer.runSerially().success(function(){
+            res.json({status:'success'});
+        }).error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
    },
 
     getDepartmentLocation: function(req,res)
@@ -134,7 +147,7 @@ module.exports = {
                     res.json({data: 'no'});
                 }else
                 {
-                    db.timeTasks.findAll({where:{tasks_week_id : result.task_week_id}},{raw: true})
+                    db.timeTasks.findAll({where:{tasks_week_id : result.task_week_id},order: 'date'},{raw: true})
                         .success(function (tasks) {
                             if (tasks === null || tasks.length === 0) {
                                 console.log("Not found tasks in table");

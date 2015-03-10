@@ -91,7 +91,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="(key,task) in tasks track by $index">
-                            <td><span ng-if="task.order == 1" class="btn btn-sm blue-dark" ng-click="addRow($index,task.date)">Add new</span></td>
+                            <td><span ng-if="task.order == 1" class="btn btn-sm blue-dark" ng-click="addRow($index,task.date,task.tasks_week_id)">Add new</span></td>
                             <td><i class="fa fa-trash pointer" ng-click="delTask($index)" style="font-size: 20px"></i> &nbsp;{{task.date | date : 'EEE, dd MMM'}}</td>
                             <td>
                                 <select ng-model="task.location_id" class="form-control" ng-options="location.location_id as location.NAME for location in locations">

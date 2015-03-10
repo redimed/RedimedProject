@@ -9,5 +9,10 @@ angular.module('starter.bluetooth.services',[])
             return device.get();
         }
 
+        blueServices.insertData = function (data) {
+            var device = blueApi.all("medicalDevice/insert");
+            return device.post({info: data});
+        }
+
         return blueServices;
     })
