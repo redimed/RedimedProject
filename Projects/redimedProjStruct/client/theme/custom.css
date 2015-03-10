@@ -593,7 +593,7 @@ table.timetable-table thead tr:first-child {
 }
 
 table.timetable-table th {font-weight: bold;}
-table.timetable-table th, td {padding: 0 15px 0 20px;}
+/*table.timetable-table th, td {padding: 0 15px 0 20px;}*/ /*tannv.dts@gmail.com disabled*/
 
 table.timetable-table thead tr:last-child th {border-bottom: 2px solid #ddd;}
 
