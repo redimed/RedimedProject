@@ -263,8 +263,10 @@ angular.module("app.loggedIn.iso.directive", [])
             adminData:'='
         },
         templateUrl: 'modules/iso/directives/isoReplyEditDocument.html',
-        controller: function ($scope,isoService)
+        controller: function ($scope,isoService,$cookieStore)
         {
+            // $scope.userInfo=$cookieStore.get('userInfo');
+            // console.log($scope.userInfo);
             $scope.setListReply=function(IDREQUEST){
                 isoService.replyEdit.getAllReplyEditDocument(IDREQUEST).then(function(data){
                     if (data.status == 'success') {

@@ -57,7 +57,7 @@ module.exports =
 	    	"SELECT reply.*,us.`user_name`                           "+
 			"FROM `iso_reply_edit_document` reply                    "+
 			"INNER JOIN `users` us ON us.id = reply.`USER_ID`        "+
-			"WHERE reply.`ID_REQUEST` = ?                            "+
+			"WHERE reply.`ID_REQUEST` = ? AND reply.`ISENABLE` = 1   "+
 			"ORDER BY reply.`REPLY_DATE` DESC                        ";
 		req.getConnection(function(err,connection)
 	    {
