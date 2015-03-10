@@ -2,10 +2,10 @@
  * Created by HUYNHAN on 10/1/2014.
  */
 angular.module('app.loggedIn.document.SA1.controllers', [])
-    .controller("SA1Controller", function ($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams, localStorageService) {
+    .controller("SA1Controller", function($scope, $state, DocumentService, $http, $cookieStore, toastr, $stateParams, localStorageService) {
         $scope.patientInfo = localStorageService.get('tempPatient');
         //var CalID = -1;//$scope.apptInfo.CAL_ID;
-        var CalID = $stateParams.cal_id; 
+        var CalID = $stateParams.cal_id;
         var Patient_ID = $scope.patientInfo.Patient_id;
 
         $scope.dateOptions = {
@@ -17,44 +17,45 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
         var userInfo = $cookieStore.get('userInfo');
         if (userInfo === undefined) {
             console.log("ERROR: Cookies not exist!");
-            $state.go('loggedIn.SA1', null, {'reload': true});
-        }
-        else {
+            $state.go('loggedIn.SA1', null, {
+                'reload': true
+            });
+        } else {
             //begin signature
             var tempSignature;
             $scope.isSignature = false;
-            $scope.showSignature = function () {
+            $scope.showSignature = function() {
                 $scope.isSignature = !$scope.isSignature;
             }
 
-            $scope.cancelClick = function () {
+            $scope.cancelClick = function() {
                 $scope.isSignature = !$scope.isSignature;
                 $scope.info.Signature = tempSignature;
             };
-            $scope.clearClick = function () {
+            $scope.clearClick = function() {
                 $scope.info.Signature = '';
             };
-            $scope.okClick = function () {
-                $scope.isSignature = !$scope.isSignature;
-                tempSignature = $scope.info.Signature;
-            }
-            //end signature
+            $scope.okClick = function() {
+                    $scope.isSignature = !$scope.isSignature;
+                    tempSignature = $scope.info.Signature;
+                }
+                //end signature
             var oriInfo;
             $scope.info = {
                 patient_id: Patient_ID,
                 CAL_ID: CalID
             };
             var info = $scope.info;
-            DocumentService.loadSA1(info).then(function (response) {
+            DocumentService.loadSA1(info).then(function(response) {
                 if (response['status'] === 'fail') {
-                    $state.go('loggedIn.home', null, {'reload': true});
-                }
-                else if (response[0].status === 'findNull') {
+                    $state.go('loggedIn.home', null, {
+                        'reload': true
+                    });
+                } else if (response[0].status === 'findNull') {
                     //add new
                     $scope.isNew = true;
 
-                }
-                else if (response[0].status === 'findFound') {
+                } else if (response[0].status === 'findFound') {
                     //edit
                     $scope.isNew = false;
                 }
@@ -68,7 +69,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                 $scope.info.appt = response[0].appt;
                 $scope.info.site = response[0].site;
                 $scope.info.company = response[0].company;
-                angular.forEach(data.headers, function (dataH, hIndex) {
+                angular.forEach(data.headers, function(dataH, hIndex) {
                     $scope.info.headers.push({
                         "patient_id": Patient_ID,
                         "CAL_ID": CalID,
@@ -77,7 +78,9 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                         "ISENABLE": dataH.ISENABLE,
                         "SA_CODE": dataH.SA_CODE,
                         "test_date": dataH.test_date || new Date(),
-                        "tester": dataH.tester,
+                        "tester": dataH.tester || ((($scope.info.doctor.Title !== null && $scope.info.doctor.Title !== '') ? ($scope.info.doctor.Title + " ") : "") +
+                            (($scope.info.doctor.First_name !== null && $scope.info.doctor.First_name !== '') ? ($scope.info.doctor.First_name + " ") : "") +
+                            (($scope.info.doctor.Sur_name !== null && $scope.info.doctor.Sur_name !== '') ? ($scope.info.doctor.Sur_name + " ") : "")),
                         "report_type": dataH.report_type,
                         "RECIPIENT_NAME": dataH.RECIPIENT_NAME,
                         "DOCTOR_ID": dataH.DOCTOR_ID || response[0].doctor.doctor_id,
@@ -92,7 +95,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                     $scope.info.RECIPIENT_NAME = $scope.info.headers[hIndex].RECIPIENT_NAME;
                     $scope.info.tester = $scope.info.headers[hIndex].tester;
                     var j = 0;
-                    angular.forEach(data.sections, function (dataS) {
+                    angular.forEach(data.sections, function(dataS) {
                         if ($scope.info.headers[hIndex].SA_ID === dataS.SA_ID) {
                             $scope.info.headers[hIndex].sections.push({
                                 "patient_id": Patient_ID,
@@ -107,7 +110,7 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                                 "Last_updated_by": $scope.isNew ? dataS.Last_updated_by : userInfo.id,
                                 "lines": []
                             });
-                            angular.forEach(data.lines, function (dataL) {
+                            angular.forEach(data.lines, function(dataL) {
                                 if ($scope.info.headers[hIndex].sections[j].SECTION_ID === dataL.SECTION_ID) {
                                     $scope.info.headers[hIndex].sections[j].lines.push({
                                         "patient_id": Patient_ID,
@@ -131,53 +134,55 @@ angular.module('app.loggedIn.document.SA1.controllers', [])
                 oriInfo = angular.copy($scope.info);
 
             });
-            $scope.resetForm = function () {
+            $scope.resetForm = function() {
                 $scope.info = angular.copy(oriInfo);
                 $scope.SA1.$setPristine();
             }
 
-            $scope.infoChanged = function () {
+            $scope.infoChanged = function() {
                 return !angular.equals(oriInfo, $scope.info);
             }
-            $scope.submit = function (SA1) {
+            $scope.submit = function(SA1) {
                 var info = $scope.info;
                 if (SA1.$error.required || SA1.$error.maxlength || SA1.$error.pattern) {
                     toastr.error("Please Input All Required Information!", "Error");
-                }
-                else {
+                } else {
                     if ($scope.isNew === true) {
                         //add new sa1
-                        DocumentService.insertSA1(info).then(function (response) {
+                        DocumentService.insertSA1(info).then(function(response) {
                             if (response['status'] === 'fail') {
                                 //add new fail
                                 toastr.error("Add fail!", "Error");
-                            }
-                            else if (response['status'] === 'success') {
+                            } else if (response['status'] === 'success') {
                                 //edit success
                                 toastr.success("Add success!", "Success");
-                                $state.go('loggedIn.SA1', null, {"reload": true});
-                            }
-                            else {
+                                $state.go('loggedIn.SA1', null, {
+                                    "reload": true
+                                });
+                            } else {
                                 //throw exception
-                                $state.go('loggedIn.home', null, {'reload': true});
+                                $state.go('loggedIn.home', null, {
+                                    'reload': true
+                                });
                             }
                         });
-                    }
-                    else if ($scope.isNew === false) {
+                    } else if ($scope.isNew === false) {
                         //edit old sa1
-                        DocumentService.editSA1(info).then(function (response) {
+                        DocumentService.editSA1(info).then(function(response) {
                             if (response['status'] === 'fail') {
                                 //edit fail
                                 toastr.error("Update fail!", "Error");
-                            }
-                            else if (response['status'] === 'success') {
+                            } else if (response['status'] === 'success') {
                                 //edit success
                                 toastr.success("Update success!", "Success");
-                                $state.go('loggedIn.SA1', null, {'reload': true});
-                            }
-                            else {
+                                $state.go('loggedIn.SA1', null, {
+                                    'reload': true
+                                });
+                            } else {
                                 //throw exception
-                                $state.go("loggedIn.home", null, {'reload': true});
+                                $state.go("loggedIn.home", null, {
+                                    'reload': true
+                                });
                             }
                         })
                     }
