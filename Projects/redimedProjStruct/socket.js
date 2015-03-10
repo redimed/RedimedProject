@@ -40,6 +40,10 @@ module.exports = function(io,cookie,cookieParser,opentok) {
         });
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
+            console.log("===========From: "+currUser);
+            console.log("===========To: "+contactUser);
+            console.log("===========Message: "+JSON.stringify(message));
+            
             db.User.find({where:{id: currUser}},{raw:true})
                 .success(function(currentUser){
                     if(currentUser)
@@ -52,8 +56,6 @@ module.exports = function(io,cookie,cookieParser,opentok) {
                                     {
                                         if(message.type == 'call')
                                         {
-                                            console.log("Call From: "+currUser);
-                                            
                                            var token = opentok.generateToken(message.sessionId);
 
                                            message.apiKey = apiKey;

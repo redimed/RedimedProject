@@ -108,6 +108,8 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
+    $scope.isShow = false;
+
     socket.on("forceLogout",function(){
 
         toastr.error("Someone Is Logged Into Your Account!");
@@ -168,46 +170,51 @@ angular.module("app.loggedIn.controller",[
         }
     })
 
-    $scope.vm = {
-        messages: [
-            {
-              'username': 'username1',
-              'content': 'Hi!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            }
-          ],
-        username : 'username1',
-        sendMessage: function(message, username) {
-            if(message && message !== '' && username) {
-              vm.messages.push({
-                'username': username,
-                'content': message
-              });
-            }
-          }
-    };
+
 
     $scope.openChat = function(user){
-        console.log(user);
+        console.log($scope.isShow);
+
+        $scope.isShow = true;
+
+        console.log($scope.isShow);
+        
+        $scope.vm = {
+            messages: [
+                {
+                  'username': user.username,
+                  'content': 'Hi!'
+                },
+                {
+                  'username': 'username2',
+                  'content': 'Hello!'
+                },
+                {
+                  'username': user.username,
+                  'content': 'Hello!'
+                },
+                {
+                  'username': 'username2',
+                  'content': 'Hello!'
+                },
+                {
+                  'username': user.username,
+                  'content': 'Hello!'
+                }
+              ],
+            username : user.username,
+            userImg: $scope.userImg,
+            chatImg: "./theme/assets/icon.png",
+            title: "Chat With "+ user.username,
+            sendMessage: function(message, username) {
+                if(message && message !== '' && username) {
+                  $scope.vm.messages.push({
+                    'username': username,
+                    'content': message
+                  });
+                }
+              }
+        };
     }
 
     $scope.userImg = null;
@@ -408,6 +415,8 @@ angular.module("app.loggedIn.controller",[
         else
             $scope.userImg = "theme/assets/icon.png"
     })
+
+
 
 
 

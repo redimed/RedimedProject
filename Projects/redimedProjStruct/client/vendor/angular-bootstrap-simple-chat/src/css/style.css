@@ -1,20 +1,8 @@
-/* line 2, ../sass/components/chat-window.scss */
-.chat-window {
-  bottom: 0;
-  float: right;
-  margin-left: 10px;
-  position: fixed;
-  right: 0;
-  z-index: 9999;
-}
-/* line 10, ../sass/components/chat-window.scss */
-.chat-window .panel {
+/*.chat-window .panel {
   border: 0;
   border-radius: 5px 5px 0 0;
   margin-bottom: 0;
 }
-
-/* line 2, ../sass/components/chat-top-bar.scss */
 .chat-top-bar {
   background: #666;
   color: #fff;
@@ -22,12 +10,9 @@
   padding: 10px;
   position: relative;
 }
-/* line 9, ../sass/components/chat-top-bar.scss */
 .chat-top-bar .icon-minim {
   padding: 2px 10px;
 }
-
-/* line 2, ../sass/components/chat-msg-container.scss */
 .msg-container-base {
   background: #e5e5e5;
   margin: 0;
@@ -35,29 +20,23 @@
   overflow-x: hidden;
   padding: 0 10px 10px;
 }
-/* line 9, ../sass/components/chat-msg-container.scss */
 .msg-container-base::-webkit-scrollbar-track {
   background-color: #f5f5f5;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-/* line 14, ../sass/components/chat-msg-container.scss */
 .msg-container-base::-webkit-scrollbar {
   background-color: #f5f5f5;
   width: 12px;
 }
-/* line 19, ../sass/components/chat-msg-container.scss */
 .msg-container-base::-webkit-scrollbar-thumb {
   background-color: #555;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-/* line 24, ../sass/components/chat-msg-container.scss */
 .msg-container-base .msg-container {
   display: flex;
   overflow: hidden;
   padding: 10px;
 }
-
-/* line 2, ../sass/components/chat-msg.scss */
 .chat-msg {
   background: #fff;
   border-radius: 2px;
@@ -65,35 +44,103 @@
   max-width: 100%;
   padding: 10px;
 }
-/* line 9, ../sass/components/chat-msg.scss */
 .chat-msg p {
   font-size: 13px;
   margin: 0 0 .2rem;
 }
-/* line 14, ../sass/components/chat-msg.scss */
 .chat-msg time {
   color: #ccc;
   font-size: 11px;
 }
-/* line 19, ../sass/components/chat-msg.scss */
 .chat-msg .chat-msg-author {
   display: block;
 }
-/* line 23, ../sass/components/chat-msg.scss */
 .chat-msg.chat-msg-receive {
   margin-right: 0;
   padding-bottom: 20px;
 }
-/* line 28, ../sass/components/chat-msg.scss */
 .chat-msg.chat-msg-sent {
   margin-right: 0;
   padding-bottom: 20px;
 }
-/* line 32, ../sass/components/chat-msg.scss */
 .chat-msg.chat-msg-sent .chat-msg-author {
   text-align: right;
 }
-/* line 36, ../sass/components/chat-msg.scss */
 .chat-msg.chat-msg-sent time {
   float: right;
+}*/
+
+
+
+
+
+
+.chat-window {
+  bottom: 0;
+  float: right;
+  margin-left: 15px;
+  position: fixed;
+  right: 0;
+  z-index: 9999;
+  width: 400px;
+  word-wrap: break-word;
+}
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.panel-body
+{
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
 }

@@ -30,12 +30,8 @@ var _ = require('lodash-node');
 var apiKey = "45172682";
 var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
 
-
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
-
-
-server.listen(3000);
 
 require('./socket')(io,cookie,cookieParser,opentok);
 
@@ -47,8 +43,6 @@ var myIceServers = [
     {url: "stun:stun4.l.google.com:19302"},
     {url: "turn:172.17.19.101:3478", "username":"redimed", "credential":"redimed123"}
 ];
-
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -204,10 +198,7 @@ db.sequelize
         if (err) {
             throw err[0];
         } else {
-            var debug = require('debug')('redimedProjStruct');
-            var server = app.listen(app.get('port'), function() {
-                debug('App server listening on port ' + server.address().port);
-            });
+            server.listen(3000);
             log.info('Connection has been established successfully!');
             log.info('App server listening on port ' + server.address().port);
         }
