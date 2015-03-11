@@ -30,7 +30,9 @@ module.exports = function(io,cookie,cookieParser) {
                 if (err) 
                     return console.log(err);
 
-                var token = session.generateToken();
+                var token = session.generateToken({
+                    role : 'moderator'
+                });
 
                 var opentokRoom = {
                     apiKey: apiKey,
@@ -41,6 +43,33 @@ module.exports = function(io,cookie,cookieParser) {
                 socket.emit("generateSessionSuccess",opentokRoom);
             });
         });
+
+        socket.on("sendArchive",function(info){
+            console.log(info);
+            
+            if(info.type === "start")
+            {
+                opentok.startArchive(info.sessionId, {
+                    name: 'Test Archiving'
+                  }, function(err, archive) {
+                    if (err) 
+                        socket.emit("receiveArchive",{type:"start",status:'error',message: err.message});
+                    else
+                        socket.emit("receiveArchive",{type:"start",status:'success',archive: archive});
+                  });
+            }
+            if(info.type === "stop")
+            {
+                opentok.stopArchive(info.archiveId, function(err, archive) {
+                     if (err) 
+                        socket.emit("receiveArchive",{type:"stop",status:'error',message: err.message});
+                    else
+                        socket.emit("receiveArchive",{type:"stop",status:'success',archive: archive});
+                });
+            }
+                
+            
+        })
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
             console.log("===========From: "+currUser);
@@ -100,51 +129,38 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
-        socket.on('mobileConnect',function(id){
-            db.User.update({
-                socketMobile: socket.id
-            },{id:id})
-                .success(function(){
-                    socket.emit("mobileConnectSuccess");
-                    getOnlineUser();
-                })
-                .error(function(err){
-                    console.log(err);
-                })
+        socket.on('checkApp',function(id){
+            if(id){
+                db.User.find({where:{id:id}},{raw:true})
+                    .success(function(user){
+                        if(user)
+                        {
+                            if(user.socket == null){
+                                db.User.update({
+                                    socket: socket.id
+                                },{id:id})
+                                    .success(function(){
+                                        getOnlineUser();
+                                    })
+                                    .error(function(err){
+                                        console.log(err);
+                                    })
+                            }
+                            // else
+                            // {
+                            //     if(user.socket != socket.id){
+                            //         io.to(socket.id).emit("isLoggedIn");
+                            //     }
+                            //     getOnlineUser();
+                            // }
+                        }
+
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
         })
-
-        // socket.on('checkApp',function(id){
-            // if(id){
-            //     db.User.find({where:{id:id}},{raw:true})
-            //         .success(function(user){
-            //             if(user)
-            //             {
-            //                 if(user.socket == null){
-            //                     db.User.update({
-            //                         socket: socket.id
-            //                     },{id:id})
-            //                         .success(function(){
-            //                             getOnlineUser();
-            //                         })
-            //                         .error(function(err){
-            //                             console.log(err);
-            //                         })
-            //                 }
-            //                 else
-            //                 {
-            //                     if(user.socket != socket.id){
-            //                         io.to(socket.id).emit("isLoggedIn");
-            //                     }
-            //                     getOnlineUser();
-            //                 }
-            //             }
-
-            //         })
-            //         .error(function(err){
-            //             console.log(err);
-            //         })
-            // }
-        // })
 
         socket.on('forceLogin',function(username){
 

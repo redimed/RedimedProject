@@ -15,19 +15,21 @@ var compress = require('compression');
 var db = require('./models');
 var restful = require('sequelize-restful');
 var useragent = require('express-useragent');
+var forceSSL = require('express-force-ssl');
+var _ = require('lodash-node');
 
-var pkey = fs.readFileSync('key/key.pem');
-var pcert = fs.readFileSync('key/cert.pem');
 
-var credentials = {key: pkey, cert: pcert};
-//Create application management
+var ssl_options = {
+    key: fs.readFileSync('key/key.pem'),
+    cert: fs.readFileSync('key/cert.pem'),
+    requestCert: true,
+    rejectUnauthorized: false
+};
 var app = express();
 
-var server = require('https').createServer(credentials,app);
-// var server = require("http").createServer(app);
+var server = require('https').createServer(ssl_options,app);
 
 var io = require('socket.io')(server);
-var _ = require('lodash-node');
 
 
 require('./socket')(io,cookie,cookieParser);
@@ -41,6 +43,10 @@ var myIceServers = [
     {url: "turn:172.17.19.101:3478", "username":"redimed", "credential":"redimed123"}
 ];
 
+var clientDir = path.join(__dirname, 'client');
+var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
+
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(useragent.express());
@@ -50,6 +56,7 @@ app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
+app.use(forceSSL);
 app.use(methodOverride());
 app.use(cookieParser('secret'));
 app.use(session({
@@ -66,13 +73,13 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-var clientDir = path.join(__dirname, 'client');
-var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
-//app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
+app.get('/',function(req, res) {
+    res.sendfile(path.join(clientDir, 'login.html'))
+});
+
+//app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/img/patient/avt', express.static(uploadedFile));
 /**
  * K Library
@@ -151,24 +158,6 @@ app.get('/api/booking/download/:bookingId/:candidateId', function(req, res, next
 
 });
 
-var https_redirect = function () {
-  return function(req, res, next) {
-    if (req.secure) {
-      if(env === 'development') {
-        return res.redirect('https://localhost:3000' + req.url);
-      } else {
-        return res.redirect('https://' + req.headers.host + req.url);
-      }
-    } else {
-      return next();
-    }
-  };
-};
-app.use(https_redirect());
-
-app.get('/',function(req, res) {
-    res.sendfile(path.join(clientDir, 'login.html'))
-});
 
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

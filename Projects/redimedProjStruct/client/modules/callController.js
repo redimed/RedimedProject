@@ -22,7 +22,10 @@ angular.module("app.call.controller",[
         var from = $cookieStore.get('fromState');
         var params = {};
 
-        var fromMobile = $location.search().fromMobile;
+        var apiKey = null;
+        var sessionId = null;
+        var token = null;
+
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login',null,{location: "replace"});
@@ -46,6 +49,7 @@ angular.module("app.call.controller",[
             }
         }
 
+
         if($scope.isCaller)
         {   
 
@@ -56,15 +60,14 @@ angular.module("app.call.controller",[
 
             socket.on("generateSessionSuccess",function(opentokRoom){
 
-                var apiKey = opentokRoom.apiKey;
-                var sessionId = opentokRoom.sessionId;
-                var token = opentokRoom.token;
+                apiKey = opentokRoom.apiKey;
+                sessionId = opentokRoom.sessionId;
+                token = opentokRoom.token;
 
-                var publisherProperties = 
-                {
-                    resolution: '1280x720',
-                    insertMode: "append"
-                };
+                var publisherProperties = {};
+                publisherProperties.maxResolution = { width: 1920, height: 1080 };
+                publisherProperties.insertMode = 'append';
+                // publisherProperties.videoSource = 'screen';
 
                 publisher = OT.initPublisher('selfVideo',publisherProperties);
 
@@ -73,7 +76,7 @@ angular.module("app.call.controller",[
                     'streamCreated': function( event ){
                         session.subscribe( event.stream, "callerVideo",{
                             insertMode: "append",
-                            resolution: "1280x720",
+                            maxResolution:{ width: 1920, height: 1080 },
                             width: '100%',
                             height: '100%'
                         });
@@ -99,26 +102,29 @@ angular.module("app.call.controller",[
             {
                 var info = $stateParams.opentokInfo;
 
-                var publisherProperties = 
-                {
-                    resolution: '1280x720',
-                    insertMode: "append"
-                };
+                apiKey = info.apiKey;
+                sessionId = info.sessionId;
+                token = info.token;
+
+                var publisherProperties = {};
+                publisherProperties.maxResolution = { width: 1920, height: 1080 };
+                publisherProperties.insertMode = 'append';
+                // publisherProperties.videoSource = 'screen';
 
                 publisher = OT.initPublisher('selfVideo',publisherProperties);
 
-                session = OT.initSession( info.apiKey, info.sessionId ); 
+                session = OT.initSession( apiKey, sessionId ); 
                 session.on({
                     'streamCreated': function( event ){
                         session.subscribe( event.stream, "callerVideo",{
                             insertMode: "append",
-                            resolution: "1280x720",
+                            maxResolution:{ width: 1920, height: 1080 },
                             width: '100%',
                             height: '100%'
                         });
                     }
                 });
-                session.connect(info.token, function(error) {
+                session.connect(token, function(error) {
                     if (error) 
                     {
                         console.log(error.message);
@@ -161,6 +167,10 @@ angular.module("app.call.controller",[
 
         })
 
+        socket.on("receiveArchive",function(info){
+            console.log(info);
+        })
+
         $scope.cancelCall = function(){
             audio.pause();
             socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
@@ -169,6 +179,42 @@ angular.module("app.call.controller",[
             if(typeof from !== 'undefined')
                 $state.go(from.fromState.name,params,{location: "replace", reload: true});
 
+        }
+
+        $scope.shareScreen = function(){
+            OT.checkScreenSharingCapability(function(response) {
+              if(response.supported) {
+                console.log("supported");
+
+                // var publisherProperties = {};
+                // publisherProperties.maxResolution = { width: 1920, height: 1080 };
+                // publisherProperties.videoSource = 'screen';
+                // publisherProperties.fitMode = 'contain';
+
+                // OT.initPublisher('screen-preview',
+                //   publisherProperties,
+                //   function(error) {
+                //     if (error) {
+                //       // Look at error.message to see what went wrong.
+                //     } else {
+                //       session.publish(publisher, function(error) {
+                //         if (error) {
+                //          // Look error.message to see what went wrong.
+                //         }
+                //       });
+                //     }
+                //   }
+                // );
+
+              }else {
+                console.log("not supported");
+              }
+            });
+        }
+
+        $scope.recordVideo = function(){
+            console.log("record");
+            socket.emit("sendArchive",{type:"start", sessionId: sessionId, userId: $scope.userInfo.id});
         }
 
         $scope.muteAudio = function(){
@@ -189,8 +235,6 @@ angular.module("app.call.controller",[
 
         var disconnect = function() {
             if (publisher) {
-                publisher.publishAudio(false);
-                publisher.publishVideo(false);
                 session.unpublish(publisher);
                 session.disconnect();
             }

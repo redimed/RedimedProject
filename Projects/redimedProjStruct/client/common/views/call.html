@@ -181,7 +181,24 @@
   }
 }
 
-.buttons {
+#selfVideo {
+    height:15%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#callerVideo
+{
+    width:58%;
+    height:100%;
+    /*position: absolute;*/
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+/*.buttons {
 }
 
 .buttons a {
@@ -239,19 +256,12 @@
 .buttons a:hover::before {
   opacity: 1;
 }
-
-.buttons a.videoBtn:hover::before {
-  /*background-color: #747df8;*/
-    text-decoration: none;
-}
  
-.buttons a.cancelBtn:hover::before {
-  /*background-color: #f05d60;*/
-    text-decoration: none;
-}
- 
-.buttons a.audioBtn:hover::before {
-  /*background-color: #747df8;*/
+.buttons a.audioBtn:hover::before 
+.buttons a.cancelBtn:hover::before
+.buttons a.videoBtn:hover::before
+.buttons a.moreBtn:hover::before
+{
     text-decoration: none;
 }
  
@@ -273,25 +283,21 @@
   vertical-align: middle;
 }
 
-#selfVideo {
-    height:15%;
-    /*width:20%;*/
-    position: absolute;
-    top: 0;
-    right: 0;
-}
+.moreBtn i {
+  color: #6FDB72;
+  margin-top:24px;
+  vertical-align: middle;
+}*/
 
-#callerVideo
-{
-    width:58%;
-    height:100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
 
-}
 </style>
+
+<link rel="stylesheet" type="text/css" href="lib/circle-menu/normalize.css" />
+<link rel="stylesheet" type="text/css" href="lib/circle-menu/demo.css" />
+<link rel="stylesheet" type="text/css" href="lib/circle-menu/component.css" />
+
+<script src="lib/circle-menu/polyfills.js"></script>
+<script src="lib/circle-menu/demo.js"></script>
 
 
 <div>
@@ -307,7 +313,7 @@
         <div class="span4 offset4 text-center">
           <div class="skype">
             <div class="content-img">
-              <img width="100%" height="100%" class="img-circle" src="{{callUserInfo.img}}" alt="">
+              <img width="100%" height="100%" class="img-circle" ng-src="{{callUserInfo.img}}" alt="">
             </div>
           </div>
         </div>
@@ -315,26 +321,67 @@
     </div>
 
 
-    <div class="easyrtcMirror" id="selfVideo" ></div>
+    <div class="easyrtcMirror" id="selfVideo"></div>
+    <div id="screen-preview"></div>
+
     <div ng-show="!isCaller || isAccept"  id="callerVideo" ></div>
 
-  <div class="row-fluid" style="position: absolute; bottom:30px; left:10px; right:0;">
-      <div class="span4 offset4 text-center">
-        <div class="buttons">
-          <a style="z-index: 9999; cursor: pointer;" class="videoBtn" ng-click="muteVideo()" href="javascript:;">
-              <i ng-show="isVideoMuted" class="fa fa-eye fa-3x"></i>
-              <i ng-show="!isVideoMuted" class="fa fa-eye-slash fa-3x"></i>
-          </a>
-          <a style="z-index: 9999; cursor: pointer;" class="cancelBtn" ng-click="cancelCall()" href="javascript:;">
-              <i class="fa fa-power-off fa-3x"></i>
-          </a>
-          <a style="z-index: 9999; cursor: pointer;" class="audioBtn" ng-click="muteAudio()" href="javascript:;">
-              <i class="fa fa-microphone fa-3x" ng-show="isAudioMuted"></i>
-              <i class="fa fa-microphone-slash fa-3x" ng-show="!isAudioMuted"></i>
-          </a>
+    <!-- <div class="row-fluid" style="position: absolute; bottom:30px; left:10px; right:0;"> -->
+        <!-- <div class="span4 offset4 text-center">
+          <div class="buttons">
+            <a style="z-index: 9999; cursor: pointer;" class="videoBtn" ng-click="muteVideo()" href="javascript:;">
+                <i ng-show="isVideoMuted" class="fa fa-eye fa-3x"></i>
+                <i ng-show="!isVideoMuted" class="fa fa-eye-slash fa-3x"></i>
+            </a>
+            <a style="z-index: 9999; cursor: pointer;" class="cancelBtn" ng-click="cancelCall()" href="javascript:;">
+                <i class="fa fa-power-off fa-3x"></i>
+            </a>
+            <a style="z-index: 9999; cursor: pointer;" class="audioBtn" ng-click="muteAudio()" href="javascript:;">
+                <i class="fa fa-microphone fa-3x" ng-show="isAudioMuted"></i>
+                <i class="fa fa-microphone-slash fa-3x" ng-show="!isAudioMuted"></i>
+            </a>
+            <a style="z-index: 9999; cursor: pointer;" class="moreBtn" href="javascript:;">
+                <i class="fa fa-plus fa-3x"></i>
+            </a>
+          </div>       
+        </div> -->
+
+        <div class="container">
+          <div class="component">
+            <button class="cn-button" id="cn-button">+</button>
+            <div class="cn-wrapper" id="cn-wrapper">
+                <ul>
+                  <li>
+                    <a href="javascript:;" ng-click="shareScreen()" >
+                      <span class="fa fa-desktop"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" ng-click="muteVideo()">
+                      <span ng-show="isVideoMuted" class="fa fa-eye"></span>
+                      <span ng-show="!isVideoMuted" class="fa fa-eye-slash"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" ng-click="cancelCall()"><span class="fa fa-power-off"></span></a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" ng-click="muteAudio()">
+                      <span ng-show="isAudioMuted" class="fa fa-microphone"></span>
+                      <span ng-show="!isAudioMuted" class="fa fa-microphone-slash"></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" ng-click="recordVideo()">
+                      <span class="fa fa-video-camera"></span>
+                    </a>
+                  </li>
+                </ul>
+            </div>
+            <div id="cn-overlay" class="cn-overlay"></div>
+          </div>
         </div>
-      </div>
-  </div>
+    <!-- </div> -->
 
 
 </div>

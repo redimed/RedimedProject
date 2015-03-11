@@ -59,7 +59,8 @@
     "angular-flot": "~0.0.6",
     "angular-svg-round-progressbar": "~0.2.4",
     "angular-bootstrap-simple-chat": "~0.0.2",
-    "angular-scroll-glue": "~2.0.4"
+    "angular-scroll-glue": "~2.0.4",
+    "opentok-layout-js": "~0.0.12"
   },
   "resolutions": {
     "angular": "1.2.25",

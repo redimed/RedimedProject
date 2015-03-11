@@ -134,7 +134,7 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
+.run(function($window,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))
@@ -152,6 +152,16 @@ angular.module("app", [
 
         socket.removeAllListeners();
     })
+
+    var checkInterval;
+
+    checkInterval = $interval(function(){
+        if($cookieStore.get("userInfo") != null || typeof $cookieStore.get("userInfo") !== 'undefined')
+        {
+            socket.emit("checkApp",$cookieStore.get("userInfo").id)
+        }
+    },5000);
+
 
     // socket.on("isLoggedIn",function(){
     //     toastr.error("Your Account Is Already Logged In!");
