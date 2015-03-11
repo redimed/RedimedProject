@@ -129,16 +129,6 @@ angular.module("app", [
             }
         })
 
-    .state('renderCall',{
-            url:'/renderCall',
-            views:{
-                "root":{
-                   templateUrl: "common/views/renderCall.html",
-                    controller:'renderCall'
-                }
-            }
-
-        })
 
     /* END */
 })
@@ -207,6 +197,7 @@ angular.module("app", [
     }
 
     $rootScope.$on("$locationChangeSuccess",function(event, current,previous){
+
         if(current === previous)
         {
             if($cookieStore.get("userInfo")){
@@ -224,7 +215,10 @@ angular.module("app", [
              e.preventDefault();
              return;
         }
-        $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
+
+        if(fromState.name != "")
+            $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
+        
         if(!$cookieStore.get("userInfo") ){
             socket.removeAllListeners();
             socket.emit('lostCookie');

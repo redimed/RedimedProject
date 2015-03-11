@@ -3,12 +3,15 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var users = [];
-module.exports = function(io,cookie,cookieParser,opentok) {
+var apiKey = "45172682";
+var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
+
+var OpenTok = require('opentok'),
+    opentok = new OpenTok(apiKey, apiSecret);
+
+module.exports = function(io,cookie,cookieParser) {
     var userList = [];
     var ua = null;
-
-    var apiKey = "45172682";
 
     io.use(parser);
 

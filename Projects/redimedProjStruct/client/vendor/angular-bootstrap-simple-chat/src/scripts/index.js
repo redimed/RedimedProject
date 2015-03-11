@@ -126,21 +126,13 @@
         scope.title = 'Chat';
       }
 
-      if(!scope.userImage){
-        scope.userImage = "./theme/assets/icon.png"
-      }
-
-      if(!scope.chatImage){
-        scope.userImage = "./theme/assets/icon.png"
-      }
-
-      scope.$watch('isShow', function(newValue, oldValue) {
-          console.log(newValue);
-          if (newValue == true) 
-              scope.isShow = true;
-          else
-              scope.isShow = false;
-      }, true);
+      // scope.$watch('isShow', function(newValue, oldValue) {
+      //     console.log(newValue);
+      //     if (newValue == true) 
+      //         scope.isShow = true;
+      //     else
+      //         scope.isShow = false;
+      // }, true);
 
     }
 

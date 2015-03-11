@@ -24,16 +24,13 @@ var credentials = {key: pkey, cert: pcert};
 var app = express();
 
 var server = require('https').createServer(credentials,app);
+// var server = require("http").createServer(app);
+
 var io = require('socket.io')(server);
 var _ = require('lodash-node');
 
-var apiKey = "45172682";
-var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
 
-var OpenTok = require('opentok'),
-    opentok = new OpenTok(apiKey, apiSecret);
-
-require('./socket')(io,cookie,cookieParser,opentok);
+require('./socket')(io,cookie,cookieParser);
 
 var myIceServers = [
     {url: "stun:stun.l.google.com:19302"},
@@ -48,7 +45,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(useragent.express());
 app.use(restful(db.sequelize, { endpoint: '/api/restful'}));
-
 app.use(favicon());
 app.use(compress());
 app.use(logger('dev'));
@@ -155,6 +151,25 @@ app.get('/api/booking/download/:bookingId/:candidateId', function(req, res, next
 
 });
 
+var https_redirect = function () {
+  return function(req, res, next) {
+    if (req.secure) {
+      if(env === 'development') {
+        return res.redirect('https://localhost:3000' + req.url);
+      } else {
+        return res.redirect('https://' + req.headers.host + req.url);
+      }
+    } else {
+      return next();
+    }
+  };
+};
+app.use(https_redirect());
+
+app.get('/',function(req, res) {
+    res.sendfile(path.join(clientDir, 'login.html'))
+});
+
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -178,19 +193,6 @@ app.use(function(err, req, res, next){
     res.send({ error: err.message });
     return;
 });
-
-
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        log.error('INTERNAL ERROR (%d): %s',res.statusCode,err.message);
-        res.send({ error: err.message });
-        return;
-    });
-}
 
 db.sequelize
     .authenticate()

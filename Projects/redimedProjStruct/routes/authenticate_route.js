@@ -18,10 +18,6 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new passportLocal.Strategy({passReqToCallback : true},AuthenticationController.login));
 
 
-app.get('/',function(req, res) {
-    res.sendfile(path.join(clientDir, 'login.html'))
-});
-
 app.get('/home',AuthenticationController.authenticated,function(req,res){
     res.sendfile(path.join(clientDir, 'home.html'))
 });

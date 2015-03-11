@@ -1,56 +1,6 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-// .controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
-//     var from = $location.search().from;
-//     var to = $location.search().to;
-//     var isCaller = ($location.search().isCaller == 'true') ? true : false;
-
-//     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
-
-//     UserService.getUserInfo(from).then(function(data){
-
-//         if(data)
-//         {
-//             delete data.img;
-//             $cookieStore.put('userInfo',data);
-
-//             console.log("User Info: " + $cookieStore.get("userInfo"));
-
-//             if(fromMobile){
-
-//                 socket.emit("mobileConnect",data.id);
-
-//                 socket.on("mobileConnectSuccess",function(){
-//                     console.log("Mobile Socket Success");
-
-//                     if(isCaller)
-//                     {
-//                         UserService.getUserInfo(to).then(function(rs){
-//                             if(!rs.img)
-//                                  rs.img = "theme/assets/icon.png"
-
-//                              $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
-//                         })
-//                     }
-//                     else
-//                     {
-//                         UserService.getUserInfo(from).then(function(rs){
-//                             if(!rs.img)
-//                                  rs.img = "theme/assets/icon.png"
-
-//                             $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
-//                         })
-//                     }
-//                 })
-//             }
-
-            
-//         }
-               
-//     })
-
-// })
 
 .controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
 
@@ -108,7 +58,7 @@ angular.module("app.loggedIn.controller",[
 
 .controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
-    $scope.isShow = false;
+    $scope.isShow = true;
 
     socket.on("forceLogout",function(){
 
@@ -173,12 +123,9 @@ angular.module("app.loggedIn.controller",[
 
 
     $scope.openChat = function(user){
-        console.log($scope.isShow);
 
-        $scope.isShow = true;
+        // $scope.isShow = true;
 
-        console.log($scope.isShow);
-        
         $scope.vm = {
             messages: [
                 {

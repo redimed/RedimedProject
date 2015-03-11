@@ -189,9 +189,13 @@ angular.module("app.call.controller",[
 
         var disconnect = function() {
             if (publisher) {
+                publisher.publishAudio(false);
+                publisher.publishVideo(false);
                 session.unpublish(publisher);
+                session.disconnect();
             }
             publisher = null;
+            session = null;
 
             socket.removeAllListeners();
         }
