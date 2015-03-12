@@ -275,8 +275,9 @@ angular.module("app.call.controller",[
 
         var disconnect = function() {
             if (publisher) {
+                publisher.destroy();
                 session.unpublish(publisher);
-                // session.disconnect();
+                session.disconnect();
             }
             publisher = null;
             session = null;
