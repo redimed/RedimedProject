@@ -276,13 +276,13 @@ module.exports = {
     injuryImageById: function(req,res) {
         var imageId = req.param('imageId');
 
-        console.log(imageId);
-
         db.IMInjuryImage.find({where: {injury_image_id: imageId}}, {raw: true})
             .success(function(data){
-
+              if(data)
+              {
                 if(data.image!=null || data.image!='')
                     res.sendfile(data.image);
+              }
 
                 // var arr = [];
                 // console.log(data[0].image);

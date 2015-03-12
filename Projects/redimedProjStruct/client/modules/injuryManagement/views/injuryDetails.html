@@ -183,8 +183,8 @@
         </div>
         <br/>
         <div >
-            <a ng-click="viewImage(img)" ng-repeat="img in injuryInfo.injuryImg">
-                <img width="200px" height="200px" ng-src="https://localhost:3000/api/im/image/{{img}}" alt="">
+            <a ng-click="viewImage(img)" ng-repeat="url in imgUrlArr">
+                <img width="200px" height="200px" ng-src="{{url}}" alt="">
             </a>
         </div>
 

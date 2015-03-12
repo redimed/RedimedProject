@@ -7,13 +7,22 @@ angular.module("app.loggedIn.im.detail.controller",[])
         $scope.injuryImages = [];
         $scope.loadedImage = false;
 
+        $scope.imgUrlArr = [];
+
 
         InjuryManagementService.getInjuryById($stateParams.id).then(function(rs){
             if(rs.status == 'success')
+            {
                 $scope.injuryInfo = rs.data[0];
 
-            console.log($scope.injuryInfo);
+                for(var i=0; i< $scope.injuryInfo.injuryImg.length; i++)
+                {
+                    $scope.imgUrlArr.push(location.origin+"/api/im/image/"+$scope.injuryInfo.injuryImg[i]);
+                }
+            }
+            
         })
+
 
         // InjuryManagementService.getImageByInjury($stateParams.id).then(function(rs){
         //     if(rs.status == 'success')
