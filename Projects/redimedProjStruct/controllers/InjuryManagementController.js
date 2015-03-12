@@ -281,7 +281,16 @@ module.exports = {
               if(data)
               {
                 if(data.image!=null || data.image!='')
-                    res.sendfile(data.image);
+                {
+                    fs.exists(data.image,function(exists){
+                      if (exists) {
+                        res.sendfile(data.image);
+                      } else {
+                        res.sendfile("./uploadFile/no-image.png");
+                      }
+                    })
+                    
+                }
               }
 
                 // var arr = [];

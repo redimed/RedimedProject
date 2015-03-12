@@ -15,9 +15,13 @@ angular.module("app.loggedIn.im.detail.controller",[])
             {
                 $scope.injuryInfo = rs.data[0];
 
-                for(var i=0; i< $scope.injuryInfo.injuryImg.length; i++)
+                if($scope.injuryInfo.injuryImg.length > 0)
                 {
-                    $scope.imgUrlArr.push(location.origin+"/api/im/image/"+$scope.injuryInfo.injuryImg[i]);
+                    $scope.loadedImage = true;
+                    for(var i=0; i< $scope.injuryInfo.injuryImg.length; i++)
+                    {
+                        $scope.imgUrlArr.push(location.origin+"/api/im/image/"+$scope.injuryInfo.injuryImg[i]);
+                    }
                 }
             }
             

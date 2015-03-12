@@ -183,7 +183,7 @@
         </div>
         <br/>
         <div >
-            <a ng-click="viewImage(img)" ng-repeat="url in imgUrlArr">
+            <a ng-if="loadedImage" ng-click="viewImage(img)" ng-repeat="url in imgUrlArr">
                 <img width="200px" height="200px" ng-src="{{url}}" alt="">
             </a>
         </div>
