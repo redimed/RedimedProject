@@ -255,13 +255,16 @@ module.exports = {
             .success(function(data){
                 db.IMInjuryImage.findAll({where:{injury_id: injury_id}},{raw:true})
                   .success(function(rs){
-                      var imgArr = [];
-                      for(var i=0; i<rs.length ; i++)
+                      if(rs)
                       {
-                        if(rs[i].image!=null || rs[i].image!='')
-                            imgArr.push(rs[i].injury_image_id);
+                          var imgArr = [];
+                          for(var i=0; i<rs.length ; i++)
+                          {
+                            if(rs[i].image!=null || rs[i].image!='')
+                                imgArr.push(rs[i].injury_image_id);
+                          }
+                          data[0].injuryImg = imgArr;
                       }
-                      data[0].injuryImg = imgArr;
                       res.json({status:'success',data:data})
                   })
             })
