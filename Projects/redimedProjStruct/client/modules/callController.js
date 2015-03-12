@@ -13,6 +13,7 @@ angular.module("app.call.controller",[
 
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
+        $scope.isShareScreen = false;
 
         var publisher = null;
         var session = null;
@@ -25,6 +26,8 @@ angular.module("app.call.controller",[
         var apiKey = null;
         var sessionId = null;
         var token = null;
+
+        OT.registerScreenSharingExtension("chrome","hmnclpodollafcbbkkpfjoiekajobbbg");
 
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
@@ -67,7 +70,6 @@ angular.module("app.call.controller",[
                 var publisherProperties = {};
                 publisherProperties.maxResolution = { width: 1920, height: 1080 };
                 publisherProperties.insertMode = 'append';
-                // publisherProperties.videoSource = 'screen';
 
                 publisher = OT.initPublisher('selfVideo',publisherProperties);
 
@@ -109,7 +111,6 @@ angular.module("app.call.controller",[
                 var publisherProperties = {};
                 publisherProperties.maxResolution = { width: 1920, height: 1080 };
                 publisherProperties.insertMode = 'append';
-                // publisherProperties.videoSource = 'screen';
 
                 publisher = OT.initPublisher('selfVideo',publisherProperties);
 
@@ -182,35 +183,74 @@ angular.module("app.call.controller",[
         }
 
         $scope.shareScreen = function(){
-            OT.checkScreenSharingCapability(function(response) {
-              if(response.supported) {
-                console.log("supported");
+            $scope.isShareScreen = !$scope.isShareScreen;
+            if($scope.isShareScreen)
+            {
+                OT.checkScreenSharingCapability(function(response) {
+                  //response.extensionInstalled = true;
+                  response.extensionRequired = true
+                  console.log("extension required: " + response.extensionRequired)
+                  console.log("extension installed: " + response.extensionInstalled);
+                  console.log("extension supported: " + response.supported)
 
-                // var publisherProperties = {};
-                // publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                // publisherProperties.videoSource = 'screen';
-                // publisherProperties.fitMode = 'contain';
+                  if(!response.supported || response.extensionRegistered === false) {
+                        alert.log("This Browser does not support screen sharing")
+                  } 
+                  else if(response.extensionInstalled == false) 
+                  {
+                    // prompt to install the extension
+                    // Please help I'm stuck here. My page is loaded via HTTPS & OT.js is loaded via HTTPS as well
+                        console.log("Prompt to install screen share extension")
+                  } 
+                  else 
+                  {
+                        publisher = null;
+                        var publisherProperties = {};
+                        publisherProperties.maxResolution = { width: 1920, height: 1080 };
+                        publisherProperties.videoSource = 'screen';
+                        publisher = OT.initPublisher('selfVideo',
+                                      publisherProperties,
+                                      function(error) {
+                                        if (error) {
+                                          console.log(error.message);
+                                        } else {
+                                          session.publish(publisher, function(error) {
+                                            if (error) {
+                                             console.log(error.message);
+                                            }
+                                          });
+                                        }
+                                      }
+                                    );
+                  }
+                })   
+            }
+            else
+            {
+                publisher = null;
 
-                // OT.initPublisher('screen-preview',
-                //   publisherProperties,
-                //   function(error) {
-                //     if (error) {
-                //       // Look at error.message to see what went wrong.
-                //     } else {
-                //       session.publish(publisher, function(error) {
-                //         if (error) {
-                //          // Look error.message to see what went wrong.
-                //         }
-                //       });
-                //     }
-                //   }
-                // );
-
-              }else {
-                console.log("not supported");
-              }
-            });
+                var publisherProperties = {};
+                    publisherProperties.maxResolution = { width: 1920, height: 1080 };
+                    publisherProperties.insertMode = 'append';
+                    publisher = OT.initPublisher('selfVideo',
+                                  publisherProperties,
+                                  function(error) {
+                                    if (error) {
+                                      console.log(error.message);
+                                    } else {
+                                      session.publish(publisher, function(error) {
+                                        if (error) {
+                                         console.log(error.message);
+                                        }
+                                      });
+                                    }
+                                  }
+                                );
+            }
+             
         }
+
+        
 
         $scope.recordVideo = function(){
             console.log("record");
@@ -236,7 +276,7 @@ angular.module("app.call.controller",[
         var disconnect = function() {
             if (publisher) {
                 session.unpublish(publisher);
-                session.disconnect();
+                // session.disconnect();
             }
             publisher = null;
             session = null;
