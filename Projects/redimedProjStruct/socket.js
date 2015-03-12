@@ -53,7 +53,7 @@ module.exports = function(io,cookie,cookieParser) {
                     name: 'Test Archiving'
                   }, function(err, archive) {
                     if (err) 
-                        socket.emit("receiveArchive",{type:"start",status:'error',message: err.message});
+                        socket.emit("receiveArchive",{type:"start",status:'error',error: err});
                     else
                         socket.emit("receiveArchive",{type:"start",status:'success',archive: archive});
                   });
@@ -62,7 +62,7 @@ module.exports = function(io,cookie,cookieParser) {
             {
                 opentok.stopArchive(info.archiveId, function(err, archive) {
                      if (err) 
-                        socket.emit("receiveArchive",{type:"stop",status:'error',message: err.message});
+                        socket.emit("receiveArchive",{type:"stop",status:'error',error: err});
                     else
                         socket.emit("receiveArchive",{type:"stop",status:'success',archive: archive});
                 });

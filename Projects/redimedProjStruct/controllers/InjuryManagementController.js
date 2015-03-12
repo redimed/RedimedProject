@@ -253,25 +253,40 @@ module.exports = {
 
         db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
             .success(function(data){
-                res.json({status:'success',data:data})
+                db.IMInjuryImage.findAll({where:{injury_id: injury_id}},{raw:true})
+                  .success(function(rs){
+                      var imgArr = [];
+                      for(var i=0; i<rs.length ; i++)
+                      {
+                        if(rs[i].image!=null || rs[i].image!='')
+                            imgArr.push(rs[i].injury_image_id);
+                      }
+                      data[0].injuryImg = imgArr;
+                      res.json({status:'success',data:data})
+                  })
             })
             .error(function(err){
                 res.json({status:'error',error:err})
             })
     },
     injuryImageById: function(req,res) {
-        var injury_id = req.body.injury_id;
+        var imageId = req.param('imageId');
 
-        db.IMInjuryImage.findAll({where: {injury_id: injury_id}}, {raw: true})
+        console.log(imageId);
+
+        db.IMInjuryImage.find({where: {injury_image_id: imageId}}, {raw: true})
             .success(function(data){
-                var arr = [];
 
-                for(var i=0; i<data.length; i++)
-                {
-                    arr.push({imgId:data[i].injury_image_id,image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
-                }
+                if(data.image!=null || data.image!='')
+                    res.sendfile(data.image);
 
-                res.json({status:'success',data:arr});
+                // var arr = [];
+                // console.log(data[0].image);
+                // for(var i=0; i<data.length; i++)
+                // {
+                    // res.json({status:'success',data:arr});
+                    // arr.push({imgId:data[i].injury_image_id,image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
+                // }
             })
             .error(function(err){
                 res.json({status:'error',error:err})
