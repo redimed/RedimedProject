@@ -8,7 +8,6 @@ angular.module("app.loggedIn.im.detail.controller",[])
         $scope.loadedImage = false;
 
 
-
         InjuryManagementService.getInjuryById($stateParams.id).then(function(rs){
             if(rs.status == 'success')
                 $scope.injuryInfo = rs.data[0];
