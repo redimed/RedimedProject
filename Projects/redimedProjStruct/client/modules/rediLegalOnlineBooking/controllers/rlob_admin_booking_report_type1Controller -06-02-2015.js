@@ -78,15 +78,15 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                            if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
                                 data.data[i].style_class = 'warning'
                             }
                             else{
-                                if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                                if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
                                     data.data[i].style_class = 'info'
                                 }
                                 else{
-                                    if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                    if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
                                         data.data[i].style_class = 'danger'
                                     }
                                 }

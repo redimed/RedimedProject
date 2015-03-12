@@ -8,6 +8,7 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var rlobEmailController=require('./rlobEmailController');
 var rlobUtil=require('./rlobUtilsController');
+var kiss=require('./kissUtilsController');
 var moment=require('moment');
 module.exports =
 {
@@ -391,7 +392,7 @@ module.exports =
         var mapUrl=req.body.mapUrl;
         var sql=
             " SELECT 	u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
-            " 	booking.`WRK_SURNAME`,booking.`CLAIM_NO`,                                                     "+
+            " 	booking.`WRK_SURNAME`,booking.WRK_OTHERNAMES,booking.`CLAIM_NO`,                                                     "+
             " 	booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
             " FROM 	`rl_bookings` booking                                                                     "+
             " 	INNER JOIN `users` u ON booking.`ASS_ID`=u.`id`                                               "+
@@ -423,41 +424,63 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        emailInfo.subject='Confirmation of Redilegal booking � '+row.WRK_SURNAME;
-                        emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
+                        emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        emailInfo.senders=rlobUtil.getMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
+                        //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                        var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
+                        kiss.exlog(redimed_logo_1);
                         emailInfo.htmlBody=
-                            "	<p>Hi <span style='font-weight: bold'>"+row.user_name+"</span>,</p>                                 "+
-                            "    <p>                                                                                                 "+
-                            "        Thank you for your booking request with Redilegal.                                              "+
-                            "        The appointment has been confirmed for                                                          "+
-                            "        <span style='font-weight: bold'>"+row.WRK_SURNAME+" "+row.CLAIM_NO+"</span>                   "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        <table>                                                                                         "+
-                            "            <tr><td>Date:</td><td>"+moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY")+"</td></tr>      "+
-                            "            <tr><td>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>      "+
-                            "            <tr><td>Type of appointment:</td><td>"+'REDiLEGAL-'+row.Rl_TYPE_NAME+"</td></tr>            "+
-                            "            <tr><td>Doctor:</td><td>"+row.NAME+"</td></tr>                                             "+
-                            "            <tr><td>Address:</td><td>"+row.Site_addr+"</td></tr>                                       "+
-                            "        </table>                                                                                        "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        Please ensure the paperwork is sent through to redilegal@redimed.com.au or                      "+
-                            "        uploaded to the online booking system at least one week prior to the appointment date.          "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        Should you have any questions please do not hesitate to contact Redilegal                       "+
-                            "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        Thank you                                                                                       "+
-                            "    </p>                                                                                                "+
-                            " <div style='width:400px;height:300px'>                                                                 "+
-                            "   <img src='"+mapUrl+"'/>                                                                                        "+
-                            " <div> Site address: "+siteAddress+" <div> "+
-                            " </div>                                                                                                 ";
+                            " <div style='font:11pt Calibri'>                                                                                                                      "+
+                            "   <p>Hi "+row.user_name+",</p>                                                                                                                       "+
+                            "   <p>                                                                                                                                                "+
+                            "    Thank you for your booking request with Redimed.                                                                                                  "+
+                            "    The appointment has been confirmed for                                                                                                            "+
+                            "    <span style='font-weight: bold'>"+row.WRK_OTHERNAMES+" "+row.WRK_SURNAME+" "+row.CLAIM_NO+"</span>                                                "+
+                            "   </p>                                                                                                                                               "+
+                            "   <p>                                                                                                                                                "+
+                            "    <table>                                                                                                                                           "+
+                            "         <tr><td style='font-weight:bold'>Date:</td><td>"+moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY")+"</td></tr>                               "+
+                            "         <tr><td style='font-weight:bold'>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>                                    "+
+                            "         <tr><td style='font-weight:bold'>Address:</td><td>"+row.Site_addr+"</td></tr>                                                                "+
+                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>"+row.NAME+"</td></tr>                                                                      "+
+                            "         <tr><td style='font-weight:bold'>Type of appointment:</td><td>"+row.Rl_TYPE_NAME+"</td></tr>                                                 "+
+                            "    </table>                                                                                                                                          "+
+                            "   </p>                                                                                                                                               "+
+                            "   <p>                                                                                                                                                "+
+                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                                      "+
+                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                            "+
+                            "   </p>                                                                                                                                               "+
+                            "   <p>                                                                                                                                                "+
+                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                             "+
+                            "    on (08) 9230 0900 or medicolegal@redimed.com.au Thank you                                                                                         "+
+                            "   </p>                                                                                                                                               "+
+                            "                                                                                                                                                      "+
+                            "   <div style='width:400px;height:300px'>                                                                                                             "+
+                            "     <img src='"+mapUrl+"'/>                                                                                                                          "+
+                            "     <div> Site address: "+siteAddress+" </div>                                                                                                       "+
+                            "   </div>                                                                                                                                             "+
+                            "   <br/>                                                                                                                                              "+
+                            "   <p>Kind Regards,</p>                                                                                                                               "+
+                            "   <p>Redimed Medico-Legal</p>                                                                                                                        "+
+                            "   <hr/>                                                                                                                                              "+
+                            "   <table>                                                                                                                                            "+
+                            "   <tr>                                                                                                                                               "+
+                            "       <td>                                                                                                                                           "+
+                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                                                                          "+
+                            "       </td>                                                                                                                                          "+
+                            "       <td>                                                                                                                                           "+
+                            "           <p><span style='font-weight: bold'>A&nbsp;</span>"+row.Site_addr+"</p>                                                                     "+
+                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                         "+
+                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>                "+
+                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                            "+
+                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                                    "+
+                            "       </td>                                                                                                                                          "+
+                            "   </tr>                                                                                                                                              "+
+                            "   </table>                                                                                                                                           "+
+                            "                                                                                                                                                      "+
+                            " </div>                                                                                                                                               ";
                         rlobEmailController.sendEmail(req,res,emailInfo);
                     }
 

@@ -126,15 +126,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     //chien set style class node
                     //phanquocchien.c1109g@gmail.com
                     var styleClass = '';
-                    if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                    if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
                         styleClass = 'rlob_document_status_not_confirmed'
                     }
                     else{
-                        if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                        if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
                             styleClass = 'rlob_document_status_checked'
                         }
                         else{
-                            if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                            if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
                                 styleClass = 'rlob_document_status_no_document'
                             }
                         }
@@ -220,7 +220,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             toDateKey:moment().add(30,'d').format("DD/MM/YYYY"),
             doctorKey:'',
             workerKey:'',
-            documentStatusKey:''
+            documentStatusKey:{}
         };
 
         $scope.filterBooking=function()
@@ -231,7 +231,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             //var workerKey=$scope.lobAdminSearch.workerKey!=null && $scope.lobAdminSearch.workerKey!=undefined?$scope.lobAdminSearch.workerKey:'';
             var doctorKey=$scope.lobAdminSearch.doctorKey;
             var workerKey=$scope.lobAdminSearch.workerKey;
-            var documentStatusKey=$scope.lobAdminSearch.documentStatusKey;
+            var documentStatusKey=$scope.lobAdminSearch.documentStatusKey.value;
             $http({
                 method:"GET",
                 url:"/api/rlob/rl_bookings/admin/filter-booking",
@@ -514,15 +514,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     {
                         // chien set style class
                         //phanquocchien.c1109g@gmail.com
-                        if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                        if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
                             data.data.style_class = 'rlob_document_status_not_confirmed'
                         }
                         else{
-                            if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                            if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
                                 data.data.style_class = 'rlob_document_status_checked'
                             }
                             else{
-                                if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
                                     data.data.style_class = 'rlob_document_status_no_document'
                                 }
                             }
@@ -875,15 +875,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     {
                         // chien set style class
                         //phanquocchien.c1109g@gmail.com
-                        if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed){
+                        if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
                             data.data.style_class = 'rlob_document_status_not_confirmed'
                         }
                         else{
-                            if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked){
+                            if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
                                 data.data.style_class = 'rlob_document_status_checked'
                             }
                             else{
-                                if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments){
+                                if(data.data.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
                                     data.data.style_class = 'rlob_document_status_no_document'
                                 }
                             }
@@ -1105,15 +1105,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     if(data.status=='success')
                     {
                         var styleClass = '';
-                        if(status == $scope.rlobDocumentStatus.notConfirmed){
+                        if(status == $scope.rlobDocumentStatus.notConfirmed.value){
                             styleClass = 'rlob_document_status_not_confirmed'
                         }
                         else{
-                            if(status == $scope.rlobDocumentStatus.checked){
+                            if(status == $scope.rlobDocumentStatus.checked.value){
                                 styleClass = 'rlob_document_status_checked'
                             }
                             else{
-                                if(status == $scope.rlobDocumentStatus.noDocuments){
+                                if(status == $scope.rlobDocumentStatus.noDocuments.value){
                                     styleClass = 'rlob_document_status_no_document'
                                 }
                             }

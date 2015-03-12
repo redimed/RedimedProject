@@ -814,7 +814,6 @@ module.exports =
         var sql='SELECT doctor.`doctor_id`,doctor.`NAME` FROM `doctors` doctor WHERE doctor.`doctor_id`=?';
         req.getConnection(function(err,connection)
         {
-
             var query = connection.query(sql,doctorId,function(err,rows)
             {
                 if(err)

@@ -9,7 +9,7 @@ module.exports =
     list:function(req,res){
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var sql=
-            " SELECT spec.*                                                                                        "+
+            " SELECT DISTINCT spec.Specialties_name                                                                                        "+
             " FROM `cln_specialties` spec INNER JOIN `rl_types` rltype ON spec.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`    "+
             " WHERE rltype.`SOURCE_TYPE` LIKE ?                                                                    "+
             (sourceType==rlobUtil.sourceType.REDiLEGAL?"   AND spec.`FOR_REDILEGAL`=1 ":"")+

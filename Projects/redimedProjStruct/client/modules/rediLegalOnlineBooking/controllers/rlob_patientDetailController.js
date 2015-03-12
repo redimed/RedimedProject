@@ -388,7 +388,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 isContactPatient:$scope.newBooking.ISCONTACTPATIENT?$scope.newBooking.ISCONTACTPATIENT:'',
                 notes:$scope.newBooking.NOTES?$scope.newBooking.NOTES:'',
                 claimNumber:$scope.newBooking.CLAIM_NO?$scope.newBooking.CLAIM_NO:'',
-                wrkName:$scope.newBooking.WRK_SURNAME?$scope.newBooking.WRK_SURNAME:'',
+                wrkName:($scope.newBooking.WRK_OTHERNAMES?$scope.newBooking.WRK_OTHERNAMES:'')+" "+($scope.newBooking.WRK_SURNAME?$scope.newBooking.WRK_SURNAME:''),
                 wrkDOB:moment($scope.WRK_DOB_TEMP).format("DD/MM/YYYY"),
                 wrkContactNo:$scope.newBooking.WRK_CONTACT_NO?$scope.newBooking.WRK_CONTACT_NO:'',
                 injuryDesc:$scope.newBooking.DESC_INJURY?$scope.newBooking.DESC_INJURY:''
@@ -397,25 +397,24 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.emailContent=
                 "The below appointment has been requested by "+$scope.mailBodyData.requestBy+" from "+$scope.mailBodyData.company+".\n\n"+
                 "Appointment Details:\n\n"+
-                "+ Date: "+$scope.mailBodyData.date+"\n"+
-                "+ Time: "+$scope.mailBodyData.time+"\n"+
-                "+ Type of appointment: "+$scope.mailBodyData.typeOfAppointment+"\n"+
-                "+ Doctor: "+$scope.mailBodyData.doctor+"\n"+
-                "+ Address: "+$scope.mailBodyData.address+"\n"+
-                "+ Medico-Legal to contact the patient and arrange a time: "+(($scope.mailBodyData.isContactPatient=='1')?'yes':'no')+"\n"+
-                "+ Notes: "+$scope.mailBodyData.notes+" \n\n"+
+                "Date: "+$scope.mailBodyData.date+"\n"+
+                "Time: "+$scope.mailBodyData.time+"\n"+
+                "Type of appointment: "+selectedInfo.rltypeSelected.Rl_TYPE_NAME+"\n"+
+                "Doctor: "+$scope.mailBodyData.doctor+"\n"+
+                "Address: "+$scope.mailBodyData.address+"\n"+
+                "Notes: "+$scope.mailBodyData.notes+" \n\n"+
                 "Patient information:\n\n"+
-                "+ Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
-                "+ Name: "+$scope.mailBodyData.wrkName+"\n"+
-                "+ Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
-                "+ Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
-                "+ Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
+                "Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
+                "Name: "+$scope.mailBodyData.wrkName+"\n"+
+                "Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
+                "Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
+                "Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
 
             var recepient = "medicolegal@redimed.com.au";
             var options = {
 //                cc: "tannv.dts@gmail.com",
 //                bcc: "nguyenvantan27binhduong@gmail.com",
-                subject: "Summary of Booking",
+                subject: ("Medico-Legal Paperwork "+$scope.mailBodyData.wrkName),
                 body: $scope.emailContent
             };
 
