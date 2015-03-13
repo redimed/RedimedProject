@@ -80,16 +80,16 @@
 												<i class="fa fa-plus"></i>
 											</a>
 											&nbsp
-											<a ng-click="saveTimetable({pindex: timetableIndex, index: $index})">
-												<i class="fa fa-save"></i>
-											</a>
-											&nbsp
-											<a ng-click="showState(data)">
-												<i class="fa fa-search"></i>
-											</a>
 										</span>
+										<a ng-click="saveNewTimetable(data, timetableIndex)">
+											<i class="fa fa-save"></i>
+										</a>
+										&nbsp
+										<a ng-click="showState(data)">
+												<i class="fa fa-search"></i>
+										</a>
 										<span ng-show="dataIndex !== 0">
-											<a ng-click="clickInput({type: 'remove', pindex: timetableIndex, index: $index})" 
+											<a ng-click="removeTimetable(data)" 
 												style="color: #F3565D;">
 												<i class="fa fa-minus"></i>
 											</a>

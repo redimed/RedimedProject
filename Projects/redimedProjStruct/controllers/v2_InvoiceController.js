@@ -277,7 +277,7 @@ module.exports = {
 		var header = null;
 		var err_handle = function(err){
 			console.log('ERROR: ', err)
-			res.json({"status": "error"});
+			res.json({"status": "error", 'message': err});
 		};
 
 		// GET NEW ITEM 

@@ -93,6 +93,7 @@ angular.module("app.loggedIn.patient.search.directive", [])
 			}//END DECLARE
 
 			scope.$watch('companyId', function(companyId){
+				console.log(companyId);
 				scope.params.filters[2].value = companyId;
 				scope.refreshList();
 			})
