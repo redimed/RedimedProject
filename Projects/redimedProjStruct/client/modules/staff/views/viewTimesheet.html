@@ -52,6 +52,16 @@
                     </th>
                     <th>
                         <div class="th">
+                            </span> Approved date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Time spent
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
                             </span> Time charge
                         </div>
                     </th>
@@ -76,12 +86,14 @@
                 <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                     <td></td>
                     <td>
-                        <!--<input type="text" class="form-control input-sm">-->
+                        <input class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
                     </td>
-                    <td>
-                        <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.week_no']" ng-options="itemRow.code as itemRow.code for itemRow in weekNo " ng-change="loadList()">
-                        </select>
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -90,12 +102,17 @@
                         <h4 class="custom-timesheet">There is no items</h4>
                     </td>
                 </tr>
-                <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                    <td>{{l.Employee_Code}}</td>
-                    <td>{{l.FirstName + l.LastName}}</td>
-                    <td style="text-align:center;">{{l.week_no}}/{{currentWeek}}</td>
-                    <td>{{l.approved_date | date: "dd/MM/yyyy h:mm:ss a "}}</td>
+                <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="">
+                    <td>{{l.week_no}}</td>
+                    <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
+                    <td>{{l.end_date | date: "dd - MM - yyyy"}}</td>
+                    <td>{{l.STATUS}}</td>
+                    <td>{{l.approved_date | date: "dd - MM - yyyy h:mm:ss a "}}</td>
+                    <td>{{l.time_spent+" Hours"}}</td>
                     <td>{{l.time_charge+" Hours"}}</td>
+                    <td>{{l.time_in_lieu +" Hours"}}</td>
+                    <td>{{l.over_time +" Hours"}}</td>
+                    <td>{{l.comments}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -124,3 +141,23 @@
 <script type="text/ng-template" id="ViewTask">
     <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
 </script>
+
+<div class="modal fade" id="full" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div>
+            <div class="modal-body">
+                Modal body goes here
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn blue">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

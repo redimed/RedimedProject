@@ -9,9 +9,9 @@ angular.module("app.loggedIn.staff.service", [])
             return addAllTask.post({allTask:allTask,startWeek:startWeek,endWeek:endWeek});
         }
 
-        service.getAllTaskAMonth = function(year,month){
+        service.getAllTaskAMonth = function(search){
             var getAllTaskAMonth = api.all('staff/getAllTaskAMonth');
-            return getAllTaskAMonth.post({year:year,month:month});
+            return getAllTaskAMonth.post({search:search});
         }
 
         service.editTask = function(task){
@@ -24,9 +24,9 @@ angular.module("app.loggedIn.staff.service", [])
             return getDepartmentLocation.get();
         }
 
-        service.checkTaskWeek = function(startWeek){
+        service.checkTaskWeek = function(info){
             var checkTaskWeek = api.all('staff/checkTaskWeek');
-            return checkTaskWeek.post({startWeek:startWeek});
+            return checkTaskWeek.post({info:info});
         }
 
         service.getTaskList = function(){

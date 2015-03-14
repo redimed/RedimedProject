@@ -23,23 +23,23 @@ angular.module("app.loggedIn.staff", [
                 views: {
                     "main-content": {
                         templateUrl: "modules/staff/views/viewTimesheet.html",
-                        controller: "StaffCalendarController"
+                        controller: "TimesheetViewController"
                     }
                 }
             })
              //END VIEW TIME-SHEET
 
-            //DASHBOARD HOME
+            //CREATE TIME-SHEET
             .state("loggedIn.timesheet.create", {
                 url: "/create",
                 views: {
                     "main-content": {
                         templateUrl: "modules/staff/views/createTimesheet.html",
-                        controller: "StaffCalendarController"
+                        controller: "TimesheetCreateController"
                     }
                 }
             })
-            //END DASHBOARD HOME
+            //END CREATE TIME-SHEET
 
             //DASHBOARD HOME
             .state("loggedIn.staff.list", {

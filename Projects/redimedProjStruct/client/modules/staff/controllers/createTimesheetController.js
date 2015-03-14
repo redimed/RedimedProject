@@ -1,14 +1,20 @@
-angular.module("app.loggedIn.staff.calendar.controller", [])
+angular.module("app.loggedIn.timesheet.create.controller", [])
 
-    .controller("StaffCalendarController", function($rootScope,$scope, $filter, ConfigService, $modal,calendarHelper, moment,StaffService,$state,toastr){
-        var currentYear = moment().year();
-        var currentMonth = moment().month();
-        $scope.test = 'dd';
+    .controller("TimesheetCreateController", function($rootScope,$scope, $cookieStore,$filter, ConfigService, $modal,calendarHelper, moment,StaffService,$state,toastr){
+        $('body').addClass("page-sidebar-closed");
+        $('ul').addClass("page-sidebar-menu-closed");
+
         if(!$scope.tasks){
             $scope.tasks = [];
         }
 
+        if(!$scope.info){
+            $scope.info = {};
+        }
+
         $scope.isEdit = false;
+        $scope.calendarDay = new Date();
+        $scope.userID = $cookieStore.get("userInfo").id;
 
         var startWeek,endWeek;
 
@@ -22,30 +28,12 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             time_charge: null
         };
 
-        $scope.calendarView = 'month';
-        $scope.calendarDay = new Date();
-        $scope.preDay = moment($scope.calendarDay).subtract(1, 'month').toDate();
-        $scope.nextDay = moment($scope.calendarDay).add(1, 'month').toDate();
-
-        StaffService.getDepartmentLocation().then(function(response){
-            if(response['status'] == 'fail' || response['status'] == 'error'){
-                toastr.error("Error", "Error");
-                $state.go('loggedIn.home', null, {'reload': true});
-            }else
-            {
-                $scope.departments = response['department'];
-                $scope.locations = response['location'];
-                $scope.activities = response['activity'];
-                $scope.viewWeek = calendarHelper.getWeekView($scope.calendarDay, true);
-                checkTaskWeek($scope.viewWeek.startWeek);
-                getTaskMonth(currentYear,currentMonth);
-            }
-        })
-
-        function checkTaskWeek(date){
+        $scope.checkTaskWeek= function(date){
             $scope.tasks=[];
             startWeek = $filter('date')(date, 'yyyy-MM-dd');
-            StaffService.checkTaskWeek(startWeek).then(function(response){
+            $scope.info.startWeek = startWeek;
+            $scope.info.userID = $scope.userID;
+            StaffService.checkTaskWeek($scope.info).then(function(response){
                 if(response['status'] == 'fail' || response['status'] == 'error'){
                     toastr.error("Error", "Error");
                 }else
@@ -76,10 +64,35 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
             })
         }
 
-        $scope.addRow = function(index,date,weekID){
+        $scope.loadInfo = function(){
+            $scope.tasks.loading = true;
+            StaffService.getDepartmentLocation().then(function(response){
+                if(response['status'] == 'fail' || response['status'] == 'error'){
+                    toastr.error("Error", "Error");
+                    $state.go('loggedIn.home', null, {'reload': true});
+                }else
+                {
+                    $scope.departments = response['department'];
+                    $scope.locations = response['location'];
+                    $scope.activities = response['activity'];
+                    $scope.checkTaskWeek($scope.calendarDay)
+                }
+            })
+            $scope.tasks.loading = false;
+        }
+
+        $scope.loadInfo();
+
+        $scope.addRow = function(index,date){
+            var j = 0;
+            for(var i = index; i < $scope.tasks.length; i ++){
+                if($scope.tasks[i].date == date){
+                    j++;
+                }
+            }
+            console.log(j);
             task={
-                tasks_week_id: weekID,
-                order: 2,
+                order: 1 + j,
                 task : null,
                 date : date,
                 department_code_id: null,
@@ -88,60 +101,45 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 time_charge: null,
                 isEdit: false
             };
-            $scope.tasks.splice(index + 1, 0,task); ;
+            $scope.tasks.splice(index + j, 0,task) ;
         }
 
         var dateFrom;
         $scope.changeDate = function(){
             dateFrom = new Date($scope.dateWeekFrom.substr(6,4),$scope.dateWeekFrom.substr(3,2) - 1,$scope.dateWeekFrom.substr(0,2));
-            checkTaskWeek(dateFrom);
+            $scope.checkTaskWeek(dateFrom);
         }
 
-        function getTaskMonth(currentYear,currentMonth){
-            StaffService.getAllTaskAMonth(currentYear,currentMonth).then(function(response){
-                if(response['status'] == 'error'){
-                    toastr.error("Error", "Error");
-                }else if(response['status'] == 'no task' ){
-                    toastr.error("no task", "Error");
-                }else
-                {
-                    $scope.events = response;
-                }
-            })
-        }
-
-        $scope.delTask = function(index){
-            $scope.tasks.splice(index,1);
+        $scope.delTask = function(index,order){
+            if(order != 1)
+            {
+                swal({
+                    title: "Are you sure?",
+                    text: "This task will lost in list !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: true
+                }, function() {
+                    $scope.tasks.splice(index,1);
+                })
+            }
         }
 
         $scope.addAllTask = function()
         {
-            if(!$scope.isEdit)
-            {
-                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-                StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
-                    if(response['status'] == 'success'){
-                        toastr.success("success","Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
-                    }else
-                    {
-                        toastr.error("Error", "Error");
-                    }
-                })
-            }
-            else
-            {
-                StaffService.editTask($scope.tasks).then(function(response){
-                    if(response['status'] == 'success'){
-                        toastr.success("Edit Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
-                    }else
-                    {
-                        toastr.error("Error", "Error");
-                    }
-                })
-            }
+            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+            StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
+                if(response['status'] == 'success'){
+                    toastr.success("success","Success");
+                    $state.go('loggedIn.staff.list', null, {'reload': true});
+                }else
+                {
+                    toastr.error("Error", "Error");
+                }
+            })
         }
 
         $scope.chooseItem = function(task)
