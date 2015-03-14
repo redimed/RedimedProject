@@ -170,6 +170,25 @@ module.exports = {
             })
     },
 
+    checkFirstTaskWeek: function(req,res){
+        var info = req.body.info;
+        db.timeTaskWeek.max('start_date', { where: { user_id : info.userID} })
+            .success(function (maxDate) {
+                if (maxDate === 'Invalid Date') {
+                    console.log("Not found maxDate in table");
+                    res.json({status: 'no maxDate'});
+                    return false;
+                }else
+                {
+                    res.json({status: 'success',maxDate: maxDate});
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
     getTaskList: function(req,res)
     {
         db.sequelize.query("SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS "+

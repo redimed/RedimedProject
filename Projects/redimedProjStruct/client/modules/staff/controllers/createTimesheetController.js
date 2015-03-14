@@ -14,7 +14,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         $scope.isEdit = false;
         $scope.calendarDay = new Date();
-        $scope.userID = $cookieStore.get("userInfo").id;
+        $scope.info.userID = $cookieStore.get("userInfo").id;
 
         var startWeek,endWeek;
 
@@ -32,7 +32,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.tasks=[];
             startWeek = $filter('date')(date, 'yyyy-MM-dd');
             $scope.info.startWeek = startWeek;
-            $scope.info.userID = $scope.userID;
             StaffService.checkTaskWeek($scope.info).then(function(response){
                 if(response['status'] == 'fail' || response['status'] == 'error'){
                     toastr.error("Error", "Error");
@@ -64,6 +63,38 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             })
         }
 
+        $scope.checkFirstTaskWeek = function(){
+            $scope.tasks=[];
+            StaffService.checkFirstTaskWeek($scope.info).then(function(response){
+                if(response['status'] == 'error'){
+                    toastr.error("Error", "Error");
+                }else
+                {
+                    if(response['status'] == 'success'){
+                        $scope.nextDay = moment(response['maxDate']).add(7, 'day').toDate();
+                        console.log(response['maxDate']);
+                        console.log($scope.nextDay);
+                    }else if(response['status'] == 'no maxDate'){
+                        
+                        $scope.nextDay = moment($scope.calendarDay).add(7, 'day').toDate();
+                    }
+                    $scope.viewWeek = calendarHelper.getWeekView($scope.nextDay, true);
+                        angular.forEach($scope.viewWeek.columns, function(data){
+                            $scope.task={
+                                order: 1,
+                                task : null,
+                                date : data.dateChosen,
+                                department_code_id: null,
+                                location_id: null,
+                                activity_id: null,
+                                time_charge: null
+                            };
+                            $scope.tasks.push($scope.task);
+                        })
+                }
+            })
+        }
+
         $scope.loadInfo = function(){
             $scope.tasks.loading = true;
             StaffService.getDepartmentLocation().then(function(response){
@@ -75,7 +106,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     $scope.departments = response['department'];
                     $scope.locations = response['location'];
                     $scope.activities = response['activity'];
-                    $scope.checkTaskWeek($scope.calendarDay)
+                    $scope.checkFirstTaskWeek();
                 }
             })
             $scope.tasks.loading = false;

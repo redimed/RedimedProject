@@ -24,6 +24,11 @@ angular.module("app.loggedIn.staff.service", [])
             return getDepartmentLocation.get();
         }
 
+        service.checkFirstTaskWeek = function(info){
+            var checkFirstTaskWeek = api.all('staff/checkFirstTaskWeek');
+            return checkFirstTaskWeek.post({info:info});
+        }
+
         service.checkTaskWeek = function(info){
             var checkTaskWeek = api.all('staff/checkTaskWeek');
             return checkTaskWeek.post({info:info});
