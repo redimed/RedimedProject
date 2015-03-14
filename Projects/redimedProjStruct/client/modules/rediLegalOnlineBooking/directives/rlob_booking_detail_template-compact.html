@@ -2,7 +2,7 @@
 <accordion >
     <accordion-group class="panel panel-success"  is-open="panelAccordion.status1">
         <accordion-heading>
-            <h3 class="panel-title">Patient 's Information</h3>
+            <h3 class="panel-title">Patient <!-- 's --> Information</h3>
         </accordion-heading>
         <div >
             <div ng-if="bookingType=='REDiLEGAL'" class="row ">
@@ -92,13 +92,19 @@
             </div>
 
             <div class="row ">
-                <div class="col-md-12">
-                    <label for="ISNEW">Is the patient new to REDiMED : </label>
+               <!--  <div class="col-md-12">
+                    <label for="ISNEW">Is the patient new to REDiMED : </label> -->
                     <!-- <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
                            ng-checked="selectedBooking.ISNEW==1"
                            ng-model="selectedBooking.ISNEW" id="ISNEW"> -->
-                    <span class="rlob-print-value">{{selectedBooking.ISNEW==1?'YES':'NO'}}</span> 
+                    <!-- <span class="rlob-print-value">{{selectedBooking.ISNEW==1?'YES':'NO'}}</span> 
 
+                </div> -->
+                <div class="col-md-5">
+                    <label for="WRK_DATE_OF_INJURY">Date of injury: </label>
+                </div>
+                <div class="col-md-7">
+                    <p id="WRK_DATE_OF_INJURY" ng-bind="selectedBooking.WRK_DATE_OF_INJURY|date:'dd/MM/yyyy'"></p>
                 </div>
             </div>
 
@@ -129,13 +135,13 @@
                 Appointment
             </label>
 
-            <p>
-                Medico-Legal to contact the patient and arrage a time : 
+            <!-- <p>
+                Medico-Legal to contact the patient and arrage a time :  -->
                 <!-- <input ng-disabled='true' type="checkbox" ng-true-value="1" ng-false-value="0"
                        ng-checked="selectedBooking.ISCONTACTPATIENT==1"
                        ng-model="selectedBooking.ISCONTACTPATIENT"> -->
-                <span class="rlob-print-value">{{selectedBooking.ISCONTACTPATIENT==1?'YES':'NO'}}</span> 
-            </p>
+           <!--      <span class="rlob-print-value">{{selectedBooking.ISCONTACTPATIENT==1?'YES':'NO'}}</span> 
+            </p> -->
             <!--chien-->
             <!--phanquocchien.c1109g@gmail.com-->
              <p>

@@ -211,6 +211,8 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_detail_template_print.html',
             controller: function ($scope)
             {
+                  //get date now
+                $scope.dateValue = new Date();
                 // phanquocchien.c1109g@gmail.com
                 // google map print
                 function codeAddress() {
@@ -388,7 +390,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 bookingType:'=',
                 selectedBooking:  '=',
                 isAdminGetFiles:'=',
-                filesUpdateFlag:'='
+                filesUpdateFlag:'=',
+                numberOfDocs:'='
                 //la so, de danh dau co file moi upload hay khong
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
@@ -407,6 +410,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }).success(function (data) {
                         if (data.status == 'success') {
                             $scope.files = data.data;
+                            $scope.numberOfDocs=data.data.length;
                         }
                     });
                 }

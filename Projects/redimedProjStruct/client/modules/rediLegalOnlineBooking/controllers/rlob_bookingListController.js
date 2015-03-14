@@ -3,10 +3,11 @@
  */
 
 angular.module('app.loggedIn.rlob.list.controller',[])
-.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window) {
+.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window,Mailto) {
         //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
+        // console.log($scope.loginInfo.company_id);
         $scope.bookingStatus=rlobConstant.bookingStatus;
         $scope.rl_types=[];
         $http({
@@ -37,7 +38,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 {"code": 500}
             ];
             //END CONFIG
-
+          
             //GO TO BOOKING DETAIL
 
             $scope.goToBookingDetail = function (l) {
@@ -59,6 +60,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     {
                         $scope.selectedBooking = data.data;
                         $("#view-detail-booking-dialog").modal({show: true, backdrop: 'static'});
+                        // console.log($scope.selectedBooking);
                     }
                     else
                     {
@@ -193,6 +195,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     .then(function(data){
                         if(data.status=='success'){
                             $scope.selectedBooking=data.data;
+                            // console.log($scope.selectedBooking);
                         }
                     })
             }
@@ -210,7 +213,75 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             $scope.$watch("[search.data.DATE.APPOINTMENT_DATE.from_map,search.data.DATE.APPOINTMENT_DATE.to_map]",function(newValue,oldValue){
                 $scope.loadList();
             },true);
+            $scope.$watch("selectedBooking",function(newValue,oldValue){
+                if (newValue != oldValue) {
+                    $scope.updateMailTo(newValue);
+                };
+            });
+            $scope.showDialogSendDocument=function()
+            {
+                $("#view-detail-booking-dialog").modal('hide');
+                $("#lob-client-send-document-dialog").modal({show:true,backdrop:'static'});
+            }
+            $scope.uploadDocument=function ()
+            {
+                $("#lob-client-send-document-dialog").modal('hide');
+                $("#lob-client-upload-dialog").modal({show:true,backdrop:'static'});
+            }
+            $scope.updateMailTo=function(data){
+                $scope.mailBodyData={
+                    requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
+                    company: data.Company_name?data.Company_name:'',
+                    time:moment(new Date(data.APPOINTMENT_DATE)).format("HH:mm"),
+                    date:moment(new Date(data.APPOINTMENT_DATE)).format("DD/MM/YYYY"),
+                    typeOfAppointment:data.BOOKING_TYPE,
+                    doctor:data.NAME?data.NAME:'',
+                    address:data.Site_addr?data.Site_addr:'',
+                    isContactPatient:data.ISCONTACTPATIENT?data.ISCONTACTPATIENT:'',
+                    notes:data.NOTES?data.NOTES:'',
+                    claimNumber:data.CLAIM_NO?data.CLAIM_NO:'',
+                    wrkName:data.WRK_SURNAME?data.WRK_SURNAME:'',
+                    wrkDOB:moment(data.WRK_DOB).format("DD/MM/YYYY"),
+                    wrkContactNo:data.WRK_CONTACT_NO?data.WRK_CONTACT_NO:'',
+                    injuryDesc:data.DESC_INJURY?data.DESC_INJURY:''
+                }
 
+                 $scope.emailContent=
+                "The below appointment has been requested by "+$scope.mailBodyData.requestBy+" from "+$scope.mailBodyData.company+".\n\n"+
+                "Appointment Details:\n\n"+
+                "Date: "+$scope.mailBodyData.date+"\n"+
+                "Time: "+$scope.mailBodyData.time+"\n"+
+                "Type of appointment: "+$scope.mailBodyData.Rl_TYPE_NAME+"\n"+
+                "Doctor: "+$scope.mailBodyData.doctor+"\n"+
+                "Address: "+$scope.mailBodyData.address+"\n"+
+                "Notes: "+$scope.mailBodyData.notes+" \n\n"+
+                "Patient information:\n\n"+
+                "Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
+                "Name: "+$scope.mailBodyData.wrkName+"\n"+
+                "Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
+                "Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
+                "Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
+
+            var recepient = "medicolegal@redimed.com.au";
+            var options = {
+//                cc: "tannv.dts@gmail.com",
+//                bcc: "nguyenvantan27binhduong@gmail.com",
+                subject: ("Medico-Legal Paperwork "+$scope.mailBodyData.wrkName),
+                body: $scope.emailContent
+            };
+
+                $scope.mailtoLink = Mailto.url(recepient, options);
+
+            }
+            
+
+
+            $scope.sendEmail=function()
+            {
+                console.log($scope.mailtoLink);
+                $window.location.href = $scope.mailtoLink;
+                $("#lob-client-send-document-dialog").modal('hide');
+            }
 
         });
 
