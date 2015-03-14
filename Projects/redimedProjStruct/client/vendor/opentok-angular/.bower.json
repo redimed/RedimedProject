@@ -1,0 +1,42 @@
+{
+  "name": "opentok-angular",
+  "main": "opentok-angular.js",
+  "version": "0.2.4",
+  "homepage": "https://github.com/aullman/OpenTok-Angular",
+  "authors": [
+    "Adam Ullman <adam@tokbox.com>"
+  ],
+  "description": "Angular module for OpenTok",
+  "keywords": [
+    "angular",
+    "opentok"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "package.json",
+    "gulpfile.js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "opentok-layout-js": "~0.0.6",
+    "angular": "~1.2.15",
+    "jquery": "~2.1.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.23"
+  },
+  "_release": "0.2.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.4",
+    "commit": "65bc5394af9a1de7ccce231da1b9e28a7327f73e"
+  },
+  "_source": "git://github.com/aullman/OpenTok-Angular.git",
+  "_target": "~0.2.4",
+  "_originalSource": "opentok-angular",
+  "_direct": true
+}

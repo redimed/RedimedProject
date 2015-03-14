@@ -1,3 +1,4 @@
+
 <style type="text/css">
 .skype {
   background: #fff;
@@ -198,6 +199,28 @@
     margin: auto;
 }
 
+.statusMessage {
+    background-color: #565853;
+    width: 100%;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 0 10px 0;
+    color: #DCD9CD;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+#statusMessages {
+    transition: opacity 200ms ease;
+    opacity: 0;
+    position: absolute;
+    width: 465px;
+    left: calc(50% - 242.5px);
+    bottom: 80px;
+    z-index: 98;
+}
+
 /*.buttons {
 }
 
@@ -323,65 +346,51 @@
 
     <div class="easyrtcMirror" id="selfVideo"></div>
     <div id="screen-preview"></div>
-
     <div ng-show="!isCaller || isAccept"  id="callerVideo" ></div>
 
-    <!-- <div class="row-fluid" style="position: absolute; bottom:30px; left:10px; right:0;"> -->
-        <!-- <div class="span4 offset4 text-center">
-          <div class="buttons">
-            <a style="z-index: 9999; cursor: pointer;" class="videoBtn" ng-click="muteVideo()" href="javascript:;">
-                <i ng-show="isVideoMuted" class="fa fa-eye fa-3x"></i>
-                <i ng-show="!isVideoMuted" class="fa fa-eye-slash fa-3x"></i>
-            </a>
-            <a style="z-index: 9999; cursor: pointer;" class="cancelBtn" ng-click="cancelCall()" href="javascript:;">
-                <i class="fa fa-power-off fa-3x"></i>
-            </a>
-            <a style="z-index: 9999; cursor: pointer;" class="audioBtn" ng-click="muteAudio()" href="javascript:;">
-                <i class="fa fa-microphone fa-3x" ng-show="isAudioMuted"></i>
-                <i class="fa fa-microphone-slash fa-3x" ng-show="!isAudioMuted"></i>
-            </a>
-            <a style="z-index: 9999; cursor: pointer;" class="moreBtn" href="javascript:;">
-                <i class="fa fa-plus fa-3x"></i>
-            </a>
-          </div>       
-        </div> -->
-
-        <div class="container">
-          <div class="component">
-            <button class="cn-button" id="cn-button">+</button>
-            <div class="cn-wrapper" id="cn-wrapper">
-                <ul>
-                  <li>
-                    <a tooltip-html-unsafe="Screen Sharing" href="javascript:;" ng-click="shareScreen()" >
-                      <span class="fa fa-desktop"></span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:;" ng-click="muteVideo()">
-                      <span ng-show="isVideoMuted" class="fa fa-eye"></span>
-                      <span ng-show="!isVideoMuted" class="fa fa-eye-slash"></span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:;" ng-click="cancelCall()"><span class="fa fa-power-off"></span></a>
-                  </li>
-                  <li>
-                    <a href="javascript:;" ng-click="muteAudio()">
-                      <span ng-show="isAudioMuted" class="fa fa-microphone"></span>
-                      <span ng-show="!isAudioMuted" class="fa fa-microphone-slash"></span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:;" ng-click="recordVideo()">
-                      <span class="fa fa-video-camera"></span>
-                    </a>
-                  </li>
-                </ul>
-            </div>
-            <div id="cn-overlay" class="cn-overlay"></div>
-          </div>
+    <div class="container">
+      <div class="component">
+        <button class="cn-button" id="cn-button">+</button>
+        <div class="cn-wrapper" id="cn-wrapper">
+            <ul>
+              <li>
+                <a tooltip-html-unsafe="Screen Sharing" href="javascript:;" ng-click="shareScreen()" >
+                  <span class="fa fa-desktop"></span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;" ng-click="muteVideo()">
+                  <span ng-show="isVideoMuted" class="fa fa-eye"></span>
+                  <span ng-show="!isVideoMuted" class="fa fa-eye-slash"></span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;" ng-click="cancelCall()"><span class="fa fa-power-off"></span></a>
+              </li>
+              <li>
+                <a href="javascript:;" ng-click="muteAudio()">
+                  <span ng-show="isAudioMuted" class="fa fa-microphone"></span>
+                  <span ng-show="!isAudioMuted" class="fa fa-microphone-slash"></span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;" ng-click="recordVideo()">
+                  <span class="fa fa-video-camera"></span>
+                </a>
+              </li>
+            </ul>
         </div>
-    <!-- </div> -->
+        <div id="cn-overlay" class="cn-overlay"></div>
+      </div>
+    </div>
+
+    <div id="statusMessages">
+        <div id="screenShareFailed" class="statusMessage" ng-if="screenShareFailed">Screen Share Failed {{screenShareFailed}}</div>
+        <div id="installScreenshareExtension" class="statusMessage" ng-if="promptToInstall">You need a Chrome extension to share your screen. <a href="" sync-click="installScreenshareExtension()">Install Screensharing Extension</a>. Once you have installed refresh your browser and click the share screen button again.</div>
+        <div id="screenShareUnsupported" class="statusMessage" ng-if="!screenShareSupported">
+            Screen Sharing currently requires Google Chrome on Desktop.
+        </div>
+    </div>
 
 
 </div>

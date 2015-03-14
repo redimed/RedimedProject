@@ -13,22 +13,43 @@ angular.module("app.call.controller",[
 
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
-        $scope.isShareScreen = false;
+        $scope.isShareScreen = true;
+
+        $scope.sharingMyScreen = false;
+        $scope.selectingScreenSource = false;
+        $scope.screenShareFailed = null;
+        $scope.promptToInstall = false;
+        $scope.screenShareSupported = !!navigator.webkitGetUserMedia;
+
+        $scope.screenPublisherProps = {
+            name: "screen",
+            style:{nameDisplayMode:"off"},
+            publishAudio: false,
+            constraints: {
+                video: {
+                    mandatory: {
+                        maxWidth: 1920,
+                        maxHeight: 1080
+                    },
+                    optional: []
+                },
+                audio: false
+            },
+            mirror: false,
+            width: screen.width,
+            height: screen.height,
+            aspectRatio: screen.width / screen.height
+        };
 
         var publisher = null;
         var session = null;
-
         var audio = new Audio('theme/assets/phone_calling.mp3');
-
         var from = $cookieStore.get('fromState');
         var params = {};
 
         var apiKey = null;
         var sessionId = null;
         var token = null;
-
-        OT.registerScreenSharingExtension("chrome","hmnclpodollafcbbkkpfjoiekajobbbg");
-
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login',null,{location: "replace"});
@@ -182,32 +203,80 @@ angular.module("app.call.controller",[
 
         }
 
-        $scope.shareScreen = function(){
-            $scope.isShareScreen = !$scope.isShareScreen;
-            if($scope.isShareScreen)
-            {
-                OT.checkScreenSharingCapability(function(response) {
-                  //response.extensionInstalled = true;
-                  response.extensionRequired = true
-                  console.log("extension required: " + response.extensionRequired)
-                  console.log("extension installed: " + response.extensionInstalled);
-                  console.log("extension supported: " + response.supported)
+        $scope.installScreenshareExtension = function () {
+              chrome.webstore.install('https://chrome.google.com/webstore/detail/gbmgefccigbfiilkihnomgkmpedbojco', function () {
+                console.log('successfully installed');
+              }, function () {
+                console.error('failed to install', arguments);
+              });
+        };
 
-                  if(!response.supported || response.extensionRegistered === false) {
-                        alert.log("This Browser does not support screen sharing")
-                  } 
-                  else if(response.extensionInstalled == false) 
-                  {
-                    // prompt to install the extension
-                    // Please help I'm stuck here. My page is loaded via HTTPS & OT.js is loaded via HTTPS as well
-                        console.log("Prompt to install screen share extension")
-                  } 
-                  else 
-                  {
-                        publisher = null;
-                        var publisherProperties = {};
+        $scope.shareScreen = function(){
+            if(navigator.userAgent.toLowerCase().indexOf("chrome") != -1)
+            {
+                
+                if($scope.isShareScreen)
+                {
+                    OT.registerScreenSharingExtension("chrome","gbmgefccigbfiilkihnomgkmpedbojco");
+
+                    OT.checkScreenSharingCapability(function(response) {
+                        console.log(response);
+                      //response.extensionInstalled = true;
+                      response.extensionRequired = true
+
+                      if(!response.supported) {
+                            alert("This Browser does not support screen sharing")
+                      } 
+                      else if(response.supported && !response.extensionInstalled) 
+                      {
+                            var modalInstance = $modal.open({
+                                templateUrl: './common/views/dialog/confirmExtension.html',
+                                size: 'md',
+                                controller: function($scope, $modalInstance){
+                                    
+                                    $scope.cancelClick = function(){
+                                        $modalInstance.close();
+                                    };
+
+                                }
+                                
+                            })
+                      } 
+                      else 
+                      {
+                            
+                            if(publisher)
+                                session.unpublish(publisher);
+                            publisher = null;
+
+                            var publisherProperties = {};
+                            publisherProperties.maxResolution = { width: 1920, height: 1080 };
+                            publisherProperties.videoSource = 'screen';
+                            publisher = OT.initPublisher('selfVideo',
+                                          publisherProperties,
+                                          function(error) {
+                                            if (error) {
+                                              console.log(error.message);
+                                            } else {
+                                              session.publish(publisher, function(error) {
+                                                if (error) {
+                                                 console.log(error.message);
+                                                }
+                                              });
+                                              $scope.isShareScreen = !$scope.isShareScreen;
+                                            }
+                                          }
+                                        );
+                      }
+                    })   
+                }
+                else
+                {
+
+                    var publisherProperties = {};
                         publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                        publisherProperties.videoSource = 'screen';
+                        // publisherProperties.videoSource = 'camera';
+                        publisherProperties.insertMode = 'append';
                         publisher = OT.initPublisher('selfVideo',
                                       publisherProperties,
                                       function(error) {
@@ -219,38 +288,54 @@ angular.module("app.call.controller",[
                                              console.log(error.message);
                                             }
                                           });
+                                          $scope.isShareScreen = !$scope.isShareScreen;
                                         }
                                       }
                                     );
-                  }
-                })   
+                        
+                    
+                }
             }
             else
             {
-                publisher = null;
-
-                var publisherProperties = {};
-                    publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                    publisherProperties.insertMode = 'append';
-                    publisher = OT.initPublisher('selfVideo',
-                                  publisherProperties,
-                                  function(error) {
-                                    if (error) {
-                                      console.log(error.message);
-                                    } else {
-                                      session.publish(publisher, function(error) {
-                                        if (error) {
-                                         console.log(error.message);
-                                        }
-                                      });
-                                    }
-                                  }
-                                );
-            }
-             
+                alert("This browser does not support screen sharing");
+            }  
         }
 
-        
+        $scope.toggleShareScreen = function() {
+            if (!$scope.sharingMyScreen && !$scope.selectingScreenSource) {
+              $scope.selectingScreenSource = true;
+              $scope.screenShareFailed = null;
+              
+              var screenSharing = OTChromeScreenSharingExtensionHelper('gbmgefccigbfiilkihnomgkmpedbojco');
+              screenSharing.isAvailable(function (extensionIsAvailable) {
+                if (extensionIsAvailable) {
+                  screenSharing.getVideoSource(function(error, source) {
+                    $scope.$apply(function () {
+                      if (error) {
+                        // either the extension is not available or the user clicked cancel
+                        $scope.screenShareFailed = error.message;
+                      } else {
+                        $scope.screenPublisherProps.videoSource = source;
+                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSource = 'desktop';
+                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSourceId = source.deviceId;
+                        
+                        $scope.sharingMyScreen = true;
+                      }
+                      $scope.selectingScreenSource = false;
+                    });
+                  });
+                } else {
+                  $scope.$apply(function () {
+                    $scope.promptToInstall = true;
+                    $scope.selectingScreenSource = false;
+                  });
+                }
+              });
+            } else if ($scope.sharingMyScreen) {
+              $scope.sharingMyScreen = false;
+            }
+        };
 
         $scope.recordVideo = function(){
             console.log("record");
@@ -277,7 +362,7 @@ angular.module("app.call.controller",[
             if (publisher) {
                 publisher.destroy();
                 session.unpublish(publisher);
-                session.disconnect();
+                // session.disconnect();
             }
             publisher = null;
             session = null;

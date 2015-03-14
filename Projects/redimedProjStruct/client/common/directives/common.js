@@ -241,6 +241,20 @@ angular.module("app.directive.common", [
     };
 })
 
+.directive('syncClick', function () {
+  return {
+    restrict: 'A',
+    scope: {
+        syncClick: '&'
+    },
+    link: function(scope, element, attrs){
+      element.on('click', function () {
+        scope.syncClick();
+      });
+    }
+  };
+})
+
 
 // SELECT FROM DATE TO DATE
     /*.directive("inputDate", function(){

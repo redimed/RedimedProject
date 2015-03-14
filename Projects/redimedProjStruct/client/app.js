@@ -38,7 +38,8 @@ angular.module("app", [
     'dateRangePicker',
     'angular-svg-round-progress',
     'angular-flot',
-    'irontec.simpleChat'
+    'irontec.simpleChat',
+    'opentok'
 
     // 'angular-underscore'
 ])

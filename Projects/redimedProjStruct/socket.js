@@ -3,8 +3,8 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var apiKey = "45172682";
-var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
+var apiKey = "45178592";
+var apiSecret = "f21cb8765b7277f73989b0894d152bfb60a91aa7";
 
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
@@ -67,8 +67,6 @@ module.exports = function(io,cookie,cookieParser) {
                         socket.emit("receiveArchive",{type:"stop",status:'success',archive: archive});
                 });
             }
-                
-            
         })
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
@@ -118,6 +116,7 @@ module.exports = function(io,cookie,cookieParser) {
 
 
         socket.on('reconnected',function(id){
+            console.log("============================================reconnected");
             db.User.update({
                 socket: socket.id
             },{id:id})
@@ -130,6 +129,7 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on('checkApp',function(id){
+            console.log("============================================checkApp",id);
             if(id){
                 db.User.find({where:{id:id}},{raw:true})
                     .success(function(user){
@@ -213,6 +213,7 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('updateSocketLogin',function(username){
+            console.log("============================================update login");
             db.User.update({
                 socket: socket.id
             },{user_name: username})
@@ -227,8 +228,6 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
 
-
-
         socket.on('logout', function (username,id,userType,info) {
            db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
                 .success(function(){
@@ -241,7 +240,7 @@ module.exports = function(io,cookie,cookieParser) {
                                android_token: null
                            },{user_id:data.info.id})
                                .success(function(){
-                                   if(userType == 'Driver')
+                                   if(userType != null && userType == 'Driver')
                                        io.sockets.emit('driverLogout',id);
 
                                    socket.emit('logoutSuccess');
@@ -257,7 +256,7 @@ module.exports = function(io,cookie,cookieParser) {
                                ios_token: null
                            },{user_id:data.info.id})
                                .success(function(){
-                                   if(userType == 'Driver')
+                                   if(userType != null && userType == 'Driver')
                                        io.sockets.emit('driverLogout',id);
 
                                    socket.emit('logoutSuccess');

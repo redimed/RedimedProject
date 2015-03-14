@@ -60,7 +60,8 @@
     "angular-svg-round-progressbar": "~0.2.4",
     "angular-bootstrap-simple-chat": "~0.0.2",
     "angular-scroll-glue": "~2.0.4",
-    "opentok-layout-js": "~0.0.12"
+    "opentok-layout-js": "~0.0.12",
+    "opentok-angular": "~0.2.4"
   },
   "resolutions": {
     "angular": "1.2.25",
