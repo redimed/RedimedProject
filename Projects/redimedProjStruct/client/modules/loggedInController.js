@@ -413,7 +413,7 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
-        var userType = $cookieStore.get("userInfo").UserType.user_type != null || typeof $cookieStore.get("userInfo").UserType.user_type !== 'undefined' ? $cookieStore.get("userInfo").UserType.user_type : null;
+        var userType = $cookieStore.get("userInfo").UserType != null || typeof $cookieStore.get("userInfo").UserType !== 'undefined' ? $cookieStore.get("userInfo").UserType.user_type : null;
         socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,userType,null);
 
         socket.on('logoutSuccess',function(){

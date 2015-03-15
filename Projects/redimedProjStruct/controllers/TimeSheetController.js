@@ -213,7 +213,7 @@ module.exports = {
         db.sequelize.query("SELECT time_tasks_week.*,time_task_status.`name` AS STATUS " +
         "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status "+
         "ON time_task_status.`task_status_id` = time_tasks_week.`task_status_id` "+
-        "WHERE  time_tasks_week.`user_id` = 272 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.limit,search.offset])
+        "WHERE  time_tasks_week.`user_id` = 56 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.limit,search.offset])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found task in table");
