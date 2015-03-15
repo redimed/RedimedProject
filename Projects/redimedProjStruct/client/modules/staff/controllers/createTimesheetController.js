@@ -12,7 +12,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info = {};
         }
 
-        $scope.isEdit = false;
         $scope.calendarDay = new Date();
         $scope.info.userID = $cookieStore.get("userInfo").id;
 
@@ -61,6 +60,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     }
                 }
             })
+            console.log($scope.isEdit)
         }
 
         $scope.checkFirstTaskWeek = function(){
@@ -70,10 +70,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     toastr.error("Error", "Error");
                 }else
                 {
+                    $scope.isEdit = false;
                     if(response['status'] == 'success'){
                         $scope.nextDay = moment(response['maxDate']).add(7, 'day').toDate();
                         console.log(response['maxDate']);
-                        console.log($scope.nextDay);
                     }else if(response['status'] == 'no maxDate'){
                         
                         $scope.nextDay = moment($scope.calendarDay).add(7, 'day').toDate();
@@ -91,6 +91,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             };
                             $scope.tasks.push($scope.task);
                         })
+                        console.log($scope.isEdit)
                 }
             })
         }
@@ -158,11 +159,14 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         }
 
-        $scope.addAllTask = function()
+        $scope.addAllTask = function(status)
         {
             startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
             endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-            StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
+            $scope.info.startWeek = startWeek;
+            $scope.info.endWeek = endWeek;
+            $scope.info.statusID = status;
+            StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
                 if(response['status'] == 'success'){
                     toastr.success("success","Success");
                     $state.go('loggedIn.staff.list', null, {'reload': true});

@@ -8,14 +8,13 @@ module.exports = {
     addAllTask: function(req,res)
     {
         var allTask = req.body.allTask;
-        var startWeek = req.body.startWeek;
-        var endWeek = req.body.endWeek;
+        var info = req.body.info;
 
         db.timeTaskWeek.create({
-            start_date : startWeek,
-            end_date : endWeek,
-            user_id : 1,
-            task_status_id : 5
+            start_date : info.startWeek,
+            end_date : info.endWeek,
+            user_id : info.userID,
+            task_status_id : info.statusID
         },{raw:true})
             .success(function(data){
                 db.timeTaskWeek.max('task_week_id')
@@ -174,7 +173,7 @@ module.exports = {
         var info = req.body.info;
         db.timeTaskWeek.max('start_date', { where: { user_id : info.userID} })
             .success(function (maxDate) {
-                if (maxDate === 'Invalid Date') {
+                if (maxDate == 'Invalid Date') {
                     console.log("Not found maxDate in table");
                     res.json({status: 'no maxDate'});
                     return false;

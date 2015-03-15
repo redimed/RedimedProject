@@ -4,9 +4,9 @@ angular.module("app.loggedIn.staff.service", [])
         var service = {};
         var api = Restangular.all("api");
 
-        service.addAllTask = function(allTask,startWeek,endWeek){
+        service.addAllTask = function(allTask,info){
             var addAllTask = api.all('staff/addAllTask');
-            return addAllTask.post({allTask:allTask,startWeek:startWeek,endWeek:endWeek});
+            return addAllTask.post({allTask:allTask,info:info});
         }
 
         service.getAllTaskAMonth = function(search){
