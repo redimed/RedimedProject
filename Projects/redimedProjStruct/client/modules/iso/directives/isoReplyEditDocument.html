@@ -1,0 +1,34 @@
+<div class="input-group input">
+    <textarea class="form-control" rows="2" ng-model="comment"></textarea>
+    <span class="input-group-btn">
+        <button style="width: 100%;height:54px;" class="btn btn-info" ng-click="insertReply(comment)"><i class="fa fa-reply"></i> Reply</button>
+    </span>
+</div>
+<div style="margin-top: 20px;max-height: 220px;overflow: auto;">
+    <div style="width: 98%;" class="qa-message-list">
+        <div class="message-item" ng-repeat="item in listReplyEditDocument">
+            <div class="message-inner">
+                <div class="message-head clearfix" style="max-height: 45px;">
+                    <div class="avatar pull-left">
+                        <i class="fa fa-user" style="font-size: 35px;margin-top: 9px;"></i>
+                    </div>
+                    <div class="user-detail">
+                        <h5 class="handle">{{item.user_name}}</h5>
+                        <div class="post-meta">
+                            <div class="asker-meta">
+                                <span class="qa-message-what"></span>
+                                <span class="qa-message-when">
+                                    <span class="qa-message-when-data">{{item.REPLY_DATE | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- <button ng-show="item.user_name == userInfo.user_name" style="margin-top: -15px;margin-right: 0px;" class="btn btn-inverse pull-right"><i class="icon-white icon-trash"></i></button> -->
+                    </div>
+                </div>
+                <div class="qa-message-content">
+                    {{item.DESCRIPTION}}
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

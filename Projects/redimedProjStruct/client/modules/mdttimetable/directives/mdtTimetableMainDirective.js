@@ -11,6 +11,13 @@ angular.module("app.loggedIn.timetable.main.directive", [])
 		link: function(scope, element, attrs){
 			scope.selectedDoctor = {};
 
+			scope.removeTimetable = function(data){
+				mdtTimetableService.timetableRemove(data.cal_header_df_id).then(function(data){
+					toastr.success("Remove Successfully");
+					init();
+				})
+			}
+
 			mdtDoctorService.byId(scope.doctorId).then(function(response){
 				scope.selectedDoctor = response.data;
 				sysServiceService.byClinicalDepartment(response.data.CLINICAL_DEPT_ID).then(function(response){
@@ -78,6 +85,15 @@ angular.module("app.loggedIn.timetable.main.directive", [])
 
 			scope.saveTimetable = function(option){
 				mdtTimetableService.add(scope.timetable_list[option.pindex], scope.doctorId).then(function(response){
+					toastr.success("Saving Timetable Successful");
+					init();	
+				});
+			}
+
+			scope.saveNewTimetable = function(data, pindex){
+				data.dow = scope.timetable_list[pindex].dow;
+
+				mdtTimetableService.add(data, scope.doctorId).then(function(response){
 					toastr.success("Saving Timetable Successful");
 					init();	
 				});

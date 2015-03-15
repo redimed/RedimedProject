@@ -1,0 +1,163 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">View Timesheet</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+</div>
+
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ApproveTask">
+            <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
+        <div class="caption" style="font-size:14px;">
+            <i class="fa fa-cogs"></i>List Timesheets
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="panel-body table-dynamic">
+            <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+            </center>
+            <table class="responsive table table-bordered" ng-show="!list.loading">
+                <thead ng-show="list.result!==null">
+                <tr>
+                    <th>
+                        <div class="th">
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
+                            </span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
+                            </span> Week No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Start date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> End date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Approved date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Time spent
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Time charge
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Time in lieu
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            </span> Time OT
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                             Comment
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                    <td></td>
+                    <td>
+                        <input class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-show="list.result===null">
+                    <td colspan="4 ">
+                        <h4 class="custom-timesheet">There is no items</h4>
+                    </td>
+                </tr>
+                <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="">
+                    <td>{{l.week_no}}</td>
+                    <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
+                    <td>{{l.end_date | date: "dd - MM - yyyy"}}</td>
+                    <td>{{l.STATUS}}</td>
+                    <td>{{l.approved_date | date: "dd - MM - yyyy h:mm:ss a "}}</td>
+                    <td>{{l.time_spent+" Hours"}}</td>
+                    <td>{{l.time_charge+" Hours"}}</td>
+                    <td>{{l.time_in_lieu +" Hours"}}</td>
+                    <td>{{l.over_time +" Hours"}}</td>
+                    <td>{{l.comments}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                <div class="row ">
+                    <div class="col-ms-6 page-num-info ">
+                        <div class="col-md-4 col-sm-5 ">
+                            <div class="input-group ">
+                                <span class="custom-timesheet">Total: {{list.count}}</span>
+
+                                <span class="custom-timesheet">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
+                                </select>
+                                <span class="custom-timesheet">entries per page</span>
+                            </div>
+                        </div>
+                        <div class="col-ms-6 text-right pagination-container ">
+                            <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                            <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                        </div>
+                    </div>
+            </footer>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="ViewTask">
+    <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+</script>
+
+<div class="modal fade" id="full" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div>
+            <div class="modal-body">
+                Modal body goes here
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn blue">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -9,13 +9,37 @@ angular.module("app.loggedIn.staff", [
         $stateProvider
 
             // STRUCTURE
-            .state("loggedIn.staff", {
+            .state("loggedIn.timesheet", {
                 abstract: true,
-                url: "/staff",
+                url: "/timesheet",
                 templateUrl: "modules/staff/views/structure.html",
                 controller: "StaffController"
             })
             //END STRUCTURE
+
+            //VIEW TIME-SHEET
+            .state("loggedIn.timesheet.view", {
+                url: "/view",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/staff/views/viewTimesheet.html",
+                        controller: "TimesheetViewController"
+                    }
+                }
+            })
+             //END VIEW TIME-SHEET
+
+            //CREATE TIME-SHEET
+            .state("loggedIn.timesheet.create", {
+                url: "/create",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/staff/views/createTimesheet.html",
+                        controller: "TimesheetCreateController"
+                    }
+                }
+            })
+            //END CREATE TIME-SHEET
 
             //DASHBOARD HOME
             .state("loggedIn.staff.list", {
@@ -27,7 +51,7 @@ angular.module("app.loggedIn.staff", [
                     }
                 }
             })
-             //END DASHBOARD HOME
+            //END DASHBOARD HOME
 
             //Manage Task
             .state("loggedIn.staff.manage", {

@@ -140,8 +140,8 @@ module.exports = {
     },
 
     checkTaskWeek: function(req,res){
-        var startWeek = req.body.startWeek;
-        db.timeTaskWeek.find({where:{start_date : startWeek,user_id : 1}},{raw: true})
+        var info = req.body.info;
+        db.timeTaskWeek.find({where:{start_date : info.startWeek,user_id : info.userID}},{raw: true})
             .success(function (result) {
                 if (result === null || result.length === 0) {
                     res.json({data: 'no'});
@@ -170,6 +170,25 @@ module.exports = {
             })
     },
 
+    checkFirstTaskWeek: function(req,res){
+        var info = req.body.info;
+        db.timeTaskWeek.max('start_date', { where: { user_id : info.userID} })
+            .success(function (maxDate) {
+                if (maxDate === 'Invalid Date') {
+                    console.log("Not found maxDate in table");
+                    res.json({status: 'no maxDate'});
+                    return false;
+                }else
+                {
+                    res.json({status: 'success',maxDate: maxDate});
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
     getTaskList: function(req,res)
     {
         db.sequelize.query("SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS "+
@@ -189,19 +208,12 @@ module.exports = {
     },
 
     getAllTaskAMonth: function(req,res){
-        var year = req.body.year;
-        var month = req.body.month;
-        var monthNext = month + 2;
-        var yearNext = year;
-        if(monthNext > 12){
-            monthNext = monthNext -12;
-            yearNext = year + 1;
-        }
+        var search = req.body.search;
 
-        db.sequelize.query("SELECT time_tasks_week.`start_date`, time_tasks_week.`end_date`,time_task_status.`color` AS STATUS " +
-                            "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status " +
-            "ON time_task_status.`stask_status_id` = time_tasks_week.`task_status_id` WHERE time_tasks_week.`start_date` BETWEEN ? AND ?",
-            null, {raw: true},[year + '-' + month + '-01',yearNext + '-' + monthNext + '-31'])
+        db.sequelize.query("SELECT time_tasks_week.*,time_task_status.`name` AS STATUS " +
+        "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status "+
+        "ON time_task_status.`task_status_id` = time_tasks_week.`task_status_id` "+
+        "WHERE  time_tasks_week.`user_id` = 272 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.limit,search.offset])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found task in table");

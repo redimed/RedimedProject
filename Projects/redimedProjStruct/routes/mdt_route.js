@@ -44,6 +44,7 @@ app.post('/api/meditek/v1/mdttimetable/add', mdtTimetableController.add);
 app.post('/api/meditek/v1/mdttimetable/addRow', mdtTimetableController.addRow);
 app.post('/api/meditek/v1/mdttimetable/generate', mdtTimetableController.generate);
 app.post('/api/meditek/v1/mdttimetable/remove', mdtTimetableController.remove);
+app.post('/api/meditek/v1/mdttimetable/timetableRemove', mdtTimetableController.timetableRemove);
 
 /*AUTO CREATE*/
 var mdtRecallController = require('./controllers/mdtRecallController');

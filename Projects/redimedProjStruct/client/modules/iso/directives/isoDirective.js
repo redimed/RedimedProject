@@ -253,6 +253,61 @@ angular.module("app.loggedIn.iso.directive", [])
           return { showSuccess: _showSuccess };
         };
     })
+    .directive('isoReplyEditDocument', function() {
+    return {
+        restrict: 'E',
+        transclude:true,
+        required:['^ngModel'],
+        scope: {
+            requestData:'=',
+            adminData:'='
+        },
+        templateUrl: 'modules/iso/directives/isoReplyEditDocument.html',
+        controller: function ($scope,isoService,$cookieStore)
+        {
+            // $scope.userInfo=$cookieStore.get('userInfo');
+            // console.log($scope.userInfo);
+            $scope.setListReply=function(IDREQUEST){
+                isoService.replyEdit.getAllReplyEditDocument(IDREQUEST).then(function(data){
+                    if (data.status == 'success') {
+                        $scope.listReplyEditDocument = data.data;
+                        console.log($scope.listReplyEditDocument);
+                    };
+                });
+            };
+
+            $scope.$watch('requestData',function(oldValue,newValue){
+                $scope.setListReply($scope.requestData);
+            });
+            
+            $scope.insertReply=function(comment){
+                console.log($scope.adminData);
+                console.log(isoConst.isoPermission.administrator);
+                var value = 1;
+                isoService.replyEdit.insertReplyEditDocument($scope.requestData,comment).then(function(data){
+                    if (data.status == 'success') {
+                        // alert('okokok');
+                        if ($scope.adminData == isoConst.isoPermission.administrator) {
+                            isoService.replyEdit.updateAdminReply($scope.requestData,value).then(function(data){
+                                if (data.status == 'success') {
+                                    $scope.comment = null;
+                                    $scope.setListReply($scope.requestData);
+                                };
+                            });
+                        }else{
+                            isoService.replyEdit.updateStaffReply($scope.requestData,value).then(function(data){
+                                if (data.status == 'success') {
+                                    $scope.comment = null;
+                                    $scope.setListReply($scope.requestData);
+                                };
+                            });
+                        };
+                    };
+                });
+            }
+        }
+    };
+    })
 
     
     

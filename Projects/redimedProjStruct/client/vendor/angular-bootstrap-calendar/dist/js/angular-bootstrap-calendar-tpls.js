@@ -29,6 +29,21 @@ angular.module('app.loggedIn.staff.calendar.directive')
             return isISOWeekBasedOnLocale();
         }
 
+        function getWeekNumber(d) {
+            // Copy date so don't modify original
+            d = new Date(+d);
+            d.setHours(0,0,0);
+            // Set to nearest Thursday: current date + 4 - current day number
+            // Make Sunday's day number 7
+            d.setDate(d.getDate() + 4 - (d.getDay()||7));
+            // Get first day of year
+            var yearStart = new Date(d.getFullYear(),0,1);
+            // Calculate full weeks to nearest Thursday
+            var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7)
+            // Return array of year and week number
+            return weekNo;
+        }
+
         this.getMonthNames = function(short) {
 
             var format = short ? 'MMM' : 'MMMM';
@@ -154,6 +169,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
         };
 
         this.getWeekView = function(currentDay, useISOWeek) {
+            var weekNo = getWeekNumber(currentDay);
             var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
             var columns = new Array(7);
             var weekDays = self.getWeekDayNames(true, useISOWeek);
@@ -194,7 +210,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
 
             endOfWeek = moment(endOfWeek).endOf('day').toDate();
             beginningOfWeek = moment(beginningOfWeek).startOf('day').toDate();
-            return {columns: columns,startWeek: beginningOfWeek, endWeek: endOfWeek};
+            return {columns: columns, weekNo: weekNo,startWeek: beginningOfWeek, endWeek: endOfWeek};
 
         };
 

@@ -232,8 +232,10 @@ angular.module("app.loggedIn.patient.detail.directive", [])
                         	}
 						})
 					}else{
-						var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
-						postData.avatar = "img/patient/avt/" + upload_file_name;
+						if(uploader.queue.length > 0){
+							var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
+							postData.avatar = "img/patient/avt/" + upload_file_name;
+						}
 						PatientService.mdtAdd(postData).then(function (data) {
 	                        if (data.status != 'success') {
 	                            toastr.error("Cannot Insert!", "Error");

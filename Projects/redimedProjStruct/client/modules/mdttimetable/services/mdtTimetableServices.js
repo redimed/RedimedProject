@@ -39,5 +39,10 @@ angular.module("app.loggedIn.timetable.services",[])
 		return funcApi.post({cal_id: cal_id});
 	}
 
+	mdtService.timetableRemove = function(cal_header_df_id){
+		var funcApi = mdtApi.all("timetableRemove");
+		return funcApi.post({cal_header_df_id: cal_header_df_id});
+	}
+
 	return mdtService;
 })
