@@ -15,7 +15,6 @@ var compress = require('compression');
 var db = require('./models');
 var restful = require('sequelize-restful');
 var useragent = require('express-useragent');
-var forceSSL = require('express-force-ssl');
 var _ = require('lodash-node');
 
 
@@ -54,7 +53,6 @@ app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
-app.use(forceSSL);
 app.use(methodOverride());
 app.use(cookieParser('secret'));
 app.use(session({
