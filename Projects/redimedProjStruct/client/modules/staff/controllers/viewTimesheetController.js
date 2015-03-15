@@ -26,6 +26,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 {
                     $scope.list.result = response;
                     $scope.list.count = response.length;
+                    $scope.listTemp = angular.copy($scope.list.result);
                 }
             });
         };
@@ -127,6 +128,44 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             }
         }
 
+         $scope.changeDate = function(dateWeekFrom){
+
+            if(dateWeekFrom === '')
+            {
+                $scope.list.result = angular.copy($scope.listTemp);
+            }
+            else
+            {
+                $scope.list.result = [];
+
+                for(var i = 0;i< $scope.listTemp.length;i++)
+                {
+                    var rs = $scope.listTemp[i];
+                    var sDate = $filter('date')(rs.start_date,"dd-MM-yyyy");
+
+                    if(dateWeekFrom === sDate)
+                    {
+                        $scope.list.result.push(rs);
+                    }
+                }
+            }
+            
+        }
+
+        $scope.orderWeek = function(type)
+        {
+            if(type == 'desc')
+            {
+                $scope.list.result = $filter('orderBy')($scope.list.result,'week_no',true);
+                $scope.isAsc = false;
+            }
+            else
+            {
+                $scope.list.result = $filter('orderBy')($scope.list.result,'week_no',false);
+                $scope.isAsc = true;
+            }
+        }
+
         $scope.chooseItem = function(task)
         {
             console.log(task);
@@ -151,69 +190,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             })
         }
 
-        $(function() {
-            var startDate;
-            var endDate;
-
-            var selectCurrentWeek = function () {
-                window.setTimeout(function () {
-                    $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
-                }, 1);
-            }
-
-            var setDates = function (input) {
-                var $input = $(input);
-                var date = $input.datepicker('getDate');
-                var firstDay = $input.datepicker( "option", "firstDay");
-                $input.datepicker( "option", "dateFormat", "dd-mm-yy" );
-                $input.datepicker('option', 'firstDay', 1);
-                if (date !== null) {
-                    var dayAdjustment = date.getDay() - firstDay;
-                    if (dayAdjustment < 0) {
-                        dayAdjustment += 7;
-                    }
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
-                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
-                    $input.datepicker("setDate", startDate);
-                }
-            }
-
-            $('.week-picker').datepicker({
-                beforeShow: function () {
-                    $('#ui-datepicker-div').addClass('ui-weekpicker');
-                    selectCurrentWeek();
-                },
-                onClose: function () {
-                    $('#ui-datepicker-div').removeClass('ui-weekpicker');
-                },
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                onSelect: function (dateText, inst) {
-                    setDates(this);
-                    selectCurrentWeek();
-                    $(this).change();
-                },
-                beforeShowDay: function (date) {
-                    var cssClass = '';
-                    if (date >= startDate && date <= endDate)
-                        cssClass = 'ui-datepicker-current-day';
-                    return [true, cssClass];
-                },
-                onChangeMonthYear: function (year, month, inst) {
-                    selectCurrentWeek();
-                }
-            });
-
-            setDates('.week-picker');
-
-            var $calendarTR = $('.ui-weekpicker .ui-datepicker-calendar tr');
-            $calendarTR.live('mousemove', function () {
-                $(this).find('td a').addClass('ui-state-hover');
-            });
-            $calendarTR.live('mouseleave', function () {
-                $(this).find('td a').removeClass('ui-state-hover');
-            });
-        });
+        StaffService.showWeek();
     })
 
     .controller("EditTimesheetController",function($rootScope,$modalInstance,$modal, $scope, $cookieStore,$filter, ConfigService,calendarHelper, moment,StaffService,$state,toastr,startDate){
@@ -222,6 +199,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         }
 
         $scope.isEdit = false;
+
+        $scope.itemList = [];
 
         if(!$scope.info){
             $scope.info = {};
@@ -248,7 +227,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             department_code_id: null,
             location_id: null,
             activity_id: null,
-            time_charge: null
+            time_charge: null,
+            btnTitle: "Choose Item"
         };
 
         $scope.checkTaskWeek= function(date){
@@ -263,6 +243,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     if(response['data'] != 'no'){
                         angular.forEach(response['data'], function(data){
                             data.order = 1;
+                            data.btnTitle = "Choose Item";
                             $scope.tasks.push(data);
                         })
                     }
@@ -273,8 +254,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $scope.checkTaskWeek(startDate);
 
         console.log($scope.tasks)
-
-
 
         // $scope.checkFirstTaskWeek = function(){
         //     $scope.tasks=[];
@@ -343,16 +322,14 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 location_id: null,
                 activity_id: null,
                 time_charge: null,
-                isEdit: false
+                isEdit: false,
+                btnTitle: "Choose Item"
             };
             $scope.tasks.splice(index + j, 0,task) ;
         }
 
         // var dateFrom;
-        // $scope.changeDate = function(){
-        //     dateFrom = new Date($scope.dateWeekFrom.substr(6,4),$scope.dateWeekFrom.substr(3,2) - 1,$scope.dateWeekFrom.substr(0,2));
-        //     $scope.checkTaskWeek(dateFrom);
-        // }
+
 
         $scope.delTask = function(index,order){
             if(order != 1)
@@ -386,13 +363,47 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         //     })
         // }
 
-        $scope.chooseItem = function(task)
+        $scope.chooseItem = function(task,index)
         {
-            console.log(task);
             var modalInstance = $modal.open({
                 templateUrl: "modules/staff/views/itemModal.html",
                 controller:'ItemController',
-                size:'lg'
+                size:'lg',
+                resolve: {
+                    itemArr: function(){
+                        var check = false;
+                        var arr = [];
+                        for(var i=0; i<$scope.itemList.length;i++)
+                        {
+                            if($scope.itemList[i].key == index)
+                            {
+                                if($scope.itemList[i].value.length > 0)
+                                {
+                                    check = true;
+                                    arr = angular.copy($scope.itemList[i].value);
+                                }
+                            }
+                        }
+
+                        return check == true && arr.length > 0 ? arr : null;
+                    }
+                }
+            })
+
+            modalInstance.result.then(function(list){
+                if(list != null && list.length > 0)
+                {
+                    $scope.itemList.push({key: index, value: list});
+
+                    if(list.length > 0)
+                    {
+                        task.btnTitle = list[0].ITEM_CODE + "," + (list[1]== null || typeof list[1] === 'undefined' ? '' : list[1].ITEM_CODE+",")+"...";
+                    }
+                }
+                else
+                {
+                    task.btnTitle = "Choose Item"
+                }
             })
         }
 

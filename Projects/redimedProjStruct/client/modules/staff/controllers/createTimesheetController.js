@@ -12,6 +12,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info = {};
         }
 
+        $scope.itemList = [];
+
         $scope.calendarDay = new Date();
         $scope.info.userID = $cookieStore.get("userInfo").id;
 
@@ -26,6 +28,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             activity_id: null,
             time_charge: 0,
             time_spent: null
+            btnTitle: "Choose Item"
+
         };
 
         $scope.getWeekNumber = function(d) {
@@ -50,6 +54,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         $scope.isEdit = true;
                         angular.forEach(response['data'], function(data){
                             data.isEdit = true;
+
                             $scope.tasks.push(data);
                         })
                     }else{
@@ -65,6 +70,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 activity_id: null,
                                 time_charge: 0,
                                 time_spent: null
+                                btnTitle: "Choose Item"
+
                             };
                             $scope.tasks.push($scope.task);
                         })
@@ -97,7 +104,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 department_code_id: null,
                                 location_id: null,
                                 activity_id: null,
-                                time_charge: null
+                                time_charge: null,
+                                btnTitle: "Choose Item"
                             };
                             $scope.tasks.push($scope.task);
                         })
@@ -140,7 +148,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 location_id: null,
                 activity_id: null,
                 time_charge: null,
-                isEdit: false
+                isEdit: false,
+                btnTitle: "Choose Item"
             };
             $scope.tasks.splice(index + j, 0,task) ;
         }
@@ -205,12 +214,47 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         }
 
-        $scope.chooseItem = function(task)
+        $scope.chooseItem = function(task,index)
         {
             var modalInstance = $modal.open({
                 templateUrl: "modules/staff/views/itemModal.html",
                 controller:'ItemController',
-                size:'lg'
+                size:'lg',
+                resolve: {
+                    itemArr: function(){
+                        var check = false;
+                        var arr = [];
+                        for(var i=0; i<$scope.itemList.length;i++)
+                        {
+                            if($scope.itemList[i].key == index)
+                            {
+                                if($scope.itemList[i].value.length > 0)
+                                {
+                                    check = true;
+                                    arr = angular.copy($scope.itemList[i].value);
+                                }
+                            }
+                        }
+
+                        return check == true && arr.length > 0 ? arr : null;
+                    }
+                }
+            })
+
+            modalInstance.result.then(function(list){
+                if(list != null && list.length > 0)
+                {
+                    $scope.itemList.push({key: index, value: list});
+
+                    if(list.length > 0)
+                    {
+                        task.btnTitle = list[0].ITEM_CODE + "," + (list[1]== null || typeof list[1] === 'undefined' ? '' : list[1].ITEM_CODE+",")+"...";
+                    }
+                }
+                else
+                {
+                    task.btnTitle = "Choose Item"
+                }
             })
         }
 
@@ -230,12 +274,15 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         
     })
 
-    .controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr){
+.controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr){
         $scope.itemSearchPanel = {}
 
         $scope.onlyNumbers = /^\d+$/;
 
         $scope.itemList = [];
+
+        if(itemArr != null)
+            $scope.itemList = angular.copy(itemArr);
 
         $scope.itemObj = 
         {
@@ -246,11 +293,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
          $scope.cancel = function(){
-            $modalInstance.close();
+            if(itemArr != null)
+                $modalInstance.close(itemArr);
+            else
+            {
+                $scope.itemList = [];
+                $modalInstance.close(itemArr);
+            }
         }
 
         $scope.okClick = function(){
-            console.log($scope.itemList);
+            $modalInstance.close($scope.itemList);
         }
 
          $scope.delItem = function(index){
@@ -289,7 +342,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         {
                             ITEM_CODE: item.ITEM_CODE,
                             ITEM_NAME: item.ITEM_NAME,
-                            quantity: 0,
+                            quantity: 1,
                             timeCharge: 0
                         }
 
@@ -302,7 +355,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     {
                         ITEM_CODE: item.ITEM_CODE,
                         ITEM_NAME: item.ITEM_NAME,
-                        quantity: 0,
+                        quantity: 1,
                         timeCharge: 0
                     }
 
@@ -329,4 +382,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
     })
+
+    
 

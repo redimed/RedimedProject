@@ -29,10 +29,10 @@
                 <tr>
                     <th>
                         <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
+                                <span class="glyphicon glyphicon-chevron-up" ng-class="{'active': isAsc}" ng-click="orderWeek('asc')">
                             </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
-                            </span> Week No
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="orderWeek('desc')" ng-class="{ 'active': !isAsc } ">
+                            </span>  Week No
                         </div>
                     </th>
                     <th>
@@ -86,7 +86,7 @@
                 <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                     <td></td>
                     <td>
-                        <input class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
+                        <input class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)"/>
                     </td>
                     <td></td>
                     <td></td>
@@ -103,7 +103,7 @@
                     </td>
                 </tr>
                 <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="view(l)">
-                    <td>{{l.week_no}}</td>
+                    <td align="center">{{l.week_no}}</td>
                     <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
                     <td>{{l.end_date | date: "dd - MM - yyyy"}}</td>
                     <td>{{l.STATUS}}</td>
