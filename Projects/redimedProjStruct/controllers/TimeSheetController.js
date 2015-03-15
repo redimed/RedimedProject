@@ -13,6 +13,7 @@ module.exports = {
         db.timeTaskWeek.create({
             start_date : info.startWeek,
             end_date : info.endWeek,
+            week_no: info.weekNo,
             user_id : info.userID,
             task_status_id : info.statusID
         },{raw:true})
@@ -29,6 +30,7 @@ module.exports = {
                                     "date": moment(allTask[tasks].date).format('YYYY-MM-DD'),
                                     "location_id" : allTask[tasks].location_id,
                                     "activity_id" : allTask[tasks].activity_id,
+                                    "time_spent" : allTask[tasks].time_spent,
                                     "time_charge" : allTask[tasks].time_charge
                                 })
                             )
@@ -109,21 +111,22 @@ module.exports = {
                                 return false;
                             }else
                             {
-                                db.timeActivity.findAll({raw: true})
-                                    .success(function (activity) {
-                                        if (activity === null || activity.length === 0) {
-                                            console.log("Not found activity in table");
-                                            res.json({status: 'fail'});
-                                            return false;
-                                        }else
-                                        {
-                                            res.json({location : location, department: department, activity: activity});
-                                        }
-                                    })
-                                    .error(function(err){
-                                        res.json({status:'error'});
-                                        console.log(err);
-                                    })
+                                db.sequelize.query("SELECT a.`activity_id`, a.`NAME`, t.`NAME` AS type_name FROM `time_activity` a" 
+                                + " INNER JOIN `time_type_activity` t ON t.`type_activity_id` = a.`type_activity_id`" ,null,{raw:true})
+                                .success(function(activity){
+                                    if (activity === null || activity.length === 0) {
+                                        console.log("Not found activity in table");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }else
+                                    {
+                                        res.json({location : location, department: department, activity: activity});
+                                    }
+                                })
+                                .error(function(err){
+                                    res.json({status:'error'});
+                                    console.log(err);
+                                })
                             }
                         })
                         .error(function(err){
