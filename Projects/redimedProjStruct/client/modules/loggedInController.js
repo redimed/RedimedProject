@@ -352,20 +352,16 @@ angular.module("app.loggedIn.controller",[
     {
         $scope.userInfo=userInfo;
         $scope.user = userInfo.Booking_Person;
+
+         UserService.getUserInfo(userInfo.id).then(function(data){
+            if(data.img)
+               $scope.userImg = data.img;
+            else
+                $scope.userImg = "theme/assets/icon.png"
+        })
     }
     $scope.loggedInMenus = [];
     $scope.selectedMenu = null;
-
-    UserService.getUserInfo(userInfo.id).then(function(data){
-        if(data.img)
-           $scope.userImg = data.img;
-        else
-            $scope.userImg = "theme/assets/icon.png"
-    })
-
-
-
-
 
     // Load before logged in    
     var loadLoggedIn = function(){

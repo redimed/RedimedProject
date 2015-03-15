@@ -216,7 +216,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     })
 
-    .controller("EditTimesheetController",function($rootScope,$modalInstance, $scope, $cookieStore,$filter, ConfigService,calendarHelper, moment,StaffService,$state,toastr,startDate){
+    .controller("EditTimesheetController",function($rootScope,$modalInstance,$modal, $scope, $cookieStore,$filter, ConfigService,calendarHelper, moment,StaffService,$state,toastr,startDate){
         if(!$scope.tasks){
             $scope.tasks = [];
         }
@@ -392,7 +392,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             var modalInstance = $modal.open({
                 templateUrl: "modules/staff/views/itemModal.html",
                 controller:'ItemController',
-                size:'md'
+                size:'lg'
             })
         }
 
@@ -472,38 +472,5 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         // });
     })
 
-    .controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr){
-        $scope.itemSearchPanel = {}
-
-        $scope.itemSearch = {
-            is_show: false,
-            open: function() {
-                this.is_show = true;
-            },
-            close: function() {
-                this.is_show = false;
-            },
-            click: function(item) {
-                console.log(item);
-
-            }
-        }
-
-        $scope.itemSearchOption = {
-            api:'api/erm/v2/items/search',
-            method:'post',
-            scope: $scope.itemSearchPanel,
-            columns: [
-                {field: 'ITEM_ID', is_hide: true},
-                {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
-                {field: 'ITEM_NAME', label: 'Item Name'},
-            ],
-            use_filters:true,
-            filters:{
-                ITEM_CODE: {type: 'text'},
-                ITEM_NAME: {type: 'text'}
-            }
-        }
-
-    })
+    
 

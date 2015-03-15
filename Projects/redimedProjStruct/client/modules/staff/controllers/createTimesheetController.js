@@ -175,7 +175,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         $scope.chooseItem = function(task)
         {
-            console.log(task);
             var modalInstance = $modal.open({
                 templateUrl: "modules/staff/views/itemModal.html",
                 controller:'ItemController',
@@ -202,10 +201,81 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     .controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr){
         $scope.itemSearchPanel = {}
 
-        $scope.itemSearch = {
+        $scope.onlyNumbers = /^\d+$/;
+
+        $scope.itemList = [];
+
+        $scope.itemObj = 
+        {
+            ITEM_CODE: null,
+            ITEM_NAME: null,
+            quantity: null,
+            timeCharge: null
+        }
+
+         $scope.cancel = function(){
+            $modalInstance.close();
+        }
+
+        $scope.okClick = function(){
+            console.log($scope.itemList);
+        }
+
+         $scope.delItem = function(index){
+            swal({
+                title: "Are you sure?",
+                text: "This item will delete from the list !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true
+            }, function() {
+                $scope.itemList.splice(index,1);
+            })
+        }
+
+       $scope.itemSearch = {
             is_show: false,
+            itemPerPage: 10,
             click: function(item) {
-                console.log(item);
+                if($scope.itemList.length > 0)
+                {
+                    var isExist = false;
+                    for(var i=0; i<$scope.itemList.length; i++)
+                    {
+                        if(item.ITEM_CODE == $scope.itemList[i].ITEM_CODE)
+                        {
+                            isExist = true;
+                            $scope.itemList[i].quantity = parseInt($scope.itemList[i].quantity) + 1;
+                        }
+                    }
+
+                    if(!isExist)
+                    {
+                        $scope.itemObj = 
+                        {
+                            ITEM_CODE: item.ITEM_CODE,
+                            ITEM_NAME: item.ITEM_NAME,
+                            quantity: 0,
+                            timeCharge: 0
+                        }
+
+                        $scope.itemList.push($scope.itemObj);
+                    }
+                }
+                else
+                {
+                    $scope.itemObj = 
+                    {
+                        ITEM_CODE: item.ITEM_CODE,
+                        ITEM_NAME: item.ITEM_NAME,
+                        quantity: 0,
+                        timeCharge: 0
+                    }
+
+                    $scope.itemList.push($scope.itemObj);
+                }
 
             }
         }
