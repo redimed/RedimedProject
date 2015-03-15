@@ -108,7 +108,7 @@
                         <input ng-disabled="isEdit" class="form-control input-sm" ng-model="task.task"/>
                     </td>
                     <td>
-                        <span ng-disabled="isEdit" ng-click="chooseItem(task)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Choose Item </span>
+                        <span ng-disabled="isEdit" ng-click="chooseItem(task,$index)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i>&nbsp;{{task.btnTitle}} </span>
                     </td>
                 </tr>
                 </tbody>
