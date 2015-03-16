@@ -1,5 +1,5 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form">
+    <form method="POST" class="grid-form" name="addNode">
         <!-- MAIN INFO -->
         <fieldset>
             <legend>{{addOrUpdateTitle}}</legend>
@@ -7,27 +7,27 @@
                 <!-- NAME NODE -->
                 <div data-field-span="1">
                     <label>Name</label>
-                    <input type="text" ng-model="info.NODE_CODE" style="font-size:13px;">
+                    <input type="text" ng-model="info.NODE_CODE" style="font-size:13px;" name="NODE_CODE" ng-required="true" custom-tr="info.NODE_CODE" custom-fr="addNode.NODE_CODE">
                 </div>
                 <!-- END NAME NODE -->
                 <!-- ISVALUE NODE -->
                 <div data-field-span="1" class>
                     <label>Choise is value</label>
                     <label>
-                        <input type="checkbox" ng-model="info.ISVALUE" ng-true-value="0" ng-false-value="1" ng-checked="!info.ISVALUE"> &nbsp; Is Value
+                        <input type="checkbox" ng-model="info.ISVALUE" ng-true-value="1" ng-false-value="0"> &nbsp; Is Value
                     </label>
                 </div>
                 <!-- END ISVALUE NODE -->
                 <!-- FROM VALUE NODE -->
                 <div data-field-span="1">
                     <label>From value</label>
-                    <input type="text" ng-model="info.FROM_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE" style="font-size:13px;">
+                    <input type="number" name="FROM_VALUE" ng-model="info.FROM_VALUE" style="font-size:13px;" ng-required="info.ISVALUE==1" custom-tr="[info.ISVALUE,info.FROM_VALUE]" custom-fr="addNode.FROM_VALUE" ng-disabled="info.ISVALUE!=1">
                 </div>
                 <!-- END FROM VALUE NODE -->
                 <!-- TO VALUE NODE -->
                 <div data-field-span="1">
                     <label>To value</label>
-                    <input type="text" ng-model="info.TO_VALUE" ng-disabled="!info.ISVALUE" ng-required="info.ISVALUE" style="font-size:13px;">
+                    <input type="number" name="TO_VALUE" ng-model="info.TO_VALUE" style="font-size:13px;" ng-required="info.ISVALUE==1" custom-tr="[info.ISVALUE, info.TO_VALUE]" custom-fr="addNode.TO_VALUE" ng-disabled="info.ISVALUE!=1">
                 </div>
                 <!-- END TO VALUE NODE -->
             </div>
@@ -40,8 +40,8 @@
                 <!-- END DECRIPTION NODE -->
             </div>
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
-        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})" ng-disabled="addNode.NODE_CODE.$error.required || addNode.FROM_VALUE.$error.required || addNode.FROM_VALUE.$error.number || addNode.TO_VALUE.$error.required || addNode.TOVALUE.$error.number">{{addOrUpdateButton}}</a>
+        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

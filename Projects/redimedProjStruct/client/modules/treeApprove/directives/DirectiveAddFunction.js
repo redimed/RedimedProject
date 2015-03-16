@@ -10,23 +10,14 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
             },
             link: function(scope, element, attrs) {
                 scope.$watch("ngModel", function(newModel) {
+                    scope.info = {};
                     if (newModel !== null) {
                         scope.addOrUpdateTitle = "Update Function";
                         scope.addOrUpdateButton = "Update";
-                        scope.info = {};
-                        scope.info.model = {};
                         TreeApproveService.LoadOneFunction(newModel).then(function(response) {
                             if (response.status === "success") {
-                                scope.info.model = [{
-                                    value: response.result.TYPE_NAME,
-                                    validation: [{
-                                        type: "required"
-                                    }]
-
-                                }, {
-                                    valid: false
-                                }];
-                                scope.info.oldName = scope.info.model[0].value;
+                                scope.info = response.result;
+                                scope.info.oldName = scope.info.TYPE_NAME;
                             } else if (response.status === "fail") {
                                 $state.go("loggedIn.listSystem", null, {
                                     "reload": true
@@ -43,15 +34,6 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
                     } else {
                         scope.addOrUpdateTitle = "Add Function";
                         scope.addOrUpdateButton = "Add";
-                        scope.info = {};
-                        scope.info.model = [{
-                            value: "",
-                            validation: [{
-                                type: "required"
-                            }]
-                        }, {
-                            valid: true
-                        }];
                     }
                 });
             },

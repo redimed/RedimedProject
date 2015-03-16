@@ -59,7 +59,7 @@ module.exports = {
         var allTask = req.body.allTask;
 
         for(var i=0; i<allTask.length;i++){
-            if(allTask[i].isEdit == true){
+            if(allTask[i].isAction == 'update'){
                 chainer.add(
                     db.timeTasks.update({
                         "department_code_id" : allTask[i].department_code_id,
@@ -70,7 +70,7 @@ module.exports = {
                         "time_charge" : allTask[i].time_charge
                     },{tasks_id : allTask[i].tasks_id})
                 )
-            }else{
+            }else if(allTask[i].isAction == 'insert'){
                 chainer.add(
                     db.timeTasks.create({
                         tasks_week_id : allTask[i].tasks_week_id,
@@ -82,6 +82,12 @@ module.exports = {
                         "activity_id" : allTask[i].activity_id,
                         "time_charge" : allTask[i].time_charge
                     })
+                )
+            }else if(allTask[i].isAction == 'delete'){
+                chainer.add(
+                    db.timeTasks.update({
+                        "deleted" : 1
+                    },{tasks_id : allTask[i].tasks_id})
                 )
             }
         }
@@ -215,7 +221,7 @@ module.exports = {
         db.sequelize.query("SELECT time_tasks_week.*,time_task_status.`name` AS STATUS " +
         "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status "+
         "ON time_task_status.`task_status_id` = time_tasks_week.`task_status_id` "+
-        "WHERE  time_tasks_week.`user_id` = 56 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.limit,search.offset])
+        "WHERE  time_tasks_week.`user_id` = ? ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.userID,search.limit,search.offset])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found task in table");

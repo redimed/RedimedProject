@@ -67,8 +67,8 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         offset: 0,
                         maxSize: 5,
                         currentPage: 1,
-                        NODE_ID: -1,
-                        departmentid: -1,
+                        NODE_ID: null,
+                        departmentid: null,
                         order: {
                             "users.user_name": "",
                             "users.Creation_date": ""
@@ -87,8 +87,10 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                 //end reset page
 
                 //load list
-                scope.loadList = function(user_name) {
-                    scope.checkAll = -1;
+                scope.loadList = function() {
+                    if (notReload === false) {
+                        scope.checkAll = -1;
+                    }
                     scope.list.loading = true;
                     //loadList
                     TimeSheetService.LoadUser(scope.searchObjectMap).then(function(response) {
@@ -110,7 +112,6 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                     });
                     //end loadlist
                     scope.list.loadding = false;
-                    $(user_name).focus();
                 };
 
                 //init user
@@ -120,8 +121,8 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         offset: 0,
                         maxSize: 5,
                         currentPage: 1,
-                        departmentid: -1,
-                        NODE_ID: -1,
+                        departmentid: null,
+                        NODE_ID: null,
                         NOTIN: [],
                         order: {
                             "users.user_name": "",
@@ -173,7 +174,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                 //watch resultAll
                 scope.$watch('list.resultAll', function(newList, oldList) {
                     if (notReload === false) {
-                        scope.checkList = [];
+                        scope.checkList = {};
                         scope.checkList.departmentid = scope.searchObjectMap.departmentid;
                         scope.checkList.NODE_ID = scope.searchObjectMap.NODE_ID;
                         angular.forEach(newList, function(user, index) {
@@ -186,29 +187,51 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                     }
                 });
                 //end watch resultAll
+                scope.isChecked = false;
                 scope.checkChange = function(id, status) {
                     if (status == -1) {
                         angular.forEach(scope.list.resultAll, function(user, index) {
                             scope.checkList[user.id].status = 0;
                         });
+                        scope.isChecked = false;
                     } else if (status == 2) {
                         angular.forEach(scope.list.resultAll, function(user, index) {
                             if (scope.checkList[user.id].status != 1) {
                                 scope.checkList[user.id].status = 1;
                             }
                         });
+                        scope.isChecked = true;
                     } else {
                         angular.forEach(scope.list.resultAll, function(user, index) {
                             if (user.id === id) {
                                 scope.checkList[id].status = status;
                             }
                         });
+                        scope.isChecked = false;
+                        angular.forEach(scope.list.resultAll, function(user, index) {
+                            if (scope.checkList[user.id].status == 1) {
+                                scope.isChecked = true;
+                            }
+                        });
                     }
                 };
                 //END SOME FUNCTION IN PAGE
 
+                //FUNCTION CLICKROW
+                scope.clickRow = function(USER_ID) {
+                    if (scope.checkList[USER_ID].status) {
+                        scope.checkList[USER_ID].status = !scope.checkList[USER_ID].status;
+                    } else {
+                        scope.checkList[USER_ID].status = 1;
+                    }
+                    scope.checkChange(USER_ID, scope.checkList[USER_ID].status); //cal checkchange
+                };
+                //END FUNCTION CLICKROW
+
                 //WATCH addAgain
                 scope.$watch('ngModel', function(newModel, oldModel) {
+                    scope.checkAll = -1;
+                    scope.isChecked = false;
                     scope.loadList();
                 });
                 //END WATCH addAgain

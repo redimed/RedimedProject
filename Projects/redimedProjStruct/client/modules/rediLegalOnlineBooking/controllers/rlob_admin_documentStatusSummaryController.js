@@ -86,13 +86,13 @@ angular.module('app.loggedIn.rlob.adminDocumentStatusSummary.controller',[])
                         var styleClass='';
                         switch(item.DOCUMENT_STATUS)
                         {
-                            case rlobConstant.documentStatus.notConfirmed:
+                            case rlobConstant.documentStatus.notConfirmed.value:
                                 styleClass=rlobConstant.documentStatusSummaryStyleClass.notConfirmed;
                                 break;
-                            case rlobConstant.documentStatus.checked:
+                            case rlobConstant.documentStatus.checked.value:
                                 styleClass=rlobConstant.documentStatusSummaryStyleClass.checked;
                                 break;
-                            case rlobConstant.documentStatus.noDocuments:
+                            case rlobConstant.documentStatus.noDocuments.value:
                                 styleClass=rlobConstant.documentStatusSummaryStyleClass.noDocuments;
                                 break;
                         }

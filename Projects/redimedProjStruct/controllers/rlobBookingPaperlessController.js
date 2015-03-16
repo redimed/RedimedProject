@@ -133,11 +133,17 @@ module.exports = {
     get_booking_doctor_company:function(req,res){
         var BOOKING_ID = req.query.BOOKING_ID;
         var sql=
-             "SELECT booking.`WRK_SURNAME` AS `WRK_SURNAME`,booking.`WRK_OTHERNAMES` AS `WRK_OTHERNAMES`,booking.`WRK_DOB` AS `WRK_DATE_OF_BIRTH`,booking.`WRK_CONTACT_NO` AS `WRK_PHONE`,booking.`WRK_EMAIL` AS WRK_EMAIL,company.`Company_name` AS EMP_ORGANISATION_NAME,company.`postcode` AS EMP_POSTCODE,company.`Addr` AS EMP_ADDRESS_1,company.`Email` AS EMP_EMAIL,company.`Phone` AS EMP_PHONE,doctor.`NAME` AS DT_NAME,doctor.`Address` AS DT_ADDRESS_1,doctor.`Email` AS DT_EMAIL,doctor.`Phone` AS DT_PHONE,doctor.`Signature` AS DT_SIGNATURE "+                                      
-             "FROM `rl_bookings` booking    "+                                           
-             "INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`  "+    
-             "INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`  "+  
-             "WHERE booking.`BOOKING_ID`= ?                        ";                
+            "SELECT booking.`WRK_SURNAME` AS `WRK_SURNAME`,booking.`WRK_DATE_OF_INJURY` AS WRK_DATE_OF_INJURI,   "+
+            "booking.`WRK_OTHERNAMES` AS `WRK_OTHERNAMES`,booking.`WRK_DOB` AS `WRK_DATE_OF_BIRTH`,              "+
+            "booking.`WRK_CONTACT_NO` AS `WRK_PHONE`,booking.`WRK_EMAIL` AS WRK_EMAIL,                           "+
+            "company.`Company_name` AS EMP_ORGANISATION_NAME,company.`postcode` AS EMP_POSTCODE,                 "+
+            "company.`Addr` AS EMP_ADDRESS_1,company.`Email` AS EMP_EMAIL,company.`Phone` AS EMP_PHONE,          "+
+            "doctor.`NAME` AS DT_NAME,doctor.`Address` AS DT_ADDRESS_1,doctor.`Email` AS DT_EMAIL,               "+
+            "doctor.`Phone` AS DT_PHONE,doctor.`Signature` AS DT_SIGNATURE                                       "+
+            "FROM `rl_bookings` booking                                                                          "+
+            "INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                 "+
+            "INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                               "+
+            "WHERE booking.`BOOKING_ID`= ?                                                                       ";               
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[BOOKING_ID],function(err,data)
