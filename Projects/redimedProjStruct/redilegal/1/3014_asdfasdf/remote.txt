@@ -1,0 +1,4 @@
+192.168.10.53
+Administrator
+[2:36:16 PM] Tannv.DTS: username:root
+[2:36:20 PM] Tannv.DTS: password:root
