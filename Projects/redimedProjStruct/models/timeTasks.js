@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         "location_id" : DataTypes.INTEGER(11),
         "activity_id" : DataTypes.INTEGER(11),
         "time_charge": DataTypes.INTEGER(11),
+        "time_spent": DataTypes.INTEGER(11),
         "order": DataTypes.INTEGER(11),
         "isenable"  : DataTypes.INTEGER(11),
         //"creation_date": DataTypes.DATE,

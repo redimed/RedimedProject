@@ -8,6 +8,7 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var rlobEmailController=require('./rlobEmailController');
 var rlobUtil=require('./rlobUtilsController');
+var kiss=require('./kissUtilsController');
 var moment=require('moment');
 module.exports =
 {
@@ -18,20 +19,132 @@ module.exports =
      */
     add:function(req,res){
         var input = req.body;
-        req.getConnection(function(err,connection){
-            var query=connection.query('insert into rl_bookings set ?',input,function(err,rows){
-                if (err)
+        console.log(input);
+
+        // req.getConnection(function(err,connection){
+        //     var query=connection.query('insert into rl_bookings set ?',input,function(err,rows){
+        //         if (err)
+        //         {
+        //             console.log("Error inserting : %s ",err );
+        //             res.json({status:"fail"});
+        //         }
+        //         else
+        //         {
+        //             console.log("***************************"+JSON.stringify(input.BOOKING_ID));
+        //             res.json({status:"success",data:input.BOOKING_ID});
+        //         }
+
+        //     })
+        // });
+        /*
+        phan quoc chien
+        phanquocchien.c1109g@gmail.com
+        add booking info
+         */
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var BOOKING_ID=kiss.checkData(req.body.BOOKING_ID)?req.body.BOOKING_ID:null;
+        var BOOKING_DATE=kiss.checkData(req.body.BOOKING_DATE)?req.body.BOOKING_DATE:null;
+        var COMPANY_ID=kiss.checkData(req.body.COMPANY_ID)?req.body.COMPANY_ID:null;
+        var RL_TYPE_ID=kiss.checkData(req.body.RL_TYPE_ID)?req.body.RL_TYPE_ID:null;
+        var SPECIALITY_ID=kiss.checkData(req.body.SPECIALITY_ID)?req.body.SPECIALITY_ID:null;
+        var DOCTOR_ID=kiss.checkData(req.body.DOCTOR_ID)?req.body.DOCTOR_ID:null;
+        var SITE_ID=kiss.checkData(req.body.SITE_ID)?req.body.SITE_ID:null;
+        var FROM_DATE=kiss.checkData(req.body.FROM_DATE)?req.body.FROM_DATE:null;
+        var TO_DATE=kiss.checkData(req.body.TO_DATE)?req.body.TO_DATE:null;
+        var CAL_ID=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:null;
+        var ASS_SURNAME=kiss.checkData(req.body.ASS_SURNAME)?req.body.ASS_SURNAME:null;
+        var ASS_OTHERNAMES=kiss.checkData(req.body.ASS_OTHERNAMES)?req.body.ASS_OTHERNAMES:null;
+        var ASS_CONTACT_NO=kiss.checkData(req.body.ASS_CONTACT_NO)?req.body.ASS_CONTACT_NO:null;
+        var ASS_EMAIL=kiss.checkData(req.body.ASS_EMAIL)?req.body.ASS_EMAIL:null;
+        var WRK_SURNAME=kiss.checkData(req.body.WRK_SURNAME)?req.body.WRK_SURNAME:null;
+        var WRK_OTHERNAMES=kiss.checkData(req.body.WRK_OTHERNAMES)?req.body.WRK_OTHERNAMES:null;
+        var WRK_CONTACT_NO=kiss.checkData(req.body.WRK_CONTACT_NO)?req.body.WRK_CONTACT_NO:null;
+        var WRK_EMAIL=kiss.checkData(req.body.WRK_EMAIL)?req.body.WRK_EMAIL:null;
+        var DESC_INJURY=kiss.checkData(req.body.DESC_INJURY)?req.body.DESC_INJURY:null;
+        var ISNEW=kiss.checkData(req.body.ISNEW)?req.body.ISNEW:null;
+        var ISCONTACTPATIENT=kiss.checkData(req.body.ISCONTACTPATIENT)?req.body.ISCONTACTPATIENT:null;
+        var ISCONTACTMANAGER=kiss.checkData(req.body.ISCONTACTMANAGER)?req.body.ISCONTACTMANAGER:null;
+        var NOTES=kiss.checkData(req.body.NOTES)?req.body.NOTES:null;
+        var STATUS=kiss.checkData(req.body.STATUS)?req.body.STATUS:null;
+        var refered_date_string=kiss.checkData(req.body.refered_date_string)?req.body.refered_date_string:null;
+        var isUrgent=kiss.checkData(req.body.isUrgent)?req.body.isUrgent:null;
+        var CLAIM_NO=kiss.checkData(req.body.CLAIM_NO)?req.body.CLAIM_NO:null;
+        var WRK_DOB=kiss.checkData(req.body.WRK_DOB)?req.body.WRK_DOB:null;
+        var APPOINTMENT_DATE=kiss.checkData(req.body.APPOINTMENT_DATE)?req.body.APPOINTMENT_DATE:null;
+        var ASS_ID=kiss.checkData(req.body.ASS_ID)?req.body.ASS_ID:null;
+        var EMPLOYEE_NUMBER=kiss.checkData(req.body.EMPLOYEE_NUMBER)?req.body.EMPLOYEE_NUMBER:null;
+        var DEPARTMENT_NAME=kiss.checkData(req.body.DEPARTMENT_NAME)?req.body.DEPARTMENT_NAME:null;
+        var DESC_VACCIN=kiss.checkData(req.body.DESC_VACCIN)?req.body.DESC_VACCIN:null;
+        var BOOKING_TYPE=kiss.checkData(req.body.BOOKING_TYPE)?req.body.BOOKING_TYPE:null;
+        var WRK_DATE_OF_INJURY=kiss.checkData(req.body.WRK_DATE_OF_INJURY)?req.body.WRK_DATE_OF_INJURY:null;
+
+        var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
+
+        if(!kiss.checkListData(userId,BOOKING_ID,CLAIM_NO,WRK_SURNAME,WRK_OTHERNAMES,WRK_DOB,WRK_CONTACT_NO,WRK_DATE_OF_INJURY,DESC_INJURY))
+        {
+            kiss.exlog('add',"Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var insertRow={
+            BOOKING_ID:BOOKING_ID,
+            BOOKING_DATE:BOOKING_DATE,
+            COMPANY_ID:COMPANY_ID,
+            RL_TYPE_ID:RL_TYPE_ID,
+            SPECIALITY_ID:SPECIALITY_ID,
+            DOCTOR_ID:DOCTOR_ID,
+            SITE_ID:SITE_ID,
+            FROM_DATE:FROM_DATE,
+            TO_DATE:TO_DATE,
+            CAL_ID:CAL_ID,
+            ASS_SURNAME:ASS_SURNAME,
+            ASS_OTHERNAMES:ASS_OTHERNAMES,
+            ASS_CONTACT_NO:ASS_CONTACT_NO,
+            ASS_EMAIL:ASS_EMAIL,
+            WRK_SURNAME:WRK_SURNAME,
+            WRK_OTHERNAMES:WRK_OTHERNAMES,
+            WRK_CONTACT_NO:WRK_CONTACT_NO,
+            WRK_EMAIL:WRK_EMAIL,
+            DESC_INJURY:DESC_INJURY,
+            ISNEW:ISNEW,
+            ISCONTACTPATIENT:ISCONTACTPATIENT,
+            ISCONTACTMANAGER:ISCONTACTMANAGER,
+            NOTES:NOTES,
+            STATUS:STATUS,
+            CREATED_BY:userId,
+            CREATION_DATE:currentTime,
+            refered_date_string:refered_date_string,
+            isUrgent:isUrgent,
+            CLAIM_NO:CLAIM_NO,
+            WRK_DOB:WRK_DOB,
+            APPOINTMENT_DATE:APPOINTMENT_DATE,
+            ASS_ID:ASS_ID,
+            EMPLOYEE_NUMBER:EMPLOYEE_NUMBER,
+            DEPARTMENT_NAME:DEPARTMENT_NAME,
+            DESC_VACCIN:DESC_VACCIN,
+            BOOKING_TYPE:BOOKING_TYPE,
+            WRK_DATE_OF_INJURY:WRK_DATE_OF_INJURY
+        }
+
+        var sql="INSERT INTO `rl_bookings` SET ?";
+        
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[insertRow],function(err,result)
+            {
+                if(err)
                 {
-                    console.log("Error inserting : %s ",err );
-                    res.json({status:"fail"});
+                    kiss.exlog("add",err,query.sql);
+                    res.json({status:'fail'});
                 }
                 else
                 {
-                    console.log("***************************"+JSON.stringify(input.BOOKING_ID));
-                    res.json({status:"success",data:input.BOOKING_ID});
+                    kiss.exlog("ID BOOKING",insertRow.BOOKING_ID);
+                    res.json({status:'success',data:insertRow.BOOKING_ID});    
                 }
-
-            })
+            });
         });
     },
 
@@ -128,6 +241,89 @@ module.exports =
                     }
                 }
             );
+        });
+    },
+
+    listBookingsForCustomer:function(req,res)
+    {
+        var searchInfo=kiss.checkData(req.body.searchInfo)?req.body.searchInfo:{};
+        var currentPage=kiss.checkData(searchInfo.currentPage)?searchInfo.currentPage:'';
+        var itemsPerPage=kiss.checkData(searchInfo.itemsPerPage)?searchInfo.itemsPerPage:'';
+        var startIndex=((currentPage-1)*itemsPerPage);
+        var claimNo=kiss.checkData(searchInfo.claimNo)?searchInfo.claimNo:'';
+        var surname=kiss.checkData(searchInfo.surname)?searchInfo.surname:'';
+        var firstName=kiss.checkData(searchInfo.firstName)?searchInfo.firstName:'';
+        var type=kiss.checkData(searchInfo.type)?searchInfo.type:'';
+        var appointmentDateFrom=kiss.checkData(searchInfo.appointmentDateFrom)?searchInfo.appointmentDateFrom:'1980/1/1';
+        var appointmentDateTo=kiss.checkData(searchInfo.appointmentDateTo)?searchInfo.appointmentDateTo:'3000/1/1';
+        var bookingStatus=kiss.checkData(searchInfo.bookingStatus)?searchInfo.bookingStatus:'';
+        var documentStatus=kiss.checkData(searchInfo.documentStatus)?searchInfo.documentStatus:'';
+        var orderBy=kiss.checkData(searchInfo.orderBy)?(' ORDER BY '+searchInfo.orderBy):'';
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        // var userId='';
+        var sql=
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`                                    "+
+            " FROM `rl_bookings` booking                                                              "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                "+
+            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                   "+
+            " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                     "+
+            "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                    "+
+            "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                       "+
+            "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                       "+
+            "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?      "+
+            "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                           "+
+            "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                  "+
+            "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                           "+
+            orderBy+
+            " LIMIT ?,?                                                                               ";
+
+        var sqlCount=
+            " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                           "+
+            " FROM `rl_bookings` booking                                                                  "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                       "+
+            " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                         "+
+            "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                        "+
+            "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                           "+
+            "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                           "+
+            "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?          "+
+            "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
+            "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                      "+
+            "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                               ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[claimNo,firstName,surname,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,rows)
+            {
+                if(err)
+                {
+                    kiss.exlog("listBookingsForCustomer",err,query.sql);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    kiss.exlog(query.sql);
+                    kiss.exlog("danh sach",rows);
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sqlCount,[claimNo,firstName,surname,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,result)
+                        {
+                            if(err)
+                            {
+                                kiss.exlog("listBookingsForCustomer",err,query.sql);
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                var totalItems=result[0].TOTAL_ITEMS;
+                                res.json({status:'success',data:{list:rows,totalItems:totalItems}});
+                            }
+
+                        });
+                    });
+                }
+
+            });
         });
     },
 
@@ -391,7 +587,7 @@ module.exports =
         var mapUrl=req.body.mapUrl;
         var sql=
             " SELECT 	u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
-            " 	booking.`WRK_SURNAME`,booking.`CLAIM_NO`,                                                     "+
+            " 	booking.`WRK_SURNAME`,booking.WRK_OTHERNAMES,booking.`CLAIM_NO`,                                                     "+
             " 	booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
             " FROM 	`rl_bookings` booking                                                                     "+
             " 	INNER JOIN `users` u ON booking.`ASS_ID`=u.`id`                                               "+
@@ -423,41 +619,63 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        emailInfo.subject='Confirmation of Redilegal booking � '+row.WRK_SURNAME;
-                        emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
+                        emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        emailInfo.senders=rlobUtil.getMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
+                        //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                        var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
+                        kiss.exlog(redimed_logo_1);
                         emailInfo.htmlBody=
-                            "	<p>Hi <span style='font-weight: bold'>"+row.user_name+"</span>,</p>                                 "+
-                            "    <p>                                                                                                 "+
-                            "        Thank you for your booking request with Redilegal.                                              "+
-                            "        The appointment has been confirmed for                                                          "+
-                            "        <span style='font-weight: bold'>"+row.WRK_SURNAME+" "+row.CLAIM_NO+"</span>                   "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        <table>                                                                                         "+
-                            "            <tr><td>Date:</td><td>"+moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY")+"</td></tr>      "+
-                            "            <tr><td>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>      "+
-                            "            <tr><td>Type of appointment:</td><td>"+'REDiLEGAL-'+row.Rl_TYPE_NAME+"</td></tr>            "+
-                            "            <tr><td>Doctor:</td><td>"+row.NAME+"</td></tr>                                             "+
-                            "            <tr><td>Address:</td><td>"+row.Site_addr+"</td></tr>                                       "+
-                            "        </table>                                                                                        "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        Please ensure the paperwork is sent through to redilegal@redimed.com.au or                      "+
-                            "        uploaded to the online booking system at least one week prior to the appointment date.          "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        Should you have any questions please do not hesitate to contact Redilegal                       "+
-                            "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
-                            "    </p>                                                                                                "+
-                            "    <p>                                                                                                 "+
-                            "        Thank you                                                                                       "+
-                            "    </p>                                                                                                "+
-                            " <div style='width:400px;height:300px'>                                                                 "+
-                            "   <img src='"+mapUrl+"'/>                                                                                        "+
-                            " <div> Site address: "+siteAddress+" <div> "+
-                            " </div>                                                                                                 ";
+                            " <div style='font:11pt Calibri'>                                                                                                                      "+
+                            "   <p>Hi "+row.user_name+",</p>                                                                                                                       "+
+                            "   <p>                                                                                                                                                "+
+                            "    Thank you for your booking request with Redimed.                                                                                                  "+
+                            "    The appointment has been confirmed for                                                                                                            "+
+                            "    <span style='font-weight: bold'>"+row.WRK_OTHERNAMES+" "+row.WRK_SURNAME+" "+row.CLAIM_NO+"</span>                                                "+
+                            "   </p>                                                                                                                                               "+
+                            "   <p>                                                                                                                                                "+
+                            "    <table>                                                                                                                                           "+
+                            "         <tr><td style='font-weight:bold'>Date:</td><td>"+moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY")+"</td></tr>                               "+
+                            "         <tr><td style='font-weight:bold'>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>                                    "+
+                            "         <tr><td style='font-weight:bold'>Address:</td><td>"+row.Site_addr+"</td></tr>                                                                "+
+                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>"+row.NAME+"</td></tr>                                                                      "+
+                            "         <tr><td style='font-weight:bold'>Type of appointment:</td><td>"+row.Rl_TYPE_NAME+"</td></tr>                                                 "+
+                            "    </table>                                                                                                                                          "+
+                            "   </p>                                                                                                                                               "+
+                            "   <p>                                                                                                                                                "+
+                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                                      "+
+                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                            "+
+                            "   </p>                                                                                                                                               "+
+                            "   <p>                                                                                                                                                "+
+                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                             "+
+                            "    on (08) 9230 0900 or medicolegal@redimed.com.au Thank you                                                                                         "+
+                            "   </p>                                                                                                                                               "+
+                            "                                                                                                                                                      "+
+                            "   <div style='width:400px;height:300px'>                                                                                                             "+
+                            "     <img src='"+mapUrl+"'/>                                                                                                                          "+
+                            "     <div> Site address: "+siteAddress+" </div>                                                                                                       "+
+                            "   </div>                                                                                                                                             "+
+                            "   <br/>                                                                                                                                              "+
+                            "   <p>Kind Regards,</p>                                                                                                                               "+
+                            "   <p>Redimed Medico-Legal</p>                                                                                                                        "+
+                            "   <hr/>                                                                                                                                              "+
+                            "   <table>                                                                                                                                            "+
+                            "   <tr>                                                                                                                                               "+
+                            "       <td>                                                                                                                                           "+
+                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                                                                          "+
+                            "       </td>                                                                                                                                          "+
+                            "       <td>                                                                                                                                           "+
+                            "           <p><span style='font-weight: bold'>A&nbsp;</span>"+row.Site_addr+"</p>                                                                     "+
+                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                         "+
+                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>                "+
+                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                            "+
+                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                                    "+
+                            "       </td>                                                                                                                                          "+
+                            "   </tr>                                                                                                                                              "+
+                            "   </table>                                                                                                                                           "+
+                            "                                                                                                                                                      "+
+                            " </div>                                                                                                                                               ";
                         rlobEmailController.sendEmail(req,res,emailInfo);
                     }
 

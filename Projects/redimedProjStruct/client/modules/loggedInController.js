@@ -352,20 +352,16 @@ angular.module("app.loggedIn.controller",[
     {
         $scope.userInfo=userInfo;
         $scope.user = userInfo.Booking_Person;
+
+         UserService.getUserInfo(userInfo.id).then(function(data){
+            if(data.img)
+               $scope.userImg = data.img;
+            else
+                $scope.userImg = "theme/assets/icon.png"
+        })
     }
     $scope.loggedInMenus = [];
     $scope.selectedMenu = null;
-
-    UserService.getUserInfo(userInfo.id).then(function(data){
-        if(data.img)
-           $scope.userImg = data.img;
-        else
-            $scope.userImg = "theme/assets/icon.png"
-    })
-
-
-
-
 
     // Load before logged in    
     var loadLoggedIn = function(){
@@ -413,7 +409,7 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
-        var userType = $cookieStore.get("userInfo").UserType.user_type != null || typeof $cookieStore.get("userInfo").UserType.user_type !== 'undefined' ? $cookieStore.get("userInfo").UserType.user_type : null;
+        var userType = $cookieStore.get("userInfo").UserType != null || typeof $cookieStore.get("userInfo").UserType !== 'undefined' ? $cookieStore.get("userInfo").UserType.user_type : null;
         socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,userType,null);
 
         socket.on('logoutSuccess',function(){

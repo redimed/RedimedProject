@@ -8,14 +8,14 @@ module.exports = {
     addAllTask: function(req,res)
     {
         var allTask = req.body.allTask;
-        var startWeek = req.body.startWeek;
-        var endWeek = req.body.endWeek;
+        var info = req.body.info;
 
         db.timeTaskWeek.create({
-            start_date : startWeek,
-            end_date : endWeek,
-            user_id : 1,
-            task_status_id : 5
+            start_date : info.startWeek,
+            end_date : info.endWeek,
+            week_no: info.weekNo,
+            user_id : info.userID,
+            task_status_id : info.statusID
         },{raw:true})
             .success(function(data){
                 db.timeTaskWeek.max('task_week_id')
@@ -30,6 +30,7 @@ module.exports = {
                                     "date": moment(allTask[tasks].date).format('YYYY-MM-DD'),
                                     "location_id" : allTask[tasks].location_id,
                                     "activity_id" : allTask[tasks].activity_id,
+                                    "time_spent" : allTask[tasks].time_spent,
                                     "time_charge" : allTask[tasks].time_charge
                                 })
                             )
@@ -58,7 +59,7 @@ module.exports = {
         var allTask = req.body.allTask;
 
         for(var i=0; i<allTask.length;i++){
-            if(allTask[i].isEdit == true){
+            if(allTask[i].isAction == 'update'){
                 chainer.add(
                     db.timeTasks.update({
                         "department_code_id" : allTask[i].department_code_id,
@@ -69,7 +70,7 @@ module.exports = {
                         "time_charge" : allTask[i].time_charge
                     },{tasks_id : allTask[i].tasks_id})
                 )
-            }else{
+            }else if(allTask[i].isAction == 'insert'){
                 chainer.add(
                     db.timeTasks.create({
                         tasks_week_id : allTask[i].tasks_week_id,
@@ -81,6 +82,12 @@ module.exports = {
                         "activity_id" : allTask[i].activity_id,
                         "time_charge" : allTask[i].time_charge
                     })
+                )
+            }else if(allTask[i].isAction == 'delete'){
+                chainer.add(
+                    db.timeTasks.update({
+                        "deleted" : 1
+                    },{tasks_id : allTask[i].tasks_id})
                 )
             }
         }
@@ -110,21 +117,22 @@ module.exports = {
                                 return false;
                             }else
                             {
-                                db.timeActivity.findAll({raw: true})
-                                    .success(function (activity) {
-                                        if (activity === null || activity.length === 0) {
-                                            console.log("Not found activity in table");
-                                            res.json({status: 'fail'});
-                                            return false;
-                                        }else
-                                        {
-                                            res.json({location : location, department: department, activity: activity});
-                                        }
-                                    })
-                                    .error(function(err){
-                                        res.json({status:'error'});
-                                        console.log(err);
-                                    })
+                                db.sequelize.query("SELECT a.`activity_id`, a.`NAME`, t.`NAME` AS type_name FROM `time_activity` a" 
+                                + " INNER JOIN `time_type_activity` t ON t.`type_activity_id` = a.`type_activity_id`" ,null,{raw:true})
+                                .success(function(activity){
+                                    if (activity === null || activity.length === 0) {
+                                        console.log("Not found activity in table");
+                                        res.json({status: 'fail'});
+                                        return false;
+                                    }else
+                                    {
+                                        res.json({location : location, department: department, activity: activity});
+                                    }
+                                })
+                                .error(function(err){
+                                    res.json({status:'error'});
+                                    console.log(err);
+                                })
                             }
                         })
                         .error(function(err){
@@ -174,7 +182,7 @@ module.exports = {
         var info = req.body.info;
         db.timeTaskWeek.max('start_date', { where: { user_id : info.userID} })
             .success(function (maxDate) {
-                if (maxDate === 'Invalid Date') {
+                if (maxDate == 'Invalid Date') {
                     console.log("Not found maxDate in table");
                     res.json({status: 'no maxDate'});
                     return false;
@@ -213,7 +221,7 @@ module.exports = {
         db.sequelize.query("SELECT time_tasks_week.*,time_task_status.`name` AS STATUS " +
         "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status "+
         "ON time_task_status.`task_status_id` = time_tasks_week.`task_status_id` "+
-        "WHERE  time_tasks_week.`user_id` = 272 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.limit,search.offset])
+        "WHERE  time_tasks_week.`user_id` = ? ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.userID,search.limit,search.offset])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found task in table");

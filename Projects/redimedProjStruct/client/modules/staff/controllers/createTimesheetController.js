@@ -12,11 +12,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info = {};
         }
 
-        $scope.isEdit = false;
+        $scope.itemList = [];
+
         $scope.calendarDay = new Date();
         $scope.info.userID = $cookieStore.get("userInfo").id;
 
-        var startWeek,endWeek;
+        var startWeek,endWeek,sum = 0;
 
         $scope.task={
             order: null,
@@ -25,8 +26,20 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             department_code_id: null,
             location_id: null,
             activity_id: null,
-            time_charge: null
+            time_charge: 0,
+            time_spent: null,
+            btnTitle: "Choose Item"
+
         };
+
+        $scope.getWeekNumber = function(d) {
+            d = new Date(+d);
+            d.setHours(0,0,0);
+            d.setDate(d.getDate() + 4 - (d.getDay()||7));
+            var yearStart = new Date(d.getFullYear(),0,1);
+            var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7)
+            return weekNo;
+        }
 
         $scope.checkTaskWeek= function(date){
             $scope.tasks=[];
@@ -41,6 +54,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         $scope.isEdit = true;
                         angular.forEach(response['data'], function(data){
                             data.isEdit = true;
+
                             $scope.tasks.push(data);
                         })
                     }else{
@@ -54,13 +68,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 department_code_id: null,
                                 location_id: null,
                                 activity_id: null,
-                                time_charge: null
+                                time_charge: 0,
+                                time_spent: null,
+                                btnTitle: "Choose Item"
+
                             };
                             $scope.tasks.push($scope.task);
                         })
                     }
                 }
             })
+            console.log($scope.isEdit)
         }
 
         $scope.checkFirstTaskWeek = function(){
@@ -70,10 +88,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     toastr.error("Error", "Error");
                 }else
                 {
+                    $scope.isEdit = false;
                     if(response['status'] == 'success'){
                         $scope.nextDay = moment(response['maxDate']).add(7, 'day').toDate();
-                        console.log(response['maxDate']);
-                        console.log($scope.nextDay);
                     }else if(response['status'] == 'no maxDate'){
                         
                         $scope.nextDay = moment($scope.calendarDay).add(7, 'day').toDate();
@@ -87,7 +104,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 department_code_id: null,
                                 location_id: null,
                                 activity_id: null,
-                                time_charge: null
+                                time_charge: null,
+                                time_spent: null,
+                                btnTitle: "Choose Item"
                             };
                             $scope.tasks.push($scope.task);
                         })
@@ -130,7 +149,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 location_id: null,
                 activity_id: null,
                 time_charge: null,
-                isEdit: false
+                isEdit: false,
+                btnTitle: "Choose Item"
             };
             $scope.tasks.splice(index + j, 0,task) ;
         }
@@ -158,28 +178,84 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         }
 
-        $scope.addAllTask = function()
+        $scope.addAllTask = function(status)
         {
-            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-            StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
-                if(response['status'] == 'success'){
-                    toastr.success("success","Success");
-                    $state.go('loggedIn.staff.list', null, {'reload': true});
-                }else
-                {
-                    toastr.error("Error", "Error");
+            $scope.goOn = false;
+            if(status == 2){
+                sum = 0;
+                angular.forEach($scope.tasks, function(task){
+                    if(task.time_spent != null){
+                        sum = sum * 1 + task.time_spent * 1 ;
+                    }
+                })
+                console.log(sum > 38 ? 'yes' : 'no');
+                if(sum > 38 || sum == 38){
+                    $scope.goOn = true;
+                }else{
+                    toastr.error("Time spent of week must be than 38 hours", "Error");
                 }
-            })
+            }
+
+            if($scope.goOn == true || status == 1){
+                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+                $scope.info.startWeek = startWeek;
+                $scope.info.endWeek = endWeek;
+                $scope.info.statusID = status;
+                $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
+                StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("success","Success");
+                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                    }else
+                    {
+                        toastr.error("Error", "Error");
+                    }
+                })
+            }
         }
 
-        $scope.chooseItem = function(task)
+        $scope.chooseItem = function(task,index)
         {
-            console.log(task);
             var modalInstance = $modal.open({
                 templateUrl: "modules/staff/views/itemModal.html",
                 controller:'ItemController',
-                size:'md'
+                size:'lg',
+                resolve: {
+                    itemArr: function(){
+                        var check = false;
+                        var arr = [];
+                        for(var i=0; i<$scope.itemList.length;i++)
+                        {
+                            if($scope.itemList[i].key == index)
+                            {
+                                if($scope.itemList[i].value.length > 0)
+                                {
+                                    check = true;
+                                    arr = angular.copy($scope.itemList[i].value);
+                                }
+                            }
+                        }
+
+                        return check == true && arr.length > 0 ? arr : null;
+                    }
+                }
+            })
+
+            modalInstance.result.then(function(list){
+                if(list != null && list.length > 0)
+                {
+                    $scope.itemList.push({key: index, value: list});
+
+                    if(list.length > 0)
+                    {
+                        task.btnTitle = list[0].ITEM_CODE + "," + (list[1]== null || typeof list[1] === 'undefined' ? '' : list[1].ITEM_CODE+",")+"...";
+                    }
+                }
+                else
+                {
+                    task.btnTitle = "Choose Item"
+                }
             })
         }
 
@@ -194,84 +270,98 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             event[field] = !event[field];
         };
 
-        $(function() {
-            var startDate;
-            var endDate;
+        StaffService.showWeek();
 
-            var selectCurrentWeek = function () {
-                window.setTimeout(function () {
-                    $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
-                }, 1);
-            }
-
-            var setDates = function (input) {
-                var $input = $(input);
-                var date = $input.datepicker('getDate');
-                var firstDay = $input.datepicker( "option", "firstDay");
-                $input.datepicker( "option", "dateFormat", "dd-mm-yy" );
-                $input.datepicker('option', 'firstDay', 1);
-                if (date !== null) {
-                    var dayAdjustment = date.getDay() - firstDay;
-                    if (dayAdjustment < 0) {
-                        dayAdjustment += 7;
-                    }
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
-                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
-                    $input.datepicker("setDate", startDate);
-                }
-            }
-
-            $('.week-picker').datepicker({
-                beforeShow: function () {
-                    $('#ui-datepicker-div').addClass('ui-weekpicker');
-                    selectCurrentWeek();
-                },
-                onClose: function () {
-                    $('#ui-datepicker-div').removeClass('ui-weekpicker');
-                },
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                onSelect: function (dateText, inst) {
-                    setDates(this);
-                    selectCurrentWeek();
-                    $(this).change();
-                },
-                beforeShowDay: function (date) {
-                    var cssClass = '';
-                    if (date >= startDate && date <= endDate)
-                        cssClass = 'ui-datepicker-current-day';
-                    return [true, cssClass];
-                },
-                onChangeMonthYear: function (year, month, inst) {
-                    selectCurrentWeek();
-                }
-            });
-
-            setDates('.week-picker');
-
-            var $calendarTR = $('.ui-weekpicker .ui-datepicker-calendar tr');
-            $calendarTR.live('mousemove', function () {
-                $(this).find('td a').addClass('ui-state-hover');
-            });
-            $calendarTR.live('mouseleave', function () {
-                $(this).find('td a').removeClass('ui-state-hover');
-            });
-        });
+        
     })
 
-    .controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr){
+.controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr){
         $scope.itemSearchPanel = {}
 
-        $scope.itemSearch = {
+        $scope.onlyNumbers = /^\d+$/;
+
+        $scope.itemList = [];
+
+        if(itemArr != null)
+            $scope.itemList = angular.copy(itemArr);
+
+        $scope.itemObj = 
+        {
+            ITEM_CODE: null,
+            ITEM_NAME: null,
+            quantity: null,
+            timeCharge: null
+        }
+
+         $scope.cancel = function(){
+            if(itemArr != null)
+                $modalInstance.close(itemArr);
+            else
+            {
+                $scope.itemList = [];
+                $modalInstance.close(itemArr);
+            }
+        }
+
+        $scope.okClick = function(){
+            $modalInstance.close($scope.itemList);
+        }
+
+         $scope.delItem = function(index){
+            swal({
+                title: "Are you sure?",
+                text: "This item will delete from the list !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true
+            }, function() {
+                $scope.itemList.splice(index,1);
+            })
+        }
+
+       $scope.itemSearch = {
             is_show: false,
-            open: function() {
-                this.is_show = true;
-            },
-            close: function() {
-                this.is_show = false;
-            },
+            itemPerPage: 10,
             click: function(item) {
-                console.log(item);
+                if($scope.itemList.length > 0)
+                {
+                    var isExist = false;
+                    for(var i=0; i<$scope.itemList.length; i++)
+                    {
+                        if(item.ITEM_CODE == $scope.itemList[i].ITEM_CODE)
+                        {
+                            isExist = true;
+                            $scope.itemList[i].quantity = parseInt($scope.itemList[i].quantity) + 1;
+                        }
+                    }
+
+                    if(!isExist)
+                    {
+                        $scope.itemObj = 
+                        {
+                            ITEM_CODE: item.ITEM_CODE,
+                            ITEM_NAME: item.ITEM_NAME,
+                            quantity: 1,
+                            timeCharge: 0
+                        }
+
+                        $scope.itemList.push($scope.itemObj);
+                    }
+                }
+                else
+                {
+                    $scope.itemObj = 
+                    {
+                        ITEM_CODE: item.ITEM_CODE,
+                        ITEM_NAME: item.ITEM_NAME,
+                        quantity: 1,
+                        timeCharge: 0
+                    }
+
+                    $scope.itemList.push($scope.itemObj);
+                }
 
             }
         }
@@ -293,4 +383,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
     })
+
+    
 

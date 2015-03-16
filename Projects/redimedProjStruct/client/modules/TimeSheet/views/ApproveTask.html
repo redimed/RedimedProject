@@ -1,22 +1,21 @@
-<h3 class="page-title">Approve</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Time Sheet</a>
+            <a ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.TimeSheetGroupUser">Approve</a>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">Approve Timesheet</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
-
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
+        <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ViewAppovedTimeSheet">View Approved Timesheets</a>
         <div class="caption" style="font-size:14px;">
-            <i class="fa fa-cogs"></i>List of task
+            <i class="fa fa-cogs"></i>List Timesheets
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -28,38 +27,21 @@
                 <thead ng-show="list.result!==null">
                     <tr>
                         <th>
-                            <div class="th" style="text-align:center;">
-                                Action
+                            <div class="th">
+                                Employee code
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-click="deptASC()" ng-class="{'active': searchObjectMap.order['departments.departmentName']==='ASC'}">
+                                Employee name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
                             </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="deptDESC()" ng-class="{ 'active': searchObjectMap.order['departments.departmentName']==='DESC' } ">
-                            </span> Employee name
-                            </div>
-                        </th>
-
-                        <th>
-                            <div class="th">
-                                Period
-                            </div>
-                        </th>
-
-                        <th>
-                            <div class="th">
-                                Time Spent
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Approver(s)
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Project
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
+                            </span> Week/current
                             </div>
                         </th>
                         <th>
@@ -69,31 +51,43 @@
                         </th>
                         <th>
                             <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-click="deptASC()" ng-class="{'active': searchObjectMap.order['departments.departmentName']==='ASC'}">
+                                Time charge
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Time spent
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="dateSubmitedASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.date_submited']==='ASC'}">
                             </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="deptDESC()" ng-class="{ 'active': searchObjectMap.order['departments.departmentName']==='DESC' } ">
-                            </span> Submited Date
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="dateSubmitedDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.date_submited']==='DESC' } ">
+                            </span> Date submited
                             </div>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <td></td>
                         <td>
-                            <input type="text" class="form-control input-sm">
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['hr_employee.Employee_ID']" ng-options="itemEmp.Employee_ID as itemEmp.Employee_Code for itemEmp in list.listEmployee " ng-change="loadList()">
+                            </select>
                         </td>
-                        <td></td>
-                        <td></td>
                         <td>
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
+                            <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="loadList()">
+                        </td>
+                        <td>
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.week_no']" ng-options="itemRow.code as itemRow.code for itemRow in weekNo " ng-change="loadList()">
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="loadList()">
                             </select>
                         </td>
                         <td></td>
-                        <td>
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
-                            </select>
-                        </td>
+                        <td></td>
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
@@ -101,44 +95,30 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                        <td style="text-align: center;">
-                            <!-- DOPDOWN ACTION -->
-                            <li class="dropdown btn-group">
-                                <a class="dropdown-toggle blue" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a ng-click="viewTask()"><i class="glyphicon glyphicon-zoom-in"></i>View</a>
-                                    </li>
-                                    <li><a ng-click="editDept(l.departmentid)"><i class="glyphicon glyphicon-ok"></i>Approve</a>
-                                    </li>
-                                    <li><a ng-click="editDept(l.departmentid)"><i class="glyphicon glyphicon-remove"></i>Reject</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- END DROPDOWN ACTION -->
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="viewTask(l.task_week_id)">
+                        <td class="btn btn-xs">{{l.Employee_Code}}</td>
+                        <td class="btn btn-xs">{{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}</td>
+                        <td class="btn btn-xs">{{l.week_no}}/{{currentWeek}}</td>
+                        <td class="btn btn-xs">
+                            <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted'}">{{(l.name===null || l.name===" ")?" ":l.name}}</span>
                         </td>
-                        <td>{{l.emloyee}}</td>
-                        <td>{{date | date: "dd/MM/yyyy"}}</td>
-                        <td>01:00</td>
-                        <td>{{l.approver}}</td>
-                        <td>Time Sheet</td>
-                        <td>{{l.status}}</td>
-                        <td>{{date | date: "dd/MM/yyyy"}}</td>
+                        <td class="btn btn-xs">{{(l.time_charge===null||l.time_charge===" ")?("0 Hours "):l.time_charge + " Hours "}}</td>
+                        <td class="btn btn-xs">{{(l.time_spent===null||l.time_spent===" ")?("0 Hours "):l.time_spent + " Hours "}}</td>
+                        <td class="btn btn-xs">{{l.date_submited | date: "dd/MM/yyyy h:mm:ss a "}}</td>
                     </tr>
                 </tbody>
             </table>
-            <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+            <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null) ">
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
                             <div class="input-group ">
-                                <span class="custom-timesheet">Total: {{list.count}}</span>
+                                <span class="custom-timesheet ">Total: {{list.count}}</span>
 
-                                <span class="custom-timesheet">Show</span>
-                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
+                                <span class="custom-timesheet ">Show</span>
+                                <select class="custom-timesheet " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px; ">
                                 </select>
-                                <span class="custom-timesheet">entries per page</span>
+                                <span class="custom-timesheet ">entries per page</span>
                             </div>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
@@ -150,6 +130,6 @@
             </div>
         </div>
     </div>
-    <script type="text/ng-template" id="ViewTask">
-        <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+    <script type="text/ng-template " id="ViewTask ">
+        <view-task ng-model="infoTaskWeek" on-cancel="clickCancel(return) " on-reject="clickReject(return)" on-approve="clickApprove(return)"></view-task>
     </script>

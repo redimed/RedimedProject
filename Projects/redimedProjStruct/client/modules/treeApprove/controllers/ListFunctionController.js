@@ -160,89 +160,62 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
 
                     //Add new function
                     $scope.getInfo = function(value) {
-                        //check error form
-                        if (value.valid === true) {
-                            toastr.error("Please Input All Required Information!", "Error");
-                        } else {
-                            value.userId = $cookieStore.get("userInfo").id;
-                            if ($scope.isNew === true) {
-                                //add new function
-                                TreeApproveService.InsertFunction(value).then(function(responsive) {
-                                    if (responsive.status === "error") {
-                                        var data = [{
-                                            "status": "fail",
-                                            "result": null
-                                        }];
-                                        $modalInstance.close(data);
-                                        toastr.error("Add function fail!", "Error");
-                                    } else if (responsive.status === "success") {
+                        value.userId = $cookieStore.get("userInfo").id;
+                        if ($scope.isNew === true) {
+                            //add new function
+                            TreeApproveService.InsertFunction(value).then(function(responsive) {
+                                if (responsive.status === "error") {
+                                    $modalInstance.close();
+                                    toastr.error("Add function fail!", "Error");
+                                } else if (responsive.status === "success") {
+                                    $modalInstance.close();
+                                    $state.go("loggedIn.ListFunction", null, {
+                                        "reload": true
+                                    });
+                                    toastr.success("Add function success!", "success");
+                                } else {
+                                    //catch exception
+                                    $state.go("loggedIn.home", null, {
+                                        "reload": true
+                                    });
+                                    toastr.error("Server not responsive!", "Error");
+                                }
+                            });
+                            //end Add new function
 
-                                        //get value not reload page
-                                        var data = [{
-                                            "status": "success",
-                                            "result": responsive.result
-                                        }];
-                                        //end get value not reload page
-
-                                        $modalInstance.close(data);
-                                        toastr.success("Add function success!", "success");
-                                    } else {
-
-                                        //catch exception
-                                        $state.go("loggedIn.home", null, {
-                                            "reload": true
-                                        });
-                                        toastr.error("Server not responsive!", "Error");
-                                    }
-                                });
-                                //end Add new function
-
-                            } else if ($scope.isNew === false) {
-                                //update function
-                                TreeApproveService.UpdateFunction(value).then(function(responsive) {
-                                    if (responsive.status === "error") {
-                                        var data = [{
-                                            "status": "fail",
-                                            "result": null
-                                        }];
-                                        $modalInstance.close(data);
-                                        toastr.error("Update function fail!", "Error");
-                                    } else if (responsive.status === "success") {
-
-                                        //get value not reload page
-                                        var data = [{
-                                            "status": "success",
-                                            "result": responsive.result
-                                        }];
-                                        //end get value not reload page
-
-                                        $modalInstance.close(data);
-                                        toastr.success("Update function success!", "success");
-                                    } else {
-
-                                        //catch exception
-                                        $state.go("loggedIn.home", null, {
-                                            "reload": true
-                                        });
-                                        toastr.error("Server not responsive!", "Error");
-                                    }
-                                });
-                                //update new function
-                            }
+                        } else if ($scope.isNew === false) {
+                            //update function
+                            TreeApproveService.UpdateFunction(value).then(function(responsive) {
+                                if (responsive.status === "error") {
+                                    $modalInstance.close();
+                                    toastr.error("Update function fail!", "Error");
+                                } else if (responsive.status === "success") {
+                                    $modalInstance.close();
+                                    $state.go("loggedIn.ListFunction", null, {
+                                        "reload": true
+                                    });
+                                    toastr.success("Update function success!", "success");
+                                } else {
+                                    //catch exception
+                                    $state.go("loggedIn.home", null, {
+                                        "reload": true
+                                    });
+                                    toastr.error("Server not responsive!", "Error");
+                                }
+                            });
+                            //update new function
                         }
-
                     };
 
                 },
                 size: "md"
             });
-            modalInstance.result.then(function(data) {
-                //promise modal
-                if (data[0].status === "success") {
-                    $scope.list.result = data[0].result;
-                }
-                $scope.loadList();
-            });
+            // modalInstance.result.then(function(data) {
+            //     //promise modal
+            //     if (data.status === "success") {
+            //     }
+            //     $scope.loadList();
+            // });
             // END MODULE ADD FUNCTION
         };
 

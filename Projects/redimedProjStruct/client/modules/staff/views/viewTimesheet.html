@@ -14,10 +14,9 @@
 
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ApproveTask">
-            <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
         <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>List Timesheets
+            <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
     <div class="portlet-body">
@@ -26,94 +25,94 @@
             </center>
             <table class="responsive table table-bordered" ng-show="!list.loading">
                 <thead ng-show="list.result!==null">
-                <tr>
-                    <th>
-                        <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <span class="glyphicon glyphicon-chevron-up" ng-class="{'active': isAsc}" ng-click="orderWeek('asc')">
                             </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="orderWeek('desc')" ng-class="{ 'active': !isAsc } ">
                             </span> Week No
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Start date
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> End date
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Status
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Approved date
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Time spent
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Time charge
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Time in lieu
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                            </span> Time OT
-                        </div>
-                    </th>
-                    <th>
-                        <div class="th">
-                             Comment
-                        </div>
-                    </th>
-                </tr>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Start date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> End date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Status
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Approved date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Time spent
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Time charge
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Time in lieu
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Time OT
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Comment
+                            </div>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                    <td></td>
-                    <td>
-                        <input class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr ng-show="list.result===null">
-                    <td colspan="4 ">
-                        <h4 class="custom-timesheet">There is no items</h4>
-                    </td>
-                </tr>
-                <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="">
-                    <td>{{l.week_no}}</td>
-                    <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
-                    <td>{{l.end_date | date: "dd - MM - yyyy"}}</td>
-                    <td>{{l.STATUS}}</td>
-                    <td>{{l.approved_date | date: "dd - MM - yyyy h:mm:ss a "}}</td>
-                    <td>{{l.time_spent+" Hours"}}</td>
-                    <td>{{l.time_charge+" Hours"}}</td>
-                    <td>{{l.time_in_lieu +" Hours"}}</td>
-                    <td>{{l.over_time +" Hours"}}</td>
-                    <td>{{l.comments}}</td>
-                </tr>
+                    <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                        <td></td>
+                        <td>
+                            <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" />
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-show="list.result===null">
+                        <td colspan="4 ">
+                            <h4 class="custom-timesheet">There is no items</h4>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-dblclick="view(l)">
+                        <td align="center">{{l.week_no}}</td>
+                        <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
+                        <td>{{l.end_date | date: "dd - MM - yyyy"}}</td>
+                        <td>{{l.STATUS}}</td>
+                        <td>{{l.approved_date | date: "dd - MM - yyyy h:mm:ss a "}}</td>
+                        <td>{{(l.time_spent===0 ||l.time_spent===null)?"0 Hours":(l.time_spent+" Hours")}}</td>
+                        <td>{{(l.time_charge===0 ||l.time_charge===null)?"0 Hours":(l.time_charge+" Hours")}}</td>
+                        <td>{{(l.time_in_lieu===0 ||l.time_in_lieu===null)?"0 Hours":(l.time_in_lieu+" Hours")}}</td>
+                        <td>{{(l.over_time===0 ||l.over_time===null)?"0 Hours":(l.over_time+" Hours")}}</td>
+                        <td>{{(l.comments===null||l.comments==="")?"":l.comments}}</td>
+                    </tr>
                 </tbody>
             </table>
             <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
@@ -135,29 +134,29 @@
                         </div>
                     </div>
             </footer>
+            </div>
         </div>
     </div>
-</div>
-<script type="text/ng-template" id="ViewTask">
-    <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
-</script>
+    <script type="text/ng-template" id="ViewTask">
+        <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+    </script>
 
-<div class="modal fade" id="full" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-full">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">Modal Title</h4>
+    <div class="modal fade" id="full" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Modal Title</h4>
+                </div>
+                <div class="modal-body">
+                    Modal body goes here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn blue">Save changes</button>
+                </div>
             </div>
-            <div class="modal-body">
-                Modal body goes here
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn blue">Save changes</button>
-            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>

@@ -69,12 +69,12 @@
                     </tr>
                     <!-- END NOT DATA -->
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; ">
-                        <td>{{l.TYPE_NAME || " " }}</td>
-                        <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.TYPE_NAME || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                         <td style="text-align: center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <a class="dropdown-toggle" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a ng-click="goToTree(l.TYPE_NAME)"><i class="fa fa-check"></i>Detail</a>

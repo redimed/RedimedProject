@@ -63,10 +63,10 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                        <td>{{l.GROUP_NAME || " " }}</td>
-                        <td>{{(l.DECRIPTION === "" || l.DECRIPTION === null)?"Not Decription":l.DECRIPTION}}</td>
-                        <td>{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="goToListNode(l.GROUP_ID)">
+                        <td class="btn btn-xs" style="text-align:left;">{{l.GROUP_NAME || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.DECRIPTION === "" || l.DECRIPTION === null)?"Not Decription":l.DECRIPTION}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                     </tr>
                 </tbody>
             </table>

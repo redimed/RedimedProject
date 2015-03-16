@@ -2,20 +2,25 @@
  * Created by tannv.dts@gmail.com on 9/26/2014.
  */
 var db = require('../models');
+var rlobUtil=require('./rlobUtilsController');
+var kiss=require('./kissUtilsController');
 module.exports =
 {
     list:function(req,res){
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var sql=
-            " SELECT spec.*                                                                                     "+
-            " FROM `cln_specialties` spec INNER JOIN `rl_types` rltype ON spec.`RL_TYPE_ID`=rltype.`RL_TYPE_ID` "+
-            " WHERE rltype.`SOURCE_TYPE` like ?                                                                      ";
+            " SELECT DISTINCT spec.Specialties_name                                                                                        "+
+            " FROM `cln_specialties` spec INNER JOIN `rl_types` rltype ON spec.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`    "+
+            " WHERE rltype.`SOURCE_TYPE` LIKE ?                                                                    "+
+            (sourceType==rlobUtil.sourceType.REDiLEGAL?"   AND spec.`FOR_REDILEGAL`=1 ":"")+
+            "   AND  rltype.`ISENABLE`=1 AND spec.`Isenable`=1 order by spec.Specialties_name        ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[sourceType],function(err,rows)
             {
                 if(err)
                 {
+                    kiss.exlog("cln_specialties","list",err,query.sql);
                     res.json({status:'fail'});
                 }
                 else
