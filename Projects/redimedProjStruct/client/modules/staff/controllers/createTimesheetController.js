@@ -27,7 +27,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             location_id: null,
             activity_id: null,
             time_charge: 0,
-            time_spent: null
+            time_spent: null,
             btnTitle: "Choose Item"
 
         };
@@ -69,7 +69,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: 0,
-                                time_spent: null
+                                time_spent: null,
                                 btnTitle: "Choose Item"
 
                             };
@@ -212,6 +212,46 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     }
                 })
             }
+        }
+
+        $scope.isBillable = false;
+
+        $scope.activityChange = function(task,index){
+            // for(var i=0; i< $scope.activities.length ;i++)
+            // {
+            //     var activity = $scope.activities[i];
+            //     if(task.activity_id == activity.activity_id)
+            //     {
+            //         if(activity.NAME.toLowerCase() == 'billable time')
+            //         {
+            //             $scope.isBillable = true;
+
+            //             task.time_spent = null;
+            //             task.time_charge = null;
+            //             task.task = null;
+            //         }
+            //         else
+            //         {
+            //             $scope.isBillable = false;
+
+            //             for(var i=0; i<$scope.itemList.length;i++)
+            //             {
+            //                 if($scope.itemList[i].key == index)
+            //                 {
+            //                     if($scope.itemList[i].value.length > 0)
+            //                     {
+            //                         $scope.itemList = $scope.itemList.filter(function(obj) {
+            //                             return obj.key == index;
+            //                         });
+            //                     }
+            //                 }
+            //             }
+
+            //             task.btnTitle = "Choose Item"
+
+            //         }
+            //     }
+            // }
         }
 
         $scope.chooseItem = function(task,index)

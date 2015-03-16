@@ -3,8 +3,8 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var apiKey = "45178592";
-var apiSecret = "f21cb8765b7277f73989b0894d152bfb60a91aa7";
+var apiKey = "45172682";
+var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
 
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
@@ -26,17 +26,17 @@ module.exports = function(io,cookie,cookieParser) {
         // console.log(ua);
 
         socket.on("generateSession",function(id){
-            opentok.createSession(function(err, session) {
+            opentok.createSession(function(err, ses) {
                 if (err) 
                     return console.log(err);
 
-                var token = session.generateToken({
+                var token = ses.generateToken({
                     role : 'moderator'
                 });
 
                 var opentokRoom = {
                     apiKey: apiKey,
-                    sessionId: session.sessionId,
+                    sessionId: ses.sessionId,
                     token: token
                 }
 

@@ -61,7 +61,8 @@
     "angular-bootstrap-simple-chat": "~0.0.2",
     "angular-scroll-glue": "~2.0.4",
     "opentok-layout-js": "~0.0.12",
-    "opentok-angular": "~0.2.4"
+    "opentok-angular": "~0.2.4",
+    "ionicons": "~2.0.1"
   },
   "resolutions": {
     "angular": "1.2.25",
