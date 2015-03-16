@@ -454,6 +454,9 @@ angular.module('app.loggedIn.document.cat2.controllers', [])
                         $scope.info.q3_1_5_8 + $scope.info.q3_1_5_9 + $scope.info.q3_1_5_10;
                     info.q4_2_12_1 = $scope.info.q3_1_6_1 + $scope.info.q3_1_6_2 + $scope.info.q3_1_6_3 + $scope.info.q3_1_6_4 + $scope.info.q3_1_6_5 +
                         $scope.info.q3_1_6_6 + $scope.info.q3_1_6_7 + $scope.info.q3_1_6_8 + $scope.info.q3_1_6_9 + $scope.info.q3_1_6_10;
+                        //some input auto
+                        
+                        //end some input auto
                     if ($scope.isNew === true) {
                         DocumentService.insertCat2(info).then(function(response) {
                             if (response['status'] === 'success') {
