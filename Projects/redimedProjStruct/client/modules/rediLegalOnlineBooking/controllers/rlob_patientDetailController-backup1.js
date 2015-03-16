@@ -418,7 +418,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 "+ Type of appointment: "+$scope.mailBodyData.typeOfAppointment+"\n"+
                 "+ Doctor: "+$scope.mailBodyData.doctor+"\n"+
                 "+ Address: "+$scope.mailBodyData.address+"\n"+
-                "+ Redilegal to contact the patient and arrange a time: "+(($scope.mailBodyData.isContactPatient=='1')?'yes':'no')+"\n"+
+                "+ Medico-Legal to contact the patient and arrange a time: "+(($scope.mailBodyData.isContactPatient=='1')?'yes':'no')+"\n"+
                 "+ Notes: "+$scope.mailBodyData.notes+" \n\n"+
                 "Patient information:\n\n"+
                 "+ Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
@@ -427,7 +427,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 "+ Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
                 "+ Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
 
-            var recepient = "redilegal@redimed.com.au";
+            var recepient = "medicolegal@redimed.com.au";
             var options = {
 //                cc: "tannv.dts@gmail.com",
 //                bcc: "nguyenvantan27binhduong@gmail.com",

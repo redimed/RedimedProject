@@ -5,31 +5,36 @@
  * Created by tannv.dts@gmail.com on 9/26/2014.
  */
 
-var db = require('../models');
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
+var rlobUtil=require('./rlobUtilsController');
 module.exports =
 {
     sendEmail: function (req,res,emailInfo) {
 
-       // var transport = nodemailer.createTransport({
-       //     service: 'Gmail',
-       //     auth: {
-       //         user:'tannv.solution@gmail.com',//test
-       //         pass:'redimed123'//test
-       //     }
-       // });
 
-       // var mailOptions = {
-       //     from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
-       //     to: emailInfo.recipients, // receiver
-       //     subject: emailInfo.subject, // Subject line
-       //     html: emailInfo.htmlBody
+        
+        if(rlobUtil.isTestSendMail)
+        {
+           var transport = nodemailer.createTransport({
+               service: 'Gmail',
+               auth: {
+                   user:'vnlegal123@gmail.com',//test
+                   pass:'redimed123'//test
+               }
+           });
 
-       // }
-
-        var transport = nodemailer.createTransport(smtpTransport({
+           var mailOptions = {
+               from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
+               to: emailInfo.recipients, // receiver
+               subject: emailInfo.subject, // Subject line
+               html: emailInfo.htmlBody
+           }
+        }
+        else
+        {
+          var transport = nodemailer.createTransport(smtpTransport({
             host: "mail.redimed.com.au", // hostname
             secure: false,
             port: 25, // port for secure SMTP
@@ -39,16 +44,18 @@ module.exports =
             },
             tls: {rejectUnauthorized: false},
             debug:true
-        }));
+          }));
 
-        var mailOptions = {
-            from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
-            to: emailInfo.recipients, // receiver
-            subject: emailInfo.subject, // Subject line
-            html: emailInfo.htmlBody
+          var mailOptions = {
+              from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
+              to: emailInfo.recipients, // receiver
+              subject: emailInfo.subject, // Subject line
+              html: emailInfo.htmlBody
 
+          }
         }
 
+        
         transport.sendMail(mailOptions, function(error, response){  //callback
             if(error){
                 console.log(error);

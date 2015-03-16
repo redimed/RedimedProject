@@ -56,31 +56,16 @@ module.exports = {
     InsertFunction: function(req, res) {
         var info = req.body.info || [];
         sys_hierarchies_types.create({
-                TYPE_NAME: info.model[0].value,
+                TYPE_NAME: info.TYPE_NAME,
                 Created_by: info.userId
             }, {
                 raw: true
             })
             .success(function(result) {
-                sys_hierarchies_types.findAll({
-                        order: 'Creation_date DESC'
-                    }, {
-                        raw: true
-                    })
-                    .success(function(result) {
-                        res.json({
-                            "status": "success",
-                            "result": result
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        consolle.log("*****ERR:" + err + "*****");
-                        res.json({
-                            status: "getFail"
-                        });
-                        return;
-                    });
+                res.json({
+                    status: "success"
+                });
+                return;
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -140,32 +125,16 @@ module.exports = {
         var info = req.body.info;
         var TYPE_NAME = info.oldName;
         sys_hierarchies_types.update({
-                TYPE_NAME: info.model[0].value,
+                TYPE_NAME: info.TYPE_NAME,
                 Last_updated_by: info.userId
             }, {
                 TYPE_NAME: TYPE_NAME
             })
             .success(function(result1) {
-                sys_hierarchies_types.findAll({
-                        order: "Creation_date DESC"
-                    }, {
-                        raw: true
-                    })
-                    .success(function(result2) {
-                        res.json({
-                            "status": "success",
-                            result: result2
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            "status": "fail",
-                            "result": []
-                        });
-                        return;
-                    });
+                res.json({
+                    status: "success"
+                });
+                return;
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");

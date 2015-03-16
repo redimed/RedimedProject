@@ -49,20 +49,20 @@
 			</button>
 		</div>
 
-		<div class="forget-password">
-			<h4>Forgot your password ?</h4>
-			<p>
-				no worries, click <a ui-sref="security.forgot">here</a> to reset your password.
-			</p>
+	</form>
+
+		<div>
+			<h4>
+				<label class="checkbox">
+					<input type="checkbox" checkbox ng-model="modelUser.isAgree" 
+						name="checkAgree">
+					I Agree To The <a ui-sref="security.term">Terms And Conditions!</a>
+				</label>
+			</h4>
 		</div>
 
-		<!--<div class="create-account">-->
-			<!--<p>-->
-				<!--Don't have an account yet ?-->
-				<!--<a ui-sref="security.register">Create an account</a>-->
-			<!--</p>-->
-		<!--</div>-->
-
-	</form>
+		<div class="forget-password">
+			<h4>Forgot your password ? <a ui-sref="security.forgot">Click here!</a></h4>
+		</div>
 </div>
 <!-- END CONTENT -->

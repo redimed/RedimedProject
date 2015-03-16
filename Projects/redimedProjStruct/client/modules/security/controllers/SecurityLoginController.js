@@ -7,7 +7,8 @@ angular.module("app.security.login.controller",[
 
     $scope.modelUser = {
         username : null,
-        password : null
+        password : null,
+        isAgree: false
     }
 
     // SUBMIT LOGIN
@@ -20,6 +21,8 @@ angular.module("app.security.login.controller",[
             // $scope.isLogging = true;
 
             // if($scope.isLogging) {
+            if($scope.modelUser.isAgree)
+            {
                 SecurityService.login($scope.modelUser).then(function (response) {
                     socket.emit('checkLogin', $scope.modelUser.username);
 
@@ -53,6 +56,11 @@ angular.module("app.security.login.controller",[
                 });
 
                 socket.removeAllListeners();
+            }
+            else
+            {
+                toastr.warning("Please Agree With Terms And Conditions!");
+            }
 
             // }
 

@@ -3,8 +3,19 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,$location,$rootScope, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
+    .controller("callController", function($scope,$document,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
         socket.removeAllListeners();
+
+        var audio = new Audio('theme/assets/phone_calling.mp3');
+        var from = $cookieStore.get('fromState');
+        var params = {};
+
+        var apiKey = null;
+        var sessionId = null;
+        var token = null;
+
+        var publisher = null;
+        $scope.session = null;
 
         $scope.userInfo = null;
         $scope.callUserInfo = $stateParams.callUserInfo;
@@ -13,13 +24,19 @@ angular.module("app.call.controller",[
 
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
-        $scope.isShareScreen = true;
 
+        $scope.streams = OTSession.streams;
         $scope.sharingMyScreen = false;
-        $scope.selectingScreenSource = false;
-        $scope.screenShareFailed = null;
-        $scope.promptToInstall = false;
+        $scope.publishing = false;
+        $scope.screenBig = true;
         $scope.screenShareSupported = !!navigator.webkitGetUserMedia;
+        $scope.isAndroid = /Android/g.test(navigator.userAgent);
+        $scope.connected = false;
+        $scope.screenShareFailed = null;
+        $scope.mouseMove = false;
+        $scope.leaving = false;
+        $scope.selectingScreenSource = false;
+        $scope.promptToInstall = false;
 
         $scope.screenPublisherProps = {
             name: "screen",
@@ -41,15 +58,17 @@ angular.module("app.call.controller",[
             aspectRatio: screen.width / screen.height
         };
 
-        var publisher = null;
-        var session = null;
-        var audio = new Audio('theme/assets/phone_calling.mp3');
-        var from = $cookieStore.get('fromState');
-        var params = {};
+        $scope.facePublisherProps = {
+            name:'face',
+            width: '100%',
+            height: '100%',
+            style: {
+                nameDisplayMode: 'off'
+            },
+            resolution: '1280x720',
+            frameRate: 30
+        }
 
-        var apiKey = null;
-        var sessionId = null;
-        var token = null;
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login',null,{location: "replace"});
@@ -76,47 +95,35 @@ angular.module("app.call.controller",[
 
         if($scope.isCaller)
         {   
-
             audio.loop = true;
             audio.play();
 
             socket.emit("generateSession",$scope.userInfo.id);
 
             socket.on("generateSessionSuccess",function(opentokRoom){
+                if ($scope.session) {
+                    $scope.session.disconnect();
+                }
 
                 apiKey = opentokRoom.apiKey;
                 sessionId = opentokRoom.sessionId;
                 token = opentokRoom.token;
 
-                var publisherProperties = {};
-                publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                publisherProperties.insertMode = 'append';
-
-                publisher = OT.initPublisher('selfVideo',publisherProperties);
-
-                session = OT.initSession( apiKey, sessionId ); 
-                session.on({
-                    'streamCreated': function( event ){
-                        session.subscribe( event.stream, "callerVideo",{
-                            insertMode: "append",
-                            maxResolution:{ width: 1920, height: 1080 },
-                            width: '100%',
-                            height: '100%'
-                        });
-                    }
+                OTSession.init(apiKey, sessionId, token, function (err, session) {
+                    $scope.session = session;
+                    var connectDisconnect = function (connected) {
+                      $scope.$apply(function () {
+                          $scope.connected = connected;
+                          if (!connected) $scope.publishing = false;
+                      });
+                    };
+                    if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+                    $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+                    $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
                 });
-                session.connect(token, function(error) {
-                    if (error) 
-                    {
-                        console.log(error.message);
-                    } 
-                    else 
-                    {
-                        session.publish( publisher );
-                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
-                    }
-                });
-               
+
+                $scope.publishing = true;
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});               
             })
         }
         else
@@ -129,36 +136,22 @@ angular.module("app.call.controller",[
                 sessionId = info.sessionId;
                 token = info.token;
 
-                var publisherProperties = {};
-                publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                publisherProperties.insertMode = 'append';
-
-                publisher = OT.initPublisher('selfVideo',publisherProperties);
-
-                session = OT.initSession( apiKey, sessionId ); 
-                session.on({
-                    'streamCreated': function( event ){
-                        session.subscribe( event.stream, "callerVideo",{
-                            insertMode: "append",
-                            maxResolution:{ width: 1920, height: 1080 },
-                            width: '100%',
-                            height: '100%'
-                        });
-                    }
+                OTSession.init(apiKey, sessionId, token, function (err, session) {
+                    $scope.session = session;
+                    var connectDisconnect = function (connected) {
+                      $scope.$apply(function () {
+                          $scope.connected = connected;
+                          if (!connected) $scope.publishing = false;
+                      });
+                    };
+                    if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+                    $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+                    $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
                 });
-                session.connect(token, function(error) {
-                    if (error) 
-                    {
-                        console.log(error.message);
-                    } 
-                    else 
-                    {
-                        session.publish( publisher );
-                        socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'})
-                    }
-                });
+
+                $scope.publishing = true;
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
             }
-
         }
 
         socket.on("messageReceived",function(fromId,fromUser,message){
@@ -189,159 +182,6 @@ angular.module("app.call.controller",[
 
         })
 
-        socket.on("receiveArchive",function(info){
-            console.log(info);
-        })
-
-        $scope.cancelCall = function(){
-            audio.pause();
-            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
-            disconnect();
-            
-            if(typeof from !== 'undefined')
-                $state.go(from.fromState.name,params,{location: "replace", reload: true});
-
-        }
-
-        $scope.installScreenshareExtension = function () {
-              chrome.webstore.install('https://chrome.google.com/webstore/detail/gbmgefccigbfiilkihnomgkmpedbojco', function () {
-                console.log('successfully installed');
-              }, function () {
-                console.error('failed to install', arguments);
-              });
-        };
-
-        $scope.shareScreen = function(){
-            if(navigator.userAgent.toLowerCase().indexOf("chrome") != -1)
-            {
-                
-                if($scope.isShareScreen)
-                {
-                    OT.registerScreenSharingExtension("chrome","gbmgefccigbfiilkihnomgkmpedbojco");
-
-                    OT.checkScreenSharingCapability(function(response) {
-                        console.log(response);
-                      //response.extensionInstalled = true;
-                      response.extensionRequired = true
-
-                      if(!response.supported) {
-                            alert("This Browser does not support screen sharing")
-                      } 
-                      else if(response.supported && !response.extensionInstalled) 
-                      {
-                            var modalInstance = $modal.open({
-                                templateUrl: './common/views/dialog/confirmExtension.html',
-                                size: 'md',
-                                controller: function($scope, $modalInstance){
-                                    
-                                    $scope.cancelClick = function(){
-                                        $modalInstance.close();
-                                    };
-
-                                }
-                                
-                            })
-                      } 
-                      else 
-                      {
-                            
-                            if(publisher)
-                                session.unpublish(publisher);
-                            publisher = null;
-
-                            var publisherProperties = {};
-                            publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                            publisherProperties.videoSource = 'screen';
-                            publisher = OT.initPublisher('selfVideo',
-                                          publisherProperties,
-                                          function(error) {
-                                            if (error) {
-                                              console.log(error.message);
-                                            } else {
-                                              session.publish(publisher, function(error) {
-                                                if (error) {
-                                                 console.log(error.message);
-                                                }
-                                              });
-                                              $scope.isShareScreen = !$scope.isShareScreen;
-                                            }
-                                          }
-                                        );
-                      }
-                    })   
-                }
-                else
-                {
-
-                    var publisherProperties = {};
-                        publisherProperties.maxResolution = { width: 1920, height: 1080 };
-                        // publisherProperties.videoSource = 'camera';
-                        publisherProperties.insertMode = 'append';
-                        publisher = OT.initPublisher('selfVideo',
-                                      publisherProperties,
-                                      function(error) {
-                                        if (error) {
-                                          console.log(error.message);
-                                        } else {
-                                          session.publish(publisher, function(error) {
-                                            if (error) {
-                                             console.log(error.message);
-                                            }
-                                          });
-                                          $scope.isShareScreen = !$scope.isShareScreen;
-                                        }
-                                      }
-                                    );
-                        
-                    
-                }
-            }
-            else
-            {
-                alert("This browser does not support screen sharing");
-            }  
-        }
-
-        $scope.toggleShareScreen = function() {
-            if (!$scope.sharingMyScreen && !$scope.selectingScreenSource) {
-              $scope.selectingScreenSource = true;
-              $scope.screenShareFailed = null;
-              
-              var screenSharing = OTChromeScreenSharingExtensionHelper('gbmgefccigbfiilkihnomgkmpedbojco');
-              screenSharing.isAvailable(function (extensionIsAvailable) {
-                if (extensionIsAvailable) {
-                  screenSharing.getVideoSource(function(error, source) {
-                    $scope.$apply(function () {
-                      if (error) {
-                        // either the extension is not available or the user clicked cancel
-                        $scope.screenShareFailed = error.message;
-                      } else {
-                        $scope.screenPublisherProps.videoSource = source;
-                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSource = 'desktop';
-                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSourceId = source.deviceId;
-                        
-                        $scope.sharingMyScreen = true;
-                      }
-                      $scope.selectingScreenSource = false;
-                    });
-                  });
-                } else {
-                  $scope.$apply(function () {
-                    $scope.promptToInstall = true;
-                    $scope.selectingScreenSource = false;
-                  });
-                }
-              });
-            } else if ($scope.sharingMyScreen) {
-              $scope.sharingMyScreen = false;
-            }
-        };
-
-        $scope.recordVideo = function(){
-            console.log("record");
-            socket.emit("sendArchive",{type:"start", sessionId: sessionId, userId: $scope.userInfo.id});
-        }
-
         $scope.muteAudio = function(){
             $scope.isAudioMuted = !$scope.isAudioMuted;
             if($scope.isAudioMuted)
@@ -359,15 +199,138 @@ angular.module("app.call.controller",[
         }
 
         var disconnect = function() {
-            if (publisher) {
-                publisher.destroy();
-                session.unpublish(publisher);
-                // session.disconnect();
-            }
-            publisher = null;
-            session = null;
+            $scope.session.disconnect();
+            $scope.session.on('sessionDisconnected', function () {
+                socket.removeAllListeners();
+            });
 
-            socket.removeAllListeners();
+            // if (publisher) {
+            //     publisher.destroy();
+            //     session.unpublish(publisher);
+            //     // session.disconnect();
+            // }
+            // publisher = null;
+            // session = null;
         }
+
+        $scope.cancelCall = function(){
+            audio.pause();
+            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+            disconnect();
+            
+            if(typeof from !== 'undefined')
+                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+        }
+
+        $scope.installScreenshareExtension = function () {
+              chrome.webstore.install('https://chrome.google.com/webstore/detail/pkakgggplhfilfbailbaibljfpalofjn', function () {
+                console.log('successfully installed');
+              }, function () {
+                console.error('failed to install', arguments);
+              });
+        };
+
+        
+        $scope.toggleShareScreen = function() {
+            console.log("a");
+            if (!$scope.sharingMyScreen && !$scope.selectingScreenSource) {
+                console.log("b");
+              $scope.selectingScreenSource = true;
+              $scope.screenShareFailed = null;
+              
+              var screenSharing = OTChromeScreenSharingExtensionHelper('pkakgggplhfilfbailbaibljfpalofjn');
+              screenSharing.isAvailable(function (extensionIsAvailable) {
+                if (extensionIsAvailable) {
+                    console.log("c");
+                  screenSharing.getVideoSource(function(error, source) {
+                    $scope.$apply(function () {
+                      if (error) {
+                        // either the extension is not available or the user clicked cancel
+                        $scope.screenShareFailed = error.message;
+                      } else {
+                        $scope.screenPublisherProps.videoSource = source;
+                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSource = 'desktop';
+                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSourceId = source.deviceId;
+                        
+                        $scope.sharingMyScreen = true;
+                      }
+                      $scope.selectingScreenSource = false;
+                    });
+                  });
+                } else {
+                    console.log("d");
+                  $scope.$apply(function () {
+                    $scope.promptToInstall = true;
+                    $scope.selectingScreenSource = false;
+                  });
+                }
+              });
+            } else if ($scope.sharingMyScreen) {
+                console.log("e");
+              $scope.sharingMyScreen = false;
+            }
+        };
+
+        
+         $scope.$on("changeSize", function (event) {
+            if (event.targetScope.stream.oth_large === undefined) {
+                event.targetScope.stream.oth_large = event.targetScope.stream.name !== "screen";
+            } else {
+                event.targetScope.stream.oth_large = !event.targetScope.stream.oth_large;
+            }
+            setTimeout(function () {
+                event.targetScope.$emit("otLayout");
+            }, 10);
+        });
+        
+        $scope.$on("changeScreenSize", function (event) {
+            $scope.screenBig = !$scope.screenBig;
+            setTimeout(function () {
+                event.targetScope.$emit("otLayout");
+            }, 10);
+        });
+        
+        $scope.$on("otPublisherError", function (event, error, publisher) {
+            if (publisher.id === 'screenPublisher') {
+                $scope.$apply(function () {
+                    $scope.screenShareFailed = error.message;
+                    $scope.toggleShareScreen();
+                });
+            }
+        });
+
+        var mouseMoveTimeout;
+        var mouseMoved = function (event) {
+            if (!$scope.mouseMove) {
+                $scope.$apply(function () {
+                    $scope.mouseMove = true;
+                });
+            }
+            if (mouseMoveTimeout) {
+                clearTimeout(mouseMoveTimeout);
+            }
+            mouseMoveTimeout = setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.mouseMove = false;
+                });
+            }, 5000);
+        };
+        $window.addEventListener("mousemove", mouseMoved);
+        $window.addEventListener("touchstart", mouseMoved);
+        $document.context.body.addEventListener("orientationchange", function () {
+          $scope.$emit("otLayout");
+        });
+
+        $scope.$on('$destroy', function () {
+          if ($scope.session && $scope.connected) {
+              $scope.session.disconnect();
+              $scope.connected = false;
+          }
+          $scope.session = null;
+        });
+
+
+        
 
     })

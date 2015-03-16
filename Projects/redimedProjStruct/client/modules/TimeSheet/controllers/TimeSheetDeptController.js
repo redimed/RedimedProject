@@ -1,5 +1,11 @@
 angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
     .controller("TimeSheetDeptController", function($scope, MODE_ROW, toastr, $state, localStorageService, TimeSheetService, $modal) {
+        
+        //close siderba
+        $('body').addClass("page-sidebar-closed");
+        $('body').find('ul').addClass("page-sidebar-menu-closed");
+        //end close siderba
+        
         //FUNCTION SETPAGE
         $scope.setPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;

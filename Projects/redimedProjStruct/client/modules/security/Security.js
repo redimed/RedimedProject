@@ -40,6 +40,16 @@ angular.module("app.security",[
     		}
     	}
     })
+
+    .state("security.term",{
+        url:"/terms",
+        views: {
+            "main-content": {
+                templateUrl: "modules/security/views/terms.html",
+                controller: "SecurityLoginController"
+            }
+        }
+    })
     // END FORGOT
 
     //REGISTER

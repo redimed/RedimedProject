@@ -121,11 +121,11 @@
     margin-right: 5px;
 }
 
-.panel-body
+/*.panel-body
 {
     overflow-y: scroll;
     height: 250px;
-}
+}*/
 
 ::-webkit-scrollbar-track
 {

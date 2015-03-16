@@ -9,9 +9,9 @@
 //tannv.dts@gmail.com
 //Document Status:
 documentStatus:{
-        notConfirmed:'Not confirmed',
-        checked:'Checked',
-        noDocuments:'No documents'
+        notConfirmed:'Not confirmed', 
+        checked:'Checked', (Received)
+        noDocuments:'No documents' (Not received)
 	},
 
 /*

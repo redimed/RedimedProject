@@ -1,5 +1,10 @@
 angular.module("app.loggedIn.TimeSheet.Tree.Controller", [])
     .controller("TimeSheetTree", function($scope, MODE_ROW, localStorageService, $state, TimeSheetService, $modal, $cookieStore, toastr) {
+        //close siderba
+        $('body').addClass("page-sidebar-closed");
+        $('body').find('ul').addClass("page-sidebar-menu-closed");
+        //end close siderba
+        
         $scope.info = {};
 
         //FUNCTION SETPAGE

@@ -45,6 +45,7 @@ app.get('/api/rlob/appointment-calendar/get-by-id',clnAppointmentCalendarControl
 app.post('/api/rlob/rl_bookings/add',rlBookingsController.add);
 app.get('/api/rlob/rl_bookings/get-new-key',rlBookingsController.getNewKey);
 app.post('/api/rlob/rl_bookings/list',rlBookingsController.list);//co su dung
+app.post('/api/rlob/rl_bookings/list-bookings-for-customer',rlBookingsController.listBookingsForCustomer);//tannv.dts@gmail.com 12-3-2015
 app.post('/api/rlob/rl_bookings/detail',rlBookingsController.detail);//co su dung
 app.post('/api/rlob/rl_bookings/get-booking-by-id',rlBookingsController.getBookingById);
 app.post('/api/rlob/rl_bookings/lob-change-status',rlBookingsController.lob_change_status);

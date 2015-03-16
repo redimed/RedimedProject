@@ -202,7 +202,7 @@
 .statusMessage {
     background-color: #565853;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 5px !important;
     text-align: center;
     vertical-align: middle;
     padding: 10px 0 10px 0;
@@ -213,105 +213,132 @@
 
 #statusMessages {
     transition: opacity 200ms ease;
-    opacity: 0;
+    opacity: 1;
     position: absolute;
     width: 465px;
     left: calc(50% - 242.5px);
-    bottom: 80px;
+    /*top: 0;*/
+    bottom: 0;
     z-index: 98;
 }
 
-/*.buttons {
+#facePublisher {
+    width: 178px;
+    height: 100px;
+    display: block;
+    position: absolute;
+    cursor: move;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    top: 10px;
+    right: 10px;
+    border-radius: 5px;
+    z-index: 99;
+    transition: width 200ms, height 200ms ease;
 }
 
-.buttons a {
-    margin-right: 30px;
-    width: 64px;
-    height: 64px;
+#facePublisher ot-publisher {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#facePublisher:active {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
+
+#session {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+ot-layout ot-subscriber {
+    background-color: #262422;
     display: inline-block;
-    position: relative;
-    line-height: 64px;
-    background-color: #eaeaea;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#eaeaea));
-    background-image: -webkit-linear-gradient(top, #f6f6f6, #eaeaea);
-    background-image: -moz-linear-gradient(top, #f6f6f6, #eaeaea);
-    background-image: -ms-linear-gradient(top, #f6f6f6, #eaeaea);
-    background-image: -o-linear-gradient(top, #f6f6f6, #eaeaea);
-    background-image: linear-gradient(top, #f6f6f6, #eaeaea);
-    -moz-border-radius: 32px !important;
-    -webkit-border-radius: 32px !important;
-    border-radius: 32px !important;
-    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+}
+ot-layout {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.buttons a:active {
-  top: 1px;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#eaeaea), to(#f6f6f6));
-  background-image: -webkit-linear-gradient(top, #eaeaea, #f6f6f6);
-  background-image: -moz-linear-gradient(top, #eaeaea, #f6f6f6); 
-  background-image: -ms-linear-gradient(top, #eaeaea, #f6f6f6); 
-  background-image: -o-linear-gradient(top, #eaeaea, #f6f6f6);
-  background-image: linear-gradient(top, #eaeaea, #f6f6f6);
+ot-layout button.resize-btn {
+    transition-property: top,bottom,opacity;
+    transition-duration: .5s;
+    transition-timing-function: ease-in;
+    opacity: 0;
+    width: 25px;
+    height: 25px;
+    font-size: 27px;
+    cursor: pointer;
+    position: absolute;
+    background-color: transparent;
+    top: -25px;
+    margin-top: 2px;
+    right: 38px;
+    border: none;
+    z-index: 99;
 }
 
-.buttons a::before{
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: -8px;
-  right: -8px;
-  bottom: -8px;
-  left: -8px;
-  background-color: #eaeaea;
-  -moz-border-radius: 140px !important;
-  -webkit-border-radius: 140px !important;
-  border-radius: 140px !important;
-  opacity: 0.5;
-
+ot-layout > .OT_big button.resize-btn:before {
+    content: "\f267";
 }
 
-.buttons a:active::before {
-  top: -9px;
-}
- 
-.buttons a:hover::before {
-  opacity: 1;
-}
- 
-.buttons a.audioBtn:hover::before 
-.buttons a.cancelBtn:hover::before
-.buttons a.videoBtn:hover::before
-.buttons a.moreBtn:hover::before
-{
-    text-decoration: none;
-}
- 
-.videoBtn i {
-    color: rgba(146, 138, 138, 0.69);
-    margin-top:24px;
-    vertical-align: middle;
-}
- 
-.cancelBtn i {
-    color: rgb(255, 74, 82);
-    margin-top:24px;
-    vertical-align: middle;
-}
- 
-.audioBtn i {
-  color: rgba(146, 138, 138, 0.69);
-  margin-top:24px;
-  vertical-align: middle;
+ot-layout > :hover button.resize-btn {
+    top: 0;
+    opacity: 1;
 }
 
-.moreBtn i {
-  color: #6FDB72;
-  margin-top:24px;
-  vertical-align: middle;
-}*/
+ot-whiteboard {
+    display: block;
+    background-color: #DCD9CD;
+}
 
+ot-editor {
+    display: block;
+    background-color: #DCD9CD;
+    overflow: scroll;
+}
+
+ot-editor .CodeMirror {
+    background-color: #DCD9CD;
+}
+
+@media screen and (max-width: 650px) {  
+  #facePublisher {
+      width: 89px;
+      height: 50px;
+  }
+  
+  #statusMessages {
+      width: 340px;
+      left: calc(50% - 180px);
+  }
+}
+
+@media only screen and (orientation: portrait) {
+    #facePublisher {
+        width: 100px;
+        height: 150px;
+    }
+}
+
+@media only screen and (orientation: portrait) and (max-width: 650px) {
+    #facePublisher {
+        width: 50px;
+        height: 75px;
+    }
+}
+
+#screenShareUnsupported {
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
 
 </style>
 
@@ -344,9 +371,36 @@
     </div>
 
 
-    <div class="easyrtcMirror" id="selfVideo"></div>
+    <!-- <div class="easyrtcMirror" id="selfVideo"></div>
     <div id="screen-preview"></div>
-    <div ng-show="!isCaller || isAccept"  id="callerVideo" ></div>
+    <div ng-show="!isCaller || isAccept"  id="callerVideo" ></div> -->
+
+    <div id='session' ng-class="{'session-connected': connected}">
+        <ot-layout props="{animate:true,bigFixedRatio:true}">
+            <ot-subscriber ng-repeat="stream in streams" 
+                stream="stream" 
+                props="{style: {nameDisplayMode: 'off'}}" 
+                
+                ng-dblclick="$emit('changeSize')">
+                    <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeSize');"></button>
+            </ot-subscriber>
+            <ot-publisher id="screenPublisher"
+                ng-if="sharingMyScreen"
+                props='screenPublisherProps'
+                ng-class="{OT_big: screenBig}" 
+                ng-dblclick="$emit('changeScreenSize');">
+                <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeScreenSize');"></button>
+            </ot-publisher>
+        </ot-layout>
+        
+        <div id="facePublisher"
+            ng-if="publishing"
+            >
+            <ot-publisher id="facePublisher" 
+                props="facePublisherProps">
+            </ot-publisher>
+        </div>
+    </div>
 
     <div class="container">
       <div class="component">
@@ -354,7 +408,7 @@
         <div class="cn-wrapper" id="cn-wrapper">
             <ul>
               <li>
-                <a tooltip-html-unsafe="Screen Sharing" href="javascript:;" ng-click="shareScreen()" >
+                <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall" href="javascript:;" ng-click="toggleShareScreen()" >
                   <span class="fa fa-desktop"></span>
                 </a>
               </li>
@@ -386,7 +440,7 @@
 
     <div id="statusMessages">
         <div id="screenShareFailed" class="statusMessage" ng-if="screenShareFailed">Screen Share Failed {{screenShareFailed}}</div>
-        <div id="installScreenshareExtension" class="statusMessage" ng-if="promptToInstall">You need a Chrome extension to share your screen. <a href="" sync-click="installScreenshareExtension()">Install Screensharing Extension</a>. Once you have installed refresh your browser and click the share screen button again.</div>
+        <div id="installScreenshareExtension" ng-if="promptToInstall" class="statusMessage">You need a Chrome extension to share your screen. <a href="javascript:;" sync-click="installScreenshareExtension()">Install Screensharing Extension</a>. Once you have installed refresh your browser and click the share screen button again.</div>
         <div id="screenShareUnsupported" class="statusMessage" ng-if="!screenShareSupported">
             Screen Sharing currently requires Google Chrome on Desktop.
         </div>

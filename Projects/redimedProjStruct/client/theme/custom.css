@@ -945,6 +945,14 @@ table.timetable-table td:last-child {
 .custom-timesheet {
     font-size: 12px;
 }
+.submited {
+    color: #baaa5a;
+    font-weight: bold;
+}
+.reject {
+    color: #DF5755;
+    font-weight: bold;
+}
 .glyphicon-chevron-up:before {
     content: "\e113"
 }
@@ -1058,8 +1066,7 @@ table.timetable-table td:last-child {
     background-color: #fafafa;
 }
 .table-dynamic .table-bordered>thead>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox], .table-dynamic .table-bordered>thead>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>td>input[type=checkbox] {
-    margin: 4px 1px 1px 10px;
-    margin-top: 1px \9;
+    margin: 1px -15px -10px 2px;
     line-height: normal;
 }
 /*end tooltipster*/

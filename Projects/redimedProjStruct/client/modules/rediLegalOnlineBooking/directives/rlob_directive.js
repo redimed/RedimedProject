@@ -211,6 +211,8 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_detail_template_print.html',
             controller: function ($scope)
             {
+                  //get date now
+                $scope.dateValue = new Date();
                 // phanquocchien.c1109g@gmail.com
                 // google map print
                 function codeAddress() {
@@ -388,7 +390,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 bookingType:'=',
                 selectedBooking:  '=',
                 isAdminGetFiles:'=',
-                filesUpdateFlag:'='
+                filesUpdateFlag:'=',
+                numberOfDocs:'='
                 //la so, de danh dau co file moi upload hay khong
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
@@ -407,6 +410,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }).success(function (data) {
                         if (data.status == 'success') {
                             $scope.files = data.data;
+                            $scope.numberOfDocs=data.data.length;
                         }
                     });
                 }
@@ -539,11 +543,21 @@ angular.module("app.loggedIn.rlob.directive", [])
                     $scope.mailTemplate={
                         REDiLEGAL:{
                             label:'Please contact us to make an appointment',
-                            recepient : "redilegal@redimed.com.au",
+                            recepient : "medicolegal@redimed.com.au",
                             options:{
                                 subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
                                 body:
-                                    "Please booking for me..."
+                                    " I would like to make a booking for       \n"+
+                                    " Claim Number:                            \n"+
+                                    " Injured Workers's Name:                  \n"+
+                                    " Contact Number:                          \n"+
+                                    " Address:                                 \n"+
+                                    " Date of Birth:                           \n"+
+                                    " Date of Injury:                          \n"+
+                                    " Description of Injury:                   \n"+
+                                    " Location of Appointment:                 \n"+
+                                    " Timeframe for Appointment:               \n\n"+
+                                    " Please note that this booking is not confirmed in our system until approved by REDIMED."
                             }
 
                         },
@@ -701,7 +715,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 }
                 $scope.getSpecialitiesFilter();
 
-                $scope.specialitiesChange=function(specialtityId)
+                $scope.specialitiesChange=function()
                 {
                     //$scope.getDoctorsFilter(specialtityId);
                     //$scope.selectedFilter.doctorSelected={};
@@ -741,7 +755,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //test
                 
                 
-                $scope.getListDateAppoinment = function(rlTypeId,specialityId,doctorId,locationId,var1){
+                $scope.getListDateAppoinment = function(rlTypeId,specialtyName,doctorId,locationId,var1){
                     //phanquocchien.c1109g@gmail.com
                     //set color rlobdatepicker
                     // 
@@ -756,7 +770,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     // console.log($scope.startItemDate);
                     // console.log($scope.endItemDate);
                     // console.log(itemDate);
-                    rlobService.getListDateAppoinmentCalendar(rlTypeId,specialityId,doctorId,locationId,$scope.startItemDate,$scope.endItemDate,$scope.bookingType).then(function(data){
+                    rlobService.getListDateAppoinmentCalendar(rlTypeId,specialtyName,doctorId,locationId,$scope.startItemDate,$scope.endItemDate,$scope.bookingType).then(function(data){
                         if(data.status=='success')
                         {
                             // console.log(data.data);
@@ -794,7 +808,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     //
                     var startDate = angular.copy(var1).subtract('days' ,30).format("YYYY/MM/DD");
                     var endDate = angular.copy(var1).add('days',30).format("YYYY/MM/DD");   
-                    rlobService.getListDateAppoinmentCalendar(rlTypeId,specialityId,doctorId,locationId,startDate,endDate,$scope.bookingType).then(function(data){
+                    rlobService.getListDateAppoinmentCalendar(rlTypeId,specialtyName,doctorId,locationId,startDate,endDate,$scope.bookingType).then(function(data){
                         if(data.status=='success')
                         {
                             // console.log(data.data);
@@ -835,17 +849,17 @@ angular.module("app.loggedIn.rlob.directive", [])
                 {
                     // alert(">>>>>>>>");
                     var rlTypeId=$scope.selectedFilter.rltypeSelected && $scope.selectedFilter.rltypeSelected.RL_TYPE_ID?$scope.selectedFilter.rltypeSelected.RL_TYPE_ID:'%';
-                    var specialityId= $scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:'%';
+                    var specialtyName= $scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_name?$scope.selectedFilter.clnSpecialitySelected.Specialties_name:'%';
                     var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
                     var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
                     var fromTime=$scope.selectedFilter.var1.format("YYYY/MM/DD");
                     
-                    $scope.getListDateAppoinment(rlTypeId,specialityId,doctorId,locationId,$scope.selectedFilter.var1);
+                    $scope.getListDateAppoinment(rlTypeId,specialtyName,doctorId,locationId,$scope.selectedFilter.var1);
 
                     $http({
                         method:"GET",
                         url:"/api/rlob/appointment-calendar/get-appointment-calendar" ,
-                        params:{RL_TYPE_ID:rlTypeId,Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime,sourceType:$scope.bookingType}
+                        params:{RL_TYPE_ID:rlTypeId,Specialties_name:specialtyName,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime,sourceType:$scope.bookingType}
                     })
                         .success(function(data) {
 
@@ -853,52 +867,37 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                             for(var i=0;i<data.length;i++)
                             {
-
                                 if(!temp[data[i].RL_TYPE_ID])
                                 {
-                                    temp[data[i].RL_TYPE_ID]={SPEC_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID]={DOCTOR_ITEMS:[]};
                                     temp.TYPE_ITEMS.push({
                                         RL_TYPE_ID:data[i].RL_TYPE_ID,
                                         Rl_TYPE_NAME:data[i].Rl_TYPE_NAME
                                     });
                                 }
 
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id])
+                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID])
                                 {
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id]={DOCTOR_ITEMS:[]};
-                                    temp[data[i].RL_TYPE_ID].SPEC_ITEMS.push({
-                                        Specialties_id:data[i].Specialties_id,
-                                        Specialties_name:data[i].Specialties_name
-                                    });
-                                }
-
-
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID])
-                                {
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID]={LOCATION_ITEMS:[]};
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id].DOCTOR_ITEMS.push({
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID]={LOCATION_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID].DOCTOR_ITEMS.push({
                                         DOCTOR_ID:data[i].DOCTOR_ID,
                                         DOCTOR_NAME:data[i].NAME
                                     });
                                 }
 
-                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID])
+                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID])
                                 {
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID]={APPOINTMENT_ITEMS:[]};
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID].LOCATION_ITEMS.push({
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID]={APPOINTMENT_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID].LOCATION_ITEMS.push({
                                         SITE_ID: data[i].SITE_ID,
                                         SITE_NAME:data[i].Site_name
                                     });
-
                                 }
 
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID])
+                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID])
                                 {
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID]={};
-                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID].APPOINTMENT_ITEMS.push({
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID]={SPEC_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID].APPOINTMENT_ITEMS.push({
                                         CAL_ID:data[i].CAL_ID,
                                         APPOINTMENT_TIME:data[i].appointment_time,
                                         FROM_TIME:data[i].FROM_TIME,
@@ -907,13 +906,48 @@ angular.module("app.loggedIn.rlob.directive", [])
                                     });
                                 }
 
+                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id])
+                                {
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id]={};
+                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID].SPEC_ITEMS.push({
+                                        Specialties_id:data[i].Specialties_id,
+                                        Specialties_name:data[i].Specialties_name
+                                    });
+                                }
+
                             }
                             var arr=[];
                             for (var i=0;i<temp.TYPE_ITEMS.length;i++)
                             {
                                 var type_item=temp.TYPE_ITEMS[i];
-                                type_item.SPEC_ITEMS=[];
-                                for(var j=0;j<temp[type_item.RL_TYPE_ID].SPEC_ITEMS.length;j++)
+                                type_item.DOCTOR_ITEMS=[];
+
+                                for(var j=0;j<temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS.length;j++)
+                                {
+                                    var doctor_item=temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS[j];
+                                    doctor_item.LOCATION_ITEMS=[];
+                                    type_item.DOCTOR_ITEMS.push(doctor_item);
+                                    for(var q=0;q<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;q++)
+                                    {
+                                        var location_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS[q];
+                                        location_item.APPOINTMENT_ITEMS=[];
+                                        doctor_item.LOCATION_ITEMS.push(location_item);
+                                        for(var k=0;k<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;k++)
+                                        {
+                                            var appointment_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[k];
+                                            appointment_item.SPEC_ITEMS=[];
+                                            location_item.APPOINTMENT_ITEMS.push(appointment_item);
+                                            for(var l=0;l<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS.length;l++)
+                                            {
+                                                var spec_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS[l];
+                                                // exlog.log(appointment_item);
+                                                appointment_item.SPEC_ITEMS.push(spec_item);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                /*for(var j=0;j<temp[type_item.RL_TYPE_ID].SPEC_ITEMS.length;j++)
                                 {
                                     var spec_item=temp[type_item.RL_TYPE_ID].SPEC_ITEMS[j];
                                     spec_item.DOCTOR_ITEMS=[];
@@ -938,10 +972,12 @@ angular.module("app.loggedIn.rlob.directive", [])
                                             }
                                         }
                                     }
-                                }    
+                                }*/    
                                 arr.push(type_item);
                             }
-                            $scope.appointmentsFilter=arr
+                            $scope.appointmentsFilter=arr;
+                            // exlog.log($scope.appointmentsFilter);
+                            // exlog.log(temp);
                         })
                         .error(function (data) {
                             console.log("error");
@@ -1148,8 +1184,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.showDialogChoose=function(){
                     if($scope.fromDate && $scope.toDate)
                     {
-                        $scope.FROM_DATE_TEMP=moment($scope.fromDate,'YYYY/MM/DD').format("DD/MM/YYYY");
-                        $scope.TO_DATE_TEMP=moment($scope.toDate,'YYYY/MM/DD').format("DD/MM/YYYY");
+                        $scope.FROM_DATE_TEMP=moment($scope.fromDate,'YYYY/MM/DD').toDate();
+                        $scope.TO_DATE_TEMP=moment($scope.toDate,'YYYY/MM/DD').toDate();
                     }
                     $("#choose-period-dialog").modal({show:true,backdrop:'static'});
                 }
