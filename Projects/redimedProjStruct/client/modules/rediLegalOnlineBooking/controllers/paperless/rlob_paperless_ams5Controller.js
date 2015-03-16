@@ -20,6 +20,7 @@ angular.module('app.loggedIn.rlob.paperless.ams5.controller',[])
                             console.log(data.data);
                             $scope.info.WRK_NAME = data.data.WRK_SURNAME +" "+data.data.WRK_OTHERNAMES;
                             data.data.WRK_DATE_OF_BIRTH != null?$scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH):$scope.info.WRK_DATE_OF_BIRTH_TEMP = null;
+                            data.data.WRK_DATE_OF_INJURI != null?$scope.info.WRK_DATE_OF_INJURI_TEMP = new Date(data.data.WRK_DATE_OF_INJURI):$scope.info.WRK_DATE_OF_INJURI_TEMP = null;
                             // $scope.info.WRK_DATE_OF_BIRTH_TEMP = new Date(data.data.WRK_DATE_OF_BIRTH);
                             $scope.info.WRK_PHONE = data.data.WRK_PHONE;
                             $scope.info.WRK_EMAIL = data.data.WRK_EMAIL;
