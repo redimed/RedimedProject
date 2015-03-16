@@ -50,23 +50,11 @@ var rlobConstant={
     
     //chien set document Status
     //phanquocchien.c1109g@gmail.com
-    /*documentStatus:{
+    documentStatus:{
         notConfirmed:'Not confirmed',
         checked:'Checked',
         noDocuments:'No documents'
-	},*/
-    documentStatus:{
-        noDocuments:{value:'No documents',display:'Not received'},
-        notConfirmed:{value:'Not confirmed',display:'Not confirmed'},
-        checked:{value:'Checked',display:'Received'}
-    },
-
-    documentStatusDisplay:{
-        'No documents':'Not received',
-        'Not confirmed':'Not confirmed',
-        'Checked':'Received'
-
-    },
+	},
 
     documentStatusSummaryStyleClass:{
         notConfirmed:'booking-item document-status-not-confirmed',

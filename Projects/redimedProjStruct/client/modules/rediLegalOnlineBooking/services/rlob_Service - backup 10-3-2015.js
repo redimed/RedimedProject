@@ -126,10 +126,10 @@ angular.module('app.loggedIn.rlob.services',[])
             return changeMessages.get({ID:ID,CONTENTS:CONTENTS});
         }
         //chien get list date Appoiment Calendar
-        rlobService.getListDateAppoinmentCalendar=function(rlTypeId,specialtyName,doctorId,locationId,startDate,endDate,bookingType)
+        rlobService.getListDateAppoinmentCalendar=function(rlTypeId,specialityId,doctorId,locationId,startDate,endDate,bookingType)
         {
             var result=api.one('rlob/appointment-calendar/get-list-date-appointment-calendar');
-            return result.get({RL_TYPE_ID:rlTypeId,Specialties_name:specialtyName,DOCTOR_ID:doctorId,SITE_ID:locationId,STARTDATE:startDate,ENDDATE:endDate,sourceType:bookingType});
+            return result.get({RL_TYPE_ID:rlTypeId,Specialties_id:specialityId,DOCTOR_ID:doctorId,SITE_ID:locationId,STARTDATE:startDate,ENDDATE:endDate,sourceType:bookingType});
         }
         //phanquocchien.c1109g@gmail.com
         //addNewFromAms6

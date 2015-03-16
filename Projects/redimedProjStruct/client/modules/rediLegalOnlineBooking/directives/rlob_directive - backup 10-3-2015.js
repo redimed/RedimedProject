@@ -211,7 +211,44 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_detail_template_print.html',
             controller: function ($scope)
             {
-
+                // phanquocchien.c1109g@gmail.com
+                // google map print
+                function codeAddress() {
+                    var address1=$scope.selectedBooking.Site_addr;
+                    GMaps.geocode({
+                        address: address1,
+                        callback: function (results, status) {
+                            if (status == 'OK') {
+                                latlng1 = results[0].geometry.location;
+                                   // var map = new GMaps({
+                                   //      div: '#chienMap',
+                                   //      lat: latlng1.lat(),
+                                   //      lng: latlng1.lng()
+                                   //  });
+                                   // map.addMarker({
+                                   //    lat: latlng1.lat(),
+                                   //    lng: latlng1.lng(),
+                                   //    title: 'Lima',
+                                   //    infoWindow: {
+                                   //                    content: '<p>'+address1+'</p>'
+                                   //                  }
+                                   //  });
+                                   var url = GMaps.staticMapURL({
+                                      lat: latlng1.lat(),
+                                      lng: latlng1.lng(),
+                                      markers: [
+                                        {lat: latlng1.lat(), lng: latlng1.lng()}
+                                      ]
+                                    });
+                                    $("#imgMapPrint").attr('src', url);
+                            }
+                        }
+                    });
+                }
+                $scope.$watch("selectedBooking", function(newValue, oldValue){
+                    if($scope.selectedBooking)
+                        codeAddress();
+                });
             }
         };
     })
@@ -389,21 +426,57 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                 $scope.rlob_change_booking_file_role=function(assId,refId,fileId,role)
                 {
-                    $scope.showMsgDialog=function(styleClass,header,status,content)
+                    //alert($scope.selectedBooking.Site_addr);
+                    var mapUrl=null;
+                    var siteAddress=null;
+                    if($scope.selectedBooking && $scope.selectedBooking.Site_addr)
                     {
-                        $scope.msgHeader=header;
-                        $scope.msgStatus=status;
-                        $scope.msgContent=content;
-                        $(styleClass).modal({show:true,backdrop:'static'});
-                    };
+                        siteAddress=$scope.selectedBooking.Site_addr;
+                        GMaps.geocode({
+                            address: siteAddress,
+                            callback: function (results, status) {
+                                
+                                if (status == 'OK') 
+                                {
+                                    latlng1 = results[0].geometry.location;
+                                    mapUrl = GMaps.staticMapURL({
+                                      lat: latlng1.lat(),
+                                      lng: latlng1.lng(),
+                                      markers: [
+                                        {lat: latlng1.lat(), lng: latlng1.lng()}
+                                      ]
+                                    });
+                                    handle(mapUrl);
+                                }
+                                else
+                                {
+                                    handle(mapUrl);
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        handle(mapUrl);
+                    }
 
-                    $scope.showNotificationPopup=rlobService.showNotificationPopup;
+                    function handle(mapUrl)
+                    {
+                        $scope.showMsgDialog=function(styleClass,header,status,content)
+                        {
+                            $scope.msgHeader=header;
+                            $scope.msgStatus=status;
+                            $scope.msgContent=content;
+                            $(styleClass).modal({show:true,backdrop:'static'});
+                        };
 
-                    $http({
-                        method:"POST",
-                        url:"/api/rlob/rl_booking_files/change-role-download",
-                        data:{fileId:fileId,role:role}
-                    })
+                        $scope.showNotificationPopup=rlobService.showNotificationPopup;
+
+                        $http({
+                            method:"POST",
+                            url:"/api/rlob/rl_booking_files/change-role-download",
+                            data:{fileId:fileId,role:role,siteAddress:siteAddress,mapUrl:mapUrl}
+                        })
                         .success(function(data) {
                             if(data.status=='success')
                             {
@@ -423,7 +496,9 @@ angular.module("app.loggedIn.rlob.directive", [])
                         .finally(function() {
 
                         });
-                }
+                    }
+                    
+            }
             }
         };
     })
@@ -468,7 +543,17 @@ angular.module("app.loggedIn.rlob.directive", [])
                             options:{
                                 subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
                                 body:
-                                    "Please booking for me..."
+                                    " I would like to make a booking for       \n"+
+                                    " Claim Number:                            \n"+
+                                    " Injured Workers's Name:                  \n"+
+                                    " Contact Number:                          \n"+
+                                    " Address:                                 \n"+
+                                    " Date of Birth:                           \n"+
+                                    " Date of Injury:                          \n"+
+                                    " Description of Injury:                   \n"+
+                                    " Location of Appointment:                 \n"+
+                                    " Timeframe for Appointment:               \n\n"+
+                                    " Please note that this booking is not confirmed in our system until approved by REDIMED."
                             }
 
                         },
@@ -717,8 +802,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     //phanquocchien.c1109g@gmail.com
                     //Get List date Appoiment Calendar 15 date < var1 < 15 date 
                     //
-                    var startDate = angular.copy(var1).subtract('days' ,15).format("YYYY/MM/DD");
-                    var endDate = angular.copy(var1).add('days',15).format("YYYY/MM/DD");   
+                    var startDate = angular.copy(var1).subtract('days' ,30).format("YYYY/MM/DD");
+                    var endDate = angular.copy(var1).add('days',30).format("YYYY/MM/DD");   
                     rlobService.getListDateAppoinmentCalendar(rlTypeId,specialityId,doctorId,locationId,startDate,endDate,$scope.bookingType).then(function(data){
                         if(data.status=='success')
                         {
@@ -774,14 +859,45 @@ angular.module("app.loggedIn.rlob.directive", [])
                     })
                         .success(function(data) {
 
-                            var temp={LOCATION_ITEMS:[]};
+                            var temp={TYPE_ITEMS:[]};
 
                             for(var i=0;i<data.length;i++)
                             {
-                                if(!temp[data[i].SITE_ID])
+
+                                if(!temp[data[i].RL_TYPE_ID])
                                 {
-                                    temp[data[i].SITE_ID]={DOCTOR_ITEMS:[]};
-                                    temp.LOCATION_ITEMS.push({
+                                    temp[data[i].RL_TYPE_ID]={SPEC_ITEMS:[]};
+                                    temp.TYPE_ITEMS.push({
+                                        RL_TYPE_ID:data[i].RL_TYPE_ID,
+                                        Rl_TYPE_NAME:data[i].Rl_TYPE_NAME
+                                    });
+                                }
+
+
+                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id])
+                                {
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id]={DOCTOR_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID].SPEC_ITEMS.push({
+                                        Specialties_id:data[i].Specialties_id,
+                                        Specialties_name:data[i].Specialties_name
+                                    });
+                                }
+
+
+
+                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID])
+                                {
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID]={LOCATION_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id].DOCTOR_ITEMS.push({
+                                        DOCTOR_ID:data[i].DOCTOR_ID,
+                                        DOCTOR_NAME:data[i].NAME
+                                    });
+                                }
+
+                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID])
+                                {
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID]={APPOINTMENT_ITEMS:[]};
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID].LOCATION_ITEMS.push({
                                         SITE_ID: data[i].SITE_ID,
                                         SITE_NAME:data[i].Site_name
                                     });
@@ -789,48 +905,10 @@ angular.module("app.loggedIn.rlob.directive", [])
                                 }
 
 
-//                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
-//                                {
-//                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID]={SPEC_ITEMS:[]};
-//                                    temp[data[i].SITE_ID].DOCTOR_ITEMS.push({
-//                                        DOCTOR_ID:data[i].DOCTOR_ID,
-//                                        DOCTOR_NAME:data[i].NAME
-//                                    });
-//                                }
-
-                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
+                                if(!temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID])
                                 {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID]={TYPE_ITEMS:[]};
-                                    temp[data[i].SITE_ID].DOCTOR_ITEMS.push({
-                                        DOCTOR_ID:data[i].DOCTOR_ID,
-                                        DOCTOR_NAME:data[i].NAME
-                                    });
-                                }
-
-                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID])
-                                {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID]={SPEC_ITEMS:[]};
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID].TYPE_ITEMS.push({
-                                        RL_TYPE_ID:data[i].RL_TYPE_ID,
-                                        Rl_TYPE_NAME:data[i].Rl_TYPE_NAME
-                                    });
-                                }
-
-
-                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id])
-                                {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id]={APPOINTMENT_ITEMS:[]};
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID].SPEC_ITEMS.push({
-                                        Specialties_id:data[i].Specialties_id,
-                                        Specialties_name:data[i].Specialties_name
-                                    });
-                                }
-
-
-                                if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].CAL_ID])
-                                {
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].CAL_ID]={};
-                                    temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].RL_TYPE_ID][data[i].Specialties_id].APPOINTMENT_ITEMS.push({
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID]={};
+                                    temp[data[i].RL_TYPE_ID][data[i].Specialties_id][data[i].DOCTOR_ID][data[i].SITE_ID].APPOINTMENT_ITEMS.push({
                                         CAL_ID:data[i].CAL_ID,
                                         APPOINTMENT_TIME:data[i].appointment_time,
                                         FROM_TIME:data[i].FROM_TIME,
@@ -841,43 +919,39 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                             }
                             var arr=[];
-                            for (var i=0;i<temp.LOCATION_ITEMS.length;i++)
+                            for (var i=0;i<temp.TYPE_ITEMS.length;i++)
                             {
-                                var location_item=temp.LOCATION_ITEMS[i];
-                                location_item.DOCTOR_ITEMS=[];
-                                for(var j=0;j<temp[location_item.SITE_ID].DOCTOR_ITEMS.length;j++)
+                                var type_item=temp.TYPE_ITEMS[i];
+                                type_item.SPEC_ITEMS=[];
+                                for(var j=0;j<temp[type_item.RL_TYPE_ID].SPEC_ITEMS.length;j++)
                                 {
-                                    var doctor_item=temp[location_item.SITE_ID].DOCTOR_ITEMS[j];
-                                    doctor_item.TYPE_ITEMS=[];
-                                    location_item.DOCTOR_ITEMS.push(doctor_item);
+                                    var spec_item=temp[type_item.RL_TYPE_ID].SPEC_ITEMS[j];
+                                    spec_item.DOCTOR_ITEMS=[];
+                                    type_item.SPEC_ITEMS.push(spec_item);
 
-                                    for(var q=0;q<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].TYPE_ITEMS.length;q++)
+                                    for(var q=0;q<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS.length;q++)
                                     {
-                                        var type_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID].TYPE_ITEMS[q];
-                                        type_item.SPEC_ITEMS=[];
-                                        doctor_item.TYPE_ITEMS.push(type_item);
+                                        var doctor_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS[q];
+                                        doctor_item.LOCATION_ITEMS=[];
+                                        spec_item.DOCTOR_ITEMS.push(doctor_item);
 
-                                        for(var k=0;k<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][type_item.RL_TYPE_ID].SPEC_ITEMS.length;k++)
+                                        for(var k=0;k<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;k++)
                                         {
-                                            var spec_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][type_item.RL_TYPE_ID].SPEC_ITEMS[k];
-                                            spec_item.APPOINTMENT_ITEMS=[];
-                                            type_item.SPEC_ITEMS.push(spec_item);
+                                            var location_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS[k];
+                                            location_item.APPOINTMENT_ITEMS=[];
+                                            doctor_item.LOCATION_ITEMS.push(location_item);
 
-                                            for(var l=0;l<temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][type_item.RL_TYPE_ID][spec_item.Specialties_id].APPOINTMENT_ITEMS.length;l++)
+                                            for(var l=0;l<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;l++)
                                             {
-                                                var appointment_item=temp[location_item.SITE_ID][doctor_item.DOCTOR_ID][type_item.RL_TYPE_ID][spec_item.Specialties_id].APPOINTMENT_ITEMS[l];
-                                                spec_item.APPOINTMENT_ITEMS.push(appointment_item);
+                                                var appointment_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[l];
+                                                location_item.APPOINTMENT_ITEMS.push(appointment_item);
                                             }
                                         }
                                     }
-
-
-                                }
-                                arr.push(location_item);
+                                }    
+                                arr.push(type_item);
                             }
-                            $scope.appointmentsFilter=arr;
-
-
+                            $scope.appointmentsFilter=arr
                         })
                         .error(function (data) {
                             console.log("error");
@@ -1008,7 +1082,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_change_status_template.html',
             controller: function ($scope)
             {
-                $scope.bookingStatusChangedFlag =0;
+                //$scope.bookingStatusChangedFlag =0;
                 $scope.rlob_change_status=function(assId,bookingId,bookingType,status)
                 {
                     rlobService.changeBookingStatus(bookingId,status)
@@ -1016,6 +1090,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                             if(data.status=='success')
                             {
                                 $scope.selectedBooking.STATUS=status;
+                                if(!$scope.bookingStatusChangedFlag)
+                                    $scope.bookingStatusChangedFlag=0;
                                 $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
                                 var refId=bookingId;
                                 rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
@@ -1165,7 +1241,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_document_change_status_template.html',
             controller: function ($scope)
             {
-                $scope.documentStatusChangedFlag=0;
+                //$scope.documentStatusChangedFlag=0;
                 $scope.documentStatus=rlobConstant.documentStatus;
                 $scope.rlob_document_change_status=function(bookingId,status)
                 {
@@ -1174,6 +1250,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                             if(data.status=='success')
                             {
                                 $scope.selectedDocument.DOCUMENT_STATUS=status;
+                                if(!$scope.documentStatusChangedFlag)
+                                    $scope.documentStatusChangedFlag=0;
                                 $scope.documentStatusChangedFlag=$scope.documentStatusChangedFlag+1;
                                 //var refId=bookingId;
                                 //rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
@@ -1208,3 +1286,74 @@ angular.module("app.loggedIn.rlob.directive", [])
         };
     })
 
+    .directive('showErrors', function ($timeout, showErrorsConfig) {
+      var getShowSuccess, linkFn;
+      getShowSuccess = function (options) {
+        var showSuccess;
+        showSuccess = showErrorsConfig.showSuccess;
+        if (options && options.showSuccess != null) {
+          showSuccess = options.showSuccess;
+        }
+        return showSuccess;
+      };
+      linkFn = function (scope, el, attrs, formCtrl) {
+        var blurred, inputEl, inputName, inputNgEl, options, showSuccess, toggleClasses;
+        blurred = false;
+        options = scope.$eval(attrs.showErrors);
+        showSuccess = getShowSuccess(options);
+        inputEl = el[0].querySelector('[name]');
+        inputNgEl = angular.element(inputEl);
+        inputName = inputNgEl.attr('name');
+        if (!inputName) {
+          throw 'show-errors element has no child input elements with a \'name\' attribute';
+        }
+        inputNgEl.bind('blur', function () {
+          blurred = true;
+          return toggleClasses(formCtrl[inputName].$invalid);
+        });
+        scope.$watch(function () {
+          return formCtrl[inputName] && formCtrl[inputName].$invalid;
+        }, function (invalid) {
+          if (!blurred) {
+            return;
+          }
+          return toggleClasses(invalid);
+        });
+        scope.$on('show-errors-check-validity', function () {
+          return toggleClasses(formCtrl[inputName].$invalid);
+        });
+        scope.$on('show-errors-reset', function () {
+          return $timeout(function () {
+            el.removeClass('has-error');
+            el.removeClass('has-success');
+            return blurred = false;
+          }, 0, false);
+        });
+        return toggleClasses = function (invalid) {
+          el.toggleClass('has-error', invalid);
+          if (showSuccess) {
+            return el.toggleClass('has-success', !invalid);
+          }
+        };
+      };
+      return {
+        restrict: 'A',
+        require: '^form',
+        compile: function (elem, attrs) {
+          if (!elem.hasClass('form-group')) {
+            throw 'show-errors element does not have the \'form-group\' class';
+          }
+          return linkFn;
+        }
+      };
+    })
+    .provider('showErrorsConfig', function () {
+        var _showSuccess;
+        _showSuccess = false;
+        this.showSuccess = function (showSuccess) {
+          return _showSuccess = showSuccess;
+        };
+        this.$get = function () {
+          return { showSuccess: _showSuccess };
+        };
+    })

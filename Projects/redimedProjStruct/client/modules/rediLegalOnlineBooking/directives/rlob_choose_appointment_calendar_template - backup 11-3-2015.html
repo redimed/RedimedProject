@@ -93,48 +93,6 @@
                         {{type.Rl_TYPE_NAME}}
                     </div>
                     <div class="col-md-10" >
-                        <div ng-repeat="doctor in type.DOCTOR_ITEMS">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    {{doctor.DOCTOR_NAME}}
-                                </div>
-                                <div class="col-md-10">
-                                    <div ng-repeat="location in doctor.LOCATION_ITEMS">
-                                        <div class="col-md-2">
-                                            {{location.SITE_NAME}}
-                                        </div>
-                                        <div class="col-md-10" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px;padding-bottom: 20px">
-                                            <div ng-repeat="appointment in location.APPOINTMENT_ITEMS" class="btn-group dropdown">
-                                    
-                                                <a class="btn btn-sm ablue filter-submit margin-bottom dropdown-toggle"
-                                                   style="margin-left: 10px;margin-bottom: 10px; width: 70px"
-                                                   data-toggle="dropdown" aria-expanded="false">
-                                                    {{ appointment.APPOINTMENT_TIME }} <span class="caret"></span>
-                                                </a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li>Choose Specialty:</li>
-                                                    <li class="divider"></li>
-                                                    <li ng-repeat="spec in appointment.SPEC_ITEMS"><a ng-click="selectAppointmentCalendar(appointment,type.RL_TYPE_ID,spec.Specialties_id)">{{spec.Specialties_name}}</a></li>
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div ng-repeat="type in appointmentsFilter">
-                <div class="row">
-                    <div class="col-md-2" >
-                        {{type.Rl_TYPE_NAME}}
-                    </div>
-                    <div class="col-md-10" >
                         <div ng-repeat="spec in type.SPEC_ITEMS">
                             <div class="row">
                                 <div class="col-md-2">
@@ -161,14 +119,14 @@
                                             </div>
                                         </div>
                                     </div>
-            
-            
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
