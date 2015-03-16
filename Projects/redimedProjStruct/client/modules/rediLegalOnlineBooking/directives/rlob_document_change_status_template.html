@@ -4,8 +4,9 @@
         <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
         </span>
         <label>Change Documents Status</label>
-    </a>
 
+    </a>
+    
     <ul class="dropdown-menu" role="menu">
         <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" >
             <a ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" class="pointer" role="menuitem" tabindex="4"
@@ -32,3 +33,4 @@
         </li>
     </ul>
 </div>
+{{documentStatusDisplay[selectedDocument.DOCUMENT_STATUS]}}
