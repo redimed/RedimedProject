@@ -218,29 +218,48 @@ angular.module("app", [
     })
 
 
-    $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
+    $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
 
         var locationHref = location.href;
-        if(locationHref.indexOf('fromMobile=true') != -1)
-        {
-             e.preventDefault();
-             return;
+        if (locationHref.indexOf('fromMobile=true') != -1) {
+            e.preventDefault();
+            return;
         }
-
-        if(fromState.name != "")
-            $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
-        
-        if(!$cookieStore.get("userInfo") ){
+        $cookieStore.put("fromState", {
+            fromState: fromState,
+            fromParams: fromParams
+        });
+        if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if(toState.name !== "security.forgot"
-             && toState.name !== "security.login"
-              && toState.name !== "security.register"
-               && toState.name !== "security.redirect"){
+            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register" && toState.name !== "security.redirect") {
                 e.preventDefault();
-                $state.go("security.login",null,{location: "replace", reload: true});
+                $state.go("security.login", null, {
+                    location: "replace",
+                    reload: true
+                });
             }
         }
+
+    });
+    $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+        //ROLE
+        if (toState.position !== undefined) {
+            var status = false;
+            angular.forEach(toState.position, function(postt, index) {
+                if (postt === localStorageService.get("position")) {
+                    status = true;
+                }
+            });
+            if (status === false) {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("You not permission!", "Error");
+                e.preventDefault();
+            }
+        }
+        //END ROLE
     });
 })
 

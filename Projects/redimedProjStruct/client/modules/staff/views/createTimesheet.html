@@ -67,7 +67,7 @@
                         </div>
                     </th>
                     <th>
-                        <div class="th">
+                        <div class="th" style="width:100px;">
                             </span> Time charge
                         </div>
                     </th>
@@ -86,7 +86,7 @@
                 <tbody>
                 <tr ng-repeat="(key,task) in tasks track by $index">
                     <td ng-hide='isEdit'>
-                        <span ng-if="task.order == 1" class="btn btn-sm blue-dark" ng-click="addRow($index,task.date,task.tasks_week_id)">Add new</span>
+                        <span ng-if="task.order == 1" class="btn btn-xs blue-dark" ng-click="addRow($index,task.date,task.tasks_week_id)">Add new</span>
                     </td>
                     <td>
                         <i ng-hide="isEdit" class="fa fa-trash pointer" ng-click="delTask($index,task.order)" style="font-size: 20px"></i>
@@ -115,15 +115,15 @@
                         <input ng-disabled="isEdit" class="form-control input-sm" ng-model="task.task"/>
                     </td>
                     <td>
-                        <span ng-disabled="isEdit" ng-click="chooseItem(task,$index)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i>&nbsp;{{task.btnTitle}} </span>
+                        <span ng-disabled="isEdit" ng-click="chooseItem(task,$index)" class="btn btn-xs blue-dark">{{task.btnTitle}} </span>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="form-action" style="text-align: right">
-            <span class="btn btn-sm blue-dark" ng-hide='isEdit' ng-click="addAllTask(1)">Save</span>
-            <span class="btn btn-sm blue-dark" ng-hide='isEdit' ng-click="addAllTask(2)">Submit Displayed Week</span>
+            <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(1)">Save</span>
+            <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(2)">Submit Displayed Week</span>
         </div>
     </div>
 </div>

@@ -73,10 +73,10 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in listNode.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="focusNode(l.NODE_ID, l.NODE_CODE)">
-                        <td>{{l.NODE_CODE || " " }}</td>
-                        <td>{{(l.FROM_VALUE===null || l.FROM_VALUE==="")?"Not Value":l.FROM_VALUE}}</td>
-                        <td>{{(l.TO_VALUE===null || l.TO_VALUE==="")?"Not Value":l.TO_VALUE}}</td>
+                    <tr ng-repeat="l in listNode.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="focusNode(l.NODE_ID, l.NODE_CODE)">
+                        <td class="btn btn-xs" style="text-align:left;">{{l.NODE_CODE || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.FROM_VALUE===null || l.FROM_VALUE==="")?"Not Value":l.FROM_VALUE}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.TO_VALUE===null || l.TO_VALUE==="")?"Not Value":l.TO_VALUE}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -159,8 +159,8 @@
                 </thead>
                 <tbody>
                     <tr ng-show="listUser.result!==null || (listUser.result.length!==0 && listUser.result!==null)">
-                        <td>
-                            <input type="checkbox" class="checkbox" ng-model="checkAll" ng-true-value="2" ng-false-value="-1" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkAll)">
+                        <td style="text-align:center;">
+                            <input type="checkbox" class="checkbox" ng-model="checkAll" ng-true-value="2" ng-false-value="-1" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkAll)" style="margin-top:4px;">
                         </td>
                         <td>
                             <input type="text " id="user_name" ng-model="searchObjectMapUser.data.user_name " ng-change="loadListUser(user_name) " class="form-control input-sm ">
@@ -175,7 +175,7 @@
                         </td>
                         <td></td>
                         <td style="text-align:center;">
-                            <button type="button" class="btn btn-circle btn-xs red" ng-disabled="!isChecked" ng-click="deleteUser()">
+                            <button type="button" class="btn btn-circle btn-xs red" ng-disabled="isChecked==false" ng-click="deleteUser()">
                                 Delete
                             </button>
                         </td>
@@ -185,15 +185,15 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in listUser.result " ng-class-odd="'odd'" style="cursor: pointer; ">
-                        <td>
+                    <tr ng-repeat="l in listUser.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="clickRow(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID)">
+                        <td style="text-align:center;">
                             <input type="checkbox" class="checkbox" ng-model="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status" ng-true-value="1" ng-false-value="0" class="form-control" ng-change="checkChange(l.NODE_ID, l.id,l.DEPARTMENT_CODE_ID, checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status)" ng-checked="checkList[l.NODE_ID+'&'+l.id+'&'+l.DEPARTMENT_CODE_ID].status==1 || checkAll==2">
                         </td>
-                        <td>{{l.user_name || " " }}</td>
-                        <td>{{(l.departmentName==="" || l.departmentName===null)?"Not dept":l.departmentName}}</td>
-                        <td>{{(l.name==="" || l.name===null)?"Not location":l.name}}</td>
-                        <td>{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
-                        <td style="text-align:center;">
+                        <td class="btn btn-xs" style="text-align:left;">{{l.user_name || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName==="" || l.departmentName===null)?"Not dept":l.departmentName}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.name==="" || l.name===null)?"Not location":l.name}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                        <td class="btn btn-xs" style="text-align:center;">
                             <!-- DOPDOWN ACTION -->
                             <a type="button" class="btn btn-circle btn-xs blue" ng-click="editUser(l.NODE_ID, l.id, l.DEPARTMENT_CODE_ID)">
                                 <i class="fa fa-pencil"></i>&nbsp;Edit

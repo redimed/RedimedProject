@@ -6,7 +6,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.TimeSheetGroupUser">View Timesheet</a>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">View approved timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
@@ -14,8 +14,9 @@
 
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
+        <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ApproveTask">Approve timesheet</a>
         <div class="caption" style="font-size:14px;">
-            <i class="fa fa-cogs"></i>List Timesheets
+            <i class="fa fa-cogs"></i>List approved timesheets
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -28,68 +29,65 @@
                     <tr>
                         <th>
                             <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-class="{'active': isAsc}" ng-click="orderWeek('asc')">
+                                Employee code
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Employee name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
                             </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="orderWeek('desc')" ng-class="{ 'active': !isAsc } ">
-                            </span> Week No
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
+                            </span> Week/current
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Start date
+                                Time charge
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> End date
+                                Time spent
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Status
+                                Time in lieu
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Approved date
+                                Time over
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Time spent
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Time charge
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Time in lieu
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Time OT
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Comment
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="dateApprovedASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.approved_date']==='ASC'}">
+                            </span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="dateApprovedDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.approved_date']==='DESC' } ">
+                            </span> Date approved
                             </div>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <td></td>
                         <td>
-                            <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" />
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['hr_employee.Employee_ID']" ng-options="itemEmp.Employee_ID as itemEmp.Employee_Code for itemEmp in list.listEmployee " ng-change="loadList()">
+                            </select>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="loadList()">
+                        </td>
+                        <td>
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.week_no']" ng-options="itemRow.code as itemRow.code for itemRow in weekNo " ng-change="loadList()">
+                            </select>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -101,17 +99,15 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-dblclick="view(l)">
-                        <td align="center">{{l.week_no}}</td>
-                        <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
-                        <td>{{l.end_date | date: "dd - MM - yyyy"}}</td>
-                        <td>{{l.STATUS}}</td>
-                        <td>{{l.approved_date | date: "dd - MM - yyyy h:mm:ss a "}}</td>
-                        <td>{{(l.time_spent===0 ||l.time_spent===null)?"0 Hours":(l.time_spent+" Hours")}}</td>
-                        <td>{{(l.time_charge===0 ||l.time_charge===null)?"0 Hours":(l.time_charge+" Hours")}}</td>
-                        <td>{{(l.time_in_lieu===0 ||l.time_in_lieu===null)?"0 Hours":(l.time_in_lieu+" Hours")}}</td>
-                        <td>{{(l.over_time===0 ||l.over_time===null)?"0 Hours":(l.over_time+" Hours")}}</td>
-                        <td>{{(l.comments===null||l.comments==="")?"":l.comments}}</td>
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="showDetail(l.task_week_id)">
+                        <td class="btn btn-xs">{{l.Employee_Code}}</td>
+                        <td class="btn btn-xs">{{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}</td>
+                        <td class="btn btn-xs">{{l.week_no}}/{{currentWeek}}</td>
+                        <td class="btn btn-xs">{{(l.time_charge===null||l.time_charge==="")?("0 Hours"):l.time_charge + " Hours"}}</td>
+                        <td class="btn btn-xs">{{(l.time_spent===null||l.time_spent==="")?("0 Hours"):l.time_spent + " Hours"}}</td>
+                        <td class="btn btn-xs">{{(l.time_in_lieu===null||l.time_in_lieu==="")?("0 Hours"):l.time_in_lieu + " Hours"}}</td>
+                        <td class="btn btn-xs">{{(l.over_time===null||l.over_time==="")?("0 Hours"):l.over_time + " Hours"}}</td>
+                        <td class="btn btn-xs">{{l.approved_date | date: "dd/MM/yyyy h:mm:ss a "}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -137,26 +133,6 @@
             </div>
         </div>
     </div>
-    <script type="text/ng-template" id="ViewTask">
-        <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+    <script type="text/ng-template" id="ViewDetailTask">
+        <view-detail ng-model="idTaskWeek" on-cancel="clickCancel(return)"></view-detail>
     </script>
-
-    <div class="modal fade" id="full" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Modal Title</h4>
-                </div>
-                <div class="modal-body">
-                    Modal body goes here
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn blue">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>

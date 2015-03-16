@@ -1,5 +1,5 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form">
+    <form method="POST" class="grid-form" name="upUser">
         <!-- MAIN INFO -->
         <fieldset>
             <legend>Update User</legend>
@@ -7,14 +7,14 @@
                 <!-- NAME DEPARTMENT -->
                 <div data-field-span="6">
                     <label>name of department</label>
-                    <select ng-model="info.departmentid" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in department" ng-change="loadDept()" style="font-size:13px;">
+                    <select ng-model="info.departmentid" name="departmentid" ng-options="itemDept.departmentid as itemDept.departmentName for itemDept in department" ng-change="loadDept()" style="font-size:13px;" ng-required="true" custom-tr="info.departmentid" custom-fr="upUser.departmentid">
                     </select>
                 </div>
                 <!-- END NAME DEPARTMENT -->
                 <!-- NAME ROLE -->
                 <div data-field-span="6">
                     <label>name of role</label>
-                    <select ng-model="info.NODE_ID" ng-options="itemRole.NODE_ID as itemRole.NODE_CODE for itemRole in node" ng-change="loadRole()" style="font-size:13px;"></select>
+                    <select ng-model="info.NODE_ID" name="NODE_ID" ng-options="itemRole.NODE_ID as itemRole.NODE_CODE for itemRole in node" ng-change="loadRole()" style="font-size:13px;" ng-required="true" custom-tr="info.NODE_ID" custom-fr="upUser.NODE_ID"></select>
                 </div>
                 <!-- END NAME ROLE -->
             </div>
@@ -45,7 +45,7 @@
                 <!-- END NAME USER TYPE -->
             </div>
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})">Update</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})" ng-disabled="upUser.departmentid.$error.required || upUser.CODE.$error.required">Update</a>
         <a class="btn red pull-right btn-xs" ng-click="onCancel({return: 'true'})">Close</a>
         <!-- END MAIN INFO -->
     </form>

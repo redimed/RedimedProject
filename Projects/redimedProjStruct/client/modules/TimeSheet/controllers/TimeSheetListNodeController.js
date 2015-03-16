@@ -1,6 +1,9 @@
 angular.module("app.loggedIn.TimeSheet.ListNode", [])
     .controller("TimeSheetListNodeController", function(TimeSheetService, MODE_ROW, localStorageService, $scope, toastr, $state, $modal) {
-        // LIST GROUP MODULE
+        //close siderba
+        $('body').addClass("page-sidebar-closed");
+        $('body').find('ul').addClass("page-sidebar-menu-closed");
+        //end close siderba
 
         //FUNCTION SETPAGE
         $scope.setPageNode = function() {
@@ -153,7 +156,9 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
 
         //FUNCTION LOADLISTPAGE USER
         $scope.loadListUser = function(idInput) {
-            $scope.checkAll = -1;
+            if (notReload === false) {
+                $scope.checkAll = -1;
+            }
             $scope.listUser.loading = true;
             TimeSheetService.LoadUserTimeSheet($scope.searchObjectMapUser).then(function(response) {
                 if (response.status === "fail") {
@@ -289,6 +294,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
         //END LOAD DEPT
 
         // PROCESS DELETE
+        $scope.isChecked = false;
         $scope.checkChange = function(NODE_ID, USER_ID, DEPARTMENT_CODE_ID, status) {
             if (status == -1) {
                 angular.forEach($scope.listUser.resultSelect, function(user, index) {
@@ -322,6 +328,14 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
             }
 
         };
+        $scope.clickRow = function(NODE_ID, USER_ID, DEPARTMENT_CODE_ID) {
+            if ($scope.checkList[NODE_ID + '&' + USER_ID + '&' + DEPARTMENT_CODE_ID].status) {
+                $scope.checkList[NODE_ID + '&' + USER_ID + '&' + DEPARTMENT_CODE_ID].status = !$scope.checkList[NODE_ID + '&' + USER_ID + '&' + DEPARTMENT_CODE_ID].status;
+            } else {
+                $scope.checkList[NODE_ID + '&' + USER_ID + '&' + DEPARTMENT_CODE_ID].status = 1;
+            }
+            $scope.checkChange(NODE_ID, USER_ID, DEPARTMENT_CODE_ID, $scope.checkList[NODE_ID + '&' + USER_ID + '&' + DEPARTMENT_CODE_ID].status);//call check change
+        };
         //FUNCTION DELETE
         $scope.deleteUser = function() {
             //JQUERY CONFIRM
@@ -352,9 +366,9 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                 TimeSheetService.DeleteUser(deleteList).then(function(response) {
                     if (response.status === "success") {
                         $scope.loadListUser();
-                        $scope.isChecked = false;
                         toastr.success("Delete success!", "Success");
                         $scope.checkAll = -1;
+                        $scope.isChecked = false;
                     } else if (response.status === "error") {
                         toastr.error("Server response error!", "Error");
                     }
@@ -366,7 +380,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
         //WATCH RESULT
         $scope.$watch('listUser.resultSelect', function(newList, oldList) {
             if (notReload === false) {
-                $scope.checkList = [];
+                $scope.checkList = {};
                 angular.forEach(newList, function(user, index) {
                     $scope.checkList[user.NODE_ID + '&' + user.id + '&' + user.DEPARTMENT_CODE_ID] = [];
                     $scope.checkList[user.NODE_ID + '&' + user.id + '&' + user.DEPARTMENT_CODE_ID].push({
@@ -376,7 +390,6 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                         status: 0
                     });
                 });
-                notReload = true;
             } else {
                 notReload = false;
             }

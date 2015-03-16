@@ -73,40 +73,195 @@ angular.module('app.config', [])
     {code: 'low', name: 'Low'}
 ])
 
-.constant("TIMETABLE_DAY_OF_WEEK", [
-    {code: 'Monday', name: 'Monday'},
-    {code: 'Tuesday', name: 'Tuesday'},
-    {code: 'Wednesday', name: 'Wednesday'},
-    {code: 'Thursday', name: 'Thursday'},
-    {code: 'Friday', name: 'Friday'}
-])
-.constant("MONTH_IN_YEAR", [
-    {code: 1, title: 'January'},
-    {code: 2, title: 'February'},
-    {code: 3, title: 'March'},
-    {code: 4, title: 'April'},
-    {code: 5, title: 'May'},
-    {code: 6, title: 'June'},
-    {code: 7, title: 'July'},
-    {code: 8, title: 'August'},
-    {code: 9, title: 'September'},
-    {code: 10, title: 'October'},
-    {code: 11, title: 'November'},
-    {code: 12, title: 'December'},
-])
-.constant("RECALL_PERIOD", [
-    {code: 1, title: '1 month'},
-    {code: 2, title: '2 months'},
-    {code: 3, title: '3 months'},
-    {code: 6, title: '6 months'},
-    {code: 12, title: '12 months'},
-    {code: 24, title: '24 months'},
-])
-.constant("RECALL_REMIND", [
-    {code: 1, title: '1 month'},
-    {code: 2, title: '2 months'},
-    {code: 3, title: '3 months'},
-])
+.constant("TIMETABLE_DAY_OF_WEEK", [{
+        code: 'Monday',
+        name: 'Monday'
+    }, {
+        code: 'Tuesday',
+        name: 'Tuesday'
+    }, {
+        code: 'Wednesday',
+        name: 'Wednesday'
+    }, {
+        code: 'Thursday',
+        name: 'Thursday'
+    }, {
+        code: 'Friday',
+        name: 'Friday'
+    }])
+    .constant("MONTH_IN_YEAR", [{
+        code: 1,
+        title: 'January'
+    }, {
+        code: 2,
+        title: 'February'
+    }, {
+        code: 3,
+        title: 'March'
+    }, {
+        code: 4,
+        title: 'April'
+    }, {
+        code: 5,
+        title: 'May'
+    }, {
+        code: 6,
+        title: 'June'
+    }, {
+        code: 7,
+        title: 'July'
+    }, {
+        code: 8,
+        title: 'August'
+    }, {
+        code: 9,
+        title: 'September'
+    }, {
+        code: 10,
+        title: 'October'
+    }, {
+        code: 11,
+        title: 'November'
+    }, {
+        code: 12,
+        title: 'December'
+    }, ])
+    .constant("RECALL_PERIOD", [{
+        code: 1,
+        title: '1 month'
+    }, {
+        code: 2,
+        title: '2 months'
+    }, {
+        code: 3,
+        title: '3 months'
+    }, {
+        code: 6,
+        title: '6 months'
+    }, {
+        code: 12,
+        title: '12 months'
+    }, {
+        code: 24,
+        title: '24 months'
+    }, ])
+    .constant("RECALL_REMIND", [{
+        code: 1,
+        title: '1 month'
+    }, {
+        code: 2,
+        title: '2 months'
+    }, {
+        code: 3,
+        title: '3 months'
+    }, ])
+    //thanh
+    .constant('MODE_WEEK', [{
+        code: 1
+    }, {
+        code: 2
+    }, {
+        code: 3
+    }, {
+        code: 4
+    }, {
+        code: 5
+    }, {
+        code: 6
+    }, {
+        code: 7
+    }, {
+        code: 8
+    }, {
+        code: 9
+    }, {
+        code: 10
+    }, {
+        code: 11
+    }, {
+        code: 12
+    }, {
+        code: 13
+    }, {
+        code: 14
+    }, {
+        code: 15
+    }, {
+        code: 16
+    }, {
+        code: 17
+    }, {
+        code: 18
+    }, {
+        code: 19
+    }, {
+        code: 20
+    }, {
+        code: 21
+    }, {
+        code: 22
+    }, {
+        code: 23
+    }, {
+        code: 24
+    }, {
+        code: 25
+    }, {
+        code: 26
+    }, {
+        code: 27
+    }, {
+        code: 28
+    }, {
+        code: 29
+    }, {
+        code: 30
+    }, {
+        code: 31
+    }, {
+        code: 32
+    }, {
+        code: 33
+    }, {
+        code: 34
+    }, {
+        code: 35
+    }, {
+        code: 36
+    }, {
+        code: 37
+    }, {
+        code: 38
+    }, {
+        code: 39
+    }, {
+        code: 40
+    }, {
+        code: 41
+    }, {
+        code: 42
+    }, {
+        code: 43
+    }, {
+        code: 44
+    }, {
+        code: 45
+    }, {
+        code: 46
+    }, {
+        code: 47
+    }, {
+        code: 48
+    }, {
+        code: 49
+    }, {
+        code: 50
+    }, {
+        code: 51
+    }, {
+        code: 52
+    }])
+    //end thanh
 
 .factory('ConfigService', function (TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, Restangular) {
     var configService = {};
@@ -463,9 +618,25 @@ angular.module('app.config', [])
         return ACC_TYPE;
     }
 
-    configService.app_type_option = function(){
-        return APP_TYPE;
-    }
+    configService.app_type_option = function() {
+            return APP_TYPE;
+        }
+        //thanh
+    configService.getDayOfYear = function(date) {
+
+        var offset = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() - new Date(date.getFullYear(), 0, 1).getTime();
+
+        return Math.ceil(offset / 1000 / 60 / 60 / 24);
+
+    };
+    configService.getWeekOfYear = function(date) {
+
+        var dayOfYear = configService.getDayOfYear(date);
+
+        return Math.ceil(dayOfYear / 7);
+
+    };
+    //end thanh
 
 
     return configService;

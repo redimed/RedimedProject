@@ -1,26 +1,36 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form" name="viewTask">
+    <form method="POST" class="grid-form">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>Review
-                <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">x</a>
+            <legend>View Detail
             </legend>
             <!-- INFORMATION -->
-            <div data-row-span="10">
-                <div data-field-span="2">
+            <div data-row-span="12">
+                <div data-field-span="3">
                     EMPLOYEE CODE:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].Employee_Code}}</span>
                 </div>
-                <div data-field-span="2">
+                <div data-field-span="3">
                     EMPLOYEE NAME: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
                 </div>
-                <div data-field-span="2">
+                <div data-field-span="3">
+                    DATE APPROVED:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].approved_date | date:"dd/MM/yyyy"}}</span>
+                </div>
+                <div data-field-span="3">
                     WEEK NO:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].week_no}}</span>
                 </div>
-                <div data-field-span="2">
+            </div>
+            <div data-row-span="12">
+                <div data-field-span="3">
                     TOTAL TIME CHARGE:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].chargeWeek===null || list.result[0].chargeWeek=="")?"0":list.result[0].chargeWeek}}</span>
                 </div>
-                <div data-field-span="2">
+                <div data-field-span="3">
                     TOTAL TIME SPENT: &nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].spentWeek===null ||list.result[0].spentWeek==="")?"0":list.result[0].spentWeek}}</span>
+                </div>
+                <div data-field-span="3">
+                    TIME IN LIEU:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].inlieuWeek===null ||list.result[0].inlieuWeek==="")?"0":list.result[0].inlieuWeek}}</span>
+                </div>
+                <div data-field-span="3">
+                    OVER TIME:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].overtime===null || list.result[0].overtime==="")?"0":list.result[0].overtime}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -78,35 +88,9 @@
                     </table>
                 </div>
             </div>
-            <!-- SHOW REJECT -->
-            <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
-                <div data-field-span="12">
-                    <label>Comments(*)</label>
-                    <textarea id="commentsID" name="comments" ng-model="info.comments" style="font-size:13px;" ng-required="true" custom-tr="info.comments" custom-fr="viewTask.comments"></textarea>
-                </div>
-            </div>
-            <!-- END REJECT -->
-
-            <!-- APPROVE -->
-            <div data-row-span="12" ng-show="info.isApprove===true">
-                <div data-field-span="12">
-                    <span>Employee's remaining <span class="text-info bold">{{info.time_rest}} hours</span> , Please choose time type(*)</span>
-                    <input type="radio" name="chooseTime" id="inLieuID" ng-model="info.chooseTime" ng-value="0" ng-required="info.chooseTime!==0 && info.chooseTime!==1" custom-tr="info.chooseTime" custom-fr="viewTask.chooseTime" />
-                    <label style="font-size:13px;" for="inLieuID">
-                        TIME IN LIEU
-                    </label>
-                    <input type="radio" name="chooseTime" id="overTimeID" ng-model="info.chooseTime" ng-value="1" ng-required="info.chooseTime!==0 && info.chooseTime!==1" custom-tr="info.chooseTime" custom-fr="viewTask.chooseTime" />
-                    <label style="font-size:13px;" for="overTimeID">
-                        OVER TIME
-                    </label>
-                </div>
-            </div>
-            <!-- END APPROVE -->
-
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true" ng-disabled="(viewTask.chooseTime.$error.required && info.isApprove===true)">Approve</a>
-        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true">Reject</a>
+        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
         <!-- END MAIN INFO -->
     </form>
 </div>
