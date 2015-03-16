@@ -215,6 +215,15 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             $scope.isEdit = !$scope.isEdit;
             if(!$scope.isEdit){
                 console.log($scope.tasks);
+                StaffService.editTask($scope.tasks).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("success","Success");
+                        $state.go('loggedIn.timesheet.view', null, {'reload': true});
+                    }else
+                    {
+                        toastr.error("Error", "Error");
+                    }
+                })
             }
         }
 
@@ -246,16 +255,34 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 {
                     if(response['data'] != 'no'){
                         angular.forEach(response['data'], function(data){
-                            data.order = 1;
+                            data.isAction = 'update';
                             data.btnTitle = "Choose Item";
                             $scope.tasks.push(data);
                         })
                     }
+                    console.log($scope.tasks);
                 }
             })
         }
 
-        $scope.checkTaskWeek(startDate);
+        $scope.loadInfo = function(){
+            $scope.tasks.loading = true;
+            StaffService.getDepartmentLocation().then(function(response){
+                if(response['status'] == 'fail' || response['status'] == 'error'){
+                    toastr.error("Error", "Error");
+                    $state.go('loggedIn.home', null, {'reload': true});
+                }else
+                {
+                    $scope.departments = response['department'];
+                    $scope.locations = response['location'];
+                    $scope.activities = response['activity'];
+                    $scope.checkTaskWeek(startDate);
+                }
+            })
+            $scope.tasks.loading = false;
+        }
+
+        $scope.loadInfo();
         
         $scope.addRow = function(index,date){
             var j = 0;
@@ -264,7 +291,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     j++;
                 }
             }
-            console.log(j);
             task={
                 order: 1 + j,
                 task : null,
@@ -273,7 +299,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 location_id: null,
                 activity_id: null,
                 time_charge: null,
-                isEdit: false,
+                isAction: 'insert',
                 btnTitle: "Choose Item"
             };
             $scope.tasks.splice(index + j, 0,task) ;
@@ -291,7 +317,11 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     confirmButtonText: "Yes",
                     closeOnConfirm: true
                 }, function() {
-                    $scope.tasks.splice(index,1);
+                    if($scope.tasks[index].isAction == 'update'){
+                        $scope.tasks[index].isAction = 'delete';
+                    }else{
+                        $scope.tasks.splice(index,1);
+                    }
                 })
             }
         }
