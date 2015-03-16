@@ -259,33 +259,41 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB_TEMP.$invalid  && hadForcused}">
-                                        <!--chien-->
-                                        <!--phanquocchien.c1109g@gmail.com-->
-                                        <!-- <div class="col-md-12"> -->
-                                            <!--for="ISNEW"-->
-                                            <!-- <label>Is the patient new to REDiMED     </label> -->
-                                        <!--</div>-->
-                                        <!--<div style="margin-top: 5px" class="col-md-7">-->
-                                            <!--<input  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="newBooking.ISNEW" id="ISNEW">-->
-                                            <!-- <input type="radio" ng-model="newBooking.ISNEW" value="1">
-                                            <span>YES</span>
-                                            <input type="radio" ng-model="newBooking.ISNEW" value="0">
-                                            <span>NO</span> -->
-                                        <!-- </div> -->
-
+                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB.$invalid  && hadForcused}">
                                         <div class="col-md-4">
-                                            <label class="control-label" for="WRK_DOB_TEMP">Date of birth:
+                                            <label class="control-label" for="WRK_DOB">Date of birth:
                                                 <span class="required" aria-required="true">*</span>
                                             </label>
                                         </div>
+
                                         <div class="col-md-8">
-                                            
-                                            <input id="WRK_DOB_TEMP" name="WRK_DOB_TEMP" type="text" class="form-control" ng-model="WRK_DOB_TEMP" required ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}">
-                                            
-                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB_TEMP.$error.required && hadForcused">
+                                            <!--<div class="input-group date date-picker " style="width: 150px;" data-date-format="dd/mm/yyyy">-->
+                                                <!--<input ng-model="newBooking.WRK_DOB" id="WRK_DOB" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">-->
+                                                <!--<span class="input-group-btn">-->
+                                                    <!--<button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa glyphicon glyphicon-calendar "></i></button>-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+
+                                            <p class="input-group">
+                                                <!--<input id="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newBooking.WRK_DOB" is-open="opened" min-date="'1900-01-1'" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+                                                <input id="WRK_DOB" name="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}"
+                                                       ng-model="WRK_DOB_TEMP" is-open="opened" datepicker-options="dateOptions"
+                                                       ng-required="true"
+                                                       required
+                                                       close-text="Close" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </p>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.required  && hadForcused">
                                                 Birthday is required.
                                             </small>
+
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.date  && hadForcused">
+                                                Invalid date.
+                                            </small>
+
                                         </div>
                                     </div>
 
@@ -358,10 +366,24 @@
                                         </div>
                                         <div class="col-md-8">
                                             
-                                            <input id="WRK_DATE_OF_INJURY" name="WRK_DATE_OF_INJURY" type="text" class="form-control" ng-model="WRK_DATE_OF_INJURY_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" required/>
+                                            <!-- <input id="WRK_DATE_OF_INJURY" name="WRK_DATE_OF_INJURY" type="text" class="form-control" ng-model="WRK_DATE_OF_INJURY_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" required/> -->
+                                            <p class="input-group">
+                                                <!--<input id="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newBooking.WRK_DOB" is-open="opened" min-date="'1900-01-1'" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+                                                <input id="WRK_DATE_OF_INJURY" name="WRK_DATE_OF_INJURY" type="text" class="form-control" datepicker-popup="{{format}}"
+                                                       ng-model="WRK_DATE_OF_INJURY_TEMP" is-open="openedDateOfInjury" datepicker-options="dateOptions"
+                                                       ng-required="true"
+                                                       required
+                                                       close-text="Close" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="openDateOfInjury($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </p>
                                             
                                             <small class="help-block pull-right" ng-show="bookingForm.WRK_DATE_OF_INJURY.$error.required  && hadForcused">
                                                 Date of injury is required.
+                                            </small>
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DATE_OF_INJURY.$error.date  && hadForcused">
+                                                Invalid date.
                                             </small>
                                         </div>
                                     </div>

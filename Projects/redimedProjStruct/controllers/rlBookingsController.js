@@ -21,131 +21,131 @@ module.exports =
         var input = req.body;
         console.log(input);
 
-        req.getConnection(function(err,connection){
-            var query=connection.query('insert into rl_bookings set ?',input,function(err,rows){
-                if (err)
-                {
-                    console.log("Error inserting : %s ",err );
-                    res.json({status:"fail"});
-                }
-                else
-                {
-                    console.log("***************************"+JSON.stringify(input.BOOKING_ID));
-                    res.json({status:"success",data:input.BOOKING_ID});
-                }
+        // req.getConnection(function(err,connection){
+        //     var query=connection.query('insert into rl_bookings set ?',input,function(err,rows){
+        //         if (err)
+        //         {
+        //             console.log("Error inserting : %s ",err );
+        //             res.json({status:"fail"});
+        //         }
+        //         else
+        //         {
+        //             console.log("***************************"+JSON.stringify(input.BOOKING_ID));
+        //             res.json({status:"success",data:input.BOOKING_ID});
+        //         }
 
-            })
-        });
+        //     })
+        // });
         /*
         phan quoc chien
         phanquocchien.c1109g@gmail.com
         add booking info
          */
-        // var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
-        // var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
-        // var BOOKING_ID=kiss.checkData(req.body.BOOKING_ID)?req.body.BOOKING_ID:null;
-        // var BOOKING_DATE=kiss.checkData(req.body.BOOKING_DATE)?req.body.BOOKING_DATE:null;
-        // var COMPANY_ID=kiss.checkData(req.body.COMPANY_ID)?req.body.COMPANY_ID:null;
-        // var RL_TYPE_ID=kiss.checkData(req.body.RL_TYPE_ID)?req.body.RL_TYPE_ID:null;
-        // var SPECIALITY_ID=kiss.checkData(req.body.SPECIALITY_ID)?req.body.SPECIALITY_ID:null;
-        // var DOCTOR_ID=kiss.checkData(req.body.DOCTOR_ID)?req.body.DOCTOR_ID:null;
-        // var SITE_ID=kiss.checkData(req.body.SITE_ID)?req.body.SITE_ID:null;
-        // var FROM_DATE=kiss.checkData(req.body.FROM_DATE)?req.body.FROM_DATE:null;
-        // var TO_DATE=kiss.checkData(req.body.TO_DATE)?req.body.TO_DATE:null;
-        // var CAL_ID=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:null;
-        // var ASS_SURNAME=kiss.checkData(req.body.ASS_SURNAME)?req.body.ASS_SURNAME:null;
-        // var ASS_OTHERNAMES=kiss.checkData(req.body.ASS_OTHERNAMES)?req.body.ASS_OTHERNAMES:null;
-        // var ASS_CONTACT_NO=kiss.checkData(req.body.ASS_CONTACT_NO)?req.body.ASS_CONTACT_NO:null;
-        // var ASS_EMAIL=kiss.checkData(req.body.ASS_EMAIL)?req.body.ASS_EMAIL:null;
-        // var WRK_SURNAME=kiss.checkData(req.body.WRK_SURNAME)?req.body.WRK_SURNAME:null;
-        // var WRK_OTHERNAMES=kiss.checkData(req.body.WRK_OTHERNAMES)?req.body.WRK_OTHERNAMES:null;
-        // var WRK_CONTACT_NO=kiss.checkData(req.body.WRK_CONTACT_NO)?req.body.WRK_CONTACT_NO:null;
-        // var WRK_EMAIL=kiss.checkData(req.body.WRK_EMAIL)?req.body.WRK_EMAIL:null;
-        // var DESC_INJURY=kiss.checkData(req.body.DESC_INJURY)?req.body.DESC_INJURY:null;
-        // var ISNEW=kiss.checkData(req.body.ISNEW)?req.body.ISNEW:null;
-        // var ISCONTACTPATIENT=kiss.checkData(req.body.ISCONTACTPATIENT)?req.body.ISCONTACTPATIENT:null;
-        // var ISCONTACTMANAGER=kiss.checkData(req.body.ISCONTACTMANAGER)?req.body.ISCONTACTMANAGER:null;
-        // var NOTES=kiss.checkData(req.body.NOTES)?req.body.NOTES:null;
-        // var STATUS=kiss.checkData(req.body.STATUS)?req.body.STATUS:null;
-        // var refered_date_string=kiss.checkData(req.body.refered_date_string)?req.body.refered_date_string:null;
-        // var isUrgent=kiss.checkData(req.body.isUrgent)?req.body.isUrgent:null;
-        // var CLAIM_NO=kiss.checkData(req.body.CLAIM_NO)?req.body.CLAIM_NO:null;
-        // var WRK_DOB=kiss.checkData(req.body.WRK_DOB)?req.body.WRK_DOB:null;
-        // var APPOINTMENT_DATE=kiss.checkData(req.body.APPOINTMENT_DATE)?req.body.APPOINTMENT_DATE:null;
-        // var ASS_ID=kiss.checkData(req.body.ASS_ID)?req.body.ASS_ID:null;
-        // var EMPLOYEE_NUMBER=kiss.checkData(req.body.EMPLOYEE_NUMBER)?req.body.EMPLOYEE_NUMBER:null;
-        // var DEPARTMENT_NAME=kiss.checkData(req.body.DEPARTMENT_NAME)?req.body.DEPARTMENT_NAME:null;
-        // var DESC_VACCIN=kiss.checkData(req.body.DESC_VACCIN)?req.body.DESC_VACCIN:null;
-        // var BOOKING_TYPE=kiss.checkData(req.body.BOOKING_TYPE)?req.body.BOOKING_TYPE:null;
-        // var WRK_DATE_OF_INJURY=kiss.checkData(req.body.WRK_DATE_OF_INJURY)?req.body.WRK_DATE_OF_INJURY:null;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var BOOKING_ID=kiss.checkData(req.body.BOOKING_ID)?req.body.BOOKING_ID:null;
+        var BOOKING_DATE=kiss.checkData(req.body.BOOKING_DATE)?req.body.BOOKING_DATE:null;
+        var COMPANY_ID=kiss.checkData(req.body.COMPANY_ID)?req.body.COMPANY_ID:null;
+        var RL_TYPE_ID=kiss.checkData(req.body.RL_TYPE_ID)?req.body.RL_TYPE_ID:null;
+        var SPECIALITY_ID=kiss.checkData(req.body.SPECIALITY_ID)?req.body.SPECIALITY_ID:null;
+        var DOCTOR_ID=kiss.checkData(req.body.DOCTOR_ID)?req.body.DOCTOR_ID:null;
+        var SITE_ID=kiss.checkData(req.body.SITE_ID)?req.body.SITE_ID:null;
+        var FROM_DATE=kiss.checkData(req.body.FROM_DATE)?req.body.FROM_DATE:null;
+        var TO_DATE=kiss.checkData(req.body.TO_DATE)?req.body.TO_DATE:null;
+        var CAL_ID=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:null;
+        var ASS_SURNAME=kiss.checkData(req.body.ASS_SURNAME)?req.body.ASS_SURNAME:null;
+        var ASS_OTHERNAMES=kiss.checkData(req.body.ASS_OTHERNAMES)?req.body.ASS_OTHERNAMES:null;
+        var ASS_CONTACT_NO=kiss.checkData(req.body.ASS_CONTACT_NO)?req.body.ASS_CONTACT_NO:null;
+        var ASS_EMAIL=kiss.checkData(req.body.ASS_EMAIL)?req.body.ASS_EMAIL:null;
+        var WRK_SURNAME=kiss.checkData(req.body.WRK_SURNAME)?req.body.WRK_SURNAME:null;
+        var WRK_OTHERNAMES=kiss.checkData(req.body.WRK_OTHERNAMES)?req.body.WRK_OTHERNAMES:null;
+        var WRK_CONTACT_NO=kiss.checkData(req.body.WRK_CONTACT_NO)?req.body.WRK_CONTACT_NO:null;
+        var WRK_EMAIL=kiss.checkData(req.body.WRK_EMAIL)?req.body.WRK_EMAIL:null;
+        var DESC_INJURY=kiss.checkData(req.body.DESC_INJURY)?req.body.DESC_INJURY:null;
+        var ISNEW=kiss.checkData(req.body.ISNEW)?req.body.ISNEW:null;
+        var ISCONTACTPATIENT=kiss.checkData(req.body.ISCONTACTPATIENT)?req.body.ISCONTACTPATIENT:null;
+        var ISCONTACTMANAGER=kiss.checkData(req.body.ISCONTACTMANAGER)?req.body.ISCONTACTMANAGER:null;
+        var NOTES=kiss.checkData(req.body.NOTES)?req.body.NOTES:null;
+        var STATUS=kiss.checkData(req.body.STATUS)?req.body.STATUS:null;
+        var refered_date_string=kiss.checkData(req.body.refered_date_string)?req.body.refered_date_string:null;
+        var isUrgent=kiss.checkData(req.body.isUrgent)?req.body.isUrgent:null;
+        var CLAIM_NO=kiss.checkData(req.body.CLAIM_NO)?req.body.CLAIM_NO:null;
+        var WRK_DOB=kiss.checkData(req.body.WRK_DOB)?req.body.WRK_DOB:null;
+        var APPOINTMENT_DATE=kiss.checkData(req.body.APPOINTMENT_DATE)?req.body.APPOINTMENT_DATE:null;
+        var ASS_ID=kiss.checkData(req.body.ASS_ID)?req.body.ASS_ID:null;
+        var EMPLOYEE_NUMBER=kiss.checkData(req.body.EMPLOYEE_NUMBER)?req.body.EMPLOYEE_NUMBER:null;
+        var DEPARTMENT_NAME=kiss.checkData(req.body.DEPARTMENT_NAME)?req.body.DEPARTMENT_NAME:null;
+        var DESC_VACCIN=kiss.checkData(req.body.DESC_VACCIN)?req.body.DESC_VACCIN:null;
+        var BOOKING_TYPE=kiss.checkData(req.body.BOOKING_TYPE)?req.body.BOOKING_TYPE:null;
+        var WRK_DATE_OF_INJURY=kiss.checkData(req.body.WRK_DATE_OF_INJURY)?req.body.WRK_DATE_OF_INJURY:null;
 
-        // var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
+        var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
 
-        // if(!kiss.checkListData(userId,BOOKING_ID,CLAIM_NO,WRK_SURNAME,WRK_OTHERNAMES,WRK_DOB,WRK_CONTACT_NO,WRK_DATE_OF_INJURY,DESC_INJURY))
-        // {
-        //     kiss.exlog('add',"Loi data truyen den");
-        //     res.json({status:'fail'});
-        //     return;
-        // }
+        if(!kiss.checkListData(userId,BOOKING_ID,CLAIM_NO,WRK_SURNAME,WRK_OTHERNAMES,WRK_DOB,WRK_CONTACT_NO,WRK_DATE_OF_INJURY,DESC_INJURY))
+        {
+            kiss.exlog('add',"Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
 
-        // var insertRow={
-        //     BOOKING_ID:BOOKING_ID,
-        //     BOOKING_DATE:BOOKING_DATE,
-        //     COMPANY_ID:COMPANY_ID,
-        //     RL_TYPE_ID:RL_TYPE_ID,
-        //     SPECIALITY_ID:SPECIALITY_ID,
-        //     DOCTOR_ID:DOCTOR_ID,
-        //     SITE_ID:SITE_ID,
-        //     FROM_DATE:FROM_DATE,
-        //     TO_DATE:TO_DATE,
-        //     CAL_ID:CAL_ID,
-        //     ASS_SURNAME:ASS_SURNAME,
-        //     ASS_OTHERNAMES:ASS_OTHERNAMES,
-        //     ASS_CONTACT_NO:ASS_CONTACT_NO,
-        //     ASS_EMAIL:ASS_EMAIL,
-        //     WRK_SURNAME:WRK_SURNAME,
-        //     WRK_OTHERNAMES:WRK_OTHERNAMES,
-        //     WRK_CONTACT_NO:WRK_CONTACT_NO,
-        //     WRK_EMAIL:WRK_EMAIL,
-        //     DESC_INJURY:DESC_INJURY,
-        //     ISNEW:ISNEW,
-        //     ISCONTACTPATIENT:ISCONTACTPATIENT,
-        //     ISCONTACTMANAGER:ISCONTACTMANAGER,
-        //     NOTES:NOTES,
-        //     STATUS:STATUS,
-        //     CREATED_BY:userId,
-        //     CREATION_DATE:currentTime,
-        //     refered_date_string:refered_date_string,
-        //     isUrgent:isUrgent,
-        //     CLAIM_NO:CLAIM_NO,
-        //     WRK_DOB:WRK_DOB,
-        //     APPOINTMENT_DATE:APPOINTMENT_DATE,
-        //     ASS_ID:ASS_ID,
-        //     EMPLOYEE_NUMBER:EMPLOYEE_NUMBER,
-        //     DEPARTMENT_NAME:DEPARTMENT_NAME,
-        //     DESC_VACCIN:DESC_VACCIN,
-        //     BOOKING_TYPE:BOOKING_TYPE,
-        //     WRK_DATE_OF_INJURY:WRK_DATE_OF_INJURY
-        // }
+        var insertRow={
+            BOOKING_ID:BOOKING_ID,
+            BOOKING_DATE:BOOKING_DATE,
+            COMPANY_ID:COMPANY_ID,
+            RL_TYPE_ID:RL_TYPE_ID,
+            SPECIALITY_ID:SPECIALITY_ID,
+            DOCTOR_ID:DOCTOR_ID,
+            SITE_ID:SITE_ID,
+            FROM_DATE:FROM_DATE,
+            TO_DATE:TO_DATE,
+            CAL_ID:CAL_ID,
+            ASS_SURNAME:ASS_SURNAME,
+            ASS_OTHERNAMES:ASS_OTHERNAMES,
+            ASS_CONTACT_NO:ASS_CONTACT_NO,
+            ASS_EMAIL:ASS_EMAIL,
+            WRK_SURNAME:WRK_SURNAME,
+            WRK_OTHERNAMES:WRK_OTHERNAMES,
+            WRK_CONTACT_NO:WRK_CONTACT_NO,
+            WRK_EMAIL:WRK_EMAIL,
+            DESC_INJURY:DESC_INJURY,
+            ISNEW:ISNEW,
+            ISCONTACTPATIENT:ISCONTACTPATIENT,
+            ISCONTACTMANAGER:ISCONTACTMANAGER,
+            NOTES:NOTES,
+            STATUS:STATUS,
+            CREATED_BY:userId,
+            CREATION_DATE:currentTime,
+            refered_date_string:refered_date_string,
+            isUrgent:isUrgent,
+            CLAIM_NO:CLAIM_NO,
+            WRK_DOB:WRK_DOB,
+            APPOINTMENT_DATE:APPOINTMENT_DATE,
+            ASS_ID:ASS_ID,
+            EMPLOYEE_NUMBER:EMPLOYEE_NUMBER,
+            DEPARTMENT_NAME:DEPARTMENT_NAME,
+            DESC_VACCIN:DESC_VACCIN,
+            BOOKING_TYPE:BOOKING_TYPE,
+            WRK_DATE_OF_INJURY:WRK_DATE_OF_INJURY
+        }
 
-        // var sql="INSERT INTO `rl_bookings` SET ?";
+        var sql="INSERT INTO `rl_bookings` SET ?";
         
-        // req.getConnection(function(err,connection)
-        // {
-        //     var query = connection.query(sql,[insertRow],function(err,result)
-        //     {
-        //         if(err)
-        //         {
-        //             kiss.exlog("add",err,query.sql);
-        //             res.json({status:'fail'});
-        //         }
-        //         else
-        //         {
-        //             kiss.exlog("INSERT THANH CONG ",Result);
-        //             res.json({status:'success',data:insertRow.BOOKING_ID});    
-        //         }
-        //     });
-        // });
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[insertRow],function(err,result)
+            {
+                if(err)
+                {
+                    kiss.exlog("add",err,query.sql);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    kiss.exlog("ID BOOKING",insertRow.BOOKING_ID);
+                    res.json({status:'success',data:insertRow.BOOKING_ID});    
+                }
+            });
+        });
     },
 
     /**
