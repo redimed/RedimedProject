@@ -945,6 +945,14 @@ table.timetable-table td:last-child {
 .custom-timesheet {
     font-size: 12px;
 }
+.submited {
+    color: #baaa5a;
+    font-weight: bold;
+}
+.reject {
+    color: #DF5755;
+    font-weight: bold;
+}
 .glyphicon-chevron-up:before {
     content: "\e113"
 }
