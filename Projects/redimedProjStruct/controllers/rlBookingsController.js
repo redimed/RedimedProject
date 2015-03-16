@@ -136,7 +136,7 @@ module.exports =
             {
                 if(err)
                 {
-                    kiss.exlog("add",result);
+                    kiss.exlog("add",err,query.sql);
                     res.json({status:'fail'});
                 }
                 else
