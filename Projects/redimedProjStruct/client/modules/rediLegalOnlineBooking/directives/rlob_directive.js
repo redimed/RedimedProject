@@ -398,7 +398,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_download_file_template.html',
             controller: function ($scope,$http,rlobService)
             {
-
+                
                 $scope.letterType=rlobConstant.letterType;
                 $scope.notificationType=rlobConstant.notificationType;
                 $scope.rlob_add_notification=rlobService.add_notification;
@@ -1269,6 +1269,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             {
                 //$scope.documentStatusChangedFlag=0;
                 $scope.documentStatus=rlobConstant.documentStatus;
+                $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
                 $scope.rlob_document_change_status=function(bookingId,status)
                 {
                     rlobService.changeDocumentStatus(bookingId,status)
