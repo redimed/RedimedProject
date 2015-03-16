@@ -1,67 +1,3 @@
- <!-- MODAL SEARCH FOR BOOKING DATE -->
-<div id="booking_date_search" class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Select Booking Date</h3>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <input class="form-control" ng-model="search.data.DATE.BOOKING_DATE.from" input-date="{type:'from', id:'booking_to'}" id="booking_from">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <input class="form-control" ng-model="search.data.DATE.BOOKING_DATE.to"
-                                input-date="{type:'to', id:'booking_from'}" id="booking_to">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="closeModal('booking_date_search')">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="saveModal('booking_date_search')"
-                    ng-show="search.data.DATE.BOOKING_DATE.from !== null && search.data.DATE.BOOKING_DATE.to !== null">
-                    Save changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END MODAL SEARCH FOR BOOKING DATE -->
-
- <!-- MODAL SEARCH FOR APPOINTMENT DATE -->
-<div id="appointment_date_search" class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Select Appointment Date</h3>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <input class="form-control" ng-model="search.data.DATE.APPOINTMENT_DATE.from" input-date="{type:'from', id:'appointment_to'}" id="appointment_from">
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <input class="form-control" ng-model="search.data.DATE.APPOINTMENT_DATE.to"
-                                input-date="{type:'to', id:'appointment_from'}" id="appointment_to">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="closeModal('appointment_date_search')">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="saveModal('appointment_date_search')"
-                    ng-show="search.data.DATE.APPOINTMENT_DATE.from !== null && search.data.DATE.APPOINTMENT_DATE.to !== null">
-                    Save changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END MODAL SEARCH FOR APPOINTMENT DATE -->
-
 <div class="portlet grey-cascade box">
     <div class="portlet-title">
         <div class="caption">
@@ -72,108 +8,156 @@
     <div class="portlet-body">
         <!-- PAGINATION -->
         <div style="float: left;">
-            <pagination boundary-links="true" total-items="list.count" ng-model="search.currentPage" 
-            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
-            items-per-page="search.limit" max-size="search.maxSize" ng-change="setPage()"></pagination>
+
+            <div class="form-group">
+                <pagination total-items="searchInfo.totalItems"
+                        ng-model="searchInfo.currentPage"
+                        max-size="searchInfo.maxSize"
+                        class="pagination-sm"
+                        boundary-links="true"
+                        rotate="false"
+                        num-pages="searchInfo.numPages"
+                        items-per-page="searchInfo.itemsPerPage"
+                        ng-change="pagingHandle()">
+                </pagination>
+            </div>
+            
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputName2">Page size:</label>
+                    <select ng-model="searchInfo.itemsPerPage" class="form-control input-sm"
+                        ng-options="item.value as item.display for item in sizePageList"
+                        ng-change="searchHandle()">
+                    </select>
+                    
+                </div>
+                
+            </form>
+            
         </div>
-        <div style="float: right; padding-top: 15px;">
-            <button class="btn btn-sm" ng-click="reset()">Reset</button>
-            <b>Total Booking Lists:</b> {{list.count}}
-            <select ng-model="search.limit" ng-options="row.code as row.code for row in rows" ng-change="loadList()">
-            </select>
+        <div class="table-responsive">
+            <table class="table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th ng-if="bookingType=='REDiLEGAL'">
+                            Claim No.
+                            <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+                        <th ng-if="bookingType=='Vaccination'">
+                            Employee number
+                            <rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+                        <th>
+                            Surname
+                            <rlob-order-by field-name="WRK_SURNAME" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+                        <th>
+                            Type
+                            <rlob-order-by field-name="Rl_TYPE_NAME" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+
+                        <th>
+                            Appointment Date
+                            <rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+
+                        <th>
+                            Booking Status
+                            <rlob-order-by field-name="STATUS" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+
+                        <th>
+                            Document Status
+                            <rlob-order-by field-name="DOCUMENT_STATUS" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+
+                        <th>
+                            
+                        </th>
+                    </tr>
+                    <tr>
+                        <!-- SEARCH -->
+                        <td ng-if="bookingType=='REDiLEGAL'">
+                            <input class="form-control input-sm" type="text" ng-model="searchInfo.claimNo" ng-change="searchHandle()">
+                        </td>
+                        <td ng-if="bookingType=='Vaccination'">
+                            <input class="form-control input-sm" type="text" ng-model="searchInfo.employeeNumber" ng-change="searchHandle()">
+                        </td>
+                        <td>
+                            <input class="form-control input-sm" type="text" ng-model="searchInfo.surname" ng-change="searchHandle()">
+                        </td>
+                        <td>
+                            <select ng-model="searchInfo.type" class="form-control input-sm"
+                                ng-options="type.RL_TYPE_ID as type.Rl_TYPE_NAME for type in rl_types"
+                                ng-change="searchHandle()">
+                                <option value="">--Select All--</option>
+                            </select>
+                        </td>
+
+                    
+                        <td>
+                            <rlob-choose-period from-date="searchInfo.appointmentDateFromTemp" to-date="searchInfo.appointmentDateToTemp"></rlob-choose-period>
+                        </td>
+
+                        <td>
+                            <select ng-model="searchInfo.bookingStatus" class="form-control input-sm"
+                                ng-options="key as value for (key,value) in bookingStatus"
+                                ng-change="searchHandle()">
+                                <option value="">--Select All--</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <select ng-model="searchInfo.documentStatus" class="form-control input-sm"
+                                ng-options="value.value as value.display for (key,value) in documentStatus"
+                                ng-change="searchHandle()">
+                                <option value="">--Select All--</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" ng-click="reset();">Reset</button>
+                        </td>
+                        <!-- END SEARCH -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="l in list" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
+                        <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
+                        <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
+                        <td>{{l.WRK_SURNAME}}</td>
+                        <td>{{l.Rl_TYPE_NAME}}</td>
+                        <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{l.STATUS}}</td>
+                        <td>{{documentStatusDisplay[l.DOCUMENT_STATUS]}}</td>
+                        <td>
+                            <!--action-->
+                            <div  class="btn-group dropdown pull-right pull-right"  ng-click="clickActionMenu(l.BOOKING_ID);">
+                                <a type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
+                                    </span>
+                                    <!--{{selectedBooking.STATUS}}-->
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a class="pointer" role="menuitem" tabindex="1" ng-click="printContent()">
+                                            Print Booking Summary
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a ng-hide="selectedBooking.NUMBER_OF_RESULTS<=0" class="pointer" role="menuitem" tabindex="2" ng-click="downloadResult(l.BOOKING_ID)">
+                                            Download Result
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <!-- END PAGINATION -->
-        <table class="table table-responsive table-hover">
-            <thead>
-                <tr>
-                    <th ng-if="bookingType=='REDiLEGAL'">
-                        Claim No.
-                        <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
-                    </th>
-                    <th ng-if="bookingType=='Vaccination'">
-                        Employee number
-                        <rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
-                    </th>
-                    <th>
-                        Surname
-                        <rlob-order-by field-name="WRK_SURNAME" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
-                    </th>
-                    <th>
-                        Type
-                        <rlob-order-by field-name="Rl_TYPE_NAME" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
-                    </th>
-                    <th>
-                        Appointment Date
-                        <rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="search.ORDER_BY" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
-                    </th>
-                    <th>
-
-                    </th>
-                </tr>
-                <tr>
-                    <!-- SEARCH -->
-                    <td ng-if="bookingType=='REDiLEGAL'">
-                        <input class="form-control input-sm" type="text" ng-model="search.data.CLAIM_NO" ng-change="loadList()">
-                    </td>
-                    <td ng-if="bookingType=='Vaccination'">
-                        <input class="form-control input-sm" type="text" ng-model="search.data.EMPLOYEE_NUMBER" ng-change="loadList()">
-                    </td>
-                    <td>
-                        <input class="form-control input-sm" type="text" ng-model="search.data.WRK_SURNAME" ng-change="loadList()">
-                    </td>
-                    <td>
-                        <select ng-model="search.data.RL_TYPE_ID" class="form-control input-sm"
-                            ng-options="type.RL_TYPE_ID as type.Rl_TYPE_NAME for type in rl_types"
-                            ng-change="loadList()">
-                            <option value="">--Select All--</option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <!--<button class="btn btn-block btn-primary btn-sm" ng-click="openModal('appointment_date_search')">Search-->
-                        <!--</button>-->
-                        <rlob-choose-period from-date="search.data.DATE.APPOINTMENT_DATE.from_map" to-date="search.data.DATE.APPOINTMENT_DATE.to_map"></rlob-choose-period>
-                    </td>
-                    <td>
-
-                    </td>
-                    <!-- END SEARCH -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="l in list.results" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
-                    <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
-                    <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
-                    <td>{{l.WRK_SURNAME}}</td>
-                    <td>{{l.Rl_TYPE_NAME}}</td>
-                    <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td>
-                        <!--action-->
-                        <div  class="btn-group dropdown pull-right pull-right"  ng-click="clickActionMenu(l.BOOKING_ID);">
-                            <a type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
-                                </span>
-                                <!--{{selectedBooking.STATUS}}-->
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a class="pointer" role="menuitem" tabindex="1" ng-click="printContent()">
-                                        Print Booking Summary
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a ng-hide="selectedBooking.NUMBER_OF_RESULTS<=0" class="pointer" role="menuitem" tabindex="2" ng-click="downloadResult(l.BOOKING_ID)">
-                                        Download Result
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        
     </div>
 </div>
 

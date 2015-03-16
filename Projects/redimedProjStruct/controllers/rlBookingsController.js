@@ -132,6 +132,89 @@ module.exports =
         });
     },
 
+    listBookingsForCustomer:function(req,res)
+    {
+        var searchInfo=kiss.checkData(req.body.searchInfo)?req.body.searchInfo:{};
+        var currentPage=kiss.checkData(searchInfo.currentPage)?searchInfo.currentPage:'';
+        var itemsPerPage=kiss.checkData(searchInfo.itemsPerPage)?searchInfo.itemsPerPage:'';
+        var startIndex=((currentPage-1)*itemsPerPage);
+        var claimNo=kiss.checkData(searchInfo.claimNo)?searchInfo.claimNo:'';
+        var surname=kiss.checkData(searchInfo.surname)?searchInfo.surname:'';
+        var firstName=kiss.checkData(searchInfo.firstName)?searchInfo.firstName:'';
+        var type=kiss.checkData(searchInfo.type)?searchInfo.type:'';
+        var appointmentDateFrom=kiss.checkData(searchInfo.appointmentDateFrom)?searchInfo.appointmentDateFrom:'1980/1/1';
+        var appointmentDateTo=kiss.checkData(searchInfo.appointmentDateTo)?searchInfo.appointmentDateTo:'3000/1/1';
+        var bookingStatus=kiss.checkData(searchInfo.bookingStatus)?searchInfo.bookingStatus:'';
+        var documentStatus=kiss.checkData(searchInfo.documentStatus)?searchInfo.documentStatus:'';
+        var orderBy=kiss.checkData(searchInfo.orderBy)?(' ORDER BY '+searchInfo.orderBy):'';
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        // var userId='';
+        var sql=
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`                                    "+
+            " FROM `rl_bookings` booking                                                              "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                "+
+            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                   "+
+            " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                     "+
+            "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                    "+
+            "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                       "+
+            "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                       "+
+            "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?      "+
+            "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                           "+
+            "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                  "+
+            "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                           "+
+            orderBy+
+            " LIMIT ?,?                                                                               ";
+
+        var sqlCount=
+            " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                           "+
+            " FROM `rl_bookings` booking                                                                  "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                       "+
+            " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                         "+
+            "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                        "+
+            "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                           "+
+            "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                           "+
+            "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?          "+
+            "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
+            "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                      "+
+            "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                               ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[claimNo,firstName,surname,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,rows)
+            {
+                if(err)
+                {
+                    kiss.exlog("listBookingsForCustomer",err,query.sql);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    kiss.exlog(query.sql);
+                    kiss.exlog("danh sach",rows);
+                    req.getConnection(function(err,connection)
+                    {
+                        var query = connection.query(sqlCount,[claimNo,firstName,surname,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,result)
+                        {
+                            if(err)
+                            {
+                                kiss.exlog("listBookingsForCustomer",err,query.sql);
+                                res.json({status:'fail'});
+                            }
+                            else
+                            {
+                                var totalItems=result[0].TOTAL_ITEMS;
+                                res.json({status:'success',data:{list:rows,totalItems:totalItems}});
+                            }
+
+                        });
+                    });
+                }
+
+            });
+        });
+    },
+
     /**
      * Lay thong tin booking thong qua booking_id
      * tannv.dts@gmail.com

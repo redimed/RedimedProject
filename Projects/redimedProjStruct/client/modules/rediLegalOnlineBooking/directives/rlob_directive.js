@@ -1180,8 +1180,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.showDialogChoose=function(){
                     if($scope.fromDate && $scope.toDate)
                     {
-                        $scope.FROM_DATE_TEMP=moment($scope.fromDate,'YYYY/MM/DD').format("DD/MM/YYYY");
-                        $scope.TO_DATE_TEMP=moment($scope.toDate,'YYYY/MM/DD').format("DD/MM/YYYY");
+                        $scope.FROM_DATE_TEMP=moment($scope.fromDate,'YYYY/MM/DD').toDate();
+                        $scope.TO_DATE_TEMP=moment($scope.toDate,'YYYY/MM/DD').toDate();
                     }
                     $("#choose-period-dialog").modal({show:true,backdrop:'static'});
                 }

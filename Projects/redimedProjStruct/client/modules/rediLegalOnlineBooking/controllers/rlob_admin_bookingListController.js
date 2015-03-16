@@ -9,6 +9,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.isAdminGetFiles=true;
         $scope.accordionStatus={status1:true};
         $scope.documentStatus=rlobConstant.documentStatus;
+        $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
         //-----------------------------------------------------------
 
         $scope.newAppointmentPositionFlag=false;
