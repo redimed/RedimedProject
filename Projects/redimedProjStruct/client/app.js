@@ -232,7 +232,7 @@ angular.module("app", [
         if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register" && toState.name !== "security.redirect") {
+            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect") {
                 e.preventDefault();
                 $state.go("security.login", null, {
                     location: "replace",

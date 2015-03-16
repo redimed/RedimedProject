@@ -224,7 +224,7 @@ angular.module("app.call.controller",[
         }
 
         $scope.installScreenshareExtension = function () {
-              chrome.webstore.install('https://chrome.google.com/webstore/detail/gbmgefccigbfiilkihnomgkmpedbojco', function () {
+              chrome.webstore.install('https://chrome.google.com/webstore/detail/pkakgggplhfilfbailbaibljfpalofjn', function () {
                 console.log('successfully installed');
               }, function () {
                 console.error('failed to install', arguments);
@@ -239,7 +239,7 @@ angular.module("app.call.controller",[
               $scope.selectingScreenSource = true;
               $scope.screenShareFailed = null;
               
-              var screenSharing = OTChromeScreenSharingExtensionHelper('gbmgefccigbfiilkihnomgkmpedbojco');
+              var screenSharing = OTChromeScreenSharingExtensionHelper('pkakgggplhfilfbailbaibljfpalofjn');
               screenSharing.isAvailable(function (extensionIsAvailable) {
                 if (extensionIsAvailable) {
                     console.log("c");
