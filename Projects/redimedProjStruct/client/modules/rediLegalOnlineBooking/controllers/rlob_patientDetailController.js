@@ -81,8 +81,17 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.open = function($event) {
             $event.preventDefault();
             $event.stopPropagation();
+            $scope.openedDateOfInjury = false;
 
             $scope.opened = true;
+        };
+
+        $scope.openDateOfInjury = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = false;
+
+            $scope.openedDateOfInjury = true;
         };
 
         $scope.dateOptions = {
