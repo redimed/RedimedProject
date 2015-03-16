@@ -27,7 +27,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             location_id: null,
             activity_id: null,
             time_charge: 0,
-            time_spent: null
+            time_spent: null,
             btnTitle: "Choose Item"
 
         };
@@ -69,7 +69,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: 0,
-                                time_spent: null
+                                time_spent: null,
                                 btnTitle: "Choose Item"
 
                             };
@@ -105,6 +105,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: null,
+                                time_spent: null,
                                 btnTitle: "Choose Item"
                             };
                             $scope.tasks.push($scope.task);
