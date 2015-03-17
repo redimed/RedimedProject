@@ -6,13 +6,13 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="position==='Admin'">
+                <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="position==='Admin' || position==='Director'">
                     <img src="/img/history.png" alt="View History Timesheet">
                     <label class="control-label bold">View History Timesheet</label>
                 </a>
             </div>
             <div class="col-md-12">
-                <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="position==='Admin'">
+                <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="position==='Admin' || position==='Director'">
                     <img src="/img/create.png" alt="Create New Timesheet">
                     <label class="control-label bold">Create New Timesheet</label>
                 </a>
