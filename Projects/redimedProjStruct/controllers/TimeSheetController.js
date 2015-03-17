@@ -110,7 +110,7 @@ module.exports = {
                     return false;
                 }else
                 {
-                    db.timeDepartment.findAll({raw: true})
+                    db.Departments.findAll({where:{departmentType: 'Time Sheet'}},{raw: true})
                         .success(function (department) {
                             if (department === null || department.length === 0) {
                                 console.log("Not found department in table");
@@ -237,6 +237,29 @@ module.exports = {
                 res.json({status: 'error', err: err});
                 console.log(err);
             })
+    },
+
+    checkMonth: function(req,res){
+        var month = req.body.month * 1 + 1;
+        var year = req.body.year;
+
+        // db.sequelize.query("SELECT * FROM `time_tasks` t  WHERE t.`date` LIKE ? AND t.``",null, {raw: true},[year + '-' + month + '%',])
+        //     .success(function (task) {
+        //         if (task === null || task.length === 0) {
+        //             console.log("Not found task in table");
+        //             res.json({status: 'no task'});
+        //             return false;
+        //         }else
+        //         {
+        //             res.json(task);
+        //         }
+        //     })
+        //     .error(function (err) {
+        //         res.json({status: 'error', err: err});
+        //         console.log(err);
+        //     })
     }
+
+
 
 };
