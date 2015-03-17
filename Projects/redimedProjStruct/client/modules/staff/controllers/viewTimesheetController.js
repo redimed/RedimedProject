@@ -280,7 +280,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         }
     }
 
-    $scope.addRow = function(index,date){
+    $scope.addRow = function(index,date,weekID){
         var j = 0;
         for(var i = index; i < $scope.tasks.length; i ++){
             if($scope.tasks[i].date == date){
@@ -291,6 +291,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             order: 1 + j,
             task : null,
             date : date,
+            task_week_id: weekID,
             department_code_id: null,
             location_id: null,
             activity_id: null,
@@ -299,6 +300,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             btnTitle: "Choose Item"
         };
         $scope.tasks.splice(index + j, 0,task) ;
+        console.log($scope.tasks);
     }
 
     $scope.okClick = function() {

@@ -73,7 +73,7 @@ module.exports = {
             }else if(allTask[i].isAction == 'insert'){
                 chainer.add(
                     db.timeTasks.create({
-                        "tasks_week_id" : allTask[i].tasks_week_id,
+                        "tasks_week_id" : allTask[i].task_week_id,
                         "department_code_id" : allTask[i].department_code_id,
                         "task" : allTask[i].task,
                         "order": allTask[i].order,
