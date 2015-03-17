@@ -14,7 +14,6 @@ angular.module("app.call.controller",[
         var sessionId = null;
         var token = null;
 
-        var publisher = null;
         $scope.session = null;
 
         $scope.userInfo = null;
@@ -34,7 +33,6 @@ angular.module("app.call.controller",[
         $scope.connected = false;
         $scope.screenShareFailed = null;
         $scope.mouseMove = false;
-        $scope.leaving = false;
         $scope.selectingScreenSource = false;
         $scope.promptToInstall = false;
 
@@ -92,6 +90,10 @@ angular.module("app.call.controller",[
             }
         }
 
+        $scope.notMine = function(stream) {
+            return stream.connection.connectionId != $scope.session.connection.connectionId;
+        };
+
 
         if($scope.isCaller)
         {   
@@ -135,6 +137,10 @@ angular.module("app.call.controller",[
                 apiKey = info.apiKey;
                 sessionId = info.sessionId;
                 token = info.token;
+
+                if ($scope.session) {
+                    $scope.session.disconnect();
+                }
 
                 OTSession.init(apiKey, sessionId, token, function (err, session) {
                     $scope.session = session;
@@ -184,18 +190,10 @@ angular.module("app.call.controller",[
 
         $scope.muteAudio = function(){
             $scope.isAudioMuted = !$scope.isAudioMuted;
-            if($scope.isAudioMuted)
-                publisher.publishAudio(false);
-            else
-                publisher.publishAudio(true);
         }
 
         $scope.muteVideo = function(){
             $scope.isVideoMuted = !$scope.isVideoMuted;
-            if($scope.isVideoMuted)
-                publisher.publishVideo(false);
-            else
-                publisher.publishVideo(true);
         }
 
         var disconnect = function() {
@@ -203,14 +201,6 @@ angular.module("app.call.controller",[
             $scope.session.on('sessionDisconnected', function () {
                 socket.removeAllListeners();
             });
-
-            // if (publisher) {
-            //     publisher.destroy();
-            //     session.unpublish(publisher);
-            //     // session.disconnect();
-            // }
-            // publisher = null;
-            // session = null;
         }
 
         $scope.cancelCall = function(){
@@ -240,13 +230,12 @@ angular.module("app.call.controller",[
               $scope.screenShareFailed = null;
               
               var screenSharing = OTChromeScreenSharingExtensionHelper('pkakgggplhfilfbailbaibljfpalofjn');
-              screenSharing.isAvailable(function (extensionIsAvailable) {
+              screenSharing.isAvailable(function (extensionIsAvailable) {   
                 if (extensionIsAvailable) {
                     console.log("c");
                   screenSharing.getVideoSource(function(error, source) {
                     $scope.$apply(function () {
                       if (error) {
-                        // either the extension is not available or the user clicked cancel
                         $scope.screenShareFailed = error.message;
                       } else {
                         $scope.screenPublisherProps.videoSource = source;

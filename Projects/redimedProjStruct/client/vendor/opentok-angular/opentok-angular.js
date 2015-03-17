@@ -80,7 +80,9 @@ var OpenTokAngular = angular.module('opentok', [])
     return {
         restrict: 'E',
         scope: {
-            props: '&'
+            props: '&',
+            muteAudio: '=',
+            muteVideo: '='
         },
         link: function(scope, element, attrs){
             var props = scope.props() || {};
@@ -93,6 +95,7 @@ var OpenTokAngular = angular.module('opentok', [])
                     scope.$emit("otPublisherError", err, scope.publisher);
                 }
             });
+
             // Make transcluding work manually by putting the children back in there
             $(element).append(oldChildren);
             scope.publisher.on({
@@ -113,6 +116,27 @@ var OpenTokAngular = angular.module('opentok', [])
                     scope.$emit("otLayout");
                 }
             });
+
+            scope.$watch('muteAudio',function(newVal){
+                if(newVal != null && typeof newVal !== 'undefined')
+                {
+                    if(newVal == true)
+                        scope.publisher.publishAudio(false);
+                    else
+                        scope.publisher.publishAudio(true);
+                }
+            });
+
+            scope.$watch('muteVideo',function(newVal){
+                if(newVal != null && typeof newVal !== 'undefined')
+                {
+                    if(newVal == true)
+                        scope.publisher.publishVideo(false);
+                    else
+                        scope.publisher.publishVideo(true);
+                }
+            });
+
             scope.$on("$destroy", function () {
                 if (OTSession.session) OTSession.session.unpublish(scope.publisher);
                 else scope.publisher.destroy();
@@ -145,6 +169,7 @@ var OpenTokAngular = angular.module('opentok', [])
                 props = scope.props() || {};
             props.width = props.width ? props.width : $(element).width();
             props.height = props.height ? props.height : $(element).height();
+
             var oldChildren = $(element).children();
             var subscriber = OTSession.session.subscribe(stream, element[0], props, function (err) {
                 if (err) {
