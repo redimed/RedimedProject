@@ -170,6 +170,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 USER_ID: USER_ID
             });
         };
+        TimeSheetService.ViewItem = function(taskID) {
+            var ViewItem = api.all("TimeSheet/post-item-list");
+            return ViewItem.post({
+                taskID: taskID
+            });
+        };
 
         return TimeSheetService;
     });

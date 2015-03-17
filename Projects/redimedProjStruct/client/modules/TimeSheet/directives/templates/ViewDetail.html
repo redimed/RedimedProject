@@ -2,7 +2,7 @@
     <form method="POST" class="grid-form">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>View Detail
+            <legend>View detail
             </legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
@@ -13,10 +13,10 @@
                     EMPLOYEE NAME: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
                 </div>
                 <div data-field-span="3">
-                    DATE APPROVED:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].approved_date | date:"dd/MM/yyyy"}}</span>
+                    WEEK NO:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].week_no}}</span>
                 </div>
                 <div data-field-span="3">
-                    WEEK NO:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].week_no}}</span>
+                    DATE APPROVED:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].approved_date | date:"dd/MM/yyyy"}}</span>
                 </div>
             </div>
             <div data-row-span="12">
@@ -24,13 +24,13 @@
                     TOTAL TIME CHARGE:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].chargeWeek===null || list.result[0].chargeWeek=="")?"0":list.result[0].chargeWeek}}</span>
                 </div>
                 <div data-field-span="3">
-                    TOTAL TIME SPENT: &nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].spentWeek===null ||list.result[0].spentWeek==="")?"0":list.result[0].spentWeek}}</span>
-                </div>
-                <div data-field-span="3">
                     TIME IN LIEU:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].inlieuWeek===null ||list.result[0].inlieuWeek==="")?"0":list.result[0].inlieuWeek}}</span>
                 </div>
                 <div data-field-span="3">
                     OVER TIME:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].overtime===null || list.result[0].overtime==="")?"0":list.result[0].overtime}}</span>
+                </div>
+                <div data-field-span="3">
+                    DATE SUBMITED: &nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].approved_date===null ||list.result[0].approved_date==="")?"":list.result[0].approved_date | date: "dd/MM/yyyy"}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -44,13 +44,18 @@
                             <tr>
                                 <th>
                                     <div class="th">
-                                        Date Of Week
+                                        Date
                                     </div>
                                 </th>
 
                                 <th>
                                     <div class="th">
                                         Activity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Location
                                     </div>
                                 </th>
                                 <th>
@@ -65,11 +70,6 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Time spent
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
                                         Task
                                     </div>
                                 </th>
@@ -77,11 +77,11 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                                <td class="btn btn-xs">{{l.date | date: "dd/MM/yyyy"}}</td>
-                                <td class="btn btn-xs">{{l.NAME}}</td>
+                                <td class="btn btn-xs"><a ng-dblclick="DetailItem(l.tasks_id)"><i class="fa fa-search" title="View detail item code"></i></a>&nbsp;{{l.date | date: "dd/MM/yyyy"}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{l.NAME}}</td>
+                                <td class="btn btn-xs">{{l.LOCATION}}</td>
                                 <td class="btn btn-xs">{{l.departmentName}}</td>
                                 <td class="btn btn-xs">{{(l.time_charge===null || l.time_charge==="")?"0 Hours": l.time_charge+" Hours"}}</td>
-                                <td class="btn btn-xs">{{(l.time_spent===null||l.time_spent==="")?"0 Hours":l.time_spent+" Hours"}}</td>
                                 <td class="btn btn-xs">{{(l.task===""||l.task===null)?"":l.task}}</td>
                             </tr>
                         </tbody>
@@ -94,3 +94,6 @@
         <!-- END MAIN INFO -->
     </form>
 </div>
+<script type="text/ng-template " id="ViewItem ">
+    <view-item ng-model="taskID" on-cancel="clickCancel(return) "></view-item>
+</script>

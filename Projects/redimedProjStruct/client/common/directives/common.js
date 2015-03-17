@@ -909,7 +909,8 @@ angular.module("app.directive.common", [
             restrict: "EA",
             scope: {
                 customTr: "=",
-                customFr: "="
+                customFr: "=",
+                ngModel: "="
             },
             link: function(scope, elem, attrs) {
                 var arrayError = {
@@ -920,7 +921,7 @@ angular.module("app.directive.common", [
                 //watch custom-tr input required input
                 scope.$watch('customTr', function(newModel, oldModel) {
                     var checkErr = false;
-                    if (scope.customFr.$error !== undefined && scope.customFr.$error !== null) {
+                    if (scope.customFr !== undefined && scope.customFr.$error !== undefined && scope.customFr.$error !== null) {
                         angular.forEach(scope.customFr.$error, function(err, index) {
                             if (err) {
                                 checkErr = true;

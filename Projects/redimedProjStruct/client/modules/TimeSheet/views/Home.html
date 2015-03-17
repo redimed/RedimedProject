@@ -1,70 +1,33 @@
-<!-- HEADER -->
-<nav class="nav nav-pills">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
-        </div>
-        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1 ">
-            <ul class="nav navbar-nav ">
-                <!-- VIEW APPROVE TIMEHSEET MANAGE-->
-                <li ng-show="position==='Head of Dept.' || position==='Director'"><a ui-sref="loggedIn.ViewAppovedTimeSheet">View approved timesheets<span class="blue"></span></a>
-                </li>
-                <!-- END VIEW APPROVE TIMEHSEET MANAGE-->
-
-                <!-- APPROVE MANAGE-->
-                <li ng-show="position==='Head of Dept.' || position==='Director'"><a ui-sref="loggedIn.ApproveTask">Approve timesheet</a>
-                </li>
-                <!-- END APPROVE MANAGE-->
-
-                <!-- VIEW TIMESHEET EMPLOYEE-->
-                <li ng-show="position==='Staff' || position==='Head of Dept.'"><a ui-sref="loggedIn.timesheet.view">View timesheet</a>
-                </li>
-                <!-- END VIEW TIMESHEET EMPLOYEE-->
-
-                <!-- CREATE TIMEHSEET EMPLOYEE-->
-                <li ng-show="position==='Staff' || position==='Head of Dept.'"><a ui-sref="loggedIn.timesheet.create">Create new timesheet</a>
-                </li>
-                <!-- END CREATE TIMEHSHEET EMPLOYEE-->
-
-                <!-- MANAGE DEPT ADMIN-->
-                <li ng-show="position==='Admin'"><a ui-sref="loggedIn.TimeSheetDept">Manage dept</a>
-                </li>
-                <!-- END MANAGE DEPT ADMIN-->
-
-                <!-- MANAGE USER ADMIN-->
-                <li ng-show="position==='Admin'"><a ui-sref="loggedIn.TimeSheetTree">Manage user</a>
-                </li>
-                <!-- END MANAGE USER ADMIN-->
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- END HEADER -->
-
 <!-- INFO SYS -->
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Timesheet</h3>
+        <h3 class="panel-title bold">Timesheet</h3>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-3" style="width:auto;">
-                <img src="/img/createtimesheet.png" alt="Create timesheet">
-                <label class="control-label">Sign and view timesheets</label>
+            <div class="col-md-12">
+                <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="position==='Admin'">
+                    <img src="/img/history.png" alt="View History Timesheet">
+                    <label class="control-label bold">View History Timesheet</label>
+                </a>
             </div>
-            <div class="col-md-3" style="width:auto;">
-                <img src="/img/approvetimesheet.jpg" alt="Approve timesheet">
-                <label class="control-label">View and Approve timesheets</label>
+            <div class="col-md-12">
+                <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="position==='Admin'">
+                    <img src="/img/create.png" alt="Create New Timesheet">
+                    <label class="control-label bold">Create New Timesheet</label>
+                </a>
             </div>
-            <div class="col-md-3" style="width:auto;">
-                <img src="/img/admin.jpg" alt="Manager HR on  timesheet system">
-                <label class="control-label" style="margin-top:25px;">Manager HR on timesheet system</label>
+            <div class="col-md-12">
+                <a ui-sref="loggedIn.ApproveTask" class="btn" ng-disabled="position==='Staff' || position==='Admin'">
+                    <img src="/img/management.png" alt="Management And Approve Timesheet">
+                    <label class="control-label bold">Management And Approve Timesheet</label>
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-show="position==='Admin'">
+                    <img src="/img/admin.png" alt="Admin Timesheet">
+                    <label class="control-label bold">Admin Timesheet</label>
+                </a>
             </div>
         </div>
     </div>

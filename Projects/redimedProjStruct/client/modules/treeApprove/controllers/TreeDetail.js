@@ -20,7 +20,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                             GROUP_TYPE: nodeOfTree.GROUP_TYPE,
                             parent: (nodeOfTree.TO_NODE_ID === undefined || nodeOfTree.TO_NODE_ID === null || nodeOfTree.TO_NODE_ID === "") ? 0 : nodeOfTree.TO_NODE_ID,
                             decription: nodeOfTree.DECRIPTION || null,
-                            seq: nodeOfTree.seq || -1
+                            seq: nodeOfTree.seq
                         });
                     });
                 } else {
@@ -61,6 +61,7 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                     $scope.getInfo = function(value) {
                         if ($scope.isNew === true) {
                             value.userId = $cookieStore.get("userInfo").id;
+                            value.seq = nodeInfo.node.seq + 1;
                             value.parent = nodeInfo.node.id;
                             value.GROUP_ID = localStorageService.get("IdTree").GROUP_ID;
                             value.GROUP_TYPE = localStorageService.get("IdFunction");
