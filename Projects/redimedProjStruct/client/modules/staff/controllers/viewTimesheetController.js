@@ -203,14 +203,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $modalInstance.close();
     }
 
-    $scope.okClick = function() {
-        $scope.isEdit = !$scope.isEdit;
-        if (!$scope.isEdit) {
-            console.log($scope.tasks);
-        }
-    }
-
-
     $scope.calendarDay = new Date();
     $scope.info.userID = $cookieStore.get("userInfo").id;
 
@@ -227,51 +219,49 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         btnTitle: "Choose Item"
     };
 
-    $scope.checkTaskWeek = function(date) {
-        $scope.tasks = [];
+    $scope.loadInfo = function(){
+        $scope.tasks.loading = true;
+        StaffService.getDepartmentLocation().then(function(response){
+            if(response['status'] == 'fail' || response['status'] == 'error'){
+                toastr.error("Error", "Error");
+                $state.go('loggedIn.home', null, {'reload': true});
+            }else
+            {
+                $scope.departments = response['department'];
+                $scope.locations = response['location'];
+                $scope.activities = response['activity'];
+                $scope.checkTaskWeek(startDate);
+            }
+        })
+        $scope.tasks.loading = false;
+    }
+
+    $scope.loadInfo();
+
+    $scope.checkTaskWeek= function(date){
+        $scope.tasks=[];
         startWeek = $filter('date')(date, 'yyyy-MM-dd');
         $scope.info.startWeek = startWeek;
-        StaffService.checkTaskWeek($scope.info).then(function(response) {
-            if (response['status'] == 'fail' || response['status'] == 'error') {
+        StaffService.checkTaskWeek($scope.info).then(function(response){
+            if(response['status'] == 'fail' || response['status'] == 'error'){
                 toastr.error("Error", "Error");
-            } else {
-                if (response['data'] != 'no') {
-                    angular.forEach(response['data'], function(data) {
-                        data.order = 1;
+            }else
+            {
+                if(response['data'] != 'no'){
+                    angular.forEach(response['data'], function(data){
+                        data.isAction = 'update';
                         data.btnTitle = "Choose Item";
                         $scope.tasks.push(data);
                     })
                 }
+                console.log($scope.tasks);
             }
         })
     }
 
-    $scope.checkTaskWeek(startDate);
-
-    $scope.addRow = function(index, date) {
-        var j = 0;
-        for (var i = index; i < $scope.tasks.length; i++) {
-            if ($scope.tasks[i].date == date) {
-                j++;
-            }
-        }
-        console.log(j);
-        task = {
-            order: 1 + j,
-            task: null,
-            date: date,
-            department_code_id: null,
-            location_id: null,
-            activity_id: null,
-            time_charge: null,
-            isEdit: false,
-            btnTitle: "Choose Item"
-        };
-        $scope.tasks.splice(index + j, 0, task);
-    }
-
-    $scope.delTask = function(index, order) {
-        if (order != 1) {
+    $scope.delTask = function(index,order){
+        if(order != 1)
+        {
             swal({
                 title: "Are you sure?",
                 text: "This task will lost in list !",
@@ -281,11 +271,52 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 confirmButtonText: "Yes",
                 closeOnConfirm: true
             }, function() {
-                $scope.tasks.splice(index, 1);
+                if($scope.tasks[index].isAction == 'update'){
+                    $scope.tasks[index].isAction = 'delete';
+                }else{
+                    $scope.tasks.splice(index,1);
+                }
             })
         }
     }
 
+    $scope.addRow = function(index,date,weekID){
+        var j = 0;
+        for(var i = index; i < $scope.tasks.length; i ++){
+            if($scope.tasks[i].date == date){
+                j++;
+            }
+        }
+        task={
+            order: 1 + j,
+            task : null,
+            date : date,
+            task_week_id: weekID,
+            department_code_id: null,
+            location_id: null,
+            activity_id: null,
+            time_charge: null,
+            isAction: 'insert',
+            btnTitle: "Choose Item"
+        };
+        $scope.tasks.splice(index + j, 0,task) ;
+        console.log($scope.tasks);
+    }
+
+    $scope.okClick = function() {
+        $scope.isEdit = !$scope.isEdit;
+        if (!$scope.isEdit) {
+            console.log($scope.tasks);
+            StaffService.editTask($scope.tasks).then(function (response) {
+                if (response['status'] == 'success') {
+                    toastr.success("success", "Success");
+                    $state.go('loggedIn.timesheet.view', null, {'reload': true});
+                } else {
+                    toastr.error("Error", "Error");
+                }
+            })
+        }
+    };
 
     $scope.chooseItem = function(task, index) {
         var modalInstance = $modal.open({
@@ -301,6 +332,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                             if ($scope.itemList[i].value.length > 0) {
                                 check = true;
                                 arr = angular.copy($scope.itemList[i].value);
+
                             }
                         }
                     }

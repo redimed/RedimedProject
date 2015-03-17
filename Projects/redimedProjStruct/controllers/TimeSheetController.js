@@ -73,13 +73,14 @@ module.exports = {
             }else if(allTask[i].isAction == 'insert'){
                 chainer.add(
                     db.timeTasks.create({
-                        tasks_week_id : allTask[i].tasks_week_id,
+                        "tasks_week_id" : allTask[i].task_week_id,
                         "department_code_id" : allTask[i].department_code_id,
                         "task" : allTask[i].task,
                         "order": allTask[i].order,
                         "date": moment(allTask[i].date).format('YYYY-MM-DD'),
                         "location_id" : allTask[i].location_id,
                         "activity_id" : allTask[i].activity_id,
+                        "time_spent" : allTask[i].time_spent,
                         "time_charge" : allTask[i].time_charge
                     })
                 )
@@ -155,7 +156,7 @@ module.exports = {
                     res.json({data: 'no'});
                 }else
                 {
-                    db.timeTasks.findAll({where:{tasks_week_id : result.task_week_id},order: 'date'},{raw: true})
+                    db.timeTasks.findAll({where:{tasks_week_id : result.task_week_id, deleted : 0},order: 'date'},{raw: true})
                         .success(function (tasks) {
                             if (tasks === null || tasks.length === 0) {
                                 console.log("Not found tasks in table");
@@ -180,7 +181,7 @@ module.exports = {
 
     checkFirstTaskWeek: function(req,res){
         var info = req.body.info;
-        db.timeTaskWeek.max('start_date', { where: { user_id : info.userID} })
+        db.timeTaskWeek.max('start_date', { where: { user_id : info.userID, deleted: 0} })
             .success(function (maxDate) {
                 if (maxDate == 'Invalid Date') {
                     console.log("Not found maxDate in table");
@@ -221,7 +222,7 @@ module.exports = {
         db.sequelize.query("SELECT time_tasks_week.*,time_task_status.`name` AS STATUS " +
         "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status "+
         "ON time_task_status.`task_status_id` = time_tasks_week.`task_status_id` "+
-        "WHERE  time_tasks_week.`user_id` = ? ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.userID,search.limit,search.offset])
+        "WHERE  time_tasks_week.`user_id` = ? AND time_tasks_week.`deleted` = 0 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?",null, {raw: true},[search.userID,search.limit,search.offset])
             .success(function (task) {
                 if (task === null || task.length === 0) {
                     console.log("Not found task in table");

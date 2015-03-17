@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="idas_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="380e6717-6efb-44f3-9f91-4e5c6ef55dba">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="166"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -278,7 +278,7 @@ WHERE
 	<pageHeader>
 		<band height="83" splitType="Stretch">
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
-				<reportElement x="0" y="0" width="458" height="62" uuid="c7de221a-a840-4278-87ce-428573db7a8e"/>
+				<reportElement x="0" y="0" width="555" height="62" uuid="c7de221a-a840-4278-87ce-428573db7a8e"/>
 				<imageExpression><![CDATA[$P{real_path}+"/logo_long.jpg"]]></imageExpression>
 			</image>
 		</band>
@@ -326,11 +326,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{doctor_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="312" y="80" width="90" height="20" uuid="348bbfcf-6568-42ff-bc4e-a1b9cc8189f7"/>
+				<reportElement mode="Transparent" x="318" y="80" width="90" height="20" uuid="348bbfcf-6568-42ff-bc4e-a1b9cc8189f7"/>
 				<text><![CDATA[Tester’s signature: ]]></text>
 			</staticText>
 			<image>
-				<reportElement mode="Transparent" x="414" y="30" width="113" height="109" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
+				<reportElement mode="Transparent" x="414" y="26" width="113" height="113" uuid="1ef3732d-f028-4ba0-b931-5f039c8f4004"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{doctor_sign}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<textField>
@@ -341,19 +341,19 @@ WHERE
 "that I have taken the following medications (prescription and non-prescription) in the last 14 days:"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="7" y="280" width="97" height="20" uuid="cfb134c4-f45d-4bfd-ba91-390ae97448ea"/>
+				<reportElement x="7" y="240" width="100" height="20" uuid="cfb134c4-f45d-4bfd-ba91-390ae97448ea"/>
 				<text><![CDATA[Candidate signature:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="104" y="236" width="120" height="95" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
+				<reportElement x="120" y="236" width="120" height="95" uuid="1e4faf05-6edb-467e-8333-73523861d2f3"/>
 				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{cln_idas_headers_SIGNATURE}.getBytes("UTF-8"))))]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="368" y="280" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
+				<reportElement x="318" y="240" width="43" height="20" uuid="13a1a388-2615-48a5-941c-87353ec29ef3"/>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="411" y="280" width="100" height="20" uuid="6543ec24-f1f4-447a-a1a5-8dc2ce5b05b9"/>
+				<reportElement x="365" y="240" width="100" height="20" uuid="6543ec24-f1f4-447a-a1a5-8dc2ce5b05b9"/>
 				<textFieldExpression><![CDATA[$F{cln_idas_headers_IDAS_DATE}]]></textFieldExpression>
 			</textField>
 			<componentElement>
@@ -376,14 +376,14 @@ WHERE
 					</datasetRun>
 					<jr:listContents height="97" width="549">
 						<textField isStretchWithOverflow="true">
-							<reportElement x="0" y="21" width="549" height="13" uuid="bc361475-7cf2-4f01-9a89-6c3514bbd2ca"/>
+							<reportElement x="68" y="21" width="400" height="13" uuid="bc361475-7cf2-4f01-9a89-6c3514bbd2ca"/>
 							<textElement>
 								<font isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{cln_idas_groups_GROUP_NAME}]]></textFieldExpression>
 						</textField>
 						<subreport>
-							<reportElement positionType="Float" x="0" y="59" width="411" height="37" isRemoveLineWhenBlank="true" uuid="339f4ebb-a1a1-4d5a-bdb2-9a174b567d85"/>
+							<reportElement positionType="Float" x="68" y="60" width="411" height="37" isRemoveLineWhenBlank="true" uuid="339f4ebb-a1a1-4d5a-bdb2-9a174b567d85"/>
 							<subreportParameter name="real_path">
 								<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
 							</subreportParameter>
@@ -403,30 +403,30 @@ WHERE
 							<subreportExpression><![CDATA[$P{real_path}+"/idas_report_subreport1.jasper"]]></subreportExpression>
 						</subreport>
 						<rectangle>
-							<reportElement style="table" positionType="Float" x="0" y="39" width="411" height="20" isRemoveLineWhenBlank="true" uuid="07497612-3ba3-4a86-9735-ff30c51c2e64"/>
+							<reportElement style="table" positionType="Float" x="68" y="40" width="411" height="20" isRemoveLineWhenBlank="true" uuid="07497612-3ba3-4a86-9735-ff30c51c2e64"/>
 						</rectangle>
 						<line>
-							<reportElement x="255" y="40" width="1" height="20" uuid="b9a6f87a-80d2-4b72-b7a2-6a08a2b4e0c7"/>
+							<reportElement x="323" y="41" width="1" height="20" uuid="b9a6f87a-80d2-4b72-b7a2-6a08a2b4e0c7"/>
 						</line>
 						<line>
-							<reportElement x="329" y="40" width="1" height="20" uuid="7912ef2d-5bd3-4667-af7f-2d06bc6849cf"/>
+							<reportElement x="397" y="41" width="1" height="20" uuid="7912ef2d-5bd3-4667-af7f-2d06bc6849cf"/>
 						</line>
 						<staticText>
-							<reportElement x="0" y="40" width="255" height="20" uuid="10cae6e5-9b21-4408-8d71-e7da04c379e3"/>
+							<reportElement x="68" y="41" width="255" height="20" uuid="10cae6e5-9b21-4408-8d71-e7da04c379e3"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font isBold="true"/>
 							</textElement>
 							<text><![CDATA[Test name]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="256" y="41" width="73" height="20" uuid="30fd99f4-4019-49ef-95e7-af0492781c99"/>
+							<reportElement x="324" y="42" width="73" height="20" uuid="30fd99f4-4019-49ef-95e7-af0492781c99"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font isBold="true"/>
 							</textElement>
 							<text><![CDATA[Non-Negative]]></text>
 						</staticText>
 						<staticText>
-							<reportElement x="330" y="40" width="79" height="20" uuid="3d27069d-9ced-4360-b01a-3b838d7d99e5"/>
+							<reportElement x="398" y="41" width="79" height="20" uuid="3d27069d-9ced-4360-b01a-3b838d7d99e5"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font isBold="true"/>
 							</textElement>

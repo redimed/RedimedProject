@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=true;
+var isTestSendMail=false;
 module.exports =
 {
     isTestSendMail:isTestSendMail,

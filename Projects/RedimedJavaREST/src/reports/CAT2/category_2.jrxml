@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="5760"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -2433,142 +2433,142 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="539" width="58" height="17" uuid="a7eeaea3-d1de-4fc6-9112-864e5b12f64d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_1}==null?0:$F{q3_1_4_3_1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="563" width="58" height="17" uuid="d8173d14-fdeb-4f00-8cc8-79386792e4f2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_2}==null?0:$F{q3_1_4_3_2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="81" y="584" width="58" height="17" uuid="088e841b-d2cc-4ffb-a6bd-a1a248d6c6de"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_3}==null?0:$F{q3_1_4_3_3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="81" y="604" width="58" height="17" uuid="7527d0e5-4355-452c-9166-8ef97b30cc76"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_4}==null?0:$F{q3_1_4_3_4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="203" y="604" width="58" height="17" uuid="70f962c1-d89c-4f7d-a208-0369575bf11f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_8}==null?0:$F{q3_1_4_3_8}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="203" y="583" width="58" height="17" uuid="660ede74-9f44-47d8-9ed2-16b4d09beb1d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_7}==null?0:$F{q3_1_4_3_7}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="204" y="562" width="58" height="17" uuid="6ecac697-42b7-410e-a089-5acdac1c82c1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_6}==null?0:$F{q3_1_4_3_6}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="203" y="539" width="58" height="17" uuid="eecd59b8-f63f-42f3-8596-704061fa282b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_4_3_5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_4_3_5}==null?0:$F{q3_1_4_3_5}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="358" y="303" width="57" height="16" uuid="a1509b41-7865-4c6c-b9f5-39f6b9740728"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_1}==null?0:$F{q3_1_6_1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="358" y="319" width="57" height="16" uuid="7cdce83a-172b-4c10-87c6-af7579163feb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_2}==null?0:$F{q3_1_6_2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="358" y="337" width="57" height="16" uuid="9033e064-44cd-4d4f-82cb-257b6c0a8ac1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_3}==null?0:$F{q3_1_6_3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="359" y="352" width="57" height="16" uuid="9398cc33-6129-4b57-b6d5-5f1701c9036d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_4}==null?0:$F{q3_1_6_4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="359" y="368" width="57" height="16" uuid="5967d273-b8f8-4f3b-85cb-1ca353a41e3e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_5}==null?0:$F{q3_1_6_5}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="368" width="60" height="16" uuid="2f447c3b-a5d9-4421-ac04-c4ace253dfb2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_10}==null?0:$F{q3_1_6_10}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="352" width="60" height="16" uuid="108d24ba-518d-47bd-8192-cb6f5c84e403"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_9}==null?0:$F{q3_1_6_9}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="335" width="60" height="16" uuid="92fc2f85-4c8b-4565-ac60-42574747d685"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_8}==null?0:$F{q3_1_6_8}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="480" y="319" width="60" height="16" uuid="ea830979-dfcc-4b8a-985b-64806f124a13"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_7}==null?0:$F{q3_1_6_7}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="303" width="60" height="16" uuid="7ba47c80-2ef9-4316-9757-b404e5e9b157"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_6_6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_6_6}==null?0:$F{q3_1_6_6}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="165" width="59" height="16" uuid="24a18d35-6bc4-492f-8a30-cf20cfbd37d2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_10}==null?0:$F{q3_1_5_10}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="358" y="98" width="59" height="16" uuid="b3b3234f-8365-4729-ae33-ccffc7813694"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_1}==null?0:$F{q3_1_5_1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="359" y="115" width="59" height="16" uuid="c25b7769-f7f2-48f6-98d7-0b17c01fff08"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_2}==null?0:$F{q3_1_5_2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="359" y="132" width="59" height="16" uuid="de2a498a-f176-4c49-b471-d7321330b3e1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_3}==null?0:$F{q3_1_5_3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="359" y="148" width="59" height="16" uuid="b706bb4e-f8da-40cc-8b23-cc6462fceb7f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_4}==null?0:$F{q3_1_5_4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="358" y="164" width="59" height="16" uuid="cbf2319f-db70-4a69-9322-ed72cca72140"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_5}==null?0:$F{q3_1_5_5}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="479" y="99" width="59" height="16" uuid="f041f7ef-137b-4df5-aeb5-52fc00907a12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_6}==null?0:$F{q3_1_5_6}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="114" width="59" height="16" uuid="f23f56ec-4a65-432b-ba39-88e3c9215177"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_7}==null?0:$F{q3_1_5_7}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="478" y="131" width="59" height="16" uuid="458e8a03-d9c7-4e0a-9c68-1811ff9c14f1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_8}==null?0:$F{q3_1_5_8}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="477" y="148" width="59" height="16" uuid="f3067275-47a6-4ed7-9be0-2246c1c9f134"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q3_1_5_9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q3_1_5_9}==null?0:$F{q3_1_5_9}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="802">
