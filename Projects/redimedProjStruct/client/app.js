@@ -40,7 +40,8 @@ angular.module("app", [
     'angular-flot',
     'irontec.simpleChat',
     'opentok',
-    'opentok-whiteboard'
+    'opentok-whiteboard',
+    'ui.mask'
 
     // 'angular-underscore'
 ])

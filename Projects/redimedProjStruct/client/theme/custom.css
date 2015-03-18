@@ -946,11 +946,15 @@ table.timetable-table td:last-child {
     font-size: 12px;
 }
 .submited {
-    color: #baaa5a;
+    color: #35aa47;
     font-weight: bold;
 }
 .reject {
     color: #DF5755;
+    font-weight: bold;
+}
+.approved {
+    color: #4b8df8;
     font-weight: bold;
 }
 .glyphicon-chevron-up:before {
@@ -993,13 +997,11 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered thead th>.th {
     position: relative;
     padding: 4px 4px 4px 4px;
-    height: 25px;
     font-size: 12px;
 }
 .table-dynamic .table-bordered tbody tr {
     position: relative;
     padding: 4px 4px 4px 4px;
-    height: 10px;
 }
 .table-dynamic .table-bordered tbody tr td input>.checkbox {
     height: 15px;
@@ -1064,6 +1066,9 @@ table.timetable-table td:last-child {
 }
 .odd {
     background-color: #fafafa;
+}
+.same {
+    background-color: #EEEEEE;
 }
 .table-dynamic .table-bordered>thead>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox], .table-dynamic .table-bordered>thead>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>td>input[type=checkbox] {
     margin: 1px -15px -10px 2px;

@@ -13,7 +13,6 @@
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ViewAppovedTimeSheet">View Approved Timesheets</a>
         <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>List Timesheets
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -28,12 +27,12 @@
                     <tr>
                         <th>
                             <div class="th">
-                                Employee code
+                                No.
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                Employee name
+                                Employee
                             </div>
                         </th>
                         <th>
@@ -41,7 +40,12 @@
                                 <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
                             </span>
                                 <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
-                            </span> Week/current
+                            </span> For The Week
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Time Charge
                             </div>
                         </th>
                         <th>
@@ -51,37 +55,23 @@
                         </th>
                         <th>
                             <div class="th">
-                                Time charge
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-click="dateSubmitedASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.date_submited']==='ASC'}">
-                            </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="dateSubmitedDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.date_submited']==='DESC' } ">
-                            </span> Date submited
+                                Task/Comments
                             </div>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <td>
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['hr_employee.Employee_ID']" ng-options="itemEmp.Employee_ID as itemEmp.Employee_Code for itemEmp in list.listEmployee " ng-change="loadList()">
-                            </select>
-                        </td>
+                        <td></td>
                         <td>
                             <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="loadList()">
                         </td>
-                        <td>
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.week_no']" ng-options="itemRow.code as itemRow.code for itemRow in weekNo " ng-change="loadList()">
-                            </select>
-                        </td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="loadList()">
                             </select>
                         </td>
-                        <td></td>
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
@@ -90,14 +80,14 @@
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="viewTask(l.task_week_id)">
-                        <td class="btn btn-xs">{{l.Employee_Code}}</td>
-                        <td class="btn btn-xs">{{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}</td>
-                        <td class="btn btn-xs">{{l.week_no}}/{{currentWeek}}</td>
-                        <td class="btn btn-xs">
-                            <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted'}">{{(l.name===null || l.name===" ")?" ":l.name}}</span>
+                        <td class="btn btn-xs">{{$index+1}}.</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}</td>
+                        <td class="btn btn-xs" style="text-align:left;"><span class="text-info">{{l.start_date|date:"dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date|date:"dd-MM-yyyy"}}</span></td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.time_charge===null||l.time_charge===" ")?("0"):l.time_charge}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">
+                            <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved'}">{{(l.name===null || l.name===" ")?" ":(l.name==='Submitted'?"A watting for approve":l.name)}}</span>
                         </td>
-                        <td class="btn btn-xs">{{(l.time_charge===null||l.time_charge===" ")?("0 Hours "):l.time_charge + " Hours "}}</td>
-                        <td class="btn btn-xs">{{l.date_submited | date: "dd/MM/yyyy h:mm:ss a "}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.comments===null||l.comments==="")?"":l.comments}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -107,7 +97,6 @@
                         <div class="col-md-4 col-sm-5 ">
                             <div class="input-group ">
                                 <span class="custom-timesheet ">Total: {{list.count}}</span>
-
                                 <span class="custom-timesheet ">Show</span>
                                 <select class="custom-timesheet " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px; ">
                                 </select>

@@ -2,25 +2,14 @@
     <form method="POST" class="grid-form" name="viewTask">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>Review
-                <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">x</a>
-            </legend>
+            <legend>Review</legend>
             <!-- INFORMATION -->
-            <div data-row-span="10">
-                <div data-field-span="2">
-                    EMPLOYEE CODE:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].Employee_Code}}</span>
+            <div data-row-span="12">
+                <div data-field-span="6">
+                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
                 </div>
-                <div data-field-span="2">
-                    EMPLOYEE NAME: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
-                </div>
-                <div data-field-span="2">
-                    TOTAL TIME CHARGE:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].chargeWeek===null || list.result[0].chargeWeek=="")?"0":list.result[0].chargeWeek}}</span>
-                </div>
-                <div data-field-span="2">
-                    DATE SUBMITED: &nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].approved_date===null ||list.result[0].approved_date==="")?"":list.result[0].spentWeek | date: "dd/MM/yyyy"}}</span>
-                </div>
-                <div data-field-span="2">
-                    WEEK NO:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].week_no}}</span>
+                <div data-field-span="6">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{list.result[0].end_date| date: "dd/MM/yyyy"}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -34,10 +23,19 @@
                             <tr>
                                 <th>
                                     <div class="th">
-                                        Date Of Week
+                                        Date
                                     </div>
                                 </th>
-
+                                <th>
+                                    <div class="th">
+                                        Location
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Department
+                                    </div>
+                                </th>
                                 <th>
                                     <div class="th">
                                         Activity
@@ -45,34 +43,47 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Dept name
+                                        Time Charge
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Time charge
+                                        Item
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Task
+                                        Quantity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Task/Comments
                                     </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                                <td class="btn btn-xs">{{l.date | date: "dd/MM/yyyy"}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{l.NAME}}</td>
-                                <td class="btn btn-xs">{{l.departmentName}}</td>
-                                <td class="btn btn-xs">{{(l.time_charge===null || l.time_charge==="")?"0 Hours": l.time_charge+" Hours"}}</td>
-                                <td class="btn btn-xs">{{(l.task===""||l.task===null)?"":l.task}}</td>
+                            <tr ng-repeat="l in list.result " ng-class="{'same':l.order%2!==0}" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
+                                <td class="btn btn-xs" style="text-align:left;">{{l.date | date: "dd/MM/yyyy"}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"":l.LOCATION}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"":l.departmentName}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{l.chargeDate==='undefined'?((l.time_charge===null || l.time_charge==="")?"0": l.time_charge):(l.chargeDate===null || l.chargeDate==="")?"0": l.chargeDate}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.ITEM_ID===null||l.ITEM_ID==="")?"N/A":l.ITEM_ID}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.task===null||l.task==="")?"":l.task}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
+            <div class="col-md-12" style="margin-top:5px; font-size:13px;">
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved'}">{{(list.result[0].status==="Submited")?"A waitting for approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{list.result[0].over_time}}</span>
+            </div>
             <!-- SHOW REJECT -->
             <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
                 <div data-field-span="12">
@@ -81,24 +92,29 @@
                 </div>
             </div>
             <!-- END REJECT -->
-
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
-                <span style="margin-top:20px; font-size:13px;">Employee's remaining <span class="text-info bold">{{info.time_rest}} hours</span> , Please choose time type(*)</span>
-                <input type="number" name="TimeInLieu" style="width:50px;margin-top:5px; font-size:13px;border:1px solid #ccc; text-align:center;" ng-model="info.time_in_lieu" ng-required="true" min="0" max="{{info.time_rest}}" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.TimeInLieu">
-                <label class="control-label" style="font-size:13px;">
-                    TIME IN LIEU</label>
-                <label class="control-label" style="font-size:13px;">
-                    <input type="number" name="OverTime" style="width:50px;margin-top:5px;font-size:13px; border:1px solid #ccc; text-align:center;" ng-required="true" ng-model="info.over_time" min="0" max="{{info.time_rest}}" custom-tr="info.over_time" custom-fr="viewTask.OverTime" ng-change="changeTimeOver()">OVER TIME</label>
+                <div class="col-md-4" style="margin-top:5px; font-size:13px;">
+                    <span>Employee's remaining time charge <span class="text-info bold">{{info.time_rest}}</span> , Please choose time type(*)</span>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
+                    <label class="control-label">TIME IN LIEU</label>
+                    <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;" ng-change="changeOverTime()">
+                    <label class="control-label">OVER TIME</label>
+                </div>
             </div>
             <!-- END APPROVE -->
-
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true" ng-disabled="(viewTask.TimeInLieu.$error.required || viewTask.OverTime.$error.required) && info.isApprove===true">Approve</a>
-        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true">Reject</a>
+        <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
+        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3">Reject</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
 </div>
+<script type="text/ng-template " id="ViewItem ">
+    <view-item ng-model="taskID" on-cancel="clickCancel(return) "></view-item>
+</script>
