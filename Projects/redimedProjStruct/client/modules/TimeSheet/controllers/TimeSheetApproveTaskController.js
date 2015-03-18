@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
-    .controller("ApproveTask", function($scope, $modal, TimeSheetService, toastr, $state, MODE_ROW, MODE_WEEK, $cookieStore, ConfigService) {
+    .controller("ApproveTask", function($scope, $modal, TimeSheetService, toastr, $state, MODE_ROW, $cookieStore) {
         //close siderba
         $('body').addClass("page-sidebar-closed");
         $('body').find('ul').addClass("page-sidebar-menu-closed");
@@ -7,7 +7,10 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
         //STATUS
         $scope.listStatus = [{
             code: 2,
-            name: "Submitted"
+            name: "A waitting for approve"
+        }, {
+            code: 3,
+            name: "Approved"
         }, {
             code: 4,
             name: "Rejected"
@@ -75,8 +78,6 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
             $scope.searchObjectMap = angular.copy($scope.searchObject);
             $scope.list = {};
             $scope.rows = MODE_ROW;
-            $scope.weekNo = MODE_WEEK;
-            $scope.currentWeek = ConfigService.getWeekOfYear(new Date()); //function defined in configService
             $scope.loadList();
         };
         init(); //call init
