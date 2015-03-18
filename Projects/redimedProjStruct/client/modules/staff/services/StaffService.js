@@ -38,11 +38,28 @@ angular.module("app.loggedIn.staff.service", [])
             return api.one('staff/task/getList').get();
         }
 
-        service.showWeek = function(){
+        service.showWeek = function(userID){
             var startDate;
             var endDate;
             var checkMonth = api.all('staff/checkMonth');
-            var array = [];
+            var array = [],
+                info = {},
+                temp,
+                now = new Date();
+
+                info.userID = userID;
+
+                var date = new Date();
+                info.month = date.getMonth();
+                info.year = date.getFullYear();
+                checkMonth.post({info: info}).then(function(response){
+                    angular.forEach(response['tasks'], function(data){
+                        temp = new Date(data.date);
+                        array.push(temp.toLocaleFormat('%Y-%m-%d'));
+                    })
+                    console.log(array);
+                });
+
             var selectCurrentWeek = function () {
                 window.setTimeout(function () {
                     $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
@@ -52,8 +69,6 @@ angular.module("app.loggedIn.staff.service", [])
             var setDates = function (input) {
                 var $input = $(input);
                 var date = $input.datepicker('getDate');
-                array = checkMonth.post({month:date.getMonth(),year: date.getFullYear()});
-                console.log(array);
                 var firstDay = $input.datepicker( "option", "firstDay");
                 $input.datepicker( "option", "dateFormat", "dd-mm-yy" );
                 $input.datepicker('option', 'firstDay', 1);
@@ -76,6 +91,7 @@ angular.module("app.loggedIn.staff.service", [])
                 onClose: function () {
                     $('#ui-datepicker-div').removeClass('ui-weekpicker');
                 },
+                minDate: new Date(now.getFullYear(), now.getMonth() - 1, 1),
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function (dateText, inst) {
@@ -92,7 +108,6 @@ angular.module("app.loggedIn.staff.service", [])
                 },
                 onChangeMonthYear: function (year, month, inst) {
                     selectCurrentWeek();
-                    alert(month);
                 }
             });
 

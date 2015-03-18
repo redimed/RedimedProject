@@ -240,24 +240,50 @@ module.exports = {
     },
 
     checkMonth: function(req,res){
-        var month = req.body.month * 1 + 1;
-        var year = req.body.year;
+        var info = req.body.info;
+        var task_week_id =[],
+            prevMonth = info.month,
+            month = info.month * 1 + 1,
+            year = info.year;
 
-        // db.sequelize.query("SELECT * FROM `time_tasks` t  WHERE t.`date` LIKE ? AND t.``",null, {raw: true},[year + '-' + month + '%',])
-        //     .success(function (task) {
-        //         if (task === null || task.length === 0) {
-        //             console.log("Not found task in table");
-        //             res.json({status: 'no task'});
-        //             return false;
-        //         }else
-        //         {
-        //             res.json(task);
-        //         }
-        //     })
-        //     .error(function (err) {
-        //         res.json({status: 'error', err: err});
-        //         console.log(err);
-        //     })
+            if(month < 10){
+                month = '0' + month;
+            }
+
+            if(prevMonth < 10){
+                prevMonth = '0' + prevMonth;
+            }
+
+        db.timeTaskWeek.findAll({where:{user_id : info.userID},attributes: ['task_week_id']},{raw: true})
+            .success(function (result) {
+                if (result === null || result.length === 0) {
+                    res.json({data: 'no'});
+                }else
+                {
+                    for(var i = 0; i < result.length; i++){
+                        task_week_id.push(result[i].task_week_id);
+                    }
+                    db.timeTasks.findAll({where:{tasks_week_id: {in: task_week_id}},$or: [ {date: {like: year + '-' + month + '%'}},{date: {like: year + '-' + prevMonth + '%'}} ],attributes: ['date']},{raw: true})
+                        .success(function (tasks) {
+                            if (tasks === null || tasks.length === 0) {
+                                console.log("Not found tasks in table");
+                                res.json({status: 'notFound'});
+                                return false;
+                            }else
+                            {
+                                res.json({tasks: tasks});
+                            }
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
     }
 
 

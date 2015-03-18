@@ -310,7 +310,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             event[field] = !event[field];
         };
 
-        // StaffService.showWeek();
+         StaffService.showWeek($scope.info.userID);
 
         
     })

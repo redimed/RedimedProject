@@ -171,7 +171,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
         this.getWeekView = function(currentDay, useISOWeek) {
             var weekNo = getWeekNumber(currentDay);
             var dateOffset = isISOWeek(useISOWeek) ? 1 : 0;
-            var columns = new Array(14);
+            var columns = new Array(7);
             var weekDays = self.getWeekDayNames(true, useISOWeek);
             var currentWeekDayIndex = currentDay.getDay();
             var beginningOfWeek, endOfWeek;
@@ -192,7 +192,7 @@ angular.module('app.loggedIn.staff.calendar.directive')
                 }
             }
 
-            for (var i = currentWeekDayIndex + 1; i < 14; i++) {
+            for (var i = currentWeekDayIndex + 1; i < 7; i++) {
                 var date = moment(currentDay).add(i - currentWeekDayIndex, 'days').add(dateOffset, 'day').toDate();
                 columns[i] = {
                     weekDay: weekDays[i],
