@@ -299,7 +299,10 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     var arr = [];
                     arr = item
                     return arr.length > 0 ? arr : null;
-                }
+                },
+                isView: function() {
+                    return true;
+                };
             }
         })
     }
