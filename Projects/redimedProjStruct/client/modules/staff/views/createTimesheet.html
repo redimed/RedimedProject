@@ -63,7 +63,7 @@
                     </th>
                     <th>
                         <div class="th">
-                            </span> Time spent
+                            </span> Input Item
                         </div>
                     </th>
                     <th>
@@ -73,7 +73,7 @@
                     </th>
                     <th>
                         <div class="th">
-                            </span> Task
+                            </span> Task/Comment
                         </div>
                     </th>
                     <th>
@@ -108,7 +108,7 @@
                         </select>
                     </td>
                     <td style="width: 7%">
-                        <input ng-disabled="isEdit || !isBillable" class="form-control input-sm"  ng-model="task.time_spent"/></td>
+                        <input ng-disabled="isEdit || !isBillable" type="checkbox" class="form-control input-sm"  ng-model="task.time_spent"/></td>
                     <td style="width: 7%">
                         <input disabled="" class="form-control input-sm"  ng-model="task.time_charge"/></td>
                     <td style="width: 20%">
@@ -124,7 +124,8 @@
         </div>
         <div class="form-action" style="text-align: right">
             <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(1)">Save</span>
-            <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(2)">Submit Displayed Week</span>
+            <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(2)">Submit</span>
+            <a class="btn btn-xs blue-dark" ng-hide='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
         </div>
     </div>
 </div>

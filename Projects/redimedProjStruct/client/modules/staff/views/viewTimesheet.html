@@ -16,7 +16,6 @@
     <div class="portlet-title">
         <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>List Timesheets
-            <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
     <div class="portlet-body">
@@ -28,27 +27,22 @@
                     <tr>
                         <th>
                             <div class="th">
-                                </span> Week from
+                                </span> No.
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> For The Weekly
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                </span> Time Charge
                             </div>
                         </th>
                         <th>
                             <div class="th">
                                 </span> Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Approved date
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Time charge
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Time in lieu
                             </div>
                         </th>
                         <th>
@@ -60,11 +54,10 @@
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                        <td></td>
                         <td>
                             <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" />
                         </td>
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -74,12 +67,11 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " style="cursor: pointer; " ng-dblclick="view(l)">
+                    <tr ng-repeat="l in list.result track by $index" style="cursor: pointer; " ng-dblclick="view(l)">
+                        <td>{{$index}}</td>
                         <td>{{l.start_date | date: "dd - MM - yyyy"}}</td>
-                        <td>{{l.STATUS}}</td>
-                        <td>{{l.approved_date | date: "dd - MM - yyyy h:mm:ss a "}}</td>
                         <td>{{(l.time_charge===0 ||l.time_charge===null)?"0 Hours":(l.time_charge+" Hours")}}</td>
-                        <td>{{(l.time_in_lieu===0 ||l.time_in_lieu===null)?"0 Hours":(l.time_in_lieu+" Hours")}}</td>
+                        <td>{{l.STATUS}}</td>
                         <td>{{(l.comments===null||l.comments==="")?"":l.comments}}</td>
                     </tr>
                 </tbody>
