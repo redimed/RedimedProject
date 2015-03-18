@@ -39,7 +39,8 @@ angular.module("app", [
     'angular-svg-round-progress',
     'angular-flot',
     'irontec.simpleChat',
-    'opentok'
+    'opentok',
+    'opentok-whiteboard'
 
     // 'angular-underscore'
 ])
@@ -61,6 +62,24 @@ angular.module("app", [
     })
 
     return socketFactory;
+})
+.factory('beforeUnload', function ($rootScope, $window) {
+
+    // Events are broadcast outside the Scope Lifecycle
+    
+    $window.onbeforeunload = function (e) {
+        var confirmation = {};
+        var event = $rootScope.$broadcast('onBeforeUnload', confirmation);
+        if (event.defaultPrevented) {
+            return confirmation.message;
+        }
+    };
+    
+    $window.onunload = function () {
+        $rootScope.$broadcast('onUnload');
+    };
+
+    return {};
 })
 .config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider, $locationProvider) {
     // CORS PROXY
@@ -135,7 +154,24 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function($window,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
+.run(function(beforeUnload,$window,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
+
+    $rootScope.$on('onBeforeUnload', function (e, confirmation) {
+        confirmation.message = "Your sure want to leave this page!";
+        e.preventDefault();
+    });
+    $rootScope.$on('onUnload', function (e) {
+        if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
+        {
+            if(!$cookieStore.get("isRemember"))
+            {
+                $cookieStore.remove("userInfo");
+                $cookieStore.remove("companyInfo");
+                $cookieStore.remove("doctorInfo");
+                $cookieStore.remove("fromState");
+            }
+        }
+    });
 
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))

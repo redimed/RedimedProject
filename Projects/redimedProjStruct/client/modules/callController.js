@@ -3,7 +3,7 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,$document,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
+    .controller("callController", function($scope,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
         socket.removeAllListeners();
 
         var audio = new Audio('theme/assets/phone_calling.mp3');
@@ -28,32 +28,27 @@ angular.module("app.call.controller",[
         $scope.sharingMyScreen = false;
         $scope.publishing = false;
         $scope.screenBig = true;
-        $scope.screenShareSupported = !!navigator.webkitGetUserMedia;
+        $scope.screenShareSupported = false;
         $scope.isAndroid = /Android/g.test(navigator.userAgent);
         $scope.connected = false;
         $scope.screenShareFailed = null;
         $scope.mouseMove = false;
         $scope.selectingScreenSource = false;
         $scope.promptToInstall = false;
+        $scope.showWhiteboard = false;
+        $scope.whiteboardUnread = false;
+
+        OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
+        OT.checkScreenSharingCapability(function(response) {
+            $scope.screenShareSupported = response.supported && response.extensionRegistered !== false;
+            $scope.$apply();
+        });
 
         $scope.screenPublisherProps = {
             name: "screen",
             style:{nameDisplayMode:"off"},
             publishAudio: false,
-            constraints: {
-                video: {
-                    mandatory: {
-                        maxWidth: 1920,
-                        maxHeight: 1080
-                    },
-                    optional: []
-                },
-                audio: false
-            },
-            mirror: false,
-            width: screen.width,
-            height: screen.height,
-            aspectRatio: screen.width / screen.height
+            videoSource: 'screen'
         };
 
         $scope.facePublisherProps = {
@@ -66,6 +61,8 @@ angular.module("app.call.controller",[
             resolution: '1280x720',
             frameRate: 30
         }
+
+       
 
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
@@ -122,6 +119,16 @@ angular.module("app.call.controller",[
                     if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
                     $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
                     $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+                    var whiteboardUpdated = function() {
+                        if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
+                          // Someone did something to the whiteboard while we weren't looking
+                          $scope.$apply(function() {
+                            $scope.whiteboardUnread = true;
+                            $scope.mouseMove = true; // Show the bottom bar
+                          });
+                        }
+                    };
+                    $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
                 });
 
                 $scope.publishing = true;
@@ -153,6 +160,16 @@ angular.module("app.call.controller",[
                     if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
                     $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
                     $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+                    var whiteboardUpdated = function() {
+                        if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
+                          // Someone did something to the whiteboard while we weren't looking
+                          $scope.$apply(function() {
+                            $scope.whiteboardUnread = true;
+                            $scope.mouseMove = true; // Show the bottom bar
+                          });
+                        }
+                    };
+                    $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
                 });
 
                 $scope.publishing = true;
@@ -213,6 +230,34 @@ angular.module("app.call.controller",[
 
         }
 
+        $scope.recordVideo = function(){
+            var signal = {
+                type: 'send',
+                data: 'Test Data'
+            };
+            if(OTSession.session)
+            {
+                OTSession.session.signal(signal,function(error) {
+                    if (error) {
+                      console.log("signal error: " + error.message);
+                    } else {
+                      console.log("signal sent");
+                    }
+                })
+            }
+        }
+
+       
+        if(OTSession.session)
+        {
+            OTSession.session.on({
+                'signal:send':function(event){
+                    console.log("receive: ");
+                    console.log(event);
+                }
+            })
+        }
+        
         $scope.installScreenshareExtension = function () {
               chrome.webstore.install('https://chrome.google.com/webstore/detail/pkakgggplhfilfbailbaibljfpalofjn', function () {
                 console.log('successfully installed');
@@ -221,43 +266,40 @@ angular.module("app.call.controller",[
               });
         };
 
+        $scope.toggleWhiteboard = function() {
+            if($scope.connected)
+            {
+                $scope.showWhiteboard = !$scope.showWhiteboard;
+                $scope.whiteboardUnread = false;
+                setTimeout(function() {
+                  $scope.$emit('otLayout');
+                }, 10);
+            }
+        };
         
         $scope.toggleShareScreen = function() {
-            console.log("a");
-            if (!$scope.sharingMyScreen && !$scope.selectingScreenSource) {
-                console.log("b");
-              $scope.selectingScreenSource = true;
-              $scope.screenShareFailed = null;
-              
-              var screenSharing = OTChromeScreenSharingExtensionHelper('pkakgggplhfilfbailbaibljfpalofjn');
-              screenSharing.isAvailable(function (extensionIsAvailable) {   
-                if (extensionIsAvailable) {
-                    console.log("c");
-                  screenSharing.getVideoSource(function(error, source) {
-                    $scope.$apply(function () {
-                      if (error) {
-                        $scope.screenShareFailed = error.message;
-                      } else {
-                        $scope.screenPublisherProps.videoSource = source;
-                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSource = 'desktop';
-                        $scope.screenPublisherProps.constraints.video.mandatory.chromeMediaSourceId = source.deviceId;
-                        
-                        $scope.sharingMyScreen = true;
-                      }
+            if($scope.connected)
+            {
+                if (!$scope.sharingMyScreen && !$scope.selectingScreenSource) {
+                  $scope.selectingScreenSource = true;
+                  $scope.screenShareFailed = null;
+
+                  OT.checkScreenSharingCapability(function(response) {
+                    if (!response.supported || response.extensionRegistered === false) {
+                      $scope.screenShareSupported = false;
                       $scope.selectingScreenSource = false;
-                    });
+                    } else if (response.extensionInstalled === false) {
+                      $scope.promptToInstall = true;
+                      $scope.selectingScreenSource = false;
+                    } else {
+                      $scope.sharingMyScreen = true;
+                      $scope.selectingScreenSource = false;
+                    }
+                    $scope.$apply();
                   });
-                } else {
-                    console.log("d");
-                  $scope.$apply(function () {
-                    $scope.promptToInstall = true;
-                    $scope.selectingScreenSource = false;
-                  });
+                } else if ($scope.sharingMyScreen) {
+                  $scope.sharingMyScreen = false;
                 }
-              });
-            } else if ($scope.sharingMyScreen) {
-                console.log("e");
-              $scope.sharingMyScreen = false;
             }
         };
 
@@ -288,6 +330,14 @@ angular.module("app.call.controller",[
                 });
             }
         });
+
+        $scope.$on('otStreamDestroyed', function(event) {
+            if (event.targetScope.publisher.id === 'screenPublisher') {
+              $scope.$apply(function() {
+                $scope.sharingMyScreen = false;
+              });
+            }
+          });
 
         var mouseMoveTimeout;
         var mouseMoved = function (event) {

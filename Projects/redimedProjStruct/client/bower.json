@@ -62,7 +62,8 @@
     "angular-scroll-glue": "~2.0.4",
     "opentok-layout-js": "~0.0.12",
     "opentok-angular": "~0.2.4",
-    "ionicons": "~2.0.1"
+    "ionicons": "~2.0.1",
+    "opentok-whiteboard": "~0.1.2"
   },
   "resolutions": {
     "angular": "1.2.25",

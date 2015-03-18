@@ -273,145 +273,6 @@ ot-whiteboard {
     background-color: #DCD9CD;
 }
 
-ot-editor {
-    display: block;
-    background-color: #DCD9CD;
-    overflow: scroll;
-}
-
-ot-editor .CodeMirror {
-    background-color: #DCD9CD;
-}
-
-#bottomBar {
-  transition: opacity 200ms ease;
-  opacity: 0;
-  width: 100%;
-  left: 0;
-  bottom: 20px;
-  position: absolute;
-  text-align: center;
-  z-index: 98;
-}
-
-body.mouse-move #bottomBar {
-  opacity: 1;
-}
-
-button.icon-left:before {
-    font-family: "Ionicons";
-    padding-right: 8px;
-    padding-left: 0;
-}
-
-#bottomBar .unread-indicator {
-    display: inline-block;
-}
-
-@-webkit-keyframes whitePulse {
-    from { -webkit-box-shadow: 0 0 9px #333; -moz-box-shadow: 0 0 9px #333; box-shadow: 0 0 9px #333; }
-    50% { -webkit-box-shadow: 0 0 18px #DCD9B5; -moz-box-shadow: 0 0 18px #DCD9B5; box-shadow: 0 0 18px #DCD9B5;}
-    to { -webkit-box-shadow: 0 0 9px #333; -moz-box-shadow: 0 0 9px #333; box-shadow: 0 0 9px #333; }
-}
-
-#bottomBar .unread-indicator span.indicator {
-    display: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #C04B4B;
-    border: 1px solid #DCD9B5;
-    margin-left: -5px;
-    margin-top: -38px;
-    position: relative;
-    -webkit-animation-name: whitePulse;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: infinite;
-}
-
-#bottomBar .unread-indicator.unread span.indicator {
-    display: block;
-}
-
-#bottomBar button {
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    color: #DCD9B5;
-    font-size: 22px;
-    -webkit-appearance: none;
-    font-family: 'Ropa Sans', sans-serif;
-    transition: width 200ms, height 200ms ease;
-    padding-left: 14px;
-    padding-top: 5px;
-}
-
-#bottomBar #publishHDCheck {
-    color: #DCD9CD;
-    position: relative;
-    left: -50px;
-    top: -4px;
-    vertical-align: middle;
-}
-
-#bottomBar #publishHDCheck input[type="checkbox"] {
-    position: absolute;
-    top: -2px;
-}
-
-button.green {
-    background-color: #4D9154;
-}
-
-button.red {
-    background-color: #C04B4B;
-}
-
-button.unread {
-    
-}
-
-button:disabled {
-    background-color: #565853;
-    color: #ccc;
-    cursor: auto;
-}
-
-#shareInfo {
-    font-size: 18px;
-    color: #DCD9CD;
-    text-align: center;
-    width: 550px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #565853;
-    top: 35%;
-    position: absolute;
-    left: 50%;
-    margin-left: -285px;
-    transition: width 200ms, height 200ms ease;
-    z-index: 98;
-}
-
-#loader {
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -16px;
-    margin-top: -16px;
-    color: #DCD9CD;
-    font-size: 32px;
-    font-weight: bold;
-}
-
-
-#bottomBar #publishBtn.green {
-    text-align: left;
-    width: 85px;
-}
-
 .statusMessage {
     background-color: #565853;
     width: 100%;
@@ -440,12 +301,6 @@ button:disabled {
       height: 50px;
   }
   
-  #shareInfo {
-      width: 250px;
-      left: 50%;
-      margin-left: -135px;
-  }
-  
   #statusMessages {
       width: 340px;
       left: calc(50% - 180px);
@@ -470,21 +325,11 @@ body.mouse-move #statusMessages {
   opacity: 1;
 }
 
-#bottomBar #footer {
-    position: absolute;
-    bottom: -15px;
-    left: 0;
-    font-size: 12px;
-}
-
 #screenShareUnsupported {
     opacity: 0;
     transition: opacity 200ms ease;
 }
 
-#bottomBar:hover ~ #statusMessages > #screenShareUnsupported {
-    opacity: 1;
-}
 
 </style>
 
@@ -537,6 +382,14 @@ body.mouse-move #statusMessages {
                 ng-dblclick="$emit('changeScreenSize');">
                 <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeScreenSize');"></button>
             </ot-publisher>
+            <ot-whiteboard ng-show="showWhiteboard"
+                    ng-if="connected"
+                    width="1280"
+                    height="960"
+                    color="black"
+                    lineWidth="5"
+                    class="OT_big">
+            </ot-whiteboard>
         </ot-layout>
         
         <div id="facePublisher"
@@ -556,7 +409,7 @@ body.mouse-move #statusMessages {
         <div class="cn-wrapper" id="cn-wrapper">
             <ul>
               <li>
-                <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall" href="javascript:;" ng-click="toggleShareScreen()" >
+                <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" href="javascript:;" ng-click="toggleShareScreen()" >
                   <span class="fa fa-desktop"></span>
                 </a>
               </li>
@@ -576,7 +429,7 @@ body.mouse-move #statusMessages {
                 </a>
               </li>
               <li>
-                <a href="javascript:;" ng-click="recordVideo()">
+                <a href="javascript:;" ng-click="toggleWhiteboard()">
                   <span class="fa fa-video-camera"></span>
                 </a>
               </li>
