@@ -297,13 +297,13 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             resolve: {
                 itemArr: function() {
                     var arr = [];
-                    arr = item
+                    arr = item;
                     return arr.length > 0 ? arr : null;
                 },
                 isView: function() {
                     return true;
-                };
+                }
             }
-        })
+        });
     }
 })
