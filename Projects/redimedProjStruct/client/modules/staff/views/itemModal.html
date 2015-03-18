@@ -32,6 +32,11 @@
 	                            </span> Time Charge
 	                        </div>
 	                    </th>
+	                    <th>
+	                    	<div class="th">
+	                            </span> Task/Comment
+	                        </div>
+	                    </th>
 	                </tr>
                 </thead>
                 <tbody>
@@ -40,11 +45,14 @@
                         <i class="fa fa-trash pointer" ng-click="delItem($index)" style="font-size: 20px"></i>
                     </td>
                     <td width="10%" align="center" >{{item.ITEM_CODE}}</td>
-                    <td width="70%" style="word-wrap: break-word">{{item.ITEM_NAME}}</td>
+                    <td width="40%" style="word-wrap: break-word">{{item.ITEM_NAME}}</td>
                     <td style="width: 10%">
                         <input type="text" class="form-control input-sm" ng-model="item.quantity" required numbers-only="numbers-only" />
                     <td style="width: 10%">
                         <input type="text" class="form-control input-sm" ng-model="item.timeCharge" required numbers-only="numbers-only" />
+                    </td>
+                    <td width="30%" style="word-wrap: break-word">
+                    	<input type="text" class="form-control input-sm" ng-model="item.comment"/>
                     </td>
                 </tr>
                 </tbody>

@@ -27,8 +27,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             location_id: null,
             activity_id: null,
             time_charge: 0,
-            time_spent: null,
-            btnTitle: "Choose Item"
+            time_spent: null
 
         };
 
@@ -69,8 +68,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: 0,
-                                time_spent: null,
-                                btnTitle: "Choose Item"
+                                time_spent: null
 
                             };
                             $scope.tasks.push($scope.task);
@@ -105,8 +103,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: null,
-                                time_spent: null,
-                                btnTitle: "Choose Item"
+                                time_spent: null
                             };
                             $scope.tasks.push($scope.task);
                         })
@@ -149,8 +146,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 location_id: null,
                 activity_id: null,
                 time_charge: null,
-                isEdit: false,
-                btnTitle: "Choose Item"
+                isEdit: false
             };
             $scope.tasks.splice(index + j, 0,task) ;
         }
@@ -282,20 +278,43 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 }
             })
 
-            modalInstance.result.then(function(list){
-                if(list != null && list.length > 0)
+            modalInstance.result.then(function(obj){
+                if(obj.type == "ok")
                 {
+                    var list = [];
+                    list = obj.value;
+
+                    for(var i=0; i<$scope.itemList.length;i++)
+                    {
+                        if($scope.itemList[i].key == index)
+                        {
+                            $scope.itemList.splice($scope.itemList[i].key,1);
+                        }
+                    }
+
                     $scope.itemList.push({key: index, value: list});
 
                     if(list.length > 0)
                     {
-                        task.btnTitle = list[0].ITEM_CODE + "," + (list[1]== null || typeof list[1] === 'undefined' ? '' : list[1].ITEM_CODE+",")+"...";
+                        var t = [];
+                        var c = 0;
+                        for(var i=0; i < list.length; i++)
+                        {
+                            t.push(list[i].ITEM_CODE);
+                            c = c + parseInt((list[i].timeCharge == null || list[i].timeCharge === '' || typeof list[i].timeCharge === 'undefined') ? 0 : list[i].timeCharge);
+                        }
+                        task.task = t.join(' , ');
+                        task.time_charge = c;
                     }
+                    else
+                    {
+                        task.task =  null;
+                        task.time_charge = null;
+                    }
+
                 }
-                else
-                {
-                    task.btnTitle = "Choose Item"
-                }
+                
+                
             })
         }
 
@@ -330,21 +349,25 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             ITEM_CODE: null,
             ITEM_NAME: null,
             quantity: null,
-            timeCharge: null
+            timeCharge: null,
+            comment: null
         }
 
          $scope.cancel = function(){
-            if(itemArr != null)
-                $modalInstance.close(itemArr);
-            else
-            {
-                $scope.itemList = [];
-                $modalInstance.close(itemArr);
-            }
+            $modalInstance.close({type:"cancel"});
+
+            // if(itemArr != null)
+            //     $modalInstance.close(itemArr);
+            // else
+            // {
+            //     $scope.itemList = [];
+            //     $modalInstance.close($scope.itemList);
+            // }
         }
 
         $scope.okClick = function(){
-            $modalInstance.close($scope.itemList);
+            $modalInstance.close({type:"ok",value:$scope.itemList});
+            // $modalInstance.close($scope.itemList);
         }
 
          $scope.delItem = function(index){
@@ -384,7 +407,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             ITEM_CODE: item.ITEM_CODE,
                             ITEM_NAME: item.ITEM_NAME,
                             quantity: 1,
-                            timeCharge: 0
+                            timeCharge: 0,
+                            comment: null
                         }
 
                         $scope.itemList.push($scope.itemObj);
@@ -397,7 +421,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         ITEM_CODE: item.ITEM_CODE,
                         ITEM_NAME: item.ITEM_NAME,
                         quantity: 1,
-                        timeCharge: 0
+                        timeCharge: 0,
+                        comment: null
                     }
 
                     $scope.itemList.push($scope.itemObj);
