@@ -80,12 +80,12 @@
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved'}">{{(list.result[0].status==="Submited")?"A waitting for approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved'}">{{(list.result[0].status==="Submitted")?"A waitting for approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{list.result[0].over_time}}</span>
             </div>
             <!-- SHOW REJECT -->
-            <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
+            <div data-row-span="12" ng-show="(info.isReject===true && info.hasReject===true) && info.isApprove!==true">
                 <div data-field-span="12">
                     <label>Comments(*)</label>
                     <textarea id="commentsID" name="comments" ng-model="info.comments" style="font-size:13px;" ng-required="true" custom-tr="info.comments" custom-fr="viewTask.comments"></textarea>

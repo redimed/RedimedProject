@@ -23,14 +23,15 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                             } else if (response.status === "success") {
                                 scope.list = response;
                                 scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
-                                scope.info.comments = scope.list.result[0].comments;
                                 scope.statusID = scope.list.result[0].task_status_id;
                                 if (scope.list.result[0].task_status_id === 4) {
                                     scope.info.hasReject = true;
+                                    scope.info.comments = scope.list.result[0].comments;
                                 }
                                 scope.info.time_rest = scope.list.result[0].time_rest;
                                 scope.info.time_in_lieu = null;
                                 scope.info.over_time = null;
+                                scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
                             } else {
                                 //catch exception
                                 $state.go("loggedIn.TimeSheetHome", null, {
