@@ -1,38 +1,38 @@
 <!-- INFO SYS -->
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bold">Timesheet</h3>
+        <h3 class="panel-title bold">Timesheets</h3>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-left:10px;">
                 <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="position==='Admin' || position==='Director'">
-                    <img src="/img/history.png" alt="View History Timesheet">
+                    <img src="/img/History.jpg" alt="View History Timesheet">
                     <label class="control-label bold">View Timesheets History</label>
                 </a>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-left:10px;">
                 <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="position==='Admin' || position==='Director'">
-                    <img src="/img/create.png" alt="Create New Timesheet">
-                    <label class="control-label bold">Create New Timesheets</label>
+                    <img src="/img/create.jpg" alt="Create New Timesheet">
+                    <label class="control-label bold">Create New Timesheet</label>
                 </a>
             </div>
             <div class="col-md-12">
                 <a ui-sref="loggedIn.ApproveTask" class="btn" ng-disabled="position==='Staff' || position==='Admin'">
-                    <img src="/img/management.png" alt="Management And Approve Timesheet">
-                    <label class="control-label bold">Management And Approve Timesheets</label>
+                    <img src="/img/Manage_Approve.jpg" alt="Management And Approve Timesheet">
+                    <label class="control-label bold">Approve and Manage Timesheets</label>
                 </a>
             </div>
             <div class="col-md-12">
                 <a class="btn" ng-disabled="true">
                     <img src="/img/reports.png" alt="Reports">
-                    <label class="control-label bold">Reports Timesheets</label>
+                    <label class="control-label bold">Reports all Timesheets</label>
                 </a>
             </div>
             <div class="col-md-12">
                 <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-show="position==='Admin'">
                     <img src="/img/admin.png" alt="Admin Timesheet">
-                    <label class="control-label bold">Admin Timesheet</label>
+                    <label class="control-label bold">Admin Timesheets</label>
                 </a>
             </div>
         </div>

@@ -7,7 +7,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
         //STATUS
         $scope.listStatus = [{
             code: 2,
-            name: "A waitting for approve"
+            name: "Awaitting for approve"
         }, {
             code: 3,
             name: "Approved"
@@ -181,6 +181,23 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
             });
         };
         //END DIALOG VIEWTASK APPROVE
+        $scope.getFortMatTimeCharge = function(time_charge) {
+            if (time_charge === 0) {
+                return "00:00";
+            } else {
+                var hour = parseInt(time_charge);
+                var minute = (time_charge - hour) * 60;
+                if (hour < 10) {
+                    hour += "0" + hour;
+                }
+                if (minute < 10) {
+                    minute += "0" + minute;
+                }
+                var result = hour + ":" + minute;
+                result = result.substring(0, result.length - 1);
+                return result;
+            }
+        };
 
         $scope.viewTask = function(idTaskWeek) {
             dialogViewTask(idTaskWeek);

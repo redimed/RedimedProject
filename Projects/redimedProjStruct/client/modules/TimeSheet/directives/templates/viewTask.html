@@ -2,7 +2,7 @@
     <form method="POST" class="grid-form" name="viewTask">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>Review</legend>
+            <legend>Review Timesheet</legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
                 <div data-field-span="6">
@@ -58,7 +58,7 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Task/Comments
+                                        Tasks/Comments
                                     </div>
                                 </th>
                             </tr>
@@ -69,7 +69,7 @@
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"":l.LOCATION}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"":l.departmentName}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{l.chargeDate==='undefined'?((l.time_charge===null || l.time_charge==="")?"0": l.time_charge):(l.chargeDate===null || l.chargeDate==="")?"0": l.chargeDate}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{getFortMatTimeCharge(l.time_charge)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.ITEM_ID===null||l.ITEM_ID==="")?"N/A":l.ITEM_ID}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.task===null||l.task==="")?"":l.task}}</td>
@@ -79,23 +79,23 @@
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
-                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].chargeWeek)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved'}">{{(list.result[0].status==="Submitted")?"A waitting for approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{list.result[0].over_time}}</span>
+                <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].time_in_lieu)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].over_time)}}</span>
             </div>
             <!-- SHOW REJECT -->
             <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
-                <div data-field-span="12">
+                <div class="col-md-12">
                     <label>Comments(*)</label>
-                    <textarea id="commentsID" name="comments" ng-model="info.comments" style="font-size:13px;" ng-required="true" custom-tr="info.comments" custom-fr="viewTask.comments"></textarea>
+                    <textarea id="commentsID" name="comments" ng-model="info.comments" style="font-size:13px;" ng-required="true" custom-tr="info.comments" custom-fr="viewTask.comments" ng-disabled="statusID===4"></textarea>
                 </div>
             </div>
             <!-- END REJECT -->
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
                 <div class="col-md-4" style="margin-top:5px; font-size:13px;">
-                    <span>Employee's remaining time charge <span class="text-info bold">{{info.time_rest}}</span> , Please choose time type(*)</span>
+                    <span>Employee's remaining time charge <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}</span> , Please choose time type(*)</span>
                 </div>
                 <div class="col-md-5">
                     <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
@@ -109,8 +109,8 @@
         </fieldset>
         <!-- BUTTON -->
         <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
-        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
-        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3">Reject</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
+        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4">Reject</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
