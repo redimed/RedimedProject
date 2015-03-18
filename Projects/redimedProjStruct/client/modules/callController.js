@@ -59,11 +59,9 @@ angular.module("app.call.controller",[
                 nameDisplayMode: 'off'
             },
             resolution: '1280x720',
-            frameRate: 30
+            frameRate: 30,
+            // videoSource: 'screen'
         }
-
-       
-
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login',null,{location: "replace"});

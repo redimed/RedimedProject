@@ -23,7 +23,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             '<input type="button" ng-click="erase()" ng-class="{OT_erase: true, OT_selected: erasing}"' +
             ' value="Eraser"></input>' +
 
-            '<input type="file" ng-click="upload()" class="OT_upload" value="Upload"></input>' +
+            '<input type="file" onchange="angular.element(this).scope().uploadImage(this.files)" class="OT_upload" value="Upload"></input>' +
             
             '<input type="button" ng-click="capture()" class="OT_capture" value="{{captureText}}"></input>' +
 
@@ -34,7 +34,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 select = element.context.querySelector("select"),
                 input = element.context.querySelector("input"),
                 client = {dragging:false},
-                ctx,
+                ctx = canvas.getContext("2d"),
                 drawHistory = [],
                 drawHistoryReceivedFrom,
                 drawHistoryReceived,
@@ -61,8 +61,17 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 drawHistory = [];
             };
 
-            scope.upload = function(){
-
+            scope.uploadImage = function(image){
+                var reader = new FileReader();
+                reader.onload = function(event){
+                    var img = new Image();
+                    img.onload = function(){
+                        ctx.drawImage(img,0,0);
+                    }
+                    img.src = event.target.result;
+                }
+                console.log(reader);
+                reader.readAsDataURL(image[0]);
             };
             
             scope.changeColor = function (color) {
@@ -99,11 +108,9 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             };
 
             var draw = function (update) {
-                if (!ctx) {
-                    ctx = canvas.getContext("2d");
-                    ctx.lineCap = "round";
-                    ctx.fillStyle = "solid";
-                }
+
+                ctx.lineCap = "round";
+                ctx.fillStyle = "solid";
 
                 ctx.strokeStyle = update.color;
                 ctx.lineWidth = update.lineWidth;
