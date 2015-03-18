@@ -282,6 +282,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         }
 
                         return check == true && arr.length > 0 ? arr : null;
+                    },
+                    isView: function(){
+                        return false;
                     }
                 }
             })
@@ -343,8 +346,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         
     })
 
-.controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr){
+.controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr,isView){
         $scope.itemSearchPanel = {}
+
+        $scope.isView = isView;
 
         $scope.onlyNumbers = /^\d+$/;
 
