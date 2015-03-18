@@ -28,6 +28,7 @@ app.post("/api/TimeSheet/post-dept-update", TimeSheet.UpdateDept);
 //VIEW APPROVED TIMESHEETS
 app.post("/api/TimeSheet/post-list-approved", TimeSheet.LoadTaskApproved);
 app.post("/api/TimeSheet/post-one-approved", TimeSheet.ViewApproved);
+app.post("/api/TimeSheet/post-item-list", TimeSheet.ViewItem);
 //END VIEW APPROVED TIMESHEETS
 
 //APPROVE TIMESHEET

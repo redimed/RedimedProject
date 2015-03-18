@@ -45,8 +45,13 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         scope.info.isReject = false;
                     }
                 });
+                scope.changeTimeInLieu = function() {
+                    scope.info.over_time = scope.info.time_rest - scope.info.time_in_lieu;
+                };
+                scope.changeTimeOver = function() {
+                    scope.info.time_in_lieu = scope.info.time_rest - scope.info.over_time;
+                };
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewTask.html"
         };
     });
-    

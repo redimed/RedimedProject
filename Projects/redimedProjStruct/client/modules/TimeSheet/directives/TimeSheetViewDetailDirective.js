@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
-    .directive("viewDetail", function(TimeSheetService, toastr, $state, $filter) {
+    .directive("viewDetail", function(TimeSheetService, toastr, $state, $filter, $modal) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -27,6 +27,24 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                         }
                     });
                 });
+                scope.DetailItem = function(taskID) {
+                    dialogItem(taskID);
+                };
+
+                //VIEW ITEM CODE
+                var dialogItem = function(taskID) {
+                    var modalInstance = $modal.open({
+                        templateUrl: "ViewItem",
+                        controller: function($scope) {
+                            $scope.taskID = taskID;
+                            $scope.clickCancel = function() {
+                                modalInstance.close();
+                            };
+                        },
+                        size: "lg"
+                    });
+                };
+                //END VIEW ITEM CODE
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewDetail.html"
         };

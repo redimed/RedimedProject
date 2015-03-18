@@ -418,7 +418,7 @@ module.exports = {
                         NODE_CODE: info.NODE_CODE,
                         FROM_VALUE: info.FROM_VALUE,
                         TO_VALUE: info.TO_VALUE,
-                        ISVALUE: 1,
+                        ISVALUE: info.ISVALUE,
                         TO_NODE_ID: info.parent,
                         GROUP_ID: info.GROUP_ID,
                         DECRIPTION: info.DECRIPTION,
@@ -603,6 +603,7 @@ module.exports = {
         sys_hierarchy_nodes.update({
                 NODE_CODE: info.NODE_CODE,
                 FROM_VALUE: info.FROM_VALUE,
+                ISVALUE: info.ISVALUE,
                 TO_VALUE: info.TO_VALUE,
                 TO_NODE_ID: info.TO_NODE_ID,
                 GROUP_ID: info.GROUP_ID,

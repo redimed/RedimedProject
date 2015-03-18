@@ -39,5 +39,11 @@ angular.module("app.loggedIn.TimeSheet", [
                 url: "/ViewApprovedTimeSheet",
                 templateUrl: "modules/TimeSheet/views/ViewApproved.html",
                 controller: "ViewApprovedTimeSheet"
+            })
+            .state("loggedIn.AdminTimeSheet", {
+                position: ['Admin'],
+                url: "/AdminTimeSheet",
+                templateUrl: "modules/TimeSheet/views/Admin.html",
+                controller: "AdminController"
             });
     });

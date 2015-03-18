@@ -14,13 +14,13 @@
                     EMPLOYEE NAME: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
                 </div>
                 <div data-field-span="2">
-                    WEEK NO:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].week_no}}</span>
-                </div>
-                <div data-field-span="2">
                     TOTAL TIME CHARGE:&nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].chargeWeek===null || list.result[0].chargeWeek=="")?"0":list.result[0].chargeWeek}}</span>
                 </div>
                 <div data-field-span="2">
-                    TOTAL TIME SPENT: &nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].spentWeek===null ||list.result[0].spentWeek==="")?"0":list.result[0].spentWeek}}</span>
+                    DATE SUBMITED: &nbsp;<span class="text-info" style="font-size:13px;">{{(list.result[0].approved_date===null ||list.result[0].approved_date==="")?"":list.result[0].spentWeek | date: "dd/MM/yyyy"}}</span>
+                </div>
+                <div data-field-span="2">
+                    WEEK NO:&nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].week_no}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -55,11 +55,6 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Time spent
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
                                         Task
                                     </div>
                                 </th>
@@ -68,16 +63,16 @@
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
                                 <td class="btn btn-xs">{{l.date | date: "dd/MM/yyyy"}}</td>
-                                <td class="btn btn-xs">{{l.NAME}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{l.NAME}}</td>
                                 <td class="btn btn-xs">{{l.departmentName}}</td>
                                 <td class="btn btn-xs">{{(l.time_charge===null || l.time_charge==="")?"0 Hours": l.time_charge+" Hours"}}</td>
-                                <td class="btn btn-xs">{{(l.time_spent===null||l.time_spent==="")?"0 Hours":l.time_spent+" Hours"}}</td>
                                 <td class="btn btn-xs">{{(l.task===""||l.task===null)?"":l.task}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
             <!-- SHOW REJECT -->
             <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
                 <div data-field-span="12">
@@ -89,24 +84,21 @@
 
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
-                <div data-field-span="12">
-                    <span>Employee's remaining <span class="text-info bold">{{info.time_rest}} hours</span> , Please choose time type(*)</span>
-                    <input type="radio" name="chooseTime" id="inLieuID" ng-model="info.chooseTime" ng-value="0" ng-required="info.chooseTime!==0 && info.chooseTime!==1" custom-tr="info.chooseTime" custom-fr="viewTask.chooseTime" />
-                    <label style="font-size:13px;" for="inLieuID">
-                        TIME IN LIEU
-                    </label>
-                    <input type="radio" name="chooseTime" id="overTimeID" ng-model="info.chooseTime" ng-value="1" ng-required="info.chooseTime!==0 && info.chooseTime!==1" custom-tr="info.chooseTime" custom-fr="viewTask.chooseTime" />
-                    <label style="font-size:13px;" for="overTimeID">
-                        OVER TIME
-                    </label>
-                </div>
+                <span style="margin-top:20px; font-size:13px;">Employee's remaining <span class="text-info bold">{{info.time_rest}} hours</span> , Please choose time type(*)</span>
+                <input type="number" name="TimeInLieu" style="width:50px;margin-top:5px; font-size:13px;border:1px solid #ccc; text-align:center;" ng-model="info.time_in_lieu" ng-required="true" min="0" max="{{info.time_rest}}" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.TimeInLieu">
+                <label class="control-label" style="font-size:13px;">
+                    TIME IN LIEU</label>
+                <label class="control-label" style="font-size:13px;">
+                    <input type="number" name="OverTime" style="width:50px;margin-top:5px;font-size:13px; border:1px solid #ccc; text-align:center;" ng-required="true" ng-model="info.over_time" min="0" max="{{info.time_rest}}" custom-tr="info.over_time" custom-fr="viewTask.OverTime" ng-change="changeTimeOver()">OVER TIME</label>
             </div>
             <!-- END APPROVE -->
 
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true" ng-disabled="(viewTask.chooseTime.$error.required && info.isApprove===true)">Approve</a>
+        <!-- BUTTON -->
+        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true" ng-disabled="(viewTask.TimeInLieu.$error.required || viewTask.OverTime.$error.required) && info.isApprove===true">Approve</a>
         <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true">Reject</a>
+        <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
 </div>

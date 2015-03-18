@@ -254,7 +254,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                         $scope.tasks.push(data);
                     })
                 }
-                console.log($scope.tasks);
             }
         })
     }
@@ -300,7 +299,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             btnTitle: "Choose Item"
         };
         $scope.tasks.splice(index + j, 0,task) ;
-        console.log($scope.tasks);
     }
 
     $scope.okClick = function() {

@@ -520,12 +520,13 @@ module.exports =
     getDepartmentList:function(req,res)
     {
         var sql=
-            " SELECT dep.`departmentid` AS DEPARTMENT_ID,                                                    "+
-            " redi.`id` AS SITE_ID,CONCAT(redi.`Site_name`,' - ',dep.`departmentName`) AS DEPARTMENT_NAME    "+
-            " FROM `departments` dep INNER JOIN `redimedsites` redi ON dep.`locationID`=redi.`id`            ";
+            " SELECT dep.`departmentid` AS DEPARTMENT_ID,                                                 "+   
+            " redi.`id` AS SITE_ID,CONCAT(redi.`Site_name`,' - ',dep.`departmentName`) AS DEPARTMENT_NAME "+   
+            " FROM `departments` dep INNER JOIN `redimedsites` redi ON dep.`locationID`=redi.`id`         "+   
+            " WHERE dep.`departmentType`=?                                                                ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,function(err,rows)
+            var query = connection.query(sql,isoUtil.departmentType,function(err,rows)
             {
                 if(err)
                 {

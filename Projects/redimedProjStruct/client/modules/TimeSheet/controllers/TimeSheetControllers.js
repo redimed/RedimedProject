@@ -4,5 +4,6 @@ angular.module("app.loggedIn.TimeSheet.Controllers", [
     "app.loggedIn.TimeSheet.ListNode",
     "app.loggedIn.TimeSheet.Dept.Controller",
     "app.loggedIn.TimeSheet.ApproveTask.Controller",
-    "app.loggedIn.TimeSheet.ViewApproved.Controller"
+    "app.loggedIn.TimeSheet.ViewApproved.Controller",
+    "app.loggedIn.TimeSheet.Admin.Controller"
 ]);

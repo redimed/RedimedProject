@@ -56,11 +56,6 @@
                         </th>
                         <th>
                             <div class="th">
-                                Time spent
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
                                 <span class="glyphicon glyphicon-chevron-up" ng-click="dateSubmitedASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.date_submited']==='ASC'}">
                             </span>
                                 <span class="glyphicon glyphicon-chevron-down" ng-click="dateSubmitedDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.date_submited']==='DESC' } ">
@@ -88,7 +83,6 @@
                         </td>
                         <td></td>
                         <td></td>
-                        <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
                         <td colspan="4 ">
@@ -103,7 +97,6 @@
                             <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted'}">{{(l.name===null || l.name===" ")?" ":l.name}}</span>
                         </td>
                         <td class="btn btn-xs">{{(l.time_charge===null||l.time_charge===" ")?("0 Hours "):l.time_charge + " Hours "}}</td>
-                        <td class="btn btn-xs">{{(l.time_spent===null||l.time_spent===" ")?("0 Hours "):l.time_spent + " Hours "}}</td>
                         <td class="btn btn-xs">{{l.date_submited | date: "dd/MM/yyyy h:mm:ss a "}}</td>
                     </tr>
                 </tbody>

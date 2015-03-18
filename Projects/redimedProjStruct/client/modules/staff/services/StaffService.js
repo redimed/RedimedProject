@@ -41,7 +41,8 @@ angular.module("app.loggedIn.staff.service", [])
         service.showWeek = function(){
             var startDate;
             var endDate;
-
+            var checkMonth = api.all('staff/checkMonth');
+            var array = [];
             var selectCurrentWeek = function () {
                 window.setTimeout(function () {
                     $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
@@ -51,6 +52,8 @@ angular.module("app.loggedIn.staff.service", [])
             var setDates = function (input) {
                 var $input = $(input);
                 var date = $input.datepicker('getDate');
+                array = checkMonth.post({month:date.getMonth(),year: date.getFullYear()});
+                console.log(array);
                 var firstDay = $input.datepicker( "option", "firstDay");
                 $input.datepicker( "option", "dateFormat", "dd-mm-yy" );
                 $input.datepicker('option', 'firstDay', 1);
@@ -81,13 +84,15 @@ angular.module("app.loggedIn.staff.service", [])
                     $(this).change();
                 },
                 beforeShowDay: function (date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
                     var cssClass = '';
                     if (date >= startDate && date <= endDate)
                         cssClass = 'ui-datepicker-current-day';
-                    return [true, cssClass];
+                    return [array.indexOf(string) == -1, cssClass];
                 },
                 onChangeMonthYear: function (year, month, inst) {
                     selectCurrentWeek();
+                    alert(month);
                 }
             });
 

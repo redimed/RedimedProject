@@ -1107,14 +1107,14 @@ module.exports = {
 
     ViewApproved: function(req, res) {
         var idTaskWeek = req.body.info;
-        var strQuery = "SELECT time_tasks.date, time_activity.NAME, departments.departmentName, " +
+        var strQuery = "SELECT time_tasks.date,time_tasks.tasks_id,time_location.NAME AS LOCATION, time_activity.NAME, departments.departmentName, " +
             "time_tasks.time_charge,time_tasks.task,time_tasks.time_spent, time_tasks_week.approved_date, time_tasks_week.week_no, time_tasks_week.task_status_id, " +
             "time_tasks_week.time_charge as chargeWeek, time_tasks_week.time_spent as spentWeek, time_tasks_week.time_in_lieu as inlieuWeek, time_tasks_week.comments, time_tasks_week.time_rest, " +
             "time_tasks_week.over_time as overtime, " + "hr_employee.Employee_Code, hr_employee.FirstName, hr_employee.LastName FROM time_tasks_week " +
-            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = " +
-            "time_tasks_week.task_week_id INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
             "INNER JOIN users ON users.id = time_tasks_week.user_id INNER JOIN hr_employee ON " +
             "hr_employee.Employee_ID = users.employee_id INNER JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
+            "INNER JOIN time_location ON time_location.location_id = time_tasks.location_id " +
             "WHERE departments.departmentType = 'Time Sheet' AND time_tasks_week.task_week_id = " + idTaskWeek + " ORDER BY time_tasks.order";
         db.sequelize.query(strQuery)
             .success(function(result) {
@@ -1141,6 +1141,34 @@ module.exports = {
                 return;
             });
     },
+
+    ViewItem: function(req, res) {
+        var taskID = req.body.taskID;
+        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_tasks.date, time_tasks.time_charge, time_tasks.task, time_activity.NAME, " +
+            "departments.departmentName FROM time_tasks INNER JOIN " +
+            "time_location ON time_location.location_id = time_tasks.location_id INNER JOIN departments ON " +
+            "time_tasks.department_code_id = departments.departmentid INNER JOIN time_activity ON " +
+            "time_activity.activity_id = time_activity.activity_id INNER JOIN time_item_task ON time_item_task.task_id = " +
+            "time_tasks.tasks_id INNER JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
+            "WHERE time_tasks.tasks_id = " + taskID;
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+
     //approve
     LoadTimeSheetApprove: function(req, res) {
         var searchObj = req.body.searchObj;
@@ -1431,10 +1459,14 @@ module.exports = {
         var info = req.body.info;
         var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var timeType = "";
-        if (info.chooseTime === 0) {
-            timeType = ", time_in_lieu = " + info.time_rest + ", time_rest = 0";
-        } else if (info.chooseTime === 1) {
-            timeType = ", over_time = " + info.time_rest + ", time_rest = 0";
+        if (info.time_rest !== 0) {
+            if (info.time_in_lieu !== undefined) {
+                timeType += ", time_in_lieu = " + info.time_in_lieu;
+            }
+            if (info.over_time !== undefined) {
+                timeType += ", over_time = " + info.over_time;
+            }
+            timeType += ", time_rest = 0";
         }
         var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + info.idTaskWeek;
         db.sequelize.query(query)
