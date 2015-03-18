@@ -228,7 +228,17 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 $state.go('loggedIn.home', null, {'reload': true});
             }else if(response['status'] == 'success')
             {
-                $scope.tasks = response['data'] ;
+                
+                angular.forEach(response['data'], function(data){
+                    data.item = [];
+                    angular.forEach(response['item'], function(item){
+                         if(data.tasks_id == item.tasks_id){
+                            data.item.push(item); 
+                         }
+                    })       
+                })
+                $scope.tasks = response['data'];
+                console.log($scope.tasks);
             }
         })
         $scope.tasks.loading = false;
@@ -279,42 +289,17 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $scope.tasks.splice(index + j, 0,task) ;
     }
 
-    $scope.chooseItem = function(task, index) {
+    $scope.chooseItem = function(item) {
         var modalInstance = $modal.open({
             templateUrl: "modules/staff/views/itemModal.html",
             controller: 'ItemController',
             size: 'lg',
             resolve: {
                 itemArr: function() {
-                    var check = false;
                     var arr = [];
-                    for (var i = 0; i < $scope.itemList.length; i++) {
-                        if ($scope.itemList[i].key == index) {
-                            if ($scope.itemList[i].value.length > 0) {
-                                check = true;
-                                arr = angular.copy($scope.itemList[i].value);
-
-                            }
-                        }
-                    }
-
-                    return check == true && arr.length > 0 ? arr : null;
+                    arr = item
+                    return arr.length > 0 ? arr : null;
                 }
-            }
-        })
-
-        modalInstance.result.then(function(list) {
-            if (list != null && list.length > 0) {
-                $scope.itemList.push({
-                    key: index,
-                    value: list
-                });
-
-                if (list.length > 0) {
-                    task.btnTitle = list[0].ITEM_CODE + "," + (list[1] == null || typeof list[1] === 'undefined' ? '' : list[1].ITEM_CODE + ",") + "...";
-                }
-            } else {
-                task.btnTitle = "Choose Item"
             }
         })
     }

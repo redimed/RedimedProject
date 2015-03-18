@@ -59,11 +59,14 @@
             </table>
         </div>
 	</div>
+
     <div class="row" ng-if="!isView">
          <my-data-table options="itemSearchOption" numrows="itemSearch.itemPerPage" rowclass="itemSearch.class" rowclick="itemSearch.click"></my-data-table>
     </div>
 </div>
 <div class="modal-footer">
+
     <a ng-if="!isView" href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
     <a ng-if="!isView" href="javascript:;" ng-click="okClick()" class="btn green" >Submit</a>
+
 </div>

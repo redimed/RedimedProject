@@ -47,14 +47,14 @@
             </thead>
             <tbody>
             <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index">
-                <td>{{task.location}}</td>
+                <td>{{task.date | date : 'EEE, dd MMM'}}</td>
                 <td>{{task.location}}</td>
                 <td>{{task.department}}</td>
                 <td>{{task.activity}}</td>
                 <td>{{task.time_charge}}</td>
                 <td>{{task.task}}</td>
-                <td ng-hide="task.isAction == 'delete'">
-                    <span ng-class="{'disabled': !isEdit}" ng-click="chooseItem(task,$index)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
+                <td ng-hide="task.isAction == 'delete' || task.item.length == 0">
+                    <span ng-click="chooseItem(task.item)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
                 </td>
             </tr>
             </tbody>
