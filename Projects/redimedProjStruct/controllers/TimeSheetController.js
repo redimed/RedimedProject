@@ -60,7 +60,7 @@ module.exports = {
                                                     task_id: taskIdArr[i],
                                                     item_id: a.ITEM_ID,
                                                     quantity: a.quantity,
-                                                    time_charge: a.timeCharge,
+                                                    time_charge: a.time_charge,
                                                     comment: a.comment
                                                 })
                                             )

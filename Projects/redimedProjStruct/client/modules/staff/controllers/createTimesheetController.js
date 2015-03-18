@@ -27,7 +27,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             location_id: null,
             activity_id: null,
             time_charge: 0,
-            time_spent: null
+            isInputItem: false,
+            isBillable: false
 
         };
 
@@ -68,7 +69,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: 0,
-                                time_spent: null
+                                isInputItem: false,
+                                isBillable: false
 
                             };
                             $scope.tasks.push($scope.task);
@@ -103,7 +105,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 location_id: null,
                                 activity_id: null,
                                 time_charge: null,
-                                time_spent: null
+                                isInputItem: false,
+                                isBillable: false
                             };
                             $scope.tasks.push($scope.task);
                         })
@@ -153,7 +156,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 location_id: null,
                 activity_id: null,
                 time_charge: null,
-                isEdit: false
+                isEdit: false,
+                isInputItem: false,
+                isBillable: false
             };
             $scope.tasks.splice(index + j, 0,task) ;
         }
@@ -220,44 +225,38 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         }
 
-        $scope.isBillable = false;
 
         $scope.activityChange = function(task,index){
-            // for(var i=0; i< $scope.activities.length ;i++)
-            // {
-            //     var activity = $scope.activities[i];
-            //     if(task.activity_id == activity.activity_id)
-            //     {
-            //         if(activity.NAME.toLowerCase() == 'billable time')
-            //         {
-            //             $scope.isBillable = true;
+            for(var i=0; i< $scope.activities.length ;i++)
+            {
+                var activity = $scope.activities[i];
+                if(task.activity_id == activity.activity_id)
+                {
+                    if(activity.NAME.indexOf('Billable') != -1)
+                    {
+                        console.log("a");
+                        task.isBillable = true;
 
-            //             task.time_spent = null;
-            //             task.time_charge = null;
-            //             task.task = null;
-            //         }
-            //         else
-            //         {
-            //             $scope.isBillable = false;
+                        task.time_spent = null;
+                        task.time_charge = null;
+                        task.task = null;
+                    }
+                    else
+                    {
+                        console.log("b");
+                        task.isBillable = false;
 
-            //             for(var i=0; i<$scope.itemList.length;i++)
-            //             {
-            //                 if($scope.itemList[i].key == index)
-            //                 {
-            //                     if($scope.itemList[i].value.length > 0)
-            //                     {
-            //                         $scope.itemList = $scope.itemList.filter(function(obj) {
-            //                             return obj.key == index;
-            //                         });
-            //                     }
-            //                 }
-            //             }
+                        for(var i=0; i<$scope.itemList.length;i++)
+                        {
+                            if($scope.itemList[i].key == index)
+                            {
+                                $scope.itemList[i].value = null;
+                            }
+                        }
 
-            //             task.btnTitle = "Choose Item"
-
-            //         }
-            //     }
-            // }
+                    }
+                }
+            }
         }
 
         $scope.chooseItem = function(task,index)
@@ -311,7 +310,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         for(var i=0; i < list.length; i++)
                         {
                             t.push(list[i].ITEM_ID);
-                            c = c + parseInt((list[i].timeCharge == null || list[i].timeCharge === '' || typeof list[i].timeCharge === 'undefined') ? 0 : list[i].timeCharge);
+                            c = c + parseFloat((list[i].time_charge == null || list[i].time_charge === '' || typeof list[i].time_charge === 'undefined') ? 0 : list[i].time_charge);
                         }
                         task.task = t.join(' , ');
                         task.time_charge = c;
@@ -344,7 +343,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         
     })
 
-.controller("ItemController", function($rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr){
+.controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr){
         $scope.itemSearchPanel = {}
 
         $scope.onlyNumbers = /^\d+$/;
@@ -359,7 +358,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             ITEM_ID: null,
             ITEM_NAME: null,
             quantity: null,
-            timeCharge: null,
+            time_charge: null,
             comment: null
         }
 
@@ -368,6 +367,13 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
         $scope.okClick = function(){
+            for(var i=0; i<$scope.itemList.length;i++)
+            {
+                if($scope.itemList[i].time_charge.indexOf(':') != -1)
+                {
+                    $scope.itemList[i].time_charge = moment.duration($scope.itemList[i].time_charge).asHours();
+                }
+            }
             $modalInstance.close({type:"ok",value:$scope.itemList});
         }
 
@@ -408,7 +414,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             ITEM_ID: item.ITEM_ID,
                             ITEM_NAME: item.ITEM_NAME,
                             quantity: 1,
-                            timeCharge: 0,
+                            time_charge: 0,
                             comment: null
                         }
 
@@ -422,7 +428,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         ITEM_ID: item.ITEM_ID,
                         ITEM_NAME: item.ITEM_NAME,
                         quantity: 1,
-                        timeCharge: 0,
+                        time_charge: 0,
                         comment: null
                     }
 

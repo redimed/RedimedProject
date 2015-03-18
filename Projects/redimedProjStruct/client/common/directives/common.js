@@ -177,7 +177,7 @@ angular.module("app.directive.common", [
            // In such cases, when a letter is typed first, this parser will be called
            // again, and the 2nd time, the value will be undefined
            if (inputValue == undefined) return '' 
-           var transformedInput = inputValue.replace(/[^0-9]/g, ''); 
+           var transformedInput = inputValue.replace(/[a-zA-z\/?\,\"\'\;\\\*\=\+\-\_\^\&\%\$\#\@\!]/g, ''); 
            if (transformedInput!=inputValue) {
               modelCtrl.$setViewValue(transformedInput);
               modelCtrl.$render();
