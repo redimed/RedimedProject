@@ -107,6 +107,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             };
                             $scope.tasks.push($scope.task);
                         })
+
+                        for(var i=0; i<$scope.tasks.length;i++)
+                        {
+                             $scope.itemList.push({key: i, value: null});
+                        }
+
                 }
             })
         }
@@ -123,6 +129,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     $scope.locations = response['location'];
                     $scope.activities = response['activity'];
                     $scope.checkFirstTaskWeek();
+
                 }
             })
             $scope.tasks.loading = false;
@@ -199,6 +206,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 $scope.info.endWeek = endWeek;
                 $scope.info.statusID = status;
                 $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
+                $scope.info.itemList = $scope.itemList;
+
                 StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
                     if(response['status'] == 'success'){
                         toastr.success("success","Success");
@@ -265,7 +274,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         {
                             if($scope.itemList[i].key == index)
                             {
-                                if($scope.itemList[i].value.length > 0)
+                                if($scope.itemList[i].value != null && $scope.itemList[i].value.length > 0)
                                 {
                                     check = true;
                                     arr = angular.copy($scope.itemList[i].value);
@@ -288,11 +297,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     {
                         if($scope.itemList[i].key == index)
                         {
-                            $scope.itemList.splice($scope.itemList[i].key,1);
+                            $scope.itemList[i].value = null;
+                            $scope.itemList[i].value = list;
                         }
                     }
 
-                    $scope.itemList.push({key: index, value: list});
+                    // $scope.itemList.push({key: index, value: list});
 
                     if(list.length > 0)
                     {
@@ -300,7 +310,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         var c = 0;
                         for(var i=0; i < list.length; i++)
                         {
-                            t.push(list[i].ITEM_CODE);
+                            t.push(list[i].ITEM_ID);
                             c = c + parseInt((list[i].timeCharge == null || list[i].timeCharge === '' || typeof list[i].timeCharge === 'undefined') ? 0 : list[i].timeCharge);
                         }
                         task.task = t.join(' , ');
@@ -346,7 +356,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         $scope.itemObj = 
         {
-            ITEM_CODE: null,
+            ITEM_ID: null,
             ITEM_NAME: null,
             quantity: null,
             timeCharge: null,
@@ -355,19 +365,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
          $scope.cancel = function(){
             $modalInstance.close({type:"cancel"});
-
-            // if(itemArr != null)
-            //     $modalInstance.close(itemArr);
-            // else
-            // {
-            //     $scope.itemList = [];
-            //     $modalInstance.close($scope.itemList);
-            // }
         }
 
         $scope.okClick = function(){
             $modalInstance.close({type:"ok",value:$scope.itemList});
-            // $modalInstance.close($scope.itemList);
         }
 
          $scope.delItem = function(index){
@@ -393,7 +394,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     var isExist = false;
                     for(var i=0; i<$scope.itemList.length; i++)
                     {
-                        if(item.ITEM_CODE == $scope.itemList[i].ITEM_CODE)
+                        if(item.ITEM_ID == $scope.itemList[i].ITEM_ID)
                         {
                             isExist = true;
                             $scope.itemList[i].quantity = parseInt($scope.itemList[i].quantity) + 1;
@@ -404,7 +405,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     {
                         $scope.itemObj = 
                         {
-                            ITEM_CODE: item.ITEM_CODE,
+                            ITEM_ID: item.ITEM_ID,
                             ITEM_NAME: item.ITEM_NAME,
                             quantity: 1,
                             timeCharge: 0,
@@ -418,7 +419,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 {
                     $scope.itemObj = 
                     {
-                        ITEM_CODE: item.ITEM_CODE,
+                        ITEM_ID: item.ITEM_ID,
                         ITEM_NAME: item.ITEM_NAME,
                         quantity: 1,
                         timeCharge: 0,
@@ -432,17 +433,16 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
         $scope.itemSearchOption = {
-            api:'api/erm/v2/items/search',
+            api:'api/staff/items',
             method:'post',
             scope: $scope.itemSearchPanel,
             columns: [
-                {field: 'ITEM_ID', is_hide: true},
-                {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+                {field: 'ITEM_ID', label: 'Item ID', width:"10%"},
                 {field: 'ITEM_NAME', label: 'Item Name'},
             ],
             use_filters:true,
             filters:{
-                ITEM_CODE: {type: 'text'},
+                ITEM_ID: {type: 'text'},
                 ITEM_NAME: {type: 'text'}
             }
         }

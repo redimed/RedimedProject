@@ -10,6 +10,10 @@ module.exports = {
         var allTask = req.body.allTask;
         var info = req.body.info;
 
+        var count = allTask.length;
+
+        var taskIdArr = [];
+
         db.timeTaskWeek.create({
             start_date : info.startWeek,
             end_date : info.endWeek,
@@ -20,21 +24,55 @@ module.exports = {
             .success(function(data){
                 db.timeTaskWeek.max('task_week_id')
                     .success(function(max){
-                        for(var tasks in allTask){
-                            chainer.add(
-                                db.timeTasks.create({
-                                    tasks_week_id : max,
-                                    "department_code_id" : allTask[tasks].department_code_id,
-                                    "task" : allTask[tasks].task,
-                                    "order": allTask[tasks].order,
-                                    "date": moment(allTask[tasks].date).format('YYYY-MM-DD'),
-                                    "location_id" : allTask[tasks].location_id,
-                                    "activity_id" : allTask[tasks].activity_id,
-                                    "time_spent" : allTask[tasks].time_spent,
-                                    "time_charge" : allTask[tasks].time_charge
-                                })
-                            )
-                        }
+                        db.timeTasks.max('tasks_id')
+                            .success(function(id){
+                                var tId = id;
+                                var i=0;
+                                for(var i=0; i<count;i++)
+                                {
+                                    tId = tId + 1;
+                                    taskIdArr.push(tId);
+                                    chainer.add(
+                                        db.timeTasks.create({
+                                            tasks_id : tId,
+                                            tasks_week_id : max,
+                                            "department_code_id" : allTask[i].department_code_id,
+                                            "task" : allTask[i].task,
+                                            "order": allTask[i].order,
+                                            "date": moment(allTask[i].date).format('YYYY-MM-DD'),
+                                            "location_id" : allTask[i].location_id,
+                                            "activity_id" : allTask[i].activity_id,
+                                            "time_spent" : allTask[i].time_spent,
+                                            "time_charge" : allTask[i].time_charge
+                                        })
+                                    )
+                                }
+
+                                for(var i=0; i<count;i++)
+                                {
+                                    if(info.itemList[i].value != null && info.itemList[i].value.length > 0)
+                                    {
+                                        for(var j=0; j< info.itemList[i].value.length; j++)
+                                        {
+                                            var a = info.itemList[i].value[j];
+                                            chainer.add(
+                                                db.TimeItemTask.create({
+                                                    task_id: taskIdArr[i],
+                                                    item_id: a.ITEM_ID,
+                                                    quantity: a.quantity,
+                                                    time_charge: a.timeCharge,
+                                                    comment: a.comment
+                                                })
+                                            )
+                                        }
+                                    }
+                                }
+                            })
+                            .error(function(err){
+                                res.json({status:'error'});
+                                console.log(err);
+                            })
+
                         chainer.runSerially().success(function(){
                             res.json({status:'success'});
                         }).error(function(err){
@@ -52,6 +90,35 @@ module.exports = {
                 console.log(err);
             })
 
+    },
+
+    getItemList: function(req,res)
+    {
+        var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+        var fields = req.body.fields;
+        var search_data = req.body.search;
+        // console.log(search_data)
+        var agrs = [];
+        for (var key in search_data) {
+            if(search_data[key])
+            agrs.push(key + " LIKE '"+ search_data[key] +"%'");
+        };
+
+        var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
+
+        db.TimeItemCode.findAndCountAll({
+            where: whereOpt,
+            offset: offset,
+            limit: limit,
+            attributes: fields,
+            order: 'Creation_date DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result.rows, "count": result.count});
+        })
+        .error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
     },
 
     editTask: function(req,res)
