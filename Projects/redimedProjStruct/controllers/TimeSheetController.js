@@ -216,6 +216,33 @@ module.exports = {
 
     },
 
+    getTask: function(req,res)
+    {
+        var idWeek = req.body.idWeek;
+        db.sequelize.query("SELECT t.`date`,l.`NAME` AS location,d.`departmentName` AS department, "
+         + " a.`NAME` AS activity,t.`time_charge`,t.`task` FROM `time_tasks` t " +
+         "LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` "+
+         "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id` " +
+         "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id` " +
+          " WHERE t.`tasks_week_id` = ?",null,{raw:true},[idWeek])
+            .success(function(data){
+                if (data === null || data.length === 0) {
+                    console.log("Not found tasks in table");
+                    res.json({status: 'fail'});
+                    return false;
+                }else
+                {
+                    res.json({status:'success',data:data})
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
+
+    },
+
     getAllTaskAMonth: function(req,res){
         var search = req.body.search;
 
