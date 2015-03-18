@@ -8,7 +8,8 @@ angular.module("app.security.login.controller",[
     $scope.modelUser = {
         username : null,
         password : null,
-        isAgree: false
+        isAgree: false,
+        isRemember: false
     }
 
     // SUBMIT LOGIN
@@ -75,6 +76,7 @@ angular.module("app.security.login.controller",[
               
                 if (typeof response.userInfo !== 'undefined') {
                         $cookieStore.put("userInfo", response.userInfo);
+                        $cookieStore.put("isRemember",$scope.modelUser.isRemember);
 
                         if (typeof response.companyInfo !== 'undefined')
                             $cookieStore.put("companyInfo", response.companyInfo);
