@@ -53,14 +53,15 @@ angular.module("app.call.controller",[
         };
 
         $scope.facePublisherProps = {
-            name:'face',
+            name: 'face',
             width: '100%',
             height: '100%',
             style: {
-                nameDisplayMode: 'off'
+              nameDisplayMode: 'off'
             },
-            maxResolution: {width:1920, height:1080}
-        }
+            resolution: '1280x720',
+            frameRate: 30
+        };
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login',null,{location: "replace"});
