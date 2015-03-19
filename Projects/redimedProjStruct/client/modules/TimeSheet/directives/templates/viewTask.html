@@ -80,8 +80,8 @@
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].chargeWeek)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
-                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaitting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaiting for Submit',
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].time_in_lieu)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].over_time)}}</span>
             </div>
@@ -94,25 +94,39 @@
             </div>
             <!-- END REJECT -->
             <!-- APPROVE -->
-            <div data-row-span="12" ng-show="info.isApprove===true">
-                <div class="col-md-4" style="margin-top:5px; font-size:13px;">
-                    <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}
+            <!-- OVER CHARGE -->
+            <div data-row-span="12">
+                <div ng-show="info.isApprove===true">
+                    <div class="col-md-4" style="margin-top:5px; font-size:13px;">
+                        <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" ng-show="info.isApprove===true">
                     </span> This Over/(Under) Time will be charged to (*):</span>
-                    <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
-                    <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc; font-style='normal'" ng-change="changeOverTime()">
-                    <label class="control-label">OVER TIME</label>
+                        <input type="text" ui-mask="99:59" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
+                        <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" ui-mask="99:59" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc; font-style='normal'" ng-change="changeOverTime()">
+                        <label class="control-label">OVER TIME</label>
+                    </div>
                 </div>
+                <!-- LESS CHARGE -->
+                <div ng-show="info.isLessCharge===true">
+                    <div class="col-md-4" style="margin-top:5px; font-size:13px;">
+                        <span>Total Less Time Charge: <span class="text-info bold">{{getFortMatTimeCharge(38-info.chargeWeek)}}</span></span>
+                    </div>
+                    <div class="col-md-9">
+                        <span>Time In Lieu of Employee:{{getFortMatTimeCharge(info.time_in_lieu)}}&nbsp;&nbsp;&nbsp;<label for="chargeInLieuID" style="cursor:pointer" class="btn btn-xs"><input type="checkbox" id="chargeInLieuID" ng-model="info.isChargeInLieu" name="LessCharge" ng-required="true"> Use Time In Lieu</label></span>
+                    </div>
+                </div>
+                <!-- END LESS CHARGE -->
             </div>
+            <!-- END OVER CHARGE -->
             <!-- END APPROVE -->
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
         <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
-        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
-        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4">Reject</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required || viewTask.LessCharge.$error.required) && (info.isApprove===true ||  info.isLessCharge===true)">Approve</a>
+        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4 ||info.isLessCharge===true">Reject</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>

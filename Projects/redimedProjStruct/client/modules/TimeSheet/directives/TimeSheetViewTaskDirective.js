@@ -32,6 +32,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                 scope.info.time_in_lieu = "0000";
                                 scope.info.over_time = "0000";
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
+                                scope.info.chargeWeek = scope.list.result[0].chargeWeek;
                             } else {
                                 //catch exception
                                 $state.go("loggedIn.TimeSheetHome", null, {
@@ -43,10 +44,18 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                     } else if (newModel === "reject") {
                         scope.info.isReject = true;
                         scope.info.isApprove = false;
+                        scope.info.isLessCharge = false;
                         $('commentsID').focus();
                     } else if (newModel === "chooseApprove") {
-                        scope.info.isApprove = true;
-                        scope.info.isReject = false;
+                        if (scope.info.chargeWeek > 38) {
+                            scope.info.isApprove = true;
+                            scope.info.isReject = false;
+                            scope.info.isLessCharge = false;
+                        } else if (scope.info.chargeWeek < 38) {
+                            scope.info.isApprove = false;
+                            scope.info.isReject = false;
+                            scope.info.isLessCharge = true;
+                        }
                     }
                 });
                 scope.changeTimeInLieu = function() {

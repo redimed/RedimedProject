@@ -4,7 +4,7 @@ angular.module("app.loggedIn.TimeSheet.ViewApproved.Controller", [])
         $('body').addClass("page-sidebar-closed");
         $('body').find('ul').addClass("page-sidebar-menu-closed");
         //end close siderba
-        
+
         //setPage
         $scope.setPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
@@ -114,4 +114,5 @@ angular.module("app.loggedIn.TimeSheet.ViewApproved.Controller", [])
         $scope.showDetail = function(idTaskWeek) {
             dialogView(idTaskWeek);
         };
+
     });

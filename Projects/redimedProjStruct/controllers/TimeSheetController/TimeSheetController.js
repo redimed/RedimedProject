@@ -989,7 +989,6 @@ module.exports = {
                         .success(function(resultDept) {
                             var Depts = "";
                             if (resultDept === undefined || resultDept === null || resultDept.length === 0) {
-                                console.log("DEPT NULL");
                                 res.json({
                                     status: "error"
                                 });
