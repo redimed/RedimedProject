@@ -127,10 +127,11 @@ angular.module("app.call.controller",[
                         }
                     };
                     $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
+                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
                 });
 
                 $scope.publishing = true;
-                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});               
+                               
             })
         }
         else
@@ -168,10 +169,11 @@ angular.module("app.call.controller",[
                         }
                     };
                     $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
+                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
                 });
 
                 $scope.publishing = true;
-                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
+                
             }
         }
 

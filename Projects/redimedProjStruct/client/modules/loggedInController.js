@@ -56,7 +56,7 @@ angular.module("app.loggedIn.controller",[
 
     })
 
-.controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+.controller("loggedInController", function($scope,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
     $scope.isShow = true;
 
@@ -77,44 +77,49 @@ angular.module("app.loggedIn.controller",[
         if(message.type == 'call')
         {
 
-            var options = {
-                body: fromUser + " Is Calling You...",
-                icon: "theme/assets/icon.png",
-                dir : "ltr"
-            };
-            var notification = new Notification("You Have A Call!",options);
-
-            notification.onclick = function(){
-                window.open().close();
-                window.focus();
-            }
+            
 
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
-                    var modalInstance = $modal.open({
-                        templateUrl: 'common/views/dialog/callDialog.html',
-                        controller: 'callDialogController',
-                        size: 'sm',
-                        resolve:{
-                            userInfo: function(){
-                                return data;
-                            },
-                            notify: function(){
-                                return notification;
-                            },
-                            opentokRoom: function(){
-                                var opentokRoom = {
-                                        apiKey: message.apiKey,
-                                        sessionId: message.sessionId,
-                                        token: message.token
-                                    }
-                                return opentokRoom;
+                    $timeout(function() {
+                            var options = {
+                                body: fromUser + " Is Calling You...",
+                                icon: "theme/assets/icon.png",
+                                dir : "ltr"
+                            };
+                            var notification = new Notification("You Have A Call!",options);
+
+                            notification.onclick = function(){
+                                window.open().close();
+                                window.focus();
                             }
-                        },
-                        backdrop: 'static',
-                        keyboard: false
-                    })
+
+                            var modalInstance = $modal.open({
+                            templateUrl: 'common/views/dialog/callDialog.html',
+                            controller: 'callDialogController',
+                            size: 'sm',
+                            resolve:{
+                                userInfo: function(){
+                                    return data;
+                                },
+                                notify: function(){
+                                    return notification;
+                                },
+                                opentokRoom: function(){
+                                    var opentokRoom = {
+                                            apiKey: message.apiKey,
+                                            sessionId: message.sessionId,
+                                            token: message.token
+                                        }
+                                    return opentokRoom;
+                                }
+                            },
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    }, 0.5 * 1000);
+                   
                 }
             })
         }
