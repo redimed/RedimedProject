@@ -144,50 +144,6 @@ angular.module("app.loggedIn.controller",[
         }
     })
 
-
-
-    $scope.openChat = function(user){
-
-        // $scope.isShow = true;
-
-        $scope.vm = {
-            messages: [
-                {
-                  'username': user.username,
-                  'content': 'Hi!'
-                },
-                {
-                  'username': 'username2',
-                  'content': 'Hello!'
-                },
-                {
-                  'username': user.username,
-                  'content': 'Hello!'
-                },
-                {
-                  'username': 'username2',
-                  'content': 'Hello!'
-                },
-                {
-                  'username': user.username,
-                  'content': 'Hello!'
-                }
-              ],
-            username : user.username,
-            userImg: $scope.userImg,
-            chatImg: "./theme/assets/icon.png",
-            title: "Chat With "+ user.username,
-            sendMessage: function(message, username) {
-                if(message && message !== '' && username) {
-                  $scope.vm.messages.push({
-                    'username': username,
-                    'content': message
-                  });
-                }
-              }
-        };
-    }
-
     $scope.userImg = null;
     $scope.onlineUsers = [];
     $scope.onlineUsersTemp = [];
