@@ -48,6 +48,7 @@ angular.module("app.call.controller",[
             name: "screen",
             style:{nameDisplayMode:"off"},
             publishAudio: false,
+            maxResolution: {width:1920, height:1080},
             videoSource: 'screen'
         };
 
@@ -58,9 +59,7 @@ angular.module("app.call.controller",[
             style: {
                 nameDisplayMode: 'off'
             },
-            resolution: '1280x720',
-            frameRate: 30,
-            // videoSource: 'screen'
+            maxResolution: {width:1920, height:1080}
         }
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')

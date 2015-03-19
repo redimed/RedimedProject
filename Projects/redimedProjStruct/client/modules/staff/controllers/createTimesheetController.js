@@ -376,8 +376,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             {
                 if($scope.itemList[i].time_charge != null || typeof $scope.itemList[i].time_charge !== 'undefined')
                 {
-                    console.log($scope.itemList[i]);
-                    if($scope.itemList[i].time_charge.indexOf(':') != -1)
+                    if($scope.itemList[i].time_charge.toString().indexOf(':') != -1)
                     {
                         $scope.itemList[i].time_charge = moment.duration($scope.itemList[i].time_charge).asHours();
                     }
