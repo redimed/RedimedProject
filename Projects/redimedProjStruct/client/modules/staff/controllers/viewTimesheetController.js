@@ -182,6 +182,23 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             }
         })
     }
+    $scope.getFortMatTimeCharge = function(time_charge) {
+            if (time_charge === 0) {
+                return "00:00";
+            } else {
+                var hour = parseInt(time_charge);
+                var minute = (time_charge - hour) * 60;
+                if (hour < 10) {
+                    hour += "0" + hour;
+                }
+                if (minute < 10) {
+                    minute += "0" + minute;
+                }
+                var result = hour + ":" + minute;
+                result = result.substring(0, result.length - 1);
+                return result;
+            }
+        };
 
     StaffService.showWeek();
 })
