@@ -192,8 +192,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             if(status == 2){
                 sum = 0;
                 angular.forEach($scope.tasks, function(task){
-                    if(task.time_spent != null){
-                        sum = sum * 1 + task.time_spent * 1 ;
+                    if(task.time_charge != null){
+                        sum = sum * 1 + task.time_charge * 1 ;
                     }
                 })
                 console.log(sum > 38 ? 'yes' : 'no');
