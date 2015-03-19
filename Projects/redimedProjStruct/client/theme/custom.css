@@ -1039,12 +1039,12 @@ table.timetable-table td:last-child {
 }
 
 .pending {
-    color: #6f9a37;
+    color: #FFB848;
     font-weight: bold;
 }
 
 .re-submitted {
-    color: #3CB371;
+    color: #8E44AD;
     font-weight: bold;
 }
 
