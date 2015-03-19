@@ -222,35 +222,27 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         $scope.addAllTask = function(status)
         {
-            $scope.goOn = false;
-            if(status == 2){
-                if($scope.time_total > 38 || $scope.time_total == 38){
-                    $scope.goOn = true;
-                    $scope.info.time_rest = $scope.time_total - 38;
-                    console.log($scope.info.time_rest);
-                }else{
-                    toastr.error("Time spent of week must be than 38 hours", "Error");
-                }
+            if($scope.time_total > 38 || $scope.time_total == 38){
+                $scope.goOn = true;
+                $scope.info.time_rest = $scope.time_total - 38;
             }
 
-            if($scope.goOn == true || status == 1){
-                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-                $scope.info.startWeek = startWeek;
-                $scope.info.endWeek = endWeek;
-                $scope.info.statusID = status;
-                $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
-                $scope.info.itemList = $scope.itemList;
-                StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
-                    if(response['status'] == 'success'){
-                        toastr.success("success","Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
-                    }else
-                    {
-                        toastr.error("Error", "Error");
-                    }
-                })
-            }
+            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+            $scope.info.startWeek = startWeek;
+            $scope.info.endWeek = endWeek;
+            $scope.info.statusID = status;
+            $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
+            $scope.info.itemList = $scope.itemList;
+            StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
+                if(response['status'] == 'success'){
+                    toastr.success("success","Success");
+                    $state.go('loggedIn.staff.list', null, {'reload': true});
+                }else
+                {
+                    toastr.error("Error", "Error");
+                }
+            })
         }
 
 
@@ -324,6 +316,21 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             c = c + list[i].time_temp;
                         }
                         task.task = t.join(' , ');
+                        if (c === 0) {
+                            c = "00:00";
+                        } else {
+                            var hour = parseInt(c);
+                            var minute = (c - hour) * 60;
+                            if (hour < 10) {
+                                hour += "0" + hour;
+                            }
+                            if (minute < 10) {
+                                minute += "0" + minute;
+                            }
+                            var result = hour + ":" + minute;
+                            result = result.substring(0, result.length - 1);
+                            c = result;
+                        }
                         task.time_charge = c;
                     }
                     else
