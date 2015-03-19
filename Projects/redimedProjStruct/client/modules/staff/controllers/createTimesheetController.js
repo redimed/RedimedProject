@@ -27,9 +27,45 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             location_id: null,
             activity_id: null,
             time_charge: 0,
+            time_temp: 0,
             isInputItem: false,
             isBillable: false
 
+        };
+
+        $scope.changeTimeCharge = function(task){
+            task.time_temp = $scope.getFortMatTimeTemp(task.time_charge);
+            sum = 0;
+            angular.forEach($scope.tasks,function(data){
+                if(data.time_temp != null){
+                    sum = sum * 1 + data.time_temp * 1 ;
+                }
+            });
+            $scope.time_total = sum;
+        }
+
+        $scope.getFortMatTimeCharge = function(time_charge) {
+            if (time_charge === 0) {
+                return "00:00";
+            } else {
+                var hour = parseInt(time_charge);
+                var minute = (time_charge - hour) * 60;
+                if (hour < 10) {
+                    hour += "0" + hour;
+                }
+                if (minute < 10) {
+                    minute += "0" + minute;
+                }
+                var result = hour + ":" + minute;
+                result = result.substring(0, result.length - 1);
+                return result;
+            }
+        };
+
+        $scope.getFortMatTimeTemp = function(time_charge) {
+            var hourInLieu = parseInt(time_charge.substring(0, 2));
+            var minuteInLieu = parseInt(time_charge.substring(2, 4));
+            return hourInLieu + (minuteInLieu / 60);
         };
 
         $scope.getWeekNumber = function(d) {
@@ -78,7 +114,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     }
                 }
             })
-            console.log($scope.isEdit)
         }
 
         $scope.checkFirstTaskWeek = function(){
@@ -147,7 +182,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     j++;
                 }
             }
-            console.log(j);
             task={
                 order: 1 + j,
                 task : null,
@@ -190,15 +224,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         {
             $scope.goOn = false;
             if(status == 2){
-                sum = 0;
-                angular.forEach($scope.tasks, function(task){
-                    if(task.time_charge != null){
-                        sum = sum * 1 + task.time_charge * 1 ;
-                    }
-                })
-                console.log(sum > 38 ? 'yes' : 'no');
-                if(sum > 38 || sum == 38){
+                if($scope.time_total > 38 || $scope.time_total == 38){
                     $scope.goOn = true;
+                    $scope.info.time_rest = $scope.time_total - 38;
+                    console.log($scope.info.time_rest);
                 }else{
                     toastr.error("Time spent of week must be than 38 hours", "Error");
                 }
@@ -212,7 +241,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 $scope.info.statusID = status;
                 $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
                 $scope.info.itemList = $scope.itemList;
-
                 StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
                     if(response['status'] == 'success'){
                         toastr.success("success","Success");
