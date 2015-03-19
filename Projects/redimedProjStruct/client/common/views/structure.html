@@ -1,7 +1,5 @@
 <style>
-
 </style>
-
 <!--RIGHT SIDE MENU-->
 <div id="chatMenu">
     <div id="main-chat-wrapper" class="inner-content">
@@ -10,7 +8,6 @@
                 <div class="pull-left">
                     <input ng-model="searchUser" ng-change="searchOnlineUser(searchUser)" type="text" placeholder="Search User">
                 </div>
-
             </div>
             <div class="side-widget">
                 <div class="side-widget-title">
@@ -22,19 +19,18 @@
                     </div>
                     <hr style="background-color: #B0B0B9; height: 1px; border: 0" />
                 </div>
-                <div class="side-widget-content" >
+                <div class="side-widget-content">
                     <div ng-click="openChat(u)" ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
                         <div class="user-profile">
-                            <img ng-if="u.img != null"  style="background-color: white;" class="img-circle hide1" ng-src="{{u.img}}"  alt="" width="35" height="35">
-                            <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png"  alt="" width="35" height="35">
+                            <img ng-if="u.img != null" style="background-color: white;" class="img-circle hide1" ng-src="{{u.img}}" alt="" width="35" height="35">
+                            <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png" alt="" width="35" height="35">
                         </div>
                         <div class="user-details">
                             <div class="user-name">
                                 {{u.username}}
                             </div>
                             <div class="user-more">
-                                <span class="status-icon green"></span>
-                                Online
+                                <span class="status-icon green"></span> Online
                             </div>
                         </div>
                         <span>
@@ -47,7 +43,6 @@
             </div>
         </div>
     </div>
-
     <!-- <irontec-simple-chat
           messages="vm.messages"
           username="vm.username"
@@ -58,299 +53,265 @@
           title="vm.title"
           submit-function="vm.sendMessage">
     </irontec-simple-chat> -->
-
-    
-
-
 </div>
 <!--END RIGHT SIDE MENU-->
-
-
-
-
 <!-- BEGIN HEADER -->
 <div class="page-header navbar">
-<!-- BEGIN HEADER INNER -->
+    <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner">
-    <!-- BEGIN LOGO -->
+        <!-- BEGIN LOGO -->
         <div class="page-logo">
             <div class="menu-toggler sidebar-toggler" ng-click="toggleMenu()">
                 <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
             </div>
         </div>
-    <!-- END LOGO -->
-    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-    </a>
-    <!-- END RESPONSIVE MENU TOGGLER -->
-    <!-- BEGIN PAGE TOP -->
-    <div class="page-top">
-    <!-- BEGIN TOP NAVIGATION MENU -->
-        <div class="pull-left" style="position: relative;top: 15px;left: 20px;">
-            <button class="btn btn-circle"  ng-click="navigator.prev()"> <i class="fa fa-long-arrow-left"></i> Prev </button>
-            <button class="btn btn-circle"  ng-click="navigator.next()">  Next <i class="fa fa-long-arrow-right"></i> </button>
-        </div>
-
-    <div class="top-menu">
-        <ul class="nav navbar-nav pull-right">
-            <li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                <a  class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="icon-bell"></i>
-                                    <span class="badge badge-danger">
+        <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN PAGE TOP -->
+        <div class="page-top">
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="pull-left" style="position: relative;top: 15px;left: 20px;">
+                <button class="btn btn-circle" ng-click="navigator.prev()"> <i class="fa fa-long-arrow-left"></i> Prev </button>
+                <button class="btn btn-circle" ng-click="navigator.next()"> Next <i class="fa fa-long-arrow-right"></i> </button>
+            </div>
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-danger">
                                         {{numbersBellUnread}}
                                     </span>
-                </a>
-
-                <ul class="dropdown-menu">
-                    <li>
-                        <p>
-                            You have {{numbersBellUnread}} new notifications
-                        </p>
-                        <a ng-click="updateNotificationManual();">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p>
+                                    You have {{numbersBellUnread}} new notifications
+                                </p>
+                                <a ng-click="updateNotificationManual();">
                             Refresh
                             <span class="glyphicon glyphicon-refresh pull-right"></span>
                         </a>
-                    </li>
-                    <li>
-
-                        <ul class="dropdown-menu-list scroller bell-dropdown" style="height: 250px;">
-                            <li ng-repeat="bell in bellUnreadList" >
-                                <a ng-click="setNotificationHaveRead(bell.id)" ui-sref="{{bell.link}}">
-                                    <span class="label label-sm label-icon label-danger">
-                                    <i class="fa fa-bell-o"></i>
-                                    </span>
-                                    {{bell.msg}}
-                                </a>
                             </li>
-
-                        </ul>
-
-
-                    </li>
-
-                    <li class="external">
-                        <a ng-click="getListNotification('bell');">
+                            <li>
+                                <ul class="dropdown-menu-list scroller bell-dropdown" style="height: 250px;">
+                                    <li ng-repeat="bell in bellUnreadList">
+                                        <a ng-click="setNotificationHaveRead(bell.id)" ui-sref="{{bell.link}}">
+                                            <span class="label label-sm label-icon label-danger">
+                                    <i class="fa fa-bell-o"></i>
+                                    </span> {{bell.msg}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="external">
+                                <a ng-click="getListNotification('bell');">
                             See all notifications <i class="icon-arrow-right"></i>
                         </a>
+                            </li>
+                            <li>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-
-                    </li>
-                </ul>
-            </li>
-            <li ng-show="userInfo.HAVE_LETTER==1" class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="icon-envelope-open"></i>
-                                    <span class="badge badge-primary">
+                    <li ng-show="userInfo.HAVE_LETTER==1" class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                        <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-envelope-open"></i>
+                            <span class="badge badge-primary">
                                         {{numbersLetterUnread}}
                                     </span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <p>
-                            You have {{numbersLetterUnread}} new letters
-                        </p>
-                        <a ng-click="updateNotificationManual();">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p>
+                                    You have {{numbersLetterUnread}} new letters
+                                </p>
+                                <a ng-click="updateNotificationManual();">
                             Refresh
                             <span class="glyphicon glyphicon-refresh pull-right"></span>
                         </a>
-                    </li>
-                    <li>
-                        <ul class="dropdown-menu-list scroller letter-dropdown" style="height: 250px;">
-                            <li ng-repeat="letter in letterUnreadList" >
-                                <a ng-click="setNotificationHaveRead(letter.id)" ui-sref="{{letter.link}}">
-                                    <span class="label label-sm label-icon label-primary">
-                                    <i class="fa fa-envelope-o"></i>
-                                    </span>
-                                    {{letter.msg}}
-                                </a>
                             </li>
-
-                        </ul>
-                    </li>
-                    <li class="external">
-                        <a ng-click="getListNotification('letter');">
+                            <li>
+                                <ul class="dropdown-menu-list scroller letter-dropdown" style="height: 250px;">
+                                    <li ng-repeat="letter in letterUnreadList">
+                                        <a ng-click="setNotificationHaveRead(letter.id)" ui-sref="{{letter.link}}">
+                                            <span class="label label-sm label-icon label-primary">
+                                    <i class="fa fa-envelope-o"></i>
+                                    </span> {{letter.msg}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="external">
+                                <a ng-click="getListNotification('letter');">
                             See all letters <i class="icon-arrow-right"></i>
                         </a>
+                            </li>
+                        </ul>
                     </li>
-                </ul>
-            </li>
-            <li ng-show="userInfo.HAVE_CALENDAR==1" class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
-                <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <i class="icon-calendar"></i>
-                    <span class="badge badge-success">
+                    <li ng-show="userInfo.HAVE_CALENDAR==1" class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
+                        <a href="layout_fluid_page.html#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-calendar"></i>
+                            <span class="badge badge-success">
                         {{numberAppointmentCalendarUpcoming}}
                     </span>
-                </a>
-                <ul class="dropdown-menu extended tasks">
-                    <li>
-                        <p>
-                            You have {{numberAppointmentCalendarUpcoming}} upcoming appointments
-                        </p>
-                        <a ng-click="getAppointmentCalendarUpcoming();">
+                        </a>
+                        <ul class="dropdown-menu extended tasks">
+                            <li>
+                                <p>
+                                    You have {{numberAppointmentCalendarUpcoming}} upcoming appointments
+                                </p>
+                                <a ng-click="getAppointmentCalendarUpcoming();">
                             Refresh
                             <span class="glyphicon glyphicon-refresh pull-right"></span>
                         </a>
-                    </li>
-                    <li>
-                        <ul class="dropdown-menu-list scroller appointments-upcoming-dropdown" style="height: 250px;">
-                            <li ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
-                                <a ui-sref="{{appointmentUpcoming.link}}">
-                                    <span class="label label-sm label-icon label-primary">
-                                    <i class="fa fa-calendar-o"></i>
-                                    </span>
-                                    {{appointmentUpcoming.NOTIFICATION}}
-                                </a>
                             </li>
-
-                        </ul>
-                    </li>
-
-                    <li class="external">
-                        <a ng-click="showMyCalendar();">
+                            <li>
+                                <ul class="dropdown-menu-list scroller appointments-upcoming-dropdown" style="height: 250px;">
+                                    <li ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
+                                        <a ui-sref="{{appointmentUpcoming.link}}">
+                                            <span class="label label-sm label-icon label-primary">
+                                    <i class="fa fa-calendar-o"></i>
+                                    </span> {{appointmentUpcoming.NOTIFICATION}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="external">
+                                <a ng-click="showMyCalendar();">
                             See all my calendar <i class="icon-arrow-right"></i>
                         </a>
+                            </li>
+                        </ul>
                     </li>
-                </ul>
-            </li>
-            <li class="dropdown dropdown-user">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                    <img alt="" class="img-circle hide1" style="width:50px;height:50px;margin-bottom:20px;" ng-src="{{userImg}}"/>
-                    <span class="username username-hide-on-mobile">
+                    <li class="dropdown dropdown-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle hide1" style="width:50px;height:50px;margin-bottom:20px;" ng-src="{{userImg}}" />
+                            <span class="username username-hide-on-mobile">
                     {{user}} </span>
-                    <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a ui-sref="loggedIn.userProfile">
-                            <i class="icon-user"></i> My Profile </a>
-                    </li>
-                    <li ng-show="userInfo.HAVE_CALENDAR==1">
-                        <a ng-click="showMyCalendar();">
-                            <i class="icon-calendar"></i>
-                            My Calendar
-                            <span class="badge badge-danger">
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a ui-sref="loggedIn.userProfile">
+                                    <i class="icon-user"></i> My Profile </a>
+                            </li>
+                            <li ng-show="userInfo.HAVE_CALENDAR==1">
+                                <a ng-click="showMyCalendar();">
+                                    <i class="icon-calendar"></i> My Calendar
+                                    <span class="badge badge-danger">
                                 {{numberAppointmentCalendarUpcoming}}
                             </span>
-                        </a>
-
-                    </li>
-                    <li ng-show="userInfo.HAVE_LETTER==1">
-                        <a ng-click="getListNotification('letter');">
-                            <i class="icon-envelope-open"></i>
-                            My Inbox
-                            <span class="badge badge-danger">
+                                </a>
+                            </li>
+                            <li ng-show="userInfo.HAVE_LETTER==1">
+                                <a ng-click="getListNotification('letter');">
+                                    <i class="icon-envelope-open"></i> My Inbox
+                                    <span class="badge badge-danger">
                                 {{numbersLetterUnread}}
                             </span>
-                        </a>
-                    </li>
-                    <li ng-show="userInfo.HAVE_BELL==1">
-                        <a ng-click="getListNotification('bell');">
-                            <i class="icon-bell"></i>
-                                My notifications
-                            <span class="badge badge-success">
+                                </a>
+                            </li>
+                            <li ng-show="userInfo.HAVE_BELL==1">
+                                <a ng-click="getListNotification('bell');">
+                                    <i class="icon-bell"></i> My notifications
+                                    <span class="badge badge-success">
                                 {{numbersBellUnread}}
                             </span>
-                        </a>
-                    </li>
-                    <li class="divider">
-                    </li>
-                    <li>
-
-                       <a ng-click="lockscreen()" href="javascript:;">
-                           <i class="icon-lock"></i> Lock Screen </a>
-
-                    </li>
-                    <li>
-                        <a href="javascript:;" ng-click="logout()">
-                            <i class="icon-key"></i> Log Out </a>
+                                </a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a ng-click="lockscreen()" href="javascript:;">
+                                    <i class="icon-lock"></i> Lock Screen </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="logout()">
+                                    <i class="icon-key"></i> Log Out </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </li>
-        </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END PAGE TOP -->
     </div>
-        <!-- END TOP NAVIGATION MENU -->
-    </div>
-    <!-- END PAGE TOP -->
-    </div>
-<!-- END HEADER INNER -->
+    <!-- END HEADER INNER -->
 </div>
 <!-- END HEADER -->
 <div class="clearfix">
 </div>
 <!-- BEGIN CONTAINER -->
-
 <div class="page-container">
-<!-- BEGIN SIDEBAR -->
-<div class="page-sidebar-wrapper">
-<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-<div class="page-sidebar navbar-collapse collapse">
-<!-- BEGIN SIDEBAR MENU -->
-<ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-    <li class="start" >
-        <a href="javascript:;" ng-click="userclick()">
-            <i class="icon-home"></i>
-
-            <span class="title" >Home</span>
-        </a>
-
-    </li>
-
-    <li ng-repeat="menu in loggedInMenus">
-        <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)">
-            <i class="glyphicon glyphicon-star-empty"></i>
-            <span class="title">{{menu.parent.name}}</span>
-        </a>
-        <ul ng-if="menu.parent.childs.length > 0" class="sub-menu">
-            <li ng-repeat="submenu in menu.parent.childs">
-                <a ui-sref="{{submenu.definition}}">
-                    <i class="fa fa-angle-right"></i>
-                    {{submenu.name}}
-                </a>
-            </li>
-        </ul>
-    </li>
-</ul>
-<!-- END SIDEBAR MENU -->
-</div>
-</div>
-<!-- END SIDEBAR -->
-<!-- BEGIN CONTENT -->
-<div class="page-content-wrapper">
-    <div class="page-content" style="height: 600px;">
-        <div ui-view></div>
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar-wrapper">
+        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+        <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                <li class="start">
+                    <a href="javascript:;" ng-click="userclick()">
+                        <i class="icon-home"></i>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li ng-repeat="menu in loggedInMenus">
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='Timesheet'">
+                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <span class="title">{{menu.parent.name}}</span>
+                    </a>
+                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='Timesheet'">
+                        <li ng-repeat="submenu in menu.parent.childs">
+                            <a ui-sref="{{submenu.definition}}">
+                                <i class="fa fa-angle-right"></i> {{submenu.name}}
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='Timesheet'">
+                        <i><img src="/img/timesheet1.png"></i>
+                        <span class="title">{{menu.parent.name}}</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
     </div>
-</div>
-<!-- END CONTENT -->
-<!-- BEGIN QUICK SIDEBAR -->
-<!--Cooming Soon...-->
-<!-- END QUICK SIDEBAR -->
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content" style="height: 600px;">
+            <div ui-view></div>
+        </div>
+    </div>
+    <!-- END CONTENT -->
+    <!-- BEGIN QUICK SIDEBAR -->
+    <!--Cooming Soon...-->
+    <!-- END QUICK SIDEBAR -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
 <!--<div class="page-footer">-->
-    <!--<div class="scroll-to-top">-->
-        <!--<i class="icon-arrow-up"></i>-->
-    <!--</div>-->
+<!--<div class="scroll-to-top">-->
+<!--<i class="icon-arrow-up"></i>-->
 <!--</div>-->
-
+<!--</div>-->
 <!-- END FOOTER -->
-
-
 <!--Notification POPUP-->
 <!--TANNV.DTS@GMAIL.COM-->
 <!--BEGIN-->
 <div class='notifications top-right lob_notification_popup'></div>
-
-<div  id="list-notification-popup" class="modal fade">
+<div id="list-notification-popup" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">My Inbox</h4>
             </div>
-
             <div class="modal-body">
                 <div class="notification-list" style="height: 350px;">
                     <table class="table table-hover">
@@ -360,64 +321,37 @@
                             <th></th>
                             <!--<th>Read</th>-->
                         </tr>
-
                         <tbody>
-                        <tr  ng-repeat="item in listNotifications"
-                             ng-click="setNotificationHaveRead2($index)"
-                             ng-class="{'alert alert-success':item.STATUS==0}">
-                            <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                            <td>{{item.msg}}</td>
-                            <td>
-                                <a  ng-show="item.TYPE=='bell'"
-                                    class="btn btn-sm yellow filter-submit margin-bottom"
-                                    style="margin-left: 10px;margin-bottom: 10px;"
-                                    ng-click="closeNotificationListPopup()"
-                                    ui-sref="{{item.link}}">
+                            <tr ng-repeat="item in listNotifications" ng-click="setNotificationHaveRead2($index)" ng-class="{'alert alert-success':item.STATUS==0}">
+                                <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td>{{item.msg}}</td>
+                                <td>
+                                    <a ng-show="item.TYPE=='bell'" class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="closeNotificationListPopup()" ui-sref="{{item.link}}">
                                     View details
                                 </a>
-
-                                <a      ng-show="item.TYPE=='letter'"
-                                        class="btn btn-sm yellow filter-submit margin-bottom"
-                                        style="margin-left: 10px;margin-bottom: 10px;"
-                                        href="/api/download/structure/attach-file/{{item.source_name}}/{{item.ref_id}}">
+                                    <a ng-show="item.TYPE=='letter'" class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" href="/api/download/structure/attach-file/{{item.source_name}}/{{item.ref_id}}">
                                     Download document
                                 </a>
-
-                            </td>
-                            <!--<td>-->
+                                </td>
+                                <!--<td>-->
                                 <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
-                            <!--</td>-->
-                        </tr>
+                                <!--</td>-->
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-
-
-                <pagination total-items="totalItems"
-                            ng-model="currentPage"
-                            max-size="maxSize"
-                            class="pagination-sm"
-                            boundary-links="true"
-                            rotate="false"
-                            num-pages="numPages"
-                            items-per-page="itemsPerPage"
-                            ng-change="pagingHandler()">
+                <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage" ng-change="pagingHandler()">
                 </pagination>
-
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
                 <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
             </div>
         </div>
     </div>
 </div>
-
-
-
-<div  id="list-my-calendar" class="modal fade">
+<div id="list-my-calendar" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -426,7 +360,6 @@
             </div>
             <div class="modal-body">
                 <div class="notification-list" style="height: 350px;">
-
                     <table class="table table-hover">
                         <tr>
                             <th>Time</th>
@@ -437,75 +370,64 @@
                             <th></th>
                             <!--<th>Read</th>-->
                         </tr>
-
                         <tbody>
-                        <tr ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
-                            <td>{{appointmentUpcoming.DATE_UPCOMING |date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                            <td>{{appointmentUpcoming.SOURCE_TYPE}}</td>
-                            <td>{{appointmentUpcoming.PERSON_INFO}}</td>
-                            <td>
-                                <p data-toggle="collapse" ng-click="myExpand($index)" style="cursor: pointer">
-                                    {{appointmentUpcoming.MESSAGE}}
-                                </p>
-
-                                <div class="panel-collapse collapse collapse{{$index}}">
-                                    <div class="panel-body">
-                                        {{appointmentUpcoming.DETAIL}}
+                            <tr ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
+                                <td>{{appointmentUpcoming.DATE_UPCOMING |date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td>{{appointmentUpcoming.SOURCE_TYPE}}</td>
+                                <td>{{appointmentUpcoming.PERSON_INFO}}</td>
+                                <td>
+                                    <p data-toggle="collapse" ng-click="myExpand($index)" style="cursor: pointer">
+                                        {{appointmentUpcoming.MESSAGE}}
+                                    </p>
+                                    <div class="panel-collapse collapse collapse{{$index}}">
+                                        <div class="panel-body">
+                                            {{appointmentUpcoming.DETAIL}}
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <a
-                                        class="btn btn-sm yellow filter-submit margin-bottom"
-                                        style="margin-left: 10px;margin-bottom: 10px;"
-                                        ng-click="closeMyCalendarPopup()"
-                                        ui-sref="{{appointmentUpcoming.link}}">
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="closeMyCalendarPopup()" ui-sref="{{appointmentUpcoming.link}}">
                                     View details
                                 </a>
-                            </td>
-                            <!--<td>-->
-                            <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
-                            <!--</td>-->
-                        </tr>
+                                </td>
+                                <!--<td>-->
+                                <!--<input type="checkbox"   ng-model="item.STATUS" ng-true-value="1" ng-false-value="0" ng-checked="item.STATUS">-->
+                                <!--</td>-->
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
                 <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
             </div>
         </div>
     </div>
 </div>
-
 <!--END-->
 <script src="../../theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="../../theme/assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
 <script src="../../theme/assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
 <script src="../../theme/assets/admin/pages/scripts/index.js" type="text/javascript"></script>
-
 <script>
-    jQuery(document).ready(function() {
-        Metronic.init(); // init metronic core componets
-        Layout.init(); // init layout
-        Demo.init(); // init demo features
-        Index.init();
+jQuery(document).ready(function() {
+    Metronic.init(); // init metronic core componets
+    Layout.init(); // init layout
+    Demo.init(); // init demo features
+    Index.init();
 
-        $('#chatMenu').BootSideMenu({side:"right",autoClose:true});
-
-        $('img').error(function(){
-            $(this).attr('src', 'theme/assets/icon.png');
-        });
+    $('#chatMenu').BootSideMenu({
+        side: "right",
+        autoClose: true
     });
 
-    
-    document.body.className = "mainClass page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-footer-fixed1";
+    $('img').error(function() {
+        $(this).attr('src', 'theme/assets/icon.png');
+    });
+});
+
+
+document.body.className = "mainClass page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-footer-fixed1";
 </script>
-
-
-
