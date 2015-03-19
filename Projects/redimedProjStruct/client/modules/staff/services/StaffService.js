@@ -50,7 +50,8 @@ angular.module("app.loggedIn.staff.service", [])
             var array = [],
                 info = {},
                 temp,
-                now = new Date();
+                now = new Date(),
+                monthTemp;
 
                 info.userID = userID;
 
@@ -60,9 +61,11 @@ angular.module("app.loggedIn.staff.service", [])
                 checkMonth.post({info: info}).then(function(response){
                     angular.forEach(response['tasks'], function(data){
                         temp = new Date(data.date);
-                        array.push(temp.toLocaleFormat('%Y-%m-%d'));
+                        monthTemp = temp.getMonth() * 1 + 1;
+                        if(monthTemp < 10)
+                            monthTemp = '0' + monthTemp;
+                        array.push(temp.getFullYear() + '-' + monthTemp + '-' + temp.getDate());
                     })
-                    console.log(array);
                 });
 
             var selectCurrentWeek = function () {

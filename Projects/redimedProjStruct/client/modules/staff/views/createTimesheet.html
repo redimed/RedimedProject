@@ -16,8 +16,8 @@
     <div class="portlet-title">
         <div class="pull-right">
             <label style="margin-top:10px;" >Week From</label>
-            <input style="margin-top:10px;"  class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
-            <a class="btn btn-xs blue pull-right" style="margin-top:10px;margin-left: 10px" ui-sref="loggedIn.ApproveTask">
+            <input style="margin-top:10px;color: black"  class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
+            <a class="btn btn-xs blue pull-right" style="margin-top:10px;margin-left: 10px">
                 <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
         </div>
         <div class="caption" style="font-size:14px;">
@@ -68,7 +68,7 @@
                     </th>
                     <th>
                         <div class="th" style="width:100px;">
-                            </span> Time charge
+                            </span> Time Charge
                         </div>
                     </th>
                     <th>
@@ -111,23 +111,28 @@
                     <td style="width: 2%">
                         <input ng-disabled="!task.isBillable" type="checkbox"
                          class="checkbox center" ng-model="task.isInputItem"/></td>
-                    <td  style="width: 2%">
-                        <input ng-disabled="task.isBillable" class="form-control input-sm"  ng-model="task.time_charge"/></td>
+                    <td  style="width: 2%" style="text-align: center">
+                        <input ng-disabled="task.isBillable" type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" custom-tr="task.time_charge" custom-fr="viewTask.time_charge" ng-required="true" placeholder="HH:mm" class="form-control center input-sm">
                     <td style="width: 20%">
                         <input ng-disabled="task.isBillable" class="form-control input-sm" ng-model="task.task"/>
                     </td>
                     <td>
                         <span ng-disabled="!task.isInputItem" ng-click="chooseItem(task,$index)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
-
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="vertical-align: middle"><span class="bold pull-right">Total: </span></td>
+                    <td>
+                        <input disabled class="form-control input-sm" ng-model="time_total"/></td>
+                        <td colspan="2"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="form-action" style="text-align: right">
-            <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(1)">Save</span>
+            <span class="btn btn-xs blue" ng-hide='isEdit' ng-click="addAllTask(1)">Save</span>
             <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(2)">Submit</span>
-            <a class="btn btn-xs blue-dark" ng-hide='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
+            <a class="btn btn-xs btn-warning" ng-hide='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
         </div>
     </div>
 </div>
