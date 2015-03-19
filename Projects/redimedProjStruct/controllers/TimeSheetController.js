@@ -50,21 +50,25 @@ module.exports = {
 
                                 for(var i=0; i<count;i++)
                                 {
-                                    if(info.itemList[i].value != null && info.itemList[i].value.length > 0)
+                                    if(info.itemList[i] != null && typeof info.itemList[i] !== 'undefined')
                                     {
-                                        for(var j=0; j< info.itemList[i].value.length; j++)
-                                        {
-                                            var a = info.itemList[i].value[j];
-                                            chainer.add(
-                                                db.TimeItemTask.create({
-                                                    task_id: taskIdArr[i],
-                                                    item_id: a.ITEM_ID,
-                                                    quantity: a.quantity,
-                                                    time_charge: a.time_charge,
-                                                    comment: a.comment
-                                                })
-                                            )
-                                        }
+										if(info.itemList[i].value != null && info.itemList[i].value.length > 0)
+										{
+											for(var j=0; j< info.itemList[i].value.length; j++)
+											{
+												var a = info.itemList[i].value[j];
+												chainer.add(
+													db.TimeItemTask.create({
+														task_id: taskIdArr[i],
+														item_id: a.ITEM_ID,
+														quantity: a.quantity,
+														time_charge: a.time_charge,
+														comment: a.comment
+													})
+												)
+											}
+										}
+                                        
                                     }
                                 }
                             })
