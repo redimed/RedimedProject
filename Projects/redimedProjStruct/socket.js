@@ -3,8 +3,8 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var apiKey = "45185002";
-var apiSecret = "b73a1fee03a4da8d01340986312b41e5126d89a5";
+var apiKey = "45178592";
+var apiSecret = "f21cb8765b7277f73989b0894d152bfb60a91aa7";
 
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
