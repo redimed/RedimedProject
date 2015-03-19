@@ -48,7 +48,7 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Item
+                                        Item Number
                                     </div>
                                 </th>
                                 <th>
@@ -80,7 +80,8 @@
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].chargeWeek)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved'}">{{(list.result[0].status==="Submitted")?"A waitting for approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaitting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].time_in_lieu)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].over_time)}}</span>
             </div>
@@ -95,11 +96,12 @@
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
                 <div class="col-md-4" style="margin-top:5px; font-size:13px;">
-                    <span>Employee's remaining time charge <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}</span> , Please choose time type(*)</span>
+                    <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-9">
+                    </span> This Time will be charged to (*):</span>
                     <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
-                    <label class="control-label">TIME IN LIEU</label>
+                    <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;" ng-change="changeOverTime()">
                     <label class="control-label">OVER TIME</label>
                 </div>
