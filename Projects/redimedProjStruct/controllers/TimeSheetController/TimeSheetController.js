@@ -1055,14 +1055,14 @@ module.exports = {
                                                             "FROM time_tasks_week INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
                                                             "INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN time_task_status ON " +
                                                             "time_tasks_week.task_status_id = time_task_status.task_status_id INNER JOIN hr_employee ON " +
-                                                            "hr_employee.Employee_ID = users.employee_id WHERE time_tasks.department_code_id IN " + Depts +
+                                                            "hr_employee.Employee_ID = users.employee_id WHERE time_task_status.task_status_id NOT IN(1) AND time_tasks.department_code_id IN " + Depts +
                                                             " AND users.id IN " + listUser + strSearch + strSearchEmployee + orderBY + " LIMIT " + searchObj.limit +
                                                             " OFFSET " + searchObj.offset;
                                                         var queryCountApprovedTimeSheet = "SELECT COUNT(DISTINCT time_tasks_week.task_week_id) AS COUNT " +
                                                             "FROM time_tasks_week INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
                                                             "INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN time_task_status ON " +
                                                             "time_tasks_week.task_status_id = time_task_status.task_status_id INNER JOIN hr_employee ON " +
-                                                            "hr_employee.Employee_ID = users.employee_id WHERE time_tasks.department_code_id IN " + Depts +
+                                                            "hr_employee.Employee_ID = users.employee_id WHERE time_task_status.task_status_id NOT IN(1) AND time_tasks.department_code_id IN " + Depts +
                                                             " AND users.id IN " + listUser + strSearch + strSearchEmployee;
                                                         db.sequelize.query(queryApprovedTimeSheet)
                                                             .success(function(listApproved) {
