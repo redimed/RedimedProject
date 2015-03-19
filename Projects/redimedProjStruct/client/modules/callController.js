@@ -214,7 +214,7 @@ angular.module("app.call.controller",[
         var disconnect = function() {
             $scope.session.disconnect();
             $scope.session.on('sessionDisconnected', function () {
-                socket.removeAllListeners();
+                // socket.removeAllListeners();
             });
         }
 
@@ -336,7 +336,7 @@ angular.module("app.call.controller",[
               });
             }
           });
-
+                                 
         var mouseMoveTimeout;
         var mouseMoved = function (event) {
             if (!$scope.mouseMove) {
