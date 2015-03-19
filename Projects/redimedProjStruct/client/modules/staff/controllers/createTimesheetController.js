@@ -314,8 +314,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         }
                     }
 
-                    // $scope.itemList.push({key: index, value: list});
-
                     if(list.length > 0)
                     {
                         var t = [];
@@ -323,7 +321,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         for(var i=0; i < list.length; i++)
                         {
                             t.push(list[i].ITEM_ID);
-                            c = c + parseFloat((list[i].time_charge == null || list[i].time_charge === '' || typeof list[i].time_charge === 'undefined') ? 0 : list[i].time_charge);
+                            c = c + list[i].time_temp);
                         }
                         task.task = t.join(' , ');
                         task.time_charge = c;
@@ -333,6 +331,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         task.task =  null;
                         task.time_charge = null;
                     }
+
 
                 }
                 
@@ -373,9 +372,16 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             ITEM_ID: null,
             ITEM_NAME: null,
             quantity: null,
-            time_charge: null,
+            time_charge: 0,
+            time_temp: 0,
             comment: null
         }
+
+        $scope.getFortMatTimeTemp = function(time_charge) {
+            var hourInLieu = parseInt(time_charge.substring(0, 2));
+            var minuteInLieu = parseInt(time_charge.substring(2, 4));
+            return hourInLieu + (minuteInLieu / 60);
+        };
 
          $scope.cancel = function(){
             $modalInstance.close({type:"cancel"});
@@ -384,13 +390,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.okClick = function(){
             for(var i=0; i<$scope.itemList.length;i++)
             {
-                if($scope.itemList[i].time_charge != null || typeof $scope.itemList[i].time_charge !== 'undefined')
-                {
-                    if($scope.itemList[i].time_charge.toString().indexOf(':') != -1)
-                    {
-                        $scope.itemList[i].time_charge = moment.duration($scope.itemList[i].time_charge).asHours();
-                    }
-                }
+                $scope.itemList[i].time_temp = $scope.getFortMatTimeTemp($scope.itemList[i].time_charge);
                 
             }
             $modalInstance.close({type:"ok",value:$scope.itemList});
