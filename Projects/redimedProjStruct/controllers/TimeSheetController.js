@@ -43,7 +43,7 @@ module.exports = {
                                             "location_id" : allTask[i].location_id,
                                             "activity_id" : allTask[i].activity_id,
                                             "time_spent" : allTask[i].time_spent,
-                                            "time_charge" : allTask[i].time_charge
+                                            "time_charge" : allTask[i].time_temp
                                         })
                                     )
                                 }

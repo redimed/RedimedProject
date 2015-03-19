@@ -112,7 +112,7 @@
                         <input ng-disabled="!task.isBillable" type="checkbox"
                          class="checkbox center" ng-model="task.isInputItem"/></td>
                     <td  style="width: 2%" style="text-align: center">
-                        <input ng-disabled="task.isBillable" type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" custom-tr="task.time_charge" custom-fr="viewTask.time_charge" ng-required="true" placeholder="OO:OO" class="form-control center input-sm">
+                        <input ng-disabled="task.isBillable" type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" custom-tr="task.time_charge" custom-fr="viewTask.time_charge" ng-required="true" placeholder="hh:mm" class="form-control center input-sm">
                     <td style="width: 20%">
                         <input ng-disabled="task.isBillable" class="form-control input-sm" ng-model="task.task"/>
                     </td>
