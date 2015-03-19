@@ -374,10 +374,15 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.okClick = function(){
             for(var i=0; i<$scope.itemList.length;i++)
             {
-                if($scope.itemList[i].time_charge.indexOf(':') != -1)
+                if($scope.itemList[i].time_charge != null || typeof $scope.itemList[i].time_charge !== 'undefined')
                 {
-                    $scope.itemList[i].time_charge = moment.duration($scope.itemList[i].time_charge).asHours();
+                    console.log($scope.itemList[i]);
+                    if($scope.itemList[i].time_charge.indexOf(':') != -1)
+                    {
+                        $scope.itemList[i].time_charge = moment.duration($scope.itemList[i].time_charge).asHours();
+                    }
                 }
+                
             }
             $modalInstance.close({type:"ok",value:$scope.itemList});
         }
