@@ -29,8 +29,8 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.info.comments = scope.list.result[0].comments;
                                 }
                                 scope.info.time_rest = scope.list.result[0].time_rest;
-                                scope.info.time_in_lieu = null;
-                                scope.info.over_time = null;
+                                scope.info.time_in_lieu = "0000";
+                                scope.info.over_time = "0000";
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
                             } else {
                                 //catch exception
