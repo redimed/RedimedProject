@@ -714,7 +714,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 50000);
+            }, 4000);
         };
 
 
