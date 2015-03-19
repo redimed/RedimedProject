@@ -321,7 +321,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         for(var i=0; i < list.length; i++)
                         {
                             t.push(list[i].ITEM_ID);
-                            c = c + list[i].time_temp);
+                            c = c + list[i].time_temp;
                         }
                         task.task = t.join(' , ');
                         task.time_charge = c;
