@@ -47,7 +47,7 @@
                     <td width="10%" align="center" >{{item.ITEM_ID}}</td>
                     <td width="40%" style="word-wrap: break-word">{{item.ITEM_NAME}}</td>
                     <td style="width: 10%">
-                        <input type="text" class="form-control input-sm" ng-model="item.quantity" required numbers-only="numbers-only" />
+                        <input type="text" class="form-control input-sm" ng-model="item.quantity" required numbers-only="numbers-only"/>
                     <td style="width: 10%">
                         <input type="text" class="form-control input-sm" ng-model="item.time_charge" required numbers-only />
                     </td>
@@ -64,8 +64,6 @@
     </div>
 </div>
 <div class="modal-footer">
-
     <a ng-if="!isView" href="javascript:;" class="btn btn-danger" ng-click='cancel()'>Cancel</a>
-    <a ng-if="!isView" href="javascript:;" ng-click="okClick()" class="btn green" >Submit</a>
-
+    <a ng-if="!isView" href="javascript:;" ng-click="okClick()" class="btn green" >OK</a>
 </div>
