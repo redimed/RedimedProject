@@ -227,35 +227,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
 
         $scope.activityChange = function(task,index){
-            for(var i=0; i< $scope.activities.length ;i++)
+            if(task.activity_id == 1)
             {
-                var activity = $scope.activities[i];
-                if(task.activity_id == activity.activity_id)
-                {
-                    if(activity.NAME.indexOf('Billable') != -1)
-                    {
-                        console.log("a");
-                        task.isBillable = true;
-
-                        task.time_spent = null;
-                        task.time_charge = null;
-                        task.task = null;
-                    }
-                    else
-                    {
-                        console.log("b");
-                        task.isBillable = false;
-
-                        for(var i=0; i<$scope.itemList.length;i++)
-                        {
-                            if($scope.itemList[i].key == index)
-                            {
-                                $scope.itemList[i].value = null;
-                            }
-                        }
-
-                    }
-                }
+                task.isBillable = true;
+                task.time_charge = null;
+                task.task = null;
+            }
+            else
+            {
+                task.isBillable = false;
+                task.isInputItem = 0;
+                $scope.itemList[index].value = null;
             }
         }
 
