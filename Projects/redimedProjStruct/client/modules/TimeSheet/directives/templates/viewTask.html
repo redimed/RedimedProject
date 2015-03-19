@@ -100,9 +100,9 @@
                 </div>
                 <div class="col-md-9">
                     </span> This Time will be charged to (*):</span>
-                    <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
-                    <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" placeholder="HH:mm" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;" ng-change="changeOverTime()">
+                    <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" placeholder="00:00" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
+                    <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" placeholder="00:00" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;" ng-change="changeOverTime()">
                     <label class="control-label">OVER TIME</label>
                 </div>
             </div>

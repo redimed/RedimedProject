@@ -7,7 +7,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
         //STATUS
         $scope.listStatus = [{
             code: 2,
-            name: "Awaitting for Approve"
+            name: "Awaiting for Approve"
         }, {
             code: 3,
             name: "Approved"
