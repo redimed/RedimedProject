@@ -56,9 +56,28 @@ angular.module("app.loggedIn.controller",[
 
     })
 
-.controller("loggedInController", function($scope,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+.controller("loggedInController", function(beforeUnload,$scope,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
     $scope.isShow = true;
+
+    $scope.$on('onBeforeUnload', function (e, confirmation) {
+        confirmation.message = "Your sure want to leave this page!";
+        e.preventDefault();
+    });
+    $scope.$on('onUnload', function (e) {
+        if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
+        {
+            if(!$cookieStore.get("isRemember"))
+            {
+                $cookieStore.remove("userInfo");
+                $cookieStore.remove("companyInfo");
+                $cookieStore.remove("doctorInfo");
+                $cookieStore.remove("fromState");
+                $cookieStore.remove("isRemember");
+            }
+        }
+    });
+
 
     socket.on("forceLogout",function(){
 

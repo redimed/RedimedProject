@@ -157,22 +157,7 @@ angular.module("app", [
 //When update any route
 .run(function(beforeUnload,$window,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
-    $rootScope.$on('onBeforeUnload', function (e, confirmation) {
-        confirmation.message = "Your sure want to leave this page!";
-        e.preventDefault();
-    });
-    $rootScope.$on('onUnload', function (e) {
-        if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
-        {
-            if(!$cookieStore.get("isRemember"))
-            {
-                $cookieStore.remove("userInfo");
-                $cookieStore.remove("companyInfo");
-                $cookieStore.remove("doctorInfo");
-                $cookieStore.remove("fromState");
-            }
-        }
-    });
+   
 
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))
