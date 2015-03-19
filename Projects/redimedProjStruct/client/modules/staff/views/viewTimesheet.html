@@ -71,7 +71,8 @@
                         <td><span class="btn btn-xs">{{$index+1}}.</span></td>
                         <td><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd-MM-yyyy"}}</span></td>
                         <td>{{getFortMatTimeCharge(l.time_charge)}}</td>
-                        <td><span ng-class="{'reject':l.STATUS==='Rejected','submited':l.STATUS==='Submitted', 'approved':l.STATUS==='Approved'}">{{l.STATUS}}</td>
+                        <td><span ng-class="{'reject':l.STATUS==='Rejected','submited':l.STATUS==='Submitted', 'approved':l.STATUS==='Approved', 'pending':l.STATUS==='Pending',
+                            're-submitted':l.STATUS==='Re-submitted'}">{{l.STATUS}}</td>
                         <td>{{(l.comments===null||l.comments==="")?"":l.comments}}</span></td>
                     </tr>
                 </tbody>
