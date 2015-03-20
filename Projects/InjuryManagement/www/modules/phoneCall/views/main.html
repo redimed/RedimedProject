@@ -48,24 +48,15 @@
             <button class="button custom-bottom-control button-icon"
                     ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
             </button>
+
             <button class="button button-cancel_main" ng-click="cancelCall(offMedia = false)">
                 <img class="img-responsive margin-auto" src="img/call-down.png" />
             </button>
-            <!-- <button class="button custom-bottom-control button-icon"
-
-
-            <button style="z-index: 9999" class="button custom-bottom-control button-icon"
-                    ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
-            </button> -->
-
-            <button style="z-index: 9999" class="button button-cancel_main" ng-click="cancelCall(offMedia = false)">
-                <img class="img-responsive margin-auto" src="img/call-down.png" />
-            </button>
-
 
             <button style="z-index: 9999" class="button custom-bottom-control button-icon"
                     ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
             </button>
+
         </div>
 
         <!--<div ng-show="!isCaller || isAccept" class="cus-callerVideo">-->
@@ -80,21 +71,12 @@
         <!--<ot-publisher props="facePublisherProps" mute-audio="mic" mute-video="camera"></ot-publisher>-->
         <!--</div>-->
 
-        <div class="cus-callerVideo">
-            <ot-layout props="{animate:false,bigFixedRatio:true}">
-                <ot-subscriber ng-repeat="stream in streams"
-                               stream="stream"
-                               session="session"
-                               props="{style: {nameDisplayMode: 'off'}}"
-                               ng-class="{OT_big: (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}"
-                               ng-dblclick="$emit('changeSize')">
-                    <input type="button" class="resize-btn" ng-click="$emit('changeSize');"/>
-                </ot-subscriber>
-            </ot-layout>
+        <div class="cus-callerVideo" ng-show="!isCaller || isAccept">
+            <div id="callerVideo"></div>
         </div>
 
         <div class="cus-selfVideo">
-            <ot-publisher id="facePublisher" draggable="true"></ot-publisher>
+            <div id="selfVideo"></div>
         </div>
 
 
