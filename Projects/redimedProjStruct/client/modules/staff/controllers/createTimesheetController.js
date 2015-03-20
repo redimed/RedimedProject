@@ -181,8 +181,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                     if(data.time_charge != null)
                                     {
                                         data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
-                                        console.log(data.time_charge);
-                                        $scope.changeTimeCharge(data);
                                     }
                                     angular.forEach(response['item'], function(item){
                                          if(data.tasks_id == item.tasks_id){
@@ -193,7 +191,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                          }
                                     })
                                     $scope.tasks.push(data);
+                                    $scope.changeTimeCharge(data);
                                 })
+                                
                             }                        
                         })
                     }else{
