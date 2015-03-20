@@ -28,17 +28,17 @@
                                 </th>
                                 <th>
                                     <div class="th">
+                                        Activity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
                                         Location
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
                                         Department
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        Activity
                                     </div>
                                 </th>
                                 <th>
@@ -66,9 +66,9 @@
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class="{'same':l.order%2!==0}" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
                                 <td class="btn btn-xs" style="text-align:left;">{{l.date | date: "dd/MM/yyyy"}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"":l.LOCATION}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"":l.departmentName}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{getFortMatTimeCharge(l.chargeDate)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.ITEM_ID===null||l.ITEM_ID==="")?"N/A":l.ITEM_ID}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
