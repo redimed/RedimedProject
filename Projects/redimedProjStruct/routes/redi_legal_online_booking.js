@@ -11,6 +11,7 @@ var rlBookingFilesController=require('./controllers/rlBookingFilesController');
 var sysUserNotificationsController=require('./controllers/sysUserNotificationsController');
 var structureController=require('./controllers/structureController');
 var rlobBookingPaperlessController=require('./controllers/rlobBookingPaperlessController');
+var rlRegisterController=require('./controllers/rlRegisterController');
 
 //-------------------------------------------------------------
 
@@ -128,4 +129,8 @@ app.post('/api/rlob/rl_form_ams5/addNewFormAms5', rlobBookingPaperlessController
 app.post('/api/rlob/rl_form_ams5/rl_form_ams5_update', rlobBookingPaperlessController.rl_form_ams5_update);
 app.get('/api/rlob/rl_form_ams5/select_Item_rl_form_ams5_bookingid', rlobBookingPaperlessController.select_Item_rl_form_ams5_bookingid);
 
-
+//user register
+//tannv.dts@gmail.com
+app.post('/api/rlob/register/insert-new-user', rlRegisterController.insertNewUser);
+app.get('/api/rlob/register/list-redilegal-users', rlRegisterController.getRedilegalUsers);
+app.get('/api/rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer', rlBookingsController.getUpcommingBookingHaveNotDocumentToNotificationCustomer);

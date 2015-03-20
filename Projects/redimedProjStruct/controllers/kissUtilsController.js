@@ -41,14 +41,14 @@ function haveData(obj) {
  */
 function checkData(value)
 {
-    return (value!==undefined && value!==null && value!=='');
+    return (value!==undefined && value!==null && value!=='' && value!={});
 }
 
 function checkListData()
 {
     for (var i = 0; i < arguments.length; i++) 
     {
-        if(arguments[i]===undefined || arguments[i]===null || arguments[i]==='')
+        if(arguments[i]===undefined || arguments[i]===null || arguments[i]==='' ||arguments[i]=={})
             return false;
     }
     return true;
@@ -110,6 +110,163 @@ module.exports =
         else
         {
             return true;
+        }
+    },
+
+    /**
+     * Ham tao transaction
+     * Neu transaction tao thanh cong se thuc thi function successFunction
+     * [successFunction(connection)]
+     * tannv.dts@gmail.com
+     */
+    beginTransaction:function(req,functionSuccess,functionError)
+    {
+        if(checkData(req.kissConnection))
+        {
+            execute();
+        }
+        else
+        {
+            req.getConnection(function(err,connection)
+            {
+                if(!err)
+                {
+                    req.kissConnection=connection;
+                    execute();
+                }
+                else
+                {
+                    exlog("beginTransaction","beginTransaction error","Err","Khong lay duoc connection");
+                    functionError(err);
+                    return;
+                }
+            });
+        }
+
+        function execute()
+        {   
+            req.kissConnection.beginTransaction(function(err) 
+            {
+                if (err) 
+                { 
+                    exlog("beginTransaction","beginTransaction error","Err","Khong the tao transaction");
+                    functionError(err);
+                    return;
+                }
+                else
+                {
+                    functionSuccess();
+                }
+
+
+                /*if (err) 
+                { 
+                    connection.rollback(function() 
+                    {
+                        throw err;
+                    });
+                }*/
+
+                /*connection.commit(function(err) 
+                {
+                    if (err) 
+                    { 
+                        connection.rollback(function() 
+                        {
+                            throw err;
+                        });
+                    }
+                    console.log('success!');
+                });*/
+            });
+        }
+    },
+
+    rollback:function(req)
+    {
+        req.kissConnection.rollback(function() 
+        {
+            exlog("kissUtil","rollback success!");
+        });
+    },
+
+    commit:function(req,functionSuccess,functionError)
+    {
+        req.kissConnection.commit(function(err) 
+        {
+            if (err) 
+            { 
+                req.kissConnection.rollback(function() 
+                {
+                    exlog("kissUtil","commit error","rollback success!");
+                    functionError(err);
+                });
+            }
+            else
+            {
+                exlog("kissUtil","commit success!");
+                functionSuccess();
+            }
+        });
+    },
+
+    /**
+     * Ham thuc thi mot cau truy van
+     * logQuery=true=> xuat log cau query dang chay
+     * logResult=true=>xuat log ket qua cau query dang chay
+     * tannv.dts@gmail.com
+     */
+    executeQuery:function(req,sql,params,functionSuccess,functionError,logQuery,logResult)
+    {
+        if(checkData(req.kissConnection))
+        {
+            execute();
+        }
+        else
+        {
+            req.getConnection(function(err,connection)
+            {
+                if(!err)
+                {
+                    req.kissConnection=connection;
+                    execute();
+                }
+                else
+                {
+                    exlog("kissUtil","executeQuery error","Err","Khong lay duoc connection");
+                    functionError(err);
+                    return;
+                }
+            });
+        }
+
+        function execute()
+        {
+            var query = req.kissConnection.query(sql,params,function(err,result)
+            {
+                if(!err)
+                {
+                    if(logQuery===true)
+                    {
+                        if(logResult===true)
+                        {
+                            exlog("kissUtil","executeQuery success",query.sql,result);
+                        }
+                        else
+                        {
+                            exlog("kissUtil","executeQuery success",query.sql);
+                        }
+                    } 
+                    functionSuccess(result);
+                    return;
+                }
+                else
+                {
+                    exlog("kissUtil","executeQuery error",query.sql,err);
+                    functionError(err);
+                    return;   
+                }
+            });
         }
     }
     

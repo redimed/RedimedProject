@@ -63,6 +63,16 @@ angular.module("app.security",[
     //	}
     //})
     //END REGISTER
+    
+    .state("security.rlobRegister", {
+     url: "/rlob-register",
+     views: {
+         "main-content": {
+                templateUrl: "/modules/rediLegalOnlineBooking/views/register.html",
+                controller:'rlobRegisterController'
+         }
+     }
+    })
 
     //REDIRECT
     .state("security.redirect", {

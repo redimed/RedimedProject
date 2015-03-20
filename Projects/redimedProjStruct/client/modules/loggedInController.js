@@ -418,16 +418,14 @@ angular.module("app.loggedIn.controller",[
             angular.element("#main-menu").removeClass("page-sidebar-menu-closed");
         }
     }
+    $scope.$on('$idleTimeout', function() {
+        $state.go('lockscreen',{reload:true});
+    })
     // End Toggle Menu
 //-------------------------------------------------------------------------------
-    //Xu ly notification
-    //tannv.dts@gmail.com
-    //2-10-2014
-
-
-        $scope.$on('$idleTimeout', function() {
-            $state.go('lockscreen',{reload:true});
-        })
+        //Xu ly notification
+        //tannv.dts@gmail.com
+        //2-10-2014
 
         /****
          *Config get source link
@@ -438,6 +436,10 @@ angular.module("app.loggedIn.controller",[
             Vaccination:'Vaccination'
         }
 
+        /**
+         * Tra ve state de xem chi tiet booking
+         * tannv.dts@gmail.com
+         */
         var getSourceLink=function(sourceName,refId){
             var link='';
             switch(sourceName)
@@ -464,7 +466,6 @@ angular.module("app.loggedIn.controller",[
         }
 
         //-----------------------------------------
-
         /***
          * update Notification thu cong (startup hoac nhan nut refresh)
          * tannv.dts@gmail.com
@@ -475,12 +476,18 @@ angular.module("app.loggedIn.controller",[
         $scope.bellUnreadList=[];
         $scope.letterUnreadList=[];
 
-        $scope.maxIndex=0;
+        //Mac dinh phai bang null
+        $scope.maxIndex=null;
+
+        /**
+         * Update cac dang notification(bell,letter) bang cach thu cong (refresh)
+         * tannv.dts@gmail.com
+         */
         $scope.updateNotificationManual=function(){
             $http({
                 method:"GET",
                 url:"/api/rlob/sys_user_notifications/get-unread-notifications",
-                params:{userId:userInfo.id}
+                params:{}
             })
             .success(function(data) {
                 if(data.status=='success' && data.data.length>0)
@@ -519,13 +526,13 @@ angular.module("app.loggedIn.controller",[
             });
         }
         $scope.updateNotificationManual();
+
+
         $scope.functionTimeout=function()
         {
             $scope.updateNotificationManual();
         }
         $timeout($scope.functionTimeout,4000);
-
-
 
 
         /***
@@ -589,6 +596,11 @@ angular.module("app.loggedIn.controller",[
             danger:'danger',
             success:'success'
         }
+
+        /**
+         * Show cac the thong bao co cac notification (bell,letter) moi.
+         * tannv.dts@gmail.com
+         */
         $scope.showNotificationPopup=function(styleClass,msg,notifyColor)
         {
             $(styleClass).notify({
@@ -604,7 +616,7 @@ angular.module("app.loggedIn.controller",[
          * tannv.dts@gmail.com
          */
 
-        var notificationSchedule;
+        
 
         /***
          * kiem tra xem bell co trong trong danh sach dropdown hay chua
@@ -646,70 +658,84 @@ angular.module("app.loggedIn.controller",[
          * Defined Schedule List
          * @type {{}}
          */
+        
+        var scheduler;
+
         $scope.scheduleList={
 
         }
 
-        $scope.updateNotification = function() {
-            // Don't start a new fight if we are already fighting
-            if ( angular.isDefined(notificationSchedule) ) return;
-            notificationSchedule = $interval(function() {
+        $scope.runSchedule=function()
+        {
+            if ( angular.isDefined(scheduler) ) return;
+            scheduler = $interval(function() 
+            {
                 for(var key in $scope.scheduleList)
                 {
                     $scope.scheduleList[key]();
                 }
+            }, 4000);
+        }
+
+        $scope.scheduleList.getNewNotifications=function()
+        {
+            if($scope.maxIndex!==null)
+            {
                 $http({
                     method:"GET",
                     url:"/api/rlob/sys_user_notifications/get-new-notifications",
                     params:{userId:userInfo.id,currentIndex:$scope.maxIndex}
                 })
-                    .success(function(data) {
-                        if(data.status=='success' && data.data.length>0)
+                .success(function(data) {
+                    if(data.status=='success' && data.data.length>0)
+                    {
+                        $scope.maxIndex=data.data[0].id;
+                        for(var i=0;i<data.data.length;i++)
                         {
-                            $scope.maxIndex=data.data[0].id;
-                            for(var i=0;i<data.data.length;i++)
+                            data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
+                            $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg,$scope.notificationColor.warning);
+                            if(data.data[i].TYPE=='bell')
                             {
-                                data.data[i].link=getSourceLink(data.data[i].source_name,data.data[i].ref_id);
-                                $scope.showNotificationPopup(".lob_notification_popup",data.data[i].msg,$scope.notificationColor.warning);
-                                if(data.data[i].TYPE=='bell')
-                                {
-                                    $scope.bellUnreadList.unshift(data.data[i]);
-                                    $scope.numbersBellUnread++;
-                                }
-                                else if(data.data[i].TYPE=='letter')
-                                {
-                                    $scope.letterUnreadList.unshift(data.data[i]);
-                                    $scope.numbersLetterUnread++;
-                                }
-
+                                $scope.bellUnreadList.unshift(data.data[i]);
+                                $scope.numbersBellUnread++;
                             }
-                            $scope.setSlimCroll('.bell-dropdown');
-                            $scope.setSlimCroll('.letter-dropdown');
+                            else if(data.data[i].TYPE=='letter')
+                            {
+                                $scope.letterUnreadList.unshift(data.data[i]);
+                                $scope.numbersLetterUnread++;
+                            }
+
                         }
+                        $scope.setSlimCroll('.bell-dropdown');
+                        $scope.setSlimCroll('.letter-dropdown');
+                    }
 
-                    })
-                    .error(function (data) {
-                        console.log("error");
-                    })
-                    .finally(function() {
+                })
+                .error(function (data) {
+                    console.log("error");
+                })
+                .finally(function() {
 
-                    });
-            }, 4000);
-        };
+                });
+            }
+        }
 
+        //Chay schedule
+        $scope.runSchedule();
 
-
-        $scope.stopUpdateNotification = function() {
-            if (angular.isDefined(notificationSchedule)) {
-                $interval.cancel(notificationSchedule);
-                notificationSchedule = undefined;
+        /**
+         * Dung chay scheduler
+         * @return {[type]} [description]
+         */
+        $scope.stopScheduler = function() {
+            if (angular.isDefined(scheduler)) {
+                $interval.cancel(scheduler);
+                scheduler = undefined;
             }
         };
-
-
         $scope.$on('$destroy', function() {
             // Make sure that the interval is destroyed too
-            $scope.stopUpdateNotification();
+            $scope.stopScheduler();
         });
 
 
@@ -719,29 +745,6 @@ angular.module("app.loggedIn.controller",[
          * Phan trang notification
          * tannv.dts@gmail.com
          */
-
-        $http({
-            method:"GET",
-            url:"api/rlob/sys_user_notifications/get-max-index",
-            params:{userId:userInfo.id}
-        })
-        .success(function(data) {
-            if(data.status=='success')
-            {
-                if(data.data.max_index!=null)
-                {
-                    $scope.maxIndex=data.data.max_index;
-                    $scope.updateNotification();
-                }
-
-            }
-        })
-        .error(function (data) {
-            console.log("error");
-        })
-        .finally(function() {
-
-        });
 
         /***
          * Hien thi popup liet ke tat ca cac notification theo type
@@ -768,7 +771,7 @@ angular.module("app.loggedIn.controller",[
             $http({
                 method:"GET",
                 url:"/api/rlob/sys_user_notifications/count-total-notification",
-                params:{userId:userInfo.id,type:type}
+                params:{type:type}
             })
             .success(function(data) {
                 if(data.status=='success')
@@ -801,12 +804,11 @@ angular.module("app.loggedIn.controller",[
          */
         function getItemsOfPaging(data)
         {
-
             var deferred=$q.defer();
             $http({
                 method:"GET",
                 url:"/api/rlob/sys_user_notifications/get-items-of-paging",
-                params:{userId:userInfo.id,type:data.type,pageIndex:data.pageIndex,itemsPerPage:data.itemsPerPage}
+                params:{type:data.type,pageIndex:data.pageIndex,itemsPerPage:data.itemsPerPage}
             })
             .success(function(data) {
                 if(data.status=='success')
@@ -890,6 +892,7 @@ angular.module("app.loggedIn.controller",[
 
     /***
      * Lay danh sach cac appointment Sap toi
+     * Se hien thi trong calendar icon tren thanh user
      * tannv.dts@gmail.com
      */
     $scope.listAppointmentCalendarUpcoming=[];
@@ -900,8 +903,7 @@ angular.module("app.loggedIn.controller",[
         $scope.numberAppointmentCalendarUpcoming=0;
         $http({
             method:"POST",
-            url:"/api/structure/list-appointments-upcoming",
-            data:{userId:userInfo.id}
+            url:"/api/structure/list-appointments-upcoming"
         })
         .success(function(data) {
             if(data.status=='success')
@@ -915,8 +917,7 @@ angular.module("app.loggedIn.controller",[
                         $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION=
                             $scope.listAppointmentCalendarUpcoming[i].NOTIFICATION
                             +' - '+moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("HH:mm")
-                            +' '  +moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("DD/MM/YYYY")
-
+                            +' '  +moment($scope.listAppointmentCalendarUpcoming[i].DATE_UPCOMING).format("DD/MM/YYYY");
                         $scope.listAppointmentCalendarUpcoming[i].link=getSourceLink($scope.listAppointmentCalendarUpcoming[i].SOURCE_NAME,$scope.listAppointmentCalendarUpcoming[i].ID);
 
                     }
@@ -967,7 +968,7 @@ angular.module("app.loggedIn.controller",[
                 var employeeNumber=(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"");
                 if(notificationType==rlobConstant.notificationType.letter)
                 {
-                    msg="["+sourceName+"] - "
+                    msg="["+rlobConstant.bookingType[sourceName].display+"] - "
                         +data.Rl_TYPE_NAME+" - "
                         +data.WRK_SURNAME+" - "
                         +claimNo
@@ -977,7 +978,7 @@ angular.module("app.loggedIn.controller",[
                 }
                 else if(notificationType==rlobConstant.notificationType.bell)
                 {
-                    msg="["+sourceName+"] - "
+                    msg="["+rlobConstant.bookingType[sourceName].display+"] - "
                         +data.WRK_SURNAME+ " - "
                         +claimNo
                         +employeeNumber
@@ -993,22 +994,23 @@ angular.module("app.loggedIn.controller",[
                     url:"/api/rlob/sys_user_notifications/add-notification",
                     data:{assId:assId,refId:refId,sourceName:sourceName,type:notificationType,msg:msg,appearance:appearance}
                 })
-                    .success(function(data) {
-                        if(data.status=='success')
-                        {
+                .success(function(data) 
+                {
+                    if(data.status=='success')
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                    }
+                })
+                .error(function (data) {
 
-                        }
-                        else
-                        {
+                })
+                .finally(function() {
 
-                        }
-                    })
-                    .error(function (data) {
-
-                    })
-                    .finally(function() {
-
-                    });
+                });
             },function(reason){
 
             });
@@ -1018,21 +1020,22 @@ angular.module("app.loggedIn.controller",[
                 url:"/api/rlob/rl_bookings/get-booking-by-id",
                 data:{bookingId:refId}
             })
-                .success(function(data) {
-                    if(data.status=='success')
-                    {
-                        deferred.resolve(data.data);
-                    }
-                    else
-                    {
-                        alert("data not exist!");
-                    }
-                })
-                .error(function (data) {
-                    console.log("error");
-                })
-                .finally(function() {
-                });
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    deferred.resolve(data.data);
+                }
+                else
+                {
+                    alert("data not exist!");
+                }
+            })
+            .error(function (data) {
+                console.log("error");
+            })
+            .finally(function() {
+                
+            });
         }
 
         /***
@@ -1078,7 +1081,7 @@ angular.module("app.loggedIn.controller",[
          *
          */
         $scope.updateDailyNotificationRlobBooking=function(){
-            rlobService.getUpcommingBookingHaveNotClientDocument(rlobConstant.bookingType.REDiLEGAL.name)
+            rlobService.getUpcommingBookingHaveNotDocumentToNotificationCustomer(rlobConstant.bookingType.REDiLEGAL.name)
                 .then(function(data){
                     if(data.status=='success'){
                         for(var i=0;i<data.data.length;i++)
@@ -1114,7 +1117,6 @@ angular.module("app.loggedIn.controller",[
                 })
 
         }
-        $scope.updateDailyNotificationRlobBooking();
-
+        
 
 	})
