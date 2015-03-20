@@ -48,13 +48,13 @@
             <tbody>
             <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index">
                 <td>{{task.date | date : 'EEE, dd MMM'}}</td>
+                <td>{{task.activity}}</td>
                 <td>{{task.location}}</td>
                 <td>{{task.department}}</td>
-                <td>{{task.activity}}</td>
                 <td>{{task.time_charge}}</td>
                 <td>{{task.task}}</td>
-                <td ng-hide="task.isAction == 'delete'">
-                    <span ng-click="chooseItem(task.item)" ng-disabled='task.item.length == 0' class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
+                <td >
+                    <span ng-click="chooseItem(task.item)" ng-hide="task.isAction == 'delete'" ng-disabled='task.item.length == 0' class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
                 </td>
             </tr>
             </tbody>
