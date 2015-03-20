@@ -54,7 +54,7 @@
                 <td>{{task.time_charge}}</td>
                 <td>{{task.task}}</td>
                 <td ng-hide="task.isAction == 'delete'">
-                    <span ng-click="chooseItem(task.item)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
+                    <span ng-click="chooseItem(task.item)" ng-disabled='task.item.length == 0' class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
                 </td>
             </tr>
             </tbody>

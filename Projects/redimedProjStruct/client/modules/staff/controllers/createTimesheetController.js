@@ -178,7 +178,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 angular.forEach(response['data'], function(data){
                                     data.item = [];
                                     data.isEdit = true;
-                                    data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
+                                    if(data.time_charge != null)
+                                    {
+                                        data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
+                                        console.log(data.time_charge);
+                                        $scope.changeTimeCharge(data);
+                                    }
                                     angular.forEach(response['item'], function(item){
                                          if(data.tasks_id == item.tasks_id){
                                             data.isInputItem = true;
@@ -376,9 +381,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
         $scope.getFortMatTimeTemp = function(time_charge) {
-            var hourInLieu = parseInt(time_charge.substring(0, 2));
-            var minuteInLieu = parseInt(time_charge.substring(2, 4));
-            return hourInLieu + (minuteInLieu / 60);
+            if(time_charge){
+                var hourInLieu = parseInt(time_charge.substring(0, 2));
+                var minuteInLieu = parseInt(time_charge.substring(2, 4));
+                return hourInLieu + (minuteInLieu / 60);
+            }
         };
 
          $scope.cancel = function(){
