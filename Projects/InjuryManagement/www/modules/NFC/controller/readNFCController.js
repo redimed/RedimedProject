@@ -191,7 +191,7 @@ angular.module('starter.NFC.controller',[])
             if(data.length == 0){
                 alert("please read tag NFC!")
             }else{
-                  $cordovaInAppBrowser.open('http://'+HOST_CONFIG.host+':'+HOST_CONFIG.port+'/#/redirect/'+$scope.userInfo.id+'/'+data.data.Patient_id+'','_system', 'location=yes')            
+                  $cordovaInAppBrowser.open('https://'+HOST_CONFIG.host+':'+HOST_CONFIG.port+'/#/redirect/'+$scope.userInfo.id+'/'+data.data.Patient_id+'','_system', 'location=yes')            
             }
         }
 

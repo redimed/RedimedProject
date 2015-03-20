@@ -56,4 +56,20 @@ angular.module('starter.injury', [
                     }
                 }
             })
+        .state('app.injury.historyInjury',{
+                url:"/historyInjury",
+                views:{
+                    'main':{
+                        templateUrl:"modules/submitinjury/views/historyInjury.html"
+                    }
+                }
+        })
+        .state('app.injury.historyDetail',{
+            url:"/historyDetail",
+            views:{
+                'main':{
+                    templateUrl:"modules/submitinjury/views/historyDetail.html"
+                }
+            }
+        })
     })

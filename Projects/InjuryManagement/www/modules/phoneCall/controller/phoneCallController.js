@@ -2,7 +2,8 @@ angular.module('starter.phoneCall.controller',[])
 
     .controller('phoneCallController', function ($scope, $state, localStorageService,
                                                  $rootScope, $timeout, $ionicModal,
-                                                 $stateParams, signaling, UserService) {
+                                                 $stateParams, signaling, UserService, OTSession) {
+
 
         var from = localStorageService.get('fromState');
         $scope.userInfo = localStorageService.get('userInfo');
@@ -10,7 +11,6 @@ angular.module('starter.phoneCall.controller',[])
         $scope.sessionID = $stateParams.sessionID;
         $scope.tokenID = $stateParams.tokenID;
         $scope.isCaller = ($stateParams.isCaller == 'true') ? true : false;
-
         $scope.isAccept = false;
         var params = {};
         if(from.fromParams != null || typeof from.fromParams !== 'undefined')
@@ -39,131 +39,176 @@ angular.module('starter.phoneCall.controller',[])
             $scope.contactNameJson.contactName = data.user_name;
             $scope.contactNameJson.background = colors[Math.floor(Math.random() * colors.length)];
             $scope.contactNameJson.letter = String(data.user_name).substr(0,1).toUpperCase();
+            if(data.img == null) {
+                $scope.avatarCaller = 'img/avatar.png'
+            } else {
+                $scope.avatarCaller = data.img
+            }
         })
 
+        document.addEventListener("deviceready", onDeviceReady, false);
 
-        if($scope.isCaller)
-        {
-            AudioToggle.setAudioMode(AudioToggle.SPEAKER);
-            media = new Media(src, null, null, loop);
-            media.play();
+        $scope.streams = OTSession.streams;
 
-            var publisherProperties =
-            {
-                resolution: '1280x720',
-                insertMode: "append"
-            };
+        function onDeviceReady() {
+            if ($scope.isCaller) {
+                media = new Media(src, null, null, loop);
+                media.play();
 
-            var publisher = TB.initPublisher('selfVideo', publisherProperties);
-            var session = TB.initSession( $scope.apiKey, $scope.sessionID );
-            session.on({
-                'streamCreated': function( event ){
-                    session.subscribe( event.stream, "callerVideo",{
-                        insertMode: "append",
-                        resolution: "1280x720",
-                        width: '100%',
-                        height: '100%'
+                //var publisherProperties =
+                //{
+                //    insertMode: "append",
+                //    resolution: '1280x720',
+                //    width: window.outerWidth/10,
+                //    height: window.outerHeight/10
+                //};
+                //var publisher = TB.initPublisher('selfVideo', publisherProperties);
+                //
+                //var session = TB.initSession( $scope.apiKey, $scope.sessionID );
+                //session.on({
+                //    'streamCreated': function( event ){
+                //        session.subscribe( event.stream, "callerVideo",{
+                //            insertMode: "append",
+                //            resolution: "1280x720",
+                //            width: '100%',
+                //            height: '100%'
+                //        });
+                //    }
+                //});
+                //session.connect($scope.tokenID, function(error) {
+                //    console.log('connect error ', error);
+                //    if (error)
+                //    {
+                //        console.log(error.message);
+                //    }
+                //    else
+                //    {
+                //        session.publish( publisher );
+                //        signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type:'call', sessionId: $scope.sessionID});
+                //    }
+                //});
+
+                OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
+                    if (err) {
+                        console.log('init error ', err.message);
+                    } else {
+                        $scope.session = session;
+                        var connectDisconnect = function (connected) {
+                            $scope.$apply(function () {
+                                $scope.connected = connected;
+                                if (!connected) $scope.publishing = false;
+                            });
+                        };
+                        if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+                        $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+                        $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+                    }
+                    TB.updateViews();
+                });
+                $scope.publishing = true;
+                signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {
+                    type: 'call',
+                    sessionId: $scope.sessionID
+                });
+
+            }
+            else {
+                if ($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null) {
+
+                    if ($scope.session) {
+                        $scope.session.disconnect();
+                    }
+
+                    OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
+                        $scope.session = session;
+                        var connectDisconnect = function (connected) {
+                            $scope.$apply(function () {
+                                $scope.connected = connected;
+                                if (!connected) $scope.publishing = false;
+                            });
+                        };
+                        if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+                        $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+                        $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+                        TB.updateViews();
                     });
-                }
-            });
-            session.connect($scope.tokenID, function(error) {
-                console.log('connect error ', error);
-                if (error)
-                {
-                    console.log(error.message);
-                }
-                else
-                {
-                    session.publish( publisher );
-                    signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type:'call', sessionId: $scope.sessionID});
-                    TB.updateViews()
-                }
-            });
-        }
-        else
-        {
-            if($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null)
-            {
-                console.log('$scope.apiKey ', $scope.apiKey, '$scope.tokenID ', $scope.tokenID, '$scope.sessionID ', $scope.sessionID);
 
-                var publisherProperties =
-                {
-                    resolution: '1280x720',
-                    insertMode: "append"
-                };
+                    $scope.publishing = true;
+                    signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
 
-                publisher = TB.initPublisher('selfVideo',publisherProperties);
-
-                session = TB.initSession( $scope.apiKey, $scope.sessionID );
-                session.on({
-                    'streamCreated': function( event ){
-                        session.subscribe( event.stream, "callerVideo",{
-                            insertMode: "append",
-                            resolution: "1280x720",
-                            width: '100%',
-                            height: '100%'
-                        });
-                    }
-                });
-                session.connect($scope.tokenID, function(error) {
-                    if (error)
-                    {
-                        console.log(error.message);
-                    }
-                    else
-                    {
-                        session.publish( publisher );
-                        signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type:'answer'});
-                        TB.updateViews()
-                    }
-                });
+                    //var publisherProperties =
+                    //{
+                    //    insertMode: "append",
+                    //    resolution: '1280x720',
+                    //    width: window.outerWidth/10,
+                    //    height: window.outerHeight/10
+                    //};
+                    //
+                    //publisher = TB.initPublisher('selfVideo', publisherProperties);
+                    //
+                    //session = TB.initSession($scope.apiKey, $scope.sessionID);
+                    //session.on({
+                    //    'streamCreated': function (event) {
+                    //        session.subscribe(event.stream, "callerVideo", {
+                    //            insertMode: "append",
+                    //            resolution: "1280x720",
+                    //            width: '100%',
+                    //            height: '100%'
+                    //        });
+                    //    }
+                    //});
+                    //session.connect($scope.tokenID, function (error) {
+                    //    if (error) {
+                    //        console.log(error.message);
+                    //    }
+                    //    else {
+                    //        session.publish(publisher);
+                    //        signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
+                    //    }
+                    //});
+                }
             }
         }
+
+
 
         $scope.micToogle = function() {
             $scope.mic = !$scope.mic;
 
-            if($scope.mic){
-                publisher.publishAudio(false);
-            }
-            else {
-                publisher.publishAudio(true);
-            }
+            //if($scope.mic){
+            //    publisher.publishAudio(false);
+            //}
+            //else {
+            //    publisher.publishAudio(true);
+            //}
         }
 
         $scope.videoToogle = function() {
             $scope.camera = !$scope.camera;
-            if($scope.camera){
-                publisher.publishVideo(false);
-            }
-            else {
-                publisher.publishVideo(true);
-            }
+
+            //if($scope.camera){
+            //    publisher.publishVideo(false);
+            //}
+            //else {
+            //    publisher.publishVideo(true);
+            //}
         }
 
-        $scope.cancelCall = function () {
-            publisher.publishAudio(false);
-            publisher.publishVideo(false);
-            if(offMedia || publisher) {
+        $scope.cancelCall = function (offMedia) {
+            //publisher.destroy();
+            disconnect();
+            signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
+            $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
+            if(offMedia) {
                 media.pause();
-                session.unpublish(publisher);
-                signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
-                $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
             }
-            else {
-                session.unpublish(publisher);
-                signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
-                $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
-            }
-            publisher = null;
-            signaling.removeAllListeners();
         };
 
         $scope.$on('$destroy', function() {
             signaling.removeListener('messageReceived', onMessageReceive);
         });
 
-        function onMessageReceive (fromId, fromUser, message) {
+        function onMessageReceive (fromId, fromUsername, message) {
             switch (message.type) {
                 case 'answer':
                     media.pause();
@@ -171,15 +216,13 @@ angular.module('starter.phoneCall.controller',[])
                     break;
                 case 'ignore':
                     media.pause();
-                    session.unpublish(publisher);
-                    publisher = null;
+                    disconnect();
+                    //publisher.destroy();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
                 case 'cancel':
-                    publisher.publishAudio(false);
-                    publisher.publishVideo(false);
-                    session.unpublish(publisher);
-                    publisher = null;
+                    disconnect();
+                    //publisher.destroy();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
             }
@@ -187,66 +230,30 @@ angular.module('starter.phoneCall.controller',[])
 
         signaling.on('messageReceived', onMessageReceive);
 
+        $scope.$on("$stateChangeSuccess", function() {
+            document.addEventListener('backbutton', function(){
+                if($state.is("app.phoneCall")) {
+                    $scope.cancelCall();
+                }
+            });
+        });
 
-        //function performCall(easyRtcId) {
-        //    easyrtc.hangupAll();
-        //    var acceptedCB = function(accepted, easyrtcid) {
-        //    };
-        //    var successCB = function() {
-        //        console.log("Success","Call Success!");
-        //    };
-        //    var failureCB = function(errCode, errMsg) {
-        //        console.log("Error",errMsg);
-        //    };
-        //
-        //    easyrtc.call(easyRtcId, successCB, failureCB, acceptedCB);
-        //}
-        //
-        //function init() {
-        //    var connectSuccess = function(rtcId) {
-        //        if ($scope.isCaller == true) {
-        //            signaling.emit("sendMessage", localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'call'});
-        //            AudioToggle.setAudioMode(AudioToggle.SPEAKER);
-        //            media = new Media(src, null, null, loop);
-        //            media.play();
-        //        }
-        //        if($scope.isCaller == false) {
-        //            signaling.emit("sendMessage", localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'answer',rtcId: rtcId})
-        //        }
-        //
-        //    }
-        //    var connectFailure = function(errorCode, errText) {
-        //        console.log("===RTC Connect Error====== " + errText);
-        //        easyrtc.showError(errorCode, errText);
-        //    }
-        //
-        //    easyrtc.dontAddCloseButtons();
-        //    easyrtc.easyApp("easyrtc.audioVideo",'selfVideo',['callerVideo'], connectSuccess, connectFailure);
-        //}
-        //
-        //var disconnect = function() {
-        //    easyrtc.hangupAll();
-        //    easyrtc.closeLocalStream();
-        //    easyrtc.disconnect();
-        //}
-        //
-        //init();
+        $scope.facePublisherProps = {
+            name:'face',
+            width: 150,
+            height: 100,
+            style: {
+                nameDisplayMode: 'off'
+            },
+            resolution: '1280x720'
+            //frameRate: 30
+        }
 
-        //navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        //
-        //var constraints = {video: true};
-        //
-        //function successCallback(localMediaStream) {
-        //    window.stream = localMediaStream; // stream available to console
-        //    var video = document.querySelector("video");
-        //    video.src = window.URL.createObjectURL(localMediaStream);
-        //    video.play();
-        //}
-        //
-        //function errorCallback(error){
-        //    console.log("navigator.getUserMedia error: ", error);
-        //}
-        //
-        //navigator.getUserMedia(constraints, successCallback, errorCallback);
+        var disconnect = function() {
+            $scope.session.disconnect();
+            $scope.session.on('sessionDisconnected', function () {
+                signaling.removeAllListeners();
+            });
+        }
 
     })

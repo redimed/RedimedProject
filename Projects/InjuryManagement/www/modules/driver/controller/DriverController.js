@@ -1,7 +1,7 @@
 angular.module('starter.driver.controller',[])
 
     .controller('DriverController', function ($scope, $state, DriverServices, localStorageService, $timeout, $ionicLoading,
-                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window, $stateParams) {
+                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window, $stateParams, $ionicModal) {
 
         $scope.he = $window.innerHeight - 50 +'px';
         $scope.geo = {};
@@ -144,7 +144,6 @@ angular.module('starter.driver.controller',[])
         init();
 
         $scope.injuryID = {};
-
     })
 
     .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading,$timeout){
@@ -371,10 +370,6 @@ angular.module('starter.driver.controller',[])
 
 
                 location();
-
-
-
-
 
             }
         }

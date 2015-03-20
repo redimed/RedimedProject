@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.injurymanagement949685" version="1.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>InjuryManagement</name>
+<widget id="com.ionicframework.injurymanagement949685" version="1.1.18" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Injury Management</name>
   <description>&#xD;
     An Ionic Framework and Cordova project.&#xD;
   </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">&#xD;
-    Ionic Framework Team&#xD;
+  <author href="https://testapp.redimed.com.au">&#xD;
+    Injury Management Redimed&#xD;
   </author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -14,19 +14,16 @@
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
   <plugin name="Bluetooth" value="org.apache.cordova.bluetooth.BluetoothPlugin" />
-  <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
-  </feature>
   <feature name="PushPlugin">
-      <param name="ios-package" value="PushPlugin" />
+    <param name="ios-package" value="PushPlugin" />
   </feature>
   <feature name="http://api.phonegap.com/1.0/camera" />
   <feature name="http://api.phonegap.com/1.0/file" />
-  <icon src="www/img/icons/android/mipmap-hdpi/ic_launcher.png" width="72" height="72" />
-  <icon src="www/img/icons/android/mipmap-mdpi/ic_launcher.png" width="48" height="48" />
-  <icon src="www/img/icons/android/mipmap-xdpi/ic_launcher.png" width="96" height="96" />
-  <icon src="www/img/icons/android/mipmap-xxdpi/ic_launcher.png" width="144" height="144" />
-  <icon src="www/img/icons/android/mipmap-xxxdpi/ic_launcher.png" width="192" height="192" />
+  <icon src="www/img/app-icons/android/mipmap-hdpi/ic_launcher.png" width="72" height="72" />
+  <icon src="www/img/app-icons/android/mipmap-mdpi/ic_launcher.png" width="48" height="48" />
+  <icon src="www/img/app-icons/android/mipmap-xdpi/ic_launcher.png" width="96" height="96" />
+  <icon src="www/img/app-icons/android/mipmap-xxdpi/ic_launcher.png" width="144" height="144" />
+  <icon src="www/img/app-icons/android/mipmap-xxxdpi/ic_launcher.png" width="192" height="192" />
   <feature name="Media">
     <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
   </feature>

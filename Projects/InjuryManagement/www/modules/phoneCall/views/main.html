@@ -1,18 +1,14 @@
+
 <ion-view hide-nav-bar="true">
     <div class="content content-scroll-custom">
-
         <div class="waiting-screen" ng-show="isCaller && !isAccept">
             <div style="border: 1px solid rgba(255, 255, 255, .1); border-radius: 50%; width: 400px; height: 400px;" class="waiting-screen" ></div>
             <div style="border: 1px solid rgba(255, 255, 255, .3);; border-radius: 50%; width: 300px; height: 300px;" class="waiting-screen div2" ></div>
             <div style="border: 1px solid rgba(255, 255, 255, .5); border-radius: 50%; width: 200px; height: 200px;" class="waiting-screen div1" ></div>
-
-            <div ng-class="{'img-phone-call':contactNameJson}" ng-style={"background-color":contactNameJson.background} class="main img-circle avatar-calling">
-                <span>
-                    {{ contactNameJson.letter }}
-                </span>
+            <div class="main">
+                <img width="145" height="145" ng-src="{{avatarCaller}}" class="avatar-calling"/>
             </div>
         </div>
-
         <div class="calling-container" ng-show="isCaller && !isAccept">
             <div style="color: whitesmoke; margin-bottom: 50px;">
                 <div style="margin-bottom: 15px;">
@@ -21,9 +17,7 @@
                 <div>
                     <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
                 </div>
-
             </div>
-
             <div style="margin-bottom: 10px">
                 <div style="margin-bottom: 30px;">
                     <button class="button custom-bottom-control button-icon"
@@ -34,7 +28,6 @@
                             ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
                     </button>
                 </div>
-
                 <div>
                     <button class="button button-cancel_main" ng-click="cancelCall(offMedia = true)">
                         <img class="img-responsive margin-auto" src="img/call-down.png" />
@@ -42,42 +35,73 @@
                 </div>
             </div>
         </div>
-
         <div class="calling-container" ng-show="!isCaller || isAccept">
-
             <div style="color: whitesmoke; color: whitesmoke; position: fixed; top: 0; left: 0; right: 0; margin-top: 20px;">
                 <div style="margin-bottom: 15px;">
-                    <span style="font-size: 15px; font-weight: 300">Call in progress...</span>  <br>
+                    <span style="font-size: 15px; font-weight: 300">Call in progress...</span><br>
                 </div>
                 <div>
                     <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
                 </div>
-
             </div>
-
-
             <button class="button custom-bottom-control button-icon"
                     ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
             </button>
-
             <button class="button button-cancel_main" ng-click="cancelCall(offMedia = false)">
                 <img class="img-responsive margin-auto" src="img/call-down.png" />
             </button>
-
-
             <button class="button custom-bottom-control button-icon"
                     ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
             </button>
-
         </div>
 
-        <div id="selfVideo" class="selfVideo"></div>
+        <!--<div ng-show="!isCaller || isAccept" class="cus-callerVideo">-->
+        <!--<ot-subscriber ng-repeat="stream in streams"-->
+        <!--stream="stream"-->
+        <!--props="subscriberProp"-->
+        <!--ng-class="{OT_big: (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}">-->
+        <!--</ot-subscriber>-->
+        <!--</div>-->
 
-        <div ng-show="!isCaller || isAccept" id="callerVideo" class="callerVideo"> </div>
+        <!--<div class="cus-selfVideo">-->
+        <!--<ot-publisher props="facePublisherProps" mute-audio="mic" mute-video="camera"></ot-publisher>-->
+        <!--</div>-->
 
-        <!--<video autoplay="autoplay" id="selfVideo" muted="muted" volume="0" class="selfVideo"></video>-->
+        <div class="cus-callerVideo">
+            <ot-layout props="{animate:false,bigFixedRatio:true}">
+                <ot-subscriber ng-repeat="stream in streams"
+                               stream="stream"
+                               session="session"
+                               props="{style: {nameDisplayMode: 'off'}}"
+                               ng-class="{OT_big: (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}"
+                               ng-dblclick="$emit('changeSize')">
+                    <input type="button" class="resize-btn" ng-click="$emit('changeSize');"/>
+                </ot-subscriber>
+            </ot-layout>
+        </div>
 
-        <!--<video ng-show="!isCaller || isAccept" autoplay="autoplay" id="callerVideo" class="callerVideo"></video>-->
+        <div class="cus-selfVideo">
+            <ot-publisher id="facePublisher" draggable="true"></ot-publisher>
+        </div>
 
+
+
+        <!--<div class="cus-callerVideo" ng-show="!isCaller || isAccept">-->
+        <!--<div id="callerVideo"> </div>-->
+        <!--</div>-->
+
+        <!--<div class="cus-selfVideo">-->
+        <!--<div id="selfVideo"> </div>-->
+        <!--</div>-->
+
+
+
+        <!--<ot-layout class="cus-callerVideo" ng-show="!isCaller || isAccept">-->
+        <!--<ot-subscriber ng-repeat="stream in streams"-->
+        <!--props="SubscriberProps"-->
+        <!--stream="stream"-->
+        <!--session="session">-->
+        <!--</ot-subscriber>-->
+        <!--</ot-layout>-->
     </div>
 </ion-view>
