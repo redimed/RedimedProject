@@ -27,12 +27,12 @@ angular.module('starter.phoneCall.controller',[])
         var src = "/android_asset/www/phone_calling.mp3";
         var media = null;
         var loop = function (status) {
-            if (status === Media.MEDIA_STOPPED) {
-                media.play();
-            }
-            else if (status === Media.MEDIA_PAUSED) {
-                media.pause();
-            }
+            // if (status === Media.MEDIA_STOPPED) {
+            //     media.play();
+            // }
+            // else if (status === Media.MEDIA_PAUSED) {
+            //     media.pause();
+            // }
         };
 
         UserService.getUserInfo($stateParams.callUser).then( function(data) {
@@ -47,6 +47,7 @@ angular.module('starter.phoneCall.controller',[])
         })
 
         document.addEventListener("deviceready", onDeviceReady, false);
+
 
         $scope.streams = OTSession.streams;
 
@@ -102,6 +103,67 @@ angular.module('starter.phoneCall.controller',[])
                         if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
                         $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
                         $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+        // if($scope.isCaller)
+        // {
+        //     // AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+        //     // media = new Media(src, null, null, loop);
+        //     // media.play();
+
+        //     var publisherProperties =
+        //     {
+        //         resolution: '1280x720',
+        //         insertMode: "append"
+        //     };
+
+        //     var publisher = TB.initPublisher('selfVideo', publisherProperties);
+        //     var session = TB.initSession( $scope.apiKey, $scope.sessionID );
+        //     session.on({
+        //         'streamCreated': function( event ){
+        //             session.subscribe( event.stream, "callerVideo",{
+        //                 insertMode: "append",
+        //                 resolution: "1280x720",
+        //                 width: '100%',
+        //                 height: '100%'
+        //             });
+        //         }
+        //     });
+        //     session.connect($scope.tokenID, function(error) {
+        //         console.log('connect error ', error);
+        //         if (error)
+        //         {
+        //             console.log(error.message);
+        //         }
+        //         else
+        //         {
+        //             session.publish( publisher );
+        //             signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type:'call', sessionId: $scope.sessionID});
+        //             TB.updateViews()
+        //         }
+        //     });
+        // }
+        // else
+        // {
+        //     if($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null)
+        //     {
+        //         console.log('$scope.apiKey ', $scope.apiKey, '$scope.tokenID ', $scope.tokenID, '$scope.sessionID ', $scope.sessionID);
+
+        //         var publisherProperties =
+        //         {
+        //             resolution: '1280x720',
+        //             insertMode: "append"
+        //         };
+
+        //         publisher = TB.initPublisher('selfVideo',publisherProperties);
+
+        //         session = TB.initSession( $scope.apiKey, $scope.sessionID );
+        //         session.on({
+        //             'streamCreated': function( event ){
+        //                 session.subscribe( event.stream, "callerVideo",{
+        //                     insertMode: "append",
+        //                     resolution: "1280x720",
+        //                     width: '100%',
+        //                     height: '100%'
+        //                 });
                     }
                     TB.updateViews();
                 });
@@ -194,6 +256,7 @@ angular.module('starter.phoneCall.controller',[])
             //}
         }
 
+<<<<<<< HEAD
         $scope.cancelCall = function (offMedia) {
             //publisher.destroy();
             disconnect();
@@ -202,6 +265,27 @@ angular.module('starter.phoneCall.controller',[])
             if(offMedia) {
                 media.pause();
             }
+=======
+        $scope.cancelCall = function () {
+            publisher.publishAudio(false);
+            publisher.publishVideo(false);
+            // if(offMedia || publisher) {
+            //     media.pause();
+            //     session.unpublish(publisher);
+            //     signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
+            //     $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
+            // }
+            // else {
+            //     session.unpublish(publisher);
+            //     signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
+            //     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+            // }
+            session.unpublish(publisher);
+            signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, { type: 'cancel' });
+            $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+            publisher = null;
+            signaling.removeAllListeners();
+>>>>>>> af7f5a0e15dcd6bd881de30dece2e34f12e0827a
         };
 
         $scope.$on('$destroy', function() {
@@ -211,13 +295,19 @@ angular.module('starter.phoneCall.controller',[])
         function onMessageReceive (fromId, fromUsername, message) {
             switch (message.type) {
                 case 'answer':
-                    media.pause();
+                    // media.pause();
                     $scope.isAccept = true;
                     break;
                 case 'ignore':
+<<<<<<< HEAD
                     media.pause();
                     disconnect();
                     //publisher.destroy();
+=======
+                    // media.pause();
+                    session.unpublish(publisher);
+                    publisher = null;
+>>>>>>> af7f5a0e15dcd6bd881de30dece2e34f12e0827a
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
                 case 'cancel':

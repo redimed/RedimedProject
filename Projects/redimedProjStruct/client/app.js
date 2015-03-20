@@ -38,8 +38,10 @@ angular.module("app", [
     'dateRangePicker',
     'angular-svg-round-progress',
     'angular-flot',
-    'luegg.directives',
-    'irontec.simpleChat'
+    'irontec.simpleChat',
+    'opentok',
+    'opentok-whiteboard',
+    'ui.mask'
 
     // 'angular-underscore'
 ])
@@ -61,6 +63,24 @@ angular.module("app", [
     })
 
     return socketFactory;
+})
+.factory('beforeUnload', function ($rootScope, $window) {
+
+    // Events are broadcast outside the Scope Lifecycle
+    
+    $window.onbeforeunload = function (e) {
+        var confirmation = {};
+        var event = $rootScope.$broadcast('onBeforeUnload', confirmation);
+        if (event.defaultPrevented) {
+            return confirmation.message;
+        }
+    };
+    
+    $window.onunload = function () {
+        $rootScope.$broadcast('onUnload');
+    };
+
+    return {};
 })
 .config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider, $locationProvider) {
     // CORS PROXY
@@ -130,22 +150,14 @@ angular.module("app", [
             }
         })
 
-    .state('renderCall',{
-            url:'/renderCall',
-            views:{
-                "root":{
-                   templateUrl: "common/views/renderCall.html",
-                    controller:'renderCall'
-                }
-            }
-
-        })
 
     /* END */
 })
 
 //When update any route
-.run(function($window,$cookieStore, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
+.run(function(beforeUnload,$window,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
+
+   
 
     socket.on('reconnect',function(){
         if($cookieStore.get("userInfo"))
@@ -163,6 +175,16 @@ angular.module("app", [
 
         socket.removeAllListeners();
     })
+
+    var checkInterval;
+
+    checkInterval = $interval(function(){
+        if($cookieStore.get("userInfo") != null || typeof $cookieStore.get("userInfo") !== 'undefined')
+        {
+            socket.emit("checkApp",$cookieStore.get("userInfo").id)
+        }
+    },5000);
+
 
     // socket.on("isLoggedIn",function(){
     //     toastr.error("Your Account Is Already Logged In!");
@@ -208,6 +230,7 @@ angular.module("app", [
     }
 
     $rootScope.$on("$locationChangeSuccess",function(event, current,previous){
+
         if(current === previous)
         {
             if($cookieStore.get("userInfo")){
@@ -217,26 +240,48 @@ angular.module("app", [
     })
 
 
-    $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams){
+    $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
 
         var locationHref = location.href;
-        if(locationHref.indexOf('fromMobile=true') != -1)
-        {
-             e.preventDefault();
-             return;
+        if (locationHref.indexOf('fromMobile=true') != -1) {
+            e.preventDefault();
+            return;
         }
-        $cookieStore.put("fromState",{fromState:fromState,fromParams:fromParams});
-        if(!$cookieStore.get("userInfo") ){
+        $cookieStore.put("fromState", {
+            fromState: fromState,
+            fromParams: fromParams
+        });
+        if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if(toState.name !== "security.forgot"
-             && toState.name !== "security.login"
-              && toState.name !== "security.register"
-               && toState.name !== "security.redirect"){
+            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect") {
                 e.preventDefault();
-                $state.go("security.login",null,{location: "replace", reload: true});
+                $state.go("security.login", null, {
+                    location: "replace",
+                    reload: true
+                });
             }
         }
+
+    });
+    $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+        //ROLE
+        if (toState.position !== undefined) {
+            var status = false;
+            angular.forEach(toState.position, function(postt, index) {
+                if (postt === localStorageService.get("position")) {
+                    status = true;
+                }
+            });
+            if (status === false) {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("You not permission!", "Error");
+                e.preventDefault();
+            }
+        }
+        //END ROLE
     });
 })
 

@@ -4,53 +4,42 @@ angular.module("app.loggedIn.staff", [
     "app.loggedIn.staff.service"
 ])
 
-    .config(function ($stateProvider) {
+.config(function($stateProvider) {
 
-        $stateProvider
+    $stateProvider
 
-            // STRUCTURE
-            .state("loggedIn.staff", {
-                abstract: true,
-                url: "/staff",
-                templateUrl: "modules/staff/views/structure.html",
-                controller: "StaffController"
-            })
-            //END STRUCTURE
+    //STRUCTURE
+        .state("loggedIn.timesheet", {
+            abstract: true,
+            url: "/timesheet",
+            templateUrl: "modules/staff/views/structure.html",
+            controller: "StaffController"
+        })
+        //END STRUCTURE
 
-            //DASHBOARD HOME
-            .state("loggedIn.staff.list", {
-                url: "/calendar",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/staff/views/calendar.html",
-                        controller: "StaffCalendarController"
-                    }
+    //VIEW TIME-SHEET
+    .state("loggedIn.timesheet.view", {
+            position: ["Staff", "Head of Dept."],
+            url: "/view",
+            views: {
+                "main-content": {
+                    templateUrl: "modules/staff/views/viewTimesheet.html",
+                    controller: "TimesheetViewController"
                 }
-            })
-             //END DASHBOARD HOME
-
-            //Manage Task
-            .state("loggedIn.staff.manage", {
-                url: "/manageTask",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/staff/views/manageTask.html",
-                        controller:"ManageTaskController"
-                    }
-                }
-            })
-            //END Manage Task
-
-            //View Task
-            .state("loggedIn.staff.view", {
-                url: "/viewTask",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/staff/views/viewTask.html",
-                        controller:"ViewTaskController"
-                    }
-                }
-            })
-        //END View Task
-
-    })
+            }
+        })
+        //END VIEW TIME-SHEET
+        
+    //CREATE TIME-SHEET
+    .state("loggedIn.timesheet.create", {
+        position: ["Staff", "Head of Dept."],
+        url: "/create/:id",
+        views: {
+            "main-content": {
+                templateUrl: "modules/staff/views/createTimesheet.html",
+                controller: "TimesheetCreateController"
+            }
+        }
+    });
+    //END CREATE TIME-SHEET
+});

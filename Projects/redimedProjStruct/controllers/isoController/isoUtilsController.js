@@ -64,6 +64,8 @@ var isTestSendMail=false;
 
 module.exports =
 {
+    departmentType:'QMS',
+    
     isTestSendMail:isTestSendMail,
 
     getMailSender:function()
@@ -287,5 +289,7 @@ module.exports =
             });
         });
     }
+
+
     
 }

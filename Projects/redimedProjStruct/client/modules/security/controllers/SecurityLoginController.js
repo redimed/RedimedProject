@@ -7,7 +7,9 @@ angular.module("app.security.login.controller",[
 
     $scope.modelUser = {
         username : null,
-        password : null
+        password : null,
+        isAgree: false,
+        isRemember: false
     }
 
     // SUBMIT LOGIN
@@ -20,6 +22,8 @@ angular.module("app.security.login.controller",[
             // $scope.isLogging = true;
 
             // if($scope.isLogging) {
+            if($scope.modelUser.isAgree)
+            {
                 SecurityService.login($scope.modelUser).then(function (response) {
                     socket.emit('checkLogin', $scope.modelUser.username);
 
@@ -53,6 +57,11 @@ angular.module("app.security.login.controller",[
                 });
 
                 socket.removeAllListeners();
+            }
+            else
+            {
+                toastr.warning("Please Agree With Terms And Conditions!");
+            }
 
             // }
 
@@ -67,6 +76,7 @@ angular.module("app.security.login.controller",[
               
                 if (typeof response.userInfo !== 'undefined') {
                         $cookieStore.put("userInfo", response.userInfo);
+                        $cookieStore.put("isRemember",$scope.modelUser.isRemember);
 
                         if (typeof response.companyInfo !== 'undefined')
                             $cookieStore.put("companyInfo", response.companyInfo);

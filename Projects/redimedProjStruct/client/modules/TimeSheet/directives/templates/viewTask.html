@@ -1,28 +1,19 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form">
+    <form method="POST" class="grid-form" name="viewTask">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>View Task
-                <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
-            </legend>
+            <legend>Review Timesheet</legend>
+            <!-- INFORMATION -->
             <div data-row-span="12">
-                <div data-field-span="3">
-                    <label>Client:</label>
-                    <input type="text" value="LOC" style="font-size:13px;">
+                <div data-field-span="6">
+                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
                 </div>
-                <div data-field-span="3">
-                    <label>Employee: </label>
-                    <input type="text" value="Bastick Adam" style="font-size:13px;">
-                </div>
-                <div data-field-span="3">
-                    <label>From:</label>
-                    <input type="text" ng-model="info.FROM" name="consentDate1" datepicker-popup="dd/MM/yyyy" is-open="openConsentDate1" ng-click="openConsentDate1 = true" datepicker-options="dateOptions" close-text="Close" style="font-size:13px;">
-                </div>
-                <div data-field-span="3">
-                    <label>To:</label>
-                    <input type="text" ng-model="info.TO" name="consentDate2" datepicker-popup="dd/MM/yyyy" is-open="openConsentDate2" ng-click="openConsentDate2= true" datepicker-options="dateOptions" close-text="Close" style="font-size:13px;">
+                <div data-field-span="6">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{list.result[0].end_date| date: "dd/MM/yyyy"}}</span>
                 </div>
             </div>
+            <!-- END INFORMATION -->
+            <!-- TABLE TASK OF WEEK-->
             <div data-row-span="12">
                 <div class="panel-body table-dynamic">
                     <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
@@ -35,123 +26,97 @@
                                         Date
                                     </div>
                                 </th>
-
                                 <th>
                                     <div class="th">
-                                        Task
+                                        Activity
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Comments
+                                        Location
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Estimatedtime
+                                        Department
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Approved
+                                        Time Charge
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Hours Spent
+                                        Item Number
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Hours type
+                                        Quantity
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Approve all
-                                        <input type="checkbox"> Reject all
-                                        <input type="checkbox">
+                                        Tasks/Comments
                                     </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                                <td></td>
-                                <td>
-                                    <input type="text" class="form-control input-sm">
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
-                                    </select>
-                                </td>
-                                <td></td>
-                                <td>
-                                    <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
-                                    </select>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr ng-show="list.result===null">
-                                <td colspan="4 ">
-                                    <h4 class="custom-timesheet">There is no items</h4>
-                                </td>
-                            </tr>
-                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                                <td style="text-align: center;">
-                                    <!-- DOPDOWN ACTION -->
-                                    <li class="dropdown btn-group">
-                                        <a class="dropdown-toggle blue" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
-                                </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a ng-click="viewTask()"><i class="glyphicon glyphicon-zoom-in"></i>View</a>
-                                            </li>
-                                            <li><a ng-click="editDept(l.departmentid)"><i class="glyphicon glyphicon-ok"></i>Approve</a>
-                                            </li>
-                                            <li><a ng-click="editDept(l.departmentid)"><i class="glyphicon glyphicon-remove"></i>Reject</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <!-- END DROPDOWN ACTION -->
-                                </td>
-                                <td>{{l.emloyee}}</td>
-                                <td>{{date | date: "dd/MM/yyyy"}}</td>
-                                <td>01:00</td>
-                                <td>{{l.approver}}</td>
-                                <td>Time Sheet</td>
-                                <td>{{l.status}}</td>
-                                <td>{{date | date: "dd/MM/yyyy"}}</td>
-                                <td></td>
+                            <tr ng-repeat="l in list.result " ng-class="{'same':l.tasks_id%2!==0}" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
+                                <td class="btn btn-xs" style="text-align:left;">{{l.date | date: "dd/MM/yyyy"}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"":l.LOCATION}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"":l.departmentName}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{getFortMatTimeCharge(l.chargeDate)}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.ITEM_ID===null||l.ITEM_ID==="")?"N/A":l.ITEM_ID}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.task===null||l.task==="")?"":l.task}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <div class="row ">
-                            <div class="col-ms-6 page-num-info ">
-                                <div class="col-md-4 col-sm-5 ">
-                                    <div class="input-group ">
-                                        <span class="custom-timesheet">Total: {{list.count}}</span>
-
-                                        <span class="custom-timesheet">Show</span>
-                                        <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
-                                        </select>
-                                        <span class="custom-timesheet">entries per page</span>
-                                    </div>
-                                </div>
-                                <div class="col-ms-6 text-right pagination-container ">
-                                    <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
-                                    <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
-                                </div>
-                            </div>
-                    </footer>
-                    </div>
                 </div>
-                <!-- END TABLE LIST USER IN GROUP -->
+            </div>
+            <div class="col-md-12" style="margin-top:5px; font-size:13px;">
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].chargeWeek)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].time_in_lieu)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].over_time)}}</span>
+            </div>
+            <!-- SHOW REJECT -->
+            <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
+                <div class="col-md-12">
+                    <label>Comments(*)</label>
+                    <textarea id="commentsID" name="comments" ng-model="info.comments" style="font-size:13px;" ng-required="true" custom-tr="info.comments" custom-fr="viewTask.comments" ng-disabled="statusID===4"></textarea>
+                </div>
+            </div>
+            <!-- END REJECT -->
+            <!-- APPROVE -->
+            <div data-row-span="12" ng-show="info.isApprove===true">
+                <div class="col-md-4" style="margin-top:5px; font-size:13px;">
+                    <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}
+                </div>
+                <div class="col-md-9">
+                    </span> This Over/(Under) Time will be charged to (*):</span>
+                    <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
+                    <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc; font-style='normal'" ng-change="changeOverTime()">
+                    <label class="control-label">OVER TIME</label>
+                </div>
+            </div>
+            <!-- END APPROVE -->
+            <!-- END TABLE TASK OF WEEK -->
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: checkList})">Add</a>
-        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
+        <!-- BUTTON -->
+        <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
+        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4">Reject</a>
+        <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
-    </div>
+</div>
+<script type="text/ng-template " id="ViewItem ">
+    <view-item ng-model="taskID" on-cancel="clickCancel(return) "></view-item>
+</script>

@@ -1,56 +1,6 @@
 angular.module("app.loggedIn.controller",[
 ])
 
-// .controller('renderCall',function($scope,$location, $state, $cookieStore,$modal,$filter,UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
-//     var from = $location.search().from;
-//     var to = $location.search().to;
-//     var isCaller = ($location.search().isCaller == 'true') ? true : false;
-
-//     var fromMobile = ($location.search().fromMobile == 'true') ? true : false;
-
-//     UserService.getUserInfo(from).then(function(data){
-
-//         if(data)
-//         {
-//             delete data.img;
-//             $cookieStore.put('userInfo',data);
-
-//             console.log("User Info: " + $cookieStore.get("userInfo"));
-
-//             if(fromMobile){
-
-//                 socket.emit("mobileConnect",data.id);
-
-//                 socket.on("mobileConnectSuccess",function(){
-//                     console.log("Mobile Socket Success");
-
-//                     if(isCaller)
-//                     {
-//                         UserService.getUserInfo(to).then(function(rs){
-//                             if(!rs.img)
-//                                  rs.img = "theme/assets/icon.png"
-
-//                              $state.go("call",{callUserInfo:rs,callUser:to,isCaller:true},{reload:true});
-//                         })
-//                     }
-//                     else
-//                     {
-//                         UserService.getUserInfo(from).then(function(rs){
-//                             if(!rs.img)
-//                                  rs.img = "theme/assets/icon.png"
-
-//                             $state.go("call",{callUserInfo:rs,callUser:from,isCaller:false},{reload:true});
-//                         })
-//                     }
-//                 })
-//             }
-
-            
-//         }
-               
-//     })
-
-// })
 
 .controller("callDialogController",function($scope, $state,$modalInstance, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
 
@@ -106,7 +56,28 @@ angular.module("app.loggedIn.controller",[
 
     })
 
-.controller("loggedInController", function($scope, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+.controller("loggedInController", function(beforeUnload,$scope,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+
+    $scope.isShow = true;
+
+    $scope.$on('onBeforeUnload', function (e, confirmation) {
+        confirmation.message = "Your sure want to leave this page!";
+        e.preventDefault();
+    });
+    $scope.$on('onUnload', function (e) {
+        if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
+        {
+            if(!$cookieStore.get("isRemember"))
+            {
+                $cookieStore.remove("userInfo");
+                $cookieStore.remove("companyInfo");
+                $cookieStore.remove("doctorInfo");
+                $cookieStore.remove("fromState");
+                $cookieStore.remove("isRemember");
+            }
+        }
+    });
+
 
     socket.on("forceLogout",function(){
 
@@ -125,90 +96,53 @@ angular.module("app.loggedIn.controller",[
         if(message.type == 'call')
         {
 
-            var options = {
-                body: fromUser + " Is Calling You...",
-                icon: "theme/assets/icon.png",
-                dir : "ltr"
-            };
-            var notification = new Notification("You Have A Call!",options);
-
-            notification.onclick = function(){
-                window.open().close();
-                window.focus();
-            }
+            
 
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
-                    var modalInstance = $modal.open({
-                        templateUrl: 'common/views/dialog/callDialog.html',
-                        controller: 'callDialogController',
-                        size: 'sm',
-                        resolve:{
-                            userInfo: function(){
-                                return data;
-                            },
-                            notify: function(){
-                                return notification;
-                            },
-                            opentokRoom: function(){
-                                var opentokRoom = {
-                                        apiKey: message.apiKey,
-                                        sessionId: message.sessionId,
-                                        token: message.token
-                                    }
-                                return opentokRoom;
+                    $timeout(function() {
+                            var options = {
+                                body: fromUser + " Is Calling You...",
+                                icon: "theme/assets/icon.png",
+                                dir : "ltr"
+                            };
+                            var notification = new Notification("You Have A Call!",options);
+
+                            notification.onclick = function(){
+                                window.open().close();
+                                window.focus();
                             }
-                        },
-                        backdrop: 'static',
-                        keyboard: false
-                    })
+
+                            var modalInstance = $modal.open({
+                            templateUrl: 'common/views/dialog/callDialog.html',
+                            controller: 'callDialogController',
+                            size: 'sm',
+                            resolve:{
+                                userInfo: function(){
+                                    return data;
+                                },
+                                notify: function(){
+                                    return notification;
+                                },
+                                opentokRoom: function(){
+                                    var opentokRoom = {
+                                            apiKey: message.apiKey,
+                                            sessionId: message.sessionId,
+                                            token: message.token
+                                        }
+                                    return opentokRoom;
+                                }
+                            },
+                            backdrop: 'static',
+                            keyboard: false
+                        })
+                    }, 0.5 * 1000);
+                   
                 }
             })
         }
     })
-
-    $scope.vm = {
-        messages: [
-            {
-              'username': 'username1',
-              'content': 'Hi!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            },
-            {
-              'username': 'username2',
-              'content': 'Hello!'
-            }
-          ],
-        username : 'username1',
-        sendMessage: function(message, username) {
-            if(message && message !== '' && username) {
-              vm.messages.push({
-                'username': username,
-                'content': message
-              });
-            }
-          }
-    };
-
-    $scope.openChat = function(user){
-        console.log(user);
-    }
 
     $scope.userImg = null;
     $scope.onlineUsers = [];
@@ -398,18 +332,16 @@ angular.module("app.loggedIn.controller",[
     {
         $scope.userInfo=userInfo;
         $scope.user = userInfo.Booking_Person;
+
+         UserService.getUserInfo(userInfo.id).then(function(data){
+            if(data.img)
+               $scope.userImg = data.img;
+            else
+                $scope.userImg = "theme/assets/icon.png"
+        })
     }
     $scope.loggedInMenus = [];
     $scope.selectedMenu = null;
-
-    UserService.getUserInfo(userInfo.id).then(function(data){
-        if(data.img)
-           $scope.userImg = data.img;
-        else
-            $scope.userImg = "theme/assets/icon.png"
-    })
-
-
 
     // Load before logged in    
     var loadLoggedIn = function(){
@@ -457,7 +389,8 @@ angular.module("app.loggedIn.controller",[
 
     //Logout
     $scope.logout = function(){
-        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,$cookieStore.get("userInfo").UserType.user_type,null);
+        var userType = $cookieStore.get("userInfo").UserType != null || typeof $cookieStore.get("userInfo").UserType !== 'undefined' ? $cookieStore.get("userInfo").UserType.user_type : null;
+        socket.emit('logout',$cookieStore.get("userInfo").user_name,$cookieStore.get("userInfo").id,userType,null);
 
         socket.on('logoutSuccess',function(){
             $cookieStore.remove("userInfo");
@@ -761,7 +694,7 @@ angular.module("app.loggedIn.controller",[
                     .finally(function() {
 
                     });
-            }, 5000);
+            }, 4000);
         };
 
 

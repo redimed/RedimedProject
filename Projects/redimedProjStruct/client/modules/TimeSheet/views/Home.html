@@ -1,56 +1,41 @@
-<!-- HEADER -->
-<nav class="nav nav-pills">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
-        </div>
-        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1 ">
-            <ul class="nav navbar-nav ">
-                <!-- APPROVE -->
-                <li><a ui-sref="loggedIn.ApproveTask">Aprrove Timesheet</a>
-                </li>
-                <!-- END APPROVE -->
-
-                <!-- VIEW APPROVE TIMEHSEET -->
-                <li><a ui-sref="">View approve Timesheets<span class="blue"></span></a>
-                </li>
-                <!-- END VIEW APPROVE TIMEHSEET -->
-
-                <!-- MANAGE DEPT -->
-                <li><a ui-sref="">View Timesheet</a>
-                </li>
-                <!-- END MANAGE DEPT -->
-
-                <!-- MANAGE USER -->
-                <li><a ui-sref="loggedIn.staff.list">Create new Timesheet</a>
-                </li>
-                <!-- END MANAGE USER -->
-                <li><a ui-sref="loggedIn.TimeSheetDept">Manage Dept</a>
-                </li>
-                <!-- MANAGE USER -->
-                <li><a ui-sref="loggedIn.TimeSheetTree">Manage user</a>
-                </li>
-                <!-- END MANAGE USER -->
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- END HEADER -->
-
 <!-- INFO SYS -->
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Timesheet</h3>
+        <h3 class="panel-title bold">Timesheets</h3>
     </div>
     <div class="panel-body">
-        <p>Time - Sheet is one of current functions in MYOB, With Time - Sheet system, the Board of Management could monitor the employee’s actual working hours and control the direct labor costs as well as in-direct.
-        </p>
+        <div class="row">
+            <div class="col-md-12" style="margin-left:10px;">
+                <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="position==='Admin' || position==='Director'">
+                    <img src="/img/History.jpg" alt="View History Timesheet">
+                    <label class="control-label bold">View Timesheets History</label>
+                </a>
+            </div>
+            <div class="col-md-12" style="margin-left:10px;">
+                <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="position==='Admin' || position==='Director'">
+                    <img src="/img/create.jpg" alt="Create New Timesheet">
+                    <label class="control-label bold">Create New Timesheet</label>
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a ui-sref="loggedIn.ApproveTask" class="btn" ng-disabled="position==='Staff' || position==='Admin'">
+                    <img src="/img/Manage_Approve.jpg" alt="Management And Approve Timesheet">
+                    <label class="control-label bold">Approve and Manage Timesheets</label>
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a class="btn" ng-disabled="true">
+                    <img src="/img/reports.png" alt="Reports">
+                    <label class="control-label bold">Reports on Timesheets</label>
+                </a>
+            </div>
+            <div class="col-md-12">
+                <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-show="position==='Admin'">
+                    <img src="/img/admin.png" alt="Admin Timesheet">
+                    <label class="control-label bold">Admin Timesheets</label>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 <!-- END INFO SYS -->

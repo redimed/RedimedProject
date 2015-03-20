@@ -1,79 +1,90 @@
-
-a, a:active, a:focus{
+a,
+a:active,
+a:focus {
     cursor: pointer;
 }
 
-.break-row{
+.break-row {
     clear: both;
 }
 
-.page-header-fixed .page-container{
+.page-header-fixed .page-container {
     margin-top: 0;
 }
 
-.form-group label{
+.form-group label {
     padding-top: 6px;
 }
 
-.page-content-wrapper .page-content{
+.page-content-wrapper .page-content {
     min-height: 60em;
 }
 
-.form-group.detail > div{
+.form-group.detail > div {
     margin-top: 15px;
 }
-
 /**
 * Khank Style
 */
-.mdt-logo{
+
+.mdt-logo {
     margin: 0 auto;
     margin-top: 60px;
     padding: 15px;
 }
-#appt_tab .nav-tabs {margin-bottom: 0px;}
-#appt_tab .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover{
-	border-left: 1px solid #b1bdbd;
-	border-right: 1px solid #b1bdbd;
-	border-top: 3px solid #f3565d;
-	color: black;
-	font-weight: bold;
+
+#appt_tab .nav-tabs {
+    margin-bottom: 0px;
 }
-#appt_paperless  .row{
-	margin-right: 0px;
-	margin-left: 0px;
+
+#appt_tab .nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover {
+    border-left: 1px solid #b1bdbd;
+    border-right: 1px solid #b1bdbd;
+    border-top: 3px solid #f3565d;
+    color: black;
+    font-weight: bold;
 }
-#appt_paperless  .paperless a{
-	display: block;
-	padding: 7px;
-	border-bottom: 1px solid #ddd;
+
+#appt_paperless .row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#appt_paperless .paperless a {
+    display: block;
+    padding: 7px;
+    border-bottom: 1px solid #ddd;
 }
 /**
 * End Khank Style
 */
-
 /* Vuong Custom Timepicker */
-.ui-timepicker-table td{
+
+.ui-timepicker-table td {
     padding: 0.2em;
 }
-.ui-timepicker-table td a{
+
+.ui-timepicker-table td a {
     padding: 3px;
     width: auto;
 }
 /* END */
-
 /* MODAL DIALOG */
-.modal-lg{
+
+.modal-lg {
     width: 98%;
 }
 /* END MODAL DIALOG */
-
 /* MEDITEK CHECKBOX */
-.mdt-checkbox, .mdt-selection, .mdt-sex{
+
+.mdt-checkbox,
+.mdt-selection,
+.mdt-sex {
     display: none;
 }
 
-[class^="mdt-checkbox"] + label:before{
+[class^="mdt-checkbox"] + label:before {
     border-radius: 100px;
     box-shadow: 0 12px 20px #fff inset;
     content: " ";
@@ -86,7 +97,7 @@ a, a:active, a:focus{
     z-index: 999;
 }
 
-[class^="mdt-checkbox"] + label:after{
+[class^="mdt-checkbox"] + label:after {
     border-radius: 100px;
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4) inset;
     content: " ";
@@ -101,28 +112,28 @@ a, a:active, a:focus{
     display: block;
 }
 
-input[class^="mdt-checkbox"] + label{
+input[class^="mdt-checkbox"] + label {
     color: #333;
     text-align: center;
-    text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
     vertical-align: middle;
     cursor: pointer;
     background-color: #f5f5f5;
-    background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
-    background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
-    background-image: -o-linear-gradient(top,#fff,#e6e6e6);
-    background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+    background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #fff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #fff, #e6e6e6);
     background-repeat: repeat-x;
     border: 1px solid #ccc;
     border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     border-bottom-color: #b3b3b3;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-    -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
     display: inline-block;
     font-size: 1em;
     padding: 5px 50px 5px 16px;
@@ -130,26 +141,30 @@ input[class^="mdt-checkbox"] + label{
     width: 100%;
 }
 /* END MEDITEK CHECKBOX */
-
 /* MEDITEK SELECTION */
-.mdt-selection + label:after, .mdt-selection + label:before, .mdt-selection label,
-.mdt-sex + label:after, .mdt-sex + label:before, .mdt-sex label{
+
+.mdt-selection + label:after,
+.mdt-selection + label:before,
+.mdt-selection label,
+.mdt-sex + label:after,
+.mdt-sex + label:before,
+.mdt-sex label {
     transition: all 0.1s ease-in 0s;
 }
 
-[class^="mdt-selection"]:checked + label:before{
+[class^="mdt-selection"]:checked + label:before {
     content: " ";
     left: 49px;
     position: absolute;
     z-index: 99999;
 }
 
-[class^="mdt-sex"]:checked + label:before{
+[class^="mdt-sex"]:checked + label:before {
     left: 80px;
 }
 
 [class^="mdt-selection"] + label:before,
-[class^="mdt-sex"] + label:before{
+[class^="mdt-sex"] + label:before {
     background: none repeat scroll 0 0 #fff;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
     color: #fff;
@@ -162,22 +177,22 @@ input[class^="mdt-checkbox"] + label{
     z-index: 99999;
 }
 
-[class^="mdt-selection"]:checked + label:after{
+[class^="mdt-selection"]:checked + label:after {
     content: "Yes";
     left: 6px;
 }
 
-[class^="mdt-sex"]:checked + label:after{
+[class^="mdt-sex"]:checked + label:after {
     content: "Female";
     left: 6px;
 }
 
 [class^="mdt-selection"] + label:after,
-[class^="mdt-sex"] + label:after{
+[class^="mdt-sex"] + label:after {
     left: 35px;
 }
 
-[class^="mdt-selection"] + label:after{
+[class^="mdt-selection"] + label:after {
     color: #fff;
     content: "No";
     font-size: 1em;
@@ -188,7 +203,7 @@ input[class^="mdt-checkbox"] + label{
     top: 4px;
 }
 
-[class^="mdt-sex"] + label:after{
+[class^="mdt-sex"] + label:after {
     color: #fff;
     content: "Male";
     font-size: 1em;
@@ -200,12 +215,12 @@ input[class^="mdt-checkbox"] + label{
 }
 
 [class^="mdt-selection"]:checked + label,
-[class^="mdt-sex"]:checked + label{
+[class^="mdt-sex"]:checked + label {
     background: none repeat scroll 0 0 #67a5df;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(146, 196, 245, 0.4);
 }
 
-[class^="mdt-selection"] + label{
+[class^="mdt-selection"] + label {
     background: none repeat scroll 0 0 #f7836d;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(245, 146, 146, 0.4);
     display: inline-block;
@@ -216,7 +231,7 @@ input[class^="mdt-checkbox"] + label{
     width: 70px;
 }
 
-[class^="mdt-sex"] + label{
+[class^="mdt-sex"] + label {
     background: none repeat scroll 0 0 #f7836d;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(245, 146, 146, 0.4);
     display: inline-block;
@@ -227,118 +242,124 @@ input[class^="mdt-checkbox"] + label{
     width: 100px;
 }
 /* END MEDITEK SELECTION */
-
 /* MEDITEK INPUT AND SELECT */
+
 .field {
     margin-bottom: 15px;
     display: block;
     position: relative;
     height: 36px;
-    border: 2px solid rgb(100,160,217);
+    border: 2px solid rgb(100, 160, 217);
     transition-duration: 0.1s;
     transition-property: height, border-width;
     transition-timing-function: ease-in;
 }
 
-.field.has-error{
-    border: 2px solid rgb(239,127,106);
+.field.has-error {
+    border: 2px solid rgb(239, 127, 106);
 }
 
-.field input, .field select, .field textarea{
-   border: none;
-   width: 100%;
-   height: 32px;
-   box-sizing: border-box;
-   padding-left: 10px;
+.field input,
+.field select,
+.field textarea {
+    border: none;
+    width: 100%;
+    height: 32px;
+    box-sizing: border-box;
+    padding-left: 10px;
 }
 
-.field select:disabled{
-    background-color: rgb(240,240,240);
+.field select:disabled {
+    background-color: rgb(240, 240, 240);
 }
 
 .field label {
     height: 0;
     overflow: hidden;
     position: absolute;
-    right: 0; bottom: 0; left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     font-size: 12px;
     color: #fff;
-    background: rgb(100,160,217);
+    background: rgb(100, 160, 217);
     transition: max-height 0.1s ease-in 0s;
     margin-bottom: 0;
     padding: 0px 3px;
 }
 
-.field.has-error label{
-    background: rgb(239,127,106);
+.field.has-error label {
+    background: rgb(239, 127, 106);
 }
 
 .field.show-label {
     height: 48px;
     border-bottom: none;
 }
+
 .field.show-label input {
     height: 27px;
 }
+
 .field.show-label label {
     height: 18px;
 }
 /* END MEDITEK INPUT AND SELECT */
-
 /* MEDITEK RADIO BUTTON */
-.mdt-radio{
+
+.mdt-radio {
     display: none;
 }
 
-.mdt-radio + label{
-    display:inline-block;
-    margin:-2px;
+.mdt-radio + label {
+    display: inline-block;
+    margin: -2px;
     padding: 4px 12px;
     margin-bottom: 0;
     font-size: 14px;
     line-height: 20px;
     color: #333;
     text-align: center;
-    text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
     vertical-align: middle;
     cursor: pointer;
     background-color: #f5f5f5;
-    background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
-    background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
-    background-image: -o-linear-gradient(top,#fff,#e6e6e6);
-    background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+    background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #fff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #fff, #e6e6e6);
     background-repeat: repeat-x;
     border: 1px solid #ccc;
     border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     border-bottom-color: #b3b3b3;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-    -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.mdt-radio:checked + label{
+.mdt-radio:checked + label {
     background-image: none;
     outline: 0;
-    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-    background-color:#e0e0e0;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: #e0e0e0;
 }
 /* END MEDITEK RADIO BUTTON */
-
 /* MEDITEK POPOVER */
+
 .mdt-popover {
-    background-color: rgb(239,127,106);
+    background-color: rgb(239, 127, 106);
     border-radius: 5px;
     bottom: 45px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     color: #fff;
     font-size: 12px;
-    font-family: 'Helvetica',sans-serif;
+    font-family: 'Helvetica', sans-serif;
     right: 0;
     padding: 7px 10px;
     position: absolute;
@@ -346,8 +367,8 @@ input[class^="mdt-checkbox"] + label{
     z-index: 4;
 }
 
-.mdt-popover:before{
-    border-top: 7px solid rgb(239,127,106);
+.mdt-popover:before {
+    border-top: 7px solid rgb(239, 127, 106);
     border-right: 7px solid transparent;
     border-left: 7px solid transparent;
     bottom: -7px;
@@ -358,9 +379,9 @@ input[class^="mdt-checkbox"] + label{
     position: absolute;
 }
 /* END MEDITEK POPOVER */
-
 /* MEDITEK TABLE */
-.mdt-table{
+
+.mdt-table {
     background: #f5f5f5;
     border-collapse: separate;
     box-shadow: inset 0 1px 0 #fff;
@@ -372,7 +393,7 @@ input[class^="mdt-checkbox"] + label{
     border: 1px solid #ddd;
 }
 
-.mdt-table th{
+.mdt-table th {
     background: linear-gradient(#777, #444);
     border-left: 1px solid #555;
     border-right: 1px solid #777;
@@ -386,8 +407,8 @@ input[class^="mdt-checkbox"] + label{
     text-shadow: 0 1px 0 #000;
 }
 
-.mdt-table th:after{
-    background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+.mdt-table th:after {
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .08));
     content: '';
     display: block;
     height: 25%;
@@ -399,7 +420,7 @@ input[class^="mdt-checkbox"] + label{
 }
 
 .mdt-table th:first-child {
-    border-left: 1px solid #777;    
+    border-left: 1px solid #777;
     box-shadow: inset 1px 1px 0 #999;
 }
 
@@ -419,7 +440,7 @@ input[class^="mdt-checkbox"] + label{
 
 .mdt-table td:first-child {
     box-shadow: inset 1px 0 0 #fff;
-}   
+}
 
 .mdt-table td:last-child {
     border-right: 1px solid #e8e8e8;
@@ -427,28 +448,29 @@ input[class^="mdt-checkbox"] + label{
 }
 
 .mdt-table tr {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
+
 .mdt-table tr.selected {
     font-weight: bold;
     text-decoration: underline;
 }
 
 .mdt-table tr:nth-child(odd) td {
-    background: #f1f1f1;  
+    background: #f1f1f1;
 }
 
 .mdt-table tr:last-of-type td {
-    box-shadow: inset 0 -1px 0 #fff; 
+    box-shadow: inset 0 -1px 0 #fff;
 }
 
 .mdt-table tr:last-of-type td:first-child {
     box-shadow: inset 1px -1px 0 #fff;
-}   
+}
 
 .mdt-table tr:last-of-type td:last-child {
     box-shadow: inset -1px -1px 0 #fff;
-}   
+}
 /*.mdt-table tr:hover {
     opacity: 0.7
 }*/
@@ -466,99 +488,97 @@ input[class^="mdt-checkbox"] + label{
 
 .mdt-table td:first-child {
     box-shadow: inset 1px 0 0 #fff;
-}   
+}
 
 .mdt-table td:last-child {
     border-right: 1px solid #e8e8e8;
     box-shadow: inset -1px 0 0 #fff;
 }
 /* END MEDITEK TABLE */
-
 /* MEDITEK SEARCH */
+
 @media screen and (min-width: 768px) {
-    .mdt-search{
-        background-color: rgb(241,241,241);
+    .mdt-search {
+        background-color: rgb(241, 241, 241);
         position: fixed;
         width: 50%;
         top: 0;
         right: 0;
         padding: 10px 15px;
         z-index: 9999;
-        border: 2px solid rgb(100,160,217);
+        border: 2px solid rgb(100, 160, 217);
         display: none;
         overflow-y: auto;
         max-height: 100%;
     }
 }
 
-@media screen and (max-width: 767px){
-    .mdt-search{
-        background-color: rgb(241,241,241);
+@media screen and (max-width: 767px) {
+    .mdt-search {
+        background-color: rgb(241, 241, 241);
         position: fixed;
         width: 75%;
         top: 0;
         right: 0;
         padding: 10px 15px;
         z-index: 9999;
-        border: 2px solid rgb(100,160,217);
+        border: 2px solid rgb(100, 160, 217);
         display: none;
         overflow-y: auto;
         max-height: 100%;
     }
 }
-
-
 /* END MEDITEK SEARCH */
-
 /* MEDITEK BOOKING TABLE */
-table.mdt-booking-table{
+
+table.mdt-booking-table {
     width: auto;
 }
 
-table.mdt-booking-table thead tr th{
-    background-color: rgb(2,174,112);
+table.mdt-booking-table thead tr th {
+    background-color: rgb(2, 174, 112);
     padding: 6px 11px;
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-    border: 1px solid rgb(2,174,112);
+    border: 1px solid rgb(2, 174, 112);
 }
 
-table.mdt-booking-table thead tr th.no-border{
-    background-color: rgb(241,243,250);
+table.mdt-booking-table thead tr th.no-border {
+    background-color: rgb(241, 243, 250);
     border: none;
 }
 
-table.mdt-booking-table thead tr a{
+table.mdt-booking-table thead tr a {
     color: white;
 }
 
-table.mdt-booking-table tbody td{
+table.mdt-booking-table tbody td {
     background-color: white;
     padding: 15px;
     text-align: center;
     font-size: 13px;
-    border: 1px solid rgb(2,174,112);
+    border: 1px solid rgb(2, 174, 112);
     width: 150px;
 }
 
-table.mdt-booking-table tbody td.time-booking{
+table.mdt-booking-table tbody td.time-booking {
     width: 100px;
-    background-color: rgb(2,174,112);
+    background-color: rgb(2, 174, 112);
     color: white;
     border: 1px solid white;
 }
 /* END MEDITEK BOOKING TABLE */
-
 /* MEDITEK LIST BOOKING PATIENT */
-ul.mdt-list-booking-patient{
+
+ul.mdt-list-booking-patient {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 /* END MEDITEK LIST BOOKING PATIENT */
 
-.view-mode{
+.view-mode {
     border: none;
     padding: 0;
     margin: 0;
@@ -567,14 +587,17 @@ ul.mdt-list-booking-patient{
     background-position: right center;
     background-image: none;
 }
+
 .tabbable-custom {
-overflow: visible;
+    overflow: visible;
 }
+
 .tabbable-custom > .nav-tabs > li.active > a {
-font-weight: bold;
+    font-weight: bold;
 }
 /* TIMETABLE TABLE */
-table.timetable-table{
+
+table.timetable-table {
     color: #333;
     font-family: sans-serif;
     font-weight: 300;
@@ -592,20 +615,30 @@ table.timetable-table thead tr:first-child {
     border: none;
 }
 
-table.timetable-table th {font-weight: bold;}
-table.timetable-table th, td {padding: 0 15px 0 20px;}
+table.timetable-table th {
+    font-weight: bold;
+}
+/*table.timetable-table th, td {padding: 0 15px 0 20px;}*/
+/*tannv.dts@gmail.com disabled*/
 
-table.timetable-table thead tr:last-child th {border-bottom: 2px solid #ddd;}
-
-table.timetable-table tbody tr:last-child td {border: none;}
-table.timetable-table tbody td {border-bottom: 1px solid #ddd;}
-
-table.timetable-table td:last-child {
-  text-align: right;
-  padding-right: 10px;
+table.timetable-table thead tr:last-child th {
+    border-bottom: 2px solid #ddd;
 }
 
-.mdt-input-mask{
+table.timetable-table tbody tr:last-child td {
+    border: none;
+}
+
+table.timetable-table tbody td {
+    border-bottom: 1px solid #ddd;
+}
+
+table.timetable-table td:last-child {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.mdt-input-mask {
     width: 100%;
     font-size: .9em;
     text-align: center;
@@ -613,24 +646,26 @@ table.timetable-table td:last-child {
     margin: 20px auto;
 }
 /* END TIMETABLE TABLE */
-.mdt-green{
+
+.mdt-green {
     color: #F0FBFF
 }
 
- .inner-content {
+.inner-content {
     height: 100%;
     overflow: auto;
 }
- .chat-header {
+
+.chat-header {
     height: 58px;
 }
 
- .side-widget {
+.side-widget {
     margin-top: 15px;
     display: block;
 }
 
- .side-widget-title {
+.side-widget-title {
     color: #808285;
     font-size: 10.5px;
     font-weight: 600;
@@ -639,47 +674,58 @@ table.timetable-table td:last-child {
     padding-right: 31px;
     text-transform: uppercase;
 }
- .side-widget-content {
+
+.side-widget-content {
     display: block;
 }
- .side-widget-content ul.groups {
+
+.side-widget-content ul.groups {
     list-style: none;
     margin: 0;
     margin-top: 10px;
     padding-left: 0;
 }
- .side-widget-content ul.groups li {
+
+.side-widget-content ul.groups li {
     line-height: 25px;
 }
- .side-widget-content ul.groups > li > a {
+
+.side-widget-content ul.groups > li > a {
     color: #ffffff;
     font-size: 13px;
     padding: 5px 31px;
 }
- .side-widget-content ul.groups > li > a:hover {
+
+.side-widget-content ul.groups > li > a:hover {
     text-decoration: none;
 }
- .user-details-wrapper {
+
+.user-details-wrapper {
     display: block;
     margin: 8px;
     padding: 10px;
     border-radius: 3px;
 }
- .user-details-wrapper .status-icon {
+
+.user-details-wrapper .status-icon {
     margin-right: 0px;
 }
- .user-details-wrapper.active {
+
+.user-details-wrapper.active {
     background-color: #372b32;
 }
- .user-details-wrapper.active:hover {
+
+.user-details-wrapper.active:hover {
     background-color: #482f36;
     cursor: pointer;
 }
- .user-details-wrapper:hover {
+
+.user-details-wrapper:hover {
     background-color: #22262e;
     cursor: pointer;
 }
- .user-details-wrapper > .user-profile {
+
+.user-details-wrapper > .user-profile {
     display: inline-block;
     float: left;
     border-radius: 100px 100px 100px 100px;
@@ -688,40 +734,48 @@ table.timetable-table td:last-child {
     width: 35px;
     margin-right: 13px;
 }
- .user-details-wrapper > .user-details {
+
+.user-details-wrapper > .user-details {
     display: inline-block;
     float: left;
 }
- .user-details-wrapper > .user-details > .user-name {
+
+.user-details-wrapper > .user-details > .user-name {
     display: block;
     color: #ffffff;
     font-weight: 600;
 }
- .user-details-wrapper > .user-details > .user-more {
+
+.user-details-wrapper > .user-details > .user-more {
     display: block;
     color: #747b89;
     font-size: 11px;
     width: 120px;
 }
- .chat-messages {
+
+.chat-messages {
     position: relative;
     overflow: auto;
     height: calc(100% - 155px);
 }
- .chat-messages .user-details-wrapper {
+
+.chat-messages .user-details-wrapper {
     padding: 6px;
 }
- .chat-messages .user-details-wrapper:hover {
+
+.chat-messages .user-details-wrapper:hover {
     background-color: #22262e;
     cursor: auto;
 }
- .user-details-status-wrapper {
+
+.user-details-status-wrapper {
     display: inline-block;
     float: left;
     min-width: 32px;
     margin-top: 8px;
 }
- .user-details-count-wrapper {
+
+.user-details-count-wrapper {
     display: inline-block;
     float: left;
     margin-top: 8px;
@@ -731,7 +785,6 @@ table.timetable-table td:last-child {
     margin: 15px 0 15px 14px;
     width: 195px;
     border: transparent;
-
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-appearance: none !important;
     color: #282323;
@@ -756,15 +809,18 @@ table.timetable-table td:last-child {
     border: 1px solid #e5e9ec;
     transition: background 0.2s linear 0s, box-shadow 0.2s linear 0s;
 }
+
 .chat-header .iconset {
     margin: 20px 15px;
 }
+
 .chat-messages-header {
     background-color: #1b1e24;
     color: #4c5264;
     padding: 8px;
     padding-left: 21px;
 }
+
 .chat-messages-header .status {
     height: 10px;
     width: 10px;
@@ -773,15 +829,19 @@ table.timetable-table td:last-child {
     display: inline-block;
     margin-right: 12px;
 }
+
 .chat-messages-header .status.online {
     background-color: #0aa699;
 }
+
 .chat-messages-header .status.busy {
     background-color: #f35958;
 }
+
 .chat-messages-header .status.away {
     background-color: #0aa699;
 }
+
 .chat-messages-header a > i {
     color: #4c5264;
     font-size: 10px;
@@ -789,6 +849,7 @@ table.timetable-table td:last-child {
     margin-top: 5px;
     margin-right: 5px;
 }
+
 .chat-footer {
     position: absolute;
     bottom: 0px;
@@ -805,26 +866,31 @@ table.timetable-table td:last-child {
     margin-right: 10px;
     top: 2px;
 }
+
 .status-icon.green {
     background-position: -1px -1px;
     width: 14px;
     height: 14px;
 }
+
 .status-icon.red {
     background-position: -17px -1px;
     width: 14px;
     height: 14px;
 }
+
 .status-icon.blue {
     background-position: -33px -1px;
     width: 14px;
     height: 14px;
 }
+
 .status-icon.yellow {
     background-position: -48px -1px;
     width: 15px;
     height: 14px;
 }
+
 .status-icon.grey {
     background-position: -64px -1px;
     width: 14px;
@@ -848,23 +914,28 @@ table.timetable-table td:last-child {
     padding: 10px;
     cursor: pointer;
 }
+
 .bubble.old {
     background: #0d0f12;
     color: #4c5264;
 }
+
 .bubble.old:after {
     border-color: transparent #0d0f12;
 }
+
 .bubble.sender {
     background: #0ba195;
     color: #ffffff;
 }
+
 .bubble.sender:after {
     border-color: transparent #0ba195;
     border-width: 9px 0 9px 7px;
     right: -7px !important;
     left: auto;
 }
+
 .bubble:after {
     content: '';
     position: absolute;
@@ -886,6 +957,7 @@ table.timetable-table td:last-child {
     padding: 7px;
     z-index: 110;
 }
+
 .chat-input-wrapper textarea {
     background-color: #ffffff;
     padding: 0;
@@ -897,6 +969,7 @@ table.timetable-table td:last-child {
     display: block;
     padding: 10px 15px;
 }
+
 .user-chat-wrapper .profile-wrapper {
     float: left;
     border-radius: 100px 100px 100px 100px;
@@ -906,10 +979,12 @@ table.timetable-table td:last-child {
     width: 35px;
     margin: 0px 10px 0 0px;
 }
+
 .user-chat-wrapper .user-chat {
     display: inline-block;
     float: left;
 }
+
 .user-chat-wrapper .user-chat .user-name {
     color: #22262e;
     font-size: 12px;
@@ -917,10 +992,12 @@ table.timetable-table td:last-child {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .user-chat-wrapper .user-chat .user-chat-preview {
     display: block;
     float: left;
 }
+
 .user-chat-wrapper .user-chat .more-details {
     display: inline-block;
     float: left;
@@ -933,99 +1010,153 @@ table.timetable-table td:last-child {
 }
 
 .vertical-center {
-  min-height: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 /*css custom by thanh*/
 
 .custom-timesheet {
     font-size: 12px;
 }
+
+.submited {
+    color: #35aa47;
+    font-weight: bold;
+}
+
+.reject {
+    color: #DF5755;
+    font-weight: bold;
+}
+
+.approved {
+    color: #4b8df8;
+    font-weight: bold;
+}
+
+.pending {
+    color: #FFB848;
+    font-weight: bold;
+}
+
+.re-submitted {
+    color: #8E44AD;
+    font-weight: bold;
+}
+
 .glyphicon-chevron-up:before {
     content: "\e113"
 }
+
 .glyphicon-chevron-down:before {
     content: "\e114"
 }
-.table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up,
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down {
     position: absolute;
     color: #999;
 }
-.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover, .table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
+
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover,
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
     color: #31c0be;
     cursor: pointer;
 }
-.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active, .table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
+
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active,
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
     color: #31c0be;
 }
+
 .table-dynamic .table-bordered thead th .glyphicon-chevron-up {
     top: 4px;
     right: 5px;
 }
+
 .table-dynamic .table-filters {
     margin: 10px 0;
     padding: 8px;
 }
+
 .table-dynamic .filter-result-info {
     padding: 7px;
 }
+
 .table-dynamic .table-bordered {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     font-size: 12px;
 }
+
 .table-dynamic .table-bordered thead th {
     position: relative;
     padding: 0;
+    text-align: center;
+    font-weight: bold;
+    background-color: #67809f;
 }
+
 .table-dynamic .table-bordered thead th>.th {
     position: relative;
     padding: 4px 4px 4px 4px;
-    height: 25px;
     font-size: 12px;
 }
+
 .table-dynamic .table-bordered tbody tr {
     position: relative;
     padding: 4px 4px 4px 4px;
-    height: 10px;
 }
+
 .table-dynamic .table-bordered tbody tr td input>.checkbox {
     height: 15px;
     width: 15px;
 }
-.table-dynamic .table-bordered thead th .glyphicon-chevron-up, .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
+
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up,
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down {
     position: absolute;
     color: #999;
 }
-.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover, .table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
+
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up:hover,
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down:hover {
     color: #31c0be;
     cursor: pointer;
 }
-.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active, .table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
+
+.table-dynamic .table-bordered thead th .glyphicon-chevron-up.active,
+.table-dynamic .table-bordered thead th .glyphicon-chevron-down.active {
     color: #31c0be;
 }
+
 .table-dynamic .table-bordered thead th .glyphicon-chevron-up {
     top: 0px;
     right: 5px;
 }
+
 .table-dynamic .table-bordered thead th .glyphicon-chevron-down {
     top: 11px;
     right: 6px;
 }
+
 .table-dynamic .table-footer {
     margin: 10px 0;
     padding: 8px;
 }
+
 .table-dynamic .page-num-info span {
     padding: 6px;
 }
+
 .table-dynamic .pagination-container ul {
     margin: 0;
 }
+
 .table-dynamic .pagination-container ul li:hover {
     cursor: pointer;
 }
@@ -1048,18 +1179,34 @@ table.timetable-table td:last-child {
     line-height: 16px;
     padding: 8px 10px;
 }
-.table-dynamic .table-bordered>thead>tr>th, .table-dynamic .table-bordered>tbody>tr>th, .table-dynamic .table-bordered>tfoot>tr>th, .table-dynamic .table-bordered>thead>tr>td, .table-dynamic .table-bordered>tbody>tr>td, .table-dynamic .table-bordered>tfoot>tr>td {
+
+.table-dynamic .table-bordered>thead>tr>th,
+.table-dynamic .table-bordered>tbody>tr>th,
+.table-dynamic .table-bordered>tfoot>tr>th,
+.table-dynamic .table-bordered>thead>tr>td,
+.table-dynamic .table-bordered>tbody>tr>td,
+.table-dynamic .table-bordered>tfoot>tr>td {
     padding: 2px 5px 2px 5px;
     line-height: 1.42857143;
     vertical-align: top;
     border-top: 1px solid #ddd;
 }
+
 .odd {
     background-color: #fafafa;
 }
-.table-dynamic .table-bordered>thead>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox], .table-dynamic .table-bordered>thead>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tbody>tr>td>input[type=checkbox], .table-dynamic .table-bordered>tfoot>tr>td>input[type=checkbox] {
-    margin: 4px 1px 1px 10px;
-    margin-top: 1px \9;
+
+.same {
+    background-color: #EEEEEE;
+}
+
+.table-dynamic .table-bordered>thead>tr>th>input[type=checkbox],
+.table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox],
+.table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox],
+.table-dynamic .table-bordered>thead>tr>td>input[type=checkbox],
+.table-dynamic .table-bordered>tbody>tr>td>input[type=checkbox],
+.table-dynamic .table-bordered>tfoot>tr>td>input[type=checkbox] {
+    margin: 1px -15px -10px 2px;
     line-height: normal;
 }
 /*end tooltipster*/

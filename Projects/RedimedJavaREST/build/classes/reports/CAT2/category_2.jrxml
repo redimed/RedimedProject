@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="category_3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="96cc77b9-d078-41e3-ba89-9854d46780bc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1918"/>
+	<property name="ireport.y" value="816"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -75,6 +75,18 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Signature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="has_declaration" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="has_safety" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="has_following" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="audiometric" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="q1_4" class="java.lang.Integer">
@@ -563,6 +575,18 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 	<field name="DOCTOR_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="Signature1" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -581,6 +605,37 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<reportElement x="0" y="114" width="555" height="510" uuid="d04a54ca-9870-4303-a37b-91bae46c7623"/>
 				<imageExpression><![CDATA[$P{real_path}+"/images/c1.png"]]></imageExpression>
 			</image>
+			<image>
+				<reportElement x="19" y="537" width="33" height="35" uuid="2232752e-c738-453f-aef6-b05a08f7d29a">
+					<printWhenExpression><![CDATA[$F{audiometric}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="441" width="33" height="35" uuid="99e76247-0516-40b5-8cd0-7c1df9ca2e26">
+					<printWhenExpression><![CDATA[$F{has_following}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="374" width="33" height="35" uuid="cc3721a3-e838-47e6-a209-58176558463e">
+					<printWhenExpression><![CDATA[$F{has_safety}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="311" width="33" height="35" uuid="2bdc482b-6b49-4323-bb07-2df433ebb41a">
+					<printWhenExpression><![CDATA[$F{has_declaration}.intValue() == 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="90" y="195" width="150" height="28" uuid="a516b7d7-1fbb-4776-a206-db297e5ff2ad"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rail Cate 2]]></text>
+			</staticText>
 		</band>
 		<band height="802">
 			<image>
@@ -674,6 +729,13 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 				<reportElement x="276" y="761" width="263" height="15" uuid="dcda93fa-215d-4c12-a28e-a25c45bd8ec1"/>
 				<textFieldExpression><![CDATA[$F{q1_5_3_c}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="68" y="47" width="150" height="28" uuid="d6d09fe8-f4a3-421e-813d-ad3591ad6586"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rail Cate 2]]></text>
+			</staticText>
 		</band>
 		<band height="802">
 			<image>
@@ -726,7 +788,7 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			</image>
 			<image>
 				<reportElement x="531" y="377" width="13" height="13" uuid="0326ce43-77fe-4614-8463-a8c0bef30c3e">
-					<printWhenExpression><![CDATA[$F{q3_1_2}.intValue() == 0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{q3_1_2}.intValue() == 1]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{real_path}+"/images/check.png"]]></imageExpression>
 			</image>
@@ -1816,17 +1878,17 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="375" width="57" height="13" uuid="3df7c9f1-28e2-46c9-9ff1-70bb9a8ef693"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_1_1_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_1_1_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="79" y="394" width="57" height="14" uuid="015d8f34-c586-438e-a73a-6354b921f049"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_1_1_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_1_1_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="90" y="424" width="45" height="15" uuid="0c0697ab-46ef-4885-9db5-8f899996aa26"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_1_2_c}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_1_2_c}.intValue()]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="178" y="431" width="9" height="9" uuid="3c4c3de3-cdbf-48ec-8d45-1712f281123a">
@@ -2021,25 +2083,25 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="87" y="681" width="78" height="17" uuid="7969e49f-bd7d-4c66-ab8f-628fbbbf9a86"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{q4_2_10_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_10_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="709" width="83" height="16" uuid="6b59e7ed-8af6-4705-b95a-874dbf36c979"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{q4_2_10_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_10_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="108" y="627" width="141" height="20" uuid="1edf2ee1-c6c2-4f1f-903f-69aa11ea8a9e"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{q4_2_9}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_9}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="379" y="182" width="141" height="14" uuid="240f94d6-6df7-4395-83b0-ec7cc1f0aff3"/>
-				<textFieldExpression><![CDATA[$F{q4_2_11}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_11}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="383" y="385" width="145" height="14" uuid="1a120ea4-c101-4b1d-8db7-d8a7ae4f0097"/>
-				<textFieldExpression><![CDATA[$F{q4_2_12_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_12_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="190" y="141" width="9" height="9" uuid="c46c46cc-dcbc-4230-b2e5-131c2160893a">
@@ -2056,82 +2118,82 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="49" y="84" width="29" height="20" uuid="524d3882-ad9a-48fa-a398-a0b0a3905f2e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="84" width="29" height="20" uuid="c55e5fb6-afed-4846-ac13-9e045d900e13"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="107" y="84" width="26" height="20" uuid="a1b4ec91-5f8b-4cab-9298-e3ce11e290fe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_3}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="135" y="84" width="26" height="20" uuid="00a2bb73-7890-4bfe-8305-6606ea1ea998"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_4}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="161" y="84" width="26" height="20" uuid="e86a127d-4f0f-4ba9-aaf1-92498b5b0bf7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_5}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="190" y="84" width="26" height="20" uuid="88ba0f5f-57c4-40d8-b79c-7fd0d9adf3a3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_6}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="217" y="84" width="26" height="20" uuid="c3a9229c-cedb-4128-b8bc-9cac4bbb6c54"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_7}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="245" y="84" width="26" height="20" uuid="d323ba71-1226-436d-9349-62ef8685b94d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_L_8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_L_8}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="50" y="113" width="29" height="20" uuid="524d3882-ad9a-48fa-a398-a0b0a3905f2e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="79" y="113" width="29" height="20" uuid="c55e5fb6-afed-4846-ac13-9e045d900e13"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="108" y="113" width="26" height="20" uuid="a1b4ec91-5f8b-4cab-9298-e3ce11e290fe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_3}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="136" y="113" width="26" height="20" uuid="00a2bb73-7890-4bfe-8305-6606ea1ea998"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_4}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="162" y="113" width="26" height="20" uuid="e86a127d-4f0f-4ba9-aaf1-92498b5b0bf7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_5}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="191" y="113" width="26" height="20" uuid="88ba0f5f-57c4-40d8-b79c-7fd0d9adf3a3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_6}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_6}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="218" y="113" width="26" height="20" uuid="c3a9229c-cedb-4128-b8bc-9cac4bbb6c54"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_7}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_7}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="246" y="113" width="26" height="20" uuid="d323ba71-1226-436d-9349-62ef8685b94d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_7_R_8}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_7_R_8}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="42" y="186" width="229" height="46" uuid="339a58b2-85fc-406c-804e-754f247f5de3"/>
@@ -2365,22 +2427,22 @@ WHERE c.`cal_id` = $P{cal_id} AND c.`cat_id` = $P{key}  AND c.`patient_id` = $P{
 			<textField isBlankWhenNull="true">
 				<reportElement x="333" y="528" width="32" height="17" uuid="116ba7e3-0967-449d-b50b-df6838f722f8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_1}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="383" y="528" width="32" height="17" uuid="350fa485-c703-4809-af52-cde324eca8a9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_2}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="430" y="528" width="32" height="17" uuid="b01b6926-9f0e-454b-90fa-779657d28502"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_3}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="480" y="528" width="32" height="17" uuid="a5fd66ec-cf25-464c-8c99-4862f1da7ea6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{q4_2_13_1_4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{q4_2_13_1_4}.intValue()]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="82" y="539" width="58" height="17" uuid="a7eeaea3-d1de-4fc6-9112-864e5b12f64d"/>

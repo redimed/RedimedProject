@@ -4,32 +4,33 @@
         <span class="glyphicon glyphicon glyphicon-th-list  btn btn-xs" style="width:30px">
         </span>
         <label>Change Documents Status</label>
-    </a>
 
+    </a>
+    
     <ul class="dropdown-menu" role="menu">
         <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" >
             <a ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" class="pointer" role="menuitem" tabindex="4"
-               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.notConfirmed)">
-                <span>Not confirmed</span>
+               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.notConfirmed.value)">
+                <span>{{documentStatus.notConfirmed.display}}</span>
 
             </a>
         </li>
 
         <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Checked'">
             <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.checked)">
-                <span>Checked</span>
+                ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.checked.value)">
+                <span>{{documentStatus.checked.display}}</span>
 
             </a>
         </li>
 
         <li ng-hide="selectedDocument.DOCUMENT_STATUS=='No documents'">
             <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.noDocuments)">
-                <span>No documents</span>
+               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.noDocuments.value)">
+                <span>{{documentStatus.noDocuments.display}}</span>
 
             </a>
         </li>
     </ul>
 </div>
-{{selectedDocument.DOCUMENT_STATUS}}
+{{documentStatusDisplay[selectedDocument.DOCUMENT_STATUS]}}

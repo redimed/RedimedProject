@@ -12,7 +12,7 @@
         </select>
     </div>-->
     <div class="clearfix"></div>
-    <table class="mdt-table table table-bordered">
+    <table class="mdt-table table table-bordered table-hover">
         <thead>
             <tr>
                 <th ng-repeat="col in options.columns" ng-if="!col.is_hide" width="{{col.width}}" ng-click="orderField(col)">
@@ -43,7 +43,7 @@
              <!-- END SEARCH -->
         </thead>
         <tbody>
-            <tr ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)">             
+            <tr style="cursor: pointer;" ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)">             
                 <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
                     <!-- TYPE INPUT -->
                     <span ng-switch on="col.type">

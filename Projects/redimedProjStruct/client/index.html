@@ -8,6 +8,7 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<meta content="" name="description"/>
 	<meta content="" name="author"/>
+    <meta name="google-site-verification" content="0EVyYxb_iIwz7w53LZz0rxIpLFB0g7-TxfwN851SqNg" />
 
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -20,6 +21,7 @@
     <script src="vendor/moment-range/lib/moment-range.js"></script>
     <script src="lib/dateRangePicker/angular-date-range-picker.js"></script>
     <link rel="stylesheet" type="text/css" href="lib/dateRangePicker/angular-date-range-picker.css"/>
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/pkakgggplhfilfbailbaibljfpalofjn">
 
 
     <!--<script src="vendor/bootstrap-material-design/dist/js/ripples.min.js"></script>-->
@@ -70,6 +72,8 @@
     <!-- SANITIZE -->
     <script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
     <!-- END SANITIZE -->
+
+    <script type="text/javascript" src="lib/modernizr-2.6.2.min.js"></script>
 
 
     <!--tannv.dts add-->
@@ -835,9 +839,10 @@ RLOB PAPERLESS STRUCTURE -->
         <script type="text/javascript" src="modules/staff/controllers/StaffControllers.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/TaskController.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/ViewTaskController.js"></script>
-        <script type="text/javascript" src="modules/staff/controllers/StaffCalendarController.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/StaffWeekController.js"></script>
         <script type="text/javascript" src="modules/staff/controllers/StaffMonthController.js"></script>
+        <script type="text/javascript" src="modules/staff/controllers/createTimesheetController.js"></script>
+        <script type="text/javascript" src="modules/staff/controllers/viewTimesheetController.js"></script>
 
         <script type="text/javascript" src="modules/staff/services/StaffService.js"></script>
 
@@ -852,14 +857,21 @@ RLOB PAPERLESS STRUCTURE -->
 		<!--END AUTO CREATE-->
 
         <!--INJURY MANAGEMENT MODULE-->
-
-
         <script type="text/javascript" src="lib/desktop-notify.js"></script>
-        <link rel="stylesheet" type="text/css" href="lib/EasyRTC/easyrtc.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="lib/EasyRTC/easyrtc.css" /> -->
+        <link rel="stylesheet" href="vendor/ionicons/css/ionicons.min.css" type="text/css" media="screen">  
+
         <script type="text/javascript" src="lib/EasyRTC/opentok.min.js"></script>
+        <link type="text/css" media="screen" rel="stylesheet" href="https://static.opentok.com/webrtc/v2.4.1/css/TB.min.css">
+        <script src="lib/EasyRTC/OTChromeScreenSharingExtensionHelper.js" type="text/javascript"></script>
+        <script type="text/javascript" src="vendor/opentok-layout-js/opentok-layout.js"></script>
+        <script type="text/javascript" src="vendor/opentok-angular/opentok-angular.js"></script>
+
+        <script src="vendor/opentok-whiteboard/opentok-whiteboard.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" href="vendor/opentok-whiteboard/opentok-whiteboard.css" type="text/css" media="screen" charset="utf-8">
+
         
         <script src="vendor/angularjs-scroll-glue/src/scrollglue.js"></script>
-
         <link rel="stylesheet" href="vendor/angular-bootstrap-simple-chat/src/css/style.css">
         <script src="vendor/angular-bootstrap-simple-chat/src/scripts/index.js"></script>
 
@@ -917,12 +929,9 @@ RLOB PAPERLESS STRUCTURE -->
         <link rel="stylesheet" type="text/css" href="theme/custom.css">
         <!-- END CUSTOM CSS -->
 
- <!-- CALENDAR -->
-        <link rel="stylesheet" href="vendor/angular-bootstrap-calendar/dist/js/datePicker.css">
-        <link rel="stylesheet" href="vendor/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css">
+        <!-- CALENDAR -->
         <script src="vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
-        <script src="vendor/angular-bootstrap-calendar/dist/js/datePicker.js"></script>
-        <script src="vendor/angular-bootstrap-calendar/dist/js/date.js"></script>
+        
         <!-- END CALENDAR -->
 
     <link rel="stylesheet" type="text/css" href="theme/BootSideMenu.css" />
@@ -952,14 +961,16 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetAddDeptDirective.js">
     </script>
     <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewTaskDirective.js"></script>
-
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetTimeDirective.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/services/TimeSheetServices.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetTreeController.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetAdminController.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetDeptController.js">
     </script>
     <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveTaskController.js">
     </script>
     <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetListNodeController.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewItem.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/TimeSheet.js"></script>
     <!-- END MODULE TIME SHEET -->
 
@@ -972,6 +983,9 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="vendor/sweetalert-master/lib/sweet-alert.js"></script>
     <link rel="stylesheet" type="text/css" href="vendor/sweetalert-master/lib/sweet-alert.css" />
     <!-- END JQUERY CONFIRM -->
+    <!-- UI_UTILS -->
+    <script type="text/javascript" src="vendor/ui-utils/ui-utils.js"></script>
+    <!-- END UI_UTILS -->
     <!-- ========================================================== END MODULE ================================================= -->
     <!-- TOOLTIPS -->
     <link rel="stylesheet" type="text/css" href="vendor/tooltipster-master/css/tooltipster.css">

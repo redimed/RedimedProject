@@ -3,12 +3,15 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var users = [];
-module.exports = function(io,cookie,cookieParser,opentok) {
+var apiKey = "45178592";
+var apiSecret = "f21cb8765b7277f73989b0894d152bfb60a91aa7";
+
+var OpenTok = require('opentok'),
+    opentok = new OpenTok(apiKey, apiSecret);
+
+module.exports = function(io,cookie,cookieParser) {
     var userList = [];
     var ua = null;
-
-    var apiKey = "45172682";
 
     io.use(parser);
 
@@ -23,15 +26,17 @@ module.exports = function(io,cookie,cookieParser,opentok) {
         // console.log(ua);
 
         socket.on("generateSession",function(id){
-            opentok.createSession(function(err, session) {
+            opentok.createSession(function(err, ses) {
                 if (err) 
                     return console.log(err);
 
-                var token = session.generateToken();
+                var token = ses.generateToken({
+                    role : 'moderator'
+                });
 
                 var opentokRoom = {
                     apiKey: apiKey,
-                    sessionId: session.sessionId,
+                    sessionId: ses.sessionId,
                     token: token
                 }
 
@@ -39,7 +44,36 @@ module.exports = function(io,cookie,cookieParser,opentok) {
             });
         });
 
+        socket.on("sendArchive",function(info){
+            console.log(info);
+            
+            if(info.type === "start")
+            {
+                opentok.startArchive(info.sessionId, {
+                    name: 'Test Archiving'
+                  }, function(err, archive) {
+                    if (err) 
+                        socket.emit("receiveArchive",{type:"start",status:'error',error: err});
+                    else
+                        socket.emit("receiveArchive",{type:"start",status:'success',archive: archive});
+                  });
+            }
+            if(info.type === "stop")
+            {
+                opentok.stopArchive(info.archiveId, function(err, archive) {
+                     if (err) 
+                        socket.emit("receiveArchive",{type:"stop",status:'error',error: err});
+                    else
+                        socket.emit("receiveArchive",{type:"stop",status:'success',archive: archive});
+                });
+            }
+        })
+
         socket.on('sendMessage', function (currUser,contactUser, message) {
+            console.log("===========From: "+currUser);
+            console.log("===========To: "+contactUser);
+            console.log("===========Message: "+JSON.stringify(message));
+            
             db.User.find({where:{id: currUser}},{raw:true})
                 .success(function(currentUser){
                     if(currentUser)
@@ -52,8 +86,6 @@ module.exports = function(io,cookie,cookieParser,opentok) {
                                     {
                                         if(message.type == 'call')
                                         {
-                                            console.log("Call From: "+currUser);
-                                            
                                            var token = opentok.generateToken(message.sessionId);
 
                                            message.apiKey = apiKey;
@@ -84,6 +116,7 @@ module.exports = function(io,cookie,cookieParser,opentok) {
 
 
         socket.on('reconnected',function(id){
+            console.log("============================================reconnected");
             db.User.update({
                 socket: socket.id
             },{id:id})
@@ -95,51 +128,39 @@ module.exports = function(io,cookie,cookieParser,opentok) {
                 })
         })
 
-        socket.on('mobileConnect',function(id){
-            db.User.update({
-                socketMobile: socket.id
-            },{id:id})
-                .success(function(){
-                    socket.emit("mobileConnectSuccess");
-                    getOnlineUser();
-                })
-                .error(function(err){
-                    console.log(err);
-                })
+        socket.on('checkApp',function(id){
+            console.log("============================================checkApp",id);
+            if(id){
+                db.User.find({where:{id:id}},{raw:true})
+                    .success(function(user){
+                        if(user)
+                        {
+                            if(user.socket == null){
+                                db.User.update({
+                                    socket: socket.id
+                                },{id:id})
+                                    .success(function(){
+                                        getOnlineUser();
+                                    })
+                                    .error(function(err){
+                                        console.log(err);
+                                    })
+                            }
+                            // else
+                            // {
+                            //     if(user.socket != socket.id){
+                            //         io.to(socket.id).emit("isLoggedIn");
+                            //     }
+                            //     getOnlineUser();
+                            // }
+                        }
+
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
         })
-
-        // socket.on('checkApp',function(id){
-            // if(id){
-            //     db.User.find({where:{id:id}},{raw:true})
-            //         .success(function(user){
-            //             if(user)
-            //             {
-            //                 if(user.socket == null){
-            //                     db.User.update({
-            //                         socket: socket.id
-            //                     },{id:id})
-            //                         .success(function(){
-            //                             getOnlineUser();
-            //                         })
-            //                         .error(function(err){
-            //                             console.log(err);
-            //                         })
-            //                 }
-            //                 else
-            //                 {
-            //                     if(user.socket != socket.id){
-            //                         io.to(socket.id).emit("isLoggedIn");
-            //                     }
-            //                     getOnlineUser();
-            //                 }
-            //             }
-
-            //         })
-            //         .error(function(err){
-            //             console.log(err);
-            //         })
-            // }
-        // })
 
         socket.on('forceLogin',function(username){
 
@@ -192,6 +213,7 @@ module.exports = function(io,cookie,cookieParser,opentok) {
         });
 
         socket.on('updateSocketLogin',function(username){
+            console.log("============================================update login");
             db.User.update({
                 socket: socket.id
             },{user_name: username})
@@ -206,8 +228,6 @@ module.exports = function(io,cookie,cookieParser,opentok) {
         })
 
 
-
-
         socket.on('logout', function (username,id,userType,info) {
            db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
                 .success(function(){
@@ -220,7 +240,7 @@ module.exports = function(io,cookie,cookieParser,opentok) {
                                android_token: null
                            },{user_id:data.info.id})
                                .success(function(){
-                                   if(userType == 'Driver')
+                                   if(userType != null && userType == 'Driver')
                                        io.sockets.emit('driverLogout',id);
 
                                    socket.emit('logoutSuccess');
@@ -236,7 +256,7 @@ module.exports = function(io,cookie,cookieParser,opentok) {
                                ios_token: null
                            },{user_id:data.info.id})
                                .success(function(){
-                                   if(userType == 'Driver')
+                                   if(userType != null && userType == 'Driver')
                                        io.sockets.emit('driverLogout',id);
 
                                    socket.emit('logoutSuccess');

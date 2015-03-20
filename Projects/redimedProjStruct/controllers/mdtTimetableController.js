@@ -61,6 +61,18 @@ module.exports = {
 			res.json(500, {status: 'error', 'message': error});
 		})
 	},
+	timetableRemove: function(req, res){
+		var cal_header_df_id = req.body.cal_header_df_id;
+
+		var sql = "DELETE FROM sys_permernant_calendar_df WHERE cal_header_df_id='"+cal_header_df_id+"'";
+		db.sequelize.query(sql)
+		.success(function(result){
+			res.json({status: "success"});
+		})
+		.error(function(error){
+			res.json(500, {status: 'error', 'message': error});
+		})	
+	},
 	add: function(req, res){
 		var timetable = req.body.timetable;
 		var doctor_id = req.body.doctor_id;
@@ -69,14 +81,11 @@ module.exports = {
 			var sql_1 = "DELETE FROM sys_permernant_calendar_df WHERE cal_header_df_id="+timetable.cal_header_df_id+" AND doctor_id="+doctor_id;
 			var sql_2 = "INSERT INTO sys_permernant_calendar_df(cal_header_df_id, doctor_id, service_id, day_of_Week, from_time, to_time, isenable) VALUES";
 
-			for(var i = 0; i < timetable.data.length; i++){
-				sql_2 += "('"+timetable.cal_header_df_id+"', '"+doctor_id+"', '"+timetable.data[i].service_id+"', '"+timetable.dow+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.data[i].from_time_display)+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.data[i].to_time_display)+"', 1),";
-			}
-
+			sql_2 += "('"+timetable.cal_header_df_id+"', '"+doctor_id+"', '"+timetable.service_id+"', '"+timetable.dow+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.from_time_display)+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.to_time_display)+"', 1),";
 			sql_2 = sql_2.substring(0, sql_2.length-1);
 
 			db.sequelize.query(sql_1)
-			.success(function(deleted){
+			.success(function(tested){
 				db.sequelize.query(sql_2)
 				.success(function(created){
 					res.json({status: 'success', data: created});
@@ -85,28 +94,17 @@ module.exports = {
 					res.json(500, {status: 'error', 'message': error});		
 				})
 			})
-			.error(function(error){
-				res.json(500, {status: 'error', 'message': error});	
-			})
 		}else{
-			var sql_1 = "SELECT MAX(cal_header_df_id) AS cal_header_df_id FROM sys_permernant_calendar_df LIMIT 1";
-			var sql_2 = "INSERT INTO sys_permernant_calendar_df(cal_header_df_id, doctor_id, service_id, day_of_Week, from_time, to_time, isenable) VALUES";
+			//var sql_1 = "SELECT MAX(cal_header_df_id) AS cal_header_df_id FROM sys_permernant_calendar_df LIMIT 1";
+			var sql_2 = "INSERT INTO sys_permernant_calendar_df(doctor_id, service_id, day_of_Week, from_time, to_time, isenable) VALUES";
 
-			db.sequelize.query(sql_1)
-			.success(function(data){
-				for(var i = 0; i < timetable.data.length; i++){
-					sql_2 += "('"+(data[0].cal_header_df_id+1)+"', '"+doctor_id+"', '"+timetable.data[i].service_id+"', '"+timetable.dow+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.data[i].from_time_display)+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.data[i].to_time_display)+"', 1),";
-				}
+			sql_2 += "('"+doctor_id+"', '"+timetable.service_id+"', '"+timetable.dow+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.from_time_display)+"', '"+mdt_functions.convertFromHoursToDateTime(timetable.to_time_display)+"', 1),";
 
-				sql_2 = sql_2.substring(0, sql_2.length-1);
+			sql_2 = sql_2.substring(0, sql_2.length-1);
 
-				db.sequelize.query(sql_2)
-				.success(function(created){
-					res.json({status: 'success', data: created});
-				})
-				.error(function(error){
-					res.json(500, {status: 'error', 'message': error});
-				})
+			db.sequelize.query(sql_2)
+			.success(function(created){
+				res.json({status: 'success', data: created});
 			})
 			.error(function(error){
 				res.json(500, {status: 'error', 'message': error});

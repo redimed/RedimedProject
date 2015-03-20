@@ -56,31 +56,16 @@ module.exports = {
     InsertFunction: function(req, res) {
         var info = req.body.info || [];
         sys_hierarchies_types.create({
-                TYPE_NAME: info.model[0].value,
+                TYPE_NAME: info.TYPE_NAME,
                 Created_by: info.userId
             }, {
                 raw: true
             })
             .success(function(result) {
-                sys_hierarchies_types.findAll({
-                        order: 'Creation_date DESC'
-                    }, {
-                        raw: true
-                    })
-                    .success(function(result) {
-                        res.json({
-                            "status": "success",
-                            "result": result
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        consolle.log("*****ERR:" + err + "*****");
-                        res.json({
-                            status: "getFail"
-                        });
-                        return;
-                    });
+                res.json({
+                    status: "success"
+                });
+                return;
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -140,32 +125,16 @@ module.exports = {
         var info = req.body.info;
         var TYPE_NAME = info.oldName;
         sys_hierarchies_types.update({
-                TYPE_NAME: info.model[0].value,
+                TYPE_NAME: info.TYPE_NAME,
                 Last_updated_by: info.userId
             }, {
                 TYPE_NAME: TYPE_NAME
             })
             .success(function(result1) {
-                sys_hierarchies_types.findAll({
-                        order: "Creation_date DESC"
-                    }, {
-                        raw: true
-                    })
-                    .success(function(result2) {
-                        res.json({
-                            "status": "success",
-                            result: result2
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            "status": "fail",
-                            "result": []
-                        });
-                        return;
-                    });
+                res.json({
+                    status: "success"
+                });
+                return;
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -449,7 +418,7 @@ module.exports = {
                         NODE_CODE: info.NODE_CODE,
                         FROM_VALUE: info.FROM_VALUE,
                         TO_VALUE: info.TO_VALUE,
-                        ISVALUE: 1,
+                        ISVALUE: info.ISVALUE,
                         TO_NODE_ID: info.parent,
                         GROUP_ID: info.GROUP_ID,
                         DECRIPTION: info.DECRIPTION,
@@ -634,6 +603,7 @@ module.exports = {
         sys_hierarchy_nodes.update({
                 NODE_CODE: info.NODE_CODE,
                 FROM_VALUE: info.FROM_VALUE,
+                ISVALUE: info.ISVALUE,
                 TO_VALUE: info.TO_VALUE,
                 TO_NODE_ID: info.TO_NODE_ID,
                 GROUP_ID: info.GROUP_ID,

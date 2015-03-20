@@ -3,11 +3,27 @@
  */
 
 angular.module('app.loggedIn.rlob.list.controller',[])
-.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window) {
+.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window,Mailto) {
         //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
+        // console.log($scope.loginInfo.company_id);
         $scope.bookingStatus=rlobConstant.bookingStatus;
+        $scope.documentStatus=rlobConstant.documentStatus;
+        $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
+        $scope.sizePageList=[
+            {value:10,display:'10 Rows'},
+            {value:20,display:'20 Rows'},
+            {value:30,display:'30 Rows'},
+            {value:40,display:'40 Rows'},
+            {value:50,display:'50 Rows'},
+            {value:60,display:'60 Rows'},
+            {value:70,display:'70 Rows'},
+            {value:80,display:'80 Rows'},
+            {value:90,display:'90 Rows'},
+            {value:100,display:'100 Rows'}
+
+        ];
         $scope.rl_types=[];
         $http({
             method:"GET",
@@ -23,20 +39,6 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             .finally(function() {
 
             });
-
-            //CONFIG
-            var getDate = function (date) {
-                var res = date.split("/");
-                return res[2] + "-" + res[1] + "-" + res[0];
-            }
-
-            $scope.rows = [
-                {"code": 10},
-                {"code": 20},
-                {"code": 50},
-                {"code": 500}
-            ];
-            //END CONFIG
 
             //GO TO BOOKING DETAIL
 
@@ -59,6 +61,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     {
                         $scope.selectedBooking = data.data;
                         $("#view-detail-booking-dialog").modal({show: true, backdrop: 'static'});
+                        // console.log($scope.selectedBooking);
                     }
                     else
                     {
@@ -69,109 +72,67 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     console.log("error");
                 });
             }
-            $scope.openModal = function (id) {
-                angular.element("#" + id).fadeIn();
-            }
-
-            $scope.closeModal = function (id) {
-                angular.element("#" + id).fadeOut();
-            }
-
-            $scope.saveModal = function (id) {
-                angular.element("#" + id).fadeOut();
-                $scope.loadList();
-            }
-            //END OPEN MODAL
-
-            //CHANGE PAGE
-            $scope.setPage = function () {
-                $scope.search.offset = ($scope.search.currentPage - 1) * $scope.search.limit;
-                $scope.loadList();
-            }
-            //END CHANGE PAGE
 
             //SEARCH FUNCTION
-            $scope.search_map = {
-                limit: 10,
-                offset: 0,
-                maxSize: 5,
-                currentPage: 1,
-                data: {
-                    ASS_ID:$scope.loginInfo.id,
-                    CLAIM_NO: "",
-                    ASS_SURNAME: "",
-                    RL_TYPE_ID: "",
-                    BOOKING_TYPE:$scope.bookingType,
-                    DATE: {
-                        BOOKING_DATE: {
-                            from: null,
-                            to: null,
-                            from_map: null,
-                            to_map: null
-                        },
-                        APPOINTMENT_DATE: {
-                            from: null,
-                            to: null,
-                            from_map: null,
-                            to_map: null
-                        }
-                    }
-                },
-                ORDER_BY: "APPOINTMENT_DATE DESC"
+            $scope.searchInfoMap = {
+                currentPage: 1, //page hien tai tren phan trang
+                itemsPerPage:$scope.sizePageList[0].value,//so luong item tren 1 page
+                totalItems:'',//tong so result (tong phan tu tren tat ca cac trang)
+                maxSize:15, //so luong danh dau trang hien thi
+                claimNo:'',
+                surname:'',
+                firstName:'',
+                type:'',
+                appointmentDateFromTemp:'',
+                appointmentDateFrom:'',
+                appointmentDateToTemp:'',
+                appointmentDateTo:'',
+                bookingStatus:'',
+                documentStatus:'',
+                orderBy: "APPOINTMENT_DATE DESC"
             }
 
-            $scope.search = angular.copy($scope.search_map);
-            //END SEARCH FUNCTION
 
-            //LOAD SEARCH
+
             $scope.list = [];
-
-            $scope.reset = function () {
-                $scope.search = angular.copy($scope.search_map);
-                $scope.loadList();
-            }
-
-            $scope.loadList = function () {
-
-//                if ($scope.search.data.DATE.BOOKING_DATE.from !== null && $scope.search.data.DATE.BOOKING_DATE.to !== null) {
-//                    $scope.search.data.DATE.BOOKING_DATE.from_map = getDate($scope.search.data.DATE.BOOKING_DATE.from);
-//                    $scope.search.data.DATE.BOOKING_DATE.to_map = getDate($scope.search.data.DATE.BOOKING_DATE.to);
-//                }
-//
-//                if ($scope.search.data.DATE.APPOINTMENT_DATE.from !== null && $scope.search.data.DATE.APPOINTMENT_DATE.to !== null) {
-//                    $scope.search.data.DATE.APPOINTMENT_DATE.from_map = getDate($scope.search.data.DATE.APPOINTMENT_DATE.from);
-//                    $scope.search.data.DATE.APPOINTMENT_DATE.to_map = getDate($scope.search.data.DATE.APPOINTMENT_DATE.to);
-//                }
-                //alert($scope.search.data.DATE.APPOINTMENT_DATE.from_map)
-                //alert($scope.search.data.DATE.APPOINTMENT_DATE.to_map)
-
-                if(!$scope.search.data.DATE.APPOINTMENT_DATE.from_map)
-                    $scope.search.data.DATE.APPOINTMENT_DATE.from_map=null;
-                if(!$scope.search.data.DATE.APPOINTMENT_DATE.to_map)
-                    $scope.search.data.DATE.APPOINTMENT_DATE.to_map=null;
-                $http.post("/api/rlob/rl_bookings/list", {search: $scope.search}).then(function (response) {
-                    $scope.list = response.data;
-                    var i = 0;
-                    angular.forEach($scope.list.results, function (l) {
-                        $scope.list.results[i].BOOKING_DATE = moment($scope.list.results[i].BOOKING_DATE).format("DD/MM/YYYY");
-                        $scope.list.results[i].APPOINMENT_DATE = moment($scope.list.results[i].APPOINMENT_DATE).format("DD/MM/YYYY");
-                        i++;
-                    })
+            $scope.pagingHandle = function () {
+                if($scope.searchInfo.appointmentDateFromTemp)
+                    $scope.searchInfo.appointmentDateFrom=moment($scope.searchInfo.appointmentDateFromTemp).format("YYYY/MM/DD");
+                else
+                    $scope.searchInfo.appointmentDateFrom=null;
+                if($scope.searchInfo.appointmentDateToTemp)
+                    $scope.searchInfo.appointmentDateTo=moment($scope.searchInfo.appointmentDateToTemp).format("YYYY/MM/DD");
+                else
+                    $scope.searchInfo.appointmentDateTo=null;
+                $http.post("/api/rlob/rl_bookings/list-bookings-for-customer", {searchInfo: $scope.searchInfo}).then(function (response) {
+                    if(response.data.status=='success')
+                    {
+                        $scope.list = response.data.data.list;
+                        $scope.searchInfo.totalItems=response.data.data.totalItems;
+                    }
+                    else
+                    {
+                        $scope.list=[];
+                    }
+                    
                 })
             }
             //END LOAD SEARCH
 
+            $scope.searchHandle=function()
+            {
+                $scope.searchInfo.currentPage=1;
+                $scope.pagingHandle();
+            }
 
-            $scope.loadList();
+            $scope.reset = function () {
+                $scope.searchInfo = angular.copy($scope.searchInfoMap);
+                $scope.pagingHandle();
+            }
 
             //Sort function
             //tannv.dts@gmail.com
             //------------------------------------------------------
-            /***
-             * Sort
-             * @param field
-             * @param direct
-             */
             $scope.sortDirect = "NO_SORT";
             $scope.sortable = {
                 'APPOINTMENT_DATE': 'DESC',
@@ -180,9 +141,20 @@ angular.module('app.loggedIn.rlob.list.controller',[])
             $scope.currentFieldSort="APPOINTMENT_DATE";
             $scope.sortBy=function()
             {
-                //alert($scope.search.ORDER_BY);
-                $scope.loadList();
+                $scope.searchHandle();
             }
+
+            $scope.$watch("[searchInfo.appointmentDateFromTemp,searchInfo.appointmentDateToTemp]",function(newValue,oldValue){
+                if($scope.searchInfo)
+                {
+                    $scope.searchHandle();
+                }
+                
+            },true);
+
+            $scope.searchInfo = angular.copy($scope.searchInfoMap);
+            $scope.searchHandle();
+            //-----------------------------------------------------------
 
             $scope.isClickActionMenu=false;
             $scope.clickActionMenu=function(bookingId)
@@ -193,6 +165,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     .then(function(data){
                         if(data.status=='success'){
                             $scope.selectedBooking=data.data;
+                            // console.log($scope.selectedBooking);
                         }
                     })
             }
@@ -207,10 +180,75 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 $window.location.href = '/api/download/structure/attach-file/'+$scope.bookingType+'/'+bookingId;
             }
 
-            $scope.$watch("[search.data.DATE.APPOINTMENT_DATE.from_map,search.data.DATE.APPOINTMENT_DATE.to_map]",function(newValue,oldValue){
-                $scope.loadList();
-            },true);
 
+            $scope.$watch("selectedBooking",function(newValue,oldValue){
+                if (newValue != oldValue) {
+                    $scope.updateMailTo(newValue);
+                };
+            });
+
+            $scope.showDialogSendDocument=function()
+            {
+                $("#view-detail-booking-dialog").modal('hide');
+                $("#lob-client-send-document-dialog").modal({show:true,backdrop:'static'});
+            }
+            $scope.uploadDocument=function ()
+            {
+                $("#lob-client-send-document-dialog").modal('hide');
+                $("#lob-client-upload-dialog").modal({show:true,backdrop:'static'});
+            }
+            $scope.updateMailTo=function(data){
+                $scope.mailBodyData={
+                    requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
+                    company: data.Company_name?data.Company_name:'',
+                    time:moment(new Date(data.APPOINTMENT_DATE)).format("HH:mm"),
+                    date:moment(new Date(data.APPOINTMENT_DATE)).format("DD/MM/YYYY"),
+                    typeOfAppointment:data.BOOKING_TYPE,
+                    doctor:data.NAME?data.NAME:'',
+                    address:data.Site_addr?data.Site_addr:'',
+                    isContactPatient:data.ISCONTACTPATIENT?data.ISCONTACTPATIENT:'',
+                    notes:data.NOTES?data.NOTES:'',
+                    claimNumber:data.CLAIM_NO?data.CLAIM_NO:'',
+                    wrkName:data.WRK_SURNAME?data.WRK_SURNAME:'',
+                    wrkDOB:moment(data.WRK_DOB).format("DD/MM/YYYY"),
+                    wrkContactNo:data.WRK_CONTACT_NO?data.WRK_CONTACT_NO:'',
+                    injuryDesc:data.DESC_INJURY?data.DESC_INJURY:''
+                }
+
+                 $scope.emailContent=
+                "The below appointment has been requested by "+$scope.mailBodyData.requestBy+" from "+$scope.mailBodyData.company+".\n\n"+
+                "Appointment Details:\n\n"+
+                "Date: "+$scope.mailBodyData.date+"\n"+
+                "Time: "+$scope.mailBodyData.time+"\n"+
+                "Type of appointment: "+$scope.mailBodyData.Rl_TYPE_NAME+"\n"+
+                "Doctor: "+$scope.mailBodyData.doctor+"\n"+
+                "Address: "+$scope.mailBodyData.address+"\n"+
+                "Notes: "+$scope.mailBodyData.notes+" \n\n"+
+                "Patient information:\n\n"+
+                "Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
+                "Name: "+$scope.mailBodyData.wrkName+"\n"+
+                "Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
+                "Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
+                "Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
+
+            var recepient = "medicolegal@redimed.com.au";
+            var options = {
+//                cc: "tannv.dts@gmail.com",
+//                bcc: "nguyenvantan27binhduong@gmail.com",
+                subject: ("Medico-Legal Paperwork "+$scope.mailBodyData.wrkName),
+                body: $scope.emailContent
+            };
+
+                $scope.mailtoLink = Mailto.url(recepient, options);
+
+            }
+
+            $scope.sendEmail=function()
+            {
+                console.log($scope.mailtoLink);
+                $window.location.href = $scope.mailtoLink;
+                $("#lob-client-send-document-dialog").modal('hide');
+            }
 
         });
 

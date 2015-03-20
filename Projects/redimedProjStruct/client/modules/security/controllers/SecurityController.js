@@ -9,6 +9,7 @@ angular.module("app.security.controller",[
     $scope.modelUser = {
         username: "",
         password: "",
-        remember: false
+        remember: false,
+        isAgree: false
     }
 })

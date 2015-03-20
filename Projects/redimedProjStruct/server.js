@@ -15,29 +15,21 @@ var compress = require('compression');
 var db = require('./models');
 var restful = require('sequelize-restful');
 var useragent = require('express-useragent');
-
-var pkey = fs.readFileSync('key/key.pem');
-var pcert = fs.readFileSync('key/cert.pem');
-
-var credentials = {key: pkey, cert: pcert};
-//Create application management
-var app = express();
-
-var server = require('https').createServer(credentials,app);
-var io = require('socket.io')(server);
 var _ = require('lodash-node');
 
-var apiKey = "45172682";
-var apiSecret = "cdee9fc8a9a0c2df72a96c4f303de5f34a4e4ce9";
 
+var ssl_options = {
+    key: fs.readFileSync('key/key.pem'),
+    cert: fs.readFileSync('key/cert.pem'),
+    requestCert: true,
+    rejectUnauthorized: false
+};
+var app = express();
 
-var OpenTok = require('opentok'),
-    opentok = new OpenTok(apiKey, apiSecret);
+var server = require('https').createServer(ssl_options,app);
+var io = require('socket.io')(server,{key:fs.readFileSync('key/key.pem'),cert:fs.readFileSync('key/cert.pem')});
 
-
-server.listen(3000);
-
-require('./socket')(io,cookie,cookieParser,opentok);
+require('./socket')(io,cookie,cookieParser);
 
 var myIceServers = [
     {url: "stun:stun.l.google.com:19302"},
@@ -48,13 +40,14 @@ var myIceServers = [
     {url: "turn:172.17.19.101:3478", "username":"redimed", "credential":"redimed123"}
 ];
 
+var clientDir = path.join(__dirname, 'client');
+var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(useragent.express());
 app.use(restful(db.sequelize, { endpoint: '/api/restful'}));
-
 app.use(favicon());
 app.use(compress());
 app.use(logger('dev'));
@@ -76,13 +69,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-var clientDir = path.join(__dirname, 'client');
-var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
-//app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(clientDir));
+app.get('/',function(req, res) {
+    res.sendfile(path.join(clientDir, 'login.html'))
+});
+
+
 app.use('/img/patient/avt', express.static(uploadedFile));
 /**
  * K Library
@@ -161,6 +153,7 @@ app.get('/api/booking/download/:bookingId/:candidateId', function(req, res, next
 
 });
 
+
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -185,29 +178,13 @@ app.use(function(err, req, res, next){
     return;
 });
 
-
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        log.error('INTERNAL ERROR (%d): %s',res.statusCode,err.message);
-        res.send({ error: err.message });
-        return;
-    });
-}
-
 db.sequelize
     .authenticate()
     .complete(function(err) {
         if (err) {
             throw err[0];
         } else {
-            var debug = require('debug')('redimedProjStruct');
-            var server = app.listen(app.get('port'), function() {
-                debug('App server listening on port ' + server.address().port);
-            });
+            server.listen(3000);
             log.info('Connection has been established successfully!');
             log.info('App server listening on port ' + server.address().port);
         }

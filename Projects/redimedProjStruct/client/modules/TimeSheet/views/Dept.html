@@ -68,12 +68,12 @@
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                        <td>{{l.departmentName || " " }}</td>
-                        <td>{{l.name}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.departmentName || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.name}}</td>
                         <td style="text-align:center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <a class="dropdown-toggle" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a ng-click="editDept(l.departmentid)"><i class="fa fa-pencil"></i>Edit</a>

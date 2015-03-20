@@ -8,6 +8,7 @@ var isoUserGroupController=require('./controllers/isoController/isoUserGroupCont
 var isoApproverController = require('./controllers/isoController/isoApproverController');
 var isoHierarchyApprovalController = require('./controllers/isoController/isoHierarchyApprovalController');
 var isoRequestEditDocumentController = require('./controllers/isoController/isoRequestEditDocumentController');
+var isoReplyEditDocumentController = require('./controllers/isoController/isoReplyEditDocumentController');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -122,3 +123,12 @@ app.post('/api/iso/iso-check-out-in/force-submit-document',isoController.checkAd
 app.post('/api/iso/iso-check-out-in/force-approved-document',isoController.checkAdminIsoSystem,isoCheckInOutController.approvedDocument);
 app.post('/api/iso/iso-check-out-in/create-new-check-in-document',multipartMiddleware,isoController.checkAdminIsoSystem,isoCheckInOutController.createNewCheckInDocument);
 // app.post('/api/iso/iso-check-out-in/create-new-check-in-document',multipartMiddleware,isoCheckInOutController.createNewCheckInDocument);
+
+//isoReplyEditDocumentController
+app.post('/api/iso/iso-reply-edit-document/insert-iso-reply-edit-document',isoReplyEditDocumentController.insertReplyEditDocument);
+app.post('/api/iso/iso-reply-edit-document/get-list-iso-reply-edit-document',isoReplyEditDocumentController.getAllReplyEditDocument);
+app.post('/api/iso/iso-reply-edit-document/update-admin-reply',isoReplyEditDocumentController.updateAdminReply);
+app.post('/api/iso/iso-reply-edit-document/updete-staff-reply',isoReplyEditDocumentController.updateStaffReply);
+app.get('/api/iso/iso-reply-edit-document/get-number-staff-reply-of-request',isoReplyEditDocumentController.getNumberStaffReplyOfRequest);
+app.get('/api/iso/iso-reply-edit-document/get-number-admin-reply-of-request',isoReplyEditDocumentController.getNumberAdminReplyOfRequest);
+// app.get('/api/iso/iso-reply-edit-document/get-have-new-reply',isoReplyEditDocumentController.getHaveNewReply);

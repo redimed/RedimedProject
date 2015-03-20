@@ -11,15 +11,16 @@ angular.module("app.lockscreen.controller",[
         var params = {};
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-            console.log('this is state change to', toState);
-           if(isLocking===true){
-            if(toState.name !== 'security.login'){
-                 event.preventDefault();
-                 toastr.error('Please provide your password to unlock the system!','Password required!');
-            }
-            else{
-                isLocking=false;
-            }
+           console.log('this is state change to', toState);
+           if(isLocking===true)
+           {
+                if(toState.name !== 'security.login' && toState.name !== 'call'){
+                     event.preventDefault();
+                     toastr.error('Please provide your password to unlock the system!','Password required!');
+                }
+                else{
+                    isLocking=false;
+                }
            }
         });
 
@@ -29,8 +30,6 @@ angular.module("app.lockscreen.controller",[
                 params[key] = value;
             })
         }
-
-        console.log(params);
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
             $state.go('security.login');

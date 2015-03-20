@@ -130,5 +130,52 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
+        TimeSheetService.LoadTaskApproved = function(searchObj) {
+            var LoadTaskApproved = api.all("TimeSheet/post-list-approved");
+            return LoadTaskApproved.post({
+                searchObj: searchObj
+            });
+        };
+
+        TimeSheetService.ViewApproved = function(idPost) {
+            var ViewApproved = api.all("TimeSheet/post-one-approved");
+            return ViewApproved.post({
+                info: idPost
+            });
+        };
+
+        TimeSheetService.LoadTimeSheetApprove = function(searchObj) {
+            var LoadTimeSheetApprove = api.all("TimeSheet/post-list-approve");
+            return LoadTimeSheetApprove.post({
+                searchObj: searchObj
+            });
+        };
+
+        TimeSheetService.RejectTaskWeek = function(info) {
+            var RejectTaskWeek = api.all("TimeSheet/post-reject-taskweek");
+            return RejectTaskWeek.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.ApproveTaskWeek = function(info) {
+            var ApproveTaskWeek = api.all("TimeSheet/post-approve-taskweek");
+            return ApproveTaskWeek.post({
+                info: info
+            });
+        };
+        TimeSheetService.LoadRole = function(USER_ID) {
+            var LoadRole = api.all("TimeSheet/post-role-one");
+            return LoadRole.post({
+                USER_ID: USER_ID
+            });
+        };
+        TimeSheetService.ViewItem = function(taskID) {
+            var ViewItem = api.all("TimeSheet/post-item-list");
+            return ViewItem.post({
+                taskID: taskID
+            });
+        };
+
         return TimeSheetService;
     });

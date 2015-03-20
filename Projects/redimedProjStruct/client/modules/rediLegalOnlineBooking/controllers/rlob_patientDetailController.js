@@ -57,15 +57,15 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
          * angular bootstrap datepicker handle
          */
         $scope.newBooking={};
-        $scope.today = function() {
-            $scope.WRK_DOB_TEMP = new Date();
-        };
-        //    $scope.today();
-        $scope.WRK_DOB_TEMP = new Date('1980-1-1');
+        // $scope.today = function() {
+        //     $scope.WRK_DOB_TEMP = new Date();
+        // };
+        // //    $scope.today();
+        // $scope.WRK_DOB_TEMP = '2012-12-12';
 
-        $scope.clear = function () {
-            $scope.WRK_DOB_TEMP = null;
-        };
+        // $scope.clear = function () {
+        //     $scope.WRK_DOB_TEMP = null;
+        // };
 
         // Disable weekend selection
         $scope.disabled = function(date, mode) {
@@ -81,8 +81,17 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.open = function($event) {
             $event.preventDefault();
             $event.stopPropagation();
+            $scope.openedDateOfInjury = false;
 
             $scope.opened = true;
+        };
+
+        $scope.openDateOfInjury = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = false;
+
+            $scope.openedDateOfInjury = true;
         };
 
         $scope.dateOptions = {
@@ -260,7 +269,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
 
 
-
         /***
          * scroll den 1 id xac dinh
          * @param el
@@ -382,7 +390,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
                 time:$scope.from_time.format("HH:mm"),
                 date:$scope.from_time.format("DD/MM/YYYY"),
-                typeOfAppointment:'REDiLEGAL',
+                typeOfAppointment:$scope.bookingTypeObj.display,
                 doctor:selectedInfo.doctorSelected.NAME?selectedInfo.doctorSelected.NAME:'',
                 address:selectedInfo.locationSelected.Site_addr?selectedInfo.locationSelected.Site_addr:'',
                 isContactPatient:$scope.newBooking.ISCONTACTPATIENT?$scope.newBooking.ISCONTACTPATIENT:'',
@@ -397,25 +405,24 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.emailContent=
                 "The below appointment has been requested by "+$scope.mailBodyData.requestBy+" from "+$scope.mailBodyData.company+".\n\n"+
                 "Appointment Details:\n\n"+
-                "+ Date: "+$scope.mailBodyData.date+"\n"+
-                "+ Time: "+$scope.mailBodyData.time+"\n"+
-                "+ Type of appointment: "+$scope.mailBodyData.typeOfAppointment+"\n"+
-                "+ Doctor: "+$scope.mailBodyData.doctor+"\n"+
-                "+ Address: "+$scope.mailBodyData.address+"\n"+
-                "+ Redilegal to contact the patient and arrange a time: "+(($scope.mailBodyData.isContactPatient=='1')?'yes':'no')+"\n"+
-                "+ Notes: "+$scope.mailBodyData.notes+" \n\n"+
+                "Date: "+$scope.mailBodyData.date+"\n"+
+                "Time: "+$scope.mailBodyData.time+"\n"+
+                "Type of appointment: "+selectedInfo.rltypeSelected.Rl_TYPE_NAME+"\n"+
+                "Doctor: "+$scope.mailBodyData.doctor+"\n"+
+                "Address: "+$scope.mailBodyData.address+"\n"+
+                "Notes: "+$scope.mailBodyData.notes+" \n\n"+
                 "Patient information:\n\n"+
-                "+ Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
-                "+ Name: "+$scope.mailBodyData.wrkName+"\n"+
-                "+ Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
-                "+ Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
-                "+ Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
+                "Claim number: "+$scope.mailBodyData.claimNumber+"\n"+
+                "Name: "+$scope.mailBodyData.wrkName+"\n"+
+                "Date of Birth: "+$scope.mailBodyData.wrkDOB+"\n"+
+                "Contact number: "+$scope.mailBodyData.wrkContactNo+" \n"+
+                "Injury description: "+$scope.mailBodyData.injuryDesc+"\n";
 
-            var recepient = "redilegal@redimed.com.au";
+            var recepient = "medicolegal@redimed.com.au";
             var options = {
 //                cc: "tannv.dts@gmail.com",
 //                bcc: "nguyenvantan27binhduong@gmail.com",
-                subject: "Summary of Booking",
+                subject: ("Medico-Legal Paperwork "+$scope.mailBodyData.wrkName),
                 body: $scope.emailContent
             };
 
@@ -432,13 +439,22 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.refered_date_string=$scope.from_time.format("ddd DD/MM/YYYY HH-mm")+" "+selectedInfo.locationSelected.Site_name;
             $scope.newBooking.STATUS="Confirmed";
             $scope.newBooking.BOOKING_TYPE=$scope.bookingType;
+            console.log($scope.WRK_DATE_OF_INJURY_TEMP);
+            console.log($scope.WRK_DOB_TEMP);
             if($scope.WRK_DOB_TEMP==undefined)
             {
                 alert("Worker's birthay fail!");
                 return;
             }
 
-            $scope.newBooking.WRK_DOB=moment($scope.WRK_DOB_TEMP).format("YYYY-MM-DD");
+            $scope.newBooking.WRK_DOB=moment($scope.WRK_DOB_TEMP).format("YYYY-MM-DD") ;
+            if($scope.WRK_DATE_OF_INJURY_TEMP==undefined)
+            {
+                alert("Worker's birthay fail!");
+                return;
+            }
+
+            $scope.newBooking.WRK_DATE_OF_INJURY=moment($scope.WRK_DATE_OF_INJURY_TEMP).format("YYYY-MM-DD");
             $scope.showDialogAddSuccess=function()
             {
                 $("#lob-client-add-booking-success").modal({show:true,backdrop:'static'});
@@ -463,6 +479,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             {
                 $("#lob-client-send-document-dialog").modal({show:true,backdrop:'static'});
             }
+            // console.log($scope.WRK_DOB_TEMP);
             //phan quoc chien
             //phanquocchien.c1109g@gmail.com
             //add new patient
@@ -525,7 +542,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                                                     .success(function(data) {
                                                         if(data.status=='success')
                                                         {
-                                                            console.log(data.data);
+                                                            // console.log(data.data);
                                                             
                                                             rlobService.updatePatientIdBooking(data.data,idPatient).then(function(data){
                                                                 if (data.status == 'success') {

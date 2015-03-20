@@ -168,6 +168,34 @@ angular.module("app.directive.common", [
     } // END RETURN
 })
 
+.directive('numbersOnly', function(){
+   return {
+     require: 'ngModel',
+     link: function(scope, element, attrs, modelCtrl) {
+       modelCtrl.$parsers.push(function (inputValue) {
+           // this next if is necessary for when using ng-required on your input. 
+           // In such cases, when a letter is typed first, this parser will be called
+           // again, and the 2nd time, the value will be undefined
+           if (inputValue == undefined) return '' 
+           var transformedInput = inputValue.replace(/[^0-9/./:]+/g, ''); 
+           if (transformedInput!=inputValue) {
+              modelCtrl.$setViewValue(transformedInput);
+              modelCtrl.$render();
+           }         
+
+           return transformedInput;         
+       });
+
+       element.bind('keypress', function(event) {
+        if(event.keyCode === 32) {
+          event.preventDefault();
+        }
+      });
+       
+     }
+   };
+})
+
 
 
 .directive("radio", function () {
@@ -238,6 +266,71 @@ angular.module("app.directive.common", [
         link: function(scope, element, attrs) {
             $(element).val(scope.number).knob();
         }
+    };
+})
+
+.directive('syncClick', function () {
+  return {
+    restrict: 'A',
+    scope: {
+        syncClick: '&'
+    },
+    link: function(scope, element, attrs){
+      element.on('click', function () {
+        scope.syncClick();
+      });
+    }
+  };
+})
+
+.directive('draggable', function ($document) {
+    var getEventProp = function (event, prop) {
+        return event[prop] || (event.touches && event.touches[0][prop]) ||
+            (event.originalEvent && event.originalEvent.touches && event.originalEvent.touches[0][prop]);
+    };
+    
+    return function(scope, element, attrs){
+        var mouseMoveHandler = function mouseMoveHandler(event) {
+            y = getEventProp(event, 'pageY') - startY;
+            x = getEventProp(event, 'pageX') - startX;
+            element.css({
+                top: y + 'px',
+                left: x + 'px'
+            });
+        };
+        
+        var mouseUpHandler = function mouseUpHandler(event) {
+            $document.unbind('mousemove touchmove', mouseMoveHandler);
+            $document.unbind('mouseup touchend', mouseUpHandler);
+        };
+        
+        var position = element.css("position"),
+            startX = 0, startY = 0,
+            x = 0, y = 0;
+        if (position !== "relative" && position !== "absolute") {
+            element.css("positon", "relative");
+            position = "relative";
+        }
+        
+        element.on("mousedown touchstart", function (event) {
+            event.preventDefault();
+            var pageX = getEventProp(event, 'pageX');
+            var pageY = getEventProp(event, 'pageY');
+
+            switch (position) {
+            case "relative":
+                startX = pageX - x;
+                startY = pageY - y;
+                break;
+            case "absolute":
+                startX = pageX - element.context.offsetLeft;
+                startY = pageY - element.context.offsetTop;
+                break;
+            }
+            $document.on("mousemove touchmove", mouseMoveHandler);
+            $document.on("mouseup touchend", mouseUpHandler);
+            $($document[0].body).on("mouseleave", mouseUpHandler);
+        });
     };
 })
 
@@ -818,86 +911,69 @@ angular.module("app.directive.common", [
         };
     })
     /* directive LE HOAI THANH */
-    .directive("customInput", function() {
+    .directive("customTr", function() {
         return {
             restrict: "EA",
-            required: "ngModel",
             scope: {
-                ngModel: "=",
-                customInput: "="
+                customTr: "=",
+                customFr: "=",
+                ngModel: "="
             },
             link: function(scope, elem, attrs) {
-                // array error defined
                 var arrayError = {
-                    "required": "Field is required!",
-                    "emailValid": "Email is valid!",
-                    "maxlength": "Too long!"
+                    required: "Field is required!",
+                    maxlength: "Too long!",
+                    number: "Required number!"
                 };
-                //listener customInput
-                scope.$watch("customInput", function(newCustomInput, oldCustomInput) {
-                    if (newCustomInput !== undefined &&
-                        newCustomInput !== null &&
-                        newCustomInput.length !== 0 &&
-                        newCustomInput.validation !== undefined &&
-                        newCustomInput.validation !== null &&
-                        newCustomInput.validation.length !== 0) {
-                        _.forEach(newCustomInput.validation, function(validation) {
-                            switch (validation.type) {
-                                case "required":
-                                    if (newCustomInput.value === null || newCustomInput.value === undefined || newCustomInput.value === "") {
-                                        elem.parent().find("label").append("&nbsp<i class='fa fa-star' style='color: #f3565d'></i>");
-
-                                    } else {
-                                        elem.parent().find("label").append("&nbsp<i class='fa fa-star' style='color: #1bbc9b'></i>");
-                                    }
-                                    break;
+                //watch custom-tr input required input
+                scope.$watch('customTr', function(newModel, oldModel) {
+                    var checkErr = false;
+                    if (scope.customFr !== undefined && scope.customFr.$error !== undefined && scope.customFr.$error !== null) {
+                        angular.forEach(scope.customFr.$error, function(err, index) {
+                            if (err) {
+                                checkErr = true;
+                                //check tooltip and add
+                                if (elem.parent().hasClass("tooltipstered")) {
+                                    angular.element(elem.parent()).tooltipster("destroy");
+                                }
+                                // //add tooltipster
+                                angular.element(elem.parent()).tooltipster({
+                                    theme: "tooltip-error-theme",
+                                    contentAsHTML: true,
+                                    content: arrayError[index]
+                                });
+                                //end tooltip
                             }
                         });
+                        if (checkErr) {
+                            //check star class and add star class
+                            if (!elem.parent().find("i").hasClass('glyphicon glyphicon-exclamation-sign')) {
+                                elem.parent().find("label").append("&nbsp<i class='glyphicon glyphicon-exclamation-sign' style='color: #f3565d'></i>");
+                            } else if (elem.parent().find("i").hasClass('glyphicon glyphicon-exclamation-sign')) {}
+                            //end start
+                            elem.parent().find("label").css("color", "#f3565d");
+                        } else {
+                            //check star class and add star class
+                            if (!elem.parent().find("i").hasClass('glyphicon glyphicon-exclamation-sign')) {} else if (elem.parent().find("i").hasClass('glyphicon glyphicon-exclamation-sign')) {
+                                elem.parent().find("i").removeClass("glyphicon glyphicon-exclamation-sign");
+                            }
+                            //end star class
 
-                        //listener ngModel in customInput
-                        scope.$watch("ngModel", function(newNgModel, oldNgModel) {
-                            _.forEach(scope.customInput.validation, function(validation) {
-                                if (typeof validation !== undefined && typeof validation !== null) {
-                                    switch (validation.type) {
-                                        case "required":
-                                            if (newNgModel === "" ||
-                                                newNgModel === null ||
-                                                newNgModel === undefined) {
-                                                //check exist after add tooltopster
-                                                if (elem.parent().hasClass("tooltipstered")) {
-                                                    angular.element(elem.parent()).tooltipster("destroy");
-                                                }
-                                                //set color tag i
-                                                elem.parent().find("i").css("color", "#f3565d");
+                            // set label normal
+                            elem.parent().find("label").css("color", "#404040");
+                            //end set label normal
 
-                                                //set color error
-                                                elem.parent().find("label").css("color", "#f3565d");
-
-                                                //add tooltipster
-                                                angular.element(elem.parent()).tooltipster({
-                                                    theme: "tooltip-error-theme",
-                                                    contentAsHTML: true,
-                                                    content: arrayError["required"]
-                                                });
-                                                scope.customInput.valid = true;
-
-                                            } else if (elem.parent().hasClass("tooltipstered")) {
-                                                angular.element(elem.parent()).tooltipster("destroy");
-                                                angular.element(elem.parent()).removeAttr("title");
-                                                elem.parent().find("label").css("color", "#404040");
-                                                elem.parent().find("i").css("color", "#1bbc9b");
-                                                scope.customInput.valid = false;
-                                            }
-                                            break;
-                                    }
-                                }
-                            });
-                        });
+                            if (elem.parent().hasClass("tooltipstered")) {
+                                //remove tooltip
+                                angular.element(elem.parent()).tooltipster("destroy");
+                                angular.element(elem.parent()).removeAttr("title");
+                                //end remove tooltip
+                            }
+                        }
                     }
-
                 });
-                //end listener customInput
-            }
+                //end watch custom-tr input required input
+            },
         };
     });
 /* end directive LE HOAI THANH */
