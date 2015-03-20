@@ -189,13 +189,13 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 var hour = parseInt(time_charge);
                 var minute = (time_charge - hour) * 60;
                 if (hour < 10) {
-                    hour += "0" + hour;
+                    hour = "0" + hour;
                 }
                 if (minute < 10) {
-                    minute += "0" + minute;
+                    minute = "0" + minute;
                 }
                 var result = hour + ":" + minute;
-                result = result.substring(0, result.length - 1);
+                result = result.substring(0, result.length);
                 return result;
             }
         };
@@ -208,8 +208,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $scope.tasks = [];
     }
 
-    $scope.isEdit = false;
-
     $scope.itemList = [];
 
     if (!$scope.info) {
@@ -218,6 +216,11 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.cancelClick = function() {
         $modalInstance.close();
+    }
+
+    $scope.okClick = function() { 
+        $modalInstance.close();
+        $state.go('loggedIn.timesheet.create',{id: idWeek});
     }
 
     $scope.calendarDay = new Date();
@@ -236,9 +239,26 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         btnTitle: "Choose Item"
     };
 
+    $scope.getFortMatTimeCharge = function(time_charge) {
+            if (time_charge === 0) {
+                return "00:00";
+            } else {
+                var hour = parseInt(time_charge);
+                var minute = (time_charge - hour) * 60;
+                if (hour < 10) {
+                    hour = "0" + hour;
+                }
+                if (minute < 10) {
+                    minute = "0" + minute;
+                }
+                var result = hour + ":" + minute;
+                result = result.substring(0, result.length);
+                return result;
+            }
+        };
+
     $scope.loadInfo = function(){
         $scope.tasks.loading = true;
-        console.log(idWeek);
         StaffService.getTask(idWeek).then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
                 toastr.error("Error", "Error");
@@ -248,14 +268,15 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 
                 angular.forEach(response['data'], function(data){
                     data.item = [];
+                    data.time_charge =  $scope.getFortMatTimeCharge(data.time_charge);
                     angular.forEach(response['item'], function(item){
                          if(data.tasks_id == item.tasks_id){
-                            data.item.push(item); 
+                            item.time_charge = $scope.getFortMatTimeCharge(item.time_charge);
+                            data.item.push(item);
                          }
                     })       
                 })
                 $scope.tasks = response['data'];
-                console.log($scope.tasks);
             }
         })
         $scope.tasks.loading = false;

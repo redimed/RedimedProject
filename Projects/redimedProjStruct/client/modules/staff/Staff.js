@@ -20,7 +20,7 @@ angular.module("app.loggedIn.staff", [
     //VIEW TIME-SHEET
     .state("loggedIn.timesheet.view", {
             position: ["Staff", "Head of Dept."],
-            url: "/view/:id",
+            url: "/view",
             views: {
                 "main-content": {
                     templateUrl: "modules/staff/views/viewTimesheet.html",
@@ -33,7 +33,7 @@ angular.module("app.loggedIn.staff", [
     //CREATE TIME-SHEET
     .state("loggedIn.timesheet.create", {
         position: ["Staff", "Head of Dept."],
-        url: "/create",
+        url: "/create/:id",
         views: {
             "main-content": {
                 templateUrl: "modules/staff/views/createTimesheet.html",

@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.timesheet.create.controller", [])
 
-    .controller("TimesheetCreateController", function($rootScope,$scope, $cookieStore,$filter, ConfigService, $modal,calendarHelper, moment,StaffService,$state,toastr){
+    .controller("TimesheetCreateController", function($rootScope,$scope, $stateParams, $cookieStore,$filter, ConfigService, $modal,calendarHelper, moment,StaffService,$state,toastr){
         $('body').addClass("page-sidebar-closed");
         $('ul').addClass("page-sidebar-menu-closed");
 
@@ -26,7 +26,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             department_code_id: null,
             location_id: null,
             activity_id: null,
-            time_charge: 0,
+            time_charge: '0000',
             time_temp: 0,
             isInputItem: false,
             isBillable: false
@@ -41,7 +41,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     sum = sum * 1 + data.time_temp * 1 ;
                 }
             });
-            $scope.time_total = sum;
+            $scope.info.time_temp = sum;
+            $scope.info.time_charge = $scope.getFortMatTimeCharge(sum);
         }
 
         $scope.getFortMatTimeCharge = function(time_charge) {
@@ -51,21 +52,27 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 var hour = parseInt(time_charge);
                 var minute = (time_charge - hour) * 60;
                 if (hour < 10) {
-                    hour += "0" + hour;
+                    hour = "0" + hour;
                 }
                 if (minute < 10) {
-                    minute += "0" + minute;
+                    minute = "0" + minute;
                 }
                 var result = hour + ":" + minute;
-                result = result.substring(0, result.length - 1);
+                result = result.substring(0, result.length);
                 return result;
             }
         };
 
         $scope.getFortMatTimeTemp = function(time_charge) {
-            var hourInLieu = parseInt(time_charge.substring(0, 2));
-            var minuteInLieu = parseInt(time_charge.substring(2, 4));
-            return hourInLieu + (minuteInLieu / 60);
+            if(time_charge){
+                var hourInLieu = parseInt(time_charge.substring(0, 2));
+                if(time_charge.length == 4){
+                    var minuteInLieu = parseInt(time_charge.substring(2, 4));
+                }else{
+                    var minuteInLieu = parseInt(time_charge.substring(3, 5));
+                }
+                return hourInLieu + (minuteInLieu / 60);
+            }
         };
 
         $scope.getWeekNumber = function(d) {
@@ -87,14 +94,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 }else
                 {
                     if(response['data'] != 'no'){
-                        $scope.isEdit = true;
                         angular.forEach(response['data'], function(data){
                             data.isEdit = true;
-
                             $scope.tasks.push(data);
                         })
                     }else{
-                        $scope.isEdit = false;
                         $scope.viewWeek = calendarHelper.getWeekView(date, true);
                         angular.forEach($scope.viewWeek.columns, function(data){
                             $scope.task={
@@ -104,7 +108,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 department_code_id: null,
                                 location_id: null,
                                 activity_id: null,
-                                time_charge: 0,
+                                time_charge: '0000',
                                 isInputItem: false,
                                 isBillable: false
 
@@ -166,8 +170,33 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     $scope.departments = response['department'];
                     $scope.locations = response['location'];
                     $scope.activities = response['activity'];
-                    $scope.checkFirstTaskWeek();
-
+                    if($stateParams.id){
+                        $scope.isEdit = true;
+                        $scope.idWeek = $stateParams.id;
+                        StaffService.showEdit($scope.idWeek).then(function(response){
+                            if(response['status'] == 'fail' || response['status'] == 'error'){
+                                toastr.error("Error", "Error");
+                            }else if(response['status'] == 'success')
+                            {
+                                angular.forEach(response['data'], function(data){
+                                    data.item = [];
+                                    data.isEdit = true;
+                                    data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
+                                    angular.forEach(response['item'], function(item){
+                                         if(data.tasks_id == item.tasks_id){
+                                            data.isInputItem = true;
+                                            data.isBillable = true;
+                                            item.time_charge = $scope.getFortMatTimeCharge(item.time_charge);
+                                            data.item.push(item);
+                                         }
+                                    })
+                                    $scope.tasks.push(data);
+                                })
+                            }                        
+                        })
+                    }else{
+                        $scope.checkFirstTaskWeek();
+                    }
                 }
             })
             $scope.tasks.loading = false;
@@ -224,7 +253,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         {
             if($scope.time_total > 38 || $scope.time_total == 38){
                 $scope.goOn = true;
-                $scope.info.time_rest = $scope.time_total - 38;
+                $scope.info.time_rest = $scope.info.time_temp - 38;
             }
 
             startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
@@ -234,6 +263,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info.statusID = status;
             $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
             $scope.info.itemList = $scope.itemList;
+
             StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
                 if(response['status'] == 'success'){
                     toastr.success("success","Success");
@@ -316,30 +346,14 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             c = c + list[i].time_temp;
                         }
                         task.task = t.join(' , ');
-                        if (c === 0) {
-                            c = "00:00";
-                        } else {
-                            var hour = parseInt(c);
-                            var minute = (c - hour) * 60;
-                            if (hour < 10) {
-                                hour += "0" + hour;
-                            }
-                            if (minute < 10) {
-                                minute += "0" + minute;
-                            }
-                            var result = hour + ":" + minute;
-                            result = result.substring(0, result.length - 1);
-                            c = result;
-                        }
-                        task.time_charge = c;
+                        task.time_charge = $scope.getFortMatTimeCharge(c);
+                        $scope.changeTimeCharge(task);
                     }
                     else
                     {
                         task.task =  null;
                         task.time_charge = null;
                     }
-
-
                 }
                 
                 
@@ -379,7 +393,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             ITEM_ID: null,
             ITEM_NAME: null,
             quantity: null,
-            time_charge: 0,
+            time_charge: '0000',
             time_temp: 0,
             comment: null
         }

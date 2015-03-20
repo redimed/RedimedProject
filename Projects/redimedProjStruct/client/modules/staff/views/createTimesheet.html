@@ -31,7 +31,7 @@
             <table class="responsive table table-bordered" ng-show="!tasks.loading">
                 <thead ng-show="tasks!==null">
                 <tr>
-                    <th ng-hide='isEdit'>
+                    <th>
                         <div class="th">
 
                         </div>
@@ -85,45 +85,45 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="(key,task) in tasks track by $index">
-                    <td ng-hide='isEdit' style="vertical-align: middle">
+                    <td style="vertical-align: middle">
                         <i  ng-if="task.order == 1" class="fa fa-plus pointer" 
                         ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 17px"></i>
                     </td>
                     <td style="vertical-align: middle">
-                        <i ng-hide="isEdit" class="fa fa-trash pointer" ng-click="delTask($index,task.order)" style="font-size: 17px"></i>
+                        <i class="fa fa-trash pointer" ng-click="delTask($index,task.order)" style="font-size: 17px"></i>
                     </td>
                     <td style="vertical-align: middle">{{task.date | date : 'EEE, dd MMM'}}</td>
-                    <td style="width: 14%">
-                        <select ng-disabled="isEdit" style="font-size: 12px" ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
+                    <td style="width: 12%">
+                        <select style="font-size: 12px" ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
                             <option value="">--Select Location--</option>
                         </select>
                     </td>
-                    <td style="width: 16%">
-                        <select ng-disabled="isEdit" style="font-size: 12px" ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
+                    <td style="width: 15%">
+                        <select style="font-size: 12px" ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
                             <option value="">-Select Department Code--</option>
                         </select>
                     </td>
                     <td style="width: 16%">
-                        <select ng-disabled="isEdit" style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities" ng-change="activityChange(task, $index)">
+                        <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities" ng-change="activityChange(task, $index)">
                             <option value="">--Select Activity--</option>
                         </select>
                     </td>
-                    <td style="width: 2%">
-                        <input ng-disabled="!task.isBillable" type="checkbox"
+                    <td>
+                        <input ng-disabled="!task.isBillable" style="margin-left: 28px" type="checkbox"
                          class="checkbox center" ng-model="task.isInputItem"/></td>
                     <td  style="width: 2%" style="text-align: center">
-                        <input ng-disabled="task.isBillable" type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" custom-tr="task.time_charge" custom-fr="viewTask.time_charge" ng-required="true" placeholder="hh:mm" class="form-control center input-sm">
+                        <input ng-disabled="task.isBillable" type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" style="width: 100%" ng-change="changeTimeCharge(task)" style="font-style: 'normal'">
                     <td style="width: 20%">
                         <input ng-disabled="task.isBillable" class="form-control input-sm" ng-model="task.task"/>
                     </td>
                     <td>
-                        <span ng-disabled="!task.isInputItem" ng-click="chooseItem(task,$index)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
+                        <span ng-disabled="!task.isInputItem" ng-click="chooseItem(task.item,$index)" class="btn btn-sm blue-dark"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" style="vertical-align: middle"><span class="bold pull-right">Total: </span></td>
+                    <td colspan="7" style="vertical-align: middle"><label class="bold pull-right">Total: </label></td>
                     <td>
-                        <input disabled class="form-control input-sm" ng-model="time_total"/></td>
+                        <input disabled class="form-control input-sm" ng-model="info.time_charge"/></td>
                         <td colspan="2"></td>
                 </tr>
                 </tbody>
@@ -131,8 +131,8 @@
         </div>
         <div class="form-action" style="text-align: right">
             <span class="btn btn-xs blue" ng-hide='isEdit' ng-click="addAllTask(1)">Save</span>
-            <span class="btn btn-xs blue-dark" ng-hide='isEdit' ng-click="addAllTask(2)">Submit</span>
-            <a class="btn btn-xs btn-warning" ng-hide='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
+            <span class="btn btn-xs grey" ng-click="addAllTask(2)">Submit</span>
+            <a class="btn btn-xs btn-warning" ui-sref="loggedIn.timesheet.view">Cancel</a>
         </div>
     </div>
 </div>

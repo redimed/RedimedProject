@@ -7,6 +7,7 @@ app.post('/api/staff/checkMonth',TimeSheetController.checkMonth);
 app.post('/api/staff/getAllTaskAMonth',TimeSheetController.getAllTaskAMonth);
 app.post('/api/staff/checkFirstTaskWeek',TimeSheetController.checkFirstTaskWeek);
 app.post('/api/staff/checkTaskWeek',TimeSheetController.checkTaskWeek);
+app.post('/api/staff/showEdit',TimeSheetController.showEdit);
 app.get('/api/staff/getDepartmentLocation',TimeSheetController.getDepartmentLocation);
 app.get('/api/staff/task/getList', TimeSheetController.getTaskList);
 app.post('/api/staff/items', TimeSheetController.getItemList);

@@ -39,6 +39,11 @@ angular.module("app.loggedIn.staff.service", [])
             return checkTaskWeek.post({info:info});
         }
 
+        service.showEdit = function(info){
+            var showEdit = api.all('staff/showEdit');
+            return showEdit.post({info:info});
+        }
+
         service.getTaskList = function(){
             return api.one('staff/task/getList').get();
         }

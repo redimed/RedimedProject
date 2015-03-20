@@ -18,6 +18,8 @@ module.exports = {
             start_date : info.startWeek,
             end_date : info.endWeek,
             week_no: info.weekNo,
+            time_charge: info.time_temp,
+            time_rest: info.time_rest,
             user_id : info.userID,
             task_status_id : info.statusID
         },{raw:true})
@@ -62,7 +64,7 @@ module.exports = {
 														task_id: taskIdArr[i],
 														item_id: a.ITEM_ID,
 														quantity: a.quantity,
-														time_charge: a.time_charge,
+														time_charge: a.time_temp,
 														comment: a.comment
 													})
 												)
@@ -250,6 +252,42 @@ module.exports = {
             })
     },
 
+    showEdit: function(req,res){
+        var info = req.body.info;
+        db.timeTasks.findAll({where:{tasks_week_id : info, deleted : 0},order: 'date'},{raw: true})
+            .success(function (tasks) {
+                if (tasks === null || tasks.length === 0) {
+                    console.log("Not found tasks in table");
+                    res.json({status: 'fail'});
+                    return false;
+                }else
+                {
+                    db.sequelize.query("SELECT t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " + 
+                        "i.`time_charge` FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` " + 
+                         "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id` WHERE " + 
+                         "t.`tasks_week_id` = ?",null,{raw:true},[info])
+                    .success(function(item){
+                        if (item === null || item.length === 0) {
+                            console.log("Not found item in table");
+                            res.json({status: 'fail'});
+                            return false;
+                        }else
+                        {
+                            res.json({status:'success',data:tasks,item: item});
+                        }
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
     checkFirstTaskWeek: function(req,res){
         var info = req.body.info;
         db.timeTaskWeek.max('start_date', { where: { user_id : info.userID, deleted: 0} })
@@ -295,7 +333,7 @@ module.exports = {
          "LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` "+
          "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id` " +
          "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id` " +
-          " WHERE t.`tasks_week_id` = ?",null,{raw:true},[idWeek])
+          " WHERE t.`tasks_week_id` = ? ORDER BY t.`tasks_id`",null,{raw:true},[idWeek])
             .success(function(data){
                 if (data === null || data.length === 0) {
                     console.log("Not found tasks in table");
@@ -303,8 +341,8 @@ module.exports = {
                     return false;
                 }else
                 {
-                    db.sequelize.query("SELECT t.`tasks_id`,i.`item_id`,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT`, " + 
-                        "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " + 
+                    db.sequelize.query("SELECT t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " + 
+                        "i.`time_charge` FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` " + 
                          "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id` WHERE " + 
                          "t.`tasks_week_id` = ?",null,{raw:true},[idWeek])
                     .success(function(item){
