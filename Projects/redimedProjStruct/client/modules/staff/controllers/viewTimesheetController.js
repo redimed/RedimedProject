@@ -262,7 +262,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         StaffService.getTask(idWeek).then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
                 toastr.error("Error", "Error");
-                $state.go('loggedIn.home', null, {'reload': true});
+                // $state.go('loggedIn.home', null, {'reload': true});
             }else if(response['status'] == 'success')
             {
                 

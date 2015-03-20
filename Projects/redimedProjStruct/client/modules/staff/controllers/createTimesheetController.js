@@ -162,7 +162,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             StaffService.getDepartmentLocation().then(function(response){
                 if(response['status'] == 'fail' || response['status'] == 'error'){
                     toastr.error("Error", "Error");
-                    $state.go('loggedIn.home', null, {'reload': true});
                 }else
                 {
                     $scope.departments = response['department'];
