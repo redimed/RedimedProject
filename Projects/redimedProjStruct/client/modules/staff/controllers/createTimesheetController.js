@@ -29,7 +29,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             time_charge: '0000',
             time_temp: 0,
             isInputItem: false,
-            isBillable: false
+            isBillable: false,
+            item: []
 
         };
 
@@ -110,7 +111,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 activity_id: null,
                                 time_charge: '0000',
                                 isInputItem: false,
-                                isBillable: false
+                                isBillable: false,
+                                item: []
 
                             };
                             $scope.tasks.push($scope.task);
@@ -145,15 +147,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 activity_id: null,
                                 time_charge: null,
                                 isInputItem: false,
-                                isBillable: false
+                                isBillable: false,
+                                item: []
                             };
                             $scope.tasks.push($scope.task);
                         })
-
-                        for(var i=0; i<$scope.tasks.length;i++)
-                        {
-                             $scope.itemList.push({key: i, value: null});
-                        }
 
                 }
             })
@@ -221,7 +219,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 time_charge: null,
                 isEdit: false,
                 isInputItem: false,
-                isBillable: false
+                isBillable: false,
+                item: []
             };
             $scope.tasks.splice(index + j, 0,task) ;
         }
@@ -262,7 +261,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info.endWeek = endWeek;
             $scope.info.statusID = status;
             $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
-            $scope.info.itemList = $scope.itemList;
 
             StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
                 if(response['status'] == 'success'){
@@ -285,9 +283,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
             else
             {
-                task.isBillable = false;
+                task.isBillable = false;item
                 task.isInputItem = 0;
-                $scope.itemList[index].value = null;
+                task.item = [];
             }
         }
 
@@ -299,21 +297,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 size:'lg',
                 resolve: {
                     itemArr: function(){
-                        var check = false;
-                        var arr = [];
-                        for(var i=0; i<$scope.itemList.length;i++)
-                        {
-                            if($scope.itemList[i].key == index)
-                            {
-                                if($scope.itemList[i].value != null && $scope.itemList[i].value.length > 0)
-                                {
-                                    check = true;
-                                    arr = angular.copy($scope.itemList[i].value);
-                                }
-                            }
-                        }
-
-                        return check == true && arr.length > 0 ? arr : null;
+                        return task.item.length > 0  ? task.item : null;
                     },
                     isView: function(){
                         return false;
@@ -324,17 +308,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             modalInstance.result.then(function(obj){
                 if(obj.type == "ok")
                 {
+                    console.log(obj.value);
                     var list = [];
                     list = obj.value;
-
-                    for(var i=0; i<$scope.itemList.length;i++)
-                    {
-                        if($scope.itemList[i].key == index)
-                        {
-                            $scope.itemList[i].value = null;
-                            $scope.itemList[i].value = list;
-                        }
-                    }
+                    task.item = list;
 
                     if(list.length > 0)
                     {
@@ -354,8 +331,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         task.task =  null;
                         task.time_charge = null;
                     }
+
+                    $scope.changeTimeCharge(task);
                 }
-                
                 
             })
         }

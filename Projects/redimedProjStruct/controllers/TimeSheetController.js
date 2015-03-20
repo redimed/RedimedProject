@@ -10,10 +10,6 @@ module.exports = {
         var allTask = req.body.allTask;
         var info = req.body.info;
 
-        var count = allTask.length;
-
-        var taskIdArr = [];
-
         db.timeTaskWeek.create({
             start_date : info.startWeek,
             end_date : info.endWeek,
@@ -29,50 +25,43 @@ module.exports = {
                         db.timeTasks.max('tasks_id')
                             .success(function(id){
                                 var tId = id;
-                                var i=0;
-                                for(var i=0; i<count;i++)
+                                for(var task in allTask)
                                 {
                                     tId = tId + 1;
-                                    taskIdArr.push(tId);
                                     chainer.add(
                                         db.timeTasks.create({
                                             tasks_id : tId,
                                             tasks_week_id : max,
-                                            "department_code_id" : allTask[i].department_code_id,
-                                            "task" : allTask[i].task,
-                                            "order": allTask[i].order,
-                                            "date": moment(allTask[i].date).format('YYYY-MM-DD'),
-                                            "location_id" : allTask[i].location_id,
-                                            "activity_id" : allTask[i].activity_id,
-                                            "time_spent" : allTask[i].time_spent,
-                                            "time_charge" : allTask[i].time_temp
+                                            "department_code_id" : allTask[task].department_code_id,
+                                            "task" : allTask[task].task,
+                                            "order": allTask[task].order,
+                                            "date": moment(allTask[task].date).format('YYYY-MM-DD'),
+                                            "location_id" : allTask[task].location_id,
+                                            "activity_id" : allTask[task].activity_id,
+                                            "time_spent" : allTask[task].time_spent,
+                                            "time_charge" : allTask[task].time_temp
                                         })
                                     )
-                                }
 
-                                for(var i=0; i<count;i++)
-                                {
-                                    if(info.itemList[i] != null && typeof info.itemList[i] !== 'undefined')
+                                    if(allTask[task].item.length > 0)
                                     {
-										if(info.itemList[i].value != null && info.itemList[i].value.length > 0)
-										{
-											for(var j=0; j< info.itemList[i].value.length; j++)
-											{
-												var a = info.itemList[i].value[j];
-												chainer.add(
-													db.TimeItemTask.create({
-														task_id: taskIdArr[i],
-														item_id: a.ITEM_ID,
-														quantity: a.quantity,
-														time_charge: a.time_temp,
-														comment: a.comment
-													})
-												)
-											}
-										}
-                                        
+                                         for(var i=0; i<allTask[task].item.length; i++)
+                                        {
+                                            var a = allTask[task].item[i];
+                                            chainer.add(
+                                                db.TimeItemTask.create({
+                                                    task_id: tId,
+                                                    item_id: a.ITEM_ID,
+                                                    quantity: a.quantity,
+                                                    time_charge: a.time_temp,
+                                                    comment: a.comment
+                                                })
+                                            )
+                                            
+                                        }
                                     }
                                 }
+
                             })
                             .error(function(err){
                                 res.json({status:'error'});
