@@ -54,7 +54,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 var minute = (time_charge - hour) * 60;
                 if (hour < 10) {
                     hour = "0" + hour;
-                }
+                }   
                 if (minute < 10) {
                     minute = "0" + minute;
                 }
