@@ -11,15 +11,6 @@ angular.module("app.loggedIn.onlineConsult", [
             templateUrl: "modules/consultation/views/structure.html",
             controller: "ConsultController"
         })
-        // LIST
-        .state("loggedIn.department.list", {
-            url: "/department/list",
-            views: {
-                "main-content": {
-                    templateUrl: "modules/department/views/list.html",
-                    controller: "DepartmentListController"
-                }
-            }
-        })
+        
            
     })
