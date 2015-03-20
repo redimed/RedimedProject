@@ -1197,7 +1197,7 @@ module.exports = {
         var info = req.body.info;
         var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var timeType = "";
-        if (info.time_rest !== 0) {
+        if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
             var hourInLieu = parseInt(info.time_in_lieu.substring(0, 2));
             var minuteInLieu = parseInt(info.time_in_lieu.substring(2, 4));
             var time_in_lieu = hourInLieu + (minuteInLieu / 60);
