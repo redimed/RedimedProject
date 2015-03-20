@@ -28,7 +28,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.info.hasReject = true;
                                     scope.info.comments = scope.list.result[0].comments;
                                 }
-                                scope.info.time_rest = scope.list.result[0].time_rest;
+                                scope.info.time_rest = scope.list.result[0].chargeWeek - 38;
                                 scope.info.time_in_lieu = null;
                                 scope.info.over_time = null;
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
