@@ -20,7 +20,7 @@
                     <hr style="background-color: #B0B0B9; height: 1px; border: 0" />
                 </div>
                 <div class="side-widget-content">
-                    <div  ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
+                    <div ng-if="onlineUsers.length > 0 && u.id !== userInfo.id" class="user-details-wrapper" ng-repeat="u in onlineUsers | unique:'u.id' track by $index">
                         <div class="user-profile">
                             <img ng-if="u.img != null" style="background-color: white;" class="img-circle hide1" ng-src="{{u.img}}" alt="" width="35" height="35">
                             <img ng-if="u.img == null" style="background-color: white;" class="img-circle hide1" src="theme/assets/icon.png" alt="" width="35" height="35">
@@ -43,7 +43,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 <!--END RIGHT SIDE MENU-->
 <!-- BEGIN HEADER -->
@@ -252,18 +251,18 @@
                     </a>
                 </li>
                 <li ng-repeat="menu in loggedInMenus">
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='Timesheet'">
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='e-Timesheets'">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
-                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='Timesheet'">
+                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='e-Timesheets'">
                         <li ng-repeat="submenu in menu.parent.childs">
                             <a ui-sref="{{submenu.definition}}">
                                 <i class="fa fa-angle-right"></i> {{submenu.name}}
                             </a>
                         </li>
                     </ul>
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='Timesheet'">
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='e-Timesheets'">
                         <i><img src="/img/timesheet1.png"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
