@@ -80,13 +80,13 @@
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="viewTask(l.task_week_id)">
-                        <td class="btn btn-xs">{{$index+1}}.</td>
+                        <td class="btn btn-xs">{{$index+1}}</td>
                         <td class="btn btn-xs" style="text-align:left;">{{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}</td>
                         <td class="btn btn-xs" style="text-align:left;"><span class="text-info">{{l.start_date|date:"dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date|date:"dd-MM-yyyy"}}</span></td>
                         <td class="btn btn-xs" style="text-align:left;">{{getFortMatTimeCharge(l.time_charge)}}</td>
                         <td class="btn btn-xs" style="text-align:left;">
                             <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
-                            're-submitted':l.name==='Re-submitted'}">{{(l.name===null || l.name===" ")?" ":(l.name==='Submitted'?"Awatting for Approve":l.name)}}</span>
+                            're-submitted':l.name==='Re-submitted'}">{{(l.name===null || l.name===" ")?" ":(l.name==='Submitted'?"Awaiting for Approve":l.name)}}</span>
                         </td>
                         <td class="btn btn-xs" style="text-align:left;">{{(l.comments===null||l.comments==="")?"":l.comments}}</td>
                     </tr>
