@@ -852,7 +852,7 @@ module.exports = {
             "hr_employee.Employee_ID = users.employee_id LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "LEFT JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
-            "WHERE departments.departmentType = 'Time Sheet' AND time_tasks_week.task_week_id = " + idTaskWeek + " ORDER BY time_tasks.order";
+            "WHERE departments.departmentType = 'Time Sheet' AND time_tasks_week.task_week_id = " + idTaskWeek + " ORDER BY time_tasks.date ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {
                 if (result === null || result.length === 0) {
