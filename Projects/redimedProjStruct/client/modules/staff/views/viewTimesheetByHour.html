@@ -1,0 +1,93 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form" name="viewTask">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>View Timesheet</legend>
+            <!-- INFORMATION -->
+            <div data-row-span="12">
+                <div data-field-span="6">
+                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                </div>
+                <div data-field-span="6">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{list.result[0].end_date| date: "dd/MM/yyyy"}}</span>
+                </div>
+            </div>
+            <!-- END INFORMATION -->
+            <!-- TABLE TASK OF WEEK-->
+            <div data-row-span="12">
+                <div class="panel-body table-dynamic">
+                    <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                    </center>
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
+                        <thead ng-show="list.result!==null">
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Date
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Utilization Time
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Management Time
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Supervision Time
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Self-Developed Time
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Non-charged Time
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Hour
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="task in tasks track by $index" ng-class="{'same': $index % 2!==0}" style="cursor: pointer;">
+                                <td class="btn btn-xs" style="text-align:center;">{{task.date | date: "dd/MM/yyyy"}}</td>
+                                <td class="btn btn-xs" style="text-align:center;" ng-repeat="td in task.rows track by $index"></td>
+                                <td class="btn btn-xs" style="text-align:left;">
+                                    <span ng-click="viewDetailDate(task.item)" ng-hide="task.isAction == 'delete'" ng-disabled='task.item.length == 0' class="btn btn-sm blue-dark"><i class="fa fa-search"></i> View Detail on Date</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-top:5px; font-size:13px;">
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].chargeWeek)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <!-- END TABLE TASK OF WEEK -->
+        </fieldset>
+        <!-- BUTTON -->
+
+        <!-- END BUTTON -->
+        <!-- END MAIN INFO -->
+    </form>
+</div>
+<script type="text/ng-template " id="ViewItem ">
+    <view-item ng-model="taskID" on-cancel="clickCancel(return) "></view-item>
+</script>
