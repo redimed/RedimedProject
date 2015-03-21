@@ -8,9 +8,6 @@ angular.module("app.loggedIn.controller",[
         audio.loop = true;
         audio.play();
 
-        console.log(opentokRoom);
-
-
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
             {
