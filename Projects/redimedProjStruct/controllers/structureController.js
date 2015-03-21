@@ -2,11 +2,19 @@
  * Created by meditech on 10/9/2014.
  */
 var db = require('../models');
+var kiss=require('./kissUtilsController');
 module.exports =
 {
     list_appointments_calendar_upcoming:function(req,res)
     {
-        var userId=req.body.userId;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        if(!kiss.checkListData(userId))
+        {
+            kiss.exlog("list_appointments_calendar_upcoming","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
         var sql=
             " SELECT 	booking.`BOOKING_ID` AS ID,                                             "+
             " 	booking.BOOKING_TYPE AS SOURCE_NAME,                                            "+
@@ -23,20 +31,20 @@ module.exports =
             " ORDER BY DATE_UPCOMING                                                            ";
         req.getConnection(function (err, connection)
         {
-            var query = connection.query(
-                sql, userId, function (err, rows)
+            var query = connection.query(sql, userId, function (err, rows)
+            {
+                
+                if (err)
                 {
-                    if (err)
-                    {
-                        console.log("Error Selecting : %s ", err);
-                        res.json({status: 'fail'});
-                    }
-                    else
-                    {
-                        res.json({status: 'success', data: rows});
-                    }
+                    kiss.exlog("list_appointments_calendar_upcoming",err,query.sql);
+                    res.json({status: 'fail'});
+                }
+                else
+                {
+                    res.json({status: 'success', data: rows});
+                }
 
-                });
+            });
         });
     },
 

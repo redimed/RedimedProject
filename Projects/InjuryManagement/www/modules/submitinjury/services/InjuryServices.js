@@ -50,8 +50,17 @@ angular.module('starter.injury.services',[])
         }
         injuryServices.getInjuryByCompany = function(company_id){
             var detailApi = injuryApi.all("im/getInjuryByCompany");
-            return detailApi.post({companyId:company_id})
+            return detailApi.post({companyId:company_id});
         }
+        injuryServices.getInjuryById = function(injury_id){
+            var detailApi = injuryApi.all("im/getById");
+            return detailApi.post({injury_id:injury_id});
+        }
+        injuryServices.getInjuryImageById = function(injury_id){
+            var detailApi = injuryApi.all("im/images");
+            return detailApi.post({injury_id:injury_id});
+        }
+       
 
         return injuryServices;
 

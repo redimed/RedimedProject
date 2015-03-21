@@ -3,7 +3,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
     .controller('InjuryController', function($scope, $state, $filter, $stateParams,
                                              InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                              $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate, $cordovaGeolocation,
-                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $document, $ionicSideMenuDelegate,
+                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $cordovaStatusbar, $document, $ionicSideMenuDelegate,
                                              $cordovaDialogs, $ionicPlatform){
 
         $scope.isSubmit = false;
@@ -66,7 +66,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
             $scope.InjuryImgControllerModal = modal;
         },{
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            hardwareBackButtonClose: false
         });
 
         //CONFIG MODAL DETAIL PICTURE
@@ -169,15 +170,16 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
         //SHOW MODAL IMAGE DETAIL
         $scope.selectImg = function(selected) {
-            $cordovaStatusbar.hide();
             $scope.imageObj.selected = selected.id;
             $scope.InjuryImgControllerModal.show();
         };
+
         $scope.hideModal = function() {
-            $cordovaStatusbar.show();
             $scope.hide.bars = false;
             $scope.InjuryImgControllerModal.hide();
         };
+
+
 
         $scope.modalImage = function () {
             $scope.pictureModal.show();
@@ -465,7 +467,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
         $scope.goBluetoothState = function() {
             if($scope.worker.Patient_id > -1) {
-                $state.go('app.mainBluetooth');
+                $state.go('app.mainBluetooth', null, {reload: true});
             }
             else {
                 $ionicPopup.alert({
@@ -474,8 +476,42 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 });
             }
         }
-        var publisher = null;
-        var session = null;
+
+
+//get all injury by company view history 
+        $scope.getInjuryByCompany = function(){
+            InjuryServices.getInjuryByCompany(userInfoLS.company_id).then(function (result){
+                if(result.status == "success")
+                {
+                    $scope.historyCompany = result.data;
+                    console.log($scope.historyCompany)
+
+                }
+            });
+        }
+        $scope.historyDetail = [];
+        //detail history injury by injury_id
+        $scope.detailInjury = function(injury_id){
+            InjuryServices.getInjuryById(injury_id).then(function(result){
+                //get injury by id 
+                if(result.status == "success"){
+                    $scope.historyDetail.detail = result.data[0];
+
+                    console.log($scope.historyDetail.detail)
+                }
+            })
+
+            $state.go('app.injury.historyDetail');
+        }
+
+        $scope.backToHistory = function(){
+            $scope.historyDetail = [];
+            $state.go('app.injury.historyInjury');
+        }
+        $scope.getInjuryByCompany();
+
+        // var publisher = null;
+        // var session = null;
 
 
         // document.addEventListener("deviceready", onDeviceReady, false);
@@ -520,6 +556,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
         //     });
 
         // }
+
     })
 /**
  * Vo duc giap
@@ -624,7 +661,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 //call againt location reload map
                 map.addControl({
                     position:'right_center',
-                    content:'<i class="fa fa-crosshairs fa-3x black"></i>',
+                    content:'<i class="fa fa-crosshairs fa-3x" style="color:black;"></i>',
+
                     events:{
                         click: function(){
                             location();
@@ -799,35 +837,10 @@ angular.module('starter.injury.controller', ['ngCordova'])
                         }
                     }
                 });
-//                 initOpts();
-//                 //create new autocomplete
-//                 //reinitializes on every change of the options provided
-//                 var newAutocomplete = function() {
-//                     scope.gPlace = new google.maps.places.Autocomplete(element[0], opts);
-//                     google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
-//                         scope.$apply(function() {
-// //              if (scope.details) {
-//                             scope.details = scope.gPlace.getPlace();
-// //              }
-//                             scope.ngAutocomplete = element.val();
-//                         });
-//                     })
-//                 };
-//                 newAutocomplete();
-//                 //watch options provided to directive
-//                 scope.watchOptions = function () {
-//                     return scope.options
-//                 };
-//                 scope.$watch(scope.watchOptions, function () {
-//                     initOpts();
-//                     newAutocomplete();
-//                     element[0].value = '';
-//                     scope.ngAutocomplete = element.val();
-//                 }, true);
             }
         };
     })
-
+    //tab 
     .directive("tabmari", function( $state){
         return {
             restrict: "A",
@@ -865,16 +878,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
             }
         }
     })
-    .directive('disableTap', function($timeout) {
-        return {
-            link: function() {
 
-                $timeout(function() {
-                    document.querySelector('.pac-container').setAttribute('data-tap-disabled', 'true')
-                },500);
-            }
-        };
-    });
+
 
 //.directive('noDragRight', ['$ionicGesture', function($ionicGesture) {
 //

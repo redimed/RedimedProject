@@ -1,17 +1,14 @@
-<ion-view name="Injury">
+<ion-view title="List Injury">
     <div class="bg-list"></div>
 
     <ion-nav-buttons side="left">
-         <button menu-toggle="left" class="button button-icon icon ion-navicon  " style="color:#fff"></button>
-         <a class="button button-icon icon" ui-sref="app.driver.mapsPickup" style="color:#fff"><i class="fa fa-map-marker"></i></a>
+        <a menu-toggle="left" class="button button-icon icon ion-navicon" style="color:#fff"></a>
+        <a class="button button-icon icon" ui-sref="app.driver.mapsPickup" style="color:#fff"><i class="fa fa-map-marker"></i></a>
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-       <a menu-toggle="right" class="button button-icon" style="color:#fff">
-            <i class="fa fa-phone-square"></i>
-        </a>
+        <a menu-toggle="right" class="button button-icon fa fa-phone-square" style="color:#fff"></a>
     </ion-nav-buttons>
-
 
     <ion-content style="z-index: 9999">
         <div class="item-input-inset">
@@ -22,33 +19,6 @@
         </div>
 
         <ion-list>
-            <!--<a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS)"-->
-            <!--class="item item-avatar custom-item-listpatient"-->
-            <!--ng-repeat="listPatient in lstPatient | filter: searchText"-->
-            <!--ng-class="{'waiting': listPatient.STATUS == 'Waiting', 'done': listPatient.STATUS == 'Done'}">-->
-            <!--<div class="padding fLeft">-->
-            <!--<div ng-class="{'img-image-name': listPatient}" ng-style={"background-color":listPatient.background}>-->
-            <!--{{listPatient.letter}}-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="padding lstinjury-div-info" ng-class="{'new':listPatient.STATUS == 'New'}">-->
-            <!--<div>-->
-            <!--<h2>{{listPatient.Title}}. {{listPatient.First_name}} {{listPatient.Sur_name}} {{listPatient.Middle_name}}</h2>-->
-            <!--<span class="text-right fRight">-->
-            <!--<i class="icon ion-ios7-arrow-right"></i>-->
-            <!--</span>-->
-            <!--</div>-->
-
-            <!--<p class="lstinjury-address">-->
-            <!--<i class="icon ion-ios7-location-outline"></i> - {{listPatient.pickup_address}}-->
-            <!--</p>-->
-
-            <!--<p>-->
-            <!--<i class="icon ion-ios7-telephone-outline"></i> - {{listPatient.Mobile}}-->
-            <!--</p>-->
-            <!--</div>-->
-            <!--</a>-->
-
             <a ng-click="selectPatient(listPatient.injury_id, listPatient.STATUS, listPatient.background, listPatient.letter,listPatient.latitude,listPatient.longitude)"
                class="item item-avatar custom-item-listpatient"
                ng-repeat="listPatient in lstPatient | filter: searchText"

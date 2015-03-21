@@ -25,8 +25,10 @@ angular.module('starter', ['ionic',
     'starter.phoneCall',
     'ion-google-place',
     'ngAutocomplete',
-    'starter.bluetooth'
+    'starter.bluetooth',
+    'opentok'
 ])
+
     .factory(("ionPlatform"), function( $q ){
         var ready = $q.defer();
 
@@ -40,7 +42,7 @@ angular.module('starter', ['ionic',
     })
 
     .factory('signaling', function (socketFactory, HOST_CONFIG) {
-        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/",{'secure':true});
+        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true});
 
         var socketFactory = socketFactory({
             ioSocket: socket
@@ -77,26 +79,20 @@ angular.module('starter', ['ionic',
             })
     })
 
-    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, HOST_CONFIG) {
-
-
-        $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', {
-            scope: $rootScope,
-            animation: 'slide-in-up',
-            backdropClickToClose: false
-        }).then(function (modal) {
-            $rootScope.modal = modal
-        });
-
-        $rootScope.contacts = {};
-
-        $rootScope.nameCallingJson = [];
+    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, $interval) {
 
         signaling.on('reconnect',function(){
-            if (localStorageService.get("userInfo")) {
+            if (localStorageService.get("userInfo") != null) {
                 signaling.emit('reconnected', localStorageService.get("userInfo").id);
             }
         })
+
+        $interval(function() {
+            if (localStorageService.get("userInfo") != null) {
+                signaling.emit('checkApp', localStorageService.get("userInfo").id);
+            }
+        }, 3 * 1000);
+
 
         signaling.on('reconnect_failed',function(){
             localStorageService.removeAll();
@@ -105,6 +101,7 @@ angular.module('starter', ['ionic',
         })
 
         localStorageService.set('mode','read');
+
         $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams) {
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
@@ -146,38 +143,12 @@ angular.module('starter', ['ionic',
                 });
             });
         });
-
-        signaling.on('forceLogout', function(){
-            $ionicPopup.confirm({
-                title: "Sorry",
-                template: 'Account is using!'
-            })
-            localStorageService.clearAll();
-            $state.go("security.login");
-        })
     })
 
-    .directive('videoView', function ($rootScope, $timeout) {
-        return {
-            restrict: 'E',
-            template: '<div class="video-container"></div>',
-            replace: true,
-            link: function (scope, element, attrs) {
-                function updatePosition() {
-                    cordova.plugins.phonertc.setVideoView({
-                        container: element[0],
-                        local: {
-                            position: [20, 20],
-                            size: [150, 150]
-                        }
-                    });
-                }
-
-                $timeout(updatePosition, 500);
-                $rootScope.$on('videoView.updatePosition', updatePosition);
-            }
-        }
-    })
-
-
-
+if (!OT) {
+    var OT = {};
+}
+OT.onLoad = function(fn) {
+    document.addEventListener('deviceReady', fn);
+};
+OT.$ = OT.getHelper();

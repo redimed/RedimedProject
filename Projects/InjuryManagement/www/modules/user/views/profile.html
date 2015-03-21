@@ -1,9 +1,11 @@
 <ion-view title="Profile">
 
   <ion-nav-buttons side="left">
-   <button menu-toggle="left" class="button button-icon icon ion-navicon  " style="color:#fff">
-            
-        </button>
+    <a menu-toggle="left" class="button button-icon icon ion-navicon  " style="color:#fff"></a>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <a menu-toggle="right" class="button button-icon fa fa-phone-square" style="color:#fff"></a>
   </ion-nav-buttons>
 
   <div class="bar bar-subheader">
@@ -41,9 +43,9 @@
           <input type="text" ng-model="detail.Contact_email" />
         </label>
 
-         <button type="submit" class="btn btn-success pull-right">Submit</button>
+        <button type="submit" class="btn btn-success pull-right">Submit</button>
       </ion-list>
-     
+
     </form>
   </ion-content>
 

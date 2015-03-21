@@ -2,14 +2,9 @@
  * Created by tannv.dts@gmail.com on 10/1/2014.
  */
 
-
-
 var db = require('../models');
 var rlobUtil=require('./rlobUtilsController');
-
-
-
-
+var kiss=require('./kissUtilsController');
 
 module.exports =
 {
@@ -40,6 +35,7 @@ module.exports =
 
     addNotification:function(req,res)
     {
+        kiss.exlog("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         var assId=req.body.assId;
         var refId=req.body.refId;
         var sourceName=req.body.sourceName;
@@ -99,11 +95,19 @@ module.exports =
 
     getUnreadNotifications:function(req,res)
     {
-        var userId=req.query.userId;
-        var sql=    " SELECT 	*                              "+
-                    " FROM 	`sys_user_notifications` n         "+
-                    " WHERE	n.`STATUS`=0 AND n.`user_id`=?     "+
-                    " ORDER BY n.`time_created` DESC, n.id DESC           ";
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        if(!kiss.checkListData(userId))
+        {
+            kiss.exlog("getUnreadNotifications","Khong lay duoc user login");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql=    " SELECT 	*                                       "+
+                    " FROM 	`sys_user_notifications` n                  "+
+                    " WHERE	n.`STATUS`=0 AND n.`user_id`=?              "+
+                    " ORDER BY n.`time_created` DESC, n.id DESC         ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,userId,function(err,rows)
@@ -163,13 +167,22 @@ module.exports =
                     res.json({status:'success',data:{max_index:rows[0].max_index}});
                 }
             });
+            
         });
     },
 
     countTotalNotification:function(req,res)
     {
-        var userId=req.query.userId;
-        var type=req.query.type;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        var type=kiss.checkData(req.query.type)?req.query.type:'';
+        if(!kiss.checkListData(userId,type))
+        {
+            kiss.exlog("countTotalNotification","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
         var sql=    " SELECT COUNT(n.id) AS count_total_notification FROM `sys_user_notifications` n    "+
                     " WHERE n.`user_id`=? and n.type=?                                                  ";
         req.getConnection(function(err,connection)
@@ -191,10 +204,18 @@ module.exports =
 
     getItemsOfPaging:function(req,res)
     {
-        var userId=req.query.userId;
-        var type=req.query.type;
-        var pageIndex=req.query.pageIndex;
-        var itemsPerPage=req.query.itemsPerPage;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        var type=kiss.checkData(req.query.type)?req.query.type:'';
+        var pageIndex=kiss.checkData(req.query.pageIndex)?req.query.pageIndex:'';
+        var itemsPerPage=kiss.checkData(req.query.itemsPerPage)?req.query.itemsPerPage:'';
+        if(!kiss.checkListData(userId,type,pageIndex,itemsPerPage))
+        {
+            kiss.exlog("getItemsOfPaging","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
         var sql=
             " SELECT  n.*                        "+
             " FROM 	`sys_user_notifications` n   "+

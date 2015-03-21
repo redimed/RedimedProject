@@ -313,7 +313,7 @@ angular.module('app.loggedIn.rlob.services',[])
                 var msg="";
                 if(notificationType==rlobConstant.notificationType.letter)
                 {
-                    msg="["+sourceName+"] - "
+                    msg="["+rlobConstant.bookingType[sourceName].display+"] - "
                         +data.Rl_TYPE_NAME+" - "
                         +data.WRK_SURNAME+" - "
                         +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")
@@ -323,7 +323,7 @@ angular.module('app.loggedIn.rlob.services',[])
                 }
                 else if(notificationType==rlobConstant.notificationType.bell)
                 {
-                    msg="["+sourceName+"] - "
+                    msg="["+rlobConstant.bookingType[sourceName].display+"] - "
                         +data.WRK_SURNAME+ " - "
                         +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")+
                         +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
@@ -401,6 +401,30 @@ angular.module('app.loggedIn.rlob.services',[])
             return result.get({bookingId:bookingId,appearance:appearance});
         }
 
+        
+        rlobService.insertNewUser=function(newUser){
+            var result=api.all('rlob/register/insert-new-user');
+            return result.post({newUser:newUser});
+        }
+
+        rlobService.getUsersList=function()
+        {
+            var result=api.one('rlob/register/list-redilegal-users');
+            return result.get();
+        }
+
+        rlobService.updateRedilegalUserStatus=function(redilegalUserId,status)
+        {
+            var result=api.all('rlob/register/insert-new-user');
+            return result.post({newUser:newUser});
+        }
+
+        rlobService.getUpcommingBookingHaveNotDocumentToNotificationCustomer=function(bookingType)
+        {
+            var result=api.one('rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer');
+            return result.get({bookingType:bookingType});
+        }
+        
         return rlobService;
 })
 

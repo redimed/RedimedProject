@@ -1,57 +1,23 @@
-<!--<div class="modal-open modal-phone">-->
-
-    <!--<div class="modal-phone-child">-->
-        <!--<ion-header-bar>-->
-            <!--<h1 class="title">Incoming call</h1>-->
-        <!--</ion-header-bar>-->
-        <!--<ion-content>-->
-            <!--<div style="border-radius: 50%;" ng-class="{'img-modal-receiveCall': nameCallingJson}" ng-style={"background-color":nameCallingJson.background}>-->
-                <!--<span>-->
-                    <!--{{nameCallingJson.letter}}-->
-                <!--</span>-->
-            <!--</div>-->
-            <!--<span style="float: left; margin-left: 20px; font-size: 20px; font-weight: bolder;">{{ nameCallingJson.nameCalling }} </span>-->
-        <!--</ion-content>-->
-        <!--<ion-footer-bar>-->
-                <!--<button class="button custom-bottom-answer" ng-click="answerphoneCall()">-->
-                    <!--answer-->
-                <!--</button>-->
-
-                <!--<button class="button custom-bottom-cancel" ng-click="hideModalphoneCall()">-->
-                    <!--ignore-->
-                <!--</button>-->
-        <!--</ion-footer-bar>-->
-
-        <!--<div class="col-25" ng-class="{'img-modal-receiveCall': nameCallingJson}" ng-style={"background-color":nameCallingJson.background}>-->
-        <!--<span>-->
-        <!--{{nameCallingJson.letter}}-->
-        <!--</span>-->
-        <!--</div>-->
-
-        <!--<div class="col" style="color: whitesmoke">-->
-        <!--<span style="float: left; margin-left: 20px; font-size: 20px; font-weight: bolder;">{{ nameCallingJson.nameCalling }} </span> <br>-->
-
-        <!--<div style="margin-top: 20px; float: left">-->
-        <!--<button class="button custom-bottom-answer" ng-click="answerphoneCall()">-->
-        <!--<img class="img-responsive margin-auto" src="img/call-up.png" />-->
-        <!--</button>-->
-
-        <!--<button class="button custom-bottom-cancel" ng-click="hideModalphoneCall()">-->
-        <!--<img class="img-responsive margin-auto" src="img/call-down.png" />-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
-
-    <!--</div>-->
-
-<!--</div>-->
-
-<ion-modal-view>
-    <ion-header-bar>
-        <h1 class="title">My Modal title</h1>
-    </ion-header-bar>
-    <ion-content>
-        Hello!
-    </ion-content>
+<ion-modal-view class="custom-modal-size" style="background-color: #FDFBF8; height: 460px;">
+        <div class="parent-img-caller">
+            <img width="180" ng-src="{{avatarCaller}}" class="img-content"/>
+        </div>
+        <div class="name-caller">
+            <label>{{fromUsername}}</label>
+            <br>
+            <span>is calling you</span>
+        </div>
+        <div class="row btn-modal-parent">
+            <div class="col">
+                <a class="button button-stable button-icon btn-modal-talk" style="background-color: #6FAD75; border-bottom: 3px solid #48864e;" ng-click="acceptCall()">
+                    <i class="icon ion-ios7-videocam" style="margin-right: 12px; color: #6B8D88;"></i>Talk
+                </a>
+            </div>
+            <div class="col">
+                <a class="button button-stable button-icon btn-modal-later" style="background-color: #CC6A64; border-bottom: 3px solid #b35a5a;" ng-click="ignoreCall()">
+                    <i class="icon ion-ios7-close-empty" style="margin-right: 12px; color: #6B8D88;"></i>Later
+                </a>
+            </div>
+        </div>
 </ion-modal-view>
 

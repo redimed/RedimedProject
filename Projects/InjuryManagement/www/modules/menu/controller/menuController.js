@@ -2,8 +2,9 @@ angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
                                           $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
-                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, HOST_CONFIG){
+                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, HOST_CONFIG, $ionicModal){
         signaling.removeAllListeners();
+
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
@@ -234,11 +235,8 @@ angular.module("starter.menu.controller",[])
         }
 
         $scope.makeCall = function(id) {
-
             signaling.emit("generateSession", userInfo.id);
-
             signaling.on("generateSessionSuccess",function(opentokRoom){
-
                 var apikey = opentokRoom.apiKey;
                 var sessionid = opentokRoom.sessionId;
                 var token = opentokRoom.token;
@@ -246,17 +244,56 @@ angular.module("starter.menu.controller",[])
                 $state.go('app.phoneCall', { callUser: id, apiKey: apikey, sessionID: sessionid, tokenID: token, isCaller: true }, {reload: true});
 
             });
+        };
 
-        }
+
+        $ionicModal.fromTemplateUrl('modules/phoneCall/views/modal/receivePhone.html', {
+            scope: $scope,
+            animation: 'slide-in-up',
+            backdropClickToClose: false,
+            hardwareBackButtonClose: false
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
 
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
+<<<<<<< HEAD
+            UserService.getUserInfo(fromId).then( function(data) {
+                if(data.img == null) {
+                    $scope.avatarCaller = 'img/avatar.png'
+                } else {
+                    $scope.avatarCaller = data.img
+                }
+                $scope.fromUsername = fromUsername;
+            });
+=======
             // AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             console.log(JSON.stringify(message));
+>>>>>>> af7f5a0e15dcd6bd881de30dece2e34f12e0827a
             switch (message.type) {
                 case 'call':
                     // media = new Media(src, null, null, loop);
                     // media.play();
                     if ($state.current.name === 'app.phoneCall') { return; };
+<<<<<<< HEAD
+                    $scope.modal.show();
+                    $scope.acceptCall = function() {
+                        $scope.modal.hide();
+                        media.pause();
+                        $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
+                            tokenID: message.token, isCaller: false }, {reload: true});
+                    }
+                    $scope.ignoreCall = function() {
+                        $scope.modal.hide();
+                        media.pause();
+                        signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
+                    }
+                    break;
+                case 'cancel':
+                    if($scope.modal.isShown()) {
+                        media.pause();
+                        $scope.modal.hide();
+=======
 
                     $scope.popupCall = $ionicPopup.show({
                         title: 'Incoming Call',
@@ -287,8 +324,33 @@ angular.module("starter.menu.controller",[])
                     if($scope.popupCall != null) {
                         // media.pause();
                         $scope.popupCall.close();
+>>>>>>> af7f5a0e15dcd6bd881de30dece2e34f12e0827a
                     }
                     break;
+
             }
         });
+
+        signaling.on('forceLogout', function(){
+            $ionicPopup.alert({
+                title: "Sorry",
+                template: 'Some is logged into your account!'
+            })
+            localStorageService.clearAll();
+            $state.go("security.login", null, {location: "replace", reload: true});
+            signaling.removeAllListeners();
+        });
+
+
+
+        $scope.$on("$stateChangeSuccess", function() {
+            document.addEventListener('backbutton', function(){
+                if($state.is("app.injury.info") || $state.is("app.driver.list")) {
+                    if(!$scope.modal.isShown()) {
+                        navigator.app.exitApp();
+                    }
+                }
+            });
+        });
+
     })

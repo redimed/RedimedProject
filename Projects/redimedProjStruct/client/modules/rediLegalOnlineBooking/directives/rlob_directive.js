@@ -242,6 +242,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                                         {lat: latlng1.lat(), lng: latlng1.lng()}
                                       ]
                                     });
+                                    url=url.replace("http://", "https://");
                                     $("#imgMapPrint").attr('src', url);
                             }
                         }
@@ -270,7 +271,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_upload_template.html',
-            controller: function ($scope,$http,$cookieStore, FileUploader)
+            controller: function ($scope,$http,$cookieStore, FileUploader,rlobService)
             {
                 $scope.filesUpdateFlag=0;
                 $scope.loginInfo = $cookieStore.get('userInfo');
@@ -319,6 +320,15 @@ angular.module("app.loggedIn.rlob.directive", [])
                     console.info('onCancelItem', fileItem, response, status, headers);
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {
+                    if(response.fileInfo.isClientDownLoad && response.fileInfo.isClientDownLoad==1)
+                    {
+                        
+                        rlobService.add_notification($scope.selectedBooking.ASS_ID,
+                            $scope.selectedBooking.BOOKING_ID,
+                            rlobConstant.bookingType.REDiLEGAL.name,
+                            rlobConstant.letterType.result,
+                            rlobConstant.notificationType.letter,'');
+                    }
                     console.info('onCompleteItem', fileItem, response, status, headers);
                 };
                 uploader.onCompleteAll = function () {
@@ -431,78 +441,41 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.rlob_change_booking_file_role=function(assId,refId,fileId,role)
                 {
                     //alert($scope.selectedBooking.Site_addr);
-                    var mapUrl=null;
-                    var siteAddress=null;
-                    if($scope.selectedBooking && $scope.selectedBooking.Site_addr)
+                    $scope.showMsgDialog=function(styleClass,header,status,content)
                     {
-                        siteAddress=$scope.selectedBooking.Site_addr;
-                        GMaps.geocode({
-                            address: siteAddress,
-                            callback: function (results, status) {
-                                
-                                if (status == 'OK') 
-                                {
-                                    latlng1 = results[0].geometry.location;
-                                    mapUrl = GMaps.staticMapURL({
-                                      lat: latlng1.lat(),
-                                      lng: latlng1.lng(),
-                                      markers: [
-                                        {lat: latlng1.lat(), lng: latlng1.lng()}
-                                      ]
-                                    });
-                                    handle(mapUrl);
-                                }
-                                else
-                                {
-                                    handle(mapUrl);
-                                }
-                            }
-                        });
-                    }
-                    else
-                    {
-                        handle(mapUrl);
-                    }
+                        $scope.msgHeader=header;
+                        $scope.msgStatus=status;
+                        $scope.msgContent=content;
+                        $(styleClass).modal({show:true,backdrop:'static'});
+                    };
 
-                    function handle(mapUrl)
-                    {
-                        $scope.showMsgDialog=function(styleClass,header,status,content)
+                    $scope.showNotificationPopup=rlobService.showNotificationPopup;
+
+                    $http({
+                        method:"POST",
+                        url:"/api/rlob/rl_booking_files/change-role-download",
+                        data:{fileId:fileId,role:role}
+                    })
+                    .success(function(data) {
+                        if(data.status=='success')
                         {
-                            $scope.msgHeader=header;
-                            $scope.msgStatus=status;
-                            $scope.msgContent=content;
-                            $(styleClass).modal({show:true,backdrop:'static'});
-                        };
-
-                        $scope.showNotificationPopup=rlobService.showNotificationPopup;
-
-                        $http({
-                            method:"POST",
-                            url:"/api/rlob/rl_booking_files/change-role-download",
-                            data:{fileId:fileId,role:role,siteAddress:siteAddress,mapUrl:mapUrl}
-                        })
-                        .success(function(data) {
-                            if(data.status=='success')
-                            {
-                                //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file',rlobConstant.notifyJsColor.success);
-                                if(role==1)
-                                    $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
-                                getFilesUpload();
-                            }
-                            else
-                            {
-                                //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
-                            }
-                        })
-                        .error(function (data) {
+                            //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file',rlobConstant.notifyJsColor.success);
+                            if(role==1)
+                                $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
+                            getFilesUpload();
+                        }
+                        else
+                        {
                             //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
-                        })
-                        .finally(function() {
+                        }
+                    })
+                    .error(function (data) {
+                        //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
+                    })
+                    .finally(function() {
 
-                        });
-                    }
-                    
-            }
+                    });
+                }
             }
         };
     })
@@ -925,6 +898,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                                 for(var j=0;j<temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS.length;j++)
                                 {
                                     var doctor_item=temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS[j];
+                                    doctor_item.SPECS={};
+                                    doctor_item.SPECS_STR="";
                                     doctor_item.LOCATION_ITEMS=[];
                                     type_item.DOCTOR_ITEMS.push(doctor_item);
                                     for(var q=0;q<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;q++)
@@ -940,6 +915,12 @@ angular.module("app.loggedIn.rlob.directive", [])
                                             for(var l=0;l<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS.length;l++)
                                             {
                                                 var spec_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS[l];
+                                                if(!doctor_item.SPECS[spec_item.Specialties_name])
+                                                {
+                                                    doctor_item.SPECS[spec_item.Specialties_name]=spec_item.Specialties_name;
+                                                    doctor_item.SPECS_STR=doctor_item.SPECS_STR+spec_item.Specialties_name+'; ';
+                                                }
+                                                
                                                 // exlog.log(appointment_item);
                                                 appointment_item.SPEC_ITEMS.push(spec_item);
                                             }

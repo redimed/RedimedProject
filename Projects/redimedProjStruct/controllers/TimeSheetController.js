@@ -241,6 +241,25 @@ module.exports = {
             })
     },
 
+    showDetailDate: function(req,res){
+        var info = req.body.info;
+        db.timeTasks.findAll({where:{tasks_week_id : info, deleted : 0},attributes: ['date','activity_id','time_charge']},{raw: true})
+            .success(function (tasks) {
+                if (tasks === null || tasks.length === 0) {
+                    console.log("Not found tasks in table");
+                    res.json({status: 'fail'});
+                    return false;
+                }else
+                {
+                    res.json({status: 'success',data: tasks});
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
     showEdit: function(req,res){
         var info = req.body.info;
         db.timeTasks.findAll({where:{tasks_week_id : info, deleted : 0},order: 'date'},{raw: true})
