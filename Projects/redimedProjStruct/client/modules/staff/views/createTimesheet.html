@@ -1,3 +1,12 @@
+<style>
+/*.badge-notify{
+   background:red;
+   position:relative;
+   top: -20px;
+   left: -35px;
+  }*/
+</style>
+
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -17,17 +26,28 @@
 
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <div class="pull-right">
-            <!-- boo ne -->
-            <label ng-hide='isEdit' style="margin-top:10px;" >Week From</label>
-            <input ng-hide='isEdit' style="margin-top:10px;color: black"  class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
-            <a class="btn btn-xs blue pull-right" ng-hide='true' style="margin-top:10px;margin-left: 10px">
-                <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
-        </div>
+        <!-- <div class="pull-right"> -->
+          
+
+            
+        <!-- </div> -->
         <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>
             <span ng-hide='isEdit'>Create New Timesheet</span>
             <span ng-hide='!isEdit'>Edit Timesheet</span>
+        </div>
+        <div class="actions">
+            <a style="height: 35px !important; min-width: 35px !important;" href="javascript:;" class="icon-btn">
+                <i class="icon icon-speedometer"></i>
+                <span class="badge badge-danger">
+                2 </span>
+            </a>
+
+
+            <label ng-hide='isEdit' style="margin-top:10px;" >Week From</label>
+            <input ng-hide='isEdit' style="margin-top:10px;color: black"  class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
+            <a class="btn btn-xs blue pull-right" ng-hide='true' style="margin-top:10px;margin-left: 10px">
+                <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
         </div>
     </div>
     <div class="portlet-body">
