@@ -243,7 +243,9 @@ module.exports = {
 
     showDetailDate: function(req,res){
         var info = req.body.info;
-        db.timeTasks.findAll({where:{tasks_week_id : info, deleted : 0},attributes: ['date','activity_id','time_charge']},{raw: true})
+        db.sequelize.query("SELECT t.`date`,a.`type_activity_id` AS activity_id,t.`time_charge` FROM" + 
+         " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" + 
+        " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0",null, {raw: true},[info])
             .success(function (tasks) {
                 if (tasks === null || tasks.length === 0) {
                     console.log("Not found tasks in table");

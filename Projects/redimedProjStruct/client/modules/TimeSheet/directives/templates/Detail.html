@@ -1,0 +1,94 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form" name="viewTask">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>{{Title}}
+                <!-- BUTTON -->
+                <a class="btn pull-right btn-xs red" ng-click="onCancel({return: true})">X</a>
+                <!-- END BUTTON -->
+            </legend>
+            <!-- INFORMATION -->
+            <div data-row-span="12">
+                <div data-field-span="6">
+                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                </div>
+                <div data-field-span="6">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{list.result[0].end_date| date: "dd/MM/yyyy"}}</span>
+                </div>
+            </div>
+            <!-- END INFORMATION -->
+            <!-- TABLE TASK OF WEEK-->
+            <div data-row-span="12">
+                <div class="panel-body table-dynamic">
+                    <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                    </center>
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
+                        <thead ng-show="list.result!==null">
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Date
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Activity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Location
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Department
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Time Charge
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Item Number
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Quantity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Tasks/Comments
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(index,l) in list.result " style="cursor: pointer; " ng-class="{'same':(l.date|getDate)%2!==0}">
+                                <td class="btn btn-xs" style="text-align:left;">{{l.date | date: 'EEE, dd MMMM yyyy'}}</td>
+                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.NAME===null || l.NAME===''">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
+                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.LOCATION===null || l.LOCATION===''">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
+                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.departmentName===null || l.departmentName===''">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{l.time_charge | customHours}}</td>
+                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.comment===null || l.comment===''">{{(l.item_id===null||l.comment==="")?"N/A":l.item_id}}</td>
+                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.quantity===null || l.quantity===''">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.comment===null || l.comment===''">{{(l.comment===null||l.comment==="")?"":l.comment}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-top:5px; font-size:13px;" ng-hide="Title === 'Timesheet Detail'">
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <!-- END TABLE TASK OF WEEK -->
+        </fieldset>
+        <!-- END MAIN INFO -->
+    </form>
+</div>
