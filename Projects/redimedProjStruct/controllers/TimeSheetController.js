@@ -431,7 +431,7 @@ module.exports = {
     {
         var idWeek = req.body.idWeek;
         db.sequelize.query("SELECT t.`tasks_id`,t.`date`,l.`NAME` AS location,d.`departmentName` AS department," +
-         "a.`NAME` AS activity,t.`time_charge`,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
+         "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
          "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid`" +
           "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" + 
           "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +

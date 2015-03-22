@@ -152,16 +152,18 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     StaffService.showWeek();
 })
 
-.controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr,idWeek) {
+.controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr,infoWeek) {
     if (!$scope.tasks) {
         $scope.tasks = [];
     }
 
-    $scope.itemList = [];
-
-    if (!$scope.info) {
-        $scope.info = {};
+    $scope.getDay = function(day){
+        var date = new Date(day);
+       return date.getDay() == 0 ? 7 : date.getDay();
     }
+
+    $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
+    $scope.week = infoWeek;
 
     $scope.cancelClick = function() {
         $modalInstance.close();
@@ -170,25 +172,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.okClick = function() {
         $modalInstance.close();
         $state.go('loggedIn.timesheet.create', {
-            id: idWeek
+            id: infoWeek.task_week_id
         });
     }
-
-    $scope.calendarDay = new Date();
-    $scope.info.userID = $cookieStore.get("userInfo").id;
-
-    var startWeek, endWeek;
-
-    $scope.task = {
-        order: null,
-        task: null,
-        date: null,
-        department_code_id: null,
-        location_id: null,
-        activity_id: null,
-        time_charge: null,
-        btnTitle: "Choose Item"
-    };
 
     $scope.getFortMatTimeCharge = function(time_charge) {
         if (time_charge === 0) {
@@ -210,12 +196,20 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
-        StaffService.getTask(idWeek).then(function(response) {
+        StaffService.getTask(infoWeek.task_week_id).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
                 // $state.go('loggedIn.home', null, {'reload': true});
             } else if (response['status'] == 'success') {
-                $scope.tasks = response['data'];
+                if(infoWeek.date != 'full'){
+                    $scope.one = true;
+                    $scope.tasks = _.filter(response['data'], function(data) {
+                    return data.date == infoWeek.date;
+                    });
+                }else{
+                    $scope.one = false;
+                    $scope.tasks = response['data'];
+                }
             }
         })
         $scope.tasks.loading = false;
@@ -317,14 +311,15 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.loadInfo();
 
-    $scope.viewDetailDate = function(task) {
+    $scope.viewDetailDate = function(infoWeek,date) {
         var modalInstance = $modal.open({
             templateUrl: "modules/staff/views/viewDetail.html",
             controller: 'ViewDetailController',
             size: 'lg',
             resolve: {
-                idWeek: function() {
-                    return task;
+                infoWeek: function() {
+                    infoWeek.date = date;
+                    return infoWeek;
                 }
             }
         });

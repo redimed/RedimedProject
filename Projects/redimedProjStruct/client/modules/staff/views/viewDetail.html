@@ -1,9 +1,23 @@
-<div class="modal-header">
-    <h3>Detail Timesheet</h3>
-    <a class="btn pull-right btn-xs red" ng-click="cancelClick()">X</a>
-</div>
-<div class="modal-body">
-    <div class="table-dynamic">
+<div class="panel-body">
+    <form method="POST" class="grid-form" name="viewTask">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>View Timesheet
+                <a class="btn pull-right btn-xs red" ng-click="cancelClick()">X</a>
+            </legend>
+            <!-- INFORMATION -->
+            <div data-row-span="12">
+                <div data-field-span="6">
+                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                </div>
+                <div data-field-span="6">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{week.start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{week.end_date| date: "dd/MM/yyyy"}}</span>
+                </div>
+            </div>
+            <!-- END INFORMATION -->
+            <!-- TABLE TASK OF WEEK-->
+            <div data-row-span="12">
+                <div class="table-dynamic">
         <center ng-show="tasks.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
         </center>
         <table class="responsive table table-bordered" ng-show="!tasks.loading">
@@ -52,25 +66,35 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="(key,task) in tasks track by $index">
-                <td>{{task.date | date : 'EEE, dd MMM'}}</td>
-                <td>{{task.activity}}</td>
-                <td>{{task.location}}</td>
-                <td>{{task.department}}</td>
-                <td>{{task.time_charge}}</td>
-                <td>{{task.ITEM_ID}}</td>
-                <td>{{task.quantity}}</td>
-                <td>{{task.task}}</td>
+            <tr ng-repeat="(key,task) in tasks track by $index" ng-class="{'same': one == false ? getDay(task.date)%2==0 : false}">
+                <td class="btn btn-xs">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
+                <td class="btn btn-xs">{{task.activity}}</td>
+                <td class="btn btn-xs">{{task.location}}</td>
+                <td class="btn btn-xs">{{task.department}}</td>
+                <td class="btn btn-xs">{{task.time_item == null ? task.time_charge : task.time_item}}</td>
+                <td class="btn btn-xs">{{task.ITEM_ID}}</td>
+                <td class="btn btn-xs">{{task.quantity}}</td>
+                <td class="btn btn-xs">{{task.comment == null ? task.task : task.comment}}</td>
             </tr>
             </tbody>
         </table>
     </div>
-</div>
-<div class="modal-footer" style="text-align: center;">
-    <a style="width: 75px" href="javascript:;" ng-click="okClick()" class="btn btn-circle blue-steel btn-xs">
-        <i class="fa fa-pencil"></i> 
-        <span>Edit</span>
-    </a>
-    <a style="width: 75px" href="javascript:;" ng-click="cancelClick()" class="btn btn-circle btn-warning btn-xs">
-        <i class="fa fa-times"></i> Cancel </a>
+            </div>
+            <div class="col-md-12" style="margin-top:5px; font-size:13px;" ng-hide='one'>
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;
+                <span ng-class="{'reject':week.STATUS==='Rejected','submited':week.STATUS==='Submitted', 'approved':week.STATUS==='Approved', 'pending':week.STATUS==='Awaitting for Submit',
+                            're-submitted':week.STATUS==='Re-submitted'}">{{(week.STATUS==="Submitted")?"Awaiting for Approve":week.STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <!-- END TABLE TASK OF WEEK -->
+        </fieldset>
+        <!-- BUTTON -->
+            <a style="width: 75px" href="javascript:;" ng-hide='one' ng-click="cancelClick()" class="btn pull-right btn-circle btn-warning btn-xs">
+                <i class="fa fa-times"></i> Cancel </a>
+            <a style="width: 75px" ng-hide='one' href="javascript:;" ng-click="okClick()" class="btn pull-right btn-circle blue-steel btn-xs"><i class="fa fa-pencil"></i> 
+                <span>Edit</span>
+            </a>
+        <!-- END BUTTON -->
+        <!-- END MAIN INFO -->
+    </form>
 </div>

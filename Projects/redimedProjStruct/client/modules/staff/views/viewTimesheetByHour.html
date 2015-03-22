@@ -2,7 +2,9 @@
     <form method="POST" class="grid-form" name="viewTask">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>View Timesheet</legend>
+            <legend>View Timesheet
+                <a class="btn pull-right btn-xs red" ng-click="cancelClick()">X</a>
+            </legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
                 <div data-field-span="6">
@@ -71,12 +73,12 @@
                                 </td>
                                 <td class="btn btn-xs">{{task.total}}</td>
                                 <td class="btn btn-xs">
-                                    <a ng-click="viewDetailDate(task.item)" class="btn btn-sm">View Detail</a>
+                                    <a ng-click="viewDetailDate(week,task.date)" class="btn btn-sm">View Detail</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <a class="btn btn-xs pull-right" ng-click="viewDetailDate(week.task_week_id)">View Full Timesheet</a>
+                    <a class="btn btn-xs pull-right" ng-click="viewDetailDate(week,'full')">View Full Timesheet</a>
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
@@ -88,7 +90,7 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-            <a class='btn pull-right btn-xs btn-warning' ng-click=''>Cancel</a>
+            <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()'>Cancel</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
