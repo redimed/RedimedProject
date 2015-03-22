@@ -99,56 +99,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.calendarDay = new Date();
 
-    $scope.delTask = function(index) {
-        $scope.tasks.splice(index, 1);
-    }
-
-    $scope.addAllTask = function() {
-        if (!$scope.isEdit) {
-            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-            StaffService.addAllTask($scope.tasks, startWeek, endWeek).then(function(response) {
-                if (response['status'] == 'success') {
-                    toastr.success("success", "Success");
-                    $state.go('loggedIn.staff.list', null, {
-                        'reload': true
-                    });
-                } else {
-                    toastr.error("Error", "Error");
-                }
-            })
-        } else {
-            StaffService.editTask($scope.tasks).then(function(response) {
-                if (response['status'] == 'success') {
-                    toastr.success("Edit Success");
-                    $state.go('loggedIn.staff.list', null, {
-                        'reload': true
-                    });
-                } else {
-                    toastr.error("Error", "Error");
-                }
-            })
-        }
-    }
-
-    $scope.changeDate = function(dateWeekFrom) {
-
-        if (dateWeekFrom === '') {
-            $scope.list.result = angular.copy($scope.listTemp);
-        } else {
-            $scope.list.result = [];
-
-            for (var i = 0; i < $scope.listTemp.length; i++) {
-                var rs = $scope.listTemp[i];
-                var sDate = $filter('date')(rs.start_date, "dd-MM-yyyy");
-
-                if (dateWeekFrom === sDate) {
-                    $scope.list.result.push(rs);
-                }
-            }
-        }
-
-    }
 
     $scope.orderWeek = function(type) {
         if (type == 'desc') {
@@ -175,8 +125,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             controller: "ViewTimesheetByHourController",
             size: 'lg',
             resolve: {
-                idWeek: function() {
-                    return item.task_week_id;
+                infoWeek: function() {
+                    return item;
                 }
             }
         })
@@ -303,7 +253,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     }
 })
 
-.controller("ViewTimesheetByHourController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, idWeek) {
+.controller("ViewTimesheetByHourController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, infoWeek) {
     if (!$scope.tasks) {
         $scope.tasks = [];
     }
@@ -323,10 +273,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     }
 
-    $scope.calendarDay = new Date();
-    $scope.info.userID = $cookieStore.get("userInfo").id;
-
-    var startWeek, endWeek;
+    $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
+    $scope.week = infoWeek;
 
     $scope.getFortMatTimeCharge = function(time_charge) {
         if (time_charge === 0) {
@@ -346,19 +294,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         }
     };
 
-    $scope.task = {
-        date : null,
-        time1: 0,
-        time2: 0,
-        time3: 0,
-        time4: 0,
-        time5: 0,
-        timeTotal: 0
-    };
-
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
-        StaffService.showDetailDate(idWeek).then(function(response) {
+        StaffService.showDetailDate(infoWeek.task_week_id).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'success') {
@@ -368,22 +306,28 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                         return _.object(_.zip(["date", "rows"], [key,_.chain(value)
                             .groupBy("activity_id")
                             .map(function(value1, activity_id) {
-                                return _.object(_.zip(["activity_id", "time_charge"], [activity_id, 
-                                    _.reduce(value1, function(result, currentObject) {
-                                    return result.time_charge + currentObject.time_charge;
-                            })]));
+                                var time_charge = _.reduce(value1, function(result, currentObject) {
+                                    return result.time_charge + currentObject.time_charge;})
+                                if(typeof time_charge ==  'object'){
+                                    time_charge = time_charge.time_charge;
+                                }
+                                return _.object(_.zip(["activity_id", "time_charge"], [activity_id, time_charge]));
                             })
                             .value()]
                             )) 
                     })
                     .value();
-
-                console.log($scope.tasks);
-                // angular.forEach(response['data'], function(data) {
-                    
-                // })
-                // data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
-                // $scope.tasks = response['data'];
+                var sum = 0;
+                angular.forEach($scope.tasks, function(data) {
+                    data.arrActivity = [0,0,0,0,0];
+                    sum = 0;
+                    angular.forEach(data.rows, function(row) {
+                        sum = sum + row.time_charge;
+                        row.time_charge = $scope.getFortMatTimeCharge(row.time_charge);
+                        data.arrActivity[row.activity_id] = row.time_charge;
+                    })
+                    data.total = $scope.getFortMatTimeCharge(sum);
+                })
             }
         })
         $scope.tasks.loading = false;
