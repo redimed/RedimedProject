@@ -843,52 +843,86 @@ module.exports = {
 
     ViewApproved: function(req, res) {
         var idTaskWeek = req.body.info;
-        var strQuery = "SELECT time_tasks.date, time_tasks.tasks_id,time_tasks.order, time_tasks.task, time_location.NAME AS LOCATION, time_activity.NAME, departments.departmentName, " +
-            "time_tasks.time_charge as chargeDate, time_tasks.task, time_tasks_week.task_status_id, time_task_status.name as status, time_item_task.quantity, time_item_task.time_charge, " +
-            "time_tasks_week.time_charge as chargeWeek, time_tasks_week.time_rest, time_tasks_week.time_in_lieu, time_tasks_week.over_time, time_tasks_week.comments, time_item_code.ITEM_ID, time_item_code.ITEM_ID, " +
-            "time_tasks_week.start_date, time_tasks_week.end_date, " + "hr_employee.Employee_Code, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct FROM time_tasks_week " +
-            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN users ON users.id = time_tasks_week.user_id INNER JOIN hr_employee ON " +
-            "hr_employee.Employee_ID = users.employee_id LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
-            "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-            "LEFT JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
-            "WHERE departments.departmentType = 'Time Sheet' AND time_tasks_week.task_week_id = " + idTaskWeek + " ORDER BY time_tasks.date ASC";
+        var strQuery = "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " +
+            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
+            "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName, time_type_activity.type_activity_id " +
+            "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
+            "INNER JOIN users ON time_tasks_week.user_id = users.id " +
+            "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "INNER JOIN time_type_activity ON time_type_activity.type_activity_id = time_activity.type_activity_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date ORDER BY time_tasks.date";
+        var strActivity = "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " +
+            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
+            "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName, time_type_activity.type_activity_id " +
+            "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
+            "INNER JOIN users ON time_tasks_week.user_id = users.id " +
+            "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "INNER JOIN time_type_activity ON time_type_activity.type_activity_id = time_activity.type_activity_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_type_activity.type_activity_id ORDER BY time_tasks.date";
         db.sequelize.query(strQuery)
             .success(function(result) {
-                if (result === null || result.length === 0) {
+                if (result === undefined || result === null || result.length === 0) {
                     res.json({
                         status: "success",
-                        result: null
+                        result: [],
+                        resultActivity: []
                     });
                     return;
                 } else {
-                    res.json({
-                        status: "success",
-                        result: result
-                    });
-                    return;
+                    db.sequelize.query(strActivity)
+                        .success(function(resultActivity) {
+                            res.json({
+                                status: "success",
+                                result: result,
+                                resultActivity: resultActivity
+                            });
+                            return;
+                        }).error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                result: [],
+                                resultActivity: []
+                            });
+                            return;
+                        });
+
                 }
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
                 res.json({
                     status: "error",
-                    result: []
+                    result: [],
+                    resultActivity: []
                 });
                 return;
             });
     },
 
-    ViewItem: function(req, res) {
-        var taskID = req.body.taskID;
-        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_tasks.date, time_tasks.time_charge, time_tasks.task, time_activity.NAME, " +
-            "departments.departmentName FROM time_tasks INNER JOIN " +
-            "time_location ON time_location.location_id = time_tasks.location_id INNER JOIN departments ON " +
-            "time_tasks.department_code_id = departments.departmentid INNER JOIN time_activity ON " +
-            "time_activity.activity_id = time_activity.activity_id INNER JOIN time_item_task ON time_item_task.task_id = " +
-            "time_tasks.tasks_id INNER JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
-            "WHERE time_tasks.tasks_id = " + taskID;
-        db.sequelize.query(query)
+    ViewOnDate: function(req, res) {
+        var info = req.body.info;
+        var strQuery = "SELECT time_tasks.date, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+            "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity, time_item_task.comment, " +
+            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
+            "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
+            "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
+            "INNER JOIN users ON users.id=time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
+            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
+            "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
+            "LEFT JOIN time_item_task on time_item_task.task_id = time_tasks.tasks_id " +
+            "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
+            " ORDER BY time_tasks.date ASC";
+        db.sequelize.query(strQuery)
             .success(function(result) {
                 res.json({
                     status: "success",
@@ -906,6 +940,39 @@ module.exports = {
             });
     },
 
+    ViewAllDate: function(req, res) {
+        var info = req.body.info;
+        var strQuery = "SELECT time_tasks.date, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+            "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity, time_item_task.comment, " +
+            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
+            "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
+            "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
+            "INNER JOIN users ON users.id=time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
+            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
+            "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
+            "LEFT JOIN time_item_task on time_item_task.task_id = time_tasks.tasks_id " +
+            "WHERE time_tasks.tasks_week_id = " + info.ID +
+            " ORDER BY time_tasks.date ASC";
+        db.sequelize.query(strQuery)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
     //approve
     LoadTimeSheetApprove: function(req, res) {
         var searchObj = req.body.searchObj;
@@ -956,8 +1023,9 @@ module.exports = {
         if (orderBY.length === 10) {
             orderBY = "";
         }
+        var isDirector = false;
         //get NODE_ID Head of Dept. on TIMESHEET
-        var strQueryGetNodeDept = "SELECT sys_hierarchy_nodes.NODE_ID FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
+        var strQueryGetNodeDept = "SELECT sys_hierarchy_nodes.NODE_ID, sys_hierarchy_nodes.NODE_CODE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
             "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
             " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
             "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID WHERE sys_hierarchies_users.USER_ID = " + searchObj.USER_ID +
@@ -975,6 +1043,9 @@ module.exports = {
                         if (result[deptId] !== undefined &&
                             result[deptId] !== null &&
                             result[deptId] !== "") {
+                            if (result[deptId].NODE_CODE === "Director") {
+                                isDirector = true;
+                            }
                             NodeDeptId += result[deptId].NODE_ID + ",";
                         }
                     }
@@ -989,7 +1060,6 @@ module.exports = {
                         .success(function(resultDept) {
                             var Depts = "";
                             if (resultDept === undefined || resultDept === null || resultDept.length === 0) {
-                                console.log("DEPT NULL");
                                 res.json({
                                     status: "error"
                                 });
@@ -1027,8 +1097,14 @@ module.exports = {
                                                 NodeList = "(" + NodeList.substring(0, NodeList.length - 1) + ")";
                                             }
                                             //get list user staff
-                                            var strUserStaff = "SELECT USER_ID FROM sys_hierarchies_users WHERE NODE_ID IN" +
-                                                NodeList + " AND DEPARTMENT_CODE_ID IN " + Depts;
+                                            var strUserStaff = "";
+                                            if (isDirector === true) {
+                                                strUserStaff = "SELECT USER_ID FROM sys_hierarchies_users WHERE NODE_ID IN" +
+                                                    NodeList;
+                                            } else if (isDirector === false) {
+                                                strUserStaff = "SELECT USER_ID FROM sys_hierarchies_users WHERE NODE_ID IN" +
+                                                    NodeList + " AND DEPARTMENT_CODE_ID IN " + Depts;
+                                            }
                                             db.sequelize.query(strUserStaff)
                                                 .success(function(resultListUser) {
                                                     if (resultListUser === undefined || resultListUser === null || resultListUser.length === 0) {

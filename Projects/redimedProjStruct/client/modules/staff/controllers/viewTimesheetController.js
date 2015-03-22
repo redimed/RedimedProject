@@ -27,7 +27,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             if (response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'no task') {
-                toastr.error("no task", "Error");
+                $scope.list.result = [];
             } else {
                 $scope.list.result = response;
                 $scope.list.count = response.length;
@@ -170,10 +170,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     }
 
     $scope.view = function(item) {
-        console.log(item);
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/editTimesheet.html",
-            controller: "EditTimesheetController",
+            templateUrl: "modules/staff/views/viewTimesheetByHour.html",
+            controller: "ViewTimesheetByHourController",
             size: 'lg',
             resolve: {
                 idWeek: function() {
@@ -285,52 +284,117 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.loadInfo();
 
-    $scope.delTask = function(index, order) {
-        if (order != 1) {
-            swal({
-                title: "Are you sure?",
-                text: "This task will lost in list !",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function() {
-                if ($scope.tasks[index].isAction == 'update') {
-                    $scope.tasks[index].isAction = 'delete';
-                } else {
-                    $scope.tasks.splice(index, 1);
-                }
-            })
-        }
-    }
-
-    $scope.addRow = function(index, date, weekID) {
-        var j = 0;
-        for (var i = index; i < $scope.tasks.length; i++) {
-            if ($scope.tasks[i].date == date) {
-                j++;
-            }
-        }
-        task = {
-            order: 1 + j,
-            task: null,
-            date: date,
-            task_week_id: weekID,
-            department_code_id: null,
-            location_id: null,
-            activity_id: null,
-            time_charge: null,
-            isAction: 'insert',
-            btnTitle: "Choose Item"
-        };
-        $scope.tasks.splice(index + j, 0, task);
-    }
-
     $scope.chooseItem = function(item) {
         var modalInstance = $modal.open({
             templateUrl: "modules/staff/views/itemModal.html",
             controller: 'ItemController',
+            size: 'lg',
+            resolve: {
+                itemArr: function() {
+                    var arr = [];
+                    arr = item;
+                    return arr.length > 0 ? arr : null;
+                },
+                isView: function() {
+                    return true;
+                }
+            }
+        });
+    }
+})
+
+.controller("ViewTimesheetByHourController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, idWeek) {
+    if (!$scope.tasks) {
+        $scope.tasks = [];
+    }
+
+    if (!$scope.info) {
+        $scope.info = {};
+    }
+
+    $scope.cancelClick = function() {
+        $modalInstance.close();
+    }
+
+    $scope.okClick = function() {
+        $modalInstance.close();
+        $state.go('loggedIn.timesheet.create', {
+            id: idWeek
+        });
+    }
+
+    $scope.calendarDay = new Date();
+    $scope.info.userID = $cookieStore.get("userInfo").id;
+
+    var startWeek, endWeek;
+
+    $scope.getFortMatTimeCharge = function(time_charge) {
+        if (time_charge === 0) {
+            return "00:00";
+        } else {
+            var hour = parseInt(time_charge);
+            var minute = (time_charge - hour) * 60;
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            var result = hour + ":" + minute;
+            result = result.substring(0, result.length);
+            return result;
+        }
+    };
+
+    $scope.task = {
+        date : null,
+        time1: 0,
+        time2: 0,
+        time3: 0,
+        time4: 0,
+        time5: 0,
+        timeTotal: 0
+    };
+
+    $scope.loadInfo = function() {
+        $scope.tasks.loading = true;
+        StaffService.showDetailDate(idWeek).then(function(response) {
+            if (response['status'] == 'fail' || response['status'] == 'error') {
+                toastr.error("Error", "Error");
+            } else if (response['status'] == 'success') {
+                $scope.tasks = _.chain(response['data'])
+                    .groupBy("date")
+                    .map(function(value, key) {
+                        return _.object(_.zip(["date", "rows"], [key,_.chain(value)
+                            .groupBy("activity_id")
+                            .map(function(value1, activity_id) {
+                                return _.object(_.zip(["activity_id", "time_charge"], [activity_id, 
+                                    _.reduce(value1, function(result, currentObject) {
+                                    return result.time_charge + currentObject.time_charge;
+                            })]));
+                            })
+                            .value()]
+                            )) 
+                    })
+                    .value();
+
+                console.log($scope.tasks);
+                // angular.forEach(response['data'], function(data) {
+                    
+                // })
+                // data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
+                // $scope.tasks = response['data'];
+            }
+        })
+        $scope.tasks.loading = false;
+    }
+
+    $scope.loadInfo();
+
+    $scope.viewDetailDate = function(item) {
+        var modalInstance = $modal.open({
+            templateUrl: "modules/staff/views/editTimesheet.html",
+            controller: 'EditTimesheetController',
             size: 'lg',
             resolve: {
                 itemArr: function() {

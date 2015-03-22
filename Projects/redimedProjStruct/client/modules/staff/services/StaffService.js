@@ -44,6 +44,11 @@ angular.module("app.loggedIn.staff.service", [])
             return showEdit.post({info:info});
         }
 
+        service.showDetailDate = function(info){
+            var showDetailDate = api.all('staff/showDetailDate');
+            return showDetailDate.post({info:info});
+        }
+
         service.getTaskList = function(){
             return api.one('staff/task/getList').get();
         }

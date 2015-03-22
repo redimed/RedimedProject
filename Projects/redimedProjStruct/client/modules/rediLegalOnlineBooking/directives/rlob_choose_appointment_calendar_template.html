@@ -96,7 +96,10 @@
                         <div ng-repeat="doctor in type.DOCTOR_ITEMS">
                             <div class="row">
                                 <div class="col-md-2">
-                                    {{doctor.DOCTOR_NAME}}
+                                    <span popover="{{doctor.SPECS_STR}}" popover-trigger="mouseenter"  class="testhover">{{doctor.DOCTOR_NAME}}
+                             
+                                    </span>
+                                    
                                 </div>
                                 <div class="col-md-10">
                                     <div ng-repeat="location in doctor.LOCATION_ITEMS">

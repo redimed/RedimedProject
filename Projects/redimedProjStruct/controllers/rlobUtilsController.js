@@ -1,9 +1,11 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=false;
+var isTestSendMail=true;
 module.exports =
 {
+    userRegisterType:'Company',
+    
     isTestSendMail:isTestSendMail,
 
     getMailSender:function()
@@ -46,5 +48,12 @@ module.exports =
     calendarStatus:{
         noAppointment:'No Appointment',
         booked:'BOOKED'
-    }    
+    },
+
+    registerStatus:{
+        pending:'PENDING',
+        accepted:'ACCEPTED',
+        rejected:'REJECTED',
+        deactivate:'DEACTIVATE'
+    }
 }

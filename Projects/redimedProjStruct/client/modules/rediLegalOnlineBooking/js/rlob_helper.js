@@ -37,7 +37,6 @@ var rlobConstant={
     },
 
     bookingType:{
-
         REDiLEGAL:{alias:'rlob',name:'REDiLEGAL',display:'Medico-Legal'},
         Vaccination:{alias:'vaccinob',name:'Vaccination',display:'Vaccination'}
     },
@@ -86,6 +85,13 @@ var rlobConstant={
         nurse : 5,
         driver : 6,
         assistant : 7
+    },
+
+    registerStatus:{
+        pending:'PENDING',
+        accepted:'ACCEPTED',
+        rejected:'REJECTED',
+        deactivate:'DEACTIVATE'
     }
 }
 

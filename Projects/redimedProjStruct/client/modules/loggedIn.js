@@ -74,8 +74,12 @@ angular.module("app.loggedIn", [
     // END MODULE TREE APPROVE
 
     //MODULE TIMESHEET
-    'app.loggedIn.TimeSheet'
+    'app.loggedIn.TimeSheet',
     //END MODULE TIMESHEET
+
+    //MODULE CONSULTATION
+    'app.loggedIn.consult'
+
 ])
 
 .config(function($stateProvider) {

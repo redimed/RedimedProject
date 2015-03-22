@@ -45,5 +45,10 @@ angular.module("app.loggedIn.TimeSheet", [
                 url: "/AdminTimeSheet",
                 templateUrl: "modules/TimeSheet/views/Admin.html",
                 controller: "AdminController"
+            })
+            .state("loggedIn.ReportTimeSheet", {
+                url: "/ReportTimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report.html",
+                controller: "ReportController"
             });
     });

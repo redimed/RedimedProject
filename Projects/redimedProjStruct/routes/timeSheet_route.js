@@ -3,6 +3,7 @@ var TimeSheetController = require('./controllers/TimeSheetController');
 app.post('/api/staff/addAllTask',TimeSheetController.addAllTask);
 app.post('/api/staff/editTask',TimeSheetController.editTask);
 app.post('/api/staff/getTask',TimeSheetController.getTask);
+app.post('/api/staff/showDetailDate',TimeSheetController.showDetailDate);
 app.post('/api/staff/checkMonth',TimeSheetController.checkMonth);
 app.post('/api/staff/getAllTaskAMonth',TimeSheetController.getAllTaskAMonth);
 app.post('/api/staff/checkFirstTaskWeek',TimeSheetController.checkFirstTaskWeek);
