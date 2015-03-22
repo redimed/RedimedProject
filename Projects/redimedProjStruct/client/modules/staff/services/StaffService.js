@@ -53,6 +53,42 @@ angular.module("app.loggedIn.staff.service", [])
             return api.one('staff/task/getList').get();
         }
 
+        service.getFortMatTimeTemp = function(time_charge){
+            if(time_charge)
+            {
+                var hourInLieu = parseInt(time_charge.substring(0, 2));
+                if(time_charge.length == 4){
+                    var minuteInLieu = parseInt(time_charge.substring(2, 4));
+                }else{
+                    var minuteInLieu = parseInt(time_charge.substring(3, 5));
+                }
+                return hourInLieu + (minuteInLieu / 60);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        service.getFortMatTimeCharge = function(time_charge)
+        {
+            if (time_charge === 0) {
+                return "00:00";
+            } else {
+                var hour = parseInt(time_charge);
+                var minute = (time_charge - hour) * 60;
+                if (hour < 10) {
+                    hour = "0" + hour;
+                }   
+                if (minute < 10) {
+                    minute = "0" + minute;
+                }
+                var result = hour + ":" + minute;
+                result = result.substring(0, result.length);
+                return result;
+            }
+        }
+
         service.showWeek = function(userID){
             var startDate;
             var endDate;

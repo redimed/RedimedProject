@@ -48,7 +48,7 @@
                 			</div>
                 		</td>
                 	</tr>
-	                <tr ng-if="itemList.length > 0" ng-repeat="item in itemList track by $index">
+	                <tr ng-hide="item.isAction == 'delete'" ng-if="itemList.length > 0" ng-repeat="item in itemList track by $index">
 	                    <td ng-if="!isView" style="vertical-align: middle" align="center">
 	                        <i class="fa fa-trash pointer" ng-click="delItem($index)" style="font-size: 20px"></i>
 	                    </td>

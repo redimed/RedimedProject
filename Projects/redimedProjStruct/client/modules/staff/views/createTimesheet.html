@@ -89,7 +89,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="(key,task) in tasks track by $index">
+                <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index">
                     <td style="vertical-align: middle">
                         <i  ng-if="task.order == 1" class="fa fa-plus pointer" 
                         ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 17px"></i>

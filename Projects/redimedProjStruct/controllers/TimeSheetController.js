@@ -87,6 +87,142 @@ module.exports = {
 
     },
 
+    editTask: function(req,res)
+    {
+        var allTask = req.body.allTask;
+         db.timeTasks.max('tasks_id')
+            .success(function(id){
+                var tId = id;
+                for(var i=0; i<allTask.length;i++){
+                    tId = tId + 1;
+                    if(allTask[i].isAction == 'update'){
+                        chainer.add(
+                            db.timeTasks.update({
+                                "department_code_id" : allTask[i].department_code_id,
+                                "task" : allTask[i].task,
+                                "date": allTask[i].date,
+                                "location_id" : allTask[i].location_id,
+                                "activity_id" : allTask[i].activity_id,
+                                "time_charge" : allTask[i].time_temp
+                            },{tasks_id : allTask[i].tasks_id})
+                        )
+
+                        var taskId = allTask[i].tasks_id;
+
+                        if(allTask[i].item.length > 0)
+                        {
+                             for(var j=0;j<allTask[i].item.length; j++)
+                            {
+                                var a = allTask[i].item[j];
+                                if(a.isAction == 'insert')
+                                {
+                                    chainer.add(
+                                        db.TimeItemTask.create({
+                                            task_id: taskId,
+                                            item_id: a.ITEM_ID,
+                                            quantity: a.quantity,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment
+                                        })
+                                    )
+                                }
+                                else if(a.isAction == 'update')
+                                {
+                                    chainer.add(
+                                        db.TimeItemTask.update({
+                                            quantity: a.quantity,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment
+                                        },{task_id: taskId, item_id: a.ITEM_ID})
+                                    )
+                                }
+                                else if(a.isAction == 'delete')
+                                {
+                                    chainer.add(
+                                        db.TimeItemTask.update({
+                                            'deleted' : 1
+                                        },{item_id:a.ITEM_ID, task_id: taskId})
+                                    )
+                                }
+                            }
+                        }
+
+                    }else if(allTask[i].isAction == 'insert'){
+                        
+                        chainer.add(
+                            db.timeTasks.create({
+                                tasks_id : tId,
+                                "tasks_week_id" : allTask[i].task_week_id,
+                                "department_code_id" : allTask[i].department_code_id,
+                                "task" : allTask[i].task,
+                                "order": allTask[i].order,
+                                "date": moment(allTask[i].date).format('YYYY-MM-DD'),
+                                "location_id" : allTask[i].location_id,
+                                "activity_id" : allTask[i].activity_id,
+                                "time_spent" : allTask[i].time_spent,
+                                "time_charge" : allTask[i].time_temp
+                            })
+                        )
+
+
+
+                        if(allTask[i].item.length > 0)
+                        {
+                             for(var j=0;j<allTask[i].item.length; j++)
+                            {
+                                var a = allTask[i].item[j];
+                                chainer.add(
+                                    db.TimeItemTask.create({
+                                        task_id: tId,
+                                        item_id: a.ITEM_ID,
+                                        quantity: a.quantity,
+                                        time_charge: a.time_temp,
+                                        comment: a.comment
+                                    })
+                                )
+                                
+                            }
+                        }
+
+                    }else if(allTask[i].isAction == 'delete'){
+                        chainer.add(
+                            db.timeTasks.update({
+                                "deleted" : 1
+                            },{tasks_id : allTask[i].tasks_id})
+                        )
+
+                        var taskId = allTask[i].tasks_id;
+
+                        if(allTask[i].item.length > 0)
+                        {
+                             for(var j=0;j<allTask[i].item.length; j++)
+                            {
+                                var a = allTask[i].item[j];
+                                
+                                chainer.add(
+                                    db.TimeItemTask.update({
+                                        'deleted' : 1
+                                    },{item_id:a.ITEM_ID, task_id: taskId})
+                                )
+                                
+                            }
+                        }
+                    }
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
+        chainer.runSerially().success(function(){
+            res.json({status:'success'});
+        }).error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
+   },
+
     getItemList: function(req,res)
     {
         var limit = (req.body.limit) ? req.body.limit : 10;
@@ -116,51 +252,7 @@ module.exports = {
         });
     },
 
-    editTask: function(req,res)
-    {
-        var allTask = req.body.allTask;
-
-        for(var i=0; i<allTask.length;i++){
-            if(allTask[i].isAction == 'update'){
-                chainer.add(
-                    db.timeTasks.update({
-                        "department_code_id" : allTask[i].department_code_id,
-                        "task" : allTask[i].task,
-                        "date": allTask[i].date,
-                        "location_id" : allTask[i].location_id,
-                        "activity_id" : allTask[i].activity_id,
-                        "time_charge" : allTask[i].time_charge
-                    },{tasks_id : allTask[i].tasks_id})
-                )
-            }else if(allTask[i].isAction == 'insert'){
-                chainer.add(
-                    db.timeTasks.create({
-                        "tasks_week_id" : allTask[i].task_week_id,
-                        "department_code_id" : allTask[i].department_code_id,
-                        "task" : allTask[i].task,
-                        "order": allTask[i].order,
-                        "date": moment(allTask[i].date).format('YYYY-MM-DD'),
-                        "location_id" : allTask[i].location_id,
-                        "activity_id" : allTask[i].activity_id,
-                        "time_spent" : allTask[i].time_spent,
-                        "time_charge" : allTask[i].time_charge
-                    })
-                )
-            }else if(allTask[i].isAction == 'delete'){
-                chainer.add(
-                    db.timeTasks.update({
-                        "deleted" : 1
-                    },{tasks_id : allTask[i].tasks_id})
-                )
-            }
-        }
-        chainer.runSerially().success(function(){
-            res.json({status:'success'});
-        }).error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
-   },
+    
 
     getDepartmentLocation: function(req,res)
     {

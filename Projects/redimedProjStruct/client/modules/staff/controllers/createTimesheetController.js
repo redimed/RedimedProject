@@ -35,7 +35,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         };
 
         $scope.changeTimeCharge = function(task){
-            task.time_temp = $scope.getFortMatTimeTemp(task.time_charge);
+            task.time_temp = StaffService.getFortMatTimeTemp(task.time_charge);
             sum = 0;
             angular.forEach($scope.tasks,function(data){
                 if(data.time_temp != null){
@@ -43,38 +43,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 }
             });
             $scope.info.time_temp = sum;
-            $scope.info.time_charge = $scope.getFortMatTimeCharge(sum);
+            $scope.info.time_charge = StaffService.getFortMatTimeCharge(sum);
         }
-
-        $scope.getFortMatTimeCharge = function(time_charge) {
-            if (time_charge === 0) {
-                return "00:00";
-            } else {
-                var hour = parseInt(time_charge);
-                var minute = (time_charge - hour) * 60;
-                if (hour < 10) {
-                    hour = "0" + hour;
-                }   
-                if (minute < 10) {
-                    minute = "0" + minute;
-                }
-                var result = hour + ":" + minute;
-                result = result.substring(0, result.length);
-                return result;
-            }
-        };
-
-        $scope.getFortMatTimeTemp = function(time_charge) {
-            if(time_charge){
-                var hourInLieu = parseInt(time_charge.substring(0, 2));
-                if(time_charge.length == 4){
-                    var minuteInLieu = parseInt(time_charge.substring(2, 4));
-                }else{
-                    var minuteInLieu = parseInt(time_charge.substring(3, 5));
-                }
-                return hourInLieu + (minuteInLieu / 60);
-            }
-        };
 
         $scope.getWeekNumber = function(d) {
             d = new Date(+d);
@@ -178,15 +148,19 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 angular.forEach(response['data'], function(data){
                                     data.item = [];
                                     data.isEdit = true;
+                                    data.time_temp = data.time_charge;
+                                    data.isAction = 'update';
                                     if(data.time_charge != null)
                                     {
-                                        data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
+                                        data.time_charge = StaffService.getFortMatTimeCharge(data.time_charge);
                                     }
                                     angular.forEach(response['item'], function(item){
                                          if(data.tasks_id == item.tasks_id){
                                             data.isInputItem = true;
                                             data.isBillable = true;
-                                            item.time_charge = $scope.getFortMatTimeCharge(item.time_charge);
+                                            item.isAction = 'update';
+                                            item.time_temp = item.time_charge;
+                                            item.time_charge = StaffService.getFortMatTimeCharge(item.time_charge);
                                             data.item.push(item);
                                          }
                                     })
@@ -224,6 +198,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 isEdit: false,
                 isInputItem: false,
                 isBillable: false,
+                isAction: 'insert',
                 item: []
             };
             $scope.tasks.splice(index + j, 0,task) ;
@@ -247,34 +222,53 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     confirmButtonText: "Yes",
                     closeOnConfirm: true
                 }, function() {
-                    $scope.tasks.splice(index,1);
+                    if($scope.tasks[index].isAction == 'insert')
+                        $scope.tasks.splice(index,1);
+                    else if($scope.tasks[index].isAction == 'update')
+                        $scope.tasks[index].isAction = 'delete';
                 })
             }
         }
 
         $scope.addAllTask = function(status)
         {
-            if($scope.time_total > 38 || $scope.time_total == 38){
-                $scope.goOn = true;
-                $scope.info.time_rest = $scope.info.time_temp - 38;
+            // if($scope.time_total > 38 || $scope.time_total == 38){
+            //     $scope.goOn = true;
+            //     $scope.info.time_rest = $scope.info.time_temp - 38;
+            // }
+
+            if(!$scope.isEdit)
+            {
+                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+                $scope.info.startWeek = startWeek;
+                $scope.info.endWeek = endWeek;
+                $scope.info.statusID = status;
+                $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
+            
+                StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("success","Success");
+                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                    }else
+                    {
+                        toastr.error("Error", "Error");
+                    }
+                })
             }
-
-            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-            $scope.info.startWeek = startWeek;
-            $scope.info.endWeek = endWeek;
-            $scope.info.statusID = status;
-            $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
-
-            StaffService.addAllTask($scope.tasks,$scope.info).then(function(response){
-                if(response['status'] == 'success'){
-                    toastr.success("success","Success");
-                    $state.go('loggedIn.staff.list', null, {'reload': true});
-                }else
-                {
-                    toastr.error("Error", "Error");
-                }
-            })
+            else
+            {
+                StaffService.editTask($scope.tasks).then(function(response){
+                    if(response['status'] == 'success'){
+                        toastr.success("Edit Success");
+                        $state.go('loggedIn.timesheet.view', null, {'reload': true});
+                    }else
+                    {
+                        toastr.error("Error", "Error");
+                    }
+                })
+            }
+            
         }
 
 
@@ -312,7 +306,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             modalInstance.result.then(function(obj){
                 if(obj.type == "ok")
                 {
-                    console.log(obj.value);
+                    // console.log(obj.value);
                     var list = [];
                     list = obj.value;
                     task.item = list;
@@ -325,9 +319,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         {
                             t.push(list[i].ITEM_ID);
                             c = c + list[i].time_temp;
+                            console.log(list[i].time_temp);
                         }
                         task.task = t.join(' , ');
-                        task.time_charge = $scope.getFortMatTimeCharge(c);
+                        // console.log(c);
+                        task.time_charge = StaffService.getFortMatTimeCharge(c);
                         $scope.changeTimeCharge(task);
                     }
                     else
@@ -359,6 +355,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     })
 
 .controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr,isView){
+
         $scope.itemSearchPanel = {}
 
         $scope.isView = isView;
@@ -368,7 +365,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.itemList = [];
 
         if(itemArr != null)
+        {
             $scope.itemList = angular.copy(itemArr);
+        }
 
         $scope.itemObj = 
         {
@@ -380,14 +379,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             comment: null
         }
 
-        $scope.getFortMatTimeTemp = function(time_charge) {
-            if(time_charge){
-                var hourInLieu = parseInt(time_charge.substring(0, 2));
-                var minuteInLieu = parseInt(time_charge.substring(2, 4));
-                return hourInLieu + (minuteInLieu / 60);
-            }
-        };
-
          $scope.cancel = function(){
             $modalInstance.close({type:"cancel"});
         }
@@ -395,8 +386,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.okClick = function(){
             for(var i=0; i<$scope.itemList.length;i++)
             {
-                $scope.itemList[i].time_temp = $scope.getFortMatTimeTemp($scope.itemList[i].time_charge);
-                
+                $scope.itemList[i].time_temp = StaffService.getFortMatTimeTemp($scope.itemList[i].time_charge);
             }
             $modalInstance.close({type:"ok",value:$scope.itemList});
         }
@@ -411,7 +401,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 confirmButtonText: "Yes",
                 closeOnConfirm: true
             }, function() {
-                $scope.itemList.splice(index,1);
+                if($scope.itemList[index].isAction == 'insert')
+                    $scope.itemList.splice(index,1);
+                else if($scope.itemList[index].isAction == 'update')
+                    $scope.itemList[index].isAction = 'delete';
             })
         }
 
@@ -439,7 +432,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             ITEM_NAME: item.ITEM_NAME,
                             quantity: 1,
                             time_charge: 0,
-                            comment: null
+                            comment: null,
+                            isAction : 'insert'
                         }
 
                         $scope.itemList.push($scope.itemObj);
@@ -453,7 +447,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         ITEM_NAME: item.ITEM_NAME,
                         quantity: 1,
                         time_charge: 0,
-                        comment: null
+                        comment: null,
+                        isAction : 'insert'
                     }
 
                     $scope.itemList.push($scope.itemObj);
