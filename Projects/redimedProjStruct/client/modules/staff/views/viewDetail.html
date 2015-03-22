@@ -1,5 +1,6 @@
 <div class="modal-header">
     <h3>Detail Timesheet</h3>
+    <a class="btn pull-right btn-xs red" ng-click="cancelClick()">X</a>
 </div>
 <div class="modal-body">
     <div class="table-dynamic">
@@ -10,52 +11,56 @@
             <tr>
                 <th>
                     <div class="th">
-                        </span> Date
+                        Date
                     </div>
                 </th>
                 <th>
                     <div class="th">
-                        </span> Activity
+                         Activity
                     </div>
                 </th>
                 <th>
                     <div class="th">
-                        </span> Location
+                        Location
                     </div>
                 </th>
                 <th>
                     <div class="th">
-                        </span> Department
+                        Department
                     </div>
                 </th>
                 <th>
                     <div class="th">
-                        </span> Time Charge
+                        Time Charge
                     </div>
                 </th>
                 <th>
                     <div class="th">
-                        </span> Tasks/Comments
+                        Item Number
                     </div>
                 </th>
                 <th>
                     <div class="th">
-                        Item Codes
+                        Quantity
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Tasks/Comments
                     </div>
                 </th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index">
+            <tr ng-repeat="(key,task) in tasks track by $index">
                 <td>{{task.date | date : 'EEE, dd MMM'}}</td>
                 <td>{{task.activity}}</td>
                 <td>{{task.location}}</td>
                 <td>{{task.department}}</td>
                 <td>{{task.time_charge}}</td>
+                <td>{{task.ITEM_ID}}</td>
+                <td>{{task.quantity}}</td>
                 <td>{{task.task}}</td>
-                <td >
-                    <span ng-click="chooseItem(task.item)" ng-hide="task.isAction == 'delete'" ng-disabled='task.item.length == 0' class="btn btn-sm blue-dark"><i class="fa fa-search"></i> Detail</span>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -66,6 +71,6 @@
         <i class="fa fa-pencil"></i> 
         <span>Edit</span>
     </a>
-    <a style="width: 75px" href="javascript:;" ng-click="cancelClick(m)" class="btn btn-circle red-flamingo btn-xs">
+    <a style="width: 75px" href="javascript:;" ng-click="cancelClick()" class="btn btn-circle btn-warning btn-xs">
         <i class="fa fa-times"></i> Cancel </a>
 </div>
