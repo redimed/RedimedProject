@@ -317,12 +317,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         var c = 0;
                         for(var i=0; i < list.length; i++)
                         {
-                            t.push(list[i].ITEM_ID);
-                            c = c + list[i].time_temp;
-                            console.log(list[i].time_temp);
+                            if(list[i].isAction != 'delete'){
+                                t.push(list[i].ITEM_ID);
+                                c = c + list[i].time_temp;
+                            }
                         }
                         task.task = t.join(' , ');
-                        // console.log(c);
                         task.time_charge = StaffService.getFortMatTimeCharge(c);
                         $scope.changeTimeCharge(task);
                     }

@@ -112,9 +112,7 @@ angular.module("app.loggedIn.staff.service", [])
                             monthTemp = '0' + monthTemp;
                         array.push(temp.getFullYear() + '-' + monthTemp + '-' + temp.getDate());
                     })
-                });
-
-            var selectCurrentWeek = function () {
+                    var selectCurrentWeek = function () {
                 window.setTimeout(function () {
                     $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
                 }, 1);
@@ -145,7 +143,7 @@ angular.module("app.loggedIn.staff.service", [])
                 onClose: function () {
                     $('#ui-datepicker-div').removeClass('ui-weekpicker');
                 },
-                minDate: new Date(now.getFullYear(), now.getMonth() - 1, 1),
+                minDate: array[0],
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function (dateText, inst) {
@@ -174,6 +172,9 @@ angular.module("app.loggedIn.staff.service", [])
             $calendarTR.live('mouseleave', function () {
                 $(this).find('td a').removeClass('ui-state-hover');
             });
+                });
+
+            
         }
 
         return service;
