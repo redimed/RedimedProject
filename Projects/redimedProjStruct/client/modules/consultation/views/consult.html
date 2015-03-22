@@ -1,3 +1,8 @@
+<style>
+    .consult-modal-window .modal-dialog {
+      width: 1000px;
+    }
+</style>
 <h3 class="page-title">Consultation</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -104,7 +109,7 @@
         		<div class="form-group" >
 	                <label class="control-label bold col-md-2 col-sm-2">Problems</label>
 	                <div class="col-md-4 col-sm-4">
-	                    <select class="form-control">
+	                    <select ng-model="consultInfo.problem_id" ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.problem_id as p.problem_id for p in problemList" class="form-control">
 	                    	<option value="">--Select A Problem--</option>
 	                    </select>
 	                </div>
@@ -136,7 +141,7 @@
 			                </tr>
 		                </thead>
 		                <tbody>
-			                <tr>
+			                <tr ng-if="problemArr.length <= 0">
 			                	<td colspan="3">
 			                		<div style="text-align: center;">
 		                				<span style="font-size: 20px; font-style: italic; font-weight: bold;">		Empty Data
@@ -144,6 +149,17 @@
 		                			</div>
 			                	</td>
 			                </tr>
+                            <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
+                                <td>
+                                    {{p.Notes}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{p.ICD10_code}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{p.ICPC_code}}
+                                </td>
+                            </tr>
 		                </tbody>
 		            </table>
 		        </div>

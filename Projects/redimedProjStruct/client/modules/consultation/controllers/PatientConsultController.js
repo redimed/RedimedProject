@@ -1,16 +1,21 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($scope,$state,$modal,toastr,socket,$stateParams,PatientService){
+	.controller("PatientConsultController",function($scope,$state,$modal,toastr,socket,$stateParams,ConsultationService,PatientService){
 		var patient_id = $stateParams.patient_id;
 		var cal_id = $stateParams.cal_id;
 
 		$scope.patientInfo = {};
+		$scope.problemArr = [];
 
 		$scope.consultInfo = {
+			patient_id: patient_id,
+			cal_id: cal_id,
+			problem_id: null,
 			history: null,
 			examination: null,
 			treatment: null,
 			diagnosis: null,
-			measurements: []
+			measurements: [],
+			scripts: []
 		}
 
 		PatientService.get(patient_id).then(function(rs){
@@ -27,10 +32,29 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			}
 		})
 
+		ConsultationService.getPatientProblem(patient_id).then(function(rs){
+			if(rs.status.toLowerCase() == 'success' && rs.data)
+			{
+				console.log(rs.data);
+				$scope.problemList = rs.data;
+			}
+		})
+
+		$scope.viewProblem = function(id){
+			$scope.problemArr = [];
+			if(id != null)
+			{
+				var index = _.findIndex($scope.problemList, { 'problem_id': id});
+				$scope.problemArr.push($scope.problemList[index]);
+			}
+			else
+				$scope.problemArr = [];
+		}
+
 		$scope.newMeasure = function(){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/views/modal/measureModal.html',
-				size:'lg',
+				windowClass: "consult-modal-window",
 				controller: "MeasurementController"
 			})
 		}

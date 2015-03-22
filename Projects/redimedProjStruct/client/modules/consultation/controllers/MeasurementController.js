@@ -1,4 +1,8 @@
 angular.module("app.loggedIn.consult.measurement.controller",[])
-	.controller("MeasurementController",function($scope,$state,$modal,toastr,$modalInstance,$stateParams){
-		console.log("measure controller");
+	.controller("MeasurementController",function($scope,$filter,$state,$modal,toastr,$modalInstance,$stateParams){
+		$scope.cancelClick = function(){
+			$modalInstance.close();
+		}
+		
+		$scope.today = $filter('date')(new Date(),'dd/MM/yyyy');
 	})
