@@ -24,8 +24,15 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 				$scope.patientInfo = rs.data;
 				$scope.patientInfo.FullName = 
 					(rs.data.Title != null || rs.data.Title != '') ? (rs.data.Title +" . " + fName.join(' ')) : fName.join(' ');
-
 			}
 		})
+
+		$scope.newMeasure = function(){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/views/modal/measureModal.html',
+				size:'lg',
+				controller: "MeasurementController"
+			})
+		}
 
 	})
