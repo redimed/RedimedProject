@@ -152,7 +152,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     StaffService.showWeek();
 })
 
-.controller("EditTimesheetController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, idWeek) {
+.controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr,idWeek) {
     if (!$scope.tasks) {
         $scope.tasks = [];
     }
@@ -215,17 +215,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 toastr.error("Error", "Error");
                 // $state.go('loggedIn.home', null, {'reload': true});
             } else if (response['status'] == 'success') {
-
-                angular.forEach(response['data'], function(data) {
-                    data.item = [];
-                    data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
-                    angular.forEach(response['item'], function(item) {
-                        if (data.tasks_id == item.tasks_id) {
-                            item.time_charge = $scope.getFortMatTimeCharge(item.time_charge);
-                            data.item.push(item);
-                        }
-                    })
-                })
                 $scope.tasks = response['data'];
             }
         })
@@ -264,13 +253,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.cancelClick = function() {
         $modalInstance.close();
-    }
-
-    $scope.okClick = function() {
-        $modalInstance.close();
-        $state.go('loggedIn.timesheet.create', {
-            id: idWeek
-        });
     }
 
     $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
@@ -319,12 +301,12 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     .value();
                 var sum = 0;
                 angular.forEach($scope.tasks, function(data) {
-                    data.arrActivity = [0,0,0,0,0];
+                    data.arrActivity = ['00:00','00:00','00:00','00:00','00:00'];
                     sum = 0;
                     angular.forEach(data.rows, function(row) {
                         sum = sum + row.time_charge;
                         row.time_charge = $scope.getFortMatTimeCharge(row.time_charge);
-                        data.arrActivity[row.activity_id] = row.time_charge;
+                        data.arrActivity[row.activity_id - 1] = row.time_charge;
                     })
                     data.total = $scope.getFortMatTimeCharge(sum);
                 })
@@ -335,19 +317,14 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.loadInfo();
 
-    $scope.viewDetailDate = function(item) {
+    $scope.viewDetailDate = function(task) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/editTimesheet.html",
-            controller: 'EditTimesheetController',
+            templateUrl: "modules/staff/views/viewDetail.html",
+            controller: 'ViewDetailController',
             size: 'lg',
             resolve: {
-                itemArr: function() {
-                    var arr = [];
-                    arr = item;
-                    return arr.length > 0 ? arr : null;
-                },
-                isView: function() {
-                    return true;
+                idWeek: function() {
+                    return task;
                 }
             }
         });

@@ -64,18 +64,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="task in tasks track by $index" ng-class="{'same': $index % 2!==0}" style="cursor: pointer;">
-                                <td class="btn btn-xs" style="text-align:center;">{{task.date | date: "dd/MM/yyyy"}}</td>
-                                <td class="btn btn-xs" style="text-align:center;" ng-repeat="act in task.arrActivity track by $index">
+                            <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
+                                <td class="btn btn-xs">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
+                                <td class="btn btn-xs" ng-repeat="act in task.arrActivity track by $index">
                                     {{act}}
                                 </td>
-                                <td class="btn btn-xs" style="text-align:center;">{{task.total}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">
-                                    <span ng-click="viewDetailDate(task.item)" ng-hide="task.isAction == 'delete'" ng-disabled='task.item.length == 0' class="btn btn-sm blue-dark"><i class="fa fa-search"></i> View Detail on Date</span>
+                                <td class="btn btn-xs">{{task.total}}</td>
+                                <td class="btn btn-xs">
+                                    <a ng-click="viewDetailDate(task.item)" class="btn btn-sm">View Detail</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <a class="btn btn-xs pull-right" ng-click="viewDetailDate(week.task_week_id)">View Full Timesheet</a>
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
@@ -87,11 +88,8 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-
+            <a class='btn pull-right btn-xs btn-warning' ng-click=''>Cancel</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
 </div>
-<script type="text/ng-template " id="ViewItem ">
-    <view-item ng-model="taskID" on-cancel="clickCancel(return) "></view-item>
-</script>
