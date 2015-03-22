@@ -2418,6 +2418,92 @@ Custom icon buttons
   filter: none;
 }
 
+
+/***
+Custom icon boo
+***/
+.icon-time {
+  height: 25px;
+  min-width: 27px;
+  margin: 0 0 0 0;
+  border: 0 solid #ddd;
+  padding: 5px 0px 0px 0px;
+  background-color: none;
+  background-image: none;
+  filter: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: inline-block;
+  color: #646464;
+  text-shadow: none;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.icon-time:hover {
+  text-decoration: none;
+  border-color: #999;
+  color: #444;
+  text-shadow: 0 1px 0px white;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.icon-time:hover > .badge {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.icon-time > div {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #000;
+  font-size: 200px;
+  font-weight: 500;
+}
+.icon-time > .badge {
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  top: -5px;
+  right: -5px;
+  padding: 1px 2px 1px 2px;
+  font-size: 5px;
+  color: white;
+  text-shadow: none;
+  border-width: 0;
+  border-style: solid;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.icon-time > i {
+  font-size: 22px;
+  font-weight: bolder;
+  color: white;
+}
+.ie8 .icon-time:hover {
+  filter: none;
+}
 /***
 Input icons
 ***/
