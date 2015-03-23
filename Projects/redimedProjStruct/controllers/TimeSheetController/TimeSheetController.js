@@ -921,7 +921,7 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT JOIN time_item_task on time_item_task.task_id = time_tasks.tasks_id " +
             "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
-            " ORDER BY time_tasks.date ASC";
+            " ORDER BY time_tasks.order ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {
                 res.json({
@@ -955,7 +955,7 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT JOIN time_item_task on time_item_task.task_id = time_tasks.tasks_id " +
             "WHERE time_tasks.tasks_week_id = " + info.ID +
-            " ORDER BY time_tasks.date ASC";
+            " ORDER BY time_tasks.order ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {
                 res.json({
@@ -980,7 +980,6 @@ module.exports = {
         var strOrder = " ORDER BY ";
         //get search
         for (var keySearch in searchObj.data) {
-            console.log("KEY SEARCH:" + keySearch+"VALUE:"+searchObj.data[keySearch]);
             if (searchObj.data[keySearch] !== undefined &&
                 searchObj.data[keySearch] !== null &&
                 searchObj.data[keySearch] !== "") {
@@ -993,7 +992,6 @@ module.exports = {
         } else {
             strSearch = strSearch.substring(0, strSearch.length - 5);
         }
-        console.log(strSearch);
         //end get search
 
         //get ORDER
