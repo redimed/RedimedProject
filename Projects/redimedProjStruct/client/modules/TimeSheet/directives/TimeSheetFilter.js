@@ -7,6 +7,8 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
                 } else {
                     var hour = parseInt(time_charge);
                     var minute = (time_charge - hour) * 60;
+                    var minuteTemp = parseFloat(minute);
+                    minute = Math.round(minute * 1000) / 1000;
                     if (hour < 10) {
                         hour = "0" + hour;
                     }
