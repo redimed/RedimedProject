@@ -7,21 +7,12 @@ angular.module('starter.driver.controller',[])
         $scope.geo = {};
         $scope.ll = {};
         $scope.lstPatient = {};
-        $scope.worker = localStorageService.get('worker');
+        $timeout(function() {
+             $scope.worker = localStorageService.get('worker');
+        }, 400);
+       
         
 
-        // $scope.$watch('worker',function(newval){
-        //     console.log(newval);
-        //     if(typeof newval !== 'undefined'){
-        //         console.log(newval)
-        //         $scope.worker = localStorageService.get('worker');
-
-        //     }
-        // })
-
-        // $scope.$apply(function(){
-        //      $scope.worker = localStorageService.get('worker');
-        // })
 
         if(DriverServices.notifi !== undefined ){
             alert(JSON.stringify(DriverServices.notifi));
@@ -215,12 +206,12 @@ angular.module('starter.driver.controller',[])
                                         map.addMarker({
                                             lat: item.latitude,
                                             lng: item.longitude,
-                                            infoWindow: {
-                                                content: JSON.stringify(item)
-                                            },
-                                            // click: function(){
-                                            //     scope.add({injuryID:item.injury_id});
-                                            // }
+                                            // infoWindow: {
+                                            //     content: JSON.stringify(item)
+                                            // },
+                                            click: function(){
+                                                scope.add({injuryID:item.injury_id});
+                                            }
                                         });
                                     }
                                     else if( item.STATUS.toLowerCase()=='waiting' && item.driver_id == localStorageService.get("userInfo").id  ){
