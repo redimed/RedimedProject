@@ -1200,6 +1200,10 @@ table.timetable-table td:last-child {
     background-color: #EEEEEE;
 }
 
+.error-input {
+    border: 1px solid #d84a38;
+}
+
 .table-dynamic .table-bordered>thead>tr>th>input[type=checkbox],
 .table-dynamic .table-bordered>tbody>tr>th>input[type=checkbox],
 .table-dynamic .table-bordered>tfoot>tr>th>input[type=checkbox],

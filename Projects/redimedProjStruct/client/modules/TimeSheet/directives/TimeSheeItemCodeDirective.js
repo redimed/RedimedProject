@@ -9,7 +9,6 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 ngModel: "="
             },
             link: function(scope, elem, attrs) {
-                scope.isDisabled = false; //set button insert and table insert
                 scope.$watch('ngModel', function(oldModel, newModel) {
                     scope.items = angular.copy(oldModel.item);
                 });
@@ -100,28 +99,23 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 };
                 scope.clickAdd = function() {
                     angular.element('#itemCodeID').focus();
-                    scope.isDisabled = true;
                 };
                 scope.items = [];
                 scope.addItem = function(ITEM_ID, ITEM_NAME) {
-                    if (scope.isDisabled === true) {
-                        var check = false;
-                        angular.forEach(scope.items, function(item, index) {
-                            if (item.ITEM_ID === ITEM_ID) {
-                                toastr.warning("Item exist in list selected!", "Fail");
-                                check = true;
-                            }
-                        });
-                        if (check === false) {
-                            scope.items.push({
-                                ITEM_ID: ITEM_ID,
-                                ITEM_NAME: ITEM_NAME,
-                                status: false
-                            });
-                            scope.isDisabled = false;
+                    var check = false;
+                    angular.forEach(scope.items, function(item, index) {
+                        if (item.ITEM_ID === ITEM_ID) {
+                            toastr.warning("Item exist in list selected!", "Fail");
+                            check = true;
                         }
-                    } else {
-                        toastr.warning("Please choose Insert row!", "Fail");
+                    });
+                    if (check === false) {
+                        scope.items.push({
+                            ITEM_ID: ITEM_ID,
+                            ITEM_NAME: ITEM_NAME,
+                            status: false
+                        });
+                        scope.isDisabled = false;
                     }
                 };
                 scope.clickShowSelected = function(index) {

@@ -1,5 +1,5 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form">
+    <form method="POST" class="grid-form" name="formItemCode">
         <!-- MAIN INFO -->
         <fieldset>
             <legend>Choose Item Codes
@@ -61,14 +61,18 @@
                         </td>
                                 <!-- END MORE -->
                                 <td style="text-align:center">
-                                    <input type="text" tabindex="5" class="input-sm" ui-mask="9" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="viewTask.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
+                                    <div ng-class="{'error-input':formItemCode.quantity.$error.required}">
+                                    <input type="text" tabindex="5" class="input-sm form-control" ui-mask="9" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
+                                </div>
                                 </td>
                                 <td style="text-align:center">
-                                    <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" custom-tr="items[$index].time_charge" custom-fr="viewTask.time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID">
+                                    <div ng-class="{'error-input':formItemCode.time_charge.$error.required}">
+                                    <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" custom-tr="items[$index].time_charge" custom-fr="formItemCode.time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID">
+                                </div>
                                 </td>
                                 
                                 <td style="text-align:center;">
-                                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" custom-tr="items[$index].comment" custom-fr="viewTask.comment" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px;" id="commentID">
+                                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:20px;" id="commentID">
                                 </td>
                                 <td style="text-align:center;">
                                     <a ng-click="deleteItem($index)">
@@ -78,7 +82,7 @@
                             </tr>
                             <!-- temp row-->
                             <tr>
-                                <td><a class="btn btn-xs" style="color:#26a69a;" ng-dblclick="clickAdd()" ng-disabled="isDisabled===true"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a></td>
+                                <td><a class="btn btn-xs" style="color:#26a69a;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -97,7 +101,7 @@
                      <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
                     </center> <span class="bold" style="margin-left:3px;">List of Item Codes<span>
                      <a ng-click="reset()"><i class="fa fa-refresh"></i></a>
-                    <table class="responsive table table-bordered btn" ng-show="!list.loading" ng-disabled="isDisabled===false">
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
                     <tr>
                         <td class="btn btn-xs" style="text-align:left; width:5%;">
