@@ -4,6 +4,7 @@
 angular.module('starter.booking.services',[])
 .factory('OnlineBookingService',function(Restangular){
         var bookingService = {};
+        var selectedBooking = {};
         var api = Restangular.all('api');
 
         bookingService.getSubCompany = function(id){

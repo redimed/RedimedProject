@@ -26,7 +26,6 @@ angular.module('starter', ['ionic',
     'ion-google-place',
     'ngAutocomplete',
     'starter.bluetooth',
-    'opentok'
 ])
 
     .factory(("ionPlatform"), function( $q ){
@@ -143,12 +142,4 @@ angular.module('starter', ['ionic',
                 });
             });
         });
-    })
-
-if (!OT) {
-    var OT = {};
-}
-OT.onLoad = function(fn) {
-    document.addEventListener('deviceReady', fn);
-};
-OT.$ = OT.getHelper();
+    });

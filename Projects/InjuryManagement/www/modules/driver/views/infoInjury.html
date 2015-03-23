@@ -1,23 +1,30 @@
 <ion-view name="Injury">
     <ion-nav-buttons>
-        <a class="button button-icon icon ion-ios7-arrow-back" style="color:#fff" ng-click="backbtnList()">&nbsp;Back</a>
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="backbtnList()">&nbsp;Back</button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <a menu-toggle="right" class="button button-icon fa fa-phone-square" style="color:#fff"></a>
+        <button menu-toggle="right" class="button button-icon fa fa-book"></button>
     </ion-nav-buttons>
     <ion-content style="background-color: #F7F7F7 !important;">
         <div class="bg-info-success text-center">
-            <div ng-style={"background-color":lstPatient.background} class="img-responsive img-circle img-infoInjury">
+            <!-- <div ng-style={"background-color":lstPatient.background} class="img-responsive img-circle img-infoInjury">
                 <span>
                     {{ lstPatient.letter }}
                 </span>
             </div>
             <span class="name-info-injury">
                 {{worker.Title}}<span ng-show="worker.Title != null">.</span>{{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}
-            </span>
+            </span> -->
+           
+                <div class="portlet light">    
+                      <div id="map-canvas" data-tap-disabled="true" driver-map ll="ll"    class="col-md-12"  style="height: 300px; width: 100%"></div>
+                    <div class="clearfix"></div>
+                </div>
+
+
         </div>
 
-        <div class="row">
+       <!--  <div class="row">
             <div class="col s12">
               <ul class="tabs" tabmari>
                 <li class="tab col s6"><a class="active" href="#Infomation">Infomation</a></li>
@@ -26,9 +33,21 @@
             </div>
            
           
-          </div>
+          </div> -->
            <div id="Infomation" class="col s12">
-                 <div class="row">
+
+                    <div class="row customrow">
+                        <label class=" item .col text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                 <i class="fa fa-user margin-right-10"></i> Name</span>
+                        </label>
+                        <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                              <span >
+                                    {{worker.Title}}<span ng-show="worker.Title != null">.</span>{{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}
+                            </span>
+                        </label>
+                    </div>
+                 <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                              <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
@@ -40,7 +59,7 @@
                     </label>
                 </div>
 
-                <div class="row">
+                <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <img src="img/gender.ico" width="20px" height="20px" class="margin-right-10"/> Gender
@@ -51,7 +70,7 @@
                     </label>
                 </div>
 
-                <div class="row">
+                <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="fa fa-mobile-phone margin-right-10"></i> Mobile</span>
@@ -61,7 +80,7 @@
                     </label>
                 </div>
 
-                <div class="row">
+                <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="fa fa-envelope-o margin-right-10"></i> Email</span>
@@ -71,7 +90,7 @@
                     </label>
                 </div>
 
-                <div class="row">
+                <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="icon ion-ios7-location-outline margin-right-10" style="font-size: 20px;"></i> Address</span>
@@ -83,7 +102,7 @@
              
             </div>
                 <div id="Injury" class="col s12">
-                        <div class="row">
+                        <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
@@ -93,7 +112,7 @@
                     </label>
                 </div>
 
-                <div class="row">
+                <div class="row customrow">
                     <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="fa fa-calendar-o margin-right-10"></i> Date</span>
@@ -103,7 +122,7 @@
                     </label>
                 </div>
             </div>
-               <div id="map-canvas" data-tap-disabled="true" driver-map ll="ll"   class="col-md-12"  style="height: 200px; width: 100%"></div>       
+               
 
         </div>
       

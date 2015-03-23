@@ -116,7 +116,6 @@ angular.module('starter.bluetooth.mainBlueController',[])
             $scope.disableList = true;
 
             window.bluetooth.isConnected(checkisCon);
-            //window.bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
         }
 
         function checkisCon(result) {
@@ -254,7 +253,8 @@ angular.module('starter.bluetooth.mainBlueController',[])
                     console.log('$scope.dataReceive ', $scope.dataReceive);
                     if(typeof $scope.dataReceive['sys'] !==  'undefined') {
                         console.log($scope.dataReceive['sys']);
-                        if($scope.dataReceive['sys'] !==  0 && $scope.dataReceive['dia'] !==  0 && $scope.dataReceive['bpm'] !==  0 && $scope.dataReceive['mmHg'] !==  0) {
+                        if($scope.dataReceive['sys'] !==  0 && $scope.dataReceive['dia'] !==  0
+                            && $scope.dataReceive['bpm'] !==  0 && $scope.dataReceive['mmHg'] !==  0) {
 
                             console.log('not insert database sys == 0');
 

@@ -558,16 +558,10 @@ angular.module('starter.injury.controller', ['ngCordova'])
         // }
 
     })
-/**
- * Vo duc giap
- * Map for injury
- * [description]
- * @param  {[type]} $http         [description]
- * @param  {[type]} $ionicLoading [description]
- * @param  {String} $timeout){                                         return {                 restrict:     "A",            replace: "true",            scope:{                address: ' [description]
- * @param  {String} link:         function(scope, element, attrs){                        var id [description]
- * @return {[type]}               [description]
- */
+    /**
+     * Vo duc giap
+     * Map for injury
+     */
     .directive("mdtMap", function($http,$ionicLoading,$timeout){
         return {
             restrict: "A",
@@ -604,11 +598,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     mapTypeControl: false,
                     overviewMapControl: false
                 });
-                /**
-                 * Get location
-                 * [location description]
-                 * @return {[type]} [description]
-                 */
+               //get location
                 var location =  function(){
                     $ionicLoading.show({
                         template: "<div class='icon ion-ios7-reloading'></div>"+
@@ -716,18 +706,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
     })
 /**
  * Map for Company
- * [description]
- * @param  {[type]} $state              [description]
- * @param  {[type]} InjuryServices      [description]
- * @param  {[type]} localStorageService [description]
- * @param  {[type]} $ionicLoading       [description]
- * @param  {[type]} $timeout){                                                         return {                     restrict:     "A",               replace:            "true",                  scope:{            } [description]
-     * @param  {String} link:               function(scope, element,      attrs){                                 var id [description]
-     * @param  {[type]} panControl          :               true          [description]
- * @param  {[type]} streetViewControl   :               true          [description]
- * @param  {[type]} mapTypeControl:     true            [description]
- * @param  {[type]} overviewMapControl: true                                                             });                                      var getWokerbyIdCompany [description]
- * @return {[type]}                     [description]
  */
     .directive("companyMap", function( $state,InjuryServices,localStorageService,$ionicLoading,$timeout){
         return {
@@ -756,9 +734,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 var getWokerbyIdCompany = function() {
                     /**
                      * get user injury in company
-                     * [description]
-                     * @param  {[type]} result){                                     if(result.status [description]
-                     * @return {[type]}           [description]
                      */
                     InjuryServices.getInjuryByCompany(userinfo.company_id).then(function (result){
 

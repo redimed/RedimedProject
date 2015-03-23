@@ -59,44 +59,11 @@
 
         </div>
 
-        <!--<div ng-show="!isCaller || isAccept" class="cus-callerVideo">-->
-        <!--<ot-subscriber ng-repeat="stream in streams"-->
-        <!--stream="stream"-->
-        <!--props="subscriberProp"-->
-        <!--ng-class="{OT_big: (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}">-->
-        <!--</ot-subscriber>-->
-        <!--</div>-->
 
-        <!--<div class="cus-selfVideo">-->
-        <!--<ot-publisher props="facePublisherProps" mute-audio="mic" mute-video="camera"></ot-publisher>-->
-        <!--</div>-->
-
-        <div class="cus-callerVideo" ng-show="!isCaller || isAccept">
-            <div id="callerVideo"></div>
-        </div>
+        <div id="callerVideo" class="cus-callerVideo" ng-show="!isCaller || isAccept"></div>
 
         <div class="cus-selfVideo">
             <div id="selfVideo"></div>
         </div>
-
-
-
-        <!--<div class="cus-callerVideo" ng-show="!isCaller || isAccept">-->
-        <!--<div id="callerVideo"> </div>-->
-        <!--</div>-->
-
-        <!--<div class="cus-selfVideo">-->
-        <!--<div id="selfVideo"> </div>-->
-        <!--</div>-->
-
-
-
-        <!--<ot-layout class="cus-callerVideo" ng-show="!isCaller || isAccept">-->
-        <!--<ot-subscriber ng-repeat="stream in streams"-->
-        <!--props="SubscriberProps"-->
-        <!--stream="stream"-->
-        <!--session="session">-->
-        <!--</ot-subscriber>-->
-        <!--</ot-layout>-->
     </div>
 </ion-view>

@@ -257,7 +257,7 @@ angular.module("starter.menu.controller",[])
         });
 
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
-<<<<<<< HEAD
+
             UserService.getUserInfo(fromId).then( function(data) {
                 if(data.img == null) {
                     $scope.avatarCaller = 'img/avatar.png'
@@ -266,16 +266,11 @@ angular.module("starter.menu.controller",[])
                 }
                 $scope.fromUsername = fromUsername;
             });
-=======
-            // AudioToggle.setAudioMode(AudioToggle.SPEAKER);
-            console.log(JSON.stringify(message));
->>>>>>> af7f5a0e15dcd6bd881de30dece2e34f12e0827a
             switch (message.type) {
                 case 'call':
-                    // media = new Media(src, null, null, loop);
-                    // media.play();
-                    if ($state.current.name === 'app.phoneCall') { return; };
-<<<<<<< HEAD
+                    media = new Media(src, null, null, loop);
+                    media.play();
+                    if ($state.current.name === 'app.phoneCall') { return; }
                     $scope.modal.show();
                     $scope.acceptCall = function() {
                         $scope.modal.hide();
@@ -293,41 +288,8 @@ angular.module("starter.menu.controller",[])
                     if($scope.modal.isShown()) {
                         media.pause();
                         $scope.modal.hide();
-=======
-
-                    $scope.popupCall = $ionicPopup.show({
-                        title: 'Incoming Call',
-                        template: fromUsername + ' Calling you!',
-                        buttons: [
-                            {
-                                text: '<b>answer</b>',
-                                type: 'button button-balanced',
-                                onTap: function(e) {
-                                    // media.pause();
-                                    $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
-                                        tokenID: message.token, isCaller: false }, {reload: true});
-                                    $scope.popupCall = null;
-                                }
-                            },
-
-                            { text: '<b>ignore</b>',
-                                type: 'button button-assertive',
-                                onTap: function(e) {
-                                    // media.pause();
-                                    signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
-                                }
-                            },
-                        ]
-                    });
-                    break;
-                case 'cancel':
-                    if($scope.popupCall != null) {
-                        // media.pause();
-                        $scope.popupCall.close();
->>>>>>> af7f5a0e15dcd6bd881de30dece2e34f12e0827a
                     }
                     break;
-
             }
         });
 

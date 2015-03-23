@@ -7,7 +7,21 @@ angular.module('starter.driver.controller',[])
         $scope.geo = {};
         $scope.ll = {};
         $scope.lstPatient = {};
-        $scope.worker = {};
+        $scope.worker = localStorageService.get('worker');
+        
+
+        // $scope.$watch('worker',function(newval){
+        //     console.log(newval);
+        //     if(typeof newval !== 'undefined'){
+        //         console.log(newval)
+        //         $scope.worker = localStorageService.get('worker');
+
+        //     }
+        // })
+
+        // $scope.$apply(function(){
+        //      $scope.worker = localStorageService.get('worker');
+        // })
 
         if(DriverServices.notifi !== undefined ){
             alert(JSON.stringify(DriverServices.notifi));
@@ -35,25 +49,25 @@ angular.module('starter.driver.controller',[])
         };
 
         //INIT WHEN NOTIFICATION DETAIL_INJURY
-        $timeout(function () {
-            $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>Waiting...</span>",
-                animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
-                showDelay: 0
-            });
-            $scope.idPatient = localStorageService.get("idpatient_notice");
-            DriverServices.getPatientID($scope.idPatient).then(function (result){
-                if(result.status.toLocaleLowerCase() == "success")
-                {
-                    $scope.worker = result.data[0];
-                    $ionicLoading.hide()
-                }
-            })
-        }, 500);
+        // $timeout(function () {
+        //     $ionicLoading.show({
+        //         template: "<div class='icon ion-ios7-reloading'></div>"+
+        //         "<br />"+
+        //         "<span>Waiting...</span>",
+        //         animation: 'fade-in',
+        //         showBackdrop: true,
+        //         maxWidth: 200,
+        //         showDelay: 0
+        //     });
+        //     $scope.idPatient = localStorageService.get("idpatient_notice");
+        //     DriverServices.getPatientID($scope.idPatient).then(function (result){
+        //         if(result.status.toLocaleLowerCase() == "success")
+        //         {
+        //             $scope.worker = result.data[0];
+        //             $ionicLoading.hide()
+        //         }
+        //     })
+        // }, 500);
 
         //INIT LIST PATIENT
         function init() {
@@ -86,25 +100,14 @@ angular.module('starter.driver.controller',[])
             });
         };
 
-        $scope.selectPatient = function (injuryID, status, background, letter, lat, lng){
-            //if(status == "New")
-            //{
-            //    var jsonStatus = {STATUS:'Waiting'};
-            //    DriverServices.editPatient(jsonStatus, injuryID).then(function (result){
-            //        if(result.status.toLocaleLowerCase('success')){
-            //            console.log("success");
-            //        }
-            //    });
-            //}
-            $scope.ll.lat=lat;
-            $scope.ll.lng=lng;
-
-            $scope.lstPatient.background = background;
-            $scope.lstPatient.letter = letter;
-            DriverServices.getPatientID(injuryID).then(function (result){
-                $scope.worker = result.data[0];
-            });
-            $state.go('app.driver.detailInjury');
+        $scope.selectPatient = function (injuryID){
+            // DriverServices.getPatientID(injuryID).then(function (result){
+            //     if(typeof result !== 'undefined'){
+            //         localStorageService.set('worker',result.data[0])
+                   
+            //     }
+            // });
+             $state.go('app.driver.detailInjury',{injuryID:injuryID},{reload:true});
         };
 
         $scope.pickUp = function(injuryID) {
@@ -132,7 +135,7 @@ angular.module('starter.driver.controller',[])
                     console.log("success");
                 }
             });
-            $state.go('app.driver.mapsPickup');
+            $state.go('app.driver.list');
             $scope.doRefreshList();
         };
 
@@ -196,6 +199,7 @@ angular.module('starter.driver.controller',[])
                         maxWidth: 200,
                         showDelay: 0
                     });
+                   
                     GMaps.geolocate({
                         success: function(position) {
                             map.setCenter(position.coords.latitude, position.coords.longitude);
@@ -204,6 +208,7 @@ angular.module('starter.driver.controller',[])
                                 lng: position.coords.longitude,
                                 icon:'img/icon/ambulance.png'
                             });
+                          
                             angular.forEach(scope.lstPatient,function(item){
                                 if(item.latitude !== null && item.longitude !== null && item.cal_id == null && item.STATUS.toLowerCase() !== 'done'){
                                     if(item.STATUS.toLowerCase() == 'new'){
@@ -211,11 +216,11 @@ angular.module('starter.driver.controller',[])
                                             lat: item.latitude,
                                             lng: item.longitude,
                                             infoWindow: {
-                                                content: item.pickup_address
+                                                content: JSON.stringify(item)
                                             },
-                                            click: function(){
-                                                scope.add({injuryID:item.injury_id});
-                                            }
+                                            // click: function(){
+                                            //     scope.add({injuryID:item.injury_id});
+                                            // }
                                         });
                                     }
                                     else if( item.STATUS.toLowerCase()=='waiting' && item.driver_id == localStorageService.get("userInfo").id  ){
@@ -223,7 +228,7 @@ angular.module('starter.driver.controller',[])
                                             lat: item.latitude,
                                             lng: item.longitude,
                                             infoWindow: {
-                                                content: item.pickup_address
+                                                content:item.longitude
                                             },
                                             click: function(){
                                                 scope.add({injuryID:item.injury_id});
@@ -267,109 +272,126 @@ angular.module('starter.driver.controller',[])
                     }
                 });
 
-
-
             }
         }
     })
 
-    .directive("driverMap", function( $state,DriverServices,localStorageService,$ionicLoading,$timeout){
+    .directive("driverMap", function( $state,DriverServices,localStorageService,$ionicLoading,$timeout,$stateParams){
         return {
             restrict: "A",
             replace: "true",
             scope:{
                 ll:'='
+               
             },
             link: function(scope, element, attrs){
+                var map = "";
                 var id = "#"+attrs.id;
                 var lstPatient = {};
                 scope.ll.duration = 0;
                 scope.ll.distance = 0;
-                var map = new GMaps({
-                    el: id,
-                    lat: -32.280625,
-                    lng: 115.736246,
-                    zoomControl : true,
-                    zoomControlOpt: {
-                        style : 'SMALL',
-                        position: 'TOP_LEFT'
-                    },
-                    panControl : false,
-                    streetViewControl : false,
-                    mapTypeControl: false,
-                    overviewMapControl: false
-                });
-
-
-
-                var location =  function(){
-                    map.removeMarkers();
-
-                    map.addMarker({
-                        lat: scope.ll.lat,
-                        lng: scope.ll.lng,
-                        icon:'img/icon/waitingMaker.png'
-
+                var createMap = function(){
+                     map = new GMaps({
+                        el: id,
+                        lat: -32.280625,
+                        lng: 115.736246,
+                        zoomControl : true,
+                        zoomControlOpt: {
+                            style : 'SMALL',
+                            position: 'TOP_LEFT'
+                        },
+                        panControl : false,
+                        streetViewControl : false,
+                        mapTypeControl: false,
+                        overviewMapControl: false
                     });
 
-                    GMaps.geolocate({
-                        success: function(position) {
-                            map.setCenter(position.coords.latitude, position.coords.longitude);
-                            map.addMarker({
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude,
-                                icon:'img/icon/ambulance.png'
-                            });
+                     DriverServices.getPatientID($stateParams.injuryID).then(function (result){
+                         
+                        scope.worker = result.data[0];
+                        
+                        if(scope.worker !== undefined){
+                             
+                            localStorageService.set('worker',result.data[0])
+                          
 
-                            map.drawRoute({
-                                origin: [position.coords.latitude, position.coords.longitude],
-                                destination: [ scope.ll.lat,  scope.ll.lng],
-                                travelMode: 'driving',
-                                strokeColor: '#131540',
-                                strokeOpacity: 0.6,
-                                strokeWeight: 6
-                            });
+                              var location =  function(){
+                                map.removeMarkers();
 
-                            map.travelRoute({
-                                origin: [position.coords.latitude, position.coords.longitude],
-                                destination: [scope.ll.lat, scope.ll.lng],
-                                travelMode: 'driving',
-                                step: function(e) {
+                                map.addMarker({
+                                    lat: scope.worker.latitude,
+                                    lng: scope.worker.longitude,
+                                    icon:'img/icon/waitingMaker.png'
 
-                                    scope.ll.duration = parseInt(scope.ll.duration) + parseInt(e.duration.value);
-                                    scope.ll.distance = parseInt(scope.ll.distance) + parseInt(e.distance.value);
-                                    console.log(e)
+                                });
+
+                                GMaps.geolocate({
+                                    success: function(position) {
+                                        map.setCenter(position.coords.latitude, position.coords.longitude);
+                                        map.addMarker({
+                                            lat: position.coords.latitude,
+                                            lng: position.coords.longitude,
+                                            icon:'img/icon/ambulance.png'
+                                        });
+
+                                        map.drawRoute({
+                                            origin: [position.coords.latitude, position.coords.longitude],
+                                            destination: [ scope.worker.latitude,  scope.worker.longitude],
+                                            travelMode: 'driving',
+                                            strokeColor: '#131540',
+                                            strokeOpacity: 0.6,
+                                            strokeWeight: 6
+                                        });
+
+                                        map.travelRoute({
+                                            origin: [position.coords.latitude, position.coords.longitude],
+                                            destination: [scope.worker.latitude, scope.worker.longitude],
+                                            travelMode: 'driving',
+                                            step: function(e) {
+
+                                                scope.ll.duration = parseInt(scope.ll.duration) + parseInt(e.duration.value);
+                                                scope.ll.distance = parseInt(scope.ll.distance) + parseInt(e.distance.value);
+                                                console.log(e)
+                                            }
+                                        });
+                                    },
+                                    error: function(error) {
+                                        alert('Geolocation failed: '+error.message);
+                                    },
+                                    not_supported: function() {
+                                        alert("Your browser does not support geolocation");
+                                    }
+                                });
+                            };
+
+                            // scope.$watch('lstPatient',function(newval,oldval){
+                            //     if(newval!== null){
+                            //         location();
+                            //     }
+                            // });
+
+                            map.addControl({
+                                position:'RIGHT_CENTER',
+                                content:'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABHklEQVRYw+2XvQqDMBDHbR2c3AWhpXNfwofppLOTkNdxdi4dSl/FBxC7xSGe8A8cRahfNFfw4Dd4Jrm75HJJPO/PJQDOpAG7A04kJFoQ/srolVDEi+gIAzroFNpsLj5REJoZrYkK1Eyv0dbfyniM6IbB30RGRCPtBl2KJTHoE28RuTX+JC5s/RMiBwnLgzPxYE6smomCGT9Cd2NRclr8G+RA3KEv1iScxrTbyMsRw5+UaHuCU3ppYioMmLHIzUTsTKT4VkscsGsfsT0/1QFbGyKWC7OLTIft5SHJzEwS9K0xVvjtVGsYNtoK//MFDuToW7FZ4TYCUQ44XwJxSShiGzovRM5LsYjDyPlxLOJCIuJKJuZSur8LxDng/HG6WnqF5QpMmxbHKwAAAABJRU5ErkJgggcc54fda4e11ef33e15a873a4d4da3cfe"/>',
+                                events:{
+                                    click: function(){
+                                        location();
+
+                                    }
                                 }
                             });
-                        },
-                        error: function(error) {
-                            alert('Geolocation failed: '+error.message);
-                        },
-                        not_supported: function() {
-                            alert("Your browser does not support geolocation");
-                        }
-                    });
-                };
 
-                scope.$watch('lstPatient',function(newval,oldval){
-                    if(newval!== null){
-                        location();
-                    }
-                });
 
-                map.addControl({
-                    position:'RIGHT_CENTER',
-                    content:'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABHklEQVRYw+2XvQqDMBDHbR2c3AWhpXNfwofppLOTkNdxdi4dSl/FBxC7xSGe8A8cRahfNFfw4Dd4Jrm75HJJPO/PJQDOpAG7A04kJFoQ/srolVDEi+gIAzroFNpsLj5REJoZrYkK1Eyv0dbfyniM6IbB30RGRCPtBl2KJTHoE28RuTX+JC5s/RMiBwnLgzPxYE6smomCGT9Cd2NRclr8G+RA3KEv1iScxrTbyMsRw5+UaHuCU3ppYioMmLHIzUTsTKT4VkscsGsfsT0/1QFbGyKWC7OLTIft5SHJzEwS9K0xVvjtVGsYNtoK//MFDuToW7FZ4TYCUQ44XwJxSShiGzovRM5LsYjDyPlxLOJCIuJKJuZSur8LxDng/HG6WnqF5QpMmxbHKwAAAABJRU5ErkJgggcc54fda4e11ef33e15a873a4d4da3cfe"/>',
-                    events:{
-                        click: function(){
                             location();
-
                         }
-                    }
                 });
+                };
+                createMap();
+                
+                
+               
 
-
-                location();
+              
 
             }
         }

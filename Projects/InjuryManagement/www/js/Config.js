@@ -975,8 +975,8 @@ var COUNTRY_LIST = [
 angular.module('app.config', [])
 
     .constant('HOST_CONFIG', {
-        //'host':'testapp.redimed.com.au',
-        'host':'192.168.133.17',
+        'host':'testapp.redimed.com.au',
+        //'host':'192.168.133.10',
         'port':'3000'
     })
 
