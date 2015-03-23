@@ -1210,4 +1210,38 @@ table.timetable-table td:last-child {
     line-height: normal;
 }
 /*end tooltipster*/
+/*tr chevron*/
+
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-up:hover,
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-down:hover {
+    color: #31c0be;
+    cursor: pointer;
+}
+
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-up.active,
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-down.active {
+    color: #31c0be;
+}
+
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-up {
+    top: -3px;
+    left: 1px;
+}
+
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-down {
+    top: 7px;
+    left: -15px;
+}
+
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-up:hover,
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-down:hover {
+    color: #31c0be;
+    cursor: pointer;
+}
+
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-up.active,
+.table-dynamic .table-bordered tbody tr .glyphicon-chevron-down.active {
+    color: #31c0be;
+}
+/*end tr chevron*/
 /*end css custom by thanh*/

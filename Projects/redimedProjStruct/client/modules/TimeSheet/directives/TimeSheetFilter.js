@@ -14,7 +14,7 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
                         minute = "0" + minute;
                     }
                     var result = hour + ":" + minute;
-                    return result;
+                    return result.substring(0, 5);
                 }
             } else return time_charge;
 
@@ -24,5 +24,25 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
         return function(input) {
             var DateInput = new Date(input.toString());
             return DateInput.getDate();
+        };
+    })
+    .filter('readMore', function() {
+        return function(input) {
+            if (input !== undefined && input !== null && input !== "") {
+                return ({
+                    check: input.length > 195,
+                    value: input.substring(0, 195)
+                });
+            } else return "";
+        };
+    })
+    .filter('readMoreSelected', function() {
+        return function(input) {
+            if (input !== undefined && input !== null && input !== "") {
+                return ({
+                    check: input.length > 120,
+                    value: input.substring(0, 120)
+                });
+            } else return "";
         };
     });

@@ -106,7 +106,6 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
         $scope.deleteDept = function(idDept) {
             swal({
                 title: "Are you sure?",
-                text: "This user will lost in list !",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

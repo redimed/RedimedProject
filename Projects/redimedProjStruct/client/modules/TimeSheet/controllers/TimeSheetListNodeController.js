@@ -341,7 +341,6 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
             //JQUERY CONFIRM
             swal({
                 title: "Are you sure?",
-                text: "This user will lost in list !",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

@@ -11,7 +11,7 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
+            <a ui-sref="loggedIn.TimeSheetHome">Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -165,4 +165,7 @@
 </div>
 <script type="text/ng-template" id="ViewTask">
     <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+</script>
+<script type="text/ng-template" id="ItemCode">
+    <item-code ng-model="items" on-cancel="clickCancel(return)" on-save="clickSave(return)"></item-code>
 </script>

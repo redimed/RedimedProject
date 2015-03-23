@@ -287,56 +287,75 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         }
 
-        $scope.chooseItem = function(task,index)
-        {
-            var modalInstance = $modal.open({
-                templateUrl: "modules/staff/views/itemModal.html",
-                controller:'ItemController',
-                size:'lg',
-                resolve: {
-                    itemArr: function(){
-                        return task.item.length > 0  ? task.item : null;
-                    },
-                    isView: function(){
-                        return false;
+    //CHOOSE ITEM THANH
+    $scope.chooseItem = function(task, index) {
+        var modalInstance = $modal.open({
+            templateUrl: "ItemCode",
+            controller: function($scope) {
+                $scope.items = angular.copy(task);
+                //get time_char format double
+                $scope.getFortMatTimeTemp = function(time_charge) {
+                    if (time_charge) {
+                        var hour = parseInt(time_charge.substring(0, 2));
+                        var minute = parseInt(time_charge.substring(2, 4));
+                        return hour + (minute / 60);
                     }
-                }
-            })
+                };
+                // end get time_char format double
 
-            modalInstance.result.then(function(obj){
-                if(obj.type == "ok")
-                {
-                    // console.log(obj.value);
-                    var list = [];
-                    list = obj.value;
-                    task.item = list;
+                //click cancel
+                $scope.clickCancel = function() {
+                    modalInstance.close({
+                        type: "cancel"
+                    });
+                };
+                //end click cancel
 
-                    if(list.length > 0)
-                    {
-                        var t = [];
-                        var c = 0;
-                        for(var i=0; i < list.length; i++)
-                        {
-                            if(list[i].isAction != 'delete'){
-                                t.push(list[i].ITEM_ID);
-                                c = c + list[i].time_temp;
-                            }
+                //click save
+                $scope.clickSave = function(info) {
+                    if (info !== undefined) {
+                        for (var i = 0; i < info.length; i++) {
+                            info[i].time_temp = StaffService.getFortMatTimeTemp(info[i].time_charge);
+
                         }
-                        task.task = t.join(' , ');
-                        task.time_charge = StaffService.getFortMatTimeCharge(c);
-                        $scope.changeTimeCharge(task);
                     }
-                    else
-                    {
-                        task.task =  null;
-                        task.time_charge = null;
-                    }
+                    modalInstance.close({
+                        type: "ok",
+                        value: info
+                    });
+                };
+                //end click save
+            },
+            size: 'lg',
+        });
 
+        modalInstance.result.then(function(obj) {
+            if (obj.type == "ok") {
+                var list = [];
+                list = obj.value;
+                task.item = list;
+
+                if (list.length > 0) {
+                    var t = [];
+                    var c = 0;
+                    for (var i = 0; i < list.length; i++) {
+                        t.push(list[i].ITEM_ID);
+                        c = c + list[i].time_temp;
+                    }
+                    task.task = t.join(' , ');
+                    task.time_charge = StaffService.getFortMatTimeCharge(c);
                     $scope.changeTimeCharge(task);
+                } else {
+                    task.task = null;
+                    task.time_charge = null;
                 }
-                
-            })
-        }
+
+                $scope.changeTimeCharge(task);
+            }
+
+        });
+    };
+    //END CHOOSE ITEM THANH
 
         $scope.setCalendarToToday = function() {
             $scope.calendarDay = new Date();
@@ -354,125 +373,125 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         
     })
 
-.controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr,isView){
+// .controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr,isView){
 
-        $scope.itemSearchPanel = {}
+//         $scope.itemSearchPanel = {}
 
-        $scope.isView = isView;
+//         $scope.isView = isView;
 
-        $scope.onlyNumbers = /^\d+$/;
+//         $scope.onlyNumbers = /^\d+$/;
 
-        $scope.itemList = [];
+//         $scope.itemList = [];
 
-        if(itemArr != null)
-        {
-            $scope.itemList = angular.copy(itemArr);
-        }
+//         if(itemArr != null)
+//         {
+//             $scope.itemList = angular.copy(itemArr);
+//         }
 
-        $scope.itemObj = 
-        {
-            ITEM_ID: null,
-            ITEM_NAME: null,
-            quantity: null,
-            time_charge: '0000',
-            time_temp: 0,
-            comment: null
-        }
+//         $scope.itemObj = 
+//         {
+//             ITEM_ID: null,
+//             ITEM_NAME: null,
+//             quantity: null,
+//             time_charge: '0000',
+//             time_temp: 0,
+//             comment: null
+//         }
 
-         $scope.cancel = function(){
-            $modalInstance.close({type:"cancel"});
-        }
+//          $scope.cancel = function(){
+//             $modalInstance.close({type:"cancel"});
+//         }
 
-        $scope.okClick = function(){
-            for(var i=0; i<$scope.itemList.length;i++)
-            {
-                $scope.itemList[i].time_temp = StaffService.getFortMatTimeTemp($scope.itemList[i].time_charge);
-            }
-            $modalInstance.close({type:"ok",value:$scope.itemList});
-        }
+//         $scope.okClick = function(){
+//             for(var i=0; i<$scope.itemList.length;i++)
+//             {
+//                 $scope.itemList[i].time_temp = StaffService.getFortMatTimeTemp($scope.itemList[i].time_charge);
+//             }
+//             $modalInstance.close({type:"ok",value:$scope.itemList});
+//         }
 
-         $scope.delItem = function(index){
-            swal({
-                title: "Are you sure?",
-                text: "This item will delete from the list !",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function() {
-                if($scope.itemList[index].isAction == 'insert')
-                    $scope.itemList.splice(index,1);
-                else if($scope.itemList[index].isAction == 'update')
-                    $scope.itemList[index].isAction = 'delete';
-            })
-        }
+//          $scope.delItem = function(index){
+//             swal({
+//                 title: "Are you sure?",
+//                 text: "This item will delete from the list !",
+//                 type: "warning",
+//                 showCancelButton: true,
+//                 confirmButtonColor: "#DD6B55",
+//                 confirmButtonText: "Yes",
+//                 closeOnConfirm: true
+//             }, function() {
+//                 if($scope.itemList[index].isAction == 'insert')
+//                     $scope.itemList.splice(index,1);
+//                 else if($scope.itemList[index].isAction == 'update')
+//                     $scope.itemList[index].isAction = 'delete';
+//             })
+//         }
 
-       $scope.itemSearch = {
-            is_show: false,
-            itemPerPage: 10,
-            click: function(item) {
-                if($scope.itemList.length > 0)
-                {
-                    var isExist = false;
-                    for(var i=0; i<$scope.itemList.length; i++)
-                    {
-                        if(item.ITEM_ID == $scope.itemList[i].ITEM_ID)
-                        {
-                            isExist = true;
-                            $scope.itemList[i].quantity = parseInt($scope.itemList[i].quantity) + 1;
-                        }
-                    }
+//        $scope.itemSearch = {
+//             is_show: false,
+//             itemPerPage: 10,
+//             click: function(item) {
+//                 if($scope.itemList.length > 0)
+//                 {
+//                     var isExist = false;
+//                     for(var i=0; i<$scope.itemList.length; i++)
+//                     {
+//                         if(item.ITEM_ID == $scope.itemList[i].ITEM_ID)
+//                         {
+//                             isExist = true;
+//                             $scope.itemList[i].quantity = parseInt($scope.itemList[i].quantity) + 1;
+//                         }
+//                     }
 
-                    if(!isExist)
-                    {
-                        $scope.itemObj = 
-                        {
-                            ITEM_ID: item.ITEM_ID,
-                            ITEM_NAME: item.ITEM_NAME,
-                            quantity: 1,
-                            time_charge: 0,
-                            comment: null,
-                            isAction : 'insert'
-                        }
+//                     if(!isExist)
+//                     {
+//                         $scope.itemObj = 
+//                         {
+//                             ITEM_ID: item.ITEM_ID,
+//                             ITEM_NAME: item.ITEM_NAME,
+//                             quantity: 1,
+//                             time_charge: 0,
+//                             comment: null,
+//                             isAction : 'insert'
+//                         }
 
-                        $scope.itemList.push($scope.itemObj);
-                    }
-                }
-                else
-                {
-                    $scope.itemObj = 
-                    {
-                        ITEM_ID: item.ITEM_ID,
-                        ITEM_NAME: item.ITEM_NAME,
-                        quantity: 1,
-                        time_charge: 0,
-                        comment: null,
-                        isAction : 'insert'
-                    }
+//                         $scope.itemList.push($scope.itemObj);
+//                     }
+//                 }
+//                 else
+//                 {
+//                     $scope.itemObj = 
+//                     {
+//                         ITEM_ID: item.ITEM_ID,
+//                         ITEM_NAME: item.ITEM_NAME,
+//                         quantity: 1,
+//                         time_charge: 0,
+//                         comment: null,
+//                         isAction : 'insert'
+//                     }
 
-                    $scope.itemList.push($scope.itemObj);
-                }
+//                     $scope.itemList.push($scope.itemObj);
+//                 }
 
-            }
-        }
+//             }
+//         }
 
-        $scope.itemSearchOption = {
-            api:'api/staff/items',
-            method:'post',
-            scope: $scope.itemSearchPanel,
-            columns: [
-                {field: 'ITEM_ID', label: 'Item ID', width:"10%"},
-                {field: 'ITEM_NAME', label: 'Item Name'},
-            ],
-            use_filters:true,
-            filters:{
-                ITEM_ID: {type: 'text'},
-                ITEM_NAME: {type: 'text'}
-            }
-        }
+//         $scope.itemSearchOption = {
+//             api:'api/staff/items',
+//             method:'post',
+//             scope: $scope.itemSearchPanel,
+//             columns: [
+//                 {field: 'ITEM_ID', label: 'Item ID', width:"10%"},
+//                 {field: 'ITEM_NAME', label: 'Item Name'},
+//             ],
+//             use_filters:true,
+//             filters:{
+//                 ITEM_ID: {type: 'text'},
+//                 ITEM_NAME: {type: 'text'}
+//             }
+//         }
 
-    })
+//     })
 
     
 
