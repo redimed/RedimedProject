@@ -87,6 +87,148 @@ module.exports = {
 
     },
 
+    editTask: function(req,res)
+    {
+        var allTask = req.body.allTask;
+         db.timeTasks.max('tasks_id')
+            .success(function(id){
+                var tId = id;
+                for(var i=0; i<allTask.length;i++){
+                    tId = tId + 1;
+                    if(allTask[i].isAction == 'update'){
+                        chainer.add(
+                            db.timeTasks.update({
+                                "department_code_id" : allTask[i].department_code_id,
+                                "task" : allTask[i].task,
+                                "date": allTask[i].date,
+                                "location_id" : allTask[i].location_id,
+                                "activity_id" : allTask[i].activity_id,
+                                "time_charge" : allTask[i].time_temp
+                            },{tasks_id : allTask[i].tasks_id})
+                        )
+
+                        var taskId = allTask[i].tasks_id;
+
+                        if(allTask[i].item.length > 0)
+                        {
+                             for(var j=0;j<allTask[i].item.length; j++)
+                            {
+                                var a = allTask[i].item[j];
+                                if(a.isAction == 'insert')
+                                {
+                                    chainer.add(
+                                        db.TimeItemTask.create({
+                                            task_id: taskId,
+                                            item_id: a.ITEM_ID,
+                                            quantity: a.quantity,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment
+                                        })
+                                    )
+                                }
+                                else if(a.isAction == 'update')
+                                {
+                                    chainer.add(
+                                        db.TimeItemTask.update({
+                                            quantity: a.quantity,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment
+                                        },{task_id: taskId, item_id: a.ITEM_ID})
+                                    )
+                                }
+                                else if(a.isAction == 'delete')
+                                {
+                                    chainer.add(
+                                        db.TimeItemTask.update({
+                                            'deleted' : 1
+                                        },{item_id:a.ITEM_ID, task_id: taskId})
+                                    )
+                                }
+                            }
+                        }
+
+                    }else if(allTask[i].isAction == 'insert'){
+                        
+                        chainer.add(
+                            db.timeTasks.create({
+                                tasks_id : tId,
+                                "tasks_week_id" : allTask[i].task_week_id,
+                                "department_code_id" : allTask[i].department_code_id,
+                                "task" : allTask[i].task,
+                                "order": allTask[i].order,
+                                "date": moment(allTask[i].date).format('YYYY-MM-DD'),
+                                "location_id" : allTask[i].location_id,
+                                "activity_id" : allTask[i].activity_id,
+                                "time_spent" : allTask[i].time_spent,
+                                "time_charge" : allTask[i].time_temp
+                            })
+                        )
+
+
+
+                        if(allTask[i].item.length > 0)
+                        {
+                             for(var j=0;j<allTask[i].item.length; j++)
+                            {
+                                var a = allTask[i].item[j];
+                                chainer.add(
+                                    db.TimeItemTask.create({
+                                        task_id: tId,
+                                        item_id: a.ITEM_ID,
+                                        quantity: a.quantity,
+                                        time_charge: a.time_temp,
+                                        comment: a.comment
+                                    })
+                                )
+                                
+                            }
+                        }
+
+                    }else if(allTask[i].isAction == 'delete'){
+                        chainer.add(
+                            db.timeTasks.update({
+                                "deleted" : 1
+                            },{tasks_id : allTask[i].tasks_id})
+                        )
+
+                        var taskId = allTask[i].tasks_id;
+
+                        if(allTask[i].item.length > 0)
+                        {
+                             for(var j=0;j<allTask[i].item.length; j++)
+                            {
+                                var a = allTask[i].item[j];
+                                
+                                chainer.add(
+                                    db.TimeItemTask.update({
+                                        'deleted' : 1
+                                    },{item_id:a.ITEM_ID, task_id: taskId})
+                                )
+                                
+                            }
+                        }
+                    }
+                }
+                chainer.add(
+                    db.timeTaskWeek.update({
+                        time_charge: info.time_temp,
+                        task_status_id : info.statusID
+                    },{tasks_id : allTask[i].tasks_id})
+                )
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+
+        chainer.runSerially().success(function(){
+            res.json({status:'success'});
+        }).error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
+   },
+
     getItemList: function(req,res)
     {
         var limit = (req.body.limit) ? req.body.limit : 10;
@@ -116,51 +258,7 @@ module.exports = {
         });
     },
 
-    editTask: function(req,res)
-    {
-        var allTask = req.body.allTask;
-
-        for(var i=0; i<allTask.length;i++){
-            if(allTask[i].isAction == 'update'){
-                chainer.add(
-                    db.timeTasks.update({
-                        "department_code_id" : allTask[i].department_code_id,
-                        "task" : allTask[i].task,
-                        "date": allTask[i].date,
-                        "location_id" : allTask[i].location_id,
-                        "activity_id" : allTask[i].activity_id,
-                        "time_charge" : allTask[i].time_charge
-                    },{tasks_id : allTask[i].tasks_id})
-                )
-            }else if(allTask[i].isAction == 'insert'){
-                chainer.add(
-                    db.timeTasks.create({
-                        "tasks_week_id" : allTask[i].task_week_id,
-                        "department_code_id" : allTask[i].department_code_id,
-                        "task" : allTask[i].task,
-                        "order": allTask[i].order,
-                        "date": moment(allTask[i].date).format('YYYY-MM-DD'),
-                        "location_id" : allTask[i].location_id,
-                        "activity_id" : allTask[i].activity_id,
-                        "time_spent" : allTask[i].time_spent,
-                        "time_charge" : allTask[i].time_charge
-                    })
-                )
-            }else if(allTask[i].isAction == 'delete'){
-                chainer.add(
-                    db.timeTasks.update({
-                        "deleted" : 1
-                    },{tasks_id : allTask[i].tasks_id})
-                )
-            }
-        }
-        chainer.runSerially().success(function(){
-            res.json({status:'success'});
-        }).error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
-   },
+    
 
     getDepartmentLocation: function(req,res)
     {
@@ -233,6 +331,27 @@ module.exports = {
                             res.json({status:'error'});
                             console.log(err);
                         })
+                }
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+
+    showDetailDate: function(req,res){
+        var info = req.body.info;
+        db.sequelize.query("SELECT t.`date`,a.`type_activity_id` AS activity_id,t.`time_charge` FROM" + 
+         " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" + 
+        " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0",null, {raw: true},[info])
+            .success(function (tasks) {
+                if (tasks === null || tasks.length === 0) {
+                    console.log("Not found tasks in table");
+                    res.json({status: 'fail'});
+                    return false;
+                }else
+                {
+                    res.json({status: 'success',data: tasks});
                 }
             })
             .error(function(err){
@@ -317,12 +436,13 @@ module.exports = {
     getTask: function(req,res)
     {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT t.`tasks_id`,t.`date`,l.`NAME` AS location,d.`departmentName` AS department, "
-         + " a.`NAME` AS activity,t.`time_charge`,t.`task` FROM `time_tasks` t " +
-         "LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` "+
-         "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id` " +
-         "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id` " +
-          " WHERE t.`tasks_week_id` = ? ORDER BY t.`tasks_id`",null,{raw:true},[idWeek])
+        db.sequelize.query("SELECT t.`tasks_id`,t.`date`,l.`NAME` AS location,d.`departmentName` AS department," +
+         "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
+         "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid`" +
+          "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" + 
+          "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
+          "LEFT JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id`" +
+          "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (i.`deleted` = 0 OR i.`deleted` IS NULL)  ORDER BY t.`tasks_id`",null,{raw:true},[idWeek])
             .success(function(data){
                 if (data === null || data.length === 0) {
                     console.log("Not found tasks in table");
@@ -330,24 +450,7 @@ module.exports = {
                     return false;
                 }else
                 {
-                    db.sequelize.query("SELECT t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " + 
-                        "i.`time_charge` FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` " + 
-                         "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id` WHERE " + 
-                         "t.`tasks_week_id` = ?",null,{raw:true},[idWeek])
-                    .success(function(item){
-                        if (item === null || item.length === 0) {
-                            console.log("Not found item in table");
-                            res.json({status: 'fail'});
-                            return false;
-                        }else
-                        {
-                            res.json({status:'success',data:data,item: item});
-                        }
-                    })
-                    .error(function(err){
-                        res.json({status:'error'});
-                        console.log(err);
-                    })
+                    res.json({status:'success',data:data});
                 }
             })
             .error(function(err){

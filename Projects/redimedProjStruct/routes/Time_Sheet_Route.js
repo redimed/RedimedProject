@@ -27,7 +27,6 @@ app.post("/api/TimeSheet/post-dept-update", TimeSheet.UpdateDept);
 
 //VIEW APPROVED TIMESHEETS
 app.post("/api/TimeSheet/post-one-approved", TimeSheet.ViewApproved);
-app.post("/api/TimeSheet/post-item-list", TimeSheet.ViewItem);
 //END VIEW APPROVED TIMESHEETS
 
 //APPROVE TIMESHEET
@@ -36,6 +35,15 @@ app.post("/api/TimeSheet/post-reject-taskweek", TimeSheet.RejectTaskWeek);
 app.post("/api/TimeSheet/post-approve-taskweek", TimeSheet.ApproveTaskWeek);
 //END APPROVE TIMSHEET
 
+//VIEW DETAIL TIMESHEET
+app.post("/api/TimeSheet/post-detail-one", TimeSheet.ViewOnDate);
+app.post("/api/TimeSheet/post-detail-all", TimeSheet.ViewAllDate);
+//END VIEW DETAIL TIMESHEET
+
 //ROLE
 app.post("/api/TimeSheet/post-role-one", TimeSheet.LoadRole);
 //END ROLE
+
+//ITEM CODE
+app.post("/api/TimeSheet/post-itemcode-list", TimeSheet.LoadItemCode);
+//END ITEM CODE

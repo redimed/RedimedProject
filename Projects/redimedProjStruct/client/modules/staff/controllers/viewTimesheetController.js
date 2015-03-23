@@ -27,7 +27,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             if (response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'no task') {
-                toastr.error("no task", "Error");
+                $scope.list.result = [];
             } else {
                 $scope.list.result = response;
                 $scope.list.count = response.length;
@@ -99,56 +99,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.calendarDay = new Date();
 
-    $scope.delTask = function(index) {
-        $scope.tasks.splice(index, 1);
-    }
-
-    $scope.addAllTask = function() {
-        if (!$scope.isEdit) {
-            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-            StaffService.addAllTask($scope.tasks, startWeek, endWeek).then(function(response) {
-                if (response['status'] == 'success') {
-                    toastr.success("success", "Success");
-                    $state.go('loggedIn.staff.list', null, {
-                        'reload': true
-                    });
-                } else {
-                    toastr.error("Error", "Error");
-                }
-            })
-        } else {
-            StaffService.editTask($scope.tasks).then(function(response) {
-                if (response['status'] == 'success') {
-                    toastr.success("Edit Success");
-                    $state.go('loggedIn.staff.list', null, {
-                        'reload': true
-                    });
-                } else {
-                    toastr.error("Error", "Error");
-                }
-            })
-        }
-    }
-
-    $scope.changeDate = function(dateWeekFrom) {
-
-        if (dateWeekFrom === '') {
-            $scope.list.result = angular.copy($scope.listTemp);
-        } else {
-            $scope.list.result = [];
-
-            for (var i = 0; i < $scope.listTemp.length; i++) {
-                var rs = $scope.listTemp[i];
-                var sDate = $filter('date')(rs.start_date, "dd-MM-yyyy");
-
-                if (dateWeekFrom === sDate) {
-                    $scope.list.result.push(rs);
-                }
-            }
-        }
-
-    }
 
     $scope.orderWeek = function(type) {
         if (type == 'desc') {
@@ -170,49 +120,34 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     }
 
     $scope.view = function(item) {
-        console.log(item);
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/editTimesheet.html",
-            controller: "EditTimesheetController",
+            templateUrl: "modules/staff/views/viewTimesheetByHour.html",
+            controller: "ViewTimesheetByHourController",
             size: 'lg',
             resolve: {
-                idWeek: function() {
-                    return item.task_week_id;
+                infoWeek: function() {
+                    return item;
                 }
             }
         })
     }
-    $scope.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge === 0 || time_charge === null || time_charge === "" || time_charge === undefined) {
-            return "00:00";
-        } else {
-            var hour = parseInt(time_charge);
-            var minute = (time_charge - hour) * 60;
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            var result = hour + ":" + minute;
-            result = result.substring(0, result.length);
-            return result;
-        }
-    };
+    
 
     StaffService.showWeek();
 })
 
-.controller("EditTimesheetController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, idWeek) {
+.controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr,infoWeek) {
     if (!$scope.tasks) {
         $scope.tasks = [];
     }
 
-    $scope.itemList = [];
-
-    if (!$scope.info) {
-        $scope.info = {};
+    $scope.getDay = function(day){
+        var date = new Date(day);
+       return date.getDay() == 0 ? 7 : date.getDay();
     }
+
+    $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
+    $scope.week = infoWeek;
 
     $scope.cancelClick = function() {
         $modalInstance.close();
@@ -221,111 +156,32 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.okClick = function() {
         $modalInstance.close();
         $state.go('loggedIn.timesheet.create', {
-            id: idWeek
+            id: infoWeek.task_week_id
         });
     }
 
-    $scope.calendarDay = new Date();
-    $scope.info.userID = $cookieStore.get("userInfo").id;
-
-    var startWeek, endWeek;
-
-    $scope.task = {
-        order: null,
-        task: null,
-        date: null,
-        department_code_id: null,
-        location_id: null,
-        activity_id: null,
-        time_charge: null,
-        btnTitle: "Choose Item"
-    };
-
-    $scope.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge === 0) {
-            return "00:00";
-        } else {
-            var hour = parseInt(time_charge);
-            var minute = (time_charge - hour) * 60;
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            var result = hour + ":" + minute;
-            result = result.substring(0, result.length);
-            return result;
-        }
-    };
-
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
-        StaffService.getTask(idWeek).then(function(response) {
+        StaffService.getTask(infoWeek.task_week_id).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
                 // $state.go('loggedIn.home', null, {'reload': true});
             } else if (response['status'] == 'success') {
-
-                angular.forEach(response['data'], function(data) {
-                    data.item = [];
-                    data.time_charge = $scope.getFortMatTimeCharge(data.time_charge);
-                    angular.forEach(response['item'], function(item) {
-                        if (data.tasks_id == item.tasks_id) {
-                            item.time_charge = $scope.getFortMatTimeCharge(item.time_charge);
-                            data.item.push(item);
-                        }
-                    })
-                })
-                $scope.tasks = response['data'];
+                if(infoWeek.date != 'full'){
+                    $scope.one = true;
+                    $scope.tasks = _.filter(response['data'], function(data) {
+                    return data.date == infoWeek.date;
+                    });
+                }else{
+                    $scope.one = false;
+                    $scope.tasks = response['data'];
+                }
             }
         })
         $scope.tasks.loading = false;
     }
 
     $scope.loadInfo();
-
-    $scope.delTask = function(index, order) {
-        if (order != 1) {
-            swal({
-                title: "Are you sure?",
-                text: "This task will lost in list !",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function() {
-                if ($scope.tasks[index].isAction == 'update') {
-                    $scope.tasks[index].isAction = 'delete';
-                } else {
-                    $scope.tasks.splice(index, 1);
-                }
-            })
-        }
-    }
-
-    $scope.addRow = function(index, date, weekID) {
-        var j = 0;
-        for (var i = index; i < $scope.tasks.length; i++) {
-            if ($scope.tasks[i].date == date) {
-                j++;
-            }
-        }
-        task = {
-            order: 1 + j,
-            task: null,
-            date: date,
-            task_week_id: weekID,
-            department_code_id: null,
-            location_id: null,
-            activity_id: null,
-            time_charge: null,
-            isAction: 'insert',
-            btnTitle: "Choose Item"
-        };
-        $scope.tasks.splice(index + j, 0, task);
-    }
 
     $scope.chooseItem = function(item) {
         var modalInstance = $modal.open({
@@ -340,6 +196,80 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 },
                 isView: function() {
                     return true;
+                }
+            }
+        });
+    }
+})
+
+.controller("ViewTimesheetByHourController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, infoWeek) {
+    if (!$scope.tasks) {
+        $scope.tasks = [];
+    }
+
+    if (!$scope.info) {
+        $scope.info = {};
+    }
+
+    $scope.cancelClick = function() {
+        $modalInstance.close();
+    }
+
+    $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
+    $scope.week = infoWeek;
+
+    
+
+    $scope.loadInfo = function() {
+        $scope.tasks.loading = true;
+        StaffService.showDetailDate(infoWeek.task_week_id).then(function(response) {
+            if (response['status'] == 'fail' || response['status'] == 'error') {
+                toastr.error("Error", "Error");
+            } else if (response['status'] == 'success') {
+                $scope.tasks = _.chain(response['data'])
+                    .groupBy("date")
+                    .map(function(value, key) {
+                        return _.object(_.zip(["date", "rows"], [key,_.chain(value)
+                            .groupBy("activity_id")
+                            .map(function(value1, activity_id) {
+                                var time_charge = _.reduce(value1, function(result, currentObject) {
+                                    return result.time_charge + currentObject.time_charge;})
+                                if(typeof time_charge ==  'object'){
+                                    time_charge = time_charge.time_charge;
+                                }
+                                return _.object(_.zip(["activity_id", "time_charge"], [activity_id, time_charge]));
+                            })
+                            .value()]
+                            )) 
+                    })
+                    .value();
+                var sum = 0;
+                angular.forEach($scope.tasks, function(data) {
+                    data.arrActivity = ['00:00','00:00','00:00','00:00','00:00'];
+                    sum = 0;
+                    angular.forEach(data.rows, function(row) {
+                        sum = sum + row.time_charge;
+                        row.time_charge = $StaffService.getFortMatTimeCharge(row.time_charge);
+                        data.arrActivity[row.activity_id - 1] = row.time_charge;
+                    })
+                    data.total = $scope.getFortMatTimeCharge(sum);
+                })
+            }
+        })
+        $scope.tasks.loading = false;
+    }
+
+    $scope.loadInfo();
+
+    $scope.viewDetailDate = function(infoWeek,date) {
+        var modalInstance = $modal.open({
+            templateUrl: "modules/staff/views/viewDetail.html",
+            controller: 'ViewDetailController',
+            size: 'lg',
+            resolve: {
+                infoWeek: function() {
+                    infoWeek.date = date;
+                    return infoWeek;
                 }
             }
         });

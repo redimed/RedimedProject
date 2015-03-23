@@ -1,0 +1,156 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form" name="formItemCode">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>Choose Item Codes
+            </legend>
+            <!-- TABLE ITEM BEEN SELECTED-->
+            <div data-row-span="12">
+                <div class="panel-body table-dynamic">
+                    <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                    </center>
+                    <span class="bold" style="margin-left:3px;">Selected Item Codes<span>
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
+                        <thead ng-show="list.result!==null">
+                            <tr>
+                                <th style="background-color:#26a69a;width:10%;">
+                                    <div class="th">
+                                        Item code
+                                    </div>
+                                </th>
+                                <th style="background-color:#26a69a;width:57%;">
+                                    <div class="th">
+                                        Description
+                                    </div>
+                                </th>
+                                 <th style="background-color:#26a69a;width:10%;">
+                                    <div class="th">
+                                        Quantity
+                                    </div>
+                                </th>
+                                <th style="background-color:#26a69a;width:10%;">
+                                    <div class="th">
+                                        Time charge
+                                    </div>
+                                </th>
+                                <th style="background-color:#26a69a;width:10%;">
+                                    <div class="th">
+                                        Tasks/Comments
+                                    </div>
+                                </th>
+                                <th style="background-color:#26a69a;">
+                                    <div class="th">
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class-odd="'odd'" style="cursor: pointer; " ng-repeat="item in items">
+                                <td class="btn btn-xs">{{item.ITEM_ID}}</td>
+                                <!-- MORE -->
+                                <td style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
+                            <div ng-if="item.status===false">
+                                {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
+                            </div>
+                            <div ng-if="item.status===true">
+                                {{item.ITEM_NAME}}<a ng-click="clickShowSelected($index)">&nbsp;Close</a>
+                            </div>
+                        </td>
+                        <td style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
+                            {{(item.ITEM_NAME | readMoreSelected).value}}
+                        </td>
+                                <!-- END MORE -->
+                                <td style="text-align:center">
+                                    <div ng-class="{'error-input':formItemCode.quantity.$error.required}">
+                                    <input type="text" tabindex="5" class="input-sm form-control" ui-mask="9" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
+                                </div>
+                                </td>
+                                <td style="text-align:center">
+                                    <div ng-class="{'error-input':formItemCode.time_charge.$error.required}">
+                                    <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" custom-tr="items[$index].time_charge" custom-fr="formItemCode.time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID">
+                                </div>
+                                </td>
+                                
+                                <td style="text-align:center;">
+                                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:20px;" id="commentID">
+                                </td>
+                                <td style="text-align:center;">
+                                    <a ng-click="deleteItem($index)">
+                                        <i class="fa fa-trash pointer"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <!-- temp row-->
+                            <tr>
+                                <td><a class="btn btn-xs" style="color:#26a69a;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <!-- end temp row -->
+                        </tbody>
+                    </table>
+                    <div class="col-md-12">
+                     <a class="btn pull-right btn-xs" style="background-color:#26a69a; color:white;" ng-click="onSave({return: items})" ng-disabled="(items===undefined||items.length===0)">Save</a>
+                     <a class="btn yellow pull-right btn-xs" ng-click="onCancel({return: true})">Cancel</a>
+                 </div>
+                <!-- END ITEM BEEN SELECTED -->
+                <!-- TABLE ITEM-->
+                     <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                    </center> <span class="bold" style="margin-left:3px;">List of Item Codes<span>
+                     <a ng-click="reset()"><i class="fa fa-refresh"></i></a>
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
+                <tbody>
+                    <tr>
+                        <td class="btn btn-xs" style="text-align:left; width:5%;">
+                            <span class="glyphicon glyphicon-chevron-up" ng-click="itemCodeASC()" ng-class="{'active': searchObjectMap.order['time_item_code.ITEM_ID']==='ASC'}">
+                            </span>
+                    <span class="glyphicon glyphicon-chevron-down" ng-click="itemCodeDESC()" ng-class="{ 'active': searchObjectMap.order['time_item_code.ITEM_ID']==='DESC' } ">
+                            </span>
+                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="loadList()" style="border:1px solid #ccc; font-size:13px; width:100px;margin-left:-10px;height:20px;" placeholder="Item Code" tabindex="1" id="itemCodeID">
+                    </td>
+                    <td class="btn btn-xs" style="text-align:left;width:95%;">
+                        <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;" placeholder="Item Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
+                    </td>
+                    </tr>
+                    <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME)">
+                        <td class="btn btn-xs" style="text-align:left;width:5%;">{{l.ITEM_ID}}</td>
+                        <td style="border:1px solid #ccc; text-align:left;" ng-if="(l.ITEM_NAME | readMore).check===true">
+                            <div ng-if="l.status===false">
+                                {{(l.ITEM_NAME | readMore).value}}<a ng-click="clickShow($index)">&nbsp;&nbsp;More...</a>
+                            </div>
+                            <div ng-if="l.status===true">
+                                {{l.ITEM_NAME}}<a ng-click="clickShow($index)">&nbsp;Close</a>
+                            </div>
+                        </td>
+                        <td class="btn btn-xs" style="border:1px solid #ccc; text-align:left;width:95%;" ng-if="(l.ITEM_NAME | readMore).check===false">
+                            {{(l.ITEM_NAME | readMore).value}}
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <footer class="table-footer " ng-show="listNode.result!==null || (listNode.result.length!==0 && listNode.result!==null)">
+                        <div class="row ">
+                            <div class="col-ms-6 page-num-info ">
+                                <div class="col-md-4 col-sm-5 ">
+                                    <span class="bold custom-timesheet">Total: {{listNode.count}}</span>
+                                    <span class="custom-timesheet">Show</span>
+                                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
+                                    </select>
+                                    <span class="custom-timesheet">entries per page</span>
+                                </div>
+                                <div class="col-ms-6 text-right pagination-container ">
+                                    <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                                    <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+                <!-- END TABLE ITEM -->
+        </fieldset>
+        <!-- END MAIN INFO -->
+    </form>
+    </div>

@@ -43,3 +43,6 @@ eval(fs.readFileSync('./routes/Tree_Route.js') + '');
 
 //TimeSheet
 eval(fs.readFileSync('./routes/Time_Sheet_Route.js') + '');
+
+//Consultation
+eval(fs.readFileSync('./routes/consult_route.js') + '');

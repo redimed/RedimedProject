@@ -1,0 +1,49 @@
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-users"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">APPROVAL USER REGISTER</span>
+        </div>
+
+    </div>
+
+	<div>
+		<button type="button" class="btn btn-success" ng-click="showActionContentPopup(actions.addGroup.name);">
+			<i class="fa fa-plus"></i>
+			Add Group
+		</button>
+	</div>
+	
+	<div class="table-responsive" style="height:400px;overflow:auto;">
+
+		<table class="table table-bordered table-hover ">
+			<tr>
+				<th>User Name</th>
+				<th style="text-align:center">Enable</th>
+				<th style="text-align:center">
+
+				</th>
+			</tr>
+			<tr ng-repeat='item in usersList'>
+				<td>
+					{{item.user_name}}
+				</td>
+				<td style="text-align:center">
+					<input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
+		                   ng-checked="item.isEnable==1"
+		                   ng-model="item.isEnable"/>
+				</td>
+				<td style="text-align:center">
+					<button type='button' 
+							class='btn btn-primary btn-xs' 
+							ng-click="showActionContentPopup(actions.editGroup.name);">
+						<i class="fa fa-pencil"></i>
+						Edit
+					</button>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+

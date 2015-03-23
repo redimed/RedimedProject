@@ -40,6 +40,7 @@ angular.module("app", [
     'angular-flot',
     'irontec.simpleChat',
     'opentok',
+    'app.rlobRegister.controller',
     'opentok-whiteboard',
     'ui.mask'
 
@@ -155,7 +156,7 @@ angular.module("app", [
 })
 
 //When update any route
-.run(function(beforeUnload,$window,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
+.run(function(beforeUnload,$window,$modalStack,$cookieStore,$interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket,toastr,localStorageService){
 
    
 
@@ -242,6 +243,8 @@ angular.module("app", [
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
 
+        $modalStack.dismissAll();
+
         var locationHref = location.href;
         if (locationHref.indexOf('fromMobile=true') != -1) {
             e.preventDefault();
@@ -254,7 +257,7 @@ angular.module("app", [
         if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect") {
+            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister") {
                 e.preventDefault();
                 $state.go("security.login", null, {
                     location: "replace",

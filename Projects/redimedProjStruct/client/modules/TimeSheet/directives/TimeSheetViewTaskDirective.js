@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
-    .directive('viewTask', function(toastr, $state, TimeSheetService) {
+    .directive('viewTask', function(toastr, $state, TimeSheetService, $modal) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -22,6 +22,14 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                 toastr.error("Loading fail!", "Error");
                             } else if (response.status === "success") {
                                 scope.list = response;
+                                angular.forEach(scope.list.result, function(timeDate, indexD) {
+                                    scope.list.result[indexD].AC = [];
+                                    angular.forEach(scope.list.resultActivity, function(timeAC, indexAC) {
+                                        if (scope.list.resultActivity[indexAC].date === scope.list.result[indexD].date) {
+                                            scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].type_activity_id] = scope.list.resultActivity[indexAC].sumAC;
+                                        }
+                                    });
+                                });
                                 scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
                                 scope.statusID = scope.list.result[0].task_status_id;
                                 if (scope.list.result[0].task_status_id === 4) {
@@ -127,24 +135,36 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         }
                     }
                 };
-                scope.getFortMatTimeCharge = function(time_charge) {
-                    if (isNaN(time_charge) === false) {
-                        if (time_charge === 0 || time_charge === undefined || time_charge === null) {
-                            return "00:00";
-                        } else {
-                            var hour = parseInt(time_charge);
-                            var minute = (time_charge - hour) * 60;
-                            if (hour < 10) {
-                                hour = "0" + hour;
+    
+                var dialogViewDetail = function(ID, DATE, detailType) {
+                    var modalInstance = $modal.open({
+                        templateUrl: "ViewDetail",
+                        controller: function($scope) {
+                            if (detailType === "all-date") {
+                                //view all timesheet
+                                $scope.idView = {
+                                    ID: ID,
+                                    STATUS: "all-date"
+                                };
+                            } else if (detailType === "on-date") {
+                                //view one date timesheet
+                                $scope.idView = {
+                                    ID: ID,
+                                    DATE: DATE,
+                                    STATUS: "on-date"
+                                };
                             }
-                            if (minute < 10) {
-                                minute = "0" + minute;
-                            }
-                            var result = hour + ":" + minute;
-                            return result;
-                        }
-                    } else return time_charge;
+                            $scope.clickCancel = function(value) {
+                                modalInstance.close();
+                            };
+                        },
+                        size: "lg"
+                    });
 
+                };
+
+                scope.ViewDetail = function(ID, DATE, detailType) {
+                    dialogViewDetail(ID, DATE, detailType);
                 };
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewTask.html"

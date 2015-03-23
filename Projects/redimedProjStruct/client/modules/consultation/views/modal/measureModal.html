@@ -1,0 +1,327 @@
+<style>
+	.input-group-addon
+	{
+		padding: 0 !important;
+	}
+</style>
+
+<div class="modal-body">
+	<div class="portlet light ">
+		<div class="portlet-title tabbable-line">
+			<div class="caption">
+				<i class="fa fa-heart"></i>
+        		<span class="caption-subject bold uppercase">Measurement</span>
+			</div>
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="index.html#tab_1" data-toggle="tab">
+						Measurement 1
+					</a>
+				</li>
+				<li>
+					<a href="index.html#tab_2" data-toggle="tab">
+						Measurement 2
+					</a>
+				</li>
+				<li>
+					<a href="index.html#tab_3" data-toggle="tab">
+						Respiratory
+					</a>
+				</li>
+				<li>
+					<a href="index.html#tab_4" data-toggle="tab">
+						Ophthalmology
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="portlet-body">
+			<div class="tab-content">
+				<!-- MEASUREMENT 1 -->
+				<div class="tab-pane active" id="tab_1">
+					<div class="row">
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Date:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <label>{{today}}</label>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                       <div class="form-group">
+	                            <label class="bold control-label col-md-2 col-sm-2">BP:</label>
+	                            <div class="col-md-10 col-sm-10">
+	                            	<div class="input-group">
+										<input type="text" class="form-control">
+										<span class="input-group-addon">
+											<label class="bold">/</label>
+										</span>
+										<input type="text" class="form-control">
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Rate:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <input type="text" class="form-control" />
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                       <div class="form-group">
+	                            <select class="form-control"></select>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Height:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control">
+										<span class="input-group-addon">
+											<label>cms</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                       	<div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Weight:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control">
+										<span class="input-group-addon">
+											<label>kgs</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Excess Wt:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" disabled value="0">
+										<span class="input-group-addon">
+											<label>kgs</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">BMI:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                               <input type="text" class="form-control" disabled value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Waist:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" value="0">
+										<span class="input-group-addon">
+											<label>cms</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Ratio:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                               <input type="text" class="form-control" disabled value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Hips:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" value="0">
+										<span class="input-group-addon">
+											<label>cms</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Neck:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                               <input type="text" class="form-control" disabled value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Head Crc:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" value="0">
+										<span class="input-group-addon">
+											<label>cms</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+				</div>
+				<!-- MEASUREMENT 2 -->
+				<div class="tab-pane" id="tab_2">
+	                <div class="row">
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Cholesterol:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                       	<div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">PSA:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Tryglycerides:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                       	<div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Cretinine:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">HDL:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                       	<div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">ACR:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">LDL:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input type="text" class="form-control" value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">GFR:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" value="0">
+										<span class="input-group-addon">
+											<label>umol/l</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">BSL:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" value="0">
+										<span class="input-group-addon">
+											<label>mL/min</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">BSL:</label>
+	                            <div class="col-md-8 col-sm-8">
+	                                <div class="input-group">
+										<input type="text" class="form-control" value="0">
+										<span class="input-group-addon">
+											<label>mL/min</label>
+										</span>
+									</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+				</div>
+				<!-- Respiratory -->
+				<div class="tab-pane" id="tab_3">
+					CCCC
+				</div>
+				<!-- Ophthalmology -->
+				<div class="tab-pane" id="tab_4">
+					DDDD
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+    <a href="javascript:;" class="btn btn-danger" ng-click='cancelClick()'>Cancel</a>
+    <button type="submit" class="btn green"  >Submit</button>
+</div>

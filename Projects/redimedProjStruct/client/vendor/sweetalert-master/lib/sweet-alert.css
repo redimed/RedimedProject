@@ -12,7 +12,7 @@
 }
 .sweet-alert {
     background-color: #fff;
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /*font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
     width: 300px;
     padding: 10px;
     border-radius: 5px;
@@ -96,9 +96,9 @@
 .sweet-alert[data-has-cancel-button=false] button {
     box-shadow: none!important
 }
-.sweet-alert .icon {
+/*.sweet-alert .icon {
     width: 30px;
-    height: 30px;
+    height: 30px;`
     border: 4px solid gray;
     -webkit-border-radius: 40px;
     border-radius: 50%;
@@ -225,7 +225,7 @@
     left: -4px;
     top: -4px;
     z-index: 2
-}
+}*/
 /*DELETE LINE*/
 /*.sweet-alert .icon.success .fix {
     width: 5px;
@@ -241,17 +241,17 @@
 /*END DELETE LINE*/
 
 /*DRAW LINE */
-.sweet-alert .icon.success .line {
+/*.sweet-alert .icon.success .line {
     height: 5px;
     background-color: #A5DC86;
     display: block;
     border-radius: 2px;
     position: static;
     z-index: 2
-}
+}*/
 /*END DRAW LINE*/
 
-.sweet-alert .icon.success .line.tip {
+/*.sweet-alert .icon.success .line.tip {
     width: 25px;
     left: 14px;
     top: 46px;
@@ -271,7 +271,7 @@
     border: none;
     background-position: center center;
     background-repeat: no-repeat
-}
+}*/
 @-webkit-keyframes showSweetAlert {
     0% {
         transform: scale(.7);

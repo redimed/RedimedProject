@@ -176,6 +176,26 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 taskID: taskID
             });
         };
+        TimeSheetService.ViewOnDate = function(info) {
+            var ViewOnDate = api.all("TimeSheet/post-detail-one");
+            return ViewOnDate.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.ViewAllDate = function(info) {
+            var ViewAllDate = api.all("TimeSheet/post-detail-all");
+            return ViewAllDate.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadItemCode = function(searchObj) {
+            var LoadItemCode = api.all("TimeSheet/post-itemcode-list");
+            return LoadItemCode.post({
+                searchObj: searchObj
+            });
+        };
 
         return TimeSheetService;
     });

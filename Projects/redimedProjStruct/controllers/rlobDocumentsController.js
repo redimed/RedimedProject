@@ -8,6 +8,7 @@ var fs = require('fs');//Read js file for import into
 module.exports =
 {
     rlobUploadFile:function(req, resp) {
+        
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
         var targetFolder=prefix+'redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
         var targetFolderForSave='redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
@@ -55,7 +56,7 @@ module.exports =
                         }
 
                         req.getConnection(function(err,connection){
-                            var query=connection.query('insert into rl_booking_files set ?',fileInfo,function(err,rows){
+                            var query=connection.query('insert into rl_booking_files set ?',fileInfo,function(err,result){
                                 if (err)
                                 {
                                     console.log("Error inserting : %s ",err );
@@ -63,7 +64,23 @@ module.exports =
                                 }
                                 else
                                 {
-                                    console.log("success");
+                                    var sql=
+                                        " UPDATE `rl_booking_files` files                      "+
+                                        " SET files.`isClientDownLoad`=0                       "+
+                                        " WHERE files.`BOOKING_ID`=? AND files.`FILE_ID`<>?    ";
+                                    req.getConnection(function(err,connection){
+                                        var query=connection.query(sql,[fileInfo.BOOKING_ID,file_id],function(err,result){
+                                            if (err)
+                                            {
+                                                resp.json({status:"fail"});
+                                            }
+                                            else
+                                            {
+                                                resp.json({status:"success",fileInfo:fileInfo});
+                                            }
+
+                                        })
+                                    });
                                     resp.json({status:"success",fileInfo:fileInfo});
                                 }
 

@@ -277,7 +277,6 @@ module.exports =
         var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var serviceId = rlobUtil.redilegalServiceId;
-        console.log("*************************************>"+JSON.stringify(req.query));
         var sql = 
             "  SELECT  DISTINCT DATE(h.`FROM_TIME`) AS APPOINTMENT_DATE                                                       "+
             "  FROM      `cln_appointment_calendar` h                                                                         "+

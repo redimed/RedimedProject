@@ -1252,6 +1252,56 @@ module.exports =
         });
     },
 
+    getUpcommingBookingHaveNotDocumentToNotificationCustomer:function(req,res)
+    {
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        var bookingType=req.query.bookingType?req.query.bookingType:'';
+        if(!kiss.checkListData(userId,bookingType))
+        {
+            kiss.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var sql=
+            " SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
+            "   files.`FILE_NAME`                                                                           "+
+            " FROM  `rl_bookings` booking                                                                   "+
+            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
+            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
+            "   LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
+            " WHERE     files.`FILE_ID` IS NULL                                                                 "+
+            "   AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
+            "   AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
+            "   AND booking.`BOOKING_TYPE`=? and booking.ASS_ID like ? and booking.STATUS='"+rlobUtil.bookingStatus.confirmed+"' "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[bookingType,userId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+
     /**
      * tannv.dts@gmail.com
      * admin local notification completing booking have not result

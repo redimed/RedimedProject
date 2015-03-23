@@ -18,7 +18,8 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.adminBookingMessages.controller'
     ,'app.loggedIn.rlob.paperless.controller'
     ,'app.loggedIn.rlob.paperless.ams6.controller'
-    ,'app.loggedIn.rlob.paperless.ams5.controller'])
+    ,'app.loggedIn.rlob.paperless.ams5.controller'
+    ,'app.loggedIn.rlob.redilegalUsersListController.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -104,6 +105,11 @@ angular.module('app.loggedIn.rlob',
                 url:'/ams5',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/paperless/ams5.html',
                 controller: 'rlob_paperless_ams5Controller'
+            })
+            .state('loggedIn.rlob.rlob_admin_redilegalUsersList',{
+                url:'/users-list',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/redilegalUsersList.html',
+                controller: 'rlob_admin_redilegalUsersListController'
             })
 
 //            .state('loggedIn.rlob.rlob_booking_detail', {

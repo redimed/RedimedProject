@@ -27,22 +27,22 @@
                     <tr>
                         <th style="width:5px;">
                             <div class="th">
-                            No.
+                                No.
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> For The Week
+                                For The Week
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Time Charge
+                                Time Charge
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Status
+                                Status
                             </div>
                         </th>
                         <th>
@@ -62,8 +62,8 @@
                         <td></td>
                         <td></td>
                     </tr>
-                    <tr ng-show="list.result===null">
-                        <td colspan="4 ">
+                    <tr ng-show="list.result.length === 0">
+                        <td colspan="5">
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
@@ -99,26 +99,4 @@
             </div>
         </div>
     </div>
-    <script type="text/ng-template" id="ViewTask">
-        <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
-    </script>
 
-    <div class="modal fade" id="full" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Modal Title</h4>
-                </div>
-                <div class="modal-body">
-                    Modal body goes here
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn blue">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>

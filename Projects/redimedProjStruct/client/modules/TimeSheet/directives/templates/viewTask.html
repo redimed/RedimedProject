@@ -2,7 +2,7 @@
     <form method="POST" class="grid-form" name="viewTask">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>Review Timesheet</legend>
+            <legend>View Timesheet</legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
                 <div data-field-span="6">
@@ -28,62 +28,62 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Activity
+                                        Utilization Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Location
+                                        Management Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Department
+                                        Supervision Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Time Charge
+                                        Self-Developed Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Item Number
+                                        Non-charged Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Quantity
+                                        Total Hours
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Tasks/Comments
                                     </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="l in list.result " ng-class="{'same':l.tasks_id%2!==0}" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                                <td class="btn btn-xs" style="text-align:left;">{{l.date | date: "dd/MM/yyyy"}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"":l.LOCATION}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"":l.departmentName}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{getFortMatTimeCharge(l.chargeDate)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.ITEM_ID===null||l.ITEM_ID==="")?"N/A":l.ITEM_ID}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.task===null||l.task==="")?"":l.task}}</td>
+                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'">
+                                <td class="btn btn-xs">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
+                                <td class="btn btn-xs">{{l.AC[1]!==undefined?(l.AC[1] | customHours):"00:00"}}</td>
+                                <td class="btn btn-xs">{{l.AC[2]!==undefined?(l.AC[2] | customHours):"00:00"}}</td>
+                                <td class="btn btn-xs">{{l.AC[3]!==undefined?(l.AC[3]| customHours):"00:00"}}</td>
+                                <td class="btn btn-xs">{{l.AC[4]!==undefined?(l.AC[4]| customHours):"00:00"}}</td>
+                                <td class="btn btn-xs">{{l.AC[5]!==undefined?(l.AC[5]| customHours):"00:00"}}</td>
+                                <td class="btn btn-xs bold">{{l.sumDATE | customHours}}</td>
+                                <td style="text-align:center;"><a class="btn btn-xs" ng-dblclick="ViewDetail(list.result[0].task_week_id,l.date, 'on-date')">View Detail</a></td>
                             </tr>
                         </tbody>
                     </table>
+                    <a class="btn btn-xs pull-right" ng-dblclick="ViewDetail(list.result[0].task_week_id, null, 'all-date')">View Full Timesheet</a>
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
-                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].chargeWeek)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
                             're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].time_in_lieu)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(list.result[0].over_time)}}</span>
+                <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{list.result[0].over_time | customHours}}</span>
             </div>
             <!-- SHOW REJECT -->
             <div data-row-span="12" ng-show="(info.isReject===true || info.hasReject===true) && info.isApprove!==true">
@@ -96,7 +96,7 @@
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
                 <div class="col-md-4" style="margin-top:5px; font-size:13px;">
-                    <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{getFortMatTimeCharge(info.time_rest)}}
+                    <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{info.time_rest | customHours}}
                 </div>
                 <div class="col-md-9">
                     </span> This Over/(Under) Time will be charged to (*):</span>
@@ -117,6 +117,6 @@
         <!-- END MAIN INFO -->
     </form>
 </div>
-<script type="text/ng-template " id="ViewItem ">
-    <view-item ng-model="taskID" on-cancel="clickCancel(return) "></view-item>
+<script type="text/ng-template " id="ViewDetail ">
+    <view-timesheet ng-model="idView" on-cancel="clickCancel(return) "></view-timesheet>
 </script>

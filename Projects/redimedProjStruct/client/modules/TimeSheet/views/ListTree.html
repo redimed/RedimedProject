@@ -3,7 +3,11 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Time Sheet</a>
+            <a ui-sref="loggedIn.TimeSheetHome">Timesheets</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.AdminTimeSheet">Administrator</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -75,7 +79,6 @@
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
                             <span class="bold custom-timesheet">Total: {{list.count}}</span>
-
                             <span class="custom-timesheet">Show</span>
                             <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
                             </select>
