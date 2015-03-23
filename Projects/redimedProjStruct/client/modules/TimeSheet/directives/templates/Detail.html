@@ -68,7 +68,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(index,l) in list.result " style="cursor: pointer; " ng-class="{'same':(l.date|getDate)%2!==0}">
+                            <tr ng-repeat="(index,l) in list.result " style="cursor: pointer; " ng-class="{'same':(l.date|getDate)%2===0 && Title === 'View all Detail'}">
                                 <td class="btn btn-xs" style="text-align:left;">{{l.date | date: 'EEE, dd MMMM yyyy'}}</td>
                                 <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.NAME===null || l.NAME===''">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
                                 <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.LOCATION===null || l.LOCATION===''">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
@@ -76,7 +76,7 @@
                                 <td class="btn btn-xs" style="text-align:left;">{{l.time_charge | customHours}}</td>
                                 <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.comment===null || l.comment===''">{{(l.item_id===null||l.comment==="")?"N/A":l.item_id}}</td>
                                 <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.quantity===null || l.quantity===''">{{(l.quantity===null||l.quantity==="")?"N/A":l.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;" ng-disabled="l.comment===null || l.comment===''">{{(l.comment===null||l.comment==="")?"":l.comment}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="")?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
                             </tr>
                         </tbody>
                     </table>

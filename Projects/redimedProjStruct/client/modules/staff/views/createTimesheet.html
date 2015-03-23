@@ -11,7 +11,7 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
+            <a ui-sref="loggedIn.TimeSheetHome">Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -39,11 +39,14 @@
         <div class="actions">
             <label ng-hide='isEdit' style="margin-top:10px;" >Week From</label>
             <input ng-hide='isEdit' style="margin-top:10px;color: black"  class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
-            <a href="javascript:;" class="icon-time">
+
+            <a href="javascript:;" class="icon-time" title="You Have 50 Time In Lieu!" data-toggle="tooltip" data-position="top" tooltip>
+
                 <i class="icon icon-clock"></i>
                 <span class="badge badge-danger">
                 2 </span>
             </a>
+
             <a class="btn btn-xs blue pull-right" ng-hide='true' style="margin-top:10px;margin-left: 10px">
                 <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
         </div>
@@ -163,4 +166,7 @@
 </div>
 <script type="text/ng-template" id="ViewTask">
     <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+</script>
+<script type="text/ng-template" id="ItemCode">
+    <item-code ng-model="items" on-cancel="clickCancel(return)" on-save="clickSave(return)"></item-code>
 </script>

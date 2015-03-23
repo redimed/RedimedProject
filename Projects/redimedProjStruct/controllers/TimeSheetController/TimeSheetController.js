@@ -908,7 +908,7 @@ module.exports = {
 
     ViewOnDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT time_tasks.date, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+        var strQuery = "SELECT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
@@ -942,7 +942,7 @@ module.exports = {
 
     ViewAllDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT time_tasks.date, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+        var strQuery = "SELECT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
@@ -973,6 +973,87 @@ module.exports = {
                 return;
             });
     },
+
+    LoadItemCode: function(req, res) {
+        var searchObj = req.body.searchObj;
+        var strSearch = " WHERE ";
+        var strOrder = " ORDER BY ";
+        //get search
+        for (var keySearch in searchObj.data) {
+            console.log("KEY SEARCH:" + keySearch+"VALUE:"+searchObj.data[keySearch]);
+            if (searchObj.data[keySearch] !== undefined &&
+                searchObj.data[keySearch] !== null &&
+                searchObj.data[keySearch] !== "") {
+                strSearch += keySearch + " like '%" + searchObj.data[keySearch] +
+                    "%' AND ";
+            }
+        }
+        if (strSearch.length === 7) {
+            strSearch = "";
+        } else {
+            strSearch = strSearch.substring(0, strSearch.length - 5);
+        }
+        console.log(strSearch);
+        //end get search
+
+        //get ORDER
+        for (var keyOrder in searchObj.order) {
+            if (searchObj.order[keyOrder] !== undefined &&
+                searchObj.order[keyOrder] !== null &&
+                searchObj.order[keyOrder] !== "") {
+                strOrder += keyOrder + " " + searchObj.order[keyOrder] + ", ";
+            }
+        }
+        if (strOrder.length === 10) {
+            strOrder = "";
+        } else {
+            strOrder = strOrder.substring(0, strOrder.length - 2);
+        }
+        //end get ORDER
+        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME FROM time_item_code " + strSearch + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
+        var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + strOrder;
+        db.sequelize.query(query)
+            .success(function(result) {
+                if ((result === undefined || result === null || result.length === 0) && strSearch === "") {
+                    res.json({
+                        status: "success",
+                        result: null,
+                        count: 0
+                    });
+                    return;
+                } else {
+
+                    db.sequelize.query(queryCount)
+                        .success(function(count) {
+                            res.json({
+                                status: "success",
+                                result: result,
+                                count: count[0].COUNTITEM
+                            });
+                            return;
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                result: null,
+                                count: 0
+                            });
+                            return;
+                        });
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: null,
+                    count: 0
+                });
+                return;
+            });
+    },
+
     //approve
     LoadTimeSheetApprove: function(req, res) {
         var searchObj = req.body.searchObj;
