@@ -19,11 +19,9 @@ angular.module("app.loggedIn.staff.service", [])
         });
     }
 
-    service.editTask = function(task) {
+    service.editTask = function(task,info) {
         var editTask = api.all('staff/editTask');
-        return editTask.post({
-            allTask: task
-        });
+        return editTask.post({allTask: task,info:info});
     }
 
     service.getTask = function(idWeek) {

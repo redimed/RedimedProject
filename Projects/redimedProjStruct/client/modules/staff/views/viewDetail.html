@@ -3,7 +3,6 @@
         <!-- MAIN INFO -->
         <fieldset>
             <legend>View Timesheet
-                <a class="btn pull-right btn-xs red" ng-click="cancelClick()">X</a>
             </legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
@@ -71,7 +70,7 @@
                 <td class="btn btn-xs">{{task.activity}}</td>
                 <td class="btn btn-xs">{{task.location}}</td>
                 <td class="btn btn-xs">{{task.department}}</td>
-                <td class="btn btn-xs">{{task.time_item == null ? task.time_charge : task.time_item}}</td>
+                <td class="btn btn-xs">{{task.time_item == null ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
                 <td class="btn btn-xs">{{task.ITEM_ID}}</td>
                 <td class="btn btn-xs">{{task.quantity}}</td>
                 <td class="btn btn-xs">{{task.comment == null ? task.task : task.comment}}</td>
