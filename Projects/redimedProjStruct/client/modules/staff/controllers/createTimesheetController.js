@@ -361,7 +361,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     StaffService.showWeek($scope.info.userID);
 
 
-})
+});
 
 // .controller("ItemController", function(moment,$rootScope,$scope, $filter, ConfigService,$modalInstance, $modal,calendarHelper, moment,StaffService,$state,toastr,itemArr,isView){
 
