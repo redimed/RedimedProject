@@ -51,6 +51,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 $scope.listDiscover[i].isOnline = false;
             }
             $scope.listDiscoverScan = [];
+            console.log('$scope.listDiscover', $scope.listDiscover);
             onDiscover(Isclick);
         }
 
