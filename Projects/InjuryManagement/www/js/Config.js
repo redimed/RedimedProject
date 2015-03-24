@@ -1,8 +1,8 @@
 angular.module('app.config', [])
 
     .constant('HOST_CONFIG', {
-        'host':'testapp.redimed.com.au',
-        //'host':'192.168.133.10',
+        //'host':'testapp.redimed.com.au',
+        'host':'192.168.133.10',
         'port':'3000'
     })
 
@@ -20,9 +20,8 @@ angular.module('app.config', [])
         {'code': 'Female', 'name': 'Female'}
     ])
 
-    .factory('ConfigService', function (Restangular, SEX_LIST, SYS_TITLE) {
+    .factory('ConfigService', function (SEX_LIST, SYS_TITLE) {
         var configService = {};
-        var configApi = Restangular.all("api/erm");
 
         configService.sex_option = function () {
             return SEX_LIST;

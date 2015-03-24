@@ -187,5 +187,8 @@ angular.module('starter.phoneCall.controller',[])
                     $scope.cancelCall();
                 }
             });
+            if($state.is("app.phoneCall")) {
+                
+            }
         });
     })

@@ -91,7 +91,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 });
                 for(var j=0; j<$scope.listDiscoverScan.length; j++) {
                     for(var i=0; i<$scope.listDiscover.length; i++) {
-                        if($scope.listDiscover[i].device_name == $scope.listDiscoverScan[j].deviceType) {
+                        if($scope.listDiscover[i].device_name.toLowerCase() == $scope.listDiscoverScan[j].deviceType.toLowerCase()) {
                             $scope.$apply(function() {
                                 $scope.listDiscover[i].isOnline = true;
                                 $scope.listDiscover[i].address = $scope.listDiscoverScan[j].address;
