@@ -46,9 +46,29 @@ angular.module("app.loggedIn.TimeSheet", [
                 templateUrl: "modules/TimeSheet/views/Admin.html",
                 controller: "AdminController"
             })
-            .state("loggedIn.ReportTimeSheet", {
-                url: "/ReportTimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report.html",
-                controller: "ReportController"
+            .state("loggedIn.Report1TimeSheet", {
+                url: "/Report1TimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report1.html",
+                controller: "Report1Controller"
+            })
+            .state("loggedIn.Report2TimeSheet", {
+                url: "/Report2TimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report2.html",
+                controller: "Report2Controller"
+            })
+            .state("loggedIn.Report3TimeSheet", {
+                url: "/Report3TimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report3.html",
+                controller: "Report3Controller"
+            })
+            .state("loggedIn.Report4TimeSheet", {
+                url: "/Report4TimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report4.html",
+                controller: "Report4Controller"
+            })
+            .state("loggedIn.Report5TimeSheet", {
+                url: "/Report5TimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report5.html",
+                controller: "Report5Controller"
             });
     });

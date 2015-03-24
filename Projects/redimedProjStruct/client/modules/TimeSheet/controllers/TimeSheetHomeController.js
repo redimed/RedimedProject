@@ -4,7 +4,6 @@ angular.module("app.loggedIn.TimeSheet.Home.Controller", [])
         $('body').addClass("page-sidebar-closed");
         $('body').find('ul').addClass("page-sidebar-menu-closed");
         //end close siderba
-
         //LOAD ROLE ON TREEAPPROVE
         TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
             if (response.status === "error") {

@@ -1,7 +1,7 @@
 <!-- INFO SYS -->
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bold">Timesheets</h3>
+        <h3>e-Timesheets</h3>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -24,15 +24,45 @@
                 </a>
             </div>
             <div class="col-md-12">
-                <a class="btn" ui-sref="loggedIn.ReportTimeSheet">
-                    <img src="/img/TimeSheet/reports.png" alt="Time Reporting System">
-                    <label class="control-label bold">Time Reporting System</label>
-                </a>
+                <!-- DOPDOWN ACTION -->
+                <div class="dropdown">
+                    <a class="inputBarA dropdown-toggle btn" data-toggle="dropdown" href="#">
+                        <img src="/img/TimeSheet/reports.png" alt="Time Reporting System">
+                        <span class="bold">Utilization Time Reporting System</span></a>
+                    <ul class="dropdown-menu dropup" role="menu" aria-labelledby="dLabel">
+                        <li role="presentation" ng-if="position!=='Staff' && position!=='Admin'">
+                            <a role="menuitem" ui-sref="loggedIn.Report1TimeSheet">
+                                <span class="bold text-info">Report on Time In Lieu</span></a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" ui-sref="loggedIn.Report2TimeSheet">
+                                <span class="bold text-info">Report on Utilization Ratio - View by Detail Activity
+                                </span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" ui-sref="loggedIn.Report3TimeSheet">
+                                <span class="bold text-info">Report on Utilization Ratio - View by Department</span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" ui-sref="loggedIn.Report4TimeSheet">
+                                <span class="bold text-info">Report on Utilization Time - Detail</span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" ui-sref="loggedIn.Report5TimeSheet">
+                                <span class="bold text-info">Report on Item Codes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END DROPDOWN ACTION -->
             </div>
             <div class="col-md-12">
                 <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-disabled="position!=='Admin'">
-                    <img src="/img/TimeSheet/admin.png" alt="Admin Timesheet">
-                    <label class="control-label bold">Administrator</label>
+                    <img src="/img/TimeSheet/admin.png" alt="Administrator">
+                    <span class="bold">Administrator</span>
                 </a>
             </div>
         </div>

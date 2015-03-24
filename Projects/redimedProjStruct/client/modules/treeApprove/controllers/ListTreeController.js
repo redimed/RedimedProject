@@ -85,7 +85,6 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
             //JQUERY CONFIRM
             swal({
                 title: "Are you sure?",
-                text: "This department will lost in list  !",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

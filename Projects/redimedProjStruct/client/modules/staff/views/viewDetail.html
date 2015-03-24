@@ -91,7 +91,7 @@
         <!-- BUTTON -->
             <a style="width: 75px" href="javascript:;" ng-hide='one' ng-click="cancelClick()" class="btn pull-right btn-circle btn-warning btn-xs">
                 <i class="fa fa-times"></i> Cancel </a>
-            <a style="width: 75px" ng-hide='one' href="javascript:;" ng-click="okClick()" class="btn pull-right btn-circle blue-steel btn-xs"><i class="fa fa-pencil"></i> 
+            <a style="width: 75px" ng-hide='one || week.STATUS==="Submitted" || week.STATUS==="Re-submitted" || week.STATUS==="Approved"' href="javascript:;" ng-click="okClick()" class="btn pull-right btn-circle blue-steel btn-xs"><i class="fa fa-pencil"></i> 
                 <span>Edit</span>
             </a>
         <!-- END BUTTON -->

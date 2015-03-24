@@ -13,7 +13,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
 
         $timeout(function(){
             $scope.selectedBooking=localStorageService.get("selectedBooking");
-        },1200);
+        },300);
         var serverUpload = "https://192.168.135.115:3000/api/im/upload";
         function uploadFile(img, server, params) {
             var options = new FileUploadOptions();

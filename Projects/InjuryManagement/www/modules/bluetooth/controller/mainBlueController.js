@@ -33,6 +33,9 @@ angular.module('starter.bluetooth.mainBlueController',[])
                         else if(result.data[i].device_name == 'ECG') {
                             result.data[i].imgDevice = 'img/medicalDevices/remote_ecg.jpg';
                         }
+                        else if(result.data[i].device_name == 'Scale') {
+                            result.data[i].imgDevice = 'img/medicalDevices/scale.jpg';
+                        }
                     }
                     $scope.listDiscover = result.data;
                 }
@@ -48,6 +51,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 $scope.listDiscover[i].isOnline = false;
             }
             $scope.listDiscoverScan = [];
+            console.log('$scope.listDiscover', $scope.listDiscover);
             onDiscover(Isclick);
         }
 
@@ -88,7 +92,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 });
                 for(var j=0; j<$scope.listDiscoverScan.length; j++) {
                     for(var i=0; i<$scope.listDiscover.length; i++) {
-                        if($scope.listDiscover[i].device_name == $scope.listDiscoverScan[j].deviceType) {
+                        if($scope.listDiscover[i].device_name.toLowerCase() == $scope.listDiscoverScan[j].deviceType.toLowerCase()) {
                             $scope.$apply(function() {
                                 $scope.listDiscover[i].isOnline = true;
                                 $scope.listDiscover[i].address = $scope.listDiscoverScan[j].address;
@@ -116,7 +120,6 @@ angular.module('starter.bluetooth.mainBlueController',[])
             $scope.disableList = true;
 
             window.bluetooth.isConnected(checkisCon);
-            //window.bluetooth.getUuids(onSuccesUuid, onErrorUuid, $scope.address);
         }
 
         function checkisCon(result) {
@@ -254,7 +257,8 @@ angular.module('starter.bluetooth.mainBlueController',[])
                     console.log('$scope.dataReceive ', $scope.dataReceive);
                     if(typeof $scope.dataReceive['sys'] !==  'undefined') {
                         console.log($scope.dataReceive['sys']);
-                        if($scope.dataReceive['sys'] !==  0 && $scope.dataReceive['dia'] !==  0 && $scope.dataReceive['bpm'] !==  0 && $scope.dataReceive['mmHg'] !==  0) {
+                        if($scope.dataReceive['sys'] !==  0 && $scope.dataReceive['dia'] !==  0
+                            && $scope.dataReceive['bpm'] !==  0 && $scope.dataReceive['mmHg'] !==  0) {
 
                             console.log('not insert database sys == 0');
 

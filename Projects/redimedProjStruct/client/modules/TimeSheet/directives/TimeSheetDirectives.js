@@ -6,5 +6,6 @@ angular.module("app.loggedIn.TimeSheet.Directives", [
     "app.loggedIn.TimeSheet.ViewItem.Directive",
     "app.loggedIn.TimeSheet.Time.Directive",
     "app.loggedIn.TimeSheet.Detail.Directive",
-    "app.loggedIn.TimeSheet.Filter"
+    "app.loggedIn.TimeSheet.Filter",
+    "app.loggedIn.TimeSheet.ItemCode.Directive"
 ]);

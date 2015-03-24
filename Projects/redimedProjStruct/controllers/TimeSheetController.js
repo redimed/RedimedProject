@@ -209,6 +209,12 @@ module.exports = {
                         }
                     }
                 }
+                chainer.add(
+                    db.timeTaskWeek.update({
+                        time_charge: info.time_temp,
+                        task_status_id : info.statusID
+                    },{tasks_id : allTask[i].tasks_id})
+                )
             })
             .error(function(err){
                 res.json({status:'error'});
@@ -436,7 +442,7 @@ module.exports = {
           "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" + 
           "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
           "LEFT JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id`" +
-          "WHERE t.`tasks_week_id` = ? ORDER BY t.`tasks_id`",null,{raw:true},[idWeek])
+          "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (i.`deleted` = 0 OR i.`deleted` IS NULL)  ORDER BY t.`tasks_id`",null,{raw:true},[idWeek])
             .success(function(data){
                 if (data === null || data.length === 0) {
                     console.log("Not found tasks in table");

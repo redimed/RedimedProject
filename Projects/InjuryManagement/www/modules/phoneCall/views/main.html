@@ -9,6 +9,7 @@
                 <img width="145" height="145" ng-src="{{avatarCaller}}" class="avatar-calling"/>
             </div>
         </div>
+
         <div class="calling-container" ng-show="isCaller && !isAccept">
             <div style="color: whitesmoke; margin-bottom: 50px;">
                 <div style="margin-bottom: 15px;">
@@ -35,6 +36,7 @@
                 </div>
             </div>
         </div>
+
         <div class="calling-container" ng-show="!isCaller || isAccept">
             <div style="color: whitesmoke; color: whitesmoke; position: fixed; top: 0; left: 0; right: 0; margin-top: 20px;">
                 <div style="margin-bottom: 15px;">
@@ -59,44 +61,11 @@
 
         </div>
 
-        <!--<div ng-show="!isCaller || isAccept" class="cus-callerVideo">-->
-        <!--<ot-subscriber ng-repeat="stream in streams"-->
-        <!--stream="stream"-->
-        <!--props="subscriberProp"-->
-        <!--ng-class="{OT_big: (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}">-->
-        <!--</ot-subscriber>-->
-        <!--</div>-->
 
-        <!--<div class="cus-selfVideo">-->
-        <!--<ot-publisher props="facePublisherProps" mute-audio="mic" mute-video="camera"></ot-publisher>-->
-        <!--</div>-->
-
-        <div class="cus-callerVideo" ng-show="!isCaller || isAccept">
-            <div id="callerVideo"></div>
-        </div>
+        <div id="callerVideo" class="cus-callerVideo" ng-show="!isCaller || isAccept"></div>
 
         <div class="cus-selfVideo">
             <div id="selfVideo"></div>
         </div>
-
-
-
-        <!--<div class="cus-callerVideo" ng-show="!isCaller || isAccept">-->
-        <!--<div id="callerVideo"> </div>-->
-        <!--</div>-->
-
-        <!--<div class="cus-selfVideo">-->
-        <!--<div id="selfVideo"> </div>-->
-        <!--</div>-->
-
-
-
-        <!--<ot-layout class="cus-callerVideo" ng-show="!isCaller || isAccept">-->
-        <!--<ot-subscriber ng-repeat="stream in streams"-->
-        <!--props="SubscriberProps"-->
-        <!--stream="stream"-->
-        <!--session="session">-->
-        <!--</ot-subscriber>-->
-        <!--</ot-layout>-->
     </div>
 </ion-view>

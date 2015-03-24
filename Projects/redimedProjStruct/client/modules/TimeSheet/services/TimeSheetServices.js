@@ -190,5 +190,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
+        TimeSheetService.LoadItemCode = function(searchObj) {
+            var LoadItemCode = api.all("TimeSheet/post-itemcode-list");
+            return LoadItemCode.post({
+                searchObj: searchObj
+            });
+        };
+
         return TimeSheetService;
     });

@@ -43,3 +43,7 @@ app.post("/api/TimeSheet/post-detail-all", TimeSheet.ViewAllDate);
 //ROLE
 app.post("/api/TimeSheet/post-role-one", TimeSheet.LoadRole);
 //END ROLE
+
+//ITEM CODE
+app.post("/api/TimeSheet/post-itemcode-list", TimeSheet.LoadItemCode);
+//END ITEM CODE

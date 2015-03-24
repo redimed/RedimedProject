@@ -131,23 +131,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             }
         })
     }
-    $scope.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge === 0 || time_charge === null || time_charge === "" || time_charge === undefined) {
-            return "00:00";
-        } else {
-            var hour = parseInt(time_charge);
-            var minute = (time_charge - hour) * 60;
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            var result = hour + ":" + minute;
-            result = result.substring(0, result.length);
-            return result;
-        }
-    };
+    
 
     StaffService.showWeek();
 })
@@ -175,24 +159,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             id: infoWeek.task_week_id
         });
     }
-
-    $scope.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge === 0) {
-            return "00:00";
-        } else {
-            var hour = parseInt(time_charge);
-            var minute = (time_charge - hour) * 60;
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            var result = hour + ":" + minute;
-            result = result.substring(0, result.length);
-            return result;
-        }
-    };
 
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
@@ -252,23 +218,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
     $scope.week = infoWeek;
 
-    $scope.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge === 0) {
-            return "00:00";
-        } else {
-            var hour = parseInt(time_charge);
-            var minute = (time_charge - hour) * 60;
-            if (hour < 10) {
-                hour = "0" + hour;
-            }
-            if (minute < 10) {
-                minute = "0" + minute;
-            }
-            var result = hour + ":" + minute;
-            result = result.substring(0, result.length);
-            return result;
-        }
-    };
+    
 
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
@@ -299,7 +249,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     sum = 0;
                     angular.forEach(data.rows, function(row) {
                         sum = sum + row.time_charge;
-                        row.time_charge = $scope.getFortMatTimeCharge(row.time_charge);
+                        row.time_charge = $StaffService.getFortMatTimeCharge(row.time_charge);
                         data.arrActivity[row.activity_id - 1] = row.time_charge;
                     })
                     data.total = $scope.getFortMatTimeCharge(sum);

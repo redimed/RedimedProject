@@ -28,10 +28,10 @@ angular.module('starter.phoneCall.controller',[])
         var media = null;
         var loop = function (status) {
             if (status === Media.MEDIA_STOPPED) {
-                 media.play();
+                media.play();
             }
             else if (status === Media.MEDIA_PAUSED) {
-                 media.pause();
+                media.pause();
             }
         };
 
@@ -46,23 +46,58 @@ angular.module('starter.phoneCall.controller',[])
             }
         })
 
-        document.addEventListener("deviceready", onDeviceReady, false);
+        if ($scope.isCaller) {
+            media = new Media(src, null, null, loop);
+            media.play();
 
-        function onDeviceReady() {
-            if ($scope.isCaller) {
-                media = new Media(src, null, null, loop);
-                media.play();
+            var publisherProperties =
+            {
+                insertMode: "append",
+                resolution: '1280x720',
+                width: window.outerWidth / 10,
+                height: window.outerHeight / 10
+            };
+            var publisher = TB.initPublisher('selfVideo', publisherProperties);
+
+            var session = TB.initSession($scope.apiKey, $scope.sessionID);
+            session.on({
+                'streamCreated': function (event) {
+                    session.subscribe(event.stream, "callerVideo", {
+                        insertMode: "append",
+                        resolution: "1280x720",
+                        width: '100%',
+                        height: '100%'
+                    });
+                }
+            });
+            session.connect($scope.tokenID, function (error) {
+                console.log('connect error ', error);
+                if (error) {
+                    console.log(error.message);
+                }
+                else {
+                    session.publish(publisher);
+                    signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {
+                        type: 'call',
+                        sessionId: $scope.sessionID
+                    });
+                }
+            });
+        }
+        else {
+            if ($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null) {
 
                 var publisherProperties =
                 {
                     insertMode: "append",
                     resolution: '1280x720',
-                    width: window.outerWidth / 10,
-                    height: window.outerHeight / 10
+                    width: window.outerWidth/10,
+                    height: window.outerHeight/10
                 };
-                var publisher = TB.initPublisher('selfVideo', publisherProperties);
 
-                var session = TB.initSession($scope.apiKey, $scope.sessionID);
+                publisher = TB.initPublisher('selfVideo', publisherProperties);
+
+                session = TB.initSession($scope.apiKey, $scope.sessionID);
                 session.on({
                     'streamCreated': function (event) {
                         session.subscribe(event.stream, "callerVideo", {
@@ -74,55 +109,17 @@ angular.module('starter.phoneCall.controller',[])
                     }
                 });
                 session.connect($scope.tokenID, function (error) {
-                    console.log('connect error ', error);
                     if (error) {
                         console.log(error.message);
                     }
                     else {
                         session.publish(publisher);
-                        signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {
-                            type: 'call',
-                            sessionId: $scope.sessionID
-                        });
+                        signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
                     }
                 });
             }
-            else {
-                if ($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null) {
-
-                    var publisherProperties =
-                    {
-                        insertMode: "append",
-                        resolution: '1280x720',
-                        width: window.outerWidth/10,
-                        height: window.outerHeight/10
-                    };
-
-                    publisher = TB.initPublisher('selfVideo', publisherProperties);
-
-                    session = TB.initSession($scope.apiKey, $scope.sessionID);
-                    session.on({
-                        'streamCreated': function (event) {
-                            session.subscribe(event.stream, "callerVideo", {
-                                insertMode: "append",
-                                resolution: "1280x720",
-                                width: '100%',
-                                height: '100%'
-                            });
-                        }
-                    });
-                    session.connect($scope.tokenID, function (error) {
-                        if (error) {
-                            console.log(error.message);
-                        }
-                        else {
-                            session.publish(publisher);
-                            signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
-                        }
-                    });
-                }
-            }
         }
+
 
 
 
@@ -190,5 +187,8 @@ angular.module('starter.phoneCall.controller',[])
                     $scope.cancelCall();
                 }
             });
+            if($state.is("app.phoneCall")) {
+                
+            }
         });
     })

@@ -207,7 +207,6 @@ angular.module("app.loggedIn.treeApprove.detail.controller", [])
                     //JQUERY CONFIRM
                     swal({
                         title: "Are you sure?",
-                        text: "This node will lost in tree  !",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
