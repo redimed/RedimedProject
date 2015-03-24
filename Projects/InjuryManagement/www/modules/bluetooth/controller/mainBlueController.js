@@ -115,6 +115,9 @@ angular.module('starter.bluetooth.mainBlueController',[])
             $scope.address = address;
             $scope.deviceType = deviceType;
             $scope.device_id = device_id;
+            $scope.$apply(function (){
+                $scope.copydataReceive = {};
+            })
 
             $scope.isLoad = true;
             $scope.isShowGif = true;
@@ -162,7 +165,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
         function onSuccesConn(result) {
             console.log('Connection Success ', JSON.stringify(result));
             window.bluetooth.startConnectionManager(onDataReadDevice, onConnectionLostReadData);
-            if( $scope.deviceType !== 'Scale') {
+            if( $scope.deviceType !== 'Scale' || ($scope.deviceType) !== 'Blood Pressure' ) {
                 writeData();
             }
         }
@@ -192,17 +195,12 @@ angular.module('starter.bluetooth.mainBlueController',[])
             $scope.$apply(function () {
                 $scope.dataReceive = message;
                 $scope.disableList = false;
-                delete $scope.copydataReceive['rawData'];
+                delete $scope.dataReceive['rawData'];
                 signaling.emit('onlineMeasureData', {info:$scope.dataReceive});
             });
 
-            if($scope.objJsondevice[$scope.deviceType].data.length > stmtNo){
-                console.log($scope.objJsondevice[$scope.deviceType].data.length + '  ' + stmtNo + '  sent = ' + $scope.objJsondevice[$scope.deviceType].data[stmtNo]);
-                window.bluetooth.write(onSuccessWriteData, onErrorWriteData, $scope.objJsondevice[$scope.deviceType].data[stmtNo]);
-                stmtNo++;
-            }
+            if ($scope.deviceType == 'Spirometer' || $scope.deviceType == 'Blood Pressure' || $scope.deviceType == 'Scale') {
 
-            if ($scope.deviceType == 'Spirometer' || $scope.deviceType == 'Blood Pressure') {
                 for (var key in $scope.dataReceive) {
                     if (key !== 'deviceType' && key !== 'rawData') {
                         $scope.$apply(function () {
@@ -235,14 +233,13 @@ angular.module('starter.bluetooth.mainBlueController',[])
 
                             delete $scope.spiroSignal['deviceType'];
 
-                            $scope.dataPushDB = {
-                                patient_id: localStorageService.get('patientID_select'),
-                                measure_date: new Date(),
-                                device_id: $scope.device_id,
-                                measureData: JSON.stringify($scope.spiroSignal)
-                            }
-
-                            if($scope.dataPushDB['measureData'] !== '{}') {
+                            if($scope.spiroSignal !== null) {
+                                $scope.dataPushDB = {
+                                    patient_id: localStorageService.get('patientID_select'),
+                                    measure_date: new Date(),
+                                    device_id: $scope.device_id,
+                                    measureData: JSON.stringify($scope.spiroSignal)
+                                }
                                 BluetoothServices.insertData($scope.dataPushDB).then(function (data){
                                     if(data.status.toLowerCase() == 'success') {
                                         console.log('Insert data to database success!');
@@ -251,62 +248,99 @@ angular.module('starter.bluetooth.mainBlueController',[])
                                     }
                                 })
                             } else {
-                                alert('Insert databse failed');
-                                console.log('measureData == {}');
+                                alert('Insert databse failed data null');
                             }
                         }
                     }
                 }
                 else if($scope.deviceType == 'Blood Pressure') {
-                    //if(typeof $scope.dataReceive['sys'] !==  'undefined') {
-                    //    console.log($scope.dataReceive['sys']);
-                    //    if($scope.dataReceive['sys'] !==  0 && $scope.dataReceive['dia'] !==  0
-                    //        && $scope.dataReceive['bpm'] !==  0 && $scope.dataReceive['mmHg'] !==  0) {
-                    //        console.log('not insert database sys == 0');
-                    //    } else {
-                    //        console.log('insert database');
-                    //    }
-                    //    //console.log($scope.copydataReceive);
-                    //    //
-                    //    //angular.copy($scope.dataReceive, $scope.copydataReceive);
-                    //    //
-                    //    //delete $scope.copydataReceive['rawData'];
-                    //    //
-                    //    //signaling.emit('onlineMeasureData', {info:$scope.copydataDevice});
-                    //    //
-                    //    //delete $scope.copydataReceive['deviceType'];
-                    //    //
-                    //    //$scope.dataPushDB = {
-                    //    //    patient_id: localStorageService.get('patientID_select'),
-                    //    //    measure_date: new Date(),
-                    //    //    device_id: $scope.device_id,
-                    //    //    measureData: JSON.stringify($scope.copydataReceive)
-                    //    //}
-                    //    //
-                    //    //if($scope.dataPushDB['measureData'] != '{}') {
-                    //    //    BluetoothServices.insertData($scope.dataPushDB).then(function (data){
-                    //    //        if(data.status.toLowerCase() == 'success') {
-                    //    //            console.log('Insert data to database success!');
-                    //    //            $scope.isLoad = false;
-                    //    //            $scope.disableList = false;
-                    //    //        }
-                    //    //    })
-                    //    //} else {
-                    //    //    console.log('measureData == {}');
-                    //    //}
-                    //} else {
-                    //    console.log('not insert databse');
-                    //    $scope.$apply(function() {
-                    //        $scope.isLoad = false;
-                    //        $scope.disableList = false;
-                    //    })
-                    //    console.log('sys undefined or == 0 && $scope.copydataReceive ', $scope.copydataReceive);
-                    //}
+                    if($scope.objJsondevice[$scope.deviceType].data.length > stmtNo){
+                        window.bluetooth.write(onSuccessWriteData, onErrorWriteData, $scope.objJsondevice[$scope.deviceType].data[stmtNo]);
+                        stmtNo++;
+                    }
+                    if(typeof $scope.dataReceive['sys'] !==  'undefined') {
+                        var sum = 0;
+                        angular.forEach($scope.dataReceive, function(value, key) {
+                            if(!isNaN(value)) {
+                                sum = sum + value;
+                            }
+                        });
+                        if(sum !== 0) {
+                            console.log('insert database');
+                            angular.copy($scope.dataReceive, $scope.copydataReceive);
+                            delete $scope.copydataReceive['rawData'];
+                            signaling.emit('onlineMeasureData', {info:$scope.copydataDevice});
+                            delete $scope.copydataReceive['deviceType'];
+
+                            if($scope.copydataReceive !== null) {
+                                $scope.dataPushDB = {
+                                    patient_id: localStorageService.get('patientID_select'),
+                                    measure_date: new Date(),
+                                    device_id: $scope.device_id,
+                                    measureData: JSON.stringify($scope.copydataReceive)
+                                }
+                                BluetoothServices.insertData($scope.dataPushDB).then(function (data){
+                                    if(data.status.toLowerCase() == 'success') {
+                                        console.log('Insert data to database success!');
+                                        $scope.isLoad = false;
+                                        $scope.disableList = false;
+                                    }
+                                })
+                            } else {
+                                alert('Insert databse failed data null');
+                            }
+                        } else {
+                            console.log('not insert database sum == 0');
+                            $scope.$apply(function() {
+                                $scope.isLoad = false;
+                                $scope.disableList = false;
+                            })
+                        }
+                    } else {
+                        console.log('not insert databse sys ==  undefined');
+                        $scope.$apply(function() {
+                            $scope.isLoad = false;
+                            $scope.disableList = false; 01646547672
+                        })
+                    }
                 }
                 else if($scope.deviceType == 'Scale') {
+                    if($scope.objJsondevice[$scope.deviceType].data.length > stmtNo){
+                        window.bluetooth.write(onSuccessWriteData, onErrorWriteData, $scope.objJsondevice[$scope.deviceType].data[stmtNo]);
+                        stmtNo++;
+                    }
                     console.log('$scope.copydataReceive ', $scope.copydataReceive);
+                    delete $scope.copydataReceive['dd'];
+                    delete $scope.copydataReceive['mi'];
+                    delete $scope.copydataReceive['mm'];
+                    delete $scope.copydataReceive['yy'];
+                    if(typeof $scope.copydataReceive['Data'] !== 'undefined') {
+
+                        signaling.emit('onlineMeasureData', {info:$scope.spiroSignal});
+                        delete $scope.spiroSignal['deviceType'];
+
+                        if($scope.copydataDevice !== null) {
+                        $scope.dataPushDB = {
+                            patient_id: localStorageService.get('patientID_select'),
+                            measure_date: new Date(),
+                            device_id: $scope.device_id,
+                            measureData: JSON.stringify($scope.copydataDevice)
+                        }
+
+
+                            BluetoothServices.insertData($scope.dataPushDB).then(function (data){
+                                if(data.status.toLowerCase() == 'success') {
+                                    console.log('Insert data to database success!');
+                                    $scope.isLoad = false;
+                                    $scope.disableList = false;
+                                }
+                            })
+                        } else {
+                            alert('Insert databse failed');
+                            console.log('measureData == {}');
+                        }
+                    }
                 }
-                //$scope.dataReceive['sys'] !==  0 && $scope.dataReceive['dia'] !==  0 && $scope.dataReceive['bpm'] !==  0 && $scope.dataReceive['mmHg'] !==  0
             }
         }
 
