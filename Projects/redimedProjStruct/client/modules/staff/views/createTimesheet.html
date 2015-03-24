@@ -147,9 +147,14 @@
         </div>
         <div class="form-action" style="text-align: right">
             <a class="btn btn-xs blue" ng-click="addAllTask(1)">Save</a>
-            <a class="btn btn-xs" ng-class="{'purple':isEdit,'green':!isEdit}" ng-click="addAllTask(2)">{{!isEdit?"Submit":"Re-submit"}}</a>
-            <a class="btn btn-xs yellow" ng-show='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
+            <!-- BUTTON WHEN ADDNEW -->
+            <a class="btn btn-xs green" ng-show="!isEdit" ng-click="addAllTask(2)">Submit</a>
             <a class="btn btn-xs yellow" ng-show='!isEdit' ui-sref="loggedIn.TimeSheetHome">Cancel</a>
+            <!-- END ADDNEW-->
+            <!-- BUTTON WHEN EDIT -->
+            <a class="btn btn-xs purple" ng-show="isEdit" ng-click="addAllTask(5)">Re-submit</a>
+            <a class="btn btn-xs yellow" ng-show='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
+            <!-- END EDIT-->
         </div>
     </div>
 </div>

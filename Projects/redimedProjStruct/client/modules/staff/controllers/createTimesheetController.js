@@ -159,7 +159,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 data.time_temp = data.time_charge;
                                 data.isAction = 'update';
                                 if (data.time_charge !== null) {
-                                    data.time_charge = StaffService.getFortMatTimeCharge(data.time_charge);
+                                    data.time_charge = StaffService.unCovertTimeCharge(data.time_charge);
                                 }
                                 $scope.tasks.push(data);
                                 $scope.changeTimeCharge(data);
@@ -171,7 +171,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 data.time_temp = data.time_charge;
                                 data.isAction = 'update';
                                 if (data.time_charge !== null) {
-                                    data.time_charge = StaffService.getFortMatTimeCharge(data.time_charge);
+                                    data.time_charge = StaffService.unCovertTimeCharge(data.time_charge);
                                 }
                                 angular.forEach(response['item'], function(item) {
                                     if (data.tasks_id === item.tasks_id) {
@@ -179,7 +179,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                         data.isBillable = true;
                                         item.isAction = 'update';
                                         item.time_temp = item.time_charge;
-                                        item.time_charge = StaffService.getFortMatTimeCharge(item.time_charge);
+                                        item.time_charge = StaffService.unCovertTimeCharge(item.time_charge);
                                         data.item.push(item);
                                     }
                                 });
@@ -194,6 +194,15 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     $scope.checkFirstTaskWeek();
                 }
             }
+            //CHECK TYPE OF CONTRACT
+            StaffService.LoadContract($cookieStore.get('userInfo').id).then(function(conTract) {
+                if (conTract.status === "success" && conTract.result[0] !== undefined && conTract.result[0].TypeOfContruct !== undefined) {
+                    $scope.TypeOfContruct = conTract.result[0].TypeOfContruct;
+                } else {
+                    toastr.error("User not type of contruct!, Please notification Admin", "Error");
+                }
+            });
+            //END
         });
         $scope.tasks.loading = false;
     };
@@ -259,37 +268,46 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //ADD ALL TASK OF WEEK
     $scope.addAllTask = function(status) {
-        if (!$scope.isEdit) {
-            startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-            endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-            $scope.info.startWeek = startWeek;
-            $scope.info.endWeek = endWeek;
-            $scope.info.statusID = status;
-            $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
-
-            StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
-                if (response['status'] == 'success') {
-                    toastr.success("success", "Success");
-                    $state.go('loggedIn.timesheet.view', null, {
-                        'reload': true
-                    });
-                } else {
-                    toastr.error("Error", "Error");
-                }
-            });
+        //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
+        if (StaffService.covertTimeCharge($scope.info.time_charge) < 38 && $scope.TypeOfContruct === "Full-time") {
+            toastr.error("Can not submit, please check time charge(>=38)", "Error");
         } else {
-            $scope.info.idWeek = $scope.idWeek;
-            $scope.info.statusID = status;
-            StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
-                if (response['status'] == 'success') {
-                    toastr.success("Edit Success");
-                    $state.go('loggedIn.timesheet.view', null, {
-                        'reload': true
-                    });
-                } else {
-                    toastr.error("Error", "Error");
-                }
-            });
+            if (!$scope.isEdit) {
+                $scope.info.time_charge = StaffService.covertTimeCharge($scope.info.time_charge);
+                //ADD NEW TIMESHEET
+                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+                $scope.info.startWeek = startWeek;
+                $scope.info.endWeek = endWeek;
+                $scope.info.statusID = status;
+                $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
+
+                StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
+                    if (response['status'] == 'success') {
+                        toastr.success("success", "Success");
+                        $state.go('loggedIn.timesheet.view', null, {
+                            'reload': true
+                        });
+                    } else {
+                        toastr.error("Error", "Error");
+                    }
+                });
+            } else {
+                $scope.info.time_charge = StaffService.covertTimeCharge($scope.info.time_charge);
+                //EDIT TIMESHEET
+                $scope.info.idWeek = $scope.idWeek;
+                $scope.info.statusID = status;
+                StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
+                    if (response['status'] == 'success') {
+                        toastr.success("Edit Success");
+                        $state.go('loggedIn.timesheet.view', null, {
+                            'reload': true
+                        });
+                    } else {
+                        toastr.error("Error", "Error");
+                    }
+                });
+            }
         }
 
     };

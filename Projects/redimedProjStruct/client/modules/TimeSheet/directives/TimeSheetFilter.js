@@ -1,37 +1,64 @@
 angular.module("app.loggedIn.TimeSheet.Filter", [])
     .filter('customHours', function(MIN_TO_DEC) {
         return function(time_charge) {
-            if (time_charge !== undefined && time_charge !== null && (!isNaN(time_charge))) {
-                hours = parseInt(time_charge);
+            if (time_charge !== undefined && time_charge !== null) {
+                var hours = parseInt(time_charge);
                 var n = time_charge.toString().indexOf(".");
+                var minutes = 0;
                 if (n !== -1) {
-                    var minutes = time_charge.toString().substr(n + 1, 3);
+                    minutes = time_charge.toString().substr(n + 1, 2);
                     if (minutes > 10) {
                         minutes = parseFloat(minutes / 100);
                     } else if (minutes > 1) {
                         minutes = parseFloat(minutes / 10);
                     }
+                    var checkFind = false;
+                    var minuteAdd = 0;
+                    //find firts
                     angular.forEach(MIN_TO_DEC, function(value) {
                         if (value.dec == minutes) {
-                            minutes = parseInt(value.min);
-
+                            minutes = value.min;
+                            checkFind = true;
                         }
                     });
+                    //end find first
+
+                    //call again if not found
+                    if (checkFind === false) {
+                        minutes = minutes - 0.01;
+                        ++minuteAdd;
+                        angular.forEach(MIN_TO_DEC, function(value) {
+                            if (value.dec == minutes) {
+                                minutes = value.min;
+                                checkFind = true;
+                            }
+                        });
+                    }
+                    if (checkFind === 0) {
+                        minutes = 0;
+                    }
+                    //end call
+                    minutes = minutes + minuteAdd;
                     if (parseInt(hours) < 10) {
-                        hours = '0' + hours;
+                        hours = '0' + hours.toString();
                     }
-                    if (minutes < 10) {
-                        minutes = '0' + minutes;
+                    if (parseInt(minutes) < 10) {
+                        minutes = '0' + minutes.toString();
                     }
-                    var returnValue = hours + ':' + minutes + '0000';
-                    return returnValue.substring(0, 5);
+
+                    var returnValue = hours + ':' + minutes;
+                    return (returnValue.substr(0, 5));
                 } else {
                     if (parseInt(hours) < 10) {
-                        hours = '0' + hours;
+                        hours = '0' + hours + ':00';
+                    } else {
+                        hours += ':00';
                     }
-                    var returnValue = hours + ':' + '0000';
-                    return returnValue.substring(0, 5);
+                    return (hours.substr(0, 5));
                 }
+
+            } else {
+                return "00:00";
             }
 
         };

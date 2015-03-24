@@ -13,7 +13,6 @@ module.exports = {
                 end_date: info.endWeek,
                 week_no: info.weekNo,
                 time_charge: info.time_temp,
-                time_rest: info.time_rest,
                 user_id: info.userID,
                 created_by: info.userID,
                 task_status_id: info.statusID
@@ -38,7 +37,6 @@ module.exports = {
                                             "date": moment(allTask[task].date).format('YYYY-MM-DD'),
                                             "location_id": allTask[task].location_id,
                                             "activity_id": allTask[task].activity_id,
-                                            "time_spent": allTask[task].time_spent,
                                             "time_charge": allTask[task].time_temp
                                         })
                                     )
@@ -98,6 +96,7 @@ module.exports = {
     editTask: function(req, res) {
         var allTask = req.body.allTask;
         var info = req.body.info;
+        console.log(info);
         db.timeTasks.max('tasks_id')
             .success(function(id) {
                 var tId = id;
@@ -168,7 +167,6 @@ module.exports = {
                                 "date": moment(allTask[i].date).format('YYYY-MM-DD'),
                                 "location_id": allTask[i].location_id,
                                 "activity_id": allTask[i].activity_id,
-                                "time_spent": allTask[i].time_spent,
                                 "time_charge": allTask[i].time_temp
                             })
                         )
@@ -224,15 +222,15 @@ module.exports = {
                         time_charge: info.time_temp,
                         task_status_id: info.statusID
                     }, {
-                        tasks_id: allTask[i].tasks_id
+                        task_week_id: info.idWeek
                     })
                 )
             })
             .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
                 res.json({
                     status: 'error'
                 });
-                console.log(err);
             })
 
         chainer.runSerially().success(function() {
@@ -240,10 +238,10 @@ module.exports = {
                 status: 'success'
             });
         }).error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
             res.json({
                 status: 'error'
             });
-            console.log(err);
         });
     },
 
@@ -761,8 +759,25 @@ module.exports = {
                 });
                 console.log(err);
             })
+    },
+
+    LoadContract: function(req, res) {
+        var ID = req.body.ID;
+        var query = "SELECT hr_employee.TypeOfContruct FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + ID;
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
     }
-
-
-
 };
