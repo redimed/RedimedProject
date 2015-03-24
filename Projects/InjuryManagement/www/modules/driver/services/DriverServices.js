@@ -2,6 +2,7 @@ angular.module('starter.driver.services',[])
 
     .factory('DriverServices', function(Restangular){
         var driverServices = {};
+        
         var driverApi = Restangular.all("api");
 
         driverServices.getPatientID = function (patientID) {
@@ -18,6 +19,7 @@ angular.module('starter.driver.services',[])
             var lstPatient = driverApi.all("im/edit");
             return lstPatient.post({info: info, injury_id: injuryID, geo: geolocation});
         }
+
         return driverServices;
     })
 

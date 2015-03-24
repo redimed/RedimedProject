@@ -33,6 +33,9 @@ angular.module('starter.bluetooth.mainBlueController',[])
                         else if(result.data[i].device_name == 'ECG') {
                             result.data[i].imgDevice = 'img/medicalDevices/remote_ecg.jpg';
                         }
+                        else if(result.data[i].device_name == 'Scale') {
+                            result.data[i].imgDevice = 'img/medicalDevices/scale.jpg';
+                        }
                     }
                     $scope.listDiscover = result.data;
                 }

@@ -7,9 +7,13 @@ angular.module('starter.driver.controller',[])
         $scope.geo = {};
         $scope.ll = {};
         $scope.lstPatient = {};
+
+
+
         $timeout(function() {
              $scope.worker = localStorageService.get('worker');
-        }, 400);
+            $ionicLoading.hide();
+        }, 1000);
        
         
 
@@ -98,6 +102,15 @@ angular.module('starter.driver.controller',[])
                    
             //     }
             // });
+            $ionicLoading.show({
+                template: "<div class='icon ion-ios7-reloading'></div>"+
+                "<br />"+
+                "<span>Waiting...</span>",
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
              $state.go('app.driver.detailInjury',{injuryID:injuryID},{reload:true});
         };
 
