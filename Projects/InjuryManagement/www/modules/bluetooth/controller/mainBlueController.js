@@ -51,6 +51,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 $scope.listDiscover[i].isOnline = false;
             }
             $scope.listDiscoverScan = [];
+            console.log('$scope.listDiscover', $scope.listDiscover);
             onDiscover(Isclick);
         }
 
@@ -89,9 +90,10 @@ angular.module('starter.bluetooth.mainBlueController',[])
                     $scope.isLoad = false;
                     $ionicLoading.hide();
                 });
-                for(var j=0; j<$scope.listDiscoverScan.length; j++) {
-                    for(var i=0; i<$scope.listDiscover.length; i++) {
+                for(var i=0; i<$scope.listDiscover.length; i++) {
+                    for(var j=0; j<$scope.listDiscoverScan.length; j++) {
                         if($scope.listDiscover[i].device_name == $scope.listDiscoverScan[j].deviceType) {
+                            console.log($scope.listDiscoverScan[j].deviceType);
                             $scope.$apply(function() {
                                 $scope.listDiscover[i].isOnline = true;
                                 $scope.listDiscover[i].address = $scope.listDiscoverScan[j].address;
