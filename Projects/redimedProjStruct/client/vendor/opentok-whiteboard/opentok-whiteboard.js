@@ -180,6 +180,8 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                        event.originalEvent.touches[0].pageY - offset.top,
                     x = offsetX * scaleX,
                     y = offsetY * scaleY;
+
+                
                 
                 switch (event.type) {
                 case 'mousedown':
@@ -201,6 +203,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                             color: scope.color,
                             lineWidth: scope.lineWidth
                         };
+                        // console.log(update);
                         draw(update);
                         client.lastX = x;
                         client.lastY = y;

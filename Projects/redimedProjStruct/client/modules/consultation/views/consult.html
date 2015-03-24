@@ -96,184 +96,248 @@
         </div>
     </div>
 </div>
-<div class="portlet blue-chambray box">
-    <div class="portlet-title">
-        <div class="caption ">
+<div class="portlet light ">
+    <div class="portlet-title tabbable-line">
+        <div class="caption">
             <i class="fa fa-user-md"></i>
-            <span class="caption-subject uppercase">Consultation</span>
+            <span class="caption-subject bold uppercase">Consultation</span>
         </div>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="index.html#tab_1_1" data-toggle="tab">
+                    Information
+                </a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_2" data-toggle="tab">
+                    Measurements
+                </a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_3" data-toggle="tab">
+                    Scripts
+                </a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_4" data-toggle="tab">
+                    Drawings
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="portlet-body">
-        <div class="row">
-        	<div class="col-md-12 col-sm-12">
-        		<div class="form-group" >
-	                <label class="control-label bold col-md-2 col-sm-2">Problems</label>
-	                <div class="col-md-4 col-sm-4">
-	                    <select ng-model="consultInfo.problem_id" ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.problem_id as p.problem_id for p in problemList" class="form-control">
-	                    	<option value="">--Select A Problem--</option>
-	                    </select>
-	                </div>
-	            </div>
-        	</div>
-        </div>
-        <br/>
-        <div class="row">
-        	<div class="col-md-12 col-sm-12">
-        		<div class="table-dynamic">
-		            <table class="responsive table table-bordered">
-		                <thead>
-			                <tr>
-			                    <th>
-			                        <div class="th">
-										<span style="color: white;">Problem</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-										<span style="color: white;">ICD10 Code</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-			                            <span style="color: white;">ICPC Code</span>
-			                        </div>
-			                    </th>
-			                </tr>
-		                </thead>
-		                <tbody>
-			                <tr ng-if="problemArr.length <= 0">
-			                	<td colspan="3">
-			                		<div style="text-align: center;">
-		                				<span style="font-size: 20px; font-style: italic; font-weight: bold;">		Empty Data
-		                				</span>
-		                			</div>
-			                	</td>
-			                </tr>
-                            <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
-                                <td>
-                                    {{p.Notes}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{p.ICD10_code}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{p.ICPC_code}}
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1_1">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group" >
+                            <label class="control-label bold col-md-2 col-sm-2">Problems</label>
+                            <div class="col-md-4 col-sm-4">
+                                <select ng-model="consultInfo.problem_id" ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.problem_id as p.problem_id for p in problemList" class="form-control">
+                                    <option value="">--Select A Problem--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="table-dynamic">
+                            <table class="responsive table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">Problem</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">ICD10 Code</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">ICPC Code</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="problemArr.length <= 0">
+                                        <td colspan="3">
+                                            <div style="text-align: center;">
+                                                <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
+                                        <td>
+                                            {{p.Notes}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{p.ICD10_code}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{p.ICPC_code}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group" >
+                            <label class="control-label bold col-md-2 col-sm-2">History</label>
+                            <div class="col-md-10 col-sm-10">
+                                <textarea ng-model="consultInfo.history" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group" >
+                            <label class="control-label bold col-md-2 col-sm-2">Examination</label>
+                            <div class="col-md-10 col-sm-10">
+                                <textarea ng-model="consultInfo.examination" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group" >
+                            <label class="control-label bold col-md-2 col-sm-2">Treatment/Plan</label>
+                            <div class="col-md-10 col-sm-10">
+                                <textarea ng-model="consultInfo.treatment" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group" >
+                            <label class="control-label bold col-md-2 col-sm-2">Diagnosis</label>
+                            <div class="col-md-10 col-sm-10">
+                                <textarea ng-model="consultInfo.diagnosis" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_1_2">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <a href="javascript:;" ng-click="newMeasure()" class="btn green-jungle btn-sm">
+                        <i class="fa fa-plus"></i> Add New</a>
+                    </div>
+                </div>
+                <br/>
+                <div class="table-dynamic">
+                    <table class="responsive table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Date</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Height (cms)</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Weight (kgs)</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Waist (cms)</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Hips (cms)</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Neck (cms)</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="consultInfo.measurements.length <= 0">
+                                <td colspan="7">
+                                    <div style="text-align: center;">
+                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                        </span>
+                                    </div>
                                 </td>
                             </tr>
-		                </tbody>
-		            </table>
-		        </div>
-        	</div>
+                            <tr class="bold" align="center" ng-if="consultInfo.measurements.length > 0" ng-repeat="m in consultInfo.measurements">
+                                <td style="vertical-align: middle">
+                                    {{m.date}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.height}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.weight}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.waist}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.hips}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.neck}}
+                                </td>
+                                <td>
+                                    <a ng-click="editMeasure($index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a ng-click="delMeasure($index)" href="javascript:;" class="btn btn-icon-only btn-circle red">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_1_3">
+
+            </div>
+            <div class="tab-pane" id="tab_1_4">
+                <div class="row">
+                    <div style="text-align: center;" class="col-md-12 col-sm-12">
+                        <drawings 
+                            width="700" 
+                            height="500"
+                            lineWidth="4">
+                        </drawings>
+                    </div>
+                </div>
+                
+            </div>
         </div>
-        <div class="row">
-        	<div class="col-md-12 col-sm-12">
-        		<div class="form-group" >
-	                <label class="control-label bold col-md-2 col-sm-2">History</label>
-	                <div class="col-md-10 col-sm-10">
-	                    <textarea ng-model="consultInfo.history" class="form-control"></textarea>
-	                </div>
-	            </div>
-        	</div>
-        </div>
-        <br/>
-        <div class="row">
-        	<div class="col-md-12 col-sm-12">
-        		<div class="form-group" >
-	                <label class="control-label bold col-md-2 col-sm-2">Examination</label>
-	                <div class="col-md-10 col-sm-10">
-	                    <textarea ng-model="consultInfo.examination" class="form-control"></textarea>
-	                </div>
-	            </div>
-        	</div>
-        </div>
-        <br/>
-        <div class="row">
-        	<div class="col-md-12 col-sm-12">
-        		<div class="form-group" >
-	                <label class="control-label bold col-md-2 col-sm-2">Treatment/Plan</label>
-	                <div class="col-md-10 col-sm-10">
-	                    <textarea ng-model="consultInfo.treatment" class="form-control"></textarea>
-	                </div>
-	            </div>
-        	</div>
-        </div>
-        <br/>
-        <div class="row">
-        	<div class="col-md-12 col-sm-12">
-        		<div class="form-group" >
-	                <label class="control-label bold col-md-2 col-sm-2">Diagnosis</label>
-	                <div class="col-md-10 col-sm-10">
-	                    <textarea ng-model="consultInfo.diagnosis" class="form-control"></textarea>
-	                </div>
-	            </div>
-        	</div>
-        </div>
-		<br/>
-		<div class="portlet box blue-chambray">
-        	<div class="portlet-title">
-        		<div class="caption">
-        			<i class="fa fa-heart"></i>
-            		<span class="caption-subject uppercase">Measurement</span>
-            		&nbsp; &nbsp;
-            		<a href="javascript:;" ng-click="newMeasure()" class="btn green-jungle btn-sm">
-		                <i class="fa fa-plus"></i> Add New</a>
-        		</div>
-        		<div class="tools">
-        			<a href="javascript:;" class="collapse"></a>
-        		</div>
-        	</div>
-        	<div class="portlet-body">
-        		<div class="table-dynamic">
-		            <table class="responsive table table-bordered">
-		                <thead>
-			                <tr>
-			                    <th>
-			                        <div class="th">
-										<span style="color: white;">Date</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-										<span style="color: white;">Height</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-			                            <span style="color: white;">Weight</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-			                            <span style="color: white;">Waist</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-			                            <span style="color: white;">Hips</span>
-			                        </div>
-			                    </th>
-			                    <th>
-			                        <div class="th">
-			                            <span style="color: white;">Action</span>
-			                        </div>
-			                    </th>
-			                </tr>
-		                </thead>
-		                <tbody>
-			                <tr ng-if="consultInfo.measurements.length <= 0">
-			                	<td colspan="6">
-			                		<div style="text-align: center;">
-		                				<span style="font-size: 20px; font-style: italic; font-weight: bold;">		Empty Data
-		                				</span>
-		                			</div>
-			                	</td>
-			                </tr>
-		                </tbody>
-		            </table>
-		        </div>
-        	</div>
-        </div>
-        
-        
     </div>
-</div>
+</div>  

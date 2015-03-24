@@ -53,11 +53,11 @@
 	                            <label class="bold control-label col-md-2 col-sm-2">BP:</label>
 	                            <div class="col-md-10 col-sm-10">
 	                            	<div class="input-group">
-										<input type="text" class="form-control">
+										<input numbers-only ng-model="measurementInfo.bp1" value="0" type="text" class="form-control">
 										<span class="input-group-addon">
 											<label class="bold">/</label>
 										</span>
-										<input type="text" class="form-control">
+										<input numbers-only ng-model="measurementInfo.bp2" value="0" type="text" class="form-control">
 									</div>
 	                            </div>
 	                        </div>
@@ -69,7 +69,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Rate:</label>
 	                            <div class="col-md-8 col-sm-8">
-	                                <input type="text" class="form-control" />
+	                                <input numbers-only ng-model="measurementInfo.rate" value="0" type="text" class="form-control" />
 	                            </div>
 	                        </div>
 	                    </div>
@@ -86,7 +86,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Height:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control">
+										<input numbers-only ng-model="measurementInfo.height" value="0" type="text" class="form-control">
 										<span class="input-group-addon">
 											<label>cms</label>
 										</span>
@@ -99,7 +99,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Weight:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control">
+										<input numbers-only ng-model="measurementInfo.weight" value="0" type="text" class="form-control">
 										<span class="input-group-addon">
 											<label>kgs</label>
 										</span>
@@ -115,7 +115,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Excess Wt:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control" disabled value="0">
+										<input numbers-only ng-model="measurementInfo.excessWt" type="text" class="form-control" disabled value="0">
 										<span class="input-group-addon">
 											<label>kgs</label>
 										</span>
@@ -127,7 +127,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">BMI:</label>
 	                            <div class="col-md-8 col-sm-8">
-	                               <input type="text" class="form-control" disabled value="0">
+	                               <input numbers-only ng-model="measurementInfo.bmi" type="text" class="form-control" disabled value="0">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -139,7 +139,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Waist:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control" value="0">
+										<input numbers-only ng-model="measurementInfo.waist" type="text" class="form-control" value="0">
 										<span class="input-group-addon">
 											<label>cms</label>
 										</span>
@@ -151,7 +151,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Ratio:</label>
 	                            <div class="col-md-8 col-sm-8">
-	                               <input type="text" class="form-control" disabled value="0">
+	                               <input numbers-only ng-model="measurementInfo.ratio" type="text" class="form-control" disabled value="0">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -163,7 +163,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Hips:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control" value="0">
+										<input numbers-only ng-model="measurementInfo.hips" type="text" class="form-control" value="0">
 										<span class="input-group-addon">
 											<label>cms</label>
 										</span>
@@ -175,7 +175,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Neck:</label>
 	                            <div class="col-md-8 col-sm-8">
-	                               <input type="text" class="form-control" disabled value="0">
+	                               <input numbers-only ng-model="measurementInfo.neck" type="text" class="form-control" value="0">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -187,7 +187,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Head Crc:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control" value="0">
+										<input numbers-only ng-model="measurementInfo.headCrc" type="text" class="form-control" value="0">
 										<span class="input-group-addon">
 											<label>cms</label>
 										</span>
@@ -204,7 +204,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Cholesterol:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.cholesterol" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -212,7 +212,7 @@
 	                       	<div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">PSA:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.psa" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -223,7 +223,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Tryglycerides:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.tryclycerides" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -231,7 +231,7 @@
 	                       	<div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Cretinine:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.cretinine" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -242,7 +242,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">HDL:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.hdl" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -250,7 +250,7 @@
 	                       	<div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">ACR:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.acr" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -261,7 +261,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">LDL:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input type="text" class="form-control" value="0">
+									<input numbers-only ng-model="measurementInfo.ldl" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -270,7 +270,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">GFR:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control" value="0">
+										<input numbers-only ng-model="measurementInfo.gfr" type="text" class="form-control" value="0">
 										<span class="input-group-addon">
 											<label>umol/l</label>
 										</span>
@@ -286,7 +286,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">BSL:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input type="text" class="form-control" value="0">
+										<input numbers-only ng-model="measurementInfo.bsl" type="text" class="form-control" value="0">
 										<span class="input-group-addon">
 											<label>mL/min</label>
 										</span>
@@ -296,14 +296,40 @@
 	                    </div>
 	                    <div class="col-md-6 col-sm-6">
 	                        <div class="form-group">
-	                            <label class="bold control-label col-md-4 col-sm-4">BSL:</label>
+	                            <label class="bold control-label col-md-4 col-sm-4">HbA1C:</label>
 	                            <div class="col-md-8 col-sm-8">
-	                                <div class="input-group">
-										<input type="text" class="form-control" value="0">
-										<span class="input-group-addon">
-											<label>mL/min</label>
-										</span>
-									</div>
+									<input numbers-only ng-model="measurementInfo.hba1c" type="text" class="form-control" value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <div class="col-md-12 col-sm-12">
+	                            	<input ng-model="measurementInfo.isMdrd" type="radio" name="checkGrp" value="1">&nbsp;MDRD
+									&nbsp;&nbsp;
+	                            	<input type="radio" ng-model="measurementInfo.isMdrd" name="checkGrp" value="0">&nbsp;Cockroft-Gault
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Microalbuminuria:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input numbers-only ng-model="measurementInfo.microalbuminuria" type="text" class="form-control" value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Potassium:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input numbers-only ng-model="measurementInfo.potassium" type="text" class="form-control" value="0">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -311,11 +337,68 @@
 				</div>
 				<!-- Respiratory -->
 				<div class="tab-pane" id="tab_3">
-					CCCC
+					<div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">FEV1:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input numbers-only ng-model="measurementInfo.fev1" type="text" class="form-control" value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">FVC:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input numbers-only ng-model="measurementInfo.fvc" type="text" class="form-control" value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <br/>
+	                <div class="row">
+	                	<div class="col-md-6 col-sm-6">
+	                        <div class="form-group">
+	                            <label class="bold control-label col-md-4 col-sm-4">Gas Transfer:</label>
+	                            <div class="col-md-8 col-sm-8">
+									<input numbers-only ng-model="measurementInfo.gasTransfer" type="text" class="form-control" value="0">
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
 				</div>
 				<!-- Ophthalmology -->
 				<div class="tab-pane" id="tab_4">
-					DDDD
+					<div class="row" >
+						<div class="col-md-12 col-sm-12" style="text-align: center;">
+							<table class="responsive table table-bordered">
+								<thead>
+									<tr align="center">
+										<th></th>
+										<th>Right</th>
+										<th>Left</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Pressure:</td>
+										<td><input numbers-only ng-model="measurementInfo.pressureRight" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.pressureLeft" type="text" class="form-control" value="0"></td>
+									</tr>
+									<tr>
+										<td>Uncorrected:</td>
+										<td><input numbers-only ng-model="measurementInfo.uncorrectedRight" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.uncorrectedLeft" type="text" class="form-control" value="0"></td>
+									</tr>
+									<tr>
+										<td>Corrected:</td>
+										<td><input numbers-only ng-model="measurementInfo.correctedRight" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.correctedLeft" type="text" class="form-control" value="0"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+	                </div>
 				</div>
 			</div>
 		</div>
@@ -323,5 +406,5 @@
 </div>
 <div class="modal-footer">
     <a href="javascript:;" class="btn btn-danger" ng-click='cancelClick()'>Cancel</a>
-    <button type="submit" class="btn green"  >Submit</button>
+    <a href="javascript:;" ng-click="okClick()" class="btn green"  >Submit</button>
 </div>

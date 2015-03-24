@@ -111,6 +111,34 @@ angular.module("app.directive.common", [
     };
 })
 
+.directive('bootstrapSwitch', [
+    function() {
+        return {
+            restrict: 'A',
+            require: '?ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                element.bootstrapSwitch();
+
+                element.on('switchChange.bootstrapSwitch', function(event, state) {
+                    if (ngModel) {
+                        scope.$apply(function() {
+                            ngModel.$setViewValue(state);
+                        });
+                    }
+                });
+
+                scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+                    if (newValue) {
+                        element.bootstrapSwitch('state', true, true);
+                    } else {
+                        element.bootstrapSwitch('state', false, true);
+                    }
+                });
+            }
+        };
+    }
+])
+
 .directive("audiogram", function($timeout){
     return {
         restrict: "EA",
@@ -186,20 +214,20 @@ angular.module("app.directive.common", [
 .directive('numbersOnly', function(){
    return {
      require: 'ngModel',
+     scope: {
+            model: "=ngModel"
+        },
      link: function(scope, element, attrs, modelCtrl) {
-       modelCtrl.$parsers.push(function (inputValue) {
-           // this next if is necessary for when using ng-required on your input. 
-           // In such cases, when a letter is typed first, this parser will be called
-           // again, and the 2nd time, the value will be undefined
-           if (inputValue == undefined) return '' 
-           var transformedInput = inputValue.replace(/[^0-9/./:]+/g, ''); 
-           if (transformedInput!=inputValue) {
-              modelCtrl.$setViewValue(transformedInput);
-              modelCtrl.$render();
-           }         
-
-           return transformedInput;         
-       });
+       
+        scope.$watch('model', function(newValue,oldValue) {
+            var arr = String(newValue).split("");
+            if (arr.length === 0) return;
+            if (arr.length === 1 && (arr[0] == '-' || arr[0] === '.' )) return;
+            if (arr.length === 2 && newValue === '-.') return;
+            if (isNaN(newValue)) {
+                scope.model = oldValue;
+            }
+        });
 
        element.bind('keypress', function(event) {
         if(event.keyCode === 32) {
