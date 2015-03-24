@@ -8,7 +8,6 @@ module.exports = {
     addAllTask: function(req, res) {
         var allTask = req.body.allTask;
         var info = req.body.info;
-
         db.timeTaskWeek.create({
                 start_date: info.startWeek,
                 end_date: info.endWeek,
@@ -98,6 +97,7 @@ module.exports = {
 
     editTask: function(req, res) {
         var allTask = req.body.allTask;
+        var info = req.body.info;
         db.timeTasks.max('tasks_id')
             .success(function(id) {
                 var tId = id;
@@ -409,8 +409,11 @@ module.exports = {
 
     showDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`,a.`type_activity_id` AS activity_id,t.`time_charge` FROM" +
+        db.sequelize.query("SELECT t.`date`, time_task_status.name as status, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
                 " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
+                " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
+                " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
+                " hr_employee.Employee_ID  = users.employee_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
                 " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0", null, {
                     raw: true
                 }, [info])
@@ -456,7 +459,7 @@ module.exports = {
                     return false;
                 } else {
                     db.sequelize.query("SELECT t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " +
-                            "i.`time_charge` FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` " +
+                            "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id` WHERE " +
                             "t.`tasks_week_id` = ?", null, {
                                 raw: true
@@ -548,9 +551,13 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT t.`tasks_id`,t.`date`,l.`NAME` AS location,d.`departmentName` AS department," +
+        db.sequelize.query("SELECT t.`tasks_id`,t.`tasks_week_id`,t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
                 "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
-                "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid`" +
+                "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
+                "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
+                "INNER JOIN users ON users.id  = time_tasks_week.user_id " +
+                "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+                "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
                 "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
                 "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
                 "LEFT JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id`" +

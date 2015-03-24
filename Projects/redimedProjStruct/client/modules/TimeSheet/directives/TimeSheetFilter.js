@@ -1,24 +1,38 @@
 angular.module("app.loggedIn.TimeSheet.Filter", [])
-    .filter('customHours', function() {
+    .filter('customHours', function(MIN_TO_DEC) {
         return function(time_charge) {
-            if (isNaN(time_charge) === false) {
-                if (time_charge === 0 || time_charge === undefined || time_charge === null) {
-                    return "00:00";
+            if (time_charge !== undefined && time_charge !== null && (!isNaN(time_charge))) {
+                hours = parseInt(time_charge);
+                var n = time_charge.toString().indexOf(".");
+                if (n !== -1) {
+                    var minutes = time_charge.toString().substr(n + 1, 3);
+                    if (minutes > 10) {
+                        minutes = parseFloat(minutes / 100);
+                    } else if (minutes > 1) {
+                        minutes = parseFloat(minutes / 10);
+                    }
+                    angular.forEach(MIN_TO_DEC, function(value) {
+                        if (value.dec == minutes) {
+                            minutes = parseInt(value.min);
+
+                        }
+                    });
+                    if (parseInt(hours) < 10) {
+                        hours = '0' + hours;
+                    }
+                    if (minutes < 10) {
+                        minutes = '0' + minutes;
+                    }
+                    var returnValue = hours + ':' + minutes + '0000';
+                    return returnValue.substring(0, 5);
                 } else {
-                    var hour = parseInt(time_charge);
-                    var minute = (time_charge - hour) * 60;
-                    var minuteTemp = parseFloat(minute);
-                    minute = Math.round(minute * 1000) / 1000;
-                    if (hour < 10) {
-                        hour = "0" + hour;
+                    if (parseInt(hours) < 10) {
+                        hours = '0' + hours;
                     }
-                    if (minute < 10) {
-                        minute = "0" + minute;
-                    }
-                    var result = hour + ":" + minute;
-                    return result.substring(0, 5);
+                    var returnValue = hours + ':' + '0000';
+                    return returnValue.substring(0, 5);
                 }
-            } else return time_charge;
+            }
 
         };
     })
@@ -48,3 +62,39 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
             } else return "";
         };
     });
+
+//thanh
+// service.covertTimeCharge = function(time_charge) {
+//     if (time_charge !== undefined && time_charge !== null && (!isNaN(time_charge))) {
+//         var hours = parseInt(time_charge.substring(0, 2));
+//         var minutes = parseInt(time_charge.substring(2, 4));
+//         angular.forEach(MIN_TO_DEC, function(value) {
+//             if (value.min == minutes) {
+//                 hours += value.dec;
+//             }
+//         });
+//         return hours;
+//     }
+// };
+
+// service.unCovertTimeCharge = function(time_charge) {
+//     if (time_charge !== undefined && time_charge !== null && (!isNaN(time_charge))) {
+//         hours = parseInt(time_charge.toString());
+//         var minutes = time_charge.toString().substring(3, time_charge.toString().length);
+//         minutes = (minutes / 100);
+//         angular.forEach(MIN_TO_DEC, function(value) {
+//             if (value.dec == minutes) {
+//                 minutes = parseInt(value.min);
+//             }
+//         });
+//         if (hours < 10) {
+//             hours = '0' + hours;
+//         }
+//         if (minutes < 10) {
+//             minutes = '0' + minutes;
+//         }
+//         var returnValue = hours.toString() + minutes.toString();
+//         return returnValue.substring(0, 5);
+//     }
+// };
+//end thanh

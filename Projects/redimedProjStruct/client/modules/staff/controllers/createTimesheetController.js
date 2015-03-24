@@ -1,10 +1,12 @@
 angular.module("app.loggedIn.timesheet.create.controller", [])
 
-.controller("TimesheetCreateController", function($rootScope, $scope, $stateParams, $cookieStore, $filter, ConfigService, $modal, calendarHelper, moment, StaffService, $state, toastr) {
-    //close 
+.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr) {
+    //CLOSE MEMU
     $('body').addClass("page-sidebar-closed");
     $('ul').addClass("page-sidebar-menu-closed");
+    //END CLOSE
 
+    // CHECK ITEM 
     if (!$scope.tasks) {
         $scope.tasks = [];
     }
@@ -34,19 +36,23 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         item: []
 
     };
+    //END CHECK ITEM
 
+    //FUNCTION SUM TOTAL TIME CHARGE
     $scope.changeTimeCharge = function(task) {
-        task.time_temp = StaffService.getFortMatTimeTemp(task.time_charge);
-        sum = 0;
+        task.time_temp = StaffService.covertTimeCharge(task.time_charge);
+        var sum = 0;
         angular.forEach($scope.tasks, function(data) {
-            if (data.time_temp !== null) {
-                sum = sum * 1 + data.time_temp * 1;
+            if (data.time_temp !== null && data.time_temp !== undefined) {
+                sum = parseFloat(sum) + parseFloat(data.time_temp);
             }
         });
         $scope.info.time_temp = sum;
-        $scope.info.time_charge = StaffService.getFortMatTimeCharge(sum);
+        $scope.info.time_charge = StaffService.unCovertTimeCharge(sum);
     };
+    //END FUNCTION TOTAL TIME CHARGE
 
+    //FUNCTION GET WEEK NUMBER
     $scope.getWeekNumber = function(d) {
         d = new Date(+d);
         d.setHours(0, 0, 0);
@@ -55,9 +61,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         return weekNo;
     };
+    //FUNCTION GET WEEK NUMBER
 
+    //FUNCTION CHECK TASK WEEK
     $scope.checkTaskWeek = function(date) {
-
         $scope.tasks = [];
         startWeek = $filter('date')(date, 'yyyy-MM-dd');
         $scope.info.startWeek = startWeek;
@@ -80,7 +87,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             department_code_id: null,
                             location_id: null,
                             activity_id: null,
-                            time_charge: '0000',
+                            time_charge: null,
                             isInputItem: false,
                             isBillable: false,
                             item: []
@@ -92,7 +99,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         });
     };
+    //END FUNCTION CHECK TASK WEEK
 
+    //FUNCTION CHECK TASK WEEK
     $scope.checkFirstTaskWeek = function() {
         $scope.tasks = [];
         StaffService.checkFirstTaskWeek($scope.info).then(function(response) {
@@ -126,7 +135,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             }
         });
     };
+    // END FUNCTION CHECK TASK WEEK
 
+    //FUNCTION LOAD INFO
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
         StaffService.getDepartmentLocation().then(function(response) {
@@ -137,6 +148,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 $scope.locations = response['location'];
                 $scope.activities = response['activity'];
                 if ($stateParams.id) {
+                    //EDIT TIMESHEET
                     $scope.isEdit = true;
                     $scope.idWeek = $stateParams.id;
                     StaffService.showEdit($scope.idWeek).then(function(response) {
@@ -177,15 +189,21 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         }
                     });
                 } else {
+                    //ADD TIMESHEET
+                    $scope.isEdit = false;
                     $scope.checkFirstTaskWeek();
                 }
             }
         });
         $scope.tasks.loading = false;
     };
+    //END FUNCTION LOAD INFO
 
+    //CALL LOAD INFO
     $scope.loadInfo();
+    //END CALL
 
+    //FUNCTION ADD NEW ROW
     $scope.addRow = function(index, date) {
         var j = 0;
         for (var i = index; i < $scope.tasks.length; i++) {
@@ -209,13 +227,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         };
         $scope.tasks.splice(index + j, 0, task);
     };
+    //END CHECK NEW ROW
 
+    //GET DATE FROM
     var dateFrom;
     $scope.changeDate = function() {
         dateFrom = new Date($scope.dateWeekFrom.substr(6, 4), $scope.dateWeekFrom.substr(3, 2) - 1, $scope.dateWeekFrom.substr(0, 2));
         $scope.checkTaskWeek(dateFrom);
     };
+    //END FROM
 
+    //DEL TASK
     $scope.delTask = function(index, order) {
         if (order != 1) {
             swal({
@@ -233,7 +255,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             });
         }
     };
+    //END TASK
 
+    //ADD ALL TASK OF WEEK
     $scope.addAllTask = function(status) {
         if (!$scope.isEdit) {
             startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
@@ -269,6 +293,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
     };
+    //END ADD ALL TASK OF WEEK
 
     //CHOOSE ITEM THANH
     $scope.chooseItem = function(task, index) {
@@ -296,10 +321,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
                 //click save
                 $scope.clickSave = function(info) {
-                    if (info !== undefined) {
+                    if (info !== undefined && info !== null) {
                         for (var i = 0; i < info.length; i++) {
-                            info[i].time_temp = StaffService.getFortMatTimeTemp(info[i].time_charge);
-
+                            info[i].time_temp = parseFloat(StaffService.covertTimeCharge(info[i].time_charge));
                         }
                     }
                     modalInstance.close({
@@ -326,31 +350,36 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         c = c + list[i].time_temp;
                     }
                     task.task = t.join(' , ');
-                    task.time_charge = StaffService.getFortMatTimeCharge(c);
+                    task.time_charge = StaffService.unCovertTimeCharge(parseFloat(c));
+                    task.time_temp = parseFloat(c);
                     $scope.changeTimeCharge(task);
                 } else {
                     task.task = null;
                     task.time_charge = null;
+                    $scope.changeTimeCharge(task);
                 }
-
-                $scope.changeTimeCharge(task);
             }
 
         });
     };
     //END CHOOSE ITEM THANH
 
+    //SET CALENDAR TODAY
     $scope.setCalendarToToday = function() {
         $scope.calendarDay = new Date();
     };
+    //END SET CALENDAR TODAY
 
+    //TOGGLE
     $scope.toggle = function($event, field, event) {
         $event.preventDefault();
         $event.stopPropagation();
 
         event[field] = !event[field];
     };
+    //END TOGLE
 
+    //SHOW WEEK
     StaffService.showWeek($scope.info.userID);
-
+    //END SHOW WEEK
 });

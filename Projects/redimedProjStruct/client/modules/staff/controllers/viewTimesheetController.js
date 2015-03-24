@@ -181,7 +181,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         return date.getDay() === 0 ? 7 : date.getDay();
     };
 
-    $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
+    // $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
     $scope.week = infoWeek;
 
     $scope.getFortMatTimeCharge = function(val) {
@@ -204,14 +204,20 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         StaffService.getTask(infoWeek.task_week_id).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
-                // $state.go('loggedIn.home', null, {'reload': true});
             } else if (response['status'] == 'success') {
+                var result = response.data;
+                //get status and employee name
+                $scope.STATUS = result[0].STATUS;
+                $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
+                //edn get
                 if (infoWeek.date != 'full') {
                     $scope.one = true;
+                    $scope.Title = "TimeSheet Detail"; //seet title TimeSheet Detail
                     $scope.tasks = _.filter(response['data'], function(data) {
                         return data.date == infoWeek.date;
                     });
                 } else {
+                    $scope.Title = "Full Timesheet"; //set title Full Timesheet
                     $scope.one = false;
                     $scope.tasks = response['data'];
                 }
@@ -257,8 +263,12 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.cancelClick = function() {
         $modalInstance.close();
     };
-
-    $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
+    $scope.okClick = function() {
+        $modalInstance.close();
+        $state.go('loggedIn.timesheet.create', {
+            id: infoWeek.task_week_id
+        });
+    };
     $scope.week = infoWeek;
 
     $scope.loadInfo = function() {
@@ -267,6 +277,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'success') {
+                var result = response.data;
+                $scope.STATUS = result[0].status;
+                $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 $scope.tasks = _.chain(response['data'])
                     .groupBy("date")
                     .map(function(value, key) {

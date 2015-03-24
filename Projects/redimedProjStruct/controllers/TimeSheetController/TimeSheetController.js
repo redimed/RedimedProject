@@ -944,7 +944,7 @@ module.exports = {
         var info = req.body.info;
         var strQuery = "SELECT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity, time_item_task.comment, " +
-            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
+            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, time_tasks_week.time_in_lieu, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
             "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN users ON users.id=time_tasks_week.user_id " +
@@ -1205,7 +1205,7 @@ module.exports = {
                                                         }
                                                         //get list approved
                                                         var queryApprovedTimeSheet = "SELECT DISTINCT time_tasks_week.task_week_id, time_tasks_week.time_charge, time_tasks_week.start_date, time_tasks_week.end_date, " +
-                                                            "time_tasks_week.time_rest, time_tasks_week.over_time, time_tasks_week.date_submited, time_tasks_week.comments, " +
+                                                            "time_tasks_week.over_time, time_tasks_week.date_submited, time_tasks_week.comments, " +
                                                             "hr_employee.Employee_Code, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct, time_task_status.name " +
                                                             "FROM time_tasks_week INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
                                                             "INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN time_task_status ON " +
@@ -1353,19 +1353,12 @@ module.exports = {
         var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var timeType = "";
         if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
-            var hourInLieu = parseInt(info.time_in_lieu.substring(0, 2));
-            var minuteInLieu = parseInt(info.time_in_lieu.substring(2, 4));
-            var time_in_lieu = hourInLieu + (minuteInLieu / 60);
-            var hourOver = parseInt(info.over_time.substring(0, 2));
-            var minuteOver = parseInt(info.over_time.substring(2, 4));
-            var over_time = hourOver + (minuteOver / 60);
-            if (time_in_lieu !== undefined) {
-                timeType += ", time_in_lieu = " + time_in_lieu;
+            if (info.time_in_lieu_Real !== undefined && info.time_in_lieu_Real !== null) {
+                timeType += ", time_in_lieu = " + info.time_in_lieu_Real;
             }
-            if (over_time !== undefined) {
-                timeType += ", over_time = " + over_time;
+            if (info.over_time_Real !== undefined && info.over_time_Real !== null) {
+                timeType += ", over_time = " + info.over_time_Real;
             }
-            timeType += ", time_rest = 0";
         }
         var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + info.idTaskWeek;
         db.sequelize.query(query)
