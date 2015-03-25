@@ -56,8 +56,16 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                     if (newModel === "chooseApprove") {
                         scope.info.isApprove = true;
                         scope.info.isReject = false;
+                    } else if (newModel === "cancelOn") {
+                        scope.info.isReject = null;
+                        scope.info.isApprove = false;
                     }
                 });
+
+                scope.cancelClick = function() {
+                    scope.info.isReject = 1;
+                    scope.info.isApprove = 1;
+                };
                 scope.changeTimeInLieu = function() {
                     if (scope.info.time_in_lieu !== undefined) {
                         if (scope.info.time_in_lieu.length === 0) {

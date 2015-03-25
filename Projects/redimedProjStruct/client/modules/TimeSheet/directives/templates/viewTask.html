@@ -110,7 +110,7 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
         <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
         <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4">Reject</a>
         <!-- END BUTTON -->
