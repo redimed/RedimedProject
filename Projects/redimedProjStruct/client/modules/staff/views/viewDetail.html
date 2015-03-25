@@ -96,8 +96,13 @@
         <a ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
-        <a ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="summitClick(ID_WEEK,STATUS)" ng-class="{'re-submitted':STATUS==='Rejected','submited':STATUS==='Awaiting for Submit'}" class="btn pull-right btn-xs">
-                {{(STATUS==='Awaiting for Submit')?"Submit":"Re-submit"}}
+        <a ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        STATUS==="Rejected"' ng-click="submitClick(ID_WEEK, STATUS)" class="btn pull-right green btn-xs">
+               Submit
+            </a>
+        <a ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        STATUS==="Awaiting for Submit"' ng-click="submitClick(ID_WEEK, STATUS)" class="btn purple pull-right btn-xs">
+               Re-submit
             </a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->

@@ -343,16 +343,20 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 //end click cancel
 
                 //click save
-                $scope.clickSave = function(info) {
-                    if (info !== undefined && info !== null) {
-                        for (var i = 0; i < info.length; i++) {
-                            info[i].time_temp = parseFloat(StaffService.covertTimeCharge(info[i].time_charge));
+                $scope.clickSave = function(info, formValid) {
+                    if (formValid.$invalid === true) {
+                        toastr.error("Please Input All Required Information!", "Error");
+                    } else {
+                        if (info !== undefined && info !== null) {
+                            for (var i = 0; i < info.length; i++) {
+                                info[i].time_temp = parseFloat(StaffService.covertTimeCharge(info[i].time_charge));
+                            }
                         }
+                        modalInstance.close({
+                            type: "ok",
+                            value: info
+                        });
                     }
-                    modalInstance.close({
-                        type: "ok",
-                        value: info
-                    });
                 };
                 //end click save
             },

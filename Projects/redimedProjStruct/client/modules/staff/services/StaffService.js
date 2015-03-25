@@ -262,12 +262,12 @@ angular.module("app.loggedIn.staff.service", [])
                 if (monthTemp < 10)
                     monthTemp = '0' + monthTemp;
                 array.push(temp.getYear() + '-' + monthTemp + '-' + temp.getDate());
-            })
+            });
             var selectCurrentWeek = function() {
                 window.setTimeout(function() {
                     $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
                 }, 1);
-            }
+            };
 
             var setDates = function(input) {
                 var $input = $(input);

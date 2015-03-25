@@ -3,8 +3,8 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Timesheets</a>
+            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -27,7 +27,7 @@
         </div>
         <div class="actions">
             <label ng-hide='isEdit'>Week From</label>
-            <input ng-disabled='isEdit' style="color: black" class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
+            <input ng-disabled='isEdit' style="color: black" class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" />
             <a href="javascript:;" class="icon-time" data-toggle="tooltop" data-placement='left' tooltip title="You have 2 time in lieu">
                 <i class="icon icon-clock"></i>
                 <span class="badge badge-danger">20</span>
@@ -123,15 +123,16 @@
                             <input ng-disabled="task.activity_id != 1 || task.activity_id === 18" style="margin-left: 28px; margin-top:5px;" type="checkbox" class="checkbox center" ng-model="task.isInputItem" />
                         </td>
                         <td style="width: 2%" style="text-align: center">
-                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" style="font-style: 'normal';text-align: center;width: 100%">
-                            <td style="width: 20%">
-                                <input ng-disabled="task.isInputItem || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
+                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="task.activity_id === 18" class="form-control input-sm">
+                        </td>
+                        <td style="width: 20%">
+                            <input ng-disabled="task.isInputItem || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
                             task.activity_id === 17 || task.activity_id === 19" class="form-control input-sm" ng-model="task.task" />
-                            </td>
-                            <td style="text-align:center;">
-                                <span ng-disabled="!task.isInputItem || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
+                        </td>
+                        <td style="text-align:center;">
+                            <span ng-disabled="!task.isInputItem || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
                             task.activity_id === 17 || task.activity_id === 19" ng-click="chooseItem(task,$index)" class="btn btn-xs blue-dark" style="margin-top:3px;margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
-                            </td>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="7" style="vertical-align: middle">
@@ -162,5 +163,5 @@
     <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
 </script>
 <script type="text/ng-template" id="ItemCode">
-    <item-code ng-model="items" on-cancel="clickCancel(return)" on-save="clickSave(return)"></item-code>
+    <item-code ng-model="items" on-cancel="clickCancel(return)" on-save="clickSave(return,formValid)"></item-code>
 </script>

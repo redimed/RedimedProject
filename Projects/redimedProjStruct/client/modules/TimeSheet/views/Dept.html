@@ -2,11 +2,10 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">TimeSheets</a>
+            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+            <a ui-sref="loggedIn.TimeSheetHome">e-TimeSheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
-
         <li>
             <a ui-sref="loggedIn.AdminTimeSheet">Administrator</a>
             <i class="fa fa-angle-right"></i>
@@ -40,13 +39,11 @@
                             </span> Dept name
                             </div>
                         </th>
-
                         <th>
                             <div class="th">
                                 Location
                             </div>
                         </th>
-
                         <th>
                             <div class="th">
                                 Action
@@ -96,12 +93,11 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                                <span class="custom-timesheet">Total: {{list.count}}</span>
-
-                                <span class="custom-timesheet">Show</span>
-                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
-                                </select>
-                                <span class="custom-timesheet">entries per page</span>
+                            <span class="custom-timesheet">Total: {{list.count}}</span>
+                            <span class="custom-timesheet">Show</span>
+                            <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                            </select>
+                            <span class="custom-timesheet">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>

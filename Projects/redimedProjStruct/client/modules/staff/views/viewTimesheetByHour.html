@@ -65,7 +65,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
-                                <td class="btn btn-xs">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
                                 <td class="btn btn-xs" ng-repeat="act in task.arrActivity track by $index">
                                     {{act}}
                                 </td>
