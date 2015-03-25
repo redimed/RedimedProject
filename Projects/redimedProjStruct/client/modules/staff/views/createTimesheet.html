@@ -27,7 +27,7 @@
         </div>
         <div class="actions">
             <label ng-hide='isEdit'>Week From</label>
-            <input ng-hide='isEdit' style="color: black" class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" />
+            <input ng-disabled='isEdit' style="color: black" class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()"/>
             <a href="javascript:;" class="icon-time" data-toggle="tooltop" data-placement='left' tooltip title="You have 2 time in lieu">
                 <i class="icon icon-clock"></i>
                 <span class="badge badge-danger">20</span>

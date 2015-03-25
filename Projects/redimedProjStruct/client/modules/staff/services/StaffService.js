@@ -17,6 +17,13 @@ angular.module("app.loggedIn.staff.service", [])
             search: search
         });
     };
+    service.SubmitOnView = function(idweek, status) {
+        var SubmitOnView = api.all('staff/SubmitOnView');
+        return SubmitOnView.post({
+            idWeek: idweek,
+            status: status
+        });
+    };
 
     service.editTask = function(task, info) {
         var editTask = api.all('staff/editTask');

@@ -92,6 +92,9 @@
         <a ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
+        <a ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="submitClick(ID_WEEK, STATUS)" class="btn pull-right green btn-xs">
+                Submit
+            </a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>

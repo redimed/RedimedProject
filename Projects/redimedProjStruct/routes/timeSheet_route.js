@@ -13,3 +13,4 @@ app.get('/api/staff/getDepartmentLocation', TimeSheetController.getDepartmentLoc
 app.get('/api/staff/task/getList', TimeSheetController.getTaskList);
 app.post('/api/staff/items', TimeSheetController.getItemList);
 app.post("/api/staff/get-contract", TimeSheetController.LoadContract);
+app.post("/api/staff/SubmitOnView", TimeSheetController.SubmitOnView);

@@ -198,6 +198,29 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             id: infoWeek.task_week_id
         });
     };
+    //summit on date
+    $scope.summitClick = function(idWeek, STATUS) {
+        var status = 0;
+        if (STATUS == 'Awaiting for Submit') {
+            status = 2;
+        } else if (STATUS == 'Rejected') {
+            status = 5;
+        }
+        StaffService.SubmitOnView(idWeek, status).then(function(response) {
+            if (response.status === 'error') {
+                toastr.error("Submit fail!", "Error");
+                $modalInstance.close();
+            } else if (response.status === 'success') {
+                $modalInstance.close();
+                $state.go("loggedIn.timesheet.view", null, {
+                    "reload": true
+                });
+                toastr.success("Submit success", "Success");
+            }
+
+        });
+    };
+    //end
 
     $scope.loadInfo = function() {
         $scope.tasks.loading = true;
@@ -207,6 +230,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             } else if (response['status'] == 'success') {
                 var result = response.data;
                 //get status and employee name
+                $scope.ID_WEEK = result[0].tasks_week_id;
                 $scope.STATUS = result[0].STATUS;
                 $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 //edn get
@@ -263,6 +287,27 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.cancelClick = function() {
         $modalInstance.close();
     };
+    $scope.submitClick = function(idWeek, STATUS) {
+        var status = 0;
+        if (STATUS == 'Awaiting for Submit') {
+            status = 2;
+        } else if (STATUS == 'Rejected') {
+            status = 5;
+        }
+        StaffService.SubmitOnView(idWeek, status).then(function(response) {
+            if (response.status === 'error') {
+                toastr.error("Submit fail!", "Error");
+                $modalInstance.close();
+            } else if (response.status === 'success') {
+                $modalInstance.close();
+                $state.go("loggedIn.timesheet.view", null, {
+                    "reload": true
+                });
+                toastr.success("Submit success", "Success");
+            }
+
+        });
+    };
     $scope.okClick = function() {
         $modalInstance.close();
         $state.go('loggedIn.timesheet.create', {
@@ -279,6 +324,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             } else if (response['status'] == 'success') {
                 var result = response.data;
                 $scope.STATUS = result[0].status;
+                $scope.ID_WEEK = result[0].tasks_week_id;
                 $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 $scope.tasks = _.chain(response['data'])
                     .groupBy("date")

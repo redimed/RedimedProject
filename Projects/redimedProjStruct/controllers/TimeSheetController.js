@@ -407,7 +407,7 @@ module.exports = {
 
     showDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`, time_task_status.name as status, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
+        db.sequelize.query("SELECT t.`date`, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
                 " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
                 " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
                 " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
@@ -459,7 +459,7 @@ module.exports = {
                     db.sequelize.query("SELECT time_tasks_week.task_status_id, t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                            " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id "+
+                            " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
                             " WHERE " +
                             "t.`tasks_week_id` = ?", null, {
                                 raw: true
@@ -614,7 +614,7 @@ module.exports = {
         //END SEARCH
         var query = "SELECT time_tasks_week.start_date,time_tasks_week.task_week_id, time_tasks_week.end_date, time_tasks_week.time_charge, time_task_status.name, " +
             "time_tasks_week.comments FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
-            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = " + searchObj.userID + strWeek + strSearch + " LIMIT " +
+            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = " + searchObj.userID + strWeek + strSearch + " ORDER BY time_tasks_week.start_date DESC LIMIT " +
             searchObj.limit + " OFFSET " + searchObj.offset;
         db.sequelize.query(query)
             .success(function(result) {
@@ -776,6 +776,24 @@ module.exports = {
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    SubmitOnView: function(req, res) {
+        var idWeek = req.body.idWeek;
+        var status = req.body.status;
+        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + status + " WHERE time_tasks_week.task_week_id = " + idWeek;
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: 'success'
+                });
+                return;
+            })
+            .error(function(err) {
                 res.json({
                     status: "error"
                 });
