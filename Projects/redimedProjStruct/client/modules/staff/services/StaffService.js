@@ -226,7 +226,7 @@ angular.module("app.loggedIn.staff.service", [])
             }
 
         } else {
-            return "0000";
+            return "00:00";
         }
 
     };
