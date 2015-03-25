@@ -25,11 +25,6 @@
             <table class="responsive table table-bordered" ng-show="!list.loading">
                 <thead ng-show="list.result!==null">
                     <tr>
-                        <th style="width:3%;">
-                            <div class="th">
-                                No.
-                            </div>
-                        </th>
                         <th style="width:20%;">
                             <div class="th">
                                 For The Week
@@ -54,7 +49,6 @@
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <td style="width:3%;"></td>
                         <td style="width:20%;">
                             <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" style="text-align:center;">
                         </td>
@@ -65,12 +59,11 @@
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
-                        <td colspan="5">
+                        <td colspan="4">
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result track by $index" style="cursor: pointer; " ng-dblclick="view(l)">
-                        <td class="btn btn-xs" style="text-align:center;"><span style="text-align:center;">{{$index+1}}</span></td>
                         <td class="btn btn-xs"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd-MM-yyyy"}}</span></td>
                         <td class="btn btn-xs">{{getFortMatTimeCharge(l.time_charge)}}</td>
                         <td class="btn btn-xs" style="text-align:left;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
