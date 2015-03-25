@@ -15,7 +15,7 @@
                             <tr>
                                 <th style="background-color:#26a69a;width:10%;">
                                     <div class="th">
-                                        Item code
+                                        Item Number
                                     </div>
                                 </th>
                                 <th style="background-color:#26a69a;width:40%;">
@@ -62,7 +62,7 @@
                                 <!-- END MORE -->
                                 <td style="text-align:center">
                                     <div ng-class="{'error-input':formItemCode.quantity.$error.required}">
-                                    <input type="text" tabindex="5" class="input-sm form-control" ui-mask="9" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:left;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
+                                    <input type="text" tabindex="5" class="input-sm form-control" ui-mask="9" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
                                 </div>
                                 </td>
                                 <td style="text-align:center">
@@ -102,7 +102,7 @@
                 <!-- END ITEM BEEN SELECTED -->
                 <!-- TABLE ITEM-->
                      <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
-                    </center> <span class="bold" style="margin-left:3px;">List of Item Codes<span>
+                    </center> <span class="bold" style="margin-left:3px;">List of Item Number<span>
                      <a ng-click="reset()"><i class="fa fa-refresh"></i></a>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>

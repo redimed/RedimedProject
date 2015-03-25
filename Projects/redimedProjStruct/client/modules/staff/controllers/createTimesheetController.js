@@ -180,8 +180,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                     }
                                     //end
                                     if (data.tasks_id === item.tasks_id && item.ITEM_ID !== null) {
-                                        data.isInputItem = true;
-                                        data.isBillable = true;
+                                        data.isInputItem = 1;
+                                        data.isBillable = 1;
                                         item.isAction = 'update';
                                         item.time_temp = item.time_charge;
                                         item.time_charge = StaffService.unCovertTimeCharge(item.time_charge);
