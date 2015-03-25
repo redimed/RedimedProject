@@ -252,16 +252,23 @@ angular.module("app.loggedIn.staff.service", [])
 
         var date = new Date();
         info.month = date.getMonth();
-        info.year = date.getYear();
+        info.year = date.getFullYear();
         checkMonth.post({
             info: info
         }).then(function(response) {
             angular.forEach(response['tasks'], function(data) {
-                temp = new Date(data.date);
-                monthTemp = temp.getMonth() * 1 + 1;
-                if (monthTemp < 10)
+                var temp = new Date(data.date);
+                var monthTemp = temp.getMonth() * 1 + 1;
+                var tempDate = temp.getDate();
+                if (tempDate < 10) {
+                    tempDate = '0' + tempDate;
+                }
+
+                if (monthTemp < 10) {
                     monthTemp = '0' + monthTemp;
-                array.push(temp.getYear() + '-' + monthTemp + '-' + temp.getDate());
+                }
+
+                array.push(temp.getFullYear() + '-' + monthTemp + '-' + tempDate);
             });
             var selectCurrentWeek = function() {
                 window.setTimeout(function() {
@@ -280,8 +287,9 @@ angular.module("app.loggedIn.staff.service", [])
                     if (dayAdjustment < 0) {
                         dayAdjustment += 7;
                     }
-                    startDate = new Date(date.getYear(), date.getMonth(), date.getDate() - dayAdjustment);
-                    endDate = new Date(date.getYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
+                    console.log(startDate);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
                     $input.datepicker("setDate", startDate);
                 }
             };
@@ -294,7 +302,7 @@ angular.module("app.loggedIn.staff.service", [])
                 onClose: function() {
                     $('#ui-datepicker-div').removeClass('ui-weekpicker');
                 },
-                minDate: array[0],
+                // minDate: array[0],
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function(dateText, inst) {
