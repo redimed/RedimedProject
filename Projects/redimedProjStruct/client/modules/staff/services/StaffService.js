@@ -297,104 +297,102 @@ angular.module("app.loggedIn.staff.service", [])
 
     };
 
-};
+    service.showWeek = function(userID) {
+        var startDate;
+        var endDate;
+        var checkMonth = api.all('staff/checkMonth');
+        var array = [],
+            info = {},
+            temp,
+            now = new Date(),
+            monthTemp;
 
-service.showWeek = function(userID) {
-    var startDate;
-    var endDate;
-    var checkMonth = api.all('staff/checkMonth');
-    var array = [],
-        info = {},
-        temp,
-        now = new Date(),
-        monthTemp;
+        info.userID = userID;
 
-    info.userID = userID;
-
-    var date = new Date();
-    info.month = date.getMonth();
-    info.year = date.getFullYear();
-    checkMonth.post({
-        info: info
-    }).then(function(response) {
-        angular.forEach(response['tasks'], function(data) {
-            var temp = new Date(data.date);
-            var monthTemp = temp.getMonth() * 1 + 1;
-            var tempDate = temp.getDate();
-            if (tempDate < 10) {
-                tempDate = '0' + tempDate;
-            }
-
-            if (monthTemp < 10) {
-                monthTemp = '0' + monthTemp;
-            }
-
-            array.push(temp.getFullYear() + '-' + monthTemp + '-' + tempDate);
-        });
-        var selectCurrentWeek = function() {
-            window.setTimeout(function() {
-                $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
-            }, 1);
-        };
-
-        var setDates = function(input) {
-            var $input = $(input);
-            var date = $input.datepicker('getDate');
-            var firstDay = $input.datepicker("option", "firstDay");
-            $input.datepicker("option", "dateFormat", "dd-mm-yy");
-            $input.datepicker('option', 'firstDay', 1);
-            if (date !== null) {
-                var dayAdjustment = date.getDay() - firstDay;
-                if (dayAdjustment < 0) {
-                    dayAdjustment += 7;
+        var date = new Date();
+        info.month = date.getMonth();
+        info.year = date.getFullYear();
+        checkMonth.post({
+            info: info
+        }).then(function(response) {
+            angular.forEach(response['tasks'], function(data) {
+                var temp = new Date(data.date);
+                var monthTemp = temp.getMonth() * 1 + 1;
+                var tempDate = temp.getDate();
+                if (tempDate < 10) {
+                    tempDate = '0' + tempDate;
                 }
-                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
-                console.log(startDate);
-                endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
-                $input.datepicker("setDate", startDate);
-            }
-        };
 
-        $('.week-picker').datepicker({
-            beforeShow: function() {
-                $('#ui-datepicker-div').addClass('ui-weekpicker');
-                selectCurrentWeek();
-            },
-            onClose: function() {
-                $('#ui-datepicker-div').removeClass('ui-weekpicker');
-            },
-            // minDate: array[0],
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            onSelect: function(dateText, inst) {
-                setDates(this);
-                selectCurrentWeek();
-                $(this).change();
-            },
-            beforeShowDay: function(date) {
-                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                var cssClass = '';
-                if (date >= startDate && date <= endDate)
-                    cssClass = 'ui-datepicker-current-day';
-                return [array.indexOf(string) == -1, cssClass];
-            },
-            onChangeMonthYear: function(year, month, inst) {
-                selectCurrentWeek();
-            }
+                if (monthTemp < 10) {
+                    monthTemp = '0' + monthTemp;
+                }
+
+                array.push(temp.getFullYear() + '-' + monthTemp + '-' + tempDate);
+            });
+            var selectCurrentWeek = function() {
+                window.setTimeout(function() {
+                    $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
+                }, 1);
+            };
+
+            var setDates = function(input) {
+                var $input = $(input);
+                var date = $input.datepicker('getDate');
+                var firstDay = $input.datepicker("option", "firstDay");
+                $input.datepicker("option", "dateFormat", "dd-mm-yy");
+                $input.datepicker('option', 'firstDay', 1);
+                if (date !== null) {
+                    var dayAdjustment = date.getDay() - firstDay;
+                    if (dayAdjustment < 0) {
+                        dayAdjustment += 7;
+                    }
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
+                    console.log(startDate);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
+                    $input.datepicker("setDate", startDate);
+                }
+            };
+
+            $('.week-picker').datepicker({
+                beforeShow: function() {
+                    $('#ui-datepicker-div').addClass('ui-weekpicker');
+                    selectCurrentWeek();
+                },
+                onClose: function() {
+                    $('#ui-datepicker-div').removeClass('ui-weekpicker');
+                },
+                // minDate: array[0],
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                onSelect: function(dateText, inst) {
+                    setDates(this);
+                    selectCurrentWeek();
+                    $(this).change();
+                },
+                beforeShowDay: function(date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    var cssClass = '';
+                    if (date >= startDate && date <= endDate)
+                        cssClass = 'ui-datepicker-current-day';
+                    return [array.indexOf(string) == -1, cssClass];
+                },
+                onChangeMonthYear: function(year, month, inst) {
+                    selectCurrentWeek();
+                }
+            });
+
+            setDates('.week-picker');
+
+            var $calendarTR = $('.ui-weekpicker .ui-datepicker-calendar tr');
+            $calendarTR.live('mousemove', function() {
+                $(this).find('td a').addClass('ui-state-hover');
+            });
+            $calendarTR.live('mouseleave', function() {
+                $(this).find('td a').removeClass('ui-state-hover');
+            });
         });
 
-        setDates('.week-picker');
+    };
 
-        var $calendarTR = $('.ui-weekpicker .ui-datepicker-calendar tr');
-        $calendarTR.live('mousemove', function() {
-            $(this).find('td a').addClass('ui-state-hover');
-        });
-        $calendarTR.live('mouseleave', function() {
-            $(this).find('td a').removeClass('ui-state-hover');
-        });
-    });
-
-};
-
-return service;
+    return service;
 });
