@@ -12,7 +12,7 @@ module.exports = {
                 start_date: info.startWeek,
                 end_date: info.endWeek,
                 week_no: info.weekNo,
-                time_charge: info.time_temp,
+                time_charge: info.time_charge,
                 user_id: info.userID,
                 created_by: info.userID,
                 task_status_id: info.statusID
@@ -590,7 +590,6 @@ module.exports = {
 
     getAllTaskAMonth: function(req, res) {
         var searchObj = req.body.search;
-        console.log(searchObj);
         //SEARCH
         var strSearch = " AND ";
         var strWeek = "";
