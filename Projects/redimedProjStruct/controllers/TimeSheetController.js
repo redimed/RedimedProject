@@ -412,7 +412,7 @@ module.exports = {
                 " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
                 " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
                 " hr_employee.Employee_ID  = users.employee_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-                " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0", null, {
+                " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0 ORDER BY t.date ASC", null, {
                     raw: true
                 }, [info])
             .success(function(tasks) {
@@ -456,9 +456,11 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT time_tasks_week.task_status_id, t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
-                            "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id` WHERE " +
+                            "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                            " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id "+
+                            " WHERE " +
                             "t.`tasks_week_id` = ?", null, {
                                 raw: true
                             }, [info])

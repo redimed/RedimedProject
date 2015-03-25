@@ -135,7 +135,7 @@
                     </tr>
                     <tr>
                         <td colspan="7" style="vertical-align: middle">
-                            <label class="bold pull-right">Total: </label>
+                            <label class="bold pull-right">Total Hour: </label>
                         </td>
                         <td>
                             <input disabled class="form-control input-sm" ui-mask="99:99" ng-model="info.time_charge" style="text-align:center;" />
@@ -148,11 +148,11 @@
         <div class="form-action" style="text-align: right">
             <a class="btn btn-xs blue" ng-click="addAllTask(1)">Save</a>
             <!-- BUTTON WHEN ADDNEW -->
-            <a class="btn btn-xs green" ng-show="!isEdit" ng-click="addAllTask(2)">Submit</a>
+            <a class="btn btn-xs green" ng-show="!isEdit || checkStatus===1" ng-click="addAllTask(2)">Submit</a>
             <a class="btn btn-xs yellow" ng-show='!isEdit' ui-sref="loggedIn.TimeSheetHome">Cancel</a>
             <!-- END ADDNEW-->
             <!-- BUTTON WHEN EDIT -->
-            <a class="btn btn-xs purple" ng-show="isEdit" ng-click="addAllTask(5)">Re-submit</a>
+            <a class="btn btn-xs purple" ng-show="isEdit && checkStatus!==1" ng-click="addAllTask(5)">Re-submit</a>
             <a class="btn btn-xs yellow" ng-show='isEdit' ui-sref="loggedIn.timesheet.view">Cancel</a>
             <!-- END EDIT-->
         </div>

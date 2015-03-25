@@ -91,11 +91,11 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
-                Edit
-            </a>
         <a href="javascript:;" ng-hide='one' ng-click="cancelClick()" class="btn pull-right btn-warning btn-xs">
             Cancel </a>
+            <a ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+                Edit
+            </a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>

@@ -174,7 +174,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                     data.time_charge = StaffService.unCovertTimeCharge(data.time_charge);
                                 }
                                 angular.forEach(response['item'], function(item) {
-                                    if (data.tasks_id === item.tasks_id) {
+                                    //check status
+                                    if (response['item'] !== undefined && response['item'][0] && response['item'][0].task_status_id !== undefined) {
+                                        $scope.checkStatus = response['item'][0].task_status_id;
+                                    }
+                                    //end
+                                    if (data.tasks_id === item.tasks_id && item.ITEM_ID !== null) {
                                         data.isInputItem = true;
                                         data.isBillable = true;
                                         item.isAction = 'update';
@@ -269,7 +274,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //ADD ALL TASK OF WEEK
     $scope.addAllTask = function(status) {
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
-        if (StaffService.covertTimeCharge($scope.info.time_charge) < 38 && $scope.TypeOfContruct === "Full-time") {
+        if (StaffService.covertTimeCharge($scope.info.time_charge) < 38 && $scope.TypeOfContruct === "Full-time" && status !== 1) {
             toastr.error("Can not submit, please check time charge(>=38)", "Error");
         } else {
             if (!$scope.isEdit) {

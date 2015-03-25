@@ -97,7 +97,9 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         scope.list.result[index].status = !scope.list.result[index].status;
                     }
                 };
+                scope.isShow = false;
                 scope.clickAdd = function() {
+                    scope.isShow = true;
                     angular.element('#itemCodeID').focus();
                 };
                 scope.items = [];
@@ -116,6 +118,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                             status: false
                         });
                         scope.isDisabled = false;
+                        scope.isShow = false;
                     }
                 };
                 scope.clickShowSelected = function(index) {

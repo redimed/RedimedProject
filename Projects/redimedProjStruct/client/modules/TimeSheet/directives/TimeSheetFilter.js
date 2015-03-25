@@ -83,8 +83,8 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
         return function(input) {
             if (input !== undefined && input !== null && input !== "") {
                 return ({
-                    check: input.length > 120,
-                    value: input.substring(0, 120)
+                    check: input.length > 80,
+                    value: input.substring(0, 80)
                 });
             } else return "";
         };
