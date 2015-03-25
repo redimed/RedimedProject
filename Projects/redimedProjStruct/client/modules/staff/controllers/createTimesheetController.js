@@ -152,6 +152,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     $scope.isEdit = true;
                     $scope.idWeek = $stateParams.id;
                     StaffService.showEdit($scope.idWeek).then(function(response) {
+                        console.log(response['item']);
                         if (response['status'] == 'fail' || response['status'] == 'error') {
                             angular.forEach(response['data'], function(data) {
                                 data.item = [];
