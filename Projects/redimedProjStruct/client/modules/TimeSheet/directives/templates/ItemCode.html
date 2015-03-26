@@ -46,35 +46,35 @@
                         </thead>
                         <tbody>
                             <tr ng-class-odd="'odd'" style="cursor: pointer; " ng-repeat="item in items">
-                                <td class="btn btn-xs">{{item.ITEM_ID}}</td>
+                                <td ng-show="item.show===true" class="btn btn-xs">{{item.ITEM_ID}}</td>
                                 <!-- MORE -->
-                                <td style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
-                            <div ng-if="item.status===false">
+                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
+                            <div ng-show="item.show===true" ng-if="item.status===false">
                                 {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
                             </div>
-                            <div ng-if="item.status===true">
+                            <div ng-show="item.show===true" ng-if="item.status===true">
                                 {{item.ITEM_NAME}}<a ng-click="clickShowSelected($index)">&nbsp;Close</a>
                             </div>
                         </td>
-                        <td style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
+                        <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
                             {{(item.ITEM_NAME | readMoreSelected).value}}
                         </td>
                                 <!-- END MORE -->
-                                <td style="text-align:center">
+                                <td ng-show="item.show===true" style="text-align:center">
                                     <div ng-class="{'error-input':formItemCode.quantity.$error.required}">
                                     <input type="text" tabindex="5" class="input-sm form-control" ui-mask="9" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
                                 </div>
                                 </td>
-                                <td style="text-align:center">
+                                <td ng-show="item.show===true" style="text-align:center">
                                     <div ng-class="{'error-input':formItemCode.time_charge.$error.required}">
                                     <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" custom-tr="items[$index].time_charge" custom-fr="formItemCode.time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID">
                                 </div>
                                 </td>
                                 
-                                <td style="text-align:center;">
+                                <td ng-show="item.show===true" style="text-align:center;">
                                     <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:20px;" id="commentID">
                                 </td>
-                                <td style="text-align:center;">
+                                <td ng-show="item.show===true" style="text-align:center;">
                                     <a ng-click="deleteItem($index)">
                                         <i class="fa fa-trash pointer"></i>
                                     </a>
@@ -96,8 +96,8 @@
                         </tbody>
                     </table>
                     <div class="col-md-12">
-                     <a class="btn yellow pull-right btn-xs" style="margin-right:-14px;" ng-click="onCancel({return: true})">Cancel</a>
-                     <button class="btn pull-right btn-xs" style="background-color:#26a69a; color:white;margin-right:5px;" ng-click="onSave({return: items,formValid:formItemCode})" ng-disabled="(items===undefined||items.length===0)">Save</button>
+                     <a class="btn yellow pull-right btn-xs" style="margin-right:-14px;width:70px;" ng-click="onCancel({return: true})">Cancel</a>
+                     <button class="btn pull-right btn-xs green" style="margin-right:5px;width:70px;" ng-click="onSave({return: items,formValid:formItemCode})" ng-disabled="(items===undefined||items.length===0)">Save</button>
                  </div>
                 <!-- END ITEM BEEN SELECTED -->
                 <!-- TABLE ITEM-->

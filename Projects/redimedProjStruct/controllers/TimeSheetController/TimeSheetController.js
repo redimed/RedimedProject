@@ -921,6 +921,7 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT JOIN time_item_task on time_item_task.task_id = time_tasks.tasks_id " +
             "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
+            " AND time_tasks.deleted = 0 "+
             " ORDER BY time_tasks.date ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {
@@ -955,6 +956,7 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT JOIN time_item_task on time_item_task.task_id = time_tasks.tasks_id " +
             "WHERE time_tasks.tasks_week_id = " + info.ID +
+            " AND time_tasks.deleted = 0 "+
             " ORDER BY time_tasks.date ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {

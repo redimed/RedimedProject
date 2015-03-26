@@ -9,8 +9,19 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 ngModel: "="
             },
             link: function(scope, elem, attrs) {
-                scope.$watch('ngModel', function(oldModel, newModel) {
-                    scope.items = angular.copy(oldModel.item);
+                scope.$watch('ngModel', function(newModel, oldModel) {
+                    if (newModel !== undefined && newModel.item !== undefined) {
+                        angular.forEach(newModel.item, function(item, index) {
+                            if (item !== undefined && item.deleted === 0) {
+                                scope.items.push(item);
+                            }
+                        });
+                    }
+                    //SHOW ALL ITEM
+                    angular.forEach(scope.items, function(item, index) {
+                        scope.items[index].show = true;
+                    });
+                    //END
                 });
                 //FUNCTION SETPAGE
                 scope.setPage = function() {
@@ -116,7 +127,9 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                             scope.items.push({
                                 ITEM_ID: ITEM_ID,
                                 ITEM_NAME: ITEM_NAME,
-                                status: false
+                                isAction: "insert",
+                                status: false,
+                                show: true,
                             });
                             scope.isDisabled = false;
                             scope.isShow = false;
@@ -141,7 +154,10 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         confirmButtonText: "Yes",
                         closeOnConfirm: true
                     }, function() {
-                        scope.items.splice(index, 1);
+                        scope.items[index].show = false;
+                        if (scope.items[index].isAction === "update") {
+                            scope.items[index].isAction = "delete";
+                        }
                     });
                 };
             },

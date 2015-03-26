@@ -109,6 +109,8 @@ angular.module("app.loggedIn.staff.service", [])
                 }
             });
             return hours;
+        } else {
+            return 0;
         }
     };
 
