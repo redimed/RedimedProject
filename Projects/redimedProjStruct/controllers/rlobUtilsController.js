@@ -16,7 +16,7 @@ module.exports =
         }
         else
         {
-            return "REDiMED <medicolegal@redimed@redimed.com.au>";
+            return "REDiMED <healthscreenings@redimed.com.au>";
         }
     },
 
