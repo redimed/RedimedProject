@@ -191,13 +191,16 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                         $scope.checkStatus = response['item'][0].task_status_id;
                                     }
                                     //end
-                                    if (data.tasks_id === item.tasks_id && data.item.length !== 0) {
+                                    if (data.tasks_id === item.tasks_id && item.ITEM_ID != null) {
                                         data.isInputItem = 1;
                                         data.isBillable = 1;
                                         item.isAction = 'update';
                                         item.time_temp = item.time_charge;
                                         item.time_charge = StaffService.unCovertTimeCharge(item.time_charge);
                                         data.item.push(item);
+                                    } else if (data.tasks_id === item.tasks_id) {
+                                        data.isInputItem = 0;
+                                        data.isBillable = 0;
                                     }
                                 });
                                 $scope.tasks.push(data);
