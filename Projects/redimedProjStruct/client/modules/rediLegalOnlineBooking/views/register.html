@@ -20,7 +20,7 @@
                 <div class="col-md-6">
                     <div class="input-icon">
                         <i class="fa fa-font"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Last Name" name="lastname" ng-model="user.lname" ng-maxlength="20" required/>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Surname" name="lastname" ng-model="user.lname" ng-maxlength="20" required/>
                     </div>
                 </div>
             </div>
@@ -35,32 +35,14 @@
         </span>
         <!--last name-->
         <span ng-show="registerForm.lastname.$error.maxlength && showClickedValidation" class="has-error">
-            <span for="lastname" class="help-block">Your last name cannot be longer than 20 characters</span>
+            <span for="lastname" class="help-block">Your surname cannot be longer than 20 characters</span>
         </span>
         <span ng-show="registerForm.lastname.$error.required && showClickedValidation" class="has-error">
-            <span for="lastname" class="help-block"> Last name  is required.</span>
+            <span for="lastname" class="help-block">Surname is required.</span>
         </span>
         <!--end validate -->
 
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Email</label>
-            <div class="input-icon">
-                <i class="fa fa-envelope"></i>
-                <input class="form-control placeholder-no-fix" type="email" placeholder="Email" name="email" ng-model="user.email" ng-maxlength="50" required/>
-            </div>
-            <span ng-show="registerForm.$error.email && showClickedValidation" class="has-error">
-                <span for="email" class="help-block"> Email is invalid.</span>
-             </span>
-            <span ng-show="registerForm.firstname.$error.required && showClickedValidation" class="has-error">
-                <span for="email" class="help-block">Email  is required.</span>
-            </span>
-            <span ng-show="registerForm.email.$error.maxlength && showClickedValidation" class="has-error">
-                <span for="firstname" class="help-block">Your email address cannot be longer than 50 characters</span>
-            </span>
-            <span ng-show="check==true" class="has-error">
-                <span for="email" class="help-block">Email is existed.</span>
-             </span>
-        </div>
+        
 
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Phone:</label>
@@ -92,11 +74,48 @@
                  <span for="company" class="help-block">Please select company.</span>
              </span>
         </div>
+        <div>
+            <label>Company State</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Company State</label>
+            <div class="input-icon">
+                <select ng-model="user.companyState" class="form-control" ng-options="state.id as state.State for state in stateList" name="companyState" required>
+                    <option value="">---Select State---</option>
+                </select>
+            </div>
+            <span ng-show="registerForm.companyState.$error.required && showClickedValidation" class="has-error">
+                 <span for="companyState" class="help-block">Please select company state.</span>
+             </span>
+        </div>
+
 
         <p>
             Enter your account details below:
         </p>
+
         <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Email</label>
+            <div class="input-icon">
+                <i class="fa fa-envelope"></i>
+                <input class="form-control placeholder-no-fix" type="email" placeholder="Email" name="email" ng-model="user.email" ng-maxlength="50" required/>
+            </div>
+            <span ng-show="registerForm.$error.email && showClickedValidation" class="has-error">
+                <span for="email" class="help-block"> Email is invalid.</span>
+             </span>
+            <span ng-show="registerForm.firstname.$error.required && showClickedValidation" class="has-error">
+                <span for="email" class="help-block">Email  is required.</span>
+            </span>
+            <span ng-show="registerForm.email.$error.maxlength && showClickedValidation" class="has-error">
+                <span for="firstname" class="help-block">Your email address cannot be longer than 50 characters</span>
+            </span>
+            <span ng-show="check==true" class="has-error">
+                <span for="email" class="help-block">Email is existed.</span>
+             </span>
+        </div>
+
+
+        <!-- <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Username</label>
             <div class="input-icon">
                 <i class="fa fa-user"></i>
@@ -108,7 +127,9 @@
             <span ng-show="registerForm.username.$error.required && showClickedValidation" class="has-error">
                  <span for="username" class="help-block">Username is required.</span>
             </span>
-        </div>
+        </div> -->
+
+
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">Password</label>
             <div class="input-icon">
@@ -137,13 +158,19 @@
                  <span for="password" class="help-block">Password is required.</span>
              </span>
         </div>
+
         <div class="form-group">
-            <!-- <label>
-                <input type="checkbox" name="tnc" ng-model="ang" required/> I agree to the <a href="login.html#">
-                Terms of Service </a>
-                and <a href="login.html#">
-                Privacy Policy </a>
-            </label> -->
+            <label class="checkbox">
+                    <input type="checkbox" checkbox ng-model="user.isAccessReportOnline" ng-true-value="1" ng-false-value="0" name="isAccessReportOnline">
+                    Access Reports Online
+            </label>
+
+            <small>
+                You will receive a notification as soon as your report has been completed. You can download your report directly from your account.
+            </small>
+        </div>
+
+        <div class="form-group">
 
             <label class="checkbox">
                     <input type="checkbox" checkbox ng-model="ang" 

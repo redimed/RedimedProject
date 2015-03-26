@@ -115,10 +115,14 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                 templateUrl: "ViewTask",
                 controller: function($scope) {
                     $scope.infoTaskWeek = idTaskWeek;
-                    $scope.clickCancel = function() {
-                        modalInstance.close({
-                            status: "cancel"
-                        });
+                    $scope.clickCancel = function(info) {
+                        if ((info.clickCancel === undefined || info.clickCancel === null) && (info.isReject === undefined || info.isReject === null) && info.isApprove !== true) {
+                            modalInstance.close({
+                                status: "cancel"
+                            });
+                        } else {
+                            $scope.infoTaskWeek = "cancelOn";
+                        }
                     };
                     $scope.clickReject = function(info) {
                         if (info.isReject === undefined || info.isReject === null) {
@@ -151,7 +155,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                     };
 
                     $scope.clickApprove = function(info) {
-                        if (info.time_rest !== null && info.time_rest !== 0 && info.time_rest !== "" && info.isApprove !== true) {
+                        if (info.time_rest !== null && info.time_rest != 0.00 && info.time_rest !== "" && info.isApprove !== true) {
                             $scope.infoTaskWeek = "chooseApprove";
                         } else {
                             //update approve

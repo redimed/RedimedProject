@@ -97,25 +97,32 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         scope.list.result[index].status = !scope.list.result[index].status;
                     }
                 };
+                scope.isShow = true;
                 scope.clickAdd = function() {
+                    scope.isShow = true;
                     angular.element('#itemCodeID').focus();
                 };
                 scope.items = [];
                 scope.addItem = function(ITEM_ID, ITEM_NAME) {
-                    var check = false;
-                    angular.forEach(scope.items, function(item, index) {
-                        if (item.ITEM_ID === ITEM_ID) {
-                            toastr.warning("Item exist in list selected!", "Fail");
-                            check = true;
-                        }
-                    });
-                    if (check === false) {
-                        scope.items.push({
-                            ITEM_ID: ITEM_ID,
-                            ITEM_NAME: ITEM_NAME,
-                            status: false
+                    if (scope.isShow === true) {
+                        var check = false;
+                        angular.forEach(scope.items, function(item, index) {
+                            if (item.ITEM_ID === ITEM_ID) {
+                                toastr.warning("Item exist in list selected!", "Fail");
+                                check = true;
+                            }
                         });
-                        scope.isDisabled = false;
+                        if (check === false) {
+                            scope.items.push({
+                                ITEM_ID: ITEM_ID,
+                                ITEM_NAME: ITEM_NAME,
+                                status: false
+                            });
+                            scope.isDisabled = false;
+                            scope.isShow = false;
+                        }
+                    } else {
+                        toastr.warning("Not found row empty to insert!", "Fail");
                     }
                 };
                 scope.clickShowSelected = function(index) {
@@ -127,7 +134,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 };
                 scope.deleteItem = function(index) {
                     swal({
-                        title: "Are you sure?",
+                        title: "Do you want to delete this Item Number?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",

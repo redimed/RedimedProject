@@ -1357,6 +1357,9 @@ ul.tabs li.tab {
 .margin-bot0 {
     margin-bottom: 0 !important;
 }
+.margin-top50 {
+    margin-top: 50px;
+}
 .hr-data-device {
     background-color: red;
 }

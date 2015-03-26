@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.staff.service", [])
 
-.factory("StaffService", function(Restangular) {
+.factory("StaffService", function(Restangular, MIN_TO_DEC) {
     var service = {};
     var api = Restangular.all("api");
 
@@ -10,65 +10,79 @@ angular.module("app.loggedIn.staff.service", [])
             allTask: allTask,
             info: info
         });
-    }
-
+    };
     service.getAllTaskAMonth = function(search) {
         var getAllTaskAMonth = api.all('staff/getAllTaskAMonth');
         return getAllTaskAMonth.post({
             search: search
         });
-    }
+    };
+    service.SubmitOnView = function(idweek, status) {
+        var SubmitOnView = api.all('staff/SubmitOnView');
+        return SubmitOnView.post({
+            idWeek: idweek,
+            status: status
+        });
+    };
 
-    service.editTask = function(task) {
+    service.editTask = function(task, info) {
         var editTask = api.all('staff/editTask');
         return editTask.post({
-            allTask: task
+            allTask: task,
+            info: info
         });
-    }
+    };
 
     service.getTask = function(idWeek) {
         var getTask = api.all('staff/getTask');
         return getTask.post({
             idWeek: idWeek
         });
-    }
+    };
 
     service.getDepartmentLocation = function() {
         var getDepartmentLocation = api.one('staff/getDepartmentLocation');
         return getDepartmentLocation.get();
-    }
+    };
 
     service.checkFirstTaskWeek = function(info) {
         var checkFirstTaskWeek = api.all('staff/checkFirstTaskWeek');
         return checkFirstTaskWeek.post({
             info: info
         });
-    }
+    };
 
     service.checkTaskWeek = function(info) {
         var checkTaskWeek = api.all('staff/checkTaskWeek');
         return checkTaskWeek.post({
             info: info
         });
-    }
+    };
 
     service.showEdit = function(info) {
         var showEdit = api.all('staff/showEdit');
         return showEdit.post({
             info: info
         });
-    }
+    };
 
     service.showDetailDate = function(info) {
         var showDetailDate = api.all('staff/showDetailDate');
         return showDetailDate.post({
             info: info
         });
-    }
+    };
 
     service.getTaskList = function() {
         return api.one('staff/task/getList').get();
-    }
+    };
+
+    service.LoadContract = function(USER_ID) {
+        var LoadContract = api.all("staff/get-contract");
+        return LoadContract.post({
+            ID: USER_ID
+        });
+    };
 
     service.getFortMatTimeTemp = function(time_charge) {
         if (time_charge) {
@@ -82,26 +96,147 @@ angular.module("app.loggedIn.staff.service", [])
         } else {
             return 0;
         }
-    }
+    };
+
+    //thanh
+    service.covertTimeCharge = function(time_charge) {
+        if (time_charge !== undefined && time_charge !== null) {
+            var hours = parseInt(time_charge.toString().substring(0, 2));
+            var minutes = parseInt(time_charge.toString().substring(2, 4));
+            angular.forEach(MIN_TO_DEC, function(value) {
+                if (value.min == minutes) {
+                    hours = parseFloat(hours) + parseFloat(value.dec);
+                }
+            });
+            return hours;
+        }
+    };
+
+    service.unCovertTimeCharge = function(time_charge) {
+        if (time_charge !== undefined && time_charge !== null) {
+            var hours = parseInt(time_charge);
+            var n = time_charge.toString().indexOf(".");
+            var minutes = 0;
+            if (n !== -1) {
+                minutes = time_charge.toString().substr(n + 1, 2);
+                if (minutes > 10) {
+                    minutes = parseFloat(minutes / 100);
+                } else if (minutes > 1) {
+                    minutes = parseFloat(minutes / 10);
+                }
+                var checkFind = false;
+                var minuteAdd = 0;
+                //find firts
+                angular.forEach(MIN_TO_DEC, function(value) {
+                    if (value.dec == minutes) {
+                        minutes = value.min;
+                        checkFind = true;
+                    }
+                });
+                //end find first
+
+                //call again if not found
+                if (checkFind === false) {
+                    minutes = minutes - 0.01;
+                    ++minuteAdd;
+                    angular.forEach(MIN_TO_DEC, function(value) {
+                        if (value.dec == minutes) {
+                            minutes = value.min;
+                            checkFind = true;
+                        }
+                    });
+                }
+                if (checkFind === 0) {
+                    minutes = 0;
+                }
+                //end call
+                minutes = minutes + minuteAdd;
+                if (parseInt(hours) < 10) {
+                    hours = '0' + hours.toString();
+                }
+                if (parseInt(minutes) < 10) {
+                    minutes = '0' + minutes.toString();
+                }
+
+                var returnValue = hours + '' + minutes;
+                return returnValue;
+            } else {
+                if (parseInt(hours) < 10) {
+                    hours = '0' + hours + '00';
+                } else {
+                    hours += '00';
+                }
+                return hours;
+            }
+
+        } else {
+            return "0000";
+        }
+    };
+    //end thanh
 
     service.getFortMatTimeCharge = function(time_charge) {
-        if (isNaN(time_charge) === false) {
-            if (time_charge === 0 || time_charge === undefined || time_charge === null) {
-                return "00:00";
+        if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
+            var hours = parseInt(time_charge);
+            var n = time_charge.toString().indexOf(".");
+            var minutes = 0;
+            if (n !== -1) {
+                minutes = time_charge.toString().substr(n + 1, 2);
+                if (minutes > 10) {
+                    minutes = parseFloat(minutes / 100);
+                } else if (minutes > 1) {
+                    minutes = parseFloat(minutes / 10);
+                }
+                var checkFind = false;
+                var minuteAdd = 0;
+                //find firts
+                angular.forEach(MIN_TO_DEC, function(value) {
+                    if (value.dec == minutes) {
+                        minutes = value.min;
+                        checkFind = true;
+                    }
+                });
+                //end find first
+
+                //call again if not found
+                if (checkFind === false) {
+                    minutes = minutes - 0.01;
+                    ++minuteAdd;
+                    angular.forEach(MIN_TO_DEC, function(value) {
+                        if (value.dec == minutes) {
+                            minutes = value.min;
+                            checkFind = true;
+                        }
+                    });
+                }
+                if (checkFind === 0) {
+                    minutes = 0;
+                }
+                //end call
+                minutes = minutes + minuteAdd;
+                if (parseInt(hours) < 10) {
+                    hours = '0' + hours.toString();
+                }
+                if (parseInt(minutes) < 10) {
+                    minutes = '0' + minutes.toString();
+                }
+
+                var returnValue = hours + ':' + minutes;
+                return (returnValue.substr(0, 5));
             } else {
-                var hour = parseInt(time_charge);
-                var minute = (time_charge - hour) * 60;
-                if (hour < 10) {
-                    hour = "0" + hour;
+                if (parseInt(hours) < 10) {
+                    hours = '0' + hours + ':00';
+                } else {
+                    hours += ':00';
                 }
-                if (minute < 10) {
-                    minute = "0" + minute;
-                }
-                var result = hour + ":" + minute;
-                return result.substring(0, 5);
+                return (hours.substr(0, 5));
             }
-        } else return time_charge;
-    }
+
+        } else {
+            return "-";
+        }
+
+    };
 
     service.showWeek = function(userID) {
         var startDate;
@@ -122,17 +257,24 @@ angular.module("app.loggedIn.staff.service", [])
             info: info
         }).then(function(response) {
             angular.forEach(response['tasks'], function(data) {
-                temp = new Date(data.date);
-                monthTemp = temp.getMonth() * 1 + 1;
-                if (monthTemp < 10)
+                var temp = new Date(data.date);
+                var monthTemp = temp.getMonth() * 1 + 1;
+                var tempDate = temp.getDate();
+                if (tempDate < 10) {
+                    tempDate = '0' + tempDate;
+                }
+
+                if (monthTemp < 10) {
                     monthTemp = '0' + monthTemp;
-                array.push(temp.getFullYear() + '-' + monthTemp + '-' + temp.getDate());
-            })
+                }
+
+                array.push(temp.getFullYear() + '-' + monthTemp + '-' + tempDate);
+            });
             var selectCurrentWeek = function() {
                 window.setTimeout(function() {
                     $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
                 }, 1);
-            }
+            };
 
             var setDates = function(input) {
                 var $input = $(input);
@@ -146,10 +288,11 @@ angular.module("app.loggedIn.staff.service", [])
                         dayAdjustment += 7;
                     }
                     startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
+                    console.log(startDate);
                     endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
                     $input.datepicker("setDate", startDate);
                 }
-            }
+            };
 
             $('.week-picker').datepicker({
                 beforeShow: function() {
@@ -159,7 +302,7 @@ angular.module("app.loggedIn.staff.service", [])
                 onClose: function() {
                     $('#ui-datepicker-div').removeClass('ui-weekpicker');
                 },
-                minDate: array[0],
+                // minDate: array[0],
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function(dateText, inst) {
@@ -190,8 +333,7 @@ angular.module("app.loggedIn.staff.service", [])
             });
         });
 
-
-    }
+    };
 
     return service;
-})
+});

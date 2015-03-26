@@ -13,8 +13,6 @@ module.exports =
 {
     sendEmail: function (req,res,emailInfo) {
 
-
-        
         if(rlobUtil.isTestSendMail)
         {
            var transport = nodemailer.createTransport({

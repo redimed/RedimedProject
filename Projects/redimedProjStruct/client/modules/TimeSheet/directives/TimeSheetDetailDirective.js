@@ -30,7 +30,7 @@ angular.module("app.loggedIn.TimeSheet.Detail.Directive", [])
                                 }
                             });
                         } else if (newModel.STATUS === 'all-date') {
-                            scope.Title = "View all Detail";
+                            scope.Title = "Full Timesheet";
                             //load all date
                             TimeSheetService.ViewAllDate(newModel).then(function(response) {
                                 if (response.status === "success") {

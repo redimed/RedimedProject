@@ -149,7 +149,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         Company_name:item.Company_name,
                         WRK_SURNAME:item.WRK_SURNAME,
                         STATUS:item.STATUS,
-                        DISPLAY:"["+item.APPOINTMENT_TIME+" - "+item.Site_name+"] - ["+item.WRK_SURNAME+" - "+item.Company_name+"]",
+                        DISPLAY:"["+item.APPOINTMENT_TIME+" - "+item.Site_name+"] - ["+item.WRK_OTHERNAMES+" "+item.WRK_SURNAME+"] - [" +item.ASS_OTHERNAMES+" - "+item.Company_name+"]",
                         DISPLAY1:"- Site: "+item.Site_name,
                         DISPLAY2:  "- Patient: "+item.WRK_SURNAME,
                         DISPLAY3:  "- Company: "+item.Company_name,
@@ -203,7 +203,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     }
                 }
                 $scope.mydata.push(node);
-                rlobHelper.setSlimCroll(".treeScroll");
+                // rlobHelper.setSlimCroll(".treeScroll");
             }
 
             if($scope.newAppointmentPositionFlag)

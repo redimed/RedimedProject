@@ -19,95 +19,48 @@
                 </a>
             </div>
         </div>
-        <div ng-show="deviceType == 'Pulse Oximeter'">
-            <div class="content text-center">
-                <div class="row-stretch">
-                    <div class="margin-bot0 row">
-                        <div class="col">
-                            <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">Pulse</span>
+
+        <div ng-hide="deviceType == null">
+            <div ng-show="deviceType == 'Pulse Oximeter'">
+                <div class="content text-center">
+                    <div class="row-stretch">
+                        <div class="margin-bot0 row">
+                            <div class="col">
+                                <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">Pulse</span>
+                            </div>
+                            <div class="col">
+                                <span style="font-size: 30px; font-weight: lighter; color: #4CD964">SpO2</span>
+                            </div>
                         </div>
-                        <div class="col">
-                            <span style="font-size: 30px; font-weight: lighter; color: #4CD964">SpO2</span>
+                        <div class="margin-bot0 row">
+                            <div class="col">
+                                <label class="font-responsive" style="color: #1AD6FD">{{dataReceive.pulse == NaN ? 0 : dataReceive.pulse}}</label>
+                            </div>
+                            <div class="col">
+                                <label class="font-responsive" style="color: #4CD964">{{dataReceive.spO2 == NaN ? 0 : dataReceive.spO2}}</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="margin-bot0 row">
-                        <div class="col">
-                            <label class="font-responsive" style="color: #1AD6FD">{{dataReceive.pulse == NaN ? 0 : dataReceive.pulse}}</label>
-                        </div>
-                        <div class="col">
-                            <label class="font-responsive" style="color: #4CD964">{{dataReceive.spO2 == NaN ? 0 : dataReceive.spO2}}</label>
-                        </div>
-                    </div>
-
-                    <!--<div class="margin-bot0 row" ng-show="showButton">-->
-                    <!--<div class="col">-->
-                    <!--<button class="button button-clear btn-reset" ng-click="resetWriteData()" ng-disabled="isLoad">-->
-                    <!--<span>Reset</span>-->
-                    <!--</button>-->
-                    <!--</div>-->
-                    <!--<div class="col">-->
-                    <!--<button class="button button-clear btn-save" ng-click="saveData()" ng-disabled="isLoad">-->
-                    <!--<span>Save</span>-->
-                    <!--</button>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
                 </div>
             </div>
-        </div>
-        <div ng-show="deviceType == 'Spirometer'">
-            <div class="content text-center">
-                <div class="row-stretch">
-                    <div class="margin-bot0 row">
-                        <div class="col">
-                            <span style="font-size: 30px; font-weight: lighter;">FVC</span>
-                            <hr class="hr-data-device" style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter;margin-top: 10px;">FEV1</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter;">PEF</span>
-                            <hr style="margin-top: 0">
-                        </div>
-                        <div class="col">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{ copydataReceive.FEV1 == NaN ? 0 : copydataReceive.FEV1 / 100}}</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{ copydataReceive.FVC == NaN ? 0 : copydataReceive.FVC / 100}}</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{ copydataReceive.PEF == NaN ? 0 : copydataReceive.PEF / 100}}</span>
-                            <hr style="margin-top: 0">
+
+            <div ng-show="deviceType !== 'Pulse Oximeter'">
+                <div class="content text-center">
+                    <div class="row-stretch">
+                        <div class="margin-bot0 row margin-top50"  ng-repeat="(k,v) in copydataReceive" ng-if="k !== 'deviceType'">
+                            <div class="col">
+                                <span style="font-size: 30px; font-weight: lighter; text-transform: uppercase;">{{k}}</span>
+                                <hr class="hr-data-device" style="margin-top: 0; margin-bottom: 30px;">
+                            </div>
+                            <div class="col">
+                                <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{v == NaN ? 0 : v}}</span>
+                                <hr style="margin-top: 0; margin-bottom: 30px;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div ng-show="deviceType == 'Blood Pressure'">
-            <div class="content text-center">
-                <div class="row-stretch">
-                    <div class="margin-bot0 row">
-                        <div class="col">
-                            <span style="font-size: 30px; font-weight: lighter;">SYS</span>
-                            <hr class="hr-data-device" style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter;margin-top: 10px;">DIA</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter;margin-top: 10px;">mmHg</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter;">bpm</span>
-                            <hr style="margin-top: 0">
-                        </div>
-                        <div class="col">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{copydataReceive.sys == NaN ? 0 : copydataReceive.sys}}</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{copydataReceive.dia == NaN ? 0 : copydataReceive.dia}}</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{copydataReceive.mmHg == NaN ? 0 : copydataReceive.mmHg}}</span>
-                            <hr style="margin-top: 0; margin-bottom: 30px;">
-                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{copydataReceive.bpm == NaN ? 0 : copydataReceive.bpm}}</span>
-                            <hr style="margin-top: 0">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <ion-list class="padding" show-reorder="disableList">
             <div class="list border-top">
                 <!--<a class="item item-avatar" ng-repeat="device in listDiscover"-->

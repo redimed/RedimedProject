@@ -21,11 +21,17 @@ app.get('/api/rlob/redimedsites/list',RedimedSiteController.rlobList);
 //rlType
 app.get('/api/rlob/rl_types/list',rlTypesController.list);
 app.get('/api/rlob/rl_types/get-rltype-by-id',rlTypesController.getRlTypeById);
+app.get('/api/rlob/rl_types/get-list-rltype',rlTypesController.getListRlTpyes);
+app.post('/api/rlob/rl_types/update-rltype',rlTypesController.updateRlTypes);
+app.post('/api/rlob/rl_types/insert-rltype',rlTypesController.insertRlTypes);
 
 //cln_specialties
 app.get('/api/rlob/cln_specialties/list',clnSpecialitiesController.list);
 app.get('/api/rlob/cln_specialties/filter-by-type',clnSpecialitiesController.filterByType);
 app.get('/api/rlob/cln_specialties/get-speciality-by-id',clnSpecialitiesController.getSpecialityById);
+app.get('/api/rlob/cln_specialties/get-list-specialties',clnSpecialitiesController.getListSpecialties);
+app.post('/api/rlob/cln_specialties/update-specialties',clnSpecialitiesController.updateSpecialties);
+app.post('/api/rlob/cln_specialties/edit-specialties',clnSpecialitiesController.insertSpecialties);
 
 //doctors
 app.get('/api/rlob/doctors/list',doctorsController.list);
@@ -132,5 +138,8 @@ app.get('/api/rlob/rl_form_ams5/select_Item_rl_form_ams5_bookingid', rlobBooking
 //user register
 //tannv.dts@gmail.com
 app.post('/api/rlob/register/insert-new-user', rlRegisterController.insertNewUser);
-app.get('/api/rlob/register/list-redilegal-users', rlRegisterController.getRedilegalUsers);
+app.post('/api/rlob/register/list-redilegal-users', rlRegisterController.getRedilegalUsers);
+app.post('/api/rlob/register/update-redilegal-user-status', rlRegisterController.updateRedilegalUserStatus);
+app.post('/api/rlob/register/update-user-info', rlRegisterController.updateUserInfo);
 app.get('/api/rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer', rlBookingsController.getUpcommingBookingHaveNotDocumentToNotificationCustomer);
+app.get('/api/rlob/register/get-states', rlRegisterController.getStates);

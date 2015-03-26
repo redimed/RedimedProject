@@ -1,0 +1,137 @@
+<div class="portlet light">
+    <div class="portlet-title">
+       <!--  <div class="caption">
+            <i class="fa fa-users"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Admin List</span>
+        </div> -->
+        <div class="actions">
+            <a href="javascript:;" ng-click="showPopupAddNewSpecialties()" class="btn green-jungle btn-sm">
+                <i class="fa fa-plus"></i> Add New</a>
+        </div>
+
+
+        <div class="portlet-body">
+            <div class="table-scrollable" id="content">
+                <table   show-filter="false" class="table table-hover table-bordered table-responsive">
+                    <tr>
+                        <th><span class="text-info">ID</span></th>
+                        <th><span class="text-info">SPECIALTIES NAME</span></th>
+                        <th><span class="text-info">TYPE</span></th>
+                        <th><span class="text-info">ENABLE</span></th>
+                        <th></th>
+                    </tr>
+
+                    <tr style="white-space: nowrap; cursor: pointer;" ng-repeat="specialties in listSpecialties">
+                        <td>
+                            <label >{{specialties.Specialties_id}}</label>
+                        </td>
+                        <td>
+                            <label >{{specialties.Specialties_name}}</label>
+                        </td>
+                        <td>
+                            <label >{{specialties.Rl_TYPE_NAME}}</label>
+                        </td>
+                        <td style="text-align:center">
+                            <input ng-disabled="true" type="checkbox"  ng-model="specialties.Isenable"  ng-true-value="1" ng-false-value="0"
+                        ng-checked="specialties.Isenable===1"/>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" class="btn btn-primary btn-xs" ng-click="showPopupEditSpecialties(specialties)">
+                            <i class="fa fa-pencil"></i>
+                            Edit
+                            </button>
+                        </td>
+                    
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<div>
+
+<div  id="rlob-specialties-insert-popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">New Specialties</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-xs-5 col-sm-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+              <!--   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">New Specialties</h4> -->
+            </div>
+            <div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="input-group">
+							<label class="text-info">Specialties name</label>
+							<input ng-model="specialtiesName" type="text" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="input-group">
+							<label class="text-info">Specialties type</label>
+							<select ng-model="specialtiesType" class="form-control"
+								ng-options="value.RL_TYPE_ID as value.Rl_TYPE_NAME for (key,value) in listSpecialtiesType">
+							</select>
+						</div>
+					</div>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" ng-click="insertSpecialties(specialtiesName,specialtiesType)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div  id="rlob-specialties-edit-popup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-3 col-xs-3">Edit Specialties</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit Specialties</h4> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+					<div class="col-md-6">
+						<div class="input-group" style="width: 90%;">
+							<label class="text-info">Specialties name</label>
+							<input ng-model="specialtiesName" type="text" class="form-control">
+						</div>
+					</div>
+					
+				</div>
+				<div style="margin-top: 15px;" class="row">
+					<div class="col-md-6">
+						<div class="input-group" style="width: 90%;">
+							<label class="text-info">Specialties type</label>
+							<select ng-model="specialtiesType" class="form-control"
+								ng-options="value.RL_TYPE_ID as value.Rl_TYPE_NAME for (key,value) in listSpecialtiesType">
+							</select>
+						</div>
+					</div>
+				</div>
+                <div style="margin-top: 15px;" class='row'>
+                    <div class="col-md-12">
+                        <input style=" position:relative;top:3;" type="checkbox" 
+                                ng-true-value="1" ng-false-value="0"
+                                ng-checked="enable === 1"
+                                ng-model="enable"> 
+                               <span class="text-info">Enable</span> 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" ng-click="updateSpecialties(specialtiesId,specialtiesName,specialtiesType,enable)">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

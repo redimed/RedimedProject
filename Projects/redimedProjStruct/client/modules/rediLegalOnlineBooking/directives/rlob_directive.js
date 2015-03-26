@@ -441,40 +441,77 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.rlob_change_booking_file_role=function(assId,refId,fileId,role)
                 {
                     //alert($scope.selectedBooking.Site_addr);
-                    $scope.showMsgDialog=function(styleClass,header,status,content)
+                    var mapUrl=null;
+                    var siteAddress=null;
+                    if($scope.selectedBooking && $scope.selectedBooking.Site_addr)
                     {
-                        $scope.msgHeader=header;
-                        $scope.msgStatus=status;
-                        $scope.msgContent=content;
-                        $(styleClass).modal({show:true,backdrop:'static'});
-                    };
+                        siteAddress=$scope.selectedBooking.Site_addr;
+                        GMaps.geocode({
+                            address: siteAddress,
+                            callback: function (results, status) {
+                                
+                                if (status == 'OK') 
+                                {
+                                    latlng1 = results[0].geometry.location;
+                                    mapUrl = GMaps.staticMapURL({
+                                      lat: latlng1.lat(),
+                                      lng: latlng1.lng(),
+                                      markers: [
+                                        {lat: latlng1.lat(), lng: latlng1.lng()}
+                                      ]
+                                    });
+                                    handle(mapUrl);
+                                }
+                                else
+                                {
+                                    handle(mapUrl);
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        handle(mapUrl);
+                    }
 
-                    $scope.showNotificationPopup=rlobService.showNotificationPopup;
+                    function handle(mapUrl)
+                    {
+                        $scope.showMsgDialog=function(styleClass,header,status,content)
+                        {
+                            $scope.msgHeader=header;
+                            $scope.msgStatus=status;
+                            $scope.msgContent=content;
+                            $(styleClass).modal({show:true,backdrop:'static'});
+                        };
 
-                    $http({
-                        method:"POST",
-                        url:"/api/rlob/rl_booking_files/change-role-download",
-                        data:{fileId:fileId,role:role}
-                    })
-                    .success(function(data) {
-                        if(data.status=='success')
-                        {
-                            //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file',rlobConstant.notifyJsColor.success);
-                            if(role==1)
-                                $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
-                            getFilesUpload();
-                        }
-                        else
-                        {
+                        $scope.showNotificationPopup=rlobService.showNotificationPopup;
+
+                        $http({
+                            method:"POST",
+                            url:"/api/rlob/rl_booking_files/change-role-download",
+                            data:{fileId:fileId,role:role,siteAddress:siteAddress,mapUrl:mapUrl}
+                        })
+                        .success(function(data) {
+                            if(data.status=='success')
+                            {
+                                //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file',rlobConstant.notifyJsColor.success);
+                                if(role==1)
+                                    $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
+                                getFilesUpload();
+                            }
+                            else
+                            {
+                                //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
+                            }
+                        })
+                        .error(function (data) {
                             //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
-                        }
-                    })
-                    .error(function (data) {
-                        //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
-                    })
-                    .finally(function() {
+                        })
+                        .finally(function() {
 
-                    });
+                        });
+                    }
+                    
                 }
             }
         };
@@ -503,59 +540,70 @@ angular.module("app.loggedIn.rlob.directive", [])
             controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout) {
                 $scope.loginInfo = $cookieStore.get('userInfo');
 
-
                 //Config Send mail template
                 /***
                  * Config email template
                  * tannv.dts@gmail.com
                  */
-
-                if($cookieStore.get('companyInfo'))
+                $scope.updateMailtoLink=function()
                 {
-                    $scope.companyInfo=$cookieStore.get('companyInfo');
-                    $scope.mailTemplate={
-                        REDiLEGAL:{
-                            label:'Please contact us to make an appointment',
-                            recepient : "medicolegal@redimed.com.au",
-                            options:{
-                                subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                                body:
-                                    " I would like to make a booking for       \n"+
-                                    " Claim Number:                            \n"+
-                                    " Injured Workers's Name:                  \n"+
-                                    " Contact Number:                          \n"+
-                                    " Address:                                 \n"+
-                                    " Date of Birth:                           \n"+
-                                    " Date of Injury:                          \n"+
-                                    " Description of Injury:                   \n"+
-                                    " Location of Appointment:                 \n"+
-                                    " Timeframe for Appointment:               \n\n"+
-                                    " Please note that this booking is not confirmed in our system until approved by REDIMED."
-                            }
-
-                        },
-                        Vaccination:{
-                            label:'Please contact us to make an appointment',
-                            recepient : '',
-                            options:{
-                                subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                                body:
-                                    "Please booking for me..."
-                            }
-
-                        }
-                    };
-
-                    if($scope.bookingType=='REDiLEGAL')
-                        $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
-                    else if($scope.bookingType=='Vaccination')
-                        $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
-
-                    $scope.sendEmail=function()
+          
+                    console.log($cookieStore.get('companyInfo'));
+                    if($cookieStore.get('companyInfo'))
                     {
-                        $window.location.href = $scope.mailtoLink;
+                    
+                        $scope.companyInfo=$cookieStore.get('companyInfo');
+                        $scope.mailTemplate={
+                            REDiLEGAL:{
+                                label:'Please contact us to make an appointment',
+                                recepient : "medicolegal@redimed.com.au",
+                                options:{
+                                    subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
+                                    body:
+                                        " I would like to make a booking for       \n"+
+                                        " Claim Number:                            \n"+
+                                        " Injured Workers's Name:                  \n"+
+                                        " Contact Number:                          \n"+
+                                        " Address:                                 \n"+
+                                        " Date of Birth:                           \n"+
+                                        " Date of Injury:                          \n"+
+                                        " Description of Injury:                   \n"+
+                                        " Location of Appointment:                 \n"+
+                                        " Timeframe for Appointment:               \n\n"+
+                                        " Please note that this booking is not confirmed in our system until approved by REDIMED."
+                                }
+
+                            },
+                            Vaccination:{
+                                label:'Please contact us to make an appointment',
+                                recepient : '',
+                                options:{
+                                    subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
+                                    body:
+                                        "Please booking for me..."
+                                }
+
+                            }
+                        };
+
+                        if($scope.bookingType=='REDiLEGAL')
+                        {
+                            $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
+                        
+                        }
+                        else if($scope.bookingType=='Vaccination')
+                        {
+                            $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
+                        
+                        }
+
+                        $scope.sendEmail=function()
+                        {
+                            $window.location.href = $scope.mailtoLink;
+                        }
                     }
                 }
+                $scope.updateMailtoLink();
                 //-------------------------------------------------------------
 
                 $scope.selectedFilter={
@@ -820,7 +868,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //Get Appoiment Calendar
                 $scope.updateAppoinmentsList=function()
                 {
-                    // alert(">>>>>>>>");
+                    
                     var rlTypeId=$scope.selectedFilter.rltypeSelected && $scope.selectedFilter.rltypeSelected.RL_TYPE_ID?$scope.selectedFilter.rltypeSelected.RL_TYPE_ID:'%';
                     var specialtyName= $scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_name?$scope.selectedFilter.clnSpecialitySelected.Specialties_name:'%';
                     var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
@@ -834,138 +882,139 @@ angular.module("app.loggedIn.rlob.directive", [])
                         url:"/api/rlob/appointment-calendar/get-appointment-calendar" ,
                         params:{RL_TYPE_ID:rlTypeId,Specialties_name:specialtyName,DOCTOR_ID:doctorId,SITE_ID:locationId,FROM_TIME:fromTime,sourceType:$scope.bookingType}
                     })
-                        .success(function(data) {
+                    .success(function(data) {
 
-                            var temp={TYPE_ITEMS:[]};
+                        var temp={TYPE_ITEMS:[]};
 
-                            for(var i=0;i<data.length;i++)
+                        for(var i=0;i<data.length;i++)
+                        {
+                            if(!temp[data[i].RL_TYPE_ID])
                             {
-                                if(!temp[data[i].RL_TYPE_ID])
-                                {
-                                    temp[data[i].RL_TYPE_ID]={DOCTOR_ITEMS:[]};
-                                    temp.TYPE_ITEMS.push({
-                                        RL_TYPE_ID:data[i].RL_TYPE_ID,
-                                        Rl_TYPE_NAME:data[i].Rl_TYPE_NAME
-                                    });
-                                }
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID])
-                                {
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID]={LOCATION_ITEMS:[]};
-                                    temp[data[i].RL_TYPE_ID].DOCTOR_ITEMS.push({
-                                        DOCTOR_ID:data[i].DOCTOR_ID,
-                                        DOCTOR_NAME:data[i].NAME
-                                    });
-                                }
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID])
-                                {
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID]={APPOINTMENT_ITEMS:[]};
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID].LOCATION_ITEMS.push({
-                                        SITE_ID: data[i].SITE_ID,
-                                        SITE_NAME:data[i].Site_name
-                                    });
-                                }
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID])
-                                {
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID]={SPEC_ITEMS:[]};
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID].APPOINTMENT_ITEMS.push({
-                                        CAL_ID:data[i].CAL_ID,
-                                        APPOINTMENT_TIME:data[i].appointment_time,
-                                        FROM_TIME:data[i].FROM_TIME,
-                                        DOCTOR_ID:data[i].DOCTOR_ID,
-                                        SITE_ID:data[i].SITE_ID
-                                    });
-                                }
-
-                                if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id])
-                                {
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id]={};
-                                    temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID].SPEC_ITEMS.push({
-                                        Specialties_id:data[i].Specialties_id,
-                                        Specialties_name:data[i].Specialties_name
-                                    });
-                                }
-
+                                temp[data[i].RL_TYPE_ID]={DOCTOR_ITEMS:[]};
+                                temp.TYPE_ITEMS.push({
+                                    RL_TYPE_ID:data[i].RL_TYPE_ID,
+                                    Rl_TYPE_NAME:data[i].Rl_TYPE_NAME
+                                });
                             }
-                            var arr=[];
-                            for (var i=0;i<temp.TYPE_ITEMS.length;i++)
-                            {
-                                var type_item=temp.TYPE_ITEMS[i];
-                                type_item.DOCTOR_ITEMS=[];
 
-                                for(var j=0;j<temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS.length;j++)
+                            if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID])
+                            {
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID]={LOCATION_ITEMS:[]};
+                                temp[data[i].RL_TYPE_ID].DOCTOR_ITEMS.push({
+                                    DOCTOR_ID:data[i].DOCTOR_ID,
+                                    DOCTOR_NAME:data[i].NAME
+                                });
+                            }
+
+                            if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID])
+                            {
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID]={APPOINTMENT_ITEMS:[]};
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID].LOCATION_ITEMS.push({
+                                    SITE_ID: data[i].SITE_ID,
+                                    SITE_NAME:data[i].Site_name
+                                });
+                            }
+
+                            if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID])
+                            {
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID]={SPEC_ITEMS:[]};
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID].APPOINTMENT_ITEMS.push({
+                                    CAL_ID:data[i].CAL_ID,
+                                    APPOINTMENT_TIME:data[i].appointment_time,
+                                    FROM_TIME:data[i].FROM_TIME,
+                                    DOCTOR_ID:data[i].DOCTOR_ID,
+                                    SITE_ID:data[i].SITE_ID
+                                });
+                            }
+
+                            if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id])
+                            {
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id]={};
+                                temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID].SPEC_ITEMS.push({
+                                    Specialties_id:data[i].Specialties_id,
+                                    Specialties_name:data[i].Specialties_name
+                                });
+                            }
+
+                        }
+                        var arr=[];
+                        for (var i=0;i<temp.TYPE_ITEMS.length;i++)
+                        {
+                            var type_item=temp.TYPE_ITEMS[i];
+                            type_item.DOCTOR_ITEMS=[];
+
+                            for(var j=0;j<temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS.length;j++)
+                            {
+                                var doctor_item=temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS[j];
+                                doctor_item.SPECS={};
+                                doctor_item.SPECS_STR="";
+                                doctor_item.LOCATION_ITEMS=[];
+                                type_item.DOCTOR_ITEMS.push(doctor_item);
+                                for(var q=0;q<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;q++)
                                 {
-                                    var doctor_item=temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS[j];
-                                    doctor_item.SPECS={};
-                                    doctor_item.SPECS_STR="";
-                                    doctor_item.LOCATION_ITEMS=[];
-                                    type_item.DOCTOR_ITEMS.push(doctor_item);
-                                    for(var q=0;q<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;q++)
+                                    var location_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS[q];
+                                    location_item.APPOINTMENT_ITEMS=[];
+                                    doctor_item.LOCATION_ITEMS.push(location_item);
+                                    for(var k=0;k<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;k++)
                                     {
-                                        var location_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS[q];
+                                        var appointment_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[k];
+                                        appointment_item.SPEC_ITEMS=[];
+                                        location_item.APPOINTMENT_ITEMS.push(appointment_item);
+                                        for(var l=0;l<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS.length;l++)
+                                        {
+                                            var spec_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS[l];
+                                            if(!doctor_item.SPECS[spec_item.Specialties_name])
+                                            {
+                                                doctor_item.SPECS[spec_item.Specialties_name]=spec_item.Specialties_name;
+                                                doctor_item.SPECS_STR=doctor_item.SPECS_STR+spec_item.Specialties_name+'; ';
+                                            }
+                                            
+                                            // exlog.log(appointment_item);
+                                            appointment_item.SPEC_ITEMS.push(spec_item);
+                                        }
+                                    }
+                                }
+                            }
+
+                            /*for(var j=0;j<temp[type_item.RL_TYPE_ID].SPEC_ITEMS.length;j++)
+                            {
+                                var spec_item=temp[type_item.RL_TYPE_ID].SPEC_ITEMS[j];
+                                spec_item.DOCTOR_ITEMS=[];
+                                type_item.SPEC_ITEMS.push(spec_item);
+
+                                for(var q=0;q<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS.length;q++)
+                                {
+                                    var doctor_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS[q];
+                                    doctor_item.LOCATION_ITEMS=[];
+                                    spec_item.DOCTOR_ITEMS.push(doctor_item);
+
+                                    for(var k=0;k<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;k++)
+                                    {
+                                        var location_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS[k];
                                         location_item.APPOINTMENT_ITEMS=[];
                                         doctor_item.LOCATION_ITEMS.push(location_item);
-                                        for(var k=0;k<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;k++)
+
+                                        for(var l=0;l<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;l++)
                                         {
-                                            var appointment_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[k];
-                                            appointment_item.SPEC_ITEMS=[];
+                                            var appointment_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[l];
                                             location_item.APPOINTMENT_ITEMS.push(appointment_item);
-                                            for(var l=0;l<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS.length;l++)
-                                            {
-                                                var spec_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS[l];
-                                                if(!doctor_item.SPECS[spec_item.Specialties_name])
-                                                {
-                                                    doctor_item.SPECS[spec_item.Specialties_name]=spec_item.Specialties_name;
-                                                    doctor_item.SPECS_STR=doctor_item.SPECS_STR+spec_item.Specialties_name+'; ';
-                                                }
-                                                
-                                                // exlog.log(appointment_item);
-                                                appointment_item.SPEC_ITEMS.push(spec_item);
-                                            }
                                         }
                                     }
                                 }
+                            }*/    
+                            arr.push(type_item);
+                        }
+                        $scope.appointmentsFilter=arr;
+                        // exlog.log($scope.appointmentsFilter);
+                        // exlog.log(temp);
+                        
+                    })
+                    .error(function (data) {
+                        console.log("error");
+                    })
+                    .finally(function() {
 
-                                /*for(var j=0;j<temp[type_item.RL_TYPE_ID].SPEC_ITEMS.length;j++)
-                                {
-                                    var spec_item=temp[type_item.RL_TYPE_ID].SPEC_ITEMS[j];
-                                    spec_item.DOCTOR_ITEMS=[];
-                                    type_item.SPEC_ITEMS.push(spec_item);
-
-                                    for(var q=0;q<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS.length;q++)
-                                    {
-                                        var doctor_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS[q];
-                                        doctor_item.LOCATION_ITEMS=[];
-                                        spec_item.DOCTOR_ITEMS.push(doctor_item);
-
-                                        for(var k=0;k<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;k++)
-                                        {
-                                            var location_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS[k];
-                                            location_item.APPOINTMENT_ITEMS=[];
-                                            doctor_item.LOCATION_ITEMS.push(location_item);
-
-                                            for(var l=0;l<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;l++)
-                                            {
-                                                var appointment_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[l];
-                                                location_item.APPOINTMENT_ITEMS.push(appointment_item);
-                                            }
-                                        }
-                                    }
-                                }*/    
-                                arr.push(type_item);
-                            }
-                            $scope.appointmentsFilter=arr;
-                            // exlog.log($scope.appointmentsFilter);
-                            // exlog.log(temp);
-                        })
-                        .error(function (data) {
-                            console.log("error");
-                        })
-                        .finally(function() {
-
-                        });
+                    });
                 }
 
 

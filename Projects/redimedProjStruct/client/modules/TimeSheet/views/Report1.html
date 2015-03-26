@@ -2,8 +2,8 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Timesheets</a>
+            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -16,6 +16,16 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="fromID">From:
+                            <input type="text" id="fromID" datepicker-popup="dd/MM/yyyy" ng-model="info.FROM" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" max-date="info.TO||toDate">&nbsp;
+                            <label for="toID">To:
+                                <input type="text" id="fromID" datepicker-popup="dd/MM/yyyy" ng-model="info.TO" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions" close-text="Close" max-date="toDate" min-date="info.FROM">
+                            </label>
+                            <label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,24 +1,24 @@
 <div class="panel-body">
-    <form method="POST" class="grid-form" name="formItemCode">
+    <form method="POST" class="grid-form" name="formItemCode" accessibleForm>
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>Choose Item Codes
+            <legend>Choose Item Number
             </legend>
             <!-- TABLE ITEM BEEN SELECTED-->
             <div data-row-span="12">
                 <div class="panel-body table-dynamic">
                     <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
                     </center>
-                    <span class="bold" style="margin-left:3px;">Selected Item Codes<span>
+                    <span class="bold" style="margin-left:3px;">Selected Item Number<span>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                         <thead ng-show="list.result!==null">
                             <tr>
                                 <th style="background-color:#26a69a;width:10%;">
                                     <div class="th">
-                                        Item code
+                                        Item Number
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:57%;">
+                                <th style="background-color:#26a69a;width:40%;">
                                     <div class="th">
                                         Description
                                     </div>
@@ -33,7 +33,7 @@
                                         Time charge
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:10%;">
+                                <th style="background-color:#26a69a;width:27%;">
                                     <div class="th">
                                         Tasks/Comments
                                     </div>
@@ -81,38 +81,41 @@
                                 </td>
                             </tr>
                             <!-- temp row-->
-                            <tr>
-                                <td><a class="btn btn-xs" style="color:#26a69a;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a></td>
+                            <tr ng-show="isShow===true">
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td>&nbsp;</td>
                             </tr>
+                            <td colspan="6 ">
+                            <a class="btn btn-xs" style="color:#26a69a;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a>
+                        </td>
                             <!-- end temp row -->
                         </tbody>
                     </table>
                     <div class="col-md-12">
-                     <a class="btn pull-right btn-xs" style="background-color:#26a69a; color:white;" ng-click="onSave({return: items})" ng-disabled="(items===undefined||items.length===0)">Save</a>
-                     <a class="btn yellow pull-right btn-xs" ng-click="onCancel({return: true})">Cancel</a>
+                     <a class="btn yellow pull-right btn-xs" style="margin-right:-14px;" ng-click="onCancel({return: true})">Cancel</a>
+                     <button class="btn pull-right btn-xs" style="background-color:#26a69a; color:white;margin-right:5px;" ng-click="onSave({return: items,formValid:formItemCode})" ng-disabled="(items===undefined||items.length===0)">Save</button>
                  </div>
                 <!-- END ITEM BEEN SELECTED -->
                 <!-- TABLE ITEM-->
                      <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
-                    </center> <span class="bold" style="margin-left:3px;">List of Item Codes<span>
+                    </center> <span class="bold" style="margin-left:3px;">List of Item Number<span>
                      <a ng-click="reset()"><i class="fa fa-refresh"></i></a>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
-                    <tr>
+                    <tr style="background-color:#67809f;height:32px;">
                         <td class="btn btn-xs" style="text-align:left; width:5%;">
                             <span class="glyphicon glyphicon-chevron-up" ng-click="itemCodeASC()" ng-class="{'active': searchObjectMap.order['time_item_code.ITEM_ID']==='ASC'}">
                             </span>
                     <span class="glyphicon glyphicon-chevron-down" ng-click="itemCodeDESC()" ng-class="{ 'active': searchObjectMap.order['time_item_code.ITEM_ID']==='DESC' } ">
                             </span>
-                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="loadList()" style="border:1px solid #ccc; font-size:13px; width:100px;margin-left:-10px;height:20px;" placeholder="Item Code" tabindex="1" id="itemCodeID">
+                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="loadList()" style="border:1px solid #ccc; font-size:13px; width:100px;margin-left:-10px;height:20px;background-color:white;margin-top:3px;" placeholder="Item Number" tabindex="1" id="itemCodeID">
                     </td>
                     <td class="btn btn-xs" style="text-align:left;width:95%;">
-                        <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;" placeholder="Item Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
+                        <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Item Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
                     </td>
                     </tr>
                     <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME)">

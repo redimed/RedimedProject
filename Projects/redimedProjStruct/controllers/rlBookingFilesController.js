@@ -4,6 +4,7 @@
 var db = require('../models');
 var rlBookingsController=require('./rlBookingsController');
 var rlobUtil=require('./rlobUtilsController');
+var kiss=require('./kissUtilsController');
 
  // var gmaps=require('gmaps');
 module.exports =
@@ -24,6 +25,13 @@ module.exports =
         });
     },
 
+    /**
+     * change role download
+     * tannv.dts@gmail.com
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
     change_role_download:function(req,res){
         var fileId=req.body.fileId;
         var role=req.body.role;
@@ -34,42 +42,66 @@ module.exports =
             " SET files.`isClientDownLoad`=0                       "+
             " WHERE files.`BOOKING_ID`=? AND files.`FILE_ID`<>?    ";
 
-        db.sequelize.query(sql,null,{raw:true},[role,fileId])
-            .then(function(data){
-                return 'success';
-            },function(err){
-                return 'fail';
-            })
-            .then(function(data){
-                if(data=='success')
-                {
-                    if(role==1)
+        kiss.executeQuery(req,sql,[role,fileId],function(result){
+            if(result.affectedRows>0)
+            {
+                kiss.executeQuery(req,sql2,[fileId],function(data){
+                    if(data.length>0)
                     {
-                        db.sequelize.query(sql2,null,{raw:true},[fileId])
-                            .then(function(data){
-                                if(data.length>0)
-                                {
-                                    db.sequelize.query(sql3,null,{raw:true},[data[0].BOOKING_ID,fileId])
-                                        .then(function(){
-
-                                        })
-                                }
-
-                                //send email notification
-                                req.body.bookingId=data[0].BOOKING_ID;
-                                rlBookingsController.sendResultNotificationEmail(req,res);
-                            });
+                        req.body.bookingId=data[0].BOOKING_ID;
+                        rlBookingsController.sendResultNotificationEmail(req,res);
 
                     }
+                },function(err){
+
+                });
+                res.json({status:'success'});
+            }
+            else
+            {
+                kiss.exlog("change_role_download","Khong có row nao bi anh huong");
+                res.json({status:'fail'});
+            }
+        },function(err){
+            kiss.exlog("change_role_download","Loi cau truy van");
+            res.json({status:'fail'});
+        });
+        // db.sequelize.query(sql,null,{raw:true},[role,fileId])
+        //     .then(function(data){
+        //         return 'success';
+        //     },function(err){
+        //         return 'fail';
+        //     })
+        //     .then(function(data){
+        //         if(data=='success')
+        //         {
+        //             if(role==1)
+        //             {
+        //                 db.sequelize.query(sql2,null,{raw:true},[fileId])
+        //                     .then(function(data){
+        //                         if(data.length>0)
+        //                         {
+        //                             db.sequelize.query(sql3,null,{raw:true},[data[0].BOOKING_ID,fileId])
+        //                                 .then(function(){
+
+        //                                 })
+        //                         }
+
+        //                         //send email notification
+        //                         req.body.bookingId=data[0].BOOKING_ID;
+        //                         rlBookingsController.sendResultNotificationEmail(req,res);
+        //                     });
+
+        //             }
                     
 
-                    res.json({status:'success'});
-                }
-                else
-                {
-                    res.json({status:'fail'});
-                }
-            })
+        //             res.json({status:'success'});
+        //         }
+        //         else
+        //         {
+        //             res.json({status:'fail'});
+        //         }
+        //     })
 
     },
     
