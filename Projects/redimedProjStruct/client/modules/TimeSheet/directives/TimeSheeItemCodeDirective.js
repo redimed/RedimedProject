@@ -97,7 +97,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         scope.list.result[index].status = !scope.list.result[index].status;
                     }
                 };
-                scope.isShow = false;
+                scope.isShow = true;
                 scope.clickAdd = function() {
                     scope.isShow = true;
                     angular.element('#itemCodeID').focus();
