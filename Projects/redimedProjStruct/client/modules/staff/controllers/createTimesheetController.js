@@ -191,7 +191,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                         $scope.checkStatus = response['item'][0].task_status_id;
                                     }
                                     //end
-                                    if (data.tasks_id === item.tasks_id && item.ITEM_ID !== null) {
+                                    if (data.tasks_id === item.tasks_id && data.item.length !== 0) {
                                         data.isInputItem = 1;
                                         data.isBillable = 1;
                                         item.isAction = 'update';
