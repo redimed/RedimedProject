@@ -4,6 +4,11 @@
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
     .controller("rlob_patientDetailController", function($scope,$state,$http,$cookieStore,bookingService,appointmentCalendarService,FileUploader,Mailto,$location,$window,rlobService,PatientModel,ClaimModel) {
+        /**
+         * Danh cho tai su dung thong tin patient
+         * client se chon bookinginfo hien co sau do dung no de book 1 lich moi
+         * tannv.dts@gmail.com
+         */
         var bookingInfoReuse=bookingService.getBookingInfoResuse();
         if(bookingInfoReuse)
         {
@@ -23,10 +28,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         {
             $scope.newBooking={};
         }
-        
-
-
-        
 
         $scope.selectedAppointmentCalendar=appointmentCalendarService.getSelectedAppointmentCalendar();
         /***
@@ -282,15 +283,33 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             .finally(function() {
 
             });
-        //    $scope.newBooking.ASS_SURNAME="Tan Nguyen";
-        //    $scope.newBooking.ASS_OTHERNAMES="Lupy";
-        //    $scope.newBooking.ASS_CONTACT_NO="6996 Binh Duong";
-        //    $scope.newBooking.ASS_EMAIL="tannv.dts@gmail.com";
-        $scope.newBooking.ASS_ID=$scope.loginInfo.id;
-        $scope.newBooking.ASS_SURNAME=$scope.loginInfo.Booking_Person;
-        $scope.newBooking.ASS_OTHERNAMES=$scope.loginInfo.Booking_Person;
-        $scope.newBooking.ASS_CONTACT_NO=$scope.loginInfo.Contact_number;
-        $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
+
+        /**
+         * Danh cho admin booking gium client
+         * Admin se chon user sau do dung thong tin user de booking
+         * tannv.dts@gmail.com
+         */
+        
+        var bookingBehalfInfo=angular.copy(bookingService.getBookingBehalfInfo());
+        if(bookingBehalfInfo!=null)
+        {
+            $scope.newBooking.ASS_ID=bookingBehalfInfo.ASS_ID;
+            $scope.newBooking.ASS_SURNAME=bookingBehalfInfo.ASS_SURNAME;
+            $scope.newBooking.ASS_OTHERNAMES=bookingBehalfInfo.ASS_OTHERNAMES;
+            $scope.newBooking.ASS_CONTACT_NO=bookingBehalfInfo.ASS_CONTACT_NO;
+            $scope.newBooking.ASS_EMAIL=bookingBehalfInfo.ASS_EMAIL;
+            bookingService.setBookingBehalfInfo(null);
+        }
+        else
+        {
+            $scope.newBooking.ASS_ID=$scope.loginInfo.id;
+            $scope.newBooking.ASS_SURNAME=$scope.loginInfo.Booking_Person;
+            $scope.newBooking.ASS_OTHERNAMES=$scope.loginInfo.Booking_Person;
+            $scope.newBooking.ASS_CONTACT_NO=$scope.loginInfo.Contact_number;
+            $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
+        } 
+        
+        
 
 
         /***

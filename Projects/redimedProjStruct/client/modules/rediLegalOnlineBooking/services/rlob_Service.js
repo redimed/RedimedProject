@@ -19,6 +19,7 @@ angular.module('app.loggedIn.rlob.services',[])
     var bookingInfo={};
     var bookingList=[];
     var bookingInfoReuse=null;
+    var bookingBehalfInfo=null;
     this.getSelectedInfo=function(){
         return selectedInfo;
     }
@@ -41,6 +42,14 @@ angular.module('app.loggedIn.rlob.services',[])
     this.getBookingInfoResuse=function()
     {
         return bookingInfoReuse;
+    }
+    this.setBookingBehalfInfo=function(b)
+    {
+        bookingBehalfInfo=b;
+    }
+    this.getBookingBehalfInfo=function()
+    {
+        return bookingBehalfInfo;
     }
 
 })
