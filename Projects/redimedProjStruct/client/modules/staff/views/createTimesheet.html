@@ -18,20 +18,15 @@
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <!-- <div class="pull-right"> -->
-        <!-- </div> -->
         <div class="caption" style="font-size:14px;">
             <i class="fa fa-cogs"></i>
             <span ng-hide='isEdit'>Create New Timesheet</span>
             <span ng-hide='!isEdit'>Edit Timesheet</span>
         </div>
         <div class="actions">
-            <label ng-hide='isEdit'>Week From</label>
+            <label>Week From</label>
             <input ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black;" />
             <input ng-disabled='isEdit' ng-show='isEdit' type="text" name="dob" ng-model="dateStart" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="font-size:13px;color:black;" />
-            <a href="javascript:;" class="icon-time" data-toggle="tooltop" data-placement='left' tooltip title="You have 2 time in lieu">
-                <i class="icon icon-clock"></i>
-                <span class="badge badge-danger">20</span>
             </a>
             <a class="btn btn-xs blue pull-right" ng-hide='true' style="margin-top:10px;margin-left: 10px">
                 <i class="fa fa-refresh"></i> &nbsp;Refresh</a>
@@ -132,7 +127,7 @@
                         </td>
                         <td style="text-align:center;">
                             <span ng-disabled="task.isInputItem==0 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
-                            task.activity_id === 17 || task.activity_id === 19" ng-click="chooseItem(task,$index)" class="btn btn-xs blue-dark" style="margin-top:3px;margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
+                            task.activity_id === 17 || task.activity_id === 19 || task.isInputItem!=1" ng-click="chooseItem(task,$index)" class="btn btn-xs blue-dark" style="margin-top:3px;margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
                         </td>
                     </tr>
                     <tr>

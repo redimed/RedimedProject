@@ -70,12 +70,12 @@
                         <tbody>
                             <tr ng-repeat="(key,task) in tasks track by $index" ng-class="{'same': one == false ? getDay(task.date)%2==0 : false}">
                                 <td class="btn btn-xs" style="text-align:left;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{task.activity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{task.location}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{task.department}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.activity===null ||task.activity==="")?"N/A":task.activity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.location===null ||task.location==="")?"N/A":task.location}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.department===null||task.department==="")?"N/A":task.department}}</td>
                                 <td class="btn btn-xs">{{task.time_item == null ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{task.ITEM_ID}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{task.quantity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.ITEM_ID===null||task.ITEM_ID==="")?"N/A":task.ITEM_ID}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="")?"N/A":task.quantity}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{task.comment == null ? task.task : task.comment}}</td>
                             </tr>
                         </tbody>

@@ -58,7 +58,7 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
                 }
 
             } else {
-                return "00:00";
+                return "-";
             }
 
         };

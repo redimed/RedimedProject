@@ -176,7 +176,7 @@ angular.module("app.loggedIn.staff.service", [])
     //end thanh
 
     service.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge !== undefined && time_charge !== null) {
+        if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
             var hours = parseInt(time_charge);
             var n = time_charge.toString().indexOf(".");
             var minutes = 0;
@@ -233,7 +233,7 @@ angular.module("app.loggedIn.staff.service", [])
             }
 
         } else {
-            return "00:00";
+            return "-";
         }
 
     };
