@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=true;
+var isTestSendMail=false;
 module.exports =
 {
     userRegisterType:'Company',
@@ -16,7 +16,7 @@ module.exports =
         }
         else
         {
-            return "REDiMED <healthscreenings@redimed.com.au>";
+            return "REDiMED <medicolegal@redimed@redimed.com.au>";
         }
     },
 
