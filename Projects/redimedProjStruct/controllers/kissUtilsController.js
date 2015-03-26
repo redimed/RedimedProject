@@ -3,6 +3,8 @@
  * 5-3-2015
  */
 
+var moment=require('moment');
+
 /**
  * Xuat log
  * tannv.dts@gmail.com
@@ -268,6 +270,37 @@ module.exports =
                 }
             });
         }
+    },
+
+    getCurrentTimeStr:function()
+    {
+        return moment().format("YYYY/MM/DD HH:mm:ss");
+    },
+
+    getCurrentDateStr:function()
+    {
+        return moment().format("YYYY/MM/DD");
+    },
+
+    /**
+     * Chen value vao key tuong ung trong cap dau {{}}
+     * Vi du:
+     *     str: hello {{name}}
+     *     data:{{name:'tan'}}
+     *     tokenBinding(str,data)=> hello tan
+     * tannv.dts@gmail.com
+     */
+    tokenBinding:function(strSrc,data)
+    {
+        for (var key in data) 
+        {
+            var mask="{{"+key+"}}";
+            var value=data[key];
+            var re = new RegExp(mask, 'g');
+            strSrc = strSrc.replace(re, value);
+        }   
+        exlog("tokenBinding",strSrc);
+        return strSrc;
     }
     
 }

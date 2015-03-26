@@ -1,3 +1,61 @@
+<accordion >
+    <accordion-group class="panel panel-success" is-open="panelAccordion.status2">
+        <accordion-heading>
+            <h3 class="panel-title">Summary of Booking</h3>
+        </accordion-heading>
+        <div >
+            <div class="row ">
+                <div class="col-md-5 name">
+                    Date:
+                </div>
+                <div class="col-md-7 value">
+                    {{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}
+                    <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-5 name">
+                    Time:
+                </div>
+                <div class="col-md-7 value">
+                    {{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}
+                    <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-5 name">
+                    Type of appointment:
+                </div>
+                <div class="col-md-7 value">
+                    {{selectedBooking.Rl_TYPE_NAME}}
+                    <!--{{getRlTypeName(selectedBooking.RL_TYPE_ID)}}-->
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-5 name">
+                    Doctor:
+                </div>
+                <div class="col-md-7 value">
+                    {{selectedBooking.NAME}}
+                    <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-5 name">
+                    Address:
+                </div>
+                <div class="col-md-7 value">
+                    {{selectedBooking.Site_addr}}
+                    <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
+                </div>
+            </div>
+
+        </div>
+    </accordion-group>
+
+</accordion>
+
 
 <accordion >
     <accordion-group class="panel panel-success"  is-open="panelAccordion.status1">
@@ -218,63 +276,7 @@
     </accordion-group>
 </accordion>
 
-<accordion >
-    <accordion-group class="panel panel-success" is-open="panelAccordion.status2">
-        <accordion-heading>
-            <h3 class="panel-title">Summary of Booking</h3>
-        </accordion-heading>
-        <div >
-            <div class="row ">
-                <div class="col-md-5 name">
-                    Date:
-                </div>
-                <div class="col-md-7 value">
-                    {{selectedBooking.APPOINTMENT_DATE|date:'dd/MM/yyyy'}}
-                    <!--{{getShortDateString(selectedBooking.APPOINTMENT_DATE)}}-->
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-md-5 name">
-                    Time:
-                </div>
-                <div class="col-md-7 value">
-                    {{selectedBooking.APPOINTMENT_DATE|date:'HH:mm'}}
-                    <!--{{getTimeString(selectedBooking.APPOINTMENT_DATE)}}-->
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-md-5 name">
-                    Type of appointment:
-                </div>
-                <div class="col-md-7 value">
-                    {{selectedBooking.Rl_TYPE_NAME}}
-                    <!--{{getRlTypeName(selectedBooking.RL_TYPE_ID)}}-->
-                </div>
-            </div>
 
-            <div class="row ">
-                <div class="col-md-5 name">
-                    Doctor:
-                </div>
-                <div class="col-md-7 value">
-                    {{selectedBooking.NAME}}
-                    <!--{{getDoctorName(selectedBooking.DOCTOR_ID)}}-->
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-md-5 name">
-                    Address:
-                </div>
-                <div class="col-md-7 value">
-                    {{selectedBooking.Site_addr}}
-                    <!--{{getLocationAddress(selectedBooking.SITE_ID)}}-->
-                </div>
-            </div>
-
-        </div>
-    </accordion-group>
-
-</accordion>
 
 
 

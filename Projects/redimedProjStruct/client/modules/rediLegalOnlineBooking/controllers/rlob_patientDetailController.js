@@ -4,6 +4,30 @@
 
 angular.module('app.loggedIn.rlob.patientDetail.controller',[])
     .controller("rlob_patientDetailController", function($scope,$state,$http,$cookieStore,bookingService,appointmentCalendarService,FileUploader,Mailto,$location,$window,rlobService,PatientModel,ClaimModel) {
+        var bookingInfoReuse=bookingService.getBookingInfoResuse();
+        if(bookingInfoReuse)
+        {
+            $scope.newBooking={
+                CLAIM_NO:bookingInfoReuse.CLAIM_NO,
+                WRK_SURNAME:bookingInfoReuse.WRK_SURNAME,
+                WRK_OTHERNAMES:bookingInfoReuse.WRK_OTHERNAMES,
+                WRK_EMAIL:bookingInfoReuse.WRK_EMAIL,
+                WRK_CONTACT_NO:bookingInfoReuse.WRK_CONTACT_NO,
+                DESC_INJURY:bookingInfoReuse.DESC_INJURY
+            }
+            $scope.WRK_DOB_TEMP=bookingInfoReuse.WRK_DOB;
+            $scope.WRK_DATE_OF_INJURY_TEMP=bookingInfoReuse.WRK_DATE_OF_INJURY_TEMP;
+            bookingService.setBookingInfoReuse(null);
+        }
+        else
+        {
+            $scope.newBooking={};
+        }
+        
+
+
+        
+
         $scope.selectedAppointmentCalendar=appointmentCalendarService.getSelectedAppointmentCalendar();
         /***
          * An ngan can thay doi url khi change state
@@ -56,7 +80,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         /**
          * angular bootstrap datepicker handle
          */
-        $scope.newBooking={};
+        // $scope.newBooking={};
         // $scope.today = function() {
         //     $scope.WRK_DOB_TEMP = new Date();
         // };
@@ -373,6 +397,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.isSaving=false;
         $scope.save=function()
         {
+            $scope.$broadcast('show-errors-check-validity');
 
             if($scope.bookingForm.$invalid)
             {
@@ -439,8 +464,8 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.refered_date_string=$scope.from_time.format("ddd DD/MM/YYYY HH-mm")+" "+selectedInfo.locationSelected.Site_name;
             $scope.newBooking.STATUS="Confirmed";
             $scope.newBooking.BOOKING_TYPE=$scope.bookingType;
-            console.log($scope.WRK_DATE_OF_INJURY_TEMP);
-            console.log($scope.WRK_DOB_TEMP);
+            // console.log($scope.WRK_DATE_OF_INJURY_TEMP);
+            // console.log($scope.WRK_DOB_TEMP);
             if($scope.WRK_DOB_TEMP==undefined)
             {
                 alert("Worker's birthay fail!");

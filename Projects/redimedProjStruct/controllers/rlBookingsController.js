@@ -253,6 +253,7 @@ module.exports =
         var claimNo=kiss.checkData(searchInfo.claimNo)?searchInfo.claimNo:'';
         var surname=kiss.checkData(searchInfo.surname)?searchInfo.surname:'';
         var firstName=kiss.checkData(searchInfo.firstName)?searchInfo.firstName:'';
+        var fullName=kiss.checkData(searchInfo.fullName)?searchInfo.fullName:'';
         var type=kiss.checkData(searchInfo.type)?searchInfo.type:'';
         var appointmentDateFrom=kiss.checkData(searchInfo.appointmentDateFrom)?searchInfo.appointmentDateFrom:'1980/1/1';
         var appointmentDateTo=kiss.checkData(searchInfo.appointmentDateTo)?searchInfo.appointmentDateTo:'3000/1/1';
@@ -261,15 +262,17 @@ module.exports =
         var orderBy=kiss.checkData(searchInfo.orderBy)?(' ORDER BY '+searchInfo.orderBy):'';
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
+        kiss.exlog(searchInfo);
         // var userId='';
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`                                    "+
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`,CONCAT(WRK_OTHERNAMES,' ',WRK_SURNAME) as 'FULL_NAME'                                    "+
             " FROM `rl_bookings` booking                                                              "+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                "+
             " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                   "+
             " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                     "+
             "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                    "+
             "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                       "+
+            "   AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE CONCAT('%',?,'%') "+
             "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                       "+
             "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?      "+
             "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                           "+
@@ -280,12 +283,13 @@ module.exports =
 
         var sqlCount=
             " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                           "+
-            " FROM `rl_bookings` booking                                                                  "+
+            " FROM (SELECT *,CONCAT(WRK_OTHERNAMES,' ',`WRK_SURNAME`) AS 'FULL_NAME' FROM `rl_bookings`) booking                                                                  "+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
             " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                       "+
             " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                         "+
             "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                        "+
             "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                           "+
+            "   AND booking.FULL_NAME LIKE CONCAT('%',?,'%') "+
             "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                           "+
             "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?          "+
             "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
@@ -293,7 +297,7 @@ module.exports =
             "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                               ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[claimNo,firstName,surname,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,rows)
+            var query = connection.query(sql,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,rows)
             {
                 if(err)
                 {
@@ -302,11 +306,9 @@ module.exports =
                 }
                 else
                 {
-                    kiss.exlog(query.sql);
-                    kiss.exlog("danh sach",rows);
                     req.getConnection(function(err,connection)
                     {
-                        var query = connection.query(sqlCount,[claimNo,firstName,surname,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,result)
+                        var query = connection.query(sqlCount,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,result)
                         {
                             if(err)
                             {
@@ -421,7 +423,7 @@ module.exports =
             " SELECT    booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
             "   booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
             "   booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`, booking.DOCUMENT_STATUS,                                                  "+
-            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                                               "+
+            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID, booking.ASS_OTHERNAMES,booking.WRK_OTHERNAMES,                                                                                              "+
             "   CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
             "   CONCAT(HOUR(calendar.`From_time`),':',DATE_FORMAT(calendar.`From_time`,'%i')) AS APPOINTMENT_TIME,                                                     "+
             "   booking.`STATUS`,                                                                                                                            "+
@@ -440,7 +442,7 @@ module.exports =
             "   AND                                                                                                                                          "+
             "   `booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%') and `booking`.DOCUMENT_STATUS LIKE ?                                                                                              "+
             (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
-            " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 "
+            " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 ";
         req.getConnection(function(err,connection) {
             var key_result=connection.query(sql,doctorId?[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey,doctorId]:[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey],function(err,rows){
                 if(err)
@@ -620,7 +622,7 @@ module.exports =
                             textBody:''
                         };
                         emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
-                        emailInfo.senders=rlobUtil.getMailSender() ;
+                        emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
                         //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
@@ -640,7 +642,7 @@ module.exports =
                             "         <tr><td style='font-weight:bold'>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>                                    "+
                             "         <tr><td style='font-weight:bold'>Address:</td><td>"+row.Site_addr+"</td></tr>                                                                "+
                             "         <tr><td style='font-weight:bold'>Doctor:</td><td>"+row.NAME+"</td></tr>                                                                      "+
-                            "         <tr><td style='font-weight:bold'>Type of appointment:</td><td>"+row.Rl_TYPE_NAME+"</td></tr>                                                 "+
+                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>"+row.Rl_TYPE_NAME+"</td></tr>                                                 "+
                             "    </table>                                                                                                                                          "+
                             "   </p>                                                                                                                                               "+
                             "   <p>                                                                                                                                                "+
@@ -649,7 +651,7 @@ module.exports =
                             "   </p>                                                                                                                                               "+
                             "   <p>                                                                                                                                                "+
                             "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                             "+
-                            "    on (08) 9230 0900 or medicolegal@redimed.com.au Thank you                                                                                         "+
+                            "    on (08) 9230 0900 or medicolegal@redimed.com.au                                                                                        "+
                             "   </p>                                                                                                                                               "+
                             "                                                                                                                                                      "+
                             "   <div style='width:400px;height:300px'>                                                                                                             "+
@@ -1491,11 +1493,11 @@ module.exports =
     sendResultNotificationEmail:function(req,res)
     {
         var bookingId=req.body.bookingId;
-        var siteAddress=req.body.siteAddress;
+        var siteAddress=req.body.siteAddress?req.body.siteAddress:'';
         var mapUrl=req.body.mapUrl?req.body.mapUrl:'';
         var sql=
             " SELECT    u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
-            "   booking.`WRK_SURNAME`,booking.`CLAIM_NO`,                                                     "+
+            "   booking.`WRK_SURNAME`,booking.WRK_OTHERNAMES,booking.`CLAIM_NO`,                                                     "+
             "   booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
             " FROM  `rl_bookings` booking                                                                     "+
             "   INNER JOIN `users` u ON booking.`ASS_ID`=u.`id`                                               "+
@@ -1527,39 +1529,48 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        emailInfo.subject='Redilegal Result';
-                        emailInfo.senders="REDiMED <healthscreenings@redimed.com.au>";
-                        //emailInfo.senders="tannv.solution@gmail.com";
+                        emailInfo.subject=row.Rl_TYPE_NAME+" - "+row.WRK_SURNAME+" - "+row.CLAIM_NO;
+                        emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
                         emailInfo.recipients=row.Contact_email;
 
+                        var emailTemplate=
+                            " <p>                                                                                                                           "+
+                            "   Hi {{user_name}},                                                                    "+
+                            " </p>                                                                                                                          "+
+                            " <p>                                                                                                                           "+
+                            "     The {{Rl_TYPE_NAME}} completed for {{WRK_OTHERNAMES}} {{WRK_SURNAME}} by {{NAME}} on the {{APPOINTMENT_DATE}} has been uploaded to your Medico-Legal login.      "+
+                            " </p>                                                                                                                          "+
+                            " <p>                                                                                                                           "+
+                            "     The original of the report will also be posted through to your office along with the invoice.                             "+
+                            " </p>                                                                                                                          "+
+                            " <p>                                                                                                                           "+
+                            "   Thank you                                                                                                                   "+
+                            " </p>                                                                                                                          "+
+                            // " <div style='width:400px;height:300px'>                                                                                        "+
+                            // "   <img src='{{mapUrl}}'/>                                                                                                     "+
+                            // "   <div> Site address: {{siteAddress}} </div>                                                                                  "+
+                            // " </div>                                                                                                                        "+
+                            " <p>                                                                                                                           "+
+                            "     Kind Regards                                                                                                              "+
+                            " </p>                                                                                                                          "+
+                            " <p>                                                                                                                           "+
+                            "     Redimed Medico-Legal                                                                                                   "+
+                            " </p>                                                                                                                          ";
 
                         emailInfo.htmlBody=
-                            " <p>                                                                                                    "+
-                            "   Hi <span style='font-weight: bold'>"+row.user_name+"</span>,                                                    "+
-                            " </p>                                                                                                   "+
-                            " <p>                                                                                                    "+
-                            "     The "+row.Rl_TYPE_NAME+" completed by "+row.NAME+" on the "+moment(new Date(row.APPOINTMENT_DATE)).format("HH:mm DD/MM/YYYY")+" has been uploaded to your REDiLEGAL login.     "+
-                            " </p>                                                                                                   "+
-                            " <p>                                                                                                    "+
-                            "     The original of the report will also be posted through to your office along with the invoice.      "+
-                            " </p>                                                                                                   "+
-                            " <p>                                                                                                    "+
-                            "   Thank you                                                                                            "+
-                            " </p>                                                                                                   "+
-                            " <p>                                                                                                    "+
-                            "     Kind Regards                                                                                       "+
-                            " </p>                                                                                                   "+
-                            " <p>                                                                                                    "+
-                            "     REDiLEGAL Team                                                                                     "+
-                            " </p>                                                                                                   ";
-                            //" <div style='width:400px;height:300px'>                                                                 "+
-                            //"   <img src='"+mapUrl+"'/>                                                                                        "+
-                            //" <div> Site address: "+siteAddress+" <div> "+
-                            //" </div>                                                                                                 "
+                            kiss.tokenBinding(emailTemplate,{
+                                user_name:row.user_name,
+                                WRK_OTHERNAMES:row.WRK_OTHERNAMES,
+                                WRK_SURNAME:row.WRK_SURNAME,
+                                Rl_TYPE_NAME:row.Rl_TYPE_NAME,
+                                NAME:row.NAME,
+                                APPOINTMENT_DATE:moment(new Date(row.APPOINTMENT_DATE)).format("HH:mm DD/MM/YYYY"),
+                                mapUrl:mapUrl,
+                                siteAddress:siteAddress
+                            });
+
                         rlobEmailController.sendEmail(req,res,emailInfo);
                     }
-
-
                 }
             });
 

@@ -73,6 +73,15 @@ angular.module("app.security",[
          }
      }
     })
+    .state("security.rlobMobile", {
+     url: "/rlob-mobile",
+     views: {
+         "main-content": {
+                templateUrl: "/modules/rediLegalOnlineBooking/views/mobile/sponsor1.html",
+                controller:'rlobSponsor1Controller'
+         }
+     }
+    })
 
     //REDIRECT
     .state("security.redirect", {

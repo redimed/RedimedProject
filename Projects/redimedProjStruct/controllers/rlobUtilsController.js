@@ -20,6 +20,18 @@ module.exports =
         }
     },
 
+    getMedicoLegalMailSender:function()
+    {
+        if(isTestSendMail)
+        {
+            return "REDiMED <vnlegal123@gmail.com>";
+        }
+        else
+        {
+            return "Health Screening Mailbox <medicolegal@redimed.com.au>";
+        }
+    },
+
     fulltext:function(str)
     {
         return '%'+str+'%';
@@ -52,8 +64,7 @@ module.exports =
 
     registerStatus:{
         pending:'PENDING',
-        accepted:'ACCEPTED',
-        rejected:'REJECTED',
-        deactivate:'DEACTIVATE'
+        approve:'APPROVE',
+        reject:'REJECT'
     }
 }

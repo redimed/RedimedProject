@@ -18,6 +18,7 @@ angular.module('app.loggedIn.rlob.services',[])
     var selectedInfo={};
     var bookingInfo={};
     var bookingList=[];
+    var bookingInfoReuse=null;
     this.getSelectedInfo=function(){
         return selectedInfo;
     }
@@ -31,6 +32,15 @@ angular.module('app.loggedIn.rlob.services',[])
 
     this.getBookingList=function(){
         return bookingList;
+    }
+
+    this.setBookingInfoReuse=function(booking)
+    {
+        bookingInfoReuse=angular.copy(booking);
+    }
+    this.getBookingInfoResuse=function()
+    {
+        return bookingInfoReuse;
     }
 
 })
@@ -253,13 +263,61 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/rl_bookings/cancel-booking');
             return result.post({CAL_ID:CAL_ID,PATIENT_ID:PATIENT_ID});
         }
-         //chien 
+        //chien 
         //phanquocchien.c1109g@gmail.com
         //change booking
         rlobService.changeBooking=function(CAL_ID,PATIENT_ID,PATIENT_NAME)
         {
             var result=api.all('rlob/rl_bookings/change-booking');
             return result.post({CAL_ID:CAL_ID,PATIENT_ID:PATIENT_ID,PATIENT_NAME:PATIENT_NAME});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //get list tltype
+        rlobService.getlistRlType=function()
+        {
+            var result=api.one('rlob/rl_types/get-list-rltype');
+            return result.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //update tltype
+        rlobService.updateRlTypes=function(TYPEID,TYPENAME,SOURCETYPE,ISENABLE)
+        {
+            var result=api.all('rlob/rl_types/update-rltype');
+            return result.post({TYPEID:TYPEID,TYPENAME:TYPENAME,SOURCETYPE:SOURCETYPE,ISENABLE:ISENABLE});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //insert tltype
+        rlobService.insertRlTypes=function(TYPENAME,SOURCETYPE)
+        {
+            var result=api.all('rlob/rl_types/insert-rltype');
+            return result.post({TYPENAME:TYPENAME,SOURCETYPE:SOURCETYPE});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //get list specialties
+        rlobService.getListSpecialties=function()
+        {
+            var result=api.one('rlob/cln_specialties/get-list-specialties');
+            return result.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //update specialties
+        rlobService.updateSpecialties=function(SPECIALTIESID,SPECIALTIESNAME,SPECIALTIESTYPE,ISENABLE)
+        {
+            var result=api.all('rlob/cln_specialties/update-specialties');
+            return result.post({SPECIALTIESID:SPECIALTIESID,SPECIALTIESNAME:SPECIALTIESNAME,SPECIALTIESTYPE:SPECIALTIESTYPE,ISENABLE:ISENABLE});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //insert specialties
+        rlobService.insertSpecialties=function(SPECIALTIESNAME,SPECIALTIESTYPE)
+        {
+            var result=api.all('rlob/cln_specialties/edit-specialties');
+            return result.post({SPECIALTIESNAME:SPECIALTIESNAME,SPECIALTIESTYPE:SPECIALTIESTYPE});
         }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
@@ -407,22 +465,34 @@ angular.module('app.loggedIn.rlob.services',[])
             return result.post({newUser:newUser});
         }
 
-        rlobService.getUsersList=function()
+        rlobService.getUsersList=function(searchInfo)
         {
-            var result=api.one('rlob/register/list-redilegal-users');
-            return result.get();
+            var result=api.all('rlob/register/list-redilegal-users');
+            return result.post({searchInfo:searchInfo});
         }
 
-        rlobService.updateRedilegalUserStatus=function(redilegalUserId,status)
+        rlobService.updateRedilegalUserStatus=function(redilegalUserName,status)
         {
-            var result=api.all('rlob/register/insert-new-user');
-            return result.post({newUser:newUser});
+            var result=api.all('rlob/register/update-redilegal-user-status');
+            return result.post({redilegalUserName:redilegalUserName,status:status});
+        }
+
+        rlobService.updateUserInfo=function(updateInfo)
+        {
+            var result=api.all('rlob/register/update-user-info');
+            return result.post({updateInfo:updateInfo});
         }
 
         rlobService.getUpcommingBookingHaveNotDocumentToNotificationCustomer=function(bookingType)
         {
             var result=api.one('rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer');
             return result.get({bookingType:bookingType});
+        }
+
+        rlobService.getStates=function(nation)
+        {
+            var result=api.one('rlob/register/get-states');
+            return result.get({nation:nation});
         }
         
         return rlobService;

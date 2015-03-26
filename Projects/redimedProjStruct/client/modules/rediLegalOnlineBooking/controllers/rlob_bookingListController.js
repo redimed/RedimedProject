@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.list.controller',[])
-.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window,Mailto) {
+.controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window,Mailto,bookingService) {
         //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
@@ -82,6 +82,7 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 claimNo:'',
                 surname:'',
                 firstName:'',
+                fullName:'',
                 type:'',
                 appointmentDateFromTemp:'',
                 appointmentDateFrom:'',
@@ -248,6 +249,57 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                 console.log($scope.mailtoLink);
                 $window.location.href = $scope.mailtoLink;
                 $("#lob-client-send-document-dialog").modal('hide');
+            }
+
+            $scope.reuseBookingInfo=function()
+            {
+                bookingService.setBookingInfoReuse($scope.selectedBooking);
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Please choose appointment calendar!");
+                $state.go("loggedIn.rlob.rlob_booking");
+            }
+
+            $scope.cancelBooking=function()
+            {
+                var appTime=new Date($scope.selectedBooking.APPOINTMENT_DATE);
+                var currentTime=new Date();
+                if(appTime>currentTime)
+                {
+                    if($scope.selectedBooking.STATUS==rlobConstant.bookingStatus.confirmed)
+                    {
+                        rlobService.cancelBooking($scope.selectedBooking.CAL_ID,$scope.selectedBooking.PATIENT_ID)
+                        .then(function(data){
+                            if (data.status == 'success') 
+                            {
+                                rlobService.changeBookingStatus($scope.selectedBooking.BOOKING_ID,rlobConstant.bookingStatus.canel).then(function(data){
+                                    if(data.status=='success')
+                                    {
+                                        $scope.selectedBooking.STATUS=rlobConstant.bookingStatus.canel;
+                                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Cancel booking success!");
+                                        $scope.pagingHandle();
+                                    }
+                                    else
+                                    {
+                                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Cancel booking fail!");
+                                    };
+                                });
+                            }
+                            else
+                            {
+                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Cancel booking fail!");
+                            };
+                        });
+                    }
+                    else
+                    {
+                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"You cannot cancel this booking!");
+                    }
+                    
+                }
+                else
+                {
+                    rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"You cannot cancel this booking!");
+                }
+                
             }
 
         });
