@@ -241,9 +241,6 @@ angular.module('app.config', [])
     }, {
         min: 59,
         dec: 0.98
-    }, {
-        min: 60,
-        dec: 1
     }])
     .constant('DAY_OF_WEEK', [{
         code: 'Monday',

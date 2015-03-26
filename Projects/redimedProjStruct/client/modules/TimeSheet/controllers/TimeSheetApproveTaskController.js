@@ -155,7 +155,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                     };
 
                     $scope.clickApprove = function(info) {
-                        if (info.time_rest !== null && info.time_rest !== 0 && info.time_rest !== "" && info.isApprove !== true) {
+                        if (info.time_rest !== null && info.time_rest != 0.00 && info.time_rest !== "" && info.isApprove !== true) {
                             $scope.infoTaskWeek = "chooseApprove";
                         } else {
                             //update approve

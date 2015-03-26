@@ -346,7 +346,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     .value();
                 var sum = 0;
                 angular.forEach($scope.tasks, function(data) {
-                    data.arrActivity = ['00:00', '00:00', '00:00', '00:00', '00:00'];
+                    data.arrActivity = ['-', '-', '-', '-', '-'];
                     sum = 0;
                     angular.forEach(data.rows, function(row) {
                         sum = sum + row.time_charge;

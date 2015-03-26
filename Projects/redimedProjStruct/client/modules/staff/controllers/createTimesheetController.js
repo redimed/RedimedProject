@@ -6,6 +6,13 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     $('ul').addClass("page-sidebar-menu-closed");
     //END CLOSE
 
+    // DATE
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+    //END DATE
+
     // CHECK ITEM 
     if (!$scope.tasks) {
         $scope.tasks = [];
@@ -152,6 +159,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     $scope.isEdit = true;
                     $scope.idWeek = $stateParams.id;
                     StaffService.showEdit($scope.idWeek).then(function(response) {
+                        if (response['data'] !== undefined &&
+                            response['data'][0] !== undefined &&
+                            response['data'][0].date !== undefined) {
+                            $scope.dateStart = response['data'][0].date;
+                        }
                         if (response['status'] == 'fail' || response['status'] == 'error') {
                             angular.forEach(response['data'], function(data) {
                                 data.item = [];

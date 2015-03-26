@@ -65,11 +65,11 @@
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'">
                                 <td class="btn btn-xs" style="text-align:left;">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
-                                <td class="btn btn-xs">{{l.AC[1]!==undefined?(l.AC[1] | customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[2]!==undefined?(l.AC[2] | customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[3]!==undefined?(l.AC[3]| customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[4]!==undefined?(l.AC[4]| customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[5]!==undefined?(l.AC[5]| customHours):"00:00"}}</td>
+                                <td class="btn btn-xs">{{l.AC[1]!==undefined?(l.AC[1] | customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{l.AC[2]!==undefined?(l.AC[2] | customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{l.AC[3]!==undefined?(l.AC[3]| customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{l.AC[4]!==undefined?(l.AC[4]| customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{l.AC[5]!==undefined?(l.AC[5]| customHours):"-"}}</td>
                                 <td class="btn btn-xs bold">{{l.sumDATE | customHours}}</td>
                                 <td style="text-align:center;"><a class="btn btn-xs" ng-click="ViewDetail(list.result[0].task_week_id,l.date, 'on-date')">View Detail</a></td>
                             </tr>
