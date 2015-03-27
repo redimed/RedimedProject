@@ -133,3 +133,11 @@ tannv.dts@gmail.com*/
 .testhover:hover .hover1{
     display:inline!important;
 }
+
+.portlet-rlob-custom{
+    border-color: #45B6AF!important
+}
+
+.portlet-title-rlob-custom{
+    background-color: #45B6AF!important;
+}

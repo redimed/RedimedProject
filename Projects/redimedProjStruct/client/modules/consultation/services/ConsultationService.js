@@ -7,5 +7,9 @@ angular.module("app.loggedIn.consult.services",[])
 			return api.all('consultation/getPatientProblem').post({'patient_id': patientId});
 		}
 
+		services.submitConsult = function(info){
+			return api.all('consultation/submit').post({'info': info});
+		}
+
 		return services;
 	})

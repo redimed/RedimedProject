@@ -40,9 +40,11 @@ angular.module("app", [
     'angular-flot',
     'irontec.simpleChat',
     'opentok',
+    'jsTree.directive',
     'app.rlobRegister.controller',
     'opentok-whiteboard',
-    'ui.mask'
+    'ui.mask',
+    'app.sponsor1.controller'
 
     // 'angular-underscore'
 ])

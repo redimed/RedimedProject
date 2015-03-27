@@ -1116,4 +1116,5 @@ angular.module("app.loggedIn.controller",[
         }
         
 
+        $scope.have_redilegal_components={value:0};
 	})

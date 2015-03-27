@@ -65,7 +65,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
-                                <td class="btn btn-xs">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
                                 <td class="btn btn-xs" ng-repeat="act in task.arrActivity track by $index">
                                     {{act}}
                                 </td>
@@ -88,12 +88,17 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()'>Cancel</a>
-        <a ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+        <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()' style="width:70px;">Cancel</a>
+        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
-        <a ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="submitClick(ID_WEEK, STATUS)" class="btn pull-right btn-xs" ng-class="{'re-submitted':STATUS==='Rejected','submited':STATUS==='Awaiting for Submit'}">
-               {{(STATUS==='Awaiting for Submit')?"Submit":"Re-submit"}}
+        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        STATUS==="Rejected"' ng-click="submitClick(ID_WEEK, STATUS)" class="btn btn-xs green pull-right">
+               Submit
+            </a>
+        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        STATUS==="Awaiting for Submit"' ng-click="submitClick(ID_WEEK, STATUS)" class="btn purple pull-right btn-xs">
+               Re-submit
             </a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->

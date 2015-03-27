@@ -17,7 +17,7 @@
                 <div class="tab-pane active" id="tab_1">
                     <div class="row">
                         <div class="col-md-5 col-sm-12">
-                            <div class="portlet yellow-crusta box">
+                            <div class="portlet green-haze box">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-cogs"></i>
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
 
-                            <div class="portlet yellow-crusta box">
+                            <div class="portlet green-haze box">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-cogs"></i>
@@ -152,7 +152,7 @@
                                     </div>
 
 
-                                    <div  ng-if="bookingType=='REDiLEGAL'" class="row form-group" ng-class="{ 'has-error': bookingForm.CLAIM_NO.$invalid  && hadForcused}">
+                                    <div  ng-if="bookingType=='REDiLEGAL'" class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="CLAIM_NO">Claim number:
                                                 <span class="required" aria-required="true">*</span>
@@ -172,7 +172,7 @@
                                         </div>
                                     </div>
 
-                                    <div  ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{ 'has-error': bookingForm.EMPLOYEE_NUMBER.$invalid  && hadForcused}">
+                                    <div  ng-if="bookingType=='Vaccination'" class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="EMPLOYEE_NUMBER">Employee number:
                                                 <span class="required" aria-required="true">*</span>
@@ -192,7 +192,7 @@
                                         </div>
                                     </div>
 
-                                    <div  ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{ 'has-error': bookingForm.DEPARTMENT_NAME.$invalid  && hadForcused}">
+                                    <div  ng-if="bookingType=='Vaccination'" class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="DEPARTMENT_NAME">Department Name:
                                                 <span class="required" aria-required="true">*</span>
@@ -213,7 +213,7 @@
                                     </div>
 
 
-                                    <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_SURNAME.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_SURNAME">Surname:
                                                 <span class="required" aria-required="true">*</span>
@@ -234,7 +234,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{ 'has-error': bookingForm.WRK_OTHERNAMES.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <!--chien-->
                                             <!--phanquocchien.c1109g@gmail.com-->
@@ -259,10 +259,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DOB.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_DOB">Date of birth:
-                                                <span class="required" aria-required="true">*</span>
+                                                <!-- <span class="required" aria-required="true">*</span> -->
                                             </label>
                                         </div>
 
@@ -276,15 +276,15 @@
 
                                             <!-- <p class="input-group"> -->
                                                 <!--<input id="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newBooking.WRK_DOB" is-open="opened" min-date="'1900-01-1'" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
-                                                <input id="WRK_DOB" name="WRK_DOB" type="text" class="form-control" ng-model="WRK_DOB_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" required/>
+                                                <input id="WRK_DOB" name="WRK_DOB" type="text" class="form-control" ng-model="WRK_DOB_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,defaultDate:'01/01/1990'}" placeholder="DD/MM/YYYY"/>
                                                 <!-- <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                                 </span>
                                             </p> -->
 
-                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.required  && hadForcused">
+                                            <!-- <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.required  && hadForcused">
                                                 Birthday is required.
-                                            </small>
+                                            </small> -->
 
                                            <!--  <small class="help-block pull-right" ng-show="bookingForm.WRK_DOB.$error.date  && hadForcused">
                                                 Invalid date.
@@ -293,7 +293,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_EMAIL.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_EMAIL">Email address:
                                                 <!--<span class="required" aria-required="true">*</span>-->
@@ -310,7 +310,7 @@
                                             <!--<small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.required  && hadForcused">-->
                                                 <!--Email is required.-->
                                             <!--</small>-->
-                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.email  && hadForcused">
+                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.email && hadForcused">
                                                 That is not a valid email. Please input a valid email.
                                             </small>
                                             <small class="help-block pull-right" ng-show="bookingForm.WRK_EMAIL.$error.maxlength  && hadForcused">
@@ -319,7 +319,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_CONTACT_NO.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_CONTACT_NO">Contact number:
                                                 <span class="required" aria-required="true">*</span>
@@ -340,7 +340,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row form-group" ng-class="{'has-error':bookingForm.WRK_DATE_OF_INJURY.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <!--chien-->
                                         <!--phanquocchien.c1109g@gmail.com-->
                                         <!-- <div class="col-md-12"> -->
@@ -357,7 +357,7 @@
 
                                         <div class="col-md-4">
                                             <label class="control-label" for="WRK_DATE_OF_INJURY">Date of injury:
-                                                <span class="required" aria-required="true">*</span>
+                                                <!-- <span class="required" aria-required="true">*</span> -->
                                             </label>
                                         </div>
                                         <div class="col-md-8">
@@ -365,22 +365,22 @@
                                             <!-- <input id="WRK_DATE_OF_INJURY" name="WRK_DATE_OF_INJURY" type="text" class="form-control" ng-model="WRK_DATE_OF_INJURY_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" required/> -->
                                             <!-- <p class="input-group"> -->
                                                 <!--<input id="WRK_DOB" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newBooking.WRK_DOB" is-open="opened" min-date="'1900-01-1'" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
-                                                <input id="WRK_DATE_OF_INJURY" name="WRK_DATE_OF_INJURY" type="text" class="form-control" ng-model="WRK_DATE_OF_INJURY_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" required/>
+                                                <input id="WRK_DATE_OF_INJURY" name="WRK_DATE_OF_INJURY" type="text" class="form-control" ng-model="WRK_DATE_OF_INJURY_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true}" placeholder="DD/MM/YYYY"/>
                                                <!--  <span class="input-group-btn">
                                                     <button type="button" class="btn btn-default" ng-click="openDateOfInjury($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                                 </span>
                                             </p> -->
                                             
-                                            <small class="help-block pull-right" ng-show="bookingForm.WRK_DATE_OF_INJURY.$error.required  && hadForcused">
+                                            <!-- <small class="help-block pull-right" ng-show="bookingForm.WRK_DATE_OF_INJURY.$error.required  && hadForcused">
                                                 Date of injury is required.
-                                            </small>
+                                            </small> -->
                                            <!--  <small class="help-block pull-right" ng-show="bookingForm.WRK_DATE_OF_INJURY.$error.date  && hadForcused">
                                                 Invalid date.
                                             </small> -->
                                         </div>
                                     </div>
 
-                                    <div ng-if="bookingType=='REDiLEGAL'" class="row form-group" ng-class="{'has-error':bookingForm.DESC_INJURY.$invalid  && hadForcused}">
+                                    <div ng-if="bookingType=='REDiLEGAL'" class="row form-group" show-errors='{showSuccess: true}'>
 
                                         <div class="col-md-12">
                                             <label class="control-label">Description of injury:
@@ -397,7 +397,7 @@
                                         </div>
                                     </div>
 
-                                    <div ng-if="bookingType=='Vaccination'" class="row form-group" ng-class="{'has-error':bookingForm.DESC_VACCIN.$invalid  && hadForcused}">
+                                    <div ng-if="bookingType=='Vaccination'" class="row form-group" show-errors='{showSuccess: true}'>
 
                                         <div class="col-md-12">
                                             <textarea placeholder="Description of Vaccination" class="form-control" rows="2"
@@ -444,7 +444,7 @@
                                         <span>NO</span>
                                     </p>
 
-                                    <div class="row form-group" ng-class="{'has-error':bookingForm.NOTES.$invalid  && hadForcused}">
+                                    <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-12 col-sm-12">
                                             <textarea placeholder="Notes" class="form-control" rows="3" name="NOTES"
                                                       ng-maxlength="200"
@@ -462,7 +462,7 @@
                                 <a ng-show="bookingSuccess" class="btn btn-sm yellow filter-submit margin-bottom" ng-click="showDialogSendDocument();">Send documents</a>
 
 
-                                <!--<div class="portlet yellow-crusta box">-->
+                                <!--<div class="portlet green-haze box">-->
                                     <!--<div class="portlet-title">-->
                                         <!--<div class="caption">-->
                                             <!--<i class="fa fa-cogs"></i>-->
@@ -492,8 +492,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Success</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Success</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Success</h4> -->
             </div>
 
             <div class="modal-body">
@@ -515,8 +520,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Send documents</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Send documents</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Send documents</h4> -->
             </div>
 
             <div class="modal-body">
@@ -535,8 +545,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Upload documents</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Upload documents</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload documents</h4> -->
             </div>
 
             <div class="modal-body">

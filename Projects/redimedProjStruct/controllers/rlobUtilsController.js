@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=true;
+var isTestSendMail=false;
 module.exports =
 {
     userRegisterType:'Company',
@@ -17,6 +17,18 @@ module.exports =
         else
         {
             return "REDiMED <healthscreenings@redimed.com.au>";
+        }
+    },
+
+    getMedicoLegalMailSender:function()
+    {
+        if(isTestSendMail)
+        {
+            return "REDiMED <vnlegal123@gmail.com>";
+        }
+        else
+        {
+            return "Health Screening Mailbox <medicolegal@redimed.com.au>";
         }
     },
 
@@ -52,8 +64,7 @@ module.exports =
 
     registerStatus:{
         pending:'PENDING',
-        accepted:'ACCEPTED',
-        rejected:'REJECTED',
-        deactivate:'DEACTIVATE'
+        approve:'APPROVE',
+        reject:'REJECT'
     }
 }

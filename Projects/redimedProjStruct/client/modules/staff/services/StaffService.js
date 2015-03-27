@@ -109,6 +109,8 @@ angular.module("app.loggedIn.staff.service", [])
                 }
             });
             return hours;
+        } else {
+            return 0;
         }
     };
 
@@ -176,7 +178,7 @@ angular.module("app.loggedIn.staff.service", [])
     //end thanh
 
     service.getFortMatTimeCharge = function(time_charge) {
-        if (time_charge !== undefined && time_charge !== null) {
+        if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
             var hours = parseInt(time_charge);
             var n = time_charge.toString().indexOf(".");
             var minutes = 0;
@@ -222,7 +224,7 @@ angular.module("app.loggedIn.staff.service", [])
                 }
 
                 var returnValue = hours + ':' + minutes;
-                return returnValue.substr(0, 5);
+                return (returnValue.substr(0, 5));
             } else {
                 if (parseInt(hours) < 10) {
                     hours = '0' + hours + ':00';
@@ -233,7 +235,7 @@ angular.module("app.loggedIn.staff.service", [])
             }
 
         } else {
-            return "00:00";
+            return "-";
         }
 
     };
@@ -252,22 +254,29 @@ angular.module("app.loggedIn.staff.service", [])
 
         var date = new Date();
         info.month = date.getMonth();
-        info.year = date.getYear();
+        info.year = date.getFullYear();
         checkMonth.post({
             info: info
         }).then(function(response) {
             angular.forEach(response['tasks'], function(data) {
-                temp = new Date(data.date);
-                monthTemp = temp.getMonth() * 1 + 1;
-                if (monthTemp < 10)
+                var temp = new Date(data.date);
+                var monthTemp = temp.getMonth() * 1 + 1;
+                var tempDate = temp.getDate();
+                if (tempDate < 10) {
+                    tempDate = '0' + tempDate;
+                }
+
+                if (monthTemp < 10) {
                     monthTemp = '0' + monthTemp;
-                array.push(temp.getYear() + '-' + monthTemp + '-' + temp.getDate());
-            })
+                }
+
+                array.push(temp.getFullYear() + '-' + monthTemp + '-' + tempDate);
+            });
             var selectCurrentWeek = function() {
                 window.setTimeout(function() {
                     $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
                 }, 1);
-            }
+            };
 
             var setDates = function(input) {
                 var $input = $(input);
@@ -280,8 +289,9 @@ angular.module("app.loggedIn.staff.service", [])
                     if (dayAdjustment < 0) {
                         dayAdjustment += 7;
                     }
-                    startDate = new Date(date.getYear(), date.getMonth(), date.getDate() - dayAdjustment);
-                    endDate = new Date(date.getYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
+                    console.log(startDate);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
                     $input.datepicker("setDate", startDate);
                 }
             };
@@ -294,7 +304,7 @@ angular.module("app.loggedIn.staff.service", [])
                 onClose: function() {
                     $('#ui-datepicker-div').removeClass('ui-weekpicker');
                 },
-                minDate: array[0],
+                // minDate: array[0],
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function(dateText, inst) {

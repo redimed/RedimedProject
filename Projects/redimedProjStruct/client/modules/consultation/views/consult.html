@@ -1,6 +1,6 @@
 <style>
     .consult-modal-window .modal-dialog {
-      width: 1000px;
+      width: 900px;
     }
 </style>
 <h3 class="page-title">Consultation</h3>
@@ -17,9 +17,26 @@
         </li>
         <li>
             <a>Consultation</a>
+            <i class="fa fa-angle-right"></i>
         </li>
+        <li>
+            <a href="javascript:;">{{(patientInfo.FullName == null || patientInfo.FullName == '') ? 'N/A' : patientInfo.FullName}}</a>
+        </li> 
     </ul>
 </div>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <a  href="javascript:;" style="width: 120px" ng-click="backClick()" class="btn btn-circle purple-plum pull-right btn-md">
+            <i class="glyphicon glyphicon-backward"></i> &nbsp; Back
+        </a>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <a href="javascript:;" ng-click="submitClick()" style="width: 120px" class="btn btn-circle btn-info pull-left btn-md">
+            <i class="fa fa-check"></i> &nbsp; Submit
+        </a>
+    </div>
+</div>
+<br/>
 <div class="portlet blue-chambray box">
     <div class="portlet-title">
         <div class="caption ">
@@ -100,7 +117,9 @@
     <div class="portlet-title tabbable-line">
         <div class="caption">
             <i class="fa fa-user-md"></i>
-            <span class="caption-subject bold uppercase">Consultation</span>
+            <span class="caption-subject bold uppercase">
+                Consultation - Date: {{currDate}}
+            </span>
         </div>
         <ul class="nav nav-tabs">
             <li class="active">
@@ -109,12 +128,12 @@
                 </a>
             </li>
             <li>
-                <a href="index.html#tab_1_2" data-toggle="tab">
+                <a href="index.html#tab_1_2" ng-click="measureTabClick()" data-toggle="tab">
                     Measurements
                 </a>
             </li>
             <li>
-                <a href="index.html#tab_1_3" data-toggle="tab">
+                <a href="index.html#tab_1_3" ng-click="scriptTabClick()" data-toggle="tab">
                     Scripts
                 </a>
             </li>
@@ -236,8 +255,8 @@
             <div class="tab-pane" id="tab_1_2">
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <a href="javascript:;" ng-click="newMeasure()" class="btn green-jungle btn-sm">
-                        <i class="fa fa-plus"></i> Add New</a>
+                        <a href="javascript:;" ng-click="measureAction('new',null)" class="btn green-jungle btn-circle btn-sm">
+                        <i class="fa fa-plus"></i> Add New Measure</a>
                     </div>
                 </div>
                 <br/>
@@ -293,7 +312,7 @@
                             </tr>
                             <tr class="bold" align="center" ng-if="consultInfo.measurements.length > 0" ng-repeat="m in consultInfo.measurements">
                                 <td style="vertical-align: middle">
-                                    {{m.date}}
+                                    {{m.measure_date | date:'dd/MM/yyyy'}}
                                 </td>
                                 <td style="vertical-align: middle">
                                     {{m.height}}
@@ -311,10 +330,10 @@
                                     {{m.neck}}
                                 </td>
                                 <td>
-                                    <a ng-click="editMeasure($index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
+                                    <a ng-click="measureAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a ng-click="delMeasure($index)" href="javascript:;" class="btn btn-icon-only btn-circle red">
+                                    <a ng-click="measureAction('delete',$index)" href="javascript:;" class="btn btn-icon-only btn-circle red">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
@@ -324,16 +343,111 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_1_3">
-
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <a href="javascript:;" ng-click="scriptAction('new',null)" class="btn green-jungle btn-circle btn-sm">
+                        <i class="fa fa-plus"></i> Add New Script</a>
+                    </div>
+                </div>
+                <br/>
+                <div class="table-dynamic">
+                    <table class="responsive table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Medication</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Strength</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Form</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Qty</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Dose</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Code</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Frequency</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="consultInfo.scripts.length <= 0">
+                                <td colspan="8">
+                                    <div style="text-align: center;">
+                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
+                                 <td style="vertical-align: middle">
+                                    {{m.medication}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.strength}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.form}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.qty}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.dose}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.code}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.frequency}}
+                                </td>
+                                <td align="center">
+                                    <a ng-click="scriptAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a ng-click="scriptAction('delete',$index)"href="javascript:;" class="btn btn-icon-only btn-circle red">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane" id="tab_1_4">
                 <div class="row">
-                    <div style="text-align: center;" class="col-md-12 col-sm-12">
-                        <drawings 
+                    <div class="col-md-12 col-sm-12">
+                        <consult-drawing 
                             width="700" 
                             height="500"
                             lineWidth="4">
-                        </drawings>
+                        </consult-drawing>
                     </div>
                 </div>
                 

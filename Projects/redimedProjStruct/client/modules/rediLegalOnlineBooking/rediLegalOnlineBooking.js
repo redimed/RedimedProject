@@ -19,6 +19,8 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.paperless.controller'
     ,'app.loggedIn.rlob.paperless.ams6.controller'
     ,'app.loggedIn.rlob.paperless.ams5.controller'
+    ,'app.loggedIn.rlob.rltype.controller'
+    ,'app.loggedIn.rlob.specialties.controller'
     ,'app.loggedIn.rlob.redilegalUsersListController.controller'])
     .config(function($stateProvider){
         $stateProvider
@@ -27,6 +29,10 @@ angular.module('app.loggedIn.rlob',
                 url:'/rlob',
                 templateUrl: "modules/rediLegalOnlineBooking/views/rlob.html",
                 controller: "rlobController"
+            })
+            .state("loggedIn.rlob.contactus",{
+                url:'/contactus',
+                templateUrl: "modules/rediLegalOnlineBooking/views/contactus.html",
             })
 
             .state("loggedIn.rlob.rlob_booking",{
@@ -106,12 +112,21 @@ angular.module('app.loggedIn.rlob',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/paperless/ams5.html',
                 controller: 'rlob_paperless_ams5Controller'
             })
-            .state('loggedIn.rlob.rlob_admin_redilegalUsersList',{
-                url:'/users-list',
-                templateUrl: '/modules/rediLegalOnlineBooking/views/redilegalUsersList.html',
-                controller: 'rlob_admin_redilegalUsersListController'
+            .state('loggedIn.rlob.rltype',{
+                url:'/type',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/rltype.html',
+                controller: 'rlob_rltypeController'
             })
-
+            .state('loggedIn.rlob.specialties',{
+                url:'/specialties',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/specialties.html',
+                controller: 'rlob_specialtiesController'
+            })
+		.state('loggedIn.rlob.rlob_admin_redilegalUsersList',{
+	        url:'/users-list',
+	        templateUrl: '/modules/rediLegalOnlineBooking/views/redilegalUsersList.html',
+	        controller: 'rlob_admin_redilegalUsersListController'
+            })
 //            .state('loggedIn.rlob.rlob_booking_detail', {
 //                url: '/booking/booking-detail/:bookingId',
 //                views: {

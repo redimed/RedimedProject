@@ -5,7 +5,7 @@
     }
     .rlob-print-value{
         font-size: 11pt;
-        font-weight: bold;
+        /*font-weight: bold;*/
     }
     .rlob-print-group-header{
         font-weight: bold;

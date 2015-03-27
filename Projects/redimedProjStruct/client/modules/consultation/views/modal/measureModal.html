@@ -86,7 +86,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Height:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input numbers-only ng-model="measurementInfo.height" value="0" type="text" class="form-control">
+										<input ng-change="calculateBMI(measurementInfo.height,measurementInfo.weight)" numbers-only ng-model="measurementInfo.height" value="0" type="text" class="form-control">
 										<span class="input-group-addon">
 											<label>cms</label>
 										</span>
@@ -99,7 +99,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Weight:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input numbers-only ng-model="measurementInfo.weight" value="0" type="text" class="form-control">
+										<input ng-change="calculateBMI(measurementInfo.height,measurementInfo.weight)" numbers-only ng-model="measurementInfo.weight" value="0" type="text" class="form-control">
 										<span class="input-group-addon">
 											<label>kgs</label>
 										</span>
@@ -187,7 +187,7 @@
 	                            <label class="bold control-label col-md-4 col-sm-4">Head Crc:</label>
 	                            <div class="col-md-8 col-sm-8">
 	                                <div class="input-group">
-										<input numbers-only ng-model="measurementInfo.headCrc" type="text" class="form-control" value="0">
+										<input numbers-only ng-model="measurementInfo.head_circ" type="text" class="form-control" value="0">
 										<span class="input-group-addon">
 											<label>cms</label>
 										</span>
@@ -221,17 +221,17 @@
 	                <div class="row">
 	                	<div class="col-md-6 col-sm-6">
 	                        <div class="form-group">
-	                            <label class="bold control-label col-md-4 col-sm-4">Tryglycerides:</label>
+	                            <label class="bold control-label col-md-4 col-sm-4">Triglycerides:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input numbers-only ng-model="measurementInfo.tryclycerides" value="0" type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.triglycerides" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-md-6 col-sm-6">
 	                       	<div class="form-group">
-	                            <label class="bold control-label col-md-4 col-sm-4">Cretinine:</label>
+	                            <label class="bold control-label col-md-4 col-sm-4">Creatitine:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input numbers-only ng-model="measurementInfo.cretinine" value="0" type="text" class="form-control">
+									<input numbers-only ng-model="measurementInfo.creatitine" value="0" type="text" class="form-control">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -298,7 +298,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">HbA1C:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input numbers-only ng-model="measurementInfo.hba1c" type="text" class="form-control" value="0">
+									<input numbers-only ng-model="measurementInfo.hbA1c" type="text" class="form-control" value="0">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -361,7 +361,7 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-4 col-sm-4">Gas Transfer:</label>
 	                            <div class="col-md-8 col-sm-8">
-									<input numbers-only ng-model="measurementInfo.gasTransfer" type="text" class="form-control" value="0">
+									<input numbers-only ng-model="measurementInfo.gas_transfer" type="text" class="form-control" value="0">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -382,18 +382,18 @@
 								<tbody>
 									<tr>
 										<td>Pressure:</td>
-										<td><input numbers-only ng-model="measurementInfo.pressureRight" type="text" class="form-control" value="0"></td>
-										<td><input numbers-only ng-model="measurementInfo.pressureLeft" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.right_pressure" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.left_pressure" type="text" class="form-control" value="0"></td>
 									</tr>
 									<tr>
 										<td>Uncorrected:</td>
-										<td><input numbers-only ng-model="measurementInfo.uncorrectedRight" type="text" class="form-control" value="0"></td>
-										<td><input numbers-only ng-model="measurementInfo.uncorrectedLeft" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.right_uncorrected" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.left_uncorrected" type="text" class="form-control" value="0"></td>
 									</tr>
 									<tr>
 										<td>Corrected:</td>
-										<td><input numbers-only ng-model="measurementInfo.correctedRight" type="text" class="form-control" value="0"></td>
-										<td><input numbers-only ng-model="measurementInfo.correctedLeft" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.right_corrected" type="text" class="form-control" value="0"></td>
+										<td><input numbers-only ng-model="measurementInfo.left_corrected" type="text" class="form-control" value="0"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -405,6 +405,6 @@
 	</div>
 </div>
 <div class="modal-footer">
-    <a href="javascript:;" class="btn btn-danger" ng-click='cancelClick()'>Cancel</a>
-    <a href="javascript:;" ng-click="okClick()" class="btn green"  >Submit</button>
+    <a href="javascript:;" class="btn btn-danger btn-circle" ng-click='cancelClick()'>Cancel</a>
+    <a href="javascript:;" ng-click="okClick()" class="btn green btn-circle"  >Submit</button>
 </div>

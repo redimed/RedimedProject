@@ -9,8 +9,19 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 ngModel: "="
             },
             link: function(scope, elem, attrs) {
-                scope.$watch('ngModel', function(oldModel, newModel) {
-                    scope.items = angular.copy(oldModel.item);
+                scope.$watch('ngModel', function(newModel, oldModel) {
+                    if (newModel !== undefined && newModel.item !== undefined) {
+                        angular.forEach(newModel.item, function(item, index) {
+                            if (item !== undefined && item.deleted === 0) {
+                                scope.items.push(item);
+                            }
+                        });
+                    }
+                    //SHOW ALL ITEM
+                    angular.forEach(scope.items, function(item, index) {
+                        scope.items[index].show = true;
+                    });
+                    //END
                 });
                 //FUNCTION SETPAGE
                 scope.setPage = function() {
@@ -97,28 +108,34 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         scope.list.result[index].status = !scope.list.result[index].status;
                     }
                 };
-                scope.isShow = false;
+                scope.isShow = true;
                 scope.clickAdd = function() {
                     scope.isShow = true;
                     angular.element('#itemCodeID').focus();
                 };
                 scope.items = [];
                 scope.addItem = function(ITEM_ID, ITEM_NAME) {
-                    var check = false;
-                    angular.forEach(scope.items, function(item, index) {
-                        if (item.ITEM_ID === ITEM_ID) {
-                            toastr.warning("Item exist in list selected!", "Fail");
-                            check = true;
-                        }
-                    });
-                    if (check === false) {
-                        scope.items.push({
-                            ITEM_ID: ITEM_ID,
-                            ITEM_NAME: ITEM_NAME,
-                            status: false
+                    if (scope.isShow === true) {
+                        var check = false;
+                        angular.forEach(scope.items, function(item, index) {
+                            if (item.ITEM_ID === ITEM_ID) {
+                                toastr.warning("Item exist in list selected!", "Fail");
+                                check = true;
+                            }
                         });
-                        scope.isDisabled = false;
-                        scope.isShow = false;
+                        if (check === false) {
+                            scope.items.push({
+                                ITEM_ID: ITEM_ID,
+                                ITEM_NAME: ITEM_NAME,
+                                isAction: "insert",
+                                status: false,
+                                show: true,
+                            });
+                            scope.isDisabled = false;
+                            scope.isShow = false;
+                        }
+                    } else {
+                        toastr.warning("Not found row empty to insert!", "Fail");
                     }
                 };
                 scope.clickShowSelected = function(index) {
@@ -130,14 +147,17 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 };
                 scope.deleteItem = function(index) {
                     swal({
-                        title: "Are you sure?",
+                        title: "Do you want to delete this Item Number?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
                         confirmButtonText: "Yes",
                         closeOnConfirm: true
                     }, function() {
-                        scope.items.splice(index, 1);
+                        scope.items[index].show = false;
+                        if (scope.items[index].isAction === "update") {
+                            scope.items[index].isAction = "delete";
+                        }
                     });
                 };
             },

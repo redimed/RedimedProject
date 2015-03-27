@@ -18,7 +18,9 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
             'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',
-            'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},    
+            'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},
+        {'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
+            'state': 'loggedIn.consult.patient({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
     ];
 
     $scope.patient_apt_modules = [

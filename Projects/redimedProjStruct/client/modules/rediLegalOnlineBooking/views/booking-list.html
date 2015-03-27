@@ -1,4 +1,4 @@
-<div class="portlet grey-cascade box">
+<div class="portlet green-haze box">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-cogs"></i>{{bookingTypeObj.display }} Booking List
@@ -7,7 +7,7 @@
     </div>
     <div class="portlet-body">
         <!-- PAGINATION -->
-        <div style="float: left;">
+        <div>
 
             <div class="form-group">
                 <pagination total-items="searchInfo.totalItems"
@@ -41,15 +41,19 @@
                     <tr>
                         <th ng-if="bookingType=='REDiLEGAL'">
                             Claim No.
-                            <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                            <!-- <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by> -->
                         </th>
                         <th ng-if="bookingType=='Vaccination'">
                             Employee number
                             <rlob-order-by field-name="EMPLOYEE_NUMBER" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                         </th>
-                        <th>
+                        <!-- <th>
                             Surname
                             <rlob-order-by field-name="WRK_SURNAME" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th> -->
+                        <th>
+                            Full name
+                            <!-- <rlob-order-by field-name="FULL_NAME" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by> -->
                         </th>
                         <th>
                             Type
@@ -83,8 +87,11 @@
                         <td ng-if="bookingType=='Vaccination'">
                             <input class="form-control input-sm" type="text" ng-model="searchInfo.employeeNumber" ng-change="searchHandle()">
                         </td>
-                        <td>
+                        <!-- <td>
                             <input class="form-control input-sm" type="text" ng-model="searchInfo.surname" ng-change="searchHandle()">
+                        </td> -->
+                        <td>
+                            <input class="form-control input-sm" type="text" ng-model="searchInfo.fullName" ng-change="searchHandle()">
                         </td>
                         <td>
                             <select ng-model="searchInfo.type" class="form-control input-sm"
@@ -124,7 +131,8 @@
                     <tr ng-repeat="l in list" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
                         <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
                         <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
-                        <td>{{l.WRK_SURNAME}}</td>
+                        <!-- <td>{{l.WRK_SURNAME}}</td> -->
+                        <td>{{l.FULL_NAME}}</td>
                         <td>{{l.Rl_TYPE_NAME}}</td>
                         <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{l.STATUS}}</td>
@@ -145,11 +153,25 @@
                                         </a>
                                     </li>
 
-                                    <li>
+                                   <!--  <li>
                                         <a ng-hide="selectedBooking.NUMBER_OF_RESULTS<=0" class="pointer" role="menuitem" tabindex="2" ng-click="downloadResult(l.BOOKING_ID)">
                                             Download Result
                                         </a>
+                                    </li> -->
+                                    
+
+                                    <li>
+                                        <a class="pointer" role="menuitem" tabindex="1" ng-click="reuseBookingInfo()">
+                                            Rechelule
+                                        </a>
                                     </li>
+
+                                    <li ng-show="selectedBooking.STATUS!=bookingStatus.canel">
+                                        <a class="pointer" role="menuitem" tabindex="1" ng-click="cancelBooking()">
+                                            Cancel booking
+                                    </li>
+
+
                                 </ul>
                             </div>
                         </td>
@@ -168,8 +190,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Booking Detail</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Booking Detail</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Booking Detail</h4> -->
             </div>
 
             <div class="modal-body">
@@ -177,7 +204,7 @@
                 <!--<ocuments selected-booking="selectedBooking" is-can-upload="isCanUpload"></rlob-documents>-->
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="portlet yellow-crusta box">
+                        <div class="portlet green-haze box">
                             <div class="portlet-title">
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>
@@ -221,8 +248,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Send documents</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Send documents</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Send documents</h4> -->
             </div>
 
             <div class="modal-body">
@@ -240,8 +272,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Upload documents</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Upload documents</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+               <!--  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload documents</h4> -->
             </div>
 
             <div class="modal-body">
