@@ -80,18 +80,18 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //FUNCTION SUM TOTAL TIME CHARGE
     $scope.changeTimeCharge = function(task) {
-        task.time_temp = StaffService.covertTimeCharge(task.time_charge);
+        task.time_temp = StaffService.covertTimeCharge(task.time_charge); //when custom input
         var sum = 0;
         angular.forEach($scope.tasks, function(data) {
             if (data.time_temp !== null &&
                 data.time_temp !== undefined &&
                 data.isAction !== "delete" &&
                 !isNaN(data.time_temp)) {
-                sum = parseFloat(sum) + parseFloat(data.time_temp);
+                sum = sum + StaffService.fortMatFullTime(StaffService.covertTimeCharge(data.time_charge));
             }
         });
-        $scope.info.time_temp = sum;
-        $scope.info.time_charge = StaffService.unCovertTimeCharge(sum);
+        $scope.info.time_temp = StaffService.convertTimeSave(sum);
+        $scope.info.time_charge = StaffService.convertFromFullToShow(sum);
     };
     //END FUNCTION TOTAL TIME CHARGE
 
@@ -440,6 +440,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         modalInstance.result.then(function(obj) {
             if (obj.type == "ok") {
+                console.log(obj.value);
                 var list = [];
                 list = obj.value;
                 task.item = list;
@@ -450,12 +451,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     for (var i = 0; i < list.length; i++) {
                         if (list[i].isAction !== 'delete') {
                             t.push(list[i].ITEM_ID);
-                            c = c + list[i].time_temp;
+                            c = c + StaffService.fortMatFullTime(list[i].time_charge);
                         }
                     }
                     task.task = t.join(' , ');
-                    task.time_charge = StaffService.unCovertTimeCharge(parseFloat(c));
-                    task.time_temp = parseFloat(c);
+                    task.time_charge = StaffService.convertFromFullToShow(c);
+                    task.time_temp = StaffService.convertTimeSave(c);
                     $scope.changeTimeCharge(task);
                 } else {
                     task.task = null;
