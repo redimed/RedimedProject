@@ -115,10 +115,36 @@ angular.module("app.loggedIn.staff.service", [])
                     hours = parseFloat(hours) + parseFloat(value.dec);
                 }
             });
-            return hours;
+            return hours.toFixed(2);
         } else {
             return 0;
         }
+    };
+    service.convertFromFullToShow = function(time_charge) {
+        if (time_charge !== undefined && time_charge !== null) {
+            var hours = parseInt(time_charge / 60);
+            var minutes = parseInt(time_charge % 60);
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            return hours.toString() + minutes.toString();
+        }
+    };
+
+    service.convertTimeSave = function(time_charge) {
+        if (time_charge !== undefined && time_charge !== null) {
+            var hours = parseInt(time_charge / 60);
+            var minutes = (time_charge % 60);
+            angular.forEach(MIN_TO_DEC, function(value) {
+                if (value.min == minutes) {
+                    hours = parseFloat(hours) + parseFloat(value.dec);
+                }
+            });
+            return hours.toFixed(2);
+        } else return 0;
     };
 
     //FORMAT FULLMINUTE
@@ -155,7 +181,7 @@ angular.module("app.loggedIn.staff.service", [])
             //end call
             minutes = minutes + minuteAdd;
             //END CONVERT
-            return (hours + minutes);
+            return ((hours * 60) + minutes);
         } else {
             return 0;
         }

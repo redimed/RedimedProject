@@ -36,7 +36,12 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.info.hasReject = true;
                                     scope.info.comments = scope.list.result[0].comments;
                                 }
-                                scope.info.time_rest = parseFloat(parseFloat(scope.list.result[0].chargeWeek) - parseFloat(38.00)).toFixed(2);
+                                scope.info.time_restFull = StaffService.fortMatFullTime(scope.list.result[0].chargeWeek) - (38 * 60);
+                                if (scope.info.time_restFull < 0) {
+                                    scope.info.time_restFull = 0;
+                                }
+                                scope.info.time_rest = StaffService.convertTimeSave(scope.info.time_restFull); //FUNCTION GET FORTMAT SAVE
+                                scope.info.time_restFull = StaffService.fortMatFullTime(scope.info.time_rest);
                                 scope.info.time_in_lieu = null;
                                 scope.info.over_time = null;
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
@@ -72,21 +77,16 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         if (scope.info.time_in_lieu.length === 0) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
+                        } else if (StaffService.fortMatFullTime(StaffService.covertTimeCharge(scope.info.time_in_lieu)) > scope.info.time_restFull) {
+                            scope.info.time_in_lieu = null;
                         } else {
-                            if (StaffService.covertTimeCharge(scope.info.time_in_lieu) > StaffService.covertTimeCharge(scope.info.time_rest)) {
-                                scope.info.time_in_lieu = null;
-                                scope.info.over_time = null;
-                            } else if (StaffService.covertTimeCharge(scope.info.time_in_lieu) <= 0) {
-                                scope.info.over_time_Real = (StaffService.covertTimeCharge(scope.info.time_rest));
-                                scope.info.over_time = StaffService.unCovertTimeCharge(scope.info.time_rest);
-                            } else {
-                                //processing
-                                scope.info.time_in_lieu_Real = StaffService.covertTimeCharge(scope.info.time_in_lieu);
-                                scope.info.over_time_Real = parseFloat(parseFloat(StaffService.covertTimeCharge(scope.info.time_rest)) - parseFloat(scope.info.time_in_lieu_Real));
-                                scope.info.over_time = StaffService.unCovertTimeCharge(scope.info.over_time_Real);
-                                //end processing
-                            }
-
+                            scope.info.time_in_lieuFull = StaffService.fortMatFullTime(StaffService.covertTimeCharge(scope.info.time_in_lieu));
+                            scope.info.time_in_lieuReal = StaffService.convertTimeSave(scope.info.time_in_lieuFull);
+                            scope.info.over_timeFull = scope.info.time_restFull - scope.info.time_in_lieuFull;
+                            scope.info.over_time = StaffService.convertFromFullToShow(scope.info.over_timeFull);
+                            scope.info.over_time_Real = StaffService.convertTimeSave(scope.info.over_timeFull);
+                            console.log('oVERTREAL:' + scope.info.over_time_Real);
+                            console.log('inlieuReaL:' + scope.info.time_in_lieuReal);
                         }
                         //end
                     }

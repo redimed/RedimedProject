@@ -1355,8 +1355,8 @@ module.exports = {
         var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         var timeType = "";
         if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
-            if (info.time_in_lieu_Real !== undefined && info.time_in_lieu_Real !== null) {
-                timeType += ", time_in_lieu = " + info.time_in_lieu_Real;
+            if (info.time_in_lieuReal !== undefined && info.time_in_lieuReal !== null) {
+                timeType += ", time_in_lieu = " + info.time_in_lieuReal;
             }
             if (info.over_time_Real !== undefined && info.over_time_Real !== null) {
                 timeType += ", over_time = " + info.over_time_Real;
