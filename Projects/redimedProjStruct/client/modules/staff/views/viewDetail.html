@@ -70,13 +70,13 @@
                         <tbody>
                             <tr ng-repeat="(key,task) in tasks track by $index" ng-class="{'same': one == false ? getDay(task.date)%2==0 : false}">
                                 <td class="btn btn-xs" style="text-align:left;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.activity===null ||task.activity==="")?"N/A":task.activity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.location===null ||task.location==="")?"N/A":task.location}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.department===null||task.department==="")?"N/A":task.department}}</td>
-                                <td class="btn btn-xs">{{task.time_item == null ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.ITEM_ID===null||task.ITEM_ID==="")?"N/A":task.ITEM_ID}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="")?"N/A":task.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{task.comment == null ? task.task : task.comment}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
+                                <td class="btn btn-xs">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.ITEM_ID===null||task.ITEM_ID==="" ||task.ITEM_ID ===undefined)?"N/A":task.ITEM_ID}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="" ||task.quantity===undefined)?"N/A":task.quantity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.comment == null ||task.comment===""||task.comment===undefined) ? ((task.task===null||task.task===""||task.task===undefined)?"":task.task) : task.comment}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -85,7 +85,7 @@
             <div class="col-md-12" style="margin-top:5px; font-size:13px;" ng-hide='one'>
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;
-                <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaitting for Submit',
+                <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaiting for Submit',
                             're-submitted':STATUS==='Re-submitted'}">{{(STATUS==="Submitted")?"Awaiting for Approve":STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <!-- END TABLE TASK OF WEEK -->

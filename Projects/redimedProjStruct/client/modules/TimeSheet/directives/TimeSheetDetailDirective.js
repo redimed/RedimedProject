@@ -18,7 +18,9 @@ angular.module("app.loggedIn.TimeSheet.Detail.Directive", [])
                             TimeSheetService.ViewOnDate(newModel).then(function(response) {
                                 if (response.status === "success") {
                                     scope.list = response;
-                                    scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
+                                    if (scope.list.result[0] !== undefined) {
+                                        scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
+                                    }
                                 } else if (response.status === "error") {
                                     toastr.error("Loadding fail!", "Error");
                                     //close modalInstance

@@ -66,7 +66,7 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
     .filter('getDate', function() {
         return function(input) {
             var DateInput = new Date(input.toString());
-            return DateInput.getDate();
+            return DateInput.getDay();
         };
     })
     .filter('readMore', function() {
