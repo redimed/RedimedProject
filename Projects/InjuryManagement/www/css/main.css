@@ -372,21 +372,22 @@ form i.icon.error {
     width: 100%;
 }
 .custom-icon-info {
-    color: #f0f0f0;
+    color: #f0f0f0 !important;
     position: relative;
     left: -5px;
     top: 40px;
-    text-shadow: 0 0 5px #f0f0f0;
 }
 .custom-icon-info:hover {
     color: #f0f0f0 !important;
 }
 .custom-icon-power {
-    color: #f0f0f0;
+    color: #f0f0f0 !important;
     position: relative;
     left: 5px;
     top: 40px;
-    text-shadow: 0 0 5px #f0f0f0;
+}
+.custom-icon-power:before {
+    font-size: 28px !important;
 }
 .custom-icon-power:hover {
     color: #f0f0f0 !important;
