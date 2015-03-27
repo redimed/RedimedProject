@@ -43,8 +43,8 @@ angular.module("app", [
     'app.rlobRegister.controller',
     'opentok-whiteboard',
     'ui.mask',
-    'app.sponsor1.controller'
-
+    'app.sponsor1.controller',
+    'infinite-scroll'//tannv.dts@gmail.com	
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {

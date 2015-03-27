@@ -503,6 +503,18 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.one('rlob/register/get-states');
             return result.get({nation:nation});
         }
+
+        rlobService.core={
+            /**
+             * selectedDate: javascript Date Object
+             * tannv.dts@gmail.com
+             */
+            getAllAppointmentInDate:function(doctorId,siteId,selectedDate)
+            {
+                var result=api.all('rlob/core/get-all-appointment-in-date');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedDate:selectedDate});
+            }
+        }
         
         return rlobService;
 })

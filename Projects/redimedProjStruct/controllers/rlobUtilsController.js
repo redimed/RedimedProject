@@ -4,6 +4,9 @@
 var isTestSendMail=true;
 module.exports =
 {
+    //Khoang thoi gian mac dinh cua 1 phien kham benh
+    periodTimeDefault:30,
+
     userRegisterType:'Company',
     
     isTestSendMail:isTestSendMail,
