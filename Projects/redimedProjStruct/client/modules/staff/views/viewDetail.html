@@ -76,7 +76,7 @@
                                 <td class="btn btn-xs">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(task.ITEM_ID===null||task.ITEM_ID==="" ||task.ITEM_ID ===undefined)?"N/A":task.ITEM_ID}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="" ||task.quantity===undefined)?"N/A":task.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.task == null ||task.task===""||task.task===undefined) ? ((task.comment===null||task.comment===""||task.comment===undefined)?"":task.comment) : task.task}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
                             </tr>
                         </tbody>
                     </table>
