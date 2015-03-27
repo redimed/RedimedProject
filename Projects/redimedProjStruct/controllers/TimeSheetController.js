@@ -771,7 +771,7 @@ module.exports = {
         var USER_ID = req.body.USER_ID;
         var weekStart = weekNo - 4;
         var query = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = " +
-            USER_ID + " AND time_tasks_week.week_no BETWEEN " + weekStart + " AND " + weekNo;
+            USER_ID + " AND time_tasks_week.task_status_id = 3 AND time_tasks_week.week_no BETWEEN " + weekStart + " AND " + weekNo;
         db.sequelize.query(query)
             .success(function(result) {
                 res.json({
