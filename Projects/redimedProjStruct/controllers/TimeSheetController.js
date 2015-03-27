@@ -553,7 +553,7 @@ module.exports = {
                 "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
                 "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
                 "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
-                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND t.time_charge!=0 ORDER BY t.`tasks_id`", null, {
+                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (t.time_charge!=0 OR t.activity_id=18) ORDER BY t.`tasks_id`", null, {
                     raw: true
                 }, [idWeek])
             .success(function(data) {

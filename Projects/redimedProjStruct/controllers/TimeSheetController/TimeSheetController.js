@@ -956,7 +956,7 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " +
             "WHERE time_tasks.tasks_week_id = " + info.ID +
-            " AND time_tasks.deleted = 0  AND time_tasks.time_charge != 0 " +
+            " AND time_tasks.deleted = 0  AND (time_tasks.time_charge != 0 OR time_tasks.activity_id=18)" +
             " ORDER BY time_tasks.date ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {
