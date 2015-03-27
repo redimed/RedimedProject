@@ -2,7 +2,7 @@ angular.module('starter.phoneCall.controller',[])
 
     .controller('phoneCallController', function ($scope, $state, localStorageService,
                                                  $rootScope, $timeout, $ionicModal,
-                                                 $stateParams, signaling, UserService) {
+                                                 $stateParams, signaling, UserService, OTSession, $ionicSideMenuDelegate, phoneCallService) {
 
 
         var from = localStorageService.get('fromState');
@@ -22,6 +22,8 @@ angular.module('starter.phoneCall.controller',[])
         $scope.contactNameJson = [];
         $scope.mic = false;
         $scope.camera = false;
+        $scope.isImage = false;
+        $scope.imgSrc = null;
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
         var src = "/android_asset/www/phone_calling.mp3";
@@ -35,6 +37,7 @@ angular.module('starter.phoneCall.controller',[])
             }
         };
 
+        $ionicSideMenuDelegate.canDragContent(false);
         UserService.getUserInfo($stateParams.callUser).then( function(data) {
             $scope.contactNameJson.contactName = data.user_name;
             $scope.contactNameJson.background = colors[Math.floor(Math.random() * colors.length)];
@@ -44,8 +47,9 @@ angular.module('starter.phoneCall.controller',[])
             } else {
                 $scope.avatarCaller = data.img
             }
-        })
+        });
 
+        $scope.streams = OTSession.streams;
         if ($scope.isCaller) {
             media = new Media(src, null, null, loop);
             media.play();
@@ -62,7 +66,7 @@ angular.module('starter.phoneCall.controller',[])
             var session = TB.initSession($scope.apiKey, $scope.sessionID);
             session.on({
                 'streamCreated': function (event) {
-                    session.subscribe(event.stream, "callerVideo", {
+                    $scope.subscriber = session.subscribe(event.stream, "callerVideo", {
                         insertMode: "append",
                         resolution: "1280x720",
                         width: '100%',
@@ -83,6 +87,25 @@ angular.module('starter.phoneCall.controller',[])
                     });
                 }
             });
+
+            //OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
+            //    $scope.session = session;
+            //    var connectDisconnect = function (connected) {
+            //        $scope.$apply(function () {
+            //            $scope.connected = connected;
+            //            if (!connected) $scope.publishing = false;
+            //        });
+            //    };
+            //    if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+            //    $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+            //    $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+            //});
+            //
+            //$scope.publishing = true;
+            //signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {
+            //    type: 'call',
+            //    sessionId: $scope.sessionID
+            //});
         }
         else {
             if ($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null) {
@@ -100,7 +123,7 @@ angular.module('starter.phoneCall.controller',[])
                 session = TB.initSession($scope.apiKey, $scope.sessionID);
                 session.on({
                     'streamCreated': function (event) {
-                        session.subscribe(event.stream, "callerVideo", {
+                        $scope.subscriber = session.subscribe(event.stream, "callerVideo", {
                             insertMode: "append",
                             resolution: "1280x720",
                             width: '100%',
@@ -117,13 +140,47 @@ angular.module('starter.phoneCall.controller',[])
                         signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
                     }
                 });
+
+                //OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
+                //    $scope.session = session;
+                //    var connectDisconnect = function (connected) {
+                //        $scope.$apply(function () {
+                //            $scope.connected = connected;
+                //            if (!connected) $scope.publishing = false;
+                //        });
+                //    };
+                //    if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+                //    $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+                //    $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+                //});
+                //
+                //$scope.publishing = true;
+                //signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
             }
         }
 
+        $scope.facePublisherProps = {
+            name:'face',
+            width: window.outerWidth / 10,
+            height: window.outerHeight / 10,
+            style: {
+                nameDisplayMode: 'off'
+            },
+            resolution: '1280x720',
+            frameRate: 30
+        }
+        $scope.subscriberProps = {
+            name:'face',
+            width: window.outerWidth / 2,
+            height: window.outerHeight,
+            style: {
+                nameDisplayMode: 'off'
+            },
+            resolution: '1280x720',
+            frameRate: 30
+        }
 
-
-
-        $scope.micToogle = function() {
+        $scope.micToggle = function() {
             $scope.mic = !$scope.mic;
 
             if($scope.mic){
@@ -134,7 +191,7 @@ angular.module('starter.phoneCall.controller',[])
             }
         }
 
-        $scope.videoToogle = function() {
+        $scope.videoToggle = function() {
             $scope.camera = !$scope.camera;
 
             if($scope.camera){
@@ -145,7 +202,30 @@ angular.module('starter.phoneCall.controller',[])
             }
         }
 
+        $scope.viewImage = function() {
+            $scope.isImage = !$scope.isImage;
+            if($scope.isImage) {
+                $scope.subscriber.subscribeToVideo(false);
+                //TB.updateViews();
+            } else {
+                $scope.subscriber.subscribeToVideo(true);
+                //TB.updateViews();
+            }
+        }
+
+        window.addEventListener("orientationchange", function() {
+            if($scope.isImage) {
+                $scope.subscriber.subscribeToVideo(false);
+                TB.updateViews();
+            } else {
+                $scope.subscriber.subscribeToVideo(true);
+                TB.updateViews();
+            }
+        }, false);
+
         $scope.cancelCall = function (offMedia) {
+            screen.unlockOrientation();
+            //disconnect();
             publisher.destroy();
             signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
             $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
@@ -154,6 +234,12 @@ angular.module('starter.phoneCall.controller',[])
             }
         }
 
+        var disconnect = function() {
+            $scope.session.disconnect();
+            $scope.session.on('sessionDisconnected', function () {
+                signaling.removeAllListeners();
+            });
+        }
 
         $scope.$on('$destroy', function() {
             signaling.removeListener('messageReceived', onMessageReceive);
@@ -166,20 +252,32 @@ angular.module('starter.phoneCall.controller',[])
                     $scope.isAccept = true;
                     break;
                 case 'ignore':
-                    publisher.destroy();
+                    //disconnect();
                     media.pause();
-                    session.unpublish(publisher);
-                    publisher = null;
+                    publisher.destroy();
+                    screen.unlockOrientation();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
                 case 'cancel':
+                    //disconnect();
                     publisher.destroy();
+                    screen.unlockOrientation();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
             }
         }
 
+        function getImage(id) {
+            phoneCallService.getImageShareScreen(id).then(function(result) {
+                if(result.status.toLowerCase() == 'success'){
+                    $scope.imgSrc =  result.data;
+                }
+            })
+        }
+
         signaling.on('messageReceived', onMessageReceive);
+
+        signaling.on('receiveImage', getImage);
 
         $scope.$on("$stateChangeSuccess", function() {
             document.addEventListener('backbutton', function(){
@@ -187,8 +285,5 @@ angular.module('starter.phoneCall.controller',[])
                     $scope.cancelCall();
                 }
             });
-            if($state.is("app.phoneCall")) {
-                
-            }
         });
     })

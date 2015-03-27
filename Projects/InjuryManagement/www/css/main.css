@@ -776,12 +776,16 @@ form i.icon.error {
 /*end login.css file*/
 
 /*Call function css*/
-.calling-container {
-    text-align: center;
-    z-index: 9999;
+.controllers-call {
     position: absolute;
-    bottom: 25px;
+    text-align: center;
+    bottom: 0;
     width: 100%;
+    padding-bottom: 20px;
+    z-index: 9999;
+}
+.controllers-call-black {
+    background-color: black !important;
 }
 
 .modal-phone {
@@ -837,7 +841,7 @@ form i.icon.error {
 .button-cancel_main {
     background-color: rgba(0, 0, 0, 0.1);
     border-color: #FF3A2D;
-    width: 150px;
+    width: 130px;
     height: 40px;
     color: #ffffff;
 }
@@ -867,7 +871,6 @@ form i.icon.error {
     background: linear-gradient(to bottom,  #5A6883 0%,#3D4D6B 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ad6fd', endColorstr='#1d62f0',GradientType=0 );
     height: 100%;
-    z-index: 9999;
 }
 .content-scroll .scroll {
     width: 100%;
@@ -931,7 +934,6 @@ form i.icon.error {
 }
 
 .btn-process-next {
-    /*border-radius: 50% !important;*/
     background-color: #34AADC !important;
     color: whitesmoke !important;
     width: 80%;
@@ -1031,6 +1033,7 @@ form i.icon.error {
     left: 0;
     right: 0;
 }
+
 .avatar-calling {
     margin: auto;
     top: 0;
@@ -1168,22 +1171,40 @@ form i.icon.error {
 }
 
 .cus-selfVideo {
-    top: 0 !important;
-    left: 0 !important;
-    position:absolute !important;
+    position:absolute;
+    top: 0;
+    left: 0;
     margin-top: 10px;
-    margin-left: 5px;
-    z-index: 0 !important;
+    margin-left: 15px;
+    z-index: 99999;
 }
+.cus-selfVideo * {
+    z-index: 99999;
+}
+
 .cus-callerVideo {
+    height: 90%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1 !important;
+}
+
+.cus-callerVideo * {
+    z-index: -1 !important;
+}
+
+.image-shareScreen {
     width: 100%;
-    height: 50%;
-    position: absolute !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin: auto !important;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background-color: black;
 }
 
 .OT_bar {
@@ -1193,8 +1214,6 @@ form i.icon.error {
 .OT_mute {
     display: none;
 }
-
-
 
 .customrow {
     background-color: white;
