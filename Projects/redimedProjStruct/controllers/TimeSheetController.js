@@ -406,7 +406,7 @@ module.exports = {
 
     showDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
+        db.sequelize.query("SELECT t.`date`, time_tasks_week.after_status_id, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
                 " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
                 " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
                 " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
@@ -448,7 +448,7 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT time_tasks_week.task_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`quantity`,i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`quantity`,i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
                             " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
@@ -762,6 +762,29 @@ module.exports = {
             .error(function(err) {
                 res.json({
                     status: "error"
+                });
+                return;
+            });
+    },
+    CheckTimeInLieu: function(req, res) {
+        var weekNo = req.body.weekNo;
+        var USER_ID = req.body.USER_ID;
+        var weekStart = weekNo - 4;
+        var query = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = " +
+            USER_ID + " AND time_tasks_week.week_no BETWEEN " + weekStart + " AND " + weekNo;
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "success",
+                    result: []
                 });
                 return;
             });

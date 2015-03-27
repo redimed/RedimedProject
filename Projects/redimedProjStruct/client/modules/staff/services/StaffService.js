@@ -32,6 +32,13 @@ angular.module("app.loggedIn.staff.service", [])
             info: info
         });
     };
+    service.checkTimeInLieu = function(weekNo, USER_ID) {
+        var checkTimeInLieu = api.all('staff/checktime');
+        return checkTimeInLieu.post({
+            weekNo: weekNo,
+            USER_ID: USER_ID
+        });
+    };
 
     service.getTask = function(idWeek) {
         var getTask = api.all('staff/getTask');
@@ -113,6 +120,47 @@ angular.module("app.loggedIn.staff.service", [])
             return 0;
         }
     };
+
+    //FORMAT FULLMINUTE
+    service.fortMatFullTime = function(time) {
+        if (time !== undefined && time !== null) {
+            var hours = parseInt(time);
+            var minutes = parseFloat(time - hours).toFixed(2);
+            //CONVERT
+            var checkFind = false;
+            var minuteAdd = 0;
+            //find firts
+            angular.forEach(MIN_TO_DEC, function(value) {
+                if (value.dec == minutes) {
+                    minutes = value.min;
+                    checkFind = true;
+                }
+            });
+            //end find first
+
+            //call again if not found
+            if (checkFind === false && minutes > 0.00) {
+                minutes = minutes - 0.01;
+                ++minuteAdd;
+                angular.forEach(MIN_TO_DEC, function(value) {
+                    if (value.dec == minutes) {
+                        minutes = value.min;
+                        checkFind = true;
+                    }
+                });
+            }
+            if (checkFind === false) {
+                minutes = 0;
+            }
+            //end call
+            minutes = minutes + minuteAdd;
+            //END CONVERT
+            return (hours + minutes);
+        } else {
+            return 0;
+        }
+    };
+    //END
 
     service.unCovertTimeCharge = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null) {

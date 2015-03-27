@@ -1333,7 +1333,7 @@ module.exports = {
 
     RejectTaskWeek: function(req, res) {
         var info = req.body.info;
-        var query = "UPDATE time_tasks_week SET task_status_id = 4, comments ='" +
+        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, comments ='" +
             info.comments + "' WHERE task_week_id = " + info.idTaskWeek;
         db.sequelize.query(query)
             .success(function(result) {
