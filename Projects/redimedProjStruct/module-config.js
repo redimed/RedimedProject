@@ -46,5 +46,5 @@ eval(fs.readFileSync('./routes/Time_Sheet_Route.js') + '');
 eval(fs.readFileSync('./routes/consult_route.js') + '');
 
 /* ************************************************ VUONG TEAM ************************************************* */
-eval(fs.readFileSync('./routes/claim.js') + '');
+//eval(fs.readFileSync('./routes/claim.js') + '');
 /* ************************************************ END VUONG TEAM ********************************************* */
