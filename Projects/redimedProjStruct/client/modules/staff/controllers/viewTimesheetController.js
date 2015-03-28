@@ -167,8 +167,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
 
-
-    StaffService.showWeek();
+    //CHECK MOTH AND WEEK
+    StaffService.showWeek($cookieStore.get('userInfo').id);
+    //END
 })
 
 .controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, infoWeek) {

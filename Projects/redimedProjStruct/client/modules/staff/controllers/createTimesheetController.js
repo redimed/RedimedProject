@@ -113,7 +113,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHANGE ACTIVITY
     $scope.ChangeActivity = function(activity_id, index) {
-        if (activity_id === null || activity_id === undefined || activity_id === "") {
+        if (activity_id === null || activity_id === undefined || activity_id === "" || activity_id===18) {
             $scope.tasks[index].time_charge = null;
             $scope.tasks[index].time_temp = null;
         }
