@@ -403,11 +403,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     $scope.addAllTask = function(status) {
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
         if ($scope.info.time_temp < (38 * 60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
-            toastr.warning("Can not submit, please check time charge(>=38)", "Error");
+            toastr.warning("Please check time charge(>=38)", "Error");
         } else {
             if ($scope.info.time_in_lieuFull > $scope.info.time_in_lieuHas) {
                 //CHECK TIME IN LIEU
-                toastr.warning("Can not submit, Total time in lieu use larger time in lieu you have!", "Fail");
+                toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
 
             } else {
                 if (!$scope.isEdit) {

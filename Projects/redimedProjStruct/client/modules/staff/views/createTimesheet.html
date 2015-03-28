@@ -97,7 +97,7 @@
                         </td>
                         <td style="vertical-align: middle">{{task.date | date : 'EEE, dd MMM'}}</td>
                         <td style="width: 16%">
-                            <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities" ng-change="ChangeActivity(key)">
+                            <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
                                 <option value="">--Select Activity--</option>
                             </select>
                         </td>
