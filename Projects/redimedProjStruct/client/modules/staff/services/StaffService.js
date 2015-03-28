@@ -106,20 +106,16 @@ angular.module("app.loggedIn.staff.service", [])
     };
 
     //thanh
-    service.covertTimeCharge = function(time_charge) {
+    service.convertShowToFull = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null) {
             var hours = parseInt(time_charge.toString().substring(0, 2));
             var minutes = parseInt(time_charge.toString().substring(2, 4));
-            angular.forEach(MIN_TO_DEC, function(value) {
-                if (value.min == minutes) {
-                    hours = parseFloat(hours) + parseFloat(value.dec);
-                }
-            });
-            return hours.toFixed(2);
+            return (hours * 60 + minutes);
         } else {
             return 0;
         }
     };
+
     service.convertFromFullToShow = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null) {
             var hours = parseInt(time_charge / 60);
@@ -134,184 +130,20 @@ angular.module("app.loggedIn.staff.service", [])
         }
     };
 
-    service.convertTimeSave = function(time_charge) {
-        if (time_charge !== undefined && time_charge !== null) {
-            var hours = parseInt(time_charge / 60);
-            var minutes = (time_charge % 60);
-            angular.forEach(MIN_TO_DEC, function(value) {
-                if (value.min == minutes) {
-                    hours = parseFloat(hours) + parseFloat(value.dec);
-                }
-            });
-            return hours.toFixed(2);
-        } else return 0;
-    };
-
-    //FORMAT FULLMINUTE
-    service.fortMatFullTime = function(time) {
-        if (time !== undefined && time !== null) {
-            var hours = parseInt(time);
-            var minutes = parseFloat(time - hours).toFixed(2);
-            //CONVERT
-            var checkFind = false;
-            var minuteAdd = 0;
-            //find firts
-            angular.forEach(MIN_TO_DEC, function(value) {
-                if (value.dec == minutes) {
-                    minutes = value.min;
-                    checkFind = true;
-                }
-            });
-            //end find first
-
-            //call again if not found
-            if (checkFind === false && minutes > 0.00) {
-                minutes = minutes - 0.01;
-                ++minuteAdd;
-                angular.forEach(MIN_TO_DEC, function(value) {
-                    if (value.dec == minutes) {
-                        minutes = value.min;
-                        checkFind = true;
-                    }
-                });
-            }
-            if (checkFind === false) {
-                minutes = 0;
-            }
-            //end call
-            minutes = minutes + minuteAdd;
-            //END CONVERT
-            return ((hours * 60) + minutes);
-        } else {
-            return 0;
-        }
-    };
-    //END
-
-    service.unCovertTimeCharge = function(time_charge) {
-        if (time_charge !== undefined && time_charge !== null) {
-            var hours = parseInt(time_charge);
-            var n = time_charge.toString().indexOf(".");
-            var minutes = 0;
-            if (n !== -1) {
-                minutes = time_charge.toString().substr(n + 1, 2);
-                if (minutes > 10) {
-                    minutes = parseFloat(minutes / 100);
-                } else if (minutes > 1) {
-                    minutes = parseFloat(minutes / 10);
-                }
-                var checkFind = false;
-                var minuteAdd = 0;
-                //find firts
-                angular.forEach(MIN_TO_DEC, function(value) {
-                    if (value.dec == minutes) {
-                        minutes = value.min;
-                        checkFind = true;
-                    }
-                });
-                //end find first
-
-                //call again if not found
-                if (checkFind === false) {
-                    minutes = minutes - 0.01;
-                    ++minuteAdd;
-                    angular.forEach(MIN_TO_DEC, function(value) {
-                        if (value.dec == minutes) {
-                            minutes = value.min;
-                            checkFind = true;
-                        }
-                    });
-                }
-                if (checkFind === 0) {
-                    minutes = 0;
-                }
-                //end call
-                minutes = minutes + minuteAdd;
-                if (parseInt(hours) < 10) {
-                    hours = '0' + hours.toString();
-                }
-                if (parseInt(minutes) < 10) {
-                    minutes = '0' + minutes.toString();
-                }
-
-                var returnValue = hours + '' + minutes;
-                return returnValue;
-            } else {
-                if (parseInt(hours) < 10) {
-                    hours = '0' + hours + '00';
-                } else {
-                    hours += '00';
-                }
-                return hours;
-            }
-
-        } else {
-            return "0000";
-        }
-    };
-    //end thanh
-
     service.getFortMatTimeCharge = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
-            var hours = parseInt(time_charge);
-            var n = time_charge.toString().indexOf(".");
-            var minutes = 0;
-            if (n !== -1) {
-                minutes = time_charge.toString().substr(n + 1, 2);
-                if (minutes > 10) {
-                    minutes = parseFloat(minutes / 100);
-                } else if (minutes > 1) {
-                    minutes = parseFloat(minutes / 10);
-                }
-                var checkFind = false;
-                var minuteAdd = 0;
-                //find firts
-                angular.forEach(MIN_TO_DEC, function(value) {
-                    if (value.dec == minutes) {
-                        minutes = value.min;
-                        checkFind = true;
-                    }
-                });
-                //end find first
-
-                //call again if not found
-                if (checkFind === false) {
-                    minutes = minutes - 0.01;
-                    ++minuteAdd;
-                    angular.forEach(MIN_TO_DEC, function(value) {
-                        if (value.dec == minutes) {
-                            minutes = value.min;
-                            checkFind = true;
-                        }
-                    });
-                }
-                if (checkFind === 0) {
-                    minutes = 0;
-                }
-                //end call
-                minutes = minutes + minuteAdd;
-                if (parseInt(hours) < 10) {
-                    hours = '0' + hours.toString();
-                }
-                if (parseInt(minutes) < 10) {
-                    minutes = '0' + minutes.toString();
-                }
-
-                var returnValue = hours + ':' + minutes;
-                return (returnValue.substr(0, 5));
-            } else {
-                if (parseInt(hours) < 10) {
-                    hours = '0' + hours + ':00';
-                } else {
-                    hours += ':00';
-                }
-                return (hours.substr(0, 5));
+            var hours = parseInt(time_charge / 60);
+            var minutes = parseInt(time_charge % 60);
+            if (hours < 10) {
+                hours = '0' + hours;
             }
-
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            return hours + ':' + minutes;
         } else {
             return "-";
         }
-
     };
 
     service.showWeek = function(userID) {
@@ -364,12 +196,11 @@ angular.module("app.loggedIn.staff.service", [])
                         dayAdjustment += 7;
                     }
                     startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
-                    console.log(startDate);
                     endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
                     $input.datepicker("setDate", startDate);
                 }
             };
-
+            var dateRunTimeSheet = new Date('2015-03-30'); //SET DATE TO RUN TIMESHEET
             $('.week-picker').datepicker({
                 beforeShow: function() {
                     $('#ui-datepicker-div').addClass('ui-weekpicker');
@@ -378,7 +209,8 @@ angular.module("app.loggedIn.staff.service", [])
                 onClose: function() {
                     $('#ui-datepicker-div').removeClass('ui-weekpicker');
                 },
-                // minDate: array[0],
+
+                minDate: dateRunTimeSheet,
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 onSelect: function(dateText, inst) {

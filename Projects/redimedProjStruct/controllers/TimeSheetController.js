@@ -12,10 +12,11 @@ module.exports = {
                 start_date: info.startWeek,
                 end_date: info.endWeek,
                 week_no: info.weekNo,
-                time_charge: info.time_charge,
+                time_charge: info.time_temp,
                 user_id: info.userID,
                 created_by: info.userID,
-                task_status_id: info.statusID
+                task_status_id: info.statusID,
+                time_in_lieuChoose: info.time_in_lieuFull
             }, {
                 raw: true
             })

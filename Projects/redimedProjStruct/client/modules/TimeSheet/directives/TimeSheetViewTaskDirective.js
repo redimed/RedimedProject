@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
-    .directive('viewTask', function(toastr, $state, TimeSheetService, $modal, MIN_TO_DEC, StaffService) {
+    .directive('viewTask', function(toastr, $state, TimeSheetService, $modal, MIN_TO_DEC, StaffService, $cookieStore) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -36,12 +36,10 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.info.hasReject = true;
                                     scope.info.comments = scope.list.result[0].comments;
                                 }
-                                scope.info.time_restFull = StaffService.fortMatFullTime(scope.list.result[0].chargeWeek) - (38 * 60);
+                                scope.info.time_rest = scope.list.result[0].chargeWeek - (38 * 60);
                                 if (scope.info.time_restFull < 0) {
                                     scope.info.time_restFull = 0;
                                 }
-                                scope.info.time_rest = StaffService.convertTimeSave(scope.info.time_restFull); //FUNCTION GET FORTMAT SAVE
-                                scope.info.time_restFull = StaffService.fortMatFullTime(scope.info.time_rest);
                                 scope.info.time_in_lieu = null;
                                 scope.info.over_time = null;
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
@@ -77,15 +75,13 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         if (scope.info.time_in_lieu.length === 0) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
-                        } else if (StaffService.fortMatFullTime(StaffService.covertTimeCharge(scope.info.time_in_lieu)) > scope.info.time_restFull) {
+                        } else if (StaffService.convertShowToFull(scope.info.time_in_lieu) > scope.info.time_rest) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
                         } else {
-                            scope.info.time_in_lieuFull = StaffService.fortMatFullTime(StaffService.covertTimeCharge(scope.info.time_in_lieu));
-                            scope.info.time_in_lieuReal = StaffService.convertTimeSave(scope.info.time_in_lieuFull);
-                            scope.info.over_timeFull = scope.info.time_restFull - scope.info.time_in_lieuFull;
+                            scope.info.time_in_lieuFull = StaffService.convertShowToFull(scope.info.time_in_lieu);
+                            scope.info.over_timeFull = scope.info.time_rest - scope.info.time_in_lieuFull;
                             scope.info.over_time = StaffService.convertFromFullToShow(scope.info.over_timeFull);
-                            scope.info.over_time_Real = StaffService.convertTimeSave(scope.info.over_timeFull);
                         }
                         //end
                     }
@@ -97,15 +93,13 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         if (scope.info.over_time.length === 0) {
                             scope.info.over_time = null;
                             scope.info.time_in_lieu = null;
-                        } else if (StaffService.fortMatFullTime(StaffService.covertTimeCharge(scope.info.over_time)) > scope.info.time_restFull) {
+                        } else if (StaffService.convertShowToFull(scope.info.over_time) > scope.info.time_rest) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
                         } else {
-                            scope.info.over_timeFull = StaffService.fortMatFullTime(StaffService.covertTimeCharge(scope.info.over_time));
-                            scope.info.over_time_Real = StaffService.convertTimeSave(scope.info.over_timeFull);
-                            scope.info.time_in_lieuFull = scope.info.time_restFull - scope.info.over_timeFull;
+                            scope.info.over_timeFull = StaffService.convertShowToFull(scope.info.over_time);
+                            scope.info.time_in_lieuFull = scope.info.time_rest - scope.info.over_timeFull;
                             scope.info.time_in_lieu = StaffService.convertFromFullToShow(scope.info.time_in_lieuFull);
-                            scope.info.time_in_lieuReal = StaffService.convertTimeSave(scope.info.time_in_lieuFull);
                         }
                         //end
                     }

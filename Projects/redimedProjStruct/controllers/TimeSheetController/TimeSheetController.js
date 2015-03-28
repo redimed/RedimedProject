@@ -1352,23 +1352,119 @@ module.exports = {
     },
     ApproveTaskWeek: function(req, res) {
         var info = req.body.info;
-        var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var timeType = "";
-        if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
-            if (info.time_in_lieuReal !== undefined && info.time_in_lieuReal !== null) {
-                timeType += ", time_in_lieu = " + info.time_in_lieuReal;
-            }
-            if (info.over_time_Real !== undefined && info.over_time_Real !== null) {
-                timeType += ", over_time = " + info.over_time_Real;
-            }
-        }
-        var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + info.idTaskWeek;
-        db.sequelize.query(query)
+        var idTaskWeek = info.idTaskWeek;
+        var queryGetTimeInLieu = "SELECT time_in_lieuChoose FROM  time_tasks_week WHERE task_week_id = " + idTaskWeek;
+        db.sequelize.query(queryGetTimeInLieu)
             .success(function(result) {
-                res.json({
-                    status: "success"
-                });
-                return;
+                if (result[0] !== undefined && result[0] !== null && result[0].time_in_lieuChoose > 0) {
+                    //processing time in lieu
+                    var time_in_lieuChoose = result[0].time_in_lieuChoose;
+                    //GET USER ID OF EMPLOYEE
+                    var queryGetUserID = "SELECT user_id FROM time_tasks_week WHERE task_week_id = " + idTaskWeek;
+                    db.sequelize.query(queryGetUserID)
+                        .success(function(users) {
+                            if (users[0] !== undefined && users[0] !== null) {
+                                var USER_ID = users[0].user_id;
+                                var weekNo = getWeekNo();
+                                var weekStart = weekNo - 4;
+                                //GET TIME IN LIEU 4 WEEK
+                                var queryGet4Week = "SELECT task_week_id, time_in_lieu FROM time_tasks_week WHERE user_id = " + USER_ID +
+                                    " AND week_no  BETWEEN " + weekStart + " AND " + weekNo + " AND task_status_id = 3 ";
+                                db.sequelize.query(queryGet4Week)
+                                    .success(function(listWeek) {
+                                        if (listWeek === undefined || listWeek === null || listWeek.length === 0) {
+                                            console.log("*****ERROR: User has not time in lieu *****");
+                                            res.json({
+                                                status: "error"
+                                            });
+
+                                        } else {
+                                            var Weeks = listWeek;
+                                            //CHECK NULL OR 0 DELETE
+                                            for (var i = 0; i < Weeks.length; i++) {
+                                                if (Weeks[i].time_in_lieu === undefined ||
+                                                    Weeks[i].time_in_lieu === null ||
+                                                    Weeks[i].time_in_lieu === 0) {
+                                                    Weeks.splice(i, 1);
+                                                } else {
+                                                    //MINUS TIME IN LIEU REST
+                                                    if (time_in_lieuChoose <= Weeks[i].time_in_lieu) {
+                                                        Weeks[i].time_in_lieu = Weeks[i].time_in_lieu - time_in_lieuChoose;
+                                                        time_in_lieuChoose = 0;
+                                                        break;
+                                                    } else {
+                                                        time_in_lieuChoose = time_in_lieuChoose - Weeks[i].time_in_lieu;
+                                                        Weeks[i].time_in_lieu = 0;
+                                                    }
+                                                }
+                                            }
+                                            //END CHECK
+
+                                            //UPDATE TIME IN LIEU FOR WEEK BEFORE
+                                            for (var j = 0; j < Weeks.length; j++) {
+                                                var queryUpdateTimeInLieu = "UPDATE time_tasks_week SET time_in_lieu = " + Weeks[j].time_in_lieu + " WHERE task_week_id = " + Weeks[j].task_week_id;
+                                                db.sequelize.query(queryUpdateTimeInLieu)
+                                                    .success(function(success) {
+                                                        res.json({
+                                                            status: "success"
+                                                        });
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "error"
+                                                        });
+                                                        return;
+                                                    });
+                                            }
+                                            //SET APPROVE
+                                            var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                            var timeType = "";
+                                            if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
+                                                if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
+                                                    timeType += ", time_in_lieu = " + info.time_in_lieuFull;
+                                                }
+                                                if (info.over_timeFull !== undefined && info.over_timeFull !== null) {
+                                                    timeType += ", over_time = " + info.over_timeFull;
+                                                }
+                                            }
+                                            var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
+                                            db.sequelize.query(query)
+                                                .success(function(result) {
+                                                    res.json({
+                                                        status: "success"
+                                                    });
+                                                    return;
+                                                })
+                                                .error(function(err) {
+                                                    console.log("*****ERROR:" + err + "*****");
+                                                    res.json({
+                                                        status: "error"
+                                                    });
+                                                    return;
+                                                });
+
+                                            //END
+                                        }
+                                    })
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error"
+                                        });
+                                        return;
+                                    });
+                            }
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error"
+                            });
+                            return;
+                        });
+                    //END
+                }
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -1377,6 +1473,7 @@ module.exports = {
                 });
                 return;
             });
+
     },
     //ROLE
     LoadRole: function(req, res) {
@@ -1413,3 +1510,14 @@ module.exports = {
         }
         //END ROLE
 };
+
+//FUNCTION GET WEEKNO
+var getWeekNo = function() {
+    d = new Date();
+    d.setHours(0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    var yearStart = new Date(d.getFullYear(), 0, 1);
+    var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    return weekNo;
+};
+//END
