@@ -86,7 +86,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             if (data.time_temp !== null &&
                 data.time_temp !== undefined &&
                 data.isAction !== "delete" &&
-                !isNaN(data.time_temp)) {
+                !isNaN(data.time_temp) && data.activity_id !== null) {
                 sum = sum + StaffService.fortMatFullTime(StaffService.covertTimeCharge(data.time_charge));
             }
         });
@@ -94,6 +94,14 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.info.time_charge = StaffService.convertFromFullToShow(sum);
     };
     //END FUNCTION TOTAL TIME CHARGE
+
+    //CHANGE ACTIVITY
+    $scope.ChangeActivity = function(index) {
+        $scope.tasks[index].time_charge = null;
+        $scope.tasks[index].time_temp = null;
+        $scope.changeTimeCharge($scope.tasks[index]);
+    };
+    //END CHANGE
 
     //FUNCTION GET WEEK NUMBER
     $scope.getWeekNumber = function(d) {
