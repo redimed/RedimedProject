@@ -4,7 +4,7 @@ angular.module('app.loggedIn.claim.directives.list', [])
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/claim/directives/templates/list.html',
-		function(scope, elem, attrs){
+		link: function(scope, elem, attrs){
 			ClaimModel.list().then(function(response){
 
 			}, function(error){
