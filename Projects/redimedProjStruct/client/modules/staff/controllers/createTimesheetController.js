@@ -112,10 +112,15 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //END FUNCTION TOTAL TIME CHARGE
 
     //CHANGE ACTIVITY
-    $scope.ChangeActivity = function(index) {
-        $scope.tasks[index].time_charge = null;
-        $scope.tasks[index].time_temp = null;
+    $scope.ChangeActivity = function(activity_id, index) {
+        if (activity_id === null || activity_id === undefined || activity_id === "") {
+            $scope.tasks[index].time_charge = null;
+            $scope.tasks[index].time_temp = null;
+        }
+
+        //SET TIME CHARGE-INLIEU
         $scope.changeTimeCharge();
+        //END
     };
     //END CHANGE
 
@@ -397,7 +402,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //ADD ALL TASK OF WEEK
     $scope.addAllTask = function(status) {
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
-        if ($scope.info.time_temp < (38*60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
+        if ($scope.info.time_temp < (38 * 60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
             toastr.warning("Can not submit, please check time charge(>=38)", "Error");
         } else {
             if ($scope.info.time_in_lieuFull > $scope.info.time_in_lieuHas) {
