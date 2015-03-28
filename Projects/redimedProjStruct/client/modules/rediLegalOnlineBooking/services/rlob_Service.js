@@ -509,10 +509,10 @@ angular.module('app.loggedIn.rlob.services',[])
              * selectedDate: javascript Date Object
              * tannv.dts@gmail.com
              */
-            getAllAppointmentInDate:function(doctorId,siteId,selectedDate)
+            getListAppointmentAfterTime:function(doctorId,siteId,selectedAppFromTime)
             {
-                var result=api.all('rlob/core/get-all-appointment-in-date');
-                return result.post({doctorId:doctorId,siteId:siteId,selectedDate:selectedDate});
+                var result=api.all('rlob/core/get-list-appointment-after-time');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime});
             }
         }
         

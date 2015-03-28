@@ -6,6 +6,11 @@ module.exports =
 {
     //Khoang thoi gian mac dinh cua 1 phien kham benh
     periodTimeDefault:30,
+    //Khoang thoi gian kham benh cua cac rlType
+    periodTimeOfRlType:{
+        2:{value:45,desc:'IME'},
+        1:{value:30,desc:'PI'}
+    },
 
     userRegisterType:'Company',
     

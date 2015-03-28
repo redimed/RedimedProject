@@ -349,7 +349,6 @@ module.exports =
                     }
                     res.json(rows);
                 });
-            console.log(query);
         });
     },
     

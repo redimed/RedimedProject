@@ -145,3 +145,4 @@ app.post('/api/rlob/register/update-user-info', rlRegisterController.updateUserI
 app.get('/api/rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer', rlBookingsController.getUpcommingBookingHaveNotDocumentToNotificationCustomer);
 app.get('/api/rlob/register/get-states', rlRegisterController.getStates);
 app.post('/api/rlob/core/get-list-appointment-after-time', rlobController.getListAppointmentAfterTime);
+app.post('/api/rlob/core/handle-periodtime-appointment-calendar', rlobController.handlePeriodTimeAppointmentCalendar);
