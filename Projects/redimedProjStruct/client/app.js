@@ -86,6 +86,26 @@ angular.module("app", [
     return {};
 })
 .config(function ($httpProvider, $stateProvider, $urlRouterProvider, $translateProvider, RestangularProvider, $idleProvider, $keepaliveProvider, localStorageServiceProvider, $locationProvider) {
+    // JWT SIGN
+    $httpProvider.interceptors.push(function($q, $location, $cookieStore) {
+        return {
+            'request': function (config) {
+                config.headers = config.headers || {};
+                if ($cookieStore.get('token')) {
+                    config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+                }
+                return config;
+            },
+            'responseError': function(response) {
+                if(response.status === 401 || response.status === 403) {
+                    $location.path('/login');
+                }
+                return $q.reject(response);
+            }
+        };
+    });
+    // END JWT SIGN
+
     // CORS PROXY
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];

@@ -5,8 +5,6 @@ eval(fs.readFileSync('./routes/authenticate_route.js')+'');
 //
 eval(fs.readFileSync('./routes/calendar_route.js')+'');
 //
-eval(fs.readFileSync('./routes/company_route.js')+'');
-//
 eval(fs.readFileSync('./routes/function_route.js')+'');
 //
 eval(fs.readFileSync('./routes/menu_route.js')+'');

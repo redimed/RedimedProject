@@ -2,7 +2,7 @@
  * Created by Minh Hikari on 12/1/2014.
  */
 angular.module('app.loggedIn.waworkcover.final.directive', [])
-    .directive('workCoverFinal', function (DoctorService, CompanyService, ReceptionistService, ConfigService, PatientService, toastr, WaWorkCoverService, $state, $cookieStore) {
+    .directive('workCoverFinal', function (DoctorService, ReceptionistService, ConfigService, PatientService, toastr, WaWorkCoverService, $state, $cookieStore) {
         return {
             restrict: 'EA',
             scope: {

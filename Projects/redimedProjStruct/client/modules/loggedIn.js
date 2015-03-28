@@ -12,7 +12,6 @@ angular.module("app.loggedIn", [
     "app.loggedIn.vaccinob", //Vaccination Online Booking
     "app.loggedIn.iso", //ISO manage files
     "app.loggedIn.payroll",//PAYROLL (TANNV.DTS@GMAIL.COM)
-    "app.loggedIn.company", // COMPANY MODULE
     "app.loggedIn.doctor", // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",
