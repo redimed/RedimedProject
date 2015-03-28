@@ -908,7 +908,7 @@ module.exports = {
 
     ViewOnDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.quantity, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
@@ -943,7 +943,7 @@ module.exports = {
 
     ViewAllDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity,time_item_task.time_charge as chargeItem, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, time_tasks_week.time_in_lieu, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
@@ -1417,34 +1417,6 @@ module.exports = {
                                                         return;
                                                     });
                                             }
-                                            //SET APPROVE
-                                            var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                                            var timeType = "";
-                                            if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
-                                                if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
-                                                    timeType += ", time_in_lieu = " + info.time_in_lieuFull;
-                                                }
-                                                if (info.over_timeFull !== undefined && info.over_timeFull !== null) {
-                                                    timeType += ", over_time = " + info.over_timeFull;
-                                                }
-                                            }
-                                            var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
-                                            db.sequelize.query(query)
-                                                .success(function(result) {
-                                                    res.json({
-                                                        status: "success"
-                                                    });
-                                                    return;
-                                                })
-                                                .error(function(err) {
-                                                    console.log("*****ERROR:" + err + "*****");
-                                                    res.json({
-                                                        status: "error"
-                                                    });
-                                                    return;
-                                                });
-
-                                            //END
                                         }
                                     })
                                     .error(function(err) {
@@ -1464,7 +1436,37 @@ module.exports = {
                             return;
                         });
                     //END
+                } else {
+                    console.log("*****Not found time in lieu choose of this week *****");
                 }
+                //SET APPROVE
+                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                var timeType = "";
+                if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
+                    if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
+                        timeType += ", time_in_lieu = " + info.time_in_lieuFull;
+                    }
+                    if (info.over_timeFull !== undefined && info.over_timeFull !== null) {
+                        timeType += ", over_time = " + info.over_timeFull;
+                    }
+                }
+                var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
+                db.sequelize.query(query)
+                    .success(function(result) {
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+
+                //END
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");

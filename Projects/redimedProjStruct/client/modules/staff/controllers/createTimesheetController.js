@@ -93,7 +93,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             if (data.time_charge !== null &&
                 data.time_charge !== undefined &&
                 data.isAction !== "delete" &&
-                data.activity_id !== null) {
+                data.activity_id !== null &&
+                data.time_charge !== "" &&
+                data.time_charge.length !== 0) {
                 //SUM TIME CHARGE
                 sum = sum + parseInt(StaffService.convertShowToFull(data.time_charge));
                 //END
@@ -113,7 +115,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHANGE ACTIVITY
     $scope.ChangeActivity = function(activity_id, index) {
-        if (activity_id === null || activity_id === undefined || activity_id === "" || activity_id===18) {
+        if (activity_id === null || activity_id === undefined || activity_id === "" || activity_id === 18) {
             $scope.tasks[index].time_charge = null;
             $scope.tasks[index].time_temp = null;
         }
@@ -404,46 +406,43 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
         if ($scope.info.time_temp < (38 * 60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
             toastr.warning("Please check time charge(>=38)", "Error");
+        } else if ($scope.info.time_in_lieuFull > $scope.info.time_in_lieuHas && status !== 1) {
+            //CHECK TIME IN LIEU
+            toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
-            if ($scope.info.time_in_lieuFull > $scope.info.time_in_lieuHas) {
-                //CHECK TIME IN LIEU
-                toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
+            if (!$scope.isEdit) {
+                //ADD NEW TIMESHEET
+                startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
+                endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
+                $scope.info.startWeek = startWeek;
+                $scope.info.endWeek = endWeek;
+                $scope.info.statusID = status;
+                $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
 
+                StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
+                    if (response['status'] == 'success') {
+                        toastr.success("success", "Success");
+                        $state.go('loggedIn.timesheet.view', null, {
+                            'reload': true
+                        });
+                    } else {
+                        toastr.error("Error", "Error");
+                    }
+                });
             } else {
-                if (!$scope.isEdit) {
-                    //ADD NEW TIMESHEET
-                    startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
-                    endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
-                    $scope.info.startWeek = startWeek;
-                    $scope.info.endWeek = endWeek;
-                    $scope.info.statusID = status;
-                    $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
-
-                    StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
-                        if (response['status'] == 'success') {
-                            toastr.success("success", "Success");
-                            $state.go('loggedIn.timesheet.view', null, {
-                                'reload': true
-                            });
-                        } else {
-                            toastr.error("Error", "Error");
-                        }
-                    });
-                } else {
-                    //EDIT TIMESHEET
-                    $scope.info.idWeek = $scope.idWeek;
-                    $scope.info.statusID = status;
-                    StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
-                        if (response['status'] == 'success') {
-                            toastr.success("Edit Success");
-                            $state.go('loggedIn.timesheet.view', null, {
-                                'reload': true
-                            });
-                        } else {
-                            toastr.error("Error", "Error");
-                        }
-                    });
-                }
+                //EDIT TIMESHEET
+                $scope.info.idWeek = $scope.idWeek;
+                $scope.info.statusID = status;
+                StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
+                    if (response['status'] == 'success') {
+                        toastr.success("Edit Success");
+                        $state.go('loggedIn.timesheet.view', null, {
+                            'reload': true
+                        });
+                    } else {
+                        toastr.error("Error", "Error");
+                    }
+                });
             }
         }
 
@@ -467,7 +466,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 //click save
                 $scope.clickSave = function(info, formValid) {
                     if (formValid.$invalid === true) {
-                        toastr.error("Please Input All Required Information!", "Error");
+                        toastr.warning("Please Input All Required Information!", "Error");
                     } else {
                         if (info !== undefined && info !== null) {
                             for (var i = 0; i < info.length; i++) {

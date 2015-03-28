@@ -220,7 +220,7 @@ module.exports = {
                 }
                 chainer.add(
                     db.timeTaskWeek.update({
-                        time_charge: info.time_charge,
+                        time_charge: info.time_temp,
                         task_status_id: info.statusID
                     }, {
                         task_week_id: info.idWeek
@@ -515,7 +515,7 @@ module.exports = {
                     status: 'error'
                 });
                 console.log(err);
-            })
+            });
     },
 
     getTaskList: function(req, res) {
@@ -544,7 +544,7 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT t.`tasks_id`,t.`tasks_week_id`,t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_tasks_week.after_status_id, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
                 "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
                 "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
                 "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
@@ -719,7 +719,7 @@ module.exports = {
                                 status: 'error'
                             });
                             console.log(err);
-                        })
+                        });
                 }
             })
             .error(function(err) {
@@ -727,7 +727,7 @@ module.exports = {
                     status: 'error'
                 });
                 console.log(err);
-            })
+            });
     },
 
     LoadContract: function(req, res) {
