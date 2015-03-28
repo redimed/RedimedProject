@@ -27,8 +27,6 @@ angular.module("app.loggedIn", [
 
     'app.loggedIn.mdtinsurer',
 
-    'app.loggedIn.mdtclaim',
-
     'app.loggedIn.mdtoutdoctor',
 
     'app.loggedIn.mdtoutreferral',
@@ -77,7 +75,9 @@ angular.module("app.loggedIn", [
     //END MODULE TIMESHEET
 
     //MODULE CONSULTATION
-    'app.loggedIn.consult'
+    'app.loggedIn.consult',
+
+    'app.loggedIn.claim'
 
 ])
 
