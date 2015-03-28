@@ -61,12 +61,12 @@
                         </td>
                                 <!-- END MORE -->
                                 <td ng-show="item.show===true" style="text-align:center">
-                                    <div ng-class="{'error-input':formItemCode.quantity.$error.required}">
+                                    <div ng-class="{'error-input':items[$index].quantity==='' || items[$index].quantity ===null || items[$index].quantity===undefined}">
                                     <input type="text" tabindex="5" class="input-sm form-control" ui-mask="99" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
                                 </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
-                                    <div ng-class="{'error-input':formItemCode.time_charge.$error.required}">
+                                    <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
                                     <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" custom-tr="items[$index].time_charge" custom-fr="formItemCode.time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID">
                                 </div>
                                 </td>

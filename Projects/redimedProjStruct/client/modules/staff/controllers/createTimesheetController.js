@@ -482,7 +482,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         modalInstance.result.then(function(obj) {
             if (obj.type == "ok") {
-                console.log(obj.value);
                 var list = [];
                 list = obj.value;
                 task.item = list;
