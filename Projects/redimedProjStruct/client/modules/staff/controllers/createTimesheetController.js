@@ -232,6 +232,14 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 });
 
             }
+            //SHOW WEEK WHEN CREATE
+            if ($scope.tasks !== undefined &&
+                $scope.tasks !== null &&
+                $scope.tasks.length !== 0 &&
+                $scope.tasks[0] !== undefined) {
+                $scope.dateWeekFrom = $filter('date')($scope.tasks[0].date, "dd-MM-yyyy");
+            }
+            //END SHOW
         });
     };
     // END FUNCTION CHECK TASK WEEK
@@ -254,7 +262,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         if (response['data'] !== undefined &&
                             response['data'][0] !== undefined &&
                             response['data'][0].date !== undefined) {
+                            // SHOW START DATE ON EDIT
                             $scope.dateStart = response['data'][0].date;
+                            //END
                         }
                         if (response['status'] == 'fail' || response['status'] == 'error') {
                             angular.forEach(response['data'], function(data) {
@@ -373,7 +383,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     $scope.delTask = function(index, order) {
         if (order != 1) {
             swal({
-                title: "Are you sure?",
+                title: "Are you sure delete this row?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

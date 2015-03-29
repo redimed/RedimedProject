@@ -62,7 +62,7 @@
                                 <!-- END MORE -->
                                 <td ng-show="item.show===true" style="text-align:center">
                                     <div ng-class="{'error-input':items[$index].quantity==='' || items[$index].quantity ===null || items[$index].quantity===undefined}">
-                                    <input type="text" tabindex="5" class="input-sm form-control" ui-mask="99" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID">
+                                    <input type="text" tabindex="5" class="input-sm form-control" name="quantity" ng-model="items[$index].quantity" custom-tr="items[$index].quantity" custom-fr="formItemCode.quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" only-digits>
                                 </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
