@@ -1333,10 +1333,22 @@ module.exports = {
 
     RejectTaskWeek: function(req, res) {
         var info = req.body.info;
-        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, comments ='" +
+        var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, approved_date ='" + date + "', comments ='" +
             info.comments + "' WHERE task_week_id = " + info.idTaskWeek;
         db.sequelize.query(query)
             .success(function(result) {
+                //TRACKER
+                var tracKer = {
+                    statusID: 4,
+                    USER_ID: info.USER_ID,
+                    idTaskWeek: info.idTaskWeek,
+                    date: date
+                };
+                //CALL FUNCTION TRACKER
+                TracKerTimeSheet(tracKer);
+                //END
+                //END TRACKER
                 res.json({
                     status: "success"
                 });
@@ -1453,6 +1465,17 @@ module.exports = {
                 var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
                 db.sequelize.query(query)
                     .success(function(result) {
+                        //TRACKER
+                        var tracKer = {
+                            statusID: 3,
+                            USER_ID: info.USER_ID,
+                            idTaskWeek: info.idTaskWeek,
+                            date: date
+                        };
+                        //CALL FUNCTION TRACKER
+                        TracKerTimeSheet(tracKer);
+                        //END
+                        //END TRACKER
                         res.json({
                             status: "success"
                         });
@@ -1521,5 +1544,27 @@ var getWeekNo = function() {
     var yearStart = new Date(d.getFullYear(), 0, 1);
     var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
     return weekNo;
+};
+//END
+
+// FUNCTION TRACKER
+var TracKerTimeSheet = function(info) {
+    var arrayAction = {
+        1: "Save",
+        2: "Submit",
+        3: "Approve",
+        4: "Reject",
+        5: "Resubmit"
+    };
+    var nameAction = arrayAction[info.statusID];
+    var queryTracKer = "INSERT INTO time_tracker (name_action, user_id, creation_date,task_week_id) VALUES('" +
+        nameAction + "'," + info.USER_ID + ",'" + info.date + "'," + info.idTaskWeek + ")";
+    db.sequelize.query(queryTracKer)
+        .success(function(result) {
+            console.log("*****SAVE TRACKKER SUCCESS *****");
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+        });
 };
 //END

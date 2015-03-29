@@ -199,17 +199,17 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
     //summit on date
-    $scope.submitClick = function(idWeek, STATUS) {
+    $scope.submitClick = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
         } else {
-            var status = 0;
-            if (STATUS == 'Awaiting for Submit') {
-                status = 2;
-            } else if (STATUS == 'Rejected') {
-                status = 5;
+            value.status = 0;
+            if (value.STATUS == 'Awaiting for Submit') {
+                value.status = 2;
+            } else if (value.STATUS == 'Rejected') {
+                value.status = 5;
             }
-            StaffService.SubmitOnView(idWeek, status).then(function(response) {
+            StaffService.SubmitOnView(value).then(function(response) {
                 if (response.status === 'error') {
                     toastr.error("Submit fail!", "Error");
                     $modalInstance.close();
@@ -238,7 +238,14 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     result[0] !== undefined) {
                     $scope.ID_WEEK = result[0].tasks_week_id;
                     $scope.STATUS = result[0].STATUS;
+                    $scope.USER_ID = $cookieStore.get('userInfo').id;
                     $scope.after_status_id = result[0].after_status_id;
+                    //TRACKER
+                    $scope.submitOnView = {};
+                    $scope.submitOnView.STATUS = $scope.STATUS;
+                    $scope.submitOnView.ID_WEEK = $scope.ID_WEEK;
+                    $scope.submitOnView.USER_ID = $scope.USER_ID;
+                    //END
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }
                 //end get
@@ -295,17 +302,17 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.cancelClick = function() {
         $modalInstance.close();
     };
-    $scope.submitClick = function(idWeek, STATUS) {
+    $scope.submitClick = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
         } else {
-            var status = 0;
-            if (STATUS == 'Awaiting for Submit') {
-                status = 2;
-            } else if (STATUS == 'Rejected') {
-                status = 5;
+            value.status = 0;
+            if (value.STATUS == 'Awaiting for Submit') {
+                value.status = 2;
+            } else if (value.STATUS == 'Rejected') {
+                value.status = 5;
             }
-            StaffService.SubmitOnView(idWeek, status).then(function(response) {
+            StaffService.SubmitOnView(value).then(function(response) {
                 if (response.status === 'error') {
                     toastr.error("Submit fail!", "Error");
                     $modalInstance.close();
@@ -340,6 +347,13 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 if (result !== undefined && result[0] !== undefined) {
                     $scope.STATUS = result[0].status;
                     $scope.ID_WEEK = result[0].tasks_week_id;
+                    $scope.USER_ID = $cookieStore.get('userInfo').id;
+                    //TRACKER
+                    $scope.submitOnView = {};
+                    $scope.submitOnView.STATUS = $scope.STATUS;
+                    $scope.submitOnView.ID_WEEK = $scope.ID_WEEK;
+                    $scope.submitOnView.USER_ID = $scope.USER_ID;
+                    //END
                     $scope.afterStatusID = result[0].after_status_id;
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }

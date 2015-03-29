@@ -67,7 +67,22 @@ module.exports = {
                                 console.log(err);
                             });
 
-                        chainer.runSerially().success(function() {
+                        chainer.runSerially().success(function(result) {
+                            if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
+                                //TRACKER
+                                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                var idTaskWeek = result[0].dataValues.tasks_week_id;
+                                var tracKer = {
+                                    statusID: info.statusID,
+                                    USER_ID: info.userID,
+                                    idTaskWeek: idTaskWeek,
+                                    date: date
+                                };
+                                //CALL FUNCTION TRACKER
+                                TracKerTimeSheet(tracKer);
+                                //END
+                                //END TRACKER
+                            }
                             res.json({
                                 status: 'success'
                             });
@@ -234,7 +249,20 @@ module.exports = {
                 });
             })
 
-        chainer.runSerially().success(function() {
+        chainer.runSerially().success(function(result) {
+            //TRACKER
+            var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+            var idTaskWeek = info.idWeek;
+            var tracKer = {
+                statusID: info.statusID,
+                USER_ID: info.userID,
+                idTaskWeek: idTaskWeek,
+                date: date
+            };
+            //CALL FUNCTION TRACKER
+            TracKerTimeSheet(tracKer);
+            //END
+            //END TRACKER
             res.json({
                 status: 'success'
             });
@@ -750,11 +778,22 @@ module.exports = {
             });
     },
     SubmitOnView: function(req, res) {
-        var idWeek = req.body.idWeek;
-        var status = req.body.status;
-        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + status + " WHERE time_tasks_week.task_week_id = " + idWeek;
+        var info = req.body.info;
+        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + info.status + " WHERE time_tasks_week.task_week_id = " + info.ID_WEEK;
         db.sequelize.query(query)
             .success(function(result) {
+                //TRACKER
+                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                var tracKer = {
+                    statusID: info.status,
+                    USER_ID: info.USER_ID,
+                    idTaskWeek: info.ID_WEEK,
+                    date: date
+                };
+                //CALL FUNCTION TRACKER
+                TracKerTimeSheet(tracKer);
+                //END
+                //END TRACKER
                 res.json({
                     status: 'success'
                 });
@@ -791,3 +830,25 @@ module.exports = {
             });
     }
 };
+
+// FUNCTION TRACKER
+var TracKerTimeSheet = function(info) {
+    var arrayAction = {
+        1: "Save",
+        2: "Submit",
+        3: "Approve",
+        4: "Reject",
+        5: "Resubmit"
+    };
+    var nameAction = arrayAction[info.statusID];
+    var queryTracKer = "INSERT INTO time_tracker (name_action, user_id, creation_date,task_week_id) VALUES('" +
+        nameAction + "'," + info.USER_ID + ",'" + info.date + "'," + info.idTaskWeek + ")";
+    db.sequelize.query(queryTracKer)
+        .success(function(result) {
+            console.log("*****SAVE TRACKKER SUCCESS *****");
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+        });
+};
+//END

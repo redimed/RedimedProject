@@ -17,11 +17,10 @@ angular.module("app.loggedIn.staff.service", [])
             search: search
         });
     };
-    service.SubmitOnView = function(idweek, status) {
+    service.SubmitOnView = function(info) {
         var SubmitOnView = api.all('staff/SubmitOnView');
         return SubmitOnView.post({
-            idWeek: idweek,
-            status: status
+            info: info
         });
     };
 

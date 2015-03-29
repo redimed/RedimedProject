@@ -93,11 +93,11 @@
                 Edit
             </a>
         <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && afterStatusID ===4)' ng-click="submitClick(ID_WEEK, STATUS)" class="btn btn-xs green pull-right">
+        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && afterStatusID ===4)' ng-click="submitClick(submitOnView)" class="btn btn-xs green pull-right">
                Submit
             </a>
         <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        (STATUS==="Awaiting for Submit" && afterStatusID!==4)' ng-click="submitClick(ID_WEEK, STATUS)" class="btn purple pull-right btn-xs">
+        (STATUS==="Awaiting for Submit" && afterStatusID!==4)' ng-click="submitClick(submitOnView)" class="btn purple pull-right btn-xs">
                Re-submit
             </a>
         <!-- END BUTTON -->
