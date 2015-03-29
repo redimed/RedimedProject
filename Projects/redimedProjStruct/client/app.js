@@ -43,7 +43,9 @@ angular.module("app", [
     'app.rlobRegister.controller',
     'opentok-whiteboard',
     'ui.mask',
-    'app.sponsor1.controller'
+    'app.sponsor1.controller',
+    'app.sponsor1.emergency.controller',
+    'app.sponsor1.nonemergency.controller'
 
     // 'angular-underscore'
 ])
