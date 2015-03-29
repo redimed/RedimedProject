@@ -86,7 +86,7 @@
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;
                 <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaiting for Submit',
-                            're-submitted':STATUS==='Re-submitted'}">{{(STATUS==="Submitted")?"Awaiting for Approve":STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            're-submitted':STATUS==='Re-submitted'}">{{STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>

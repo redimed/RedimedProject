@@ -95,19 +95,33 @@
             <!-- END REJECT -->
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
-                <div class="col-md-4" style="margin-top:5px; font-size:13px;">
+                <div class="col-md-12" style="margin-top:5px; font-size:13px;">
                     <span>Total Over/(Under) Time Charge: <span class="text-info bold">{{info.time_rest | customHours}}
                 </div>
-                <div class="col-md-9">
-                    </span> This Over/(Under) Time will be charged to (*):</span>
-                    <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" custom-tr="info.time_in_lieu" custom-fr="viewTask.time_in_lieu" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc;">
-                    <label class="control-label">TIME IN LIEU</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" custom-tr="info.over_time" custom-fr="viewTask.over_time" ng-required="true" style="text-align:center; width:70px; margin-top:5px;margin-bottom:5px; font-size:13px;border:1px solid #ccc; font-style='normal'" ng-change="changeOverTime()">
-                    <label class="control-label">OVER TIME</label>
+                    <span class="col-md-4" style="width:auto;"> This Over/(Under) Time will be charged to (*):</span>
+                    <div class="col-md-2" style="width:auto;">
+                        <!-- DIV ERROR -->
+                        <div ng-class="{'error-input': viewTask.time_in_lieu.$error.required}">
+                            <input type="text" ui-mask="99:99" name="time_in_lieu" ng-model="info.time_in_lieu" ng-change="changeTimeInLieu()" ng-required="true" time-charge class="input-sm form-control" style="text-align:center;width:70px;height:20px; font-size:13px;border:1px solid #ccc;">
+                        </div>
+                        <!-- END DIV -->
+                    </div>
+                    <div class="col-md-2" style="width:auto;margin-left:-15px;">
+                        <span>TIME IN LIEU</span>
+                    </div>
+                    <div class="col-md-2" style="width:auto;margin-left:20px;">
+                        <!-- DIV ERR -->
+                        <div ng-class="{'error-input': viewTask.over_time.$error.required}">
+                            <input type="text" ui-mask="99:99" name="over_time" ng-model="info.over_time" ng-required="true" style="text-align:center; width:70px;height:20px;font-size:13px;border:1px solid #ccc;" ng-change="changeOverTime()" time-charge class="input-sm form-control">
+                        </div>
+                        <!-- END DIV -->
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">OVER TIME</label>
+                    </div>
                 </div>
-            </div>
-            <!-- END APPROVE -->
-            <!-- END TABLE TASK OF WEEK -->
+                <!-- END APPROVE -->
+                <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
         <a style="width:70px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
@@ -116,7 +130,7 @@
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
-</div>
-<script type="text/ng-template " id="ViewDetail ">
-    <view-timesheet ng-model="idView" on-cancel="clickCancel(return) "></view-timesheet>
-</script>
+    </div>
+    <script type="text/ng-template " id="ViewDetail ">
+        <view-timesheet ng-model="idView" on-cancel="clickCancel(return) "></view-timesheet>
+    </script>

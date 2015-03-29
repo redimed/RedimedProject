@@ -117,7 +117,7 @@
                             <input ng-disabled="task.activity_id != 1 || task.activity_id === 18" style="margin-left: 28px; margin-top:5px;" type="checkbox" class="checkbox center" ng-model="task.isInputItem" ng-true-value="1" ng-false-value="0" ng-checked="task.isInputItem==1" />
                         </td>
                         <td style="width: 2%" style="text-align: center">
-                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="task.activity_id === 18||task.isInputItem==1|| task.activity_id===null ||task.activity_id===undefined || task.activity_id===''" class="form-control input-sm">
+                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="task.activity_id === 18||task.isInputItem==1|| task.activity_id===null ||task.activity_id===undefined || task.activity_id===''" class="form-control input-sm" time-charge>
                         </td>
                         <td style="width: 20%">
                             <input type="text" ng-disabled="task.isInputItem==1 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
@@ -149,7 +149,8 @@
                 <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheet.view" style="width:70px;">Cancel</a>
                 <a class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2)" style="width:70px;">Submit</a>
                 <a class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5)" style="width:70px;">Re-submit</a>
-                <a class="btn btn-xs blue pull-right" ng-click="addAllTask(1)" style="width:70px;">Save</a>
+                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4)" style="width:70px;">Save</a>
+                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="addAllTask(1)" style="width:70px;">Save</a>
                 <!-- END ADDNEW-->
                 <!-- END -->
             </footer>

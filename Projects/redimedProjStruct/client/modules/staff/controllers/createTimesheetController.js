@@ -73,7 +73,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     minutes = "0" + minutes;
                 }
                 //end convert
-                toastr.info("You have " + hours + " hours " + minutes + " minutes for Time in Lieu!", "Notification");
+
+                //NOTIFICATION TIME IN LIEU
+                var notification = "You have " + hours + " hours " + minutes + " minutes for Time in Lieu!";
+                swal(notification);
+                //END NOTIFICATION
             } else {
                 $state.go("loggedIn.TimeSheetHome", null, {
                     "reload": true
