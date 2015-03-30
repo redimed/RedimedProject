@@ -12,8 +12,8 @@ var sysUserNotificationsController=require('./controllers/sysUserNotificationsCo
 var structureController=require('./controllers/structureController');
 var rlobBookingPaperlessController=require('./controllers/rlobBookingPaperlessController');
 var rlRegisterController=require('./controllers/rlRegisterController');
+var rlobController=require('./controllers/rlobController');
 var rlobBookingMobileController=require('./controllers/rlobBookingMobileController');
-
 //-------------------------------------------------------------
 
 //redimedsites
@@ -144,6 +144,11 @@ app.post('/api/rlob/register/update-redilegal-user-status', rlRegisterController
 app.post('/api/rlob/register/update-user-info', rlRegisterController.updateUserInfo);
 app.get('/api/rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer', rlBookingsController.getUpcommingBookingHaveNotDocumentToNotificationCustomer);
 app.get('/api/rlob/register/get-states', rlRegisterController.getStates);
+
+app.post('/api/rlob/core/get-list-appointment-after-time', rlobController.getListAppointmentAfterTime);
+// app.post('/api/rlob/core/handle-periodtime-appointment-calendar', rlobController.handlePeriodTimeAppointmentCalendar);
+app.post('/api/rlob/core/save-booking-info', rlobController.saveBookingInfo);
+
 //phanquocchien.c1109g@gmail.com
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);
 app.post('/api/rlob/sponsor/insert-nonemergency', rlobBookingMobileController.insertNonEmergency);

@@ -1,0 +1,89 @@
+<div class="portlet light" >
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-users"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">BOOKING BEHALF</span>
+        </div>
+    </div>
+
+
+	<div>
+
+        <div class="form-group">
+            <pagination total-items="searchInfo.totalItems"
+                    ng-model="searchInfo.currentPage"
+                    max-size="searchInfo.maxSize"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    rotate="false"
+                    num-pages="searchInfo.numPages"
+                    items-per-page="searchInfo.itemsPerPage"
+                    ng-change="pagingHandle()">
+            </pagination>
+        </div>
+        
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">Page size:</label>
+                <select ng-model="searchInfo.itemsPerPage" class="form-control input-sm"
+                    ng-options="item.value as item.display for item in sizePageList"
+                    ng-change="searchHandle()">
+                </select>
+                
+            </div>
+            
+        </form>
+        
+    </div>
+	
+	<div class="table-responsive" style="height:500px;overflow:auto;">
+
+		<table class="table table-bordered table-hover " style="font-size:10pt;">
+			<tr>
+				<th>Email</th>
+				<th>Name</th>
+				<th>Company</th>
+				<th style="text-align:center">Enable</th>
+				<th style="text-align:center">
+					
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<input class="form-control input-sm" type="text" ng-model="searchInfo.emailKey" ng-change="searchHandle()">
+				</td>
+				<td>
+					<input class="form-control input-sm" type="text" ng-model="searchInfo.nameKey" ng-change="searchHandle()">
+				</td>
+				<td>
+						<input class="form-control input-sm" type="text" ng-model="searchInfo.companyKey" ng-change="searchHandle()">
+				</td>
+				<td style="text-align:center"></td>
+				<td style="text-align:center">
+					<button type="button" class="btn btn-default" ng-click="reset();">Reset</button>
+				</td>
+			</tr>
+			<tr ng-repeat='item in usersList' ng-click="setSelectedItem(item);" ng-class="registerStatus[item.MEDICO_LEGAL_REGISTER_STATUS].style">
+				<td>
+					{{item.Contact_email}}
+				</td>
+				
+				<td>
+					{{item.Booking_Person}}
+				</td>
+				
+				<td>
+					{{item.Company_name}}
+				</td>
+				<td style="text-align:center">
+					<input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
+		                   ng-checked="item.isEnable==1"
+		                   ng-model="item.isEnable"/>
+				</td>
+				<td style="text-align:center;width:150px;">
+					<a role="menuitem" ng-click="makeBooking(item);">Make booking</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

@@ -19,6 +19,7 @@ angular.module('app.loggedIn.rlob.services',[])
     var bookingInfo={};
     var bookingList=[];
     var bookingInfoReuse=null;
+    var bookingBehalfInfo=null;
     this.getSelectedInfo=function(){
         return selectedInfo;
     }
@@ -41,6 +42,14 @@ angular.module('app.loggedIn.rlob.services',[])
     this.getBookingInfoResuse=function()
     {
         return bookingInfoReuse;
+    }
+    this.setBookingBehalfInfo=function(b)
+    {
+        bookingBehalfInfo=b;
+    }
+    this.getBookingBehalfInfo=function()
+    {
+        return bookingBehalfInfo;
     }
 
 })
@@ -509,6 +518,30 @@ angular.module('app.loggedIn.rlob.services',[])
         {
             var result=api.one('rlob/register/get-states');
             return result.get({nation:nation});
+        }
+
+        rlobService.core={
+            /**
+             * selectedDate: javascript Date Object
+             * tannv.dts@gmail.com
+             */
+            getListAppointmentAfterTime:function(doctorId,siteId,selectedAppFromTime)
+            {
+                var result=api.all('rlob/core/get-list-appointment-after-time');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime});
+            },
+
+            handlePeriodTimeAppointmentCalendar:function(doctorId,siteId,selectedAppFromTime,rlTypeId)
+            {
+                var result=api.all('rlob/core/handle-periodtime-appointment-calendar');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime,rlTypeId:rlTypeId});
+            },
+
+            saveBookingInfo:function(bookingInfo)
+            {
+                var result=api.all('rlob/core/save-booking-info');
+                return result.post({bookingInfo:bookingInfo});
+            }
         }
         
         return rlobService;
