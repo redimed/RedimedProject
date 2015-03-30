@@ -177,6 +177,39 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $scope.tasks = [];
     }
 
+    //FUNCTION GET WEEK NUMBER
+    $scope.getWeekNumber = function(d) {
+        d = new Date(+d);
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        var yearStart = new Date(d.getFullYear(), 0, 1);
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        return weekNo;
+    };
+    //FUNCTION GET WEEK NUMBER
+
+    // GET TIME IN LIEU TO CHECK SUBMIT
+    var toDate = new Date();
+    var weekNo = $scope.getWeekNumber(toDate);
+    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        if (response.status === "error") {
+            toastr.error("Check Time in Lieu fail!", "Fail");
+        } else if (response.status === "success") {
+            var timeInLieu = 0;
+            angular.forEach(response.result, function(data, index) {
+                timeInLieu += StaffService.fortMatFullTime(data.time_in_lieu);
+            });
+            $scope.time_in_lieuHas = timeInLieu;
+
+        } else {
+            $state.go("loggedIn.TimeSheetHome", null, {
+                "reload": true
+            });
+            toastr.error("Server not response!", "Error");
+        }
+    });
+    //END
+
     $scope.getDay = function(day) {
         var date = new Date(day);
         return date.getDay() === 0 ? 7 : date.getDay();
@@ -202,6 +235,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.submitClick = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
+        } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
+            toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
             value.status = 0;
             if (value.STATUS == 'Awaiting for Submit') {
@@ -240,6 +275,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $scope.STATUS = result[0].STATUS;
                     $scope.USER_ID = $cookieStore.get('userInfo').id;
                     $scope.after_status_id = result[0].after_status_id;
+                    $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
                     //TRACKER
                     $scope.submitOnView = {};
                     $scope.submitOnView.STATUS = $scope.STATUS;
@@ -294,6 +330,37 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     if (!$scope.info) {
         $scope.info = {};
     }
+    //FUNCTION GET WEEK NUMBER
+    $scope.getWeekNumber = function(d) {
+        d = new Date(+d);
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        var yearStart = new Date(d.getFullYear(), 0, 1);
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        return weekNo;
+    };
+    //FUNCTION GET WEEK NUMBER
+    // GET TIME IN LIEU TO CHECK SUBMIT
+    var toDate = new Date();
+    var weekNo = $scope.getWeekNumber(toDate);
+    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        if (response.status === "error") {
+            toastr.error("Check Time in Lieu fail!", "Fail");
+        } else if (response.status === "success") {
+            var timeInLieu = 0;
+            angular.forEach(response.result, function(data, index) {
+                timeInLieu += StaffService.fortMatFullTime(data.time_in_lieu);
+            });
+            $scope.time_in_lieuHas = timeInLieu;
+
+        } else {
+            $state.go("loggedIn.TimeSheetHome", null, {
+                "reload": true
+            });
+            toastr.error("Server not response!", "Error");
+        }
+    });
+    //END
 
     $scope.getFortMatTimeCharge = function(val) {
         return StaffService.getFortMatTimeCharge(val);
@@ -305,6 +372,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.submitClick = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
+        } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
+            toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
             value.status = 0;
             if (value.STATUS == 'Awaiting for Submit') {
@@ -347,6 +416,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 if (result !== undefined && result[0] !== undefined) {
                     $scope.STATUS = result[0].status;
                     $scope.ID_WEEK = result[0].tasks_week_id;
+                    $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
                     $scope.USER_ID = $cookieStore.get('userInfo').id;
                     //TRACKER
                     $scope.submitOnView = {};

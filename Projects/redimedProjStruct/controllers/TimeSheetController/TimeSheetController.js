@@ -1502,38 +1502,73 @@ module.exports = {
     },
     //ROLE
     LoadRole: function(req, res) {
-            var USER_ID = req.body.USER_ID;
-            var query = "SELECT NODE_CODE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
-                "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
-                " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
-                "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
-                " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
-            db.sequelize.query(query)
-                .success(function(result) {
-                    if (result === undefined || result === null || result.length === 0) {
-                        res.json({
-                            status: "fail",
-                            position: []
-                        });
-                        return;
-                    } else {
-                        res.json({
-                            status: "success",
-                            position: result
-                        });
-                        return;
-                    }
-                })
-                .error(function(err) {
-                    console.log("*****ERROR:" + err + "*****");
+        var USER_ID = req.body.USER_ID;
+        var query = "SELECT NODE_CODE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
+            "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
+            " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
+            "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
+            " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
+        db.sequelize.query(query)
+            .success(function(result) {
+                if (result === undefined || result === null || result.length === 0) {
                     res.json({
-                        status: "error",
-                        position: [],
+                        status: "fail",
+                        position: []
                     });
                     return;
+                } else {
+                    res.json({
+                        status: "success",
+                        position: result
+                    });
+                    return;
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    position: [],
                 });
+                return;
+            });
+    },
+    StepEmployee: function(req, res) {
+        var info = req.body.info;
+        var listUserID = "";
+        for (var i = 0; i < info.length; i++) {
+            listUserID += info[i] + ",";
         }
+        listUserID = listUserID.substring(0, listUserID.length - 1);
+        listUserID = "(" + listUserID + ")";
+        var queryEmp = "SELECT users.id, users.user_name, users.employee_id, hr_employee.Employee_Code, " +
+            "hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct FROM users " +
+            "LEFT JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id WHERE users.id IN " + listUserID;
+        db.sequelize.query(queryEmp)
+            .success(function(result) {
+                if (result === undefined || result === null || result.length === 0) {
+                    console.log("NOT FOUND USER IN LIST");
+                    res.json({
+                        status: "error"
+                    });
+                    return;
+                } else {
+                    res.json({
+                        status: "success",
+                        result: result
+                    });
+                    return;
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
         //END ROLE
+    }
 };
 
 //FUNCTION GET WEEKNO
