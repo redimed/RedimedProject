@@ -121,7 +121,7 @@ tannv.dts@gmail.com
 }
 
 .iso_node_deleted li{
-    display:none;
+    display:none!important;
 }
 /*-------------------------------*/
 

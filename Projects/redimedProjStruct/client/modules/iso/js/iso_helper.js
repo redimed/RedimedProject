@@ -84,7 +84,8 @@ var isoConst={
     	grantDocumentPermission:'grantDocumentPermission',
     	downloadNewestVersion:'downloadNewestVersion',
         releaseDocumentOneClick:'releaseDocumentOneClick',
-        makeCurrentVersion:'makeCurrentVersion'
+        makeCurrentVersion:'makeCurrentVersion',
+        renameNode:'renameNode'
     },
 
 
@@ -117,7 +118,8 @@ var isoConst={
             getFullCheckinDoccument:true,
             viewAllRequest:true,
             releaseDocumentOneClick:true,
-            makeCurrentVersion:true
+            makeCurrentVersion:true,
+            renameNode:true
     	},
     	'1':{
     		createFolder:false,
