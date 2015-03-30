@@ -52,7 +52,7 @@
                         </th>
                         <th>
                             <div class="th" style="width:235px;">
-                             Activity
+                                Activity
                             </div>
                         </th>
                         <th>
@@ -62,12 +62,12 @@
                         </th>
                         <th>
                             <div class="th">
-                                 Department
+                                Department
                             </div>
                         </th>
                         <th>
-                            <div class="th" style="width:70px;">
-                                Input Item
+                            <div class="th">
+                                Task / Item
                             </div>
                         </th>
                         <th>
@@ -77,12 +77,7 @@
                         </th>
                         <th>
                             <div class="th">
-                               Task/Comment
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Item Codes
+                                Comments
                             </div>
                         </th>
                     </tr>
@@ -113,19 +108,15 @@
                                 <option value="">-Select Department Code--</option>
                             </select>
                         </td>
-                        <td>
-                            <input ng-disabled="task.activity_id != 1 || task.activity_id === 18" style="margin-left: 28px; margin-top:5px;" type="checkbox" class="checkbox center" ng-model="task.isInputItem" ng-true-value="1" ng-false-value="0" ng-checked="task.isInputItem==1" />
+                        <td style="text-align:center;">
+                            <a ng-disabled="task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined ||task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined" ng-click="chooseItem(task)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;"><i class="fa fa-search"></i>&nbsp; Choose</a>
                         </td>
                         <td style="width: 2%" style="text-align: center">
-                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="task.activity_id === 18||task.isInputItem==1|| task.activity_id===null ||task.activity_id===undefined || task.activity_id===''" class="form-control input-sm" time-charge>
+                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="true" class="form-control input-sm" time-charge>
                         </td>
                         <td style="width: 20%">
                             <input type="text" ng-disabled="task.isInputItem==1 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
                             task.activity_id === 17 || task.activity_id === 19" class="form-control input-sm" ng-model="task.task" />
-                        </td>
-                        <td style="text-align:center;">
-                            <span ng-disabled="task.isInputItem==0 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
-                            task.activity_id === 17 || task.activity_id === 19 || task.isInputItem!=1" ng-click="chooseItem(task)" class="btn btn-xs blue-dark" style="margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose</span>
                         </td>
                     </tr>
                     <tr>
