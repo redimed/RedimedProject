@@ -110,6 +110,7 @@ angular.module("app.sponsor1.emergency.controller",[])
                     LATITUDE:$scope.Lat,
                     INJURY:$scope.injury
                 }
+                // $scope.info.LONGITUDE != -77.028333
                 // console.log($scope.info);
                 rlobService.insertEmergency($scope.info).then(function(data){
                     if (data.status == 'success') {

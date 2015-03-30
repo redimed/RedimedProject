@@ -15,7 +15,7 @@ module.exports =
         var LASTNAME=kiss.checkData(req.body.info.LASTNAME)?req.body.info.LASTNAME:null;
         var GENDER=kiss.checkData(req.body.info.GENDER)?req.body.info.GENDER:null;
         var DOB=kiss.checkData(req.body.info.DOB)?req.body.info.DOB:null;
-        var ADD=kiss.checkData(req.body.info.ADD)?req.body.info.ADD:null;
+        // var ADD=kiss.checkData(req.body.info.ADD)?req.body.info.ADD:null;
         var CONTACT_NO=kiss.checkData(req.body.info.CONTACT_NO)?req.body.info.CONTACT_NO:null;
         var MEDICARE_NO=kiss.checkData(req.body.info.MEDICARE_NO)?req.body.info.MEDICARE_NO:null;
         var MEDICARE_REF=kiss.checkData(req.body.info.MEDICARE_REF)?req.body.info.MEDICARE_REF:null;
@@ -37,15 +37,15 @@ module.exports =
             LASTNAME:LASTNAME,
             GENDER:GENDER,
             DOB:DOB,
-            ADD:ADD,
+            // ADD:ADD,
             CONTACT_NO:CONTACT_NO,
             MEDICARE_NO:MEDICARE_NO,
             MEDICARE_REF:MEDICARE_REF,
             TYPE_NAME:TYPE_NAME,
             INJURY:INJURY,
             CAL_ID:CAL_ID,
-            LONGITUDE:LONGITUDE,
-            LATITUDE:LATITUDE,
+            // LONGITUDE:LONGITUDE,
+            // LATITUDE:LATITUDE,
             CREATION_DATE:currentDate
         }
         var sql="INSERT INTO `waf_sponsor1` SET ?";
@@ -85,6 +85,12 @@ module.exports =
             res.json({status:'fail'});
             return;
         }
+        if (LONGITUDE == -77.028333) {
+            LONGITUDE = null
+        };
+        if (LATITUDE == -12.043333) {
+            LATITUDE = null
+        };
         var insertRow={
             FIRSTNAME:FIRSTNAME,
             LASTNAME:LASTNAME,

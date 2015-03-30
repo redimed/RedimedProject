@@ -215,7 +215,7 @@ input:focus ~ .highlight {
 						<input ng-model="fristname" id="fristname" name="fristname" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">First Name *</label>
+						<label class="confix-label">First Name <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.fristname.$error.required">First name is required!</span>
 					<!-- {{FormEmergency.fristname.$error.required}} -->
@@ -229,7 +229,7 @@ input:focus ~ .highlight {
 						<input ng-model="lastname" id="lastname" name="lastname" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Last Name *</label>
+						<label class="confix-label">Last Name <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.lastname.$error.required">Last name is required!</span>
                 </div>
@@ -237,7 +237,7 @@ input:focus ~ .highlight {
 		</div>
         <div class="form-group">
 	        <div class="row">
-	        	<label style="color: #999;padding-left: 20px;" class="col-lg-12">Gender * : <input ng-model="gender" style="margin-left: 15px;position: relative;top: 2px;left: -5px;" type="radio" value="Made">Made<input style="margin-left: 15px;position: relative;top: 2px;left: -5px;" type="radio" value="Femade" ng-model="gender">Femade</label>
+	        	<label style="color: #999;padding-left: 20px;" class="col-lg-12">Gender <span style="color: red;">*</span> : <input ng-model="gender" style="margin-left: 15px;position: relative;top: 2px;left: -5px;" type="radio" value="Male">Male<input style="margin-left: 15px;position: relative;top: 2px;left: -5px;" type="radio" value="Female" ng-model="gender">Female</label>
 	        </div>
 		</div>
 		<div class="form-group" show-errors='{showSuccess: true}'>
@@ -247,7 +247,7 @@ input:focus ~ .highlight {
 						<input ng-blur="updateMap();" ng-model="address" id="address" name="address" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Address *</label>
+						<label class="confix-label">Address <span style="color: red;">*</span></label>
 						<label class="pull-right" style="position: relative;top: -30px;" ng-click="geoLocation()"><i style="font-size: 20px;" class="fa fa-map-marker"></i></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.address.$error.required">Address is required!</span>
@@ -263,7 +263,7 @@ input:focus ~ .highlight {
 						<input ng-model="dob" id="dob" name="dob" class="confix-input" type="text" required ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,defaultDate:'01/01/1990'}">
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">DOB *</label>
+						<label class="confix-label">DOB <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.dob.$error.required">DOB is required!</span>
                 </div>
@@ -276,7 +276,7 @@ input:focus ~ .highlight {
 						<input ng-model="contactus" id="contactus" name="contactus" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Contact No *</label>
+						<label class="confix-label">Contact No <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.contactus.$error.required">Contact no is required!</span>
                 </div>
@@ -289,7 +289,7 @@ input:focus ~ .highlight {
 						<input ng-model="medicareno" id="medicareno" name="mediacareno" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Medicare No *</label>
+						<label class="confix-label">Medicare No <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.medicareno.$error.required">Medicare no is required!</span>
                 </div>
@@ -302,7 +302,7 @@ input:focus ~ .highlight {
 						<input ng-model="medicareref" id="medicareref" name="medicareref" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Medicare Ref *</label>
+						<label class="confix-label">Medicare Ref <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.medicareref.$error.required">Medicare no is required!</span>
                 </div>
@@ -315,7 +315,7 @@ input:focus ~ .highlight {
 						<input ng-model="injury" id="injury" name="injury" class="confix-input" type="text" required>
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Injury *</label>
+						<label class="confix-label">Injury <span style="color: red;">*</span></label>
 					</div>
 					<span class="help-block pull-right" if="FormEmergency.injury.$error.required">Injury is required!</span>
             </div>
