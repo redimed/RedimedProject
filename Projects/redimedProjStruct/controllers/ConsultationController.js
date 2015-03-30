@@ -2,6 +2,8 @@ var db = require('../models');
 var fs = require('fs');
 var util = require("util");
 var mime = require("mime");
+var mkdirp = require('mkdirp');
+var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
 
 module.exports = {
@@ -17,6 +19,65 @@ module.exports = {
 				console.log(err);
 			})
 	},
+
+    saveImage: function(req,res){
+        var patient_id = req.body.patient_id;
+        var imgData = req.body.imgData;
+
+        var data = imgData.replace(/^data:image\/\w+;base64,/, "");
+        var buf = new Buffer(data, 'base64');
+
+        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+        var targetFolder=prefix+'uploadFile\\'+'Drawings\\'+'PatientID_'+patient_id;
+        var targetFolderForSave='.\\uploadFile\\'+'Drawings\\'+'PatientID_'+patient_id;
+
+        mkdirp(targetFolder, function (err) {
+            if(err) return err;
+
+            var date = moment();
+            fs.writeFile(targetFolder+"\\image_"+date+".png", buf, function(err){
+                if(err) res.json({'status':'error'});
+
+                db.ClnPatientDrawing.max('id')
+                    .success(function(max){
+                        db.ClnPatientDrawing.create({
+                            id: max + 1,
+                            patient_id: patient_id,
+                            url: targetFolderForSave+"\\image_"+date+".png"
+                        })
+                        .success(function(data){
+                            res.json({status:'success', id: data.values.id })
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            })
+        })
+    },
+
+    getImage: function(req,res){
+        var id = req.params.id;
+
+        db.ClnPatientDrawing.find({where:{id:id}},{raw:true})
+            .success(function(data){
+                if(data)
+                {
+                    if(data.url!=null || data.url!='')
+                        res.json({'status':'success', 'data':base64Image(data.url)});
+                    else
+                        res.json({'status':'error'});
+                }
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
 
 	getDrawTemplate: function(req,res){
 		db.DrawingTemplate.findAll({raw:true})
@@ -103,6 +164,19 @@ module.exports = {
                         )
                     }
                 }
+
+                if(info.images.length > 0)
+                {
+                    for(var i=0; i<info.images.length;i++)
+                    {
+                        chainer.add(
+                            db.ClnPatientDrawing.update({
+                                consult_id: consultId
+                            },{id: info.images[i]})
+                        )
+                    }
+                }
+
                 chainer.runSerially().success(function(){
                     res.json({status:'success'});
                 }).error(function(err){
@@ -115,7 +189,48 @@ module.exports = {
                 console.log(err);
             })
       })
+  },
+
+  getPatientCompany: function(req,res){
+    var patient_id = req.body.patient_id;
+
+    var info = {
+        Company_name: null,
+        Industry: null,
+        Addr: null,
+        users: []
+    };
+
+    db.sequelize.query("SELECT c.`Company_name`, c.`Industry`, c.`Addr` FROM companies c WHERE c.`id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
+                        null,{raw:true},[patient_id])
+        .success(function(data){
+            if(data.length > 0)
+            {
+                info.Company_name = data[0].Company_name;
+                info.Industry = data[0].Industry;
+                info.Addr = data[0].Addr;
+
+                db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
+                                    "FROM  users u "+
+                                    "WHERE u.`socket` IS NOT NULL AND u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
+                                    null,{raw:true},[patient_id])
+                    .success(function(rs){
+                        info.users = rs;
+                        res.json({status:'success', info: info});
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+            }
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
   }
+
+
 }
 
 function base64Image(src) {

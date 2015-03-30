@@ -37,7 +37,6 @@ angular.module("app.loggedIn.company.services", [])
         return instanceApi.post({id: id});
     }
 
-
     companyService.get = function(id) {
         return restApi.one('' + id).get();
     }

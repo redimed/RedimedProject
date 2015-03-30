@@ -1,29 +1,79 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($filter,$cookieStore,$scope,$state,$modal,toastr,socket,$stateParams,ConsultationService,PatientService){
-		var patient_id = $stateParams.patient_id;
-		var cal_id = $stateParams.cal_id;
+	.controller("PatientConsultController",function($filter,$cookieStore,$scope,$state,$modal,toastr,socket,$stateParams,ConsultationService,PatientService,UserService){
+		$scope.patient_id = $stateParams.patient_id;
+		$scope.cal_id = $stateParams.cal_id;
+		$scope.userInfo = $cookieStore.get('userInfo');
 
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		$scope.patientInfo = {};
+		$scope.companyInfo = {};
 		$scope.problemArr = [];
 
 		$scope.isMeasure = false;
 		$scope.isScript = false;
 
 		$scope.consultInfo = {
-			patient_id: patient_id,
-			cal_id: cal_id,
+			patient_id: $scope.patient_id,
+			cal_id: $scope.cal_id,
 			problem_id: null,
 			history: null,
 			examination: null,
 			treatment: null,
 			diagnosis: null,
 			measurements: [],
-			scripts: []
+			scripts: [],
+			images: []
 		}
 
-		PatientService.get(patient_id).then(function(rs){
+		$scope.makeCall = function(user){
+	        UserService.getUserInfo(user.id).then(function(data){
+	            if(!data.img)
+	                data.img = "theme/assets/icon.png"
+
+	            var modalInstance = $modal.open({
+	                templateUrl: 'common/views/call.html',
+	                controller: 'callController',
+	                size: 'lg',
+	                resolve:{
+	                    callUserInfo: function(){
+	                        return data;
+	                    },
+	                    callUser: function(){
+	                        return user.id;
+	                    },
+	                    isCaller: function(){
+	                        return true;
+	                    },
+	                    opentokInfo: function(){
+	                        return null;
+	                    }
+	                },
+	                backdrop: 'static',
+	                keyboard: false
+	            })
+
+	        })
+
+	    }
+
+	    $scope.refreshList = function(){
+	    	refresh($scope.patient_id);
+	    }
+
+	    refresh($scope.patient_id);
+
+	    function refresh(patientId){
+	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
+				if(rs.status.toLowerCase() == 'success' && rs.info)
+				{
+					$scope.companyInfo = rs.info;
+					console.log($scope.companyInfo.users);
+				}
+			})
+	    }
+
+		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				var fName = [];
@@ -37,7 +87,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			}
 		})
 
-		ConsultationService.getPatientProblem(patient_id).then(function(rs){
+		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				console.log(rs.data);
@@ -116,7 +166,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/scriptModal.html',
-					size: 'lg',
+					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
 						script: function(){
@@ -136,7 +186,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/scriptModal.html',
-					size: 'lg',
+					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
 						script: function(){
@@ -182,8 +232,8 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$scope.submitClick = function(){
 			for(var i=0 ; i< $scope.consultInfo.measurements.length ; i++)
 			{
-				$scope.consultInfo.measurements[i].patient_id = patient_id;
-				$scope.consultInfo.measurements[i].cal_id = cal_id;
+				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
+				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
 
 			ConsultationService.submitConsult($scope.consultInfo).then(function(res){
