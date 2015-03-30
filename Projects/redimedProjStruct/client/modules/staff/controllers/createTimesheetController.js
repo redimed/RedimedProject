@@ -13,6 +13,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     };
     //END DATE
 
+    // SET DEFAULT VALUE
+    $scope.info = {};
+    $scope.info.time_temp = 0;
+    $scope.info.time_charge = 0;
+    //END
+
     // CHECK ITEM 
     if (!$scope.tasks) {
         $scope.tasks = [];
@@ -45,35 +51,80 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     };
     //END CHECK ITEM
 
-    //FUNCTION SUM TOTAL TIME CHARGE
-    $scope.changeTimeCharge = function(task) {
-        task.time_temp = StaffService.covertTimeCharge(task.time_charge);
-        var sum = 0;
-        angular.forEach($scope.tasks, function(data) {
-            if (data.time_temp !== null &&
-                data.time_temp !== undefined &&
-                data.isAction !== "delete" &&
-                !isNaN(data.time_temp)) {
-                sum = parseFloat(sum) + parseFloat(data.time_temp);
+    //CHECK TIME IN LIEU
+    $scope.checkTimeInLieu = function() {
+        var toDate = new Date();
+        var weekNo = $scope.getWeekNumber(toDate);
+        StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+            if (response.status === "error") {
+                toastr.error("Check Time in Lieu fail!", "Fail");
+            } else if (response.status === "success") {
+                var timeInLieu = 0;
+                angular.forEach(response.result, function(data, index) {
+                    timeInLieu += data.time_in_lieu;
+                });
+                //conver to hours-minute
+                var hours = parseInt(timeInLieu / 60);
+                var minutes = timeInLieu % 60;
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                //end convert
+                toastr.info("You have " + hours + " hours " + minutes + " minutes for Time in Lieu!", "Notification");
+            } else {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
             }
         });
+    };
+    //END CHECK
+
+    //FUNCTION SUM TOTAL TIME CHARGE
+    $scope.changeTimeCharge = function() {
+        var sum = 0;
+        var sumInLieu = 0;
+        angular.forEach($scope.tasks, function(data, index) {
+            $scope.tasks[index].time_temp = StaffService.convertShowToFull(data.time_charge);
+            if (data.time_charge !== null &&
+                data.time_charge !== undefined &&
+                data.isAction !== "delete" &&
+                data.activity_id !== null &&
+                data.time_charge !== "" &&
+                data.time_charge.length !== 0) {
+                //SUM TIME CHARGE
+                sum = sum + parseInt(StaffService.convertShowToFull(data.time_charge));
+                //END
+                if (data.activity_id === 22) {
+                    //SUM IN LIEU
+                    sumInLieu = sumInLieu + parseInt(StaffService.convertShowToFull(data.time_charge));
+                    //END  
+                }
+            }
+        });
+
+        $scope.info.time_in_lieuFull = sumInLieu;
         $scope.info.time_temp = sum;
-        $scope.info.time_charge = StaffService.unCovertTimeCharge(sum);
+        $scope.info.time_charge = StaffService.convertFromFullToShow(sum);
     };
     //END FUNCTION TOTAL TIME CHARGE
 
-    //WATCH TIME
-    // $scope.$watch('task', function() {
-    //     var sum = 0;
-    //     angular.forEach($scope.tasks, function(data) {
-    //         if (data.time_temp !== null && data.time_temp !== undefined) {
-    //             sum = parseFloat(sum) + parseFloat(data.time_temp);
-    //         }
-    //     });
-    //     $scope.info.time_temp = sum;
-    //     $scope.info.time_charge = StaffService.unCovertTimeCharge(sum);
-    // });
-    //END
+    //CHANGE ACTIVITY
+    $scope.ChangeActivity = function(activity_id, index) {
+        if (activity_id === null || activity_id === undefined || activity_id === "" || activity_id === 18) {
+            $scope.tasks[index].time_charge = null;
+            $scope.tasks[index].time_temp = null;
+        }
+
+        //SET TIME CHARGE-INLIEU
+        $scope.changeTimeCharge();
+        //END
+    };
+    //END CHANGE
 
     //FUNCTION GET WEEK NUMBER
     $scope.getWeekNumber = function(d) {
@@ -85,6 +136,30 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         return weekNo;
     };
     //FUNCTION GET WEEK NUMBER
+
+    //GET TIM IN LIEU
+    // GET TIME IN LIEU TO CHECK SUBMIT
+    var toDate = new Date();
+    var weekNo = $scope.getWeekNumber(toDate);
+    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        if (response.status === "error") {
+            toastr.error("Check Time in Lieu fail!", "Fail");
+        } else if (response.status === "success") {
+            var timeInLieu = 0;
+            angular.forEach(response.result, function(data, index) {
+                timeInLieu += StaffService.fortMatFullTime(data.time_in_lieu);
+            });
+            $scope.info.time_in_lieuHas = timeInLieu;
+
+        } else {
+            $state.go("loggedIn.TimeSheetHome", null, {
+                "reload": true
+            });
+            toastr.error("Server not response!", "Error");
+        }
+    });
+    //END
+    //END
 
     //FUNCTION CHECK TASK WEEK
     $scope.checkTaskWeek = function(date) {
@@ -157,6 +232,14 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 });
 
             }
+            //SHOW WEEK WHEN CREATE
+            if ($scope.tasks !== undefined &&
+                $scope.tasks !== null &&
+                $scope.tasks.length !== 0 &&
+                $scope.tasks[0] !== undefined) {
+                $scope.dateWeekFrom = $filter('date')($scope.tasks[0].date, "dd-MM-yyyy");
+            }
+            //END SHOW
         });
     };
     // END FUNCTION CHECK TASK WEEK
@@ -179,7 +262,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         if (response['data'] !== undefined &&
                             response['data'][0] !== undefined &&
                             response['data'][0].date !== undefined) {
+                            // SHOW START DATE ON EDIT
                             $scope.dateStart = response['data'][0].date;
+                            //END
                         }
                         if (response['status'] == 'fail' || response['status'] == 'error') {
                             angular.forEach(response['data'], function(data) {
@@ -188,10 +273,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 data.time_temp = data.time_charge;
                                 data.isAction = 'update';
                                 if (data.time_charge !== null) {
-                                    data.time_charge = StaffService.unCovertTimeCharge(data.time_charge);
+                                    data.time_charge = StaffService.convertFromFullToShow(data.time_charge);
                                 }
                                 $scope.tasks.push(data);
-                                $scope.changeTimeCharge(data);
+                                $scope.changeTimeCharge();
                             });
                         } else if (response['status'] === 'success') {
                             angular.forEach(response['data'], function(data) {
@@ -200,12 +285,13 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 data.time_temp = data.time_charge;
                                 data.isAction = 'update';
                                 if (data.time_charge !== null) {
-                                    data.time_charge = StaffService.unCovertTimeCharge(data.time_charge);
+                                    data.time_charge = StaffService.convertFromFullToShow(data.time_charge);
                                 }
                                 angular.forEach(response['item'], function(item) {
                                     //check status
                                     if (response['item'] !== undefined && response['item'][0] && response['item'][0].task_status_id !== undefined) {
                                         $scope.checkStatus = response['item'][0].task_status_id;
+                                        $scope.afterStatusID = response['item'][0].after_status_id;
                                     }
                                     //end
                                     if (data.tasks_id === item.tasks_id &&
@@ -217,14 +303,14 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                         item.isAction = 'update';
                                         item.time_temp = item.time_charge;
                                         item.deleted = item.deleted;
-                                        item.time_charge = StaffService.unCovertTimeCharge(item.time_charge);
+                                        item.time_charge = StaffService.convertFromFullToShow(item.time_charge);
                                         data.item.push(item);
                                     }
                                 });
 
                                 //PUSH DATA AND REFRESH
                                 $scope.tasks.push(data);
-                                $scope.changeTimeCharge(data);
+                                $scope.changeTimeCharge();
                                 //END PUSH AND REFRESH
 
                             });
@@ -297,7 +383,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     $scope.delTask = function(index, order) {
         if (order != 1) {
             swal({
-                title: "Are you sure?",
+                title: "Are you sure delete this row?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -319,7 +405,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     }
                     //END
                 }
-                $scope.changeTimeCharge($scope.tasks[index]);
+                $scope.changeTimeCharge();
             });
         }
     };
@@ -328,11 +414,13 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //ADD ALL TASK OF WEEK
     $scope.addAllTask = function(status) {
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
-        if (StaffService.covertTimeCharge($scope.info.time_charge) < 38 && $scope.TypeOfContruct === "Full-time" && status !== 1) {
-            toastr.error("Can not submit, please check time charge(>=38)", "Error");
+        if ($scope.info.time_temp < (38 * 60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
+            toastr.warning("Please check time charge(>=38)", "Error");
+        } else if ($scope.info.time_in_lieuFull > $scope.info.time_in_lieuHas && status !== 1) {
+            //CHECK TIME IN LIEU
+            toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
             if (!$scope.isEdit) {
-                $scope.info.time_charge = StaffService.covertTimeCharge($scope.info.time_charge);
                 //ADD NEW TIMESHEET
                 startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
                 endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
@@ -352,7 +440,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     }
                 });
             } else {
-                $scope.info.time_charge = StaffService.covertTimeCharge($scope.info.time_charge);
                 //EDIT TIMESHEET
                 $scope.info.idWeek = $scope.idWeek;
                 $scope.info.statusID = status;
@@ -378,16 +465,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             templateUrl: "ItemCode",
             controller: function($scope) {
                 $scope.items = angular.copy(task);
-                //get time_char format double
-                $scope.getFortMatTimeTemp = function(time_charge) {
-                    if (time_charge) {
-                        var hour = parseInt(time_charge.substring(0, 2));
-                        var minute = parseInt(time_charge.substring(2, 4));
-                        return hour + (minute / 60);
-                    }
-                };
-                // end get time_char format double
-
                 //click cancel
                 $scope.clickCancel = function() {
                     modalInstance.close({
@@ -399,11 +476,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 //click save
                 $scope.clickSave = function(info, formValid) {
                     if (formValid.$invalid === true) {
-                        toastr.error("Please Input All Required Information!", "Error");
+                        toastr.warning("Please Input All Required Information!", "Error");
                     } else {
                         if (info !== undefined && info !== null) {
                             for (var i = 0; i < info.length; i++) {
-                                info[i].time_temp = parseFloat(StaffService.covertTimeCharge(info[i].time_charge));
+                                info[i].time_temp = StaffService.convertShowToFull(info[i].time_charge);
                             }
                         }
                         modalInstance.close({
@@ -429,17 +506,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     for (var i = 0; i < list.length; i++) {
                         if (list[i].isAction !== 'delete') {
                             t.push(list[i].ITEM_ID);
-                            c = c + list[i].time_temp;
+                            c = c + StaffService.convertShowToFull(list[i].time_charge);
                         }
                     }
                     task.task = t.join(' , ');
-                    task.time_charge = StaffService.unCovertTimeCharge(parseFloat(c));
-                    task.time_temp = parseFloat(c);
-                    $scope.changeTimeCharge(task);
+                    task.time_charge = StaffService.convertFromFullToShow(c);
+                    task.time_temp = c;
+                    $scope.changeTimeCharge();
                 } else {
                     task.task = null;
                     task.time_charge = null;
-                    $scope.changeTimeCharge(task);
+                    $scope.changeTimeCharge();
                 }
             }
 

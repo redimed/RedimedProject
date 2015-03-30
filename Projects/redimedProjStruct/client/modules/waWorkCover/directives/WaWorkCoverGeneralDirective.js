@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.waworkcover.general.directive',[])
-    .directive('workCoverGeneral',function(PatientService, CompanyService, InsurerService, ReceptionistService, WaWorkCoverService, DoctorService, ConfigService, $state, $cookieStore, toastr){
+    .directive('workCoverGeneral',function(PatientService, InsurerService, ReceptionistService, WaWorkCoverService, DoctorService, ConfigService, $state, $cookieStore, toastr){
         return{
             restrict: 'EA',
             scope: {

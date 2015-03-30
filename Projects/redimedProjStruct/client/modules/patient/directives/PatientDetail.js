@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function($stateParams, sysStateService, PatientService, CompanyService, ConfigService, toastr, PatientModel, FileUploader, $timeout){
+.directive("patientDetail", function($stateParams, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout){
 	return{
 		restrict: "EA",
 		scope: {

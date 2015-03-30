@@ -13,6 +13,7 @@ module.exports = {
 
 		var sql = "INSERT INTO cln_appointment_calendar(FROM_TIME, TO_TIME, SITE_ID, DOCTOR_ID, CLINICAL_DEPT_ID, SERVICE_ID) VALUES('"+from_time+"', '"+to_time+"', '"+site_id+"', '"+doctor_id+"', '"+clinical_dept_id+"', '"+service_id+"')";
 
+
 		db.sequelize.query(sql)
 		.success(function(result){
 			res.json({status: "success"});
