@@ -18,8 +18,8 @@
                 <!-- END LOCATION NAME -->
             </div>
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})" ng-disabled="deptForm.departmentName.$error.required || deptForm.locationID.$error.required">{{addOrUpdateButton}}</a>
-        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
+                <a class="btn red pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-click="onSave({return: info})" ng-disabled="deptForm.departmentName.$error.required || deptForm.locationID.$error.required">{{addOrUpdateButton}}</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

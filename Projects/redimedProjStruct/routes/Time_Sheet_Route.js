@@ -47,3 +47,7 @@ app.post("/api/TimeSheet/post-role-one", TimeSheet.LoadRole);
 //ITEM CODE
 app.post("/api/TimeSheet/post-itemcode-list", TimeSheet.LoadItemCode);
 //END ITEM CODE
+
+//EMPLOYEE
+app.post("/api/TimeSheet/post-list-emp", TimeSheet.StepEmployee);
+//END

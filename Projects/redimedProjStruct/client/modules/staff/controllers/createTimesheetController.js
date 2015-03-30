@@ -12,7 +12,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         startingDay: 1
     };
     //END DATE
-
+    
     // SET DEFAULT VALUE
     $scope.info = {};
     $scope.info.time_temp = 0;
@@ -307,6 +307,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                         item.isAction = 'update';
                                         item.time_temp = item.time_charge;
                                         item.deleted = item.deleted;
+                                        item.totalUnits = item.units;
                                         item.time_charge = StaffService.convertFromFullToShow(item.time_charge);
                                         data.item.push(item);
                                     }

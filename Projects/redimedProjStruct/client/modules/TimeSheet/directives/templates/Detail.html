@@ -57,7 +57,7 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Quantity
+                                        Units
                                     </div>
                                 </th>
                                 <th>
@@ -75,8 +75,8 @@
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
                                 <td class="btn btn-xs">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?"N/A":l.item_id}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="" || l.quantity===undefined)?"N/A":l.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="" || l.quantity===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(l.units===null||l.units==="" || l.units===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
                             </tr>
                         </tbody>
                     </table>

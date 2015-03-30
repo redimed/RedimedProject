@@ -196,6 +196,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 searchObj: searchObj
             });
         };
+        TimeSheetService.StepEmployee = function(info) {
+            var StepEmployee = api.all("TimeSheet/post-list-emp");
+            return StepEmployee.post({
+                info: info
+            });
+        };
 
         return TimeSheetService;
     });

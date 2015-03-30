@@ -846,25 +846,23 @@ module.exports = {
         var strQuery = "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " +
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName, time_type_activity.type_activity_id " +
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
             "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN time_type_activity ON time_type_activity.type_activity_id = time_activity.type_activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
             "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date ORDER BY time_tasks.date";
         var strActivity = "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " +
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName, time_type_activity.type_activity_id " +
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName "+
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
             "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN time_type_activity ON time_type_activity.type_activity_id = time_activity.type_activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_type_activity.type_activity_id ORDER BY time_tasks.date";
+            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_activity.activity_id ORDER BY time_tasks.date";
         db.sequelize.query(strQuery)
             .success(function(result) {
                 if (result === undefined || result === null || result.length === 0) {
@@ -908,8 +906,8 @@ module.exports = {
 
     ViewOnDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
-            "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.quantity, time_item_task.comment, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task,time_item_task.units, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+            "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
             "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
@@ -943,8 +941,8 @@ module.exports = {
 
     ViewAllDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
-            "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity,time_item_task.time_charge as chargeItem, time_item_task.comment, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_item_task.units, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+            "time_tasks.time_charge, time_item_task.item_id, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, time_tasks_week.time_in_lieu, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
             "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
@@ -1010,7 +1008,7 @@ module.exports = {
             strOrder = strOrder.substring(0, strOrder.length - 2);
         }
         //end get ORDER
-        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME FROM time_item_code " + strSearch + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
+        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_item_code.ITEM_UNITS FROM time_item_code " + strSearch + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
         var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + strOrder;
         db.sequelize.query(query)
             .success(function(result) {

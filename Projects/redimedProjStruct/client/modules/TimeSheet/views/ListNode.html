@@ -176,9 +176,9 @@
                         </td>
                         <td></td>
                         <td style="text-align:center;">
-                            <button type="button" class="btn btn-circle btn-xs red" ng-disabled="isChecked==false" ng-click="deleteUser()">
+                            <a class="btn btn-circle btn-xs red" style="width:50px;" ng-disabled="isChecked==false" ng-click="deleteUser()">
                                 Delete
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     <tr ng-show="listUser.result===null">
@@ -196,7 +196,7 @@
                         <td class="btn btn-xs" style="text-align:left;">{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                         <td class="btn btn-xs" style="text-align:center;">
                             <!-- DOPDOWN ACTION -->
-                            <a type="button" class="btn btn-circle btn-xs blue" ng-click="editUser(l.NODE_ID, l.id, l.DEPARTMENT_CODE_ID)">
+                            <a class="btn btn-circle btn-xs blue" style="width:50px;" ng-click="editUser(l.NODE_ID, l.id, l.DEPARTMENT_CODE_ID)">
                                 <i class="fa fa-pencil"></i>&nbsp;Edit
                             </a>
                             <!-- END DROPDOWN ACTION -->

@@ -46,43 +46,43 @@
                             </div>
                         </th>
                         <th>
-                            <div class="th">
-                                </span> Date
+                            <div class="th" style="width:80px;">
+                                Date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th" style="width:235px;">
+                             Activity
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Activity
+                                Location
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Location
+                                 Department
                             </div>
                         </th>
                         <th>
-                            <div class="th">
-                                </span> Department
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                </span> Input Item
+                            <div class="th" style="width:70px;">
+                                Input Item
                             </div>
                         </th>
                         <th>
                             <div class="th" style="width:100px;">
-                                </span> Time Charge
+                                Time Charge
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Task/Comment
+                               Task/Comment
                             </div>
                         </th>
                         <th>
                             <div class="th">
-                                </span> Item Codes
+                                Item Codes
                             </div>
                         </th>
                     </tr>
@@ -97,7 +97,7 @@
                         </td>
                         <td style="vertical-align: middle">{{task.date | date : 'EEE, dd MMM'}}</td>
                         <td style="width: 16%">
-                            <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
+                            <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
                                 <option value="">--Select Activity--</option>
                             </select>
                         </td>
@@ -125,7 +125,7 @@
                         </td>
                         <td style="text-align:center;">
                             <span ng-disabled="task.isInputItem==0 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
-                            task.activity_id === 17 || task.activity_id === 19 || task.isInputItem!=1" ng-click="chooseItem(task)" class="btn btn-xs blue-dark" style="margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
+                            task.activity_id === 17 || task.activity_id === 19 || task.isInputItem!=1" ng-click="chooseItem(task)" class="btn btn-xs blue-dark" style="margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose</span>
                         </td>
                     </tr>
                     <tr>

@@ -12,8 +12,8 @@
                 <!-- END NAME NODE -->
             </div>
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-disabled="AddFunction.TYPE_NAME.$error.required" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
-        <a class="btn btn-danger pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
+        <a class="btn btn-danger pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-disabled="AddFunction.TYPE_NAME.$error.required" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

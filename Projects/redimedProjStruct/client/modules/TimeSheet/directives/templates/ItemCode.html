@@ -23,14 +23,14 @@
                                         Description
                                     </div>
                                 </th>
-                                 <th style="background-color:#26a69a;width:10%;">
+                                <th style="background-color:#26a69a;width:10%;">
                                     <div class="th">
-                                        Quantity
+                                        Time charge
                                     </div>
                                 </th>
                                 <th style="background-color:#26a69a;width:10%;">
                                     <div class="th">
-                                        Time charge
+                                        Units
                                     </div>
                                 </th>
                                 <th style="background-color:#26a69a;width:27%;">
@@ -61,14 +61,12 @@
                         </td>
                                 <!-- END MORE -->
                                 <td ng-show="item.show===true" style="text-align:center">
-                                    <div ng-class="{'error-input':items[$index].quantity==='' || items[$index].quantity ===null || items[$index].quantity===undefined}">
-                                    <input type="text" tabindex="5" class="input-sm form-control" name="quantity" ng-model="items[$index].quantity" ng-required="true" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" only-digits>
+                                    <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
+                                    <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID" time-charge ng-change="changeTimeCharge($index,items[$index].time_charge)">
                                 </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
-                                    <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
-                                    <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" ng-required="true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID" time-charge>
-                                </div>
+                                    <input type="text" tabindex="5" class="input-sm form-control" name="units" ng-model="items[$index].totalUnits" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" ng-disabled="true">
                                 </td>
                                 
                                 <td ng-show="item.show===true" style="text-align:center;">
@@ -118,7 +116,7 @@
                         <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Item Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
                     </td>
                     </tr>
-                    <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME)">
+                    <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
                         <td class="btn btn-xs" style="text-align:left;width:5%;">{{l.ITEM_ID}}</td>
                         <td style="border:1px solid #ccc; text-align:left;" ng-if="(l.ITEM_NAME | readMore).check===true">
                             <div ng-if="l.status===false">

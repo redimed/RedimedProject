@@ -49,7 +49,7 @@ module.exports = {
                                                 db.TimeItemTask.create({
                                                     task_id: tId,
                                                     item_id: a.ITEM_ID,
-                                                    quantity: a.quantity,
+                                                    units: a.totalUnits,
                                                     time_charge: a.time_temp,
                                                     comment: a.comment
                                                 })
@@ -142,7 +142,7 @@ module.exports = {
                                         db.TimeItemTask.create({
                                             task_id: taskId,
                                             item_id: a.ITEM_ID,
-                                            quantity: a.quantity,
+                                            units: a.totalUnits,
                                             time_charge: a.time_temp,
                                             comment: a.comment,
                                         })
@@ -150,7 +150,7 @@ module.exports = {
                                 } else if (a.isAction == 'update') {
                                     chainer.add(
                                         db.TimeItemTask.update({
-                                            quantity: a.quantity,
+                                            units: a.totalUnits,
                                             time_charge: a.time_temp,
                                             comment: a.comment
                                         }, {
@@ -196,7 +196,7 @@ module.exports = {
                                     db.TimeItemTask.create({
                                         task_id: tId,
                                         item_id: a.ITEM_ID,
-                                        quantity: a.quantity,
+                                        units: a.totalUnits,
                                         time_charge: a.time_temp,
                                         comment: a.comment
                                     })
@@ -337,7 +337,7 @@ module.exports = {
                                 });
                                 return false;
                             } else {
-                                db.sequelize.query("SELECT a.`activity_id`, a.`NAME`, t.`NAME` AS type_name FROM `time_activity` a" + " INNER JOIN `time_type_activity` t ON t.`type_activity_id` = a.`type_activity_id`", null, {
+                                db.sequelize.query("SELECT a.`activity_id`, a.`NAME` FROM `time_activity` a", null, {
                                         raw: true
                                     })
                                     .success(function(activity) {
@@ -435,7 +435,7 @@ module.exports = {
 
     showDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`, time_tasks_week.after_status_id, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
+        db.sequelize.query("SELECT t.`date`,t.activity_id, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, time_task_status.name as status,tasks_week_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
                 " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
                 " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
                 " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
@@ -477,7 +477,7 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`quantity`,i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`units`,i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
                             " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
@@ -572,8 +572,8 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_tasks_week.after_status_id, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
-                "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
+        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, i.units, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+                "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`units`,i.`COMMENT` AS comment " +
                 "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
                 "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
                 "INNER JOIN users ON users.id  = time_tasks_week.user_id " +

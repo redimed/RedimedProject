@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
-    .directive("itemCode", function(TimeSheetService, $state, toastr, MODE_ROW) {
+    .directive("itemCode", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -100,6 +100,19 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 };
                 //ORDER BY
 
+                //FUNCTION CHANGE TIMECHARGE
+                scope.changeTimeCharge = function(index, time_charge) {
+                    if (time_charge !== undefined &&
+                        time_charge !== null &&
+                        time_charge !== "" &&
+                        time_charge.length !== 0) {
+                        scope.items[index].totalUnits = ((StaffService.convertShowToFull(time_charge) / 15) * scope.items[index].UNITS).toFixed(1);
+                    } else {
+                        scope.items[index].totalUnits = null;
+                    }
+                };
+                //END
+
                 scope.clickShow = function(index) {
                     if (scope.list !== undefined &&
                         scope.list.result !== undefined &&
@@ -114,7 +127,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                     angular.element('#itemCodeID').focus();
                 };
                 scope.items = [];
-                scope.addItem = function(ITEM_ID, ITEM_NAME) {
+                scope.addItem = function(ITEM_ID, ITEM_NAME, UNITS) {
                     if (scope.isShow === true) {
                         var check = false;
                         angular.forEach(scope.items, function(item, index) {
@@ -127,6 +140,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                             scope.items.push({
                                 ITEM_ID: ITEM_ID,
                                 ITEM_NAME: ITEM_NAME,
+                                UNITS: UNITS,
                                 isAction: "insert",
                                 status: false,
                                 show: true,

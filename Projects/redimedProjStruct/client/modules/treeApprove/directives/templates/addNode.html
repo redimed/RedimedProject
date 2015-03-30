@@ -40,8 +40,8 @@
                 <!-- END DECRIPTION NODE -->
             </div>
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: info})" ng-disabled="addNode.NODE_CODE.$error.required || addNode.FROM_VALUE.$error.required || addNode.FROM_VALUE.$error.number || addNode.TO_VALUE.$error.required || addNode.TOVALUE.$error.number">{{addOrUpdateButton}}</a>
-        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
+                <a class="btn red pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-click="onSave({return: info})" ng-disabled="addNode.NODE_CODE.$error.required || addNode.FROM_VALUE.$error.required || addNode.FROM_VALUE.$error.number || addNode.TO_VALUE.$error.required || addNode.TOVALUE.$error.number">{{addOrUpdateButton}}</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

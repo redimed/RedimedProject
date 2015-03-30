@@ -29,7 +29,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.list.result[indexD].AC = [];
                                     angular.forEach(scope.list.resultActivity, function(timeAC, indexAC) {
                                         if (scope.list.resultActivity[indexAC].date === scope.list.result[indexD].date) {
-                                            scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].type_activity_id] = scope.list.resultActivity[indexAC].sumAC;
+                                            scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].activity_id] = scope.list.resultActivity[indexAC].sumAC;
                                         }
                                     });
                                 });
