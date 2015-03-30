@@ -184,11 +184,12 @@ module.exports =
         }
     },
 
-    rollback:function(req)
+    rollback:function(req,functionFinishRollback)
     {
         req.kissConnection.rollback(function() 
         {
             exlog("kissUtil","rollback success!");
+            functionFinishRollback();
         });
     },
 

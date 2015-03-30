@@ -513,6 +513,18 @@ angular.module('app.loggedIn.rlob.services',[])
             {
                 var result=api.all('rlob/core/get-list-appointment-after-time');
                 return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime});
+            },
+
+            handlePeriodTimeAppointmentCalendar:function(doctorId,siteId,selectedAppFromTime,rlTypeId)
+            {
+                var result=api.all('rlob/core/handle-periodtime-appointment-calendar');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime,rlTypeId:rlTypeId});
+            },
+
+            saveBookingInfo:function(bookingInfo)
+            {
+                var result=api.all('rlob/core/save-booking-info');
+                return result.post({bookingInfo:bookingInfo});
             }
         }
         
