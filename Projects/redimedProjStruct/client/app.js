@@ -44,7 +44,9 @@ angular.module("app", [
         'app.rlobRegister.controller',
         'opentok-whiteboard',
         'ui.mask',
-        'app.sponsor1.controller'
+        'app.sponsor1.controller',
+	'app.sponsor1.emergency.controller',
+    	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'
     ])
     .factory('socket', function(socketFactory) {
@@ -276,7 +278,7 @@ angular.module("app", [
         if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !== "security.rlobRegister") {
+            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister" && toState.name!=='security.rlobSponsor' && toState.name!=='security.rlobSponsor.emergency' && toState.name!=='security.rlobSponsor.nonemergency') {
                 e.preventDefault();
                 $state.go("security.login", null, {
                     location: "replace",

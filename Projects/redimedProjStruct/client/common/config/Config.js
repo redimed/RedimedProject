@@ -21,6 +21,7 @@ angular.module('app.config', [])
         "code": "done",
         "label": "Done"
     }])
+    
     .constant("ACC_TYPE", [{
         "code": "PRIVATE",
         "name": "Private"
@@ -500,8 +501,13 @@ angular.module('app.config', [])
         code: 52
     }])
     //end thanh
-
-.factory('ConfigService', function(TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, Restangular) {
+    .constant("MEDICINE_UNIT", [
+            {code:"box", label:"box"},
+            {code:"mg", label:"mg"},
+            {code:"tablet", label:"tablet"},
+            {code:"bottle", label:"bottle"}
+        ])
+.factory('ConfigService', function(TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
@@ -520,6 +526,10 @@ angular.module('app.config', [])
 
     configService.timetable_dow_option = function() {
         return TIMETABLE_DAY_OF_WEEK;
+    }
+
+    configService.medicine_unit_option = function() {
+        return MEDICINE_UNIT;
     }
 
     configService.redimedsite_option = function() {

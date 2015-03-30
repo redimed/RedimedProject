@@ -42,6 +42,7 @@ app.post('/api/iso/iso-tree-dir/create-document-with-file',
 	isoCheckInOutController.buildFirstCheckIn);
 
 app.post('/api/iso/iso-tree-dir/check-dup-entry',isoTreeDirController.checkDupEntry);
+app.post('/api/iso/iso-tree-dir/rename-node',isoController.getUserPermission,isoTreeDirController.renameNode);
 
 //isoTreeUsersController
 app.post('/api/iso/iso-tree-users/grant-node-permission',isoController.getUserPermission,isoTreeUsersController.grantNodePermission);

@@ -731,3 +731,17 @@ angular.module("app.model", [])
 	last_updated_by: null,
 })
 // END RECALL 
+
+// MEDICINE
+.value('MedicineModel',{
+	medicine_id: null,
+	medicine_name: '',
+	medicine_price: null,
+	medicine_unit: '',
+	isEnable: null,
+	created_by: null,
+	creation_date: null,
+	last_updated_by: null,
+	last_update_date: null
+})
+// END MEDICINE
