@@ -292,6 +292,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     break;
                 case $scope.treeActions.renameNode.name:
                     $scope.currentTreeAction=$scope.treeActions.renameNode;
+                    $scope.newName={value:$scope.selectedTreeNode.NODE_NAME};
                     break;
             }
             $("#iso-tree-actions-menu-popup").modal('hide');
@@ -696,6 +697,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                         }
                     }
                     deletex($scope.selectedTreeNode);
+                    $scope.getTreeDir();
                 }
                 else
                 {
@@ -1224,8 +1226,35 @@ angular.module('app.loggedIn.iso.main.controller',[])
             isoService.checkOutIn.downloadSpecificCheckIn(item.NODE_ID,item.ID);
         }
 
+        $scope.newName={value:''};
         $scope.changeNodeName=function()
         {
+            if ($scope.actionContentForm.$valid)
+            {
+                isoService.treeDir.renameNode($scope.selectedTreeNode.NODE_ID,$scope.selectedTreeNode.NODE_NAME,$scope.newName.value)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,'Rename success!');
+                        $scope.getTreeDir();
+                    }   
+                    else
+                    {
+                        msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Rename fail!');
+                    }
+
+                },function(err){
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Rename fail!');
+                })
+                .then(function(){
+                    $("#iso-tree-action-content-popup").modal('hide');
+                    $scope.newName={value:''};
+                })
+            }
+            else
+            {
+
+            }
             
         }
     })

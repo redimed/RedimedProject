@@ -405,7 +405,7 @@ GOBAL POPUP -->
     <div class="form-group" show-errors='{showSuccess: true}'>
         <label >New name:
         </label>
-        <input type="text" ng-model="newName" class="form-control" placeholder="New name" name="newName" required ng-maxlength="50">
+        <input type="text" ng-model="newName.value" class="form-control" placeholder="New name" name="newName" required ng-maxlength="50">
         <p class="help-block" ng-if="actionContentForm.newName.$error.required">Required!</p>
         <p class="help-block" ng-if="actionContentForm.newName.$error.maxlength">name cannot be longer than 50 characters</p>
     </div>
