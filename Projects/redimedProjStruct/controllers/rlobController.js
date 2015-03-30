@@ -23,7 +23,7 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
 				moment(new Date(handlePeriodInfo.selectedAppFromTime)).format("YYYY-MM-DD"):null;
 	var rlTypeId=kiss.checkData(handlePeriodInfo.rlTypeId)?handlePeriodInfo.rlTypeId:'';
 	var periodTimeDefault=rlobUtil.periodTimeDefault;
-
+	var serviceId=rlobUtil.redilegalServiceId;
 	if(!kiss.checkListData(doctorId,siteId,selectedAppFromTime,rlTypeId))
 	{
 		kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi data truyen den");
@@ -42,15 +42,19 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
 		return;
 	}
 	var periodRequire=rlobUtil.periodTimeOfRlType[rlTypeId].value;
+	//Select tat ca cac session ke tu selectedSession, cac session nay phai con trong
+	//cac session nay phai co period time >0
 	var sql=
 		" SELECT calendar.*,MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) AS `PERIOD_TIME`   "+
 		" FROM `cln_appointment_calendar` calendar                                                       "+
 		" WHERE calendar.`DOCTOR_ID`=? AND calendar.`SITE_ID`=?                                          "+
-		" 	AND MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) >=?                            "+
-		"   AND DATE(calendar.`FROM_TIME`)= ? "+
-		" 	AND calendar.`FROM_TIME`>=?                                                             "+
-		" ORDER BY calendar.FROM_TIME ASC ";
-	kiss.executeQuery(req,sql,[doctorId,siteId,periodTimeDefault,selectedDate,selectedAppFromTime],function(data){
+		" 	AND MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) >0                             "+
+		" 	AND DATE(calendar.`FROM_TIME`)= ?                                                            "+
+		" 	AND calendar.`FROM_TIME`>=?                                                                  "+
+		" 	AND calendar.`NOTES` IS NULL                                                                 "+
+		" 	AND calendar.`SERVICE_ID`=?                                                                  "+
+		" ORDER BY calendar.FROM_TIME ASC                                                                ";
+	kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,serviceId],function(data){
 		if(data.length>0)
 		{
 			var selectedItem=data[0];
@@ -62,6 +66,7 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
                 var listY=[];
                 listY.push(selectedItem);
                 var previousToTime=moment(new Date(selectedItem.TO_TIME));
+                //lay ra danh sach cac session ke tu selectedSession, lien ke lien tiep
                 for(var i=1;i<data.length;i++)
                 {
                     var item=data[i];
@@ -73,7 +78,14 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
                     }
                     else
                     {
+                    	//se ngung khi gap doan khong lien tiep
                         break;
+                    }
+                    var periodTimeCurrentItem=moment(new Date(item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
+                    //se ngung khi session co periodTime nho hon periodTimeDefault
+                    if(periodTimeCurrentItem<periodTimeDefault)
+                    {
+                    	break;
                     }
                 }
 
@@ -120,7 +132,7 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
                     			else
                     			{
                     				kiss.commit(req,function(){
-                    					res.json({status:'success'});
+                    					res.json({status:'success',data:list});
                     				},function(err)
                     				{
                     					res.json({status:'fail'});

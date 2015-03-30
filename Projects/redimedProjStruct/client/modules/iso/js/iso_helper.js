@@ -183,7 +183,9 @@ var isoConst={
     documentTypeList:
     [
         {value:'Procedure'},
-        {value:'User Manual'}
+        {value:'User Manual'},
+        {value:'Policy'},
+        {value:'Templates'}
     ]
 };
 

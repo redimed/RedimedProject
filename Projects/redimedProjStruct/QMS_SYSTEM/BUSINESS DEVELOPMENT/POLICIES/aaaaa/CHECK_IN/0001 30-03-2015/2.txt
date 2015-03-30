@@ -1,0 +1,38 @@
+$scope.rlob_change_booking_file_role=function(assId,refId,fileId,role)
+                {
+                    //alert($scope.selectedBooking.Site_addr);
+                    $scope.showMsgDialog=function(styleClass,header,status,content)
+                    {
+                        $scope.msgHeader=header;
+                        $scope.msgStatus=status;
+                        $scope.msgContent=content;
+                        $(styleClass).modal({show:true,backdrop:'static'});
+                    };
+
+                    $scope.showNotificationPopup=rlobService.showNotificationPopup;
+
+                    $http({
+                        method:"POST",
+                        url:"/api/rlob/rl_booking_files/change-role-download",
+                        data:{fileId:fileId,role:role}
+                    })
+                    .success(function(data) {
+                        if(data.status=='success')
+                        {
+                            //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing success! Customer'+(role==1?' can ':' cannot ')+'download this file',rlobConstant.notifyJsColor.success);
+                            if(role==1)
+                                $scope.rlob_add_notification(assId,refId,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
+                            getFilesUpload();
+                        }
+                        else
+                        {
+                            //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
+                        }
+                    })
+                    .error(function (data) {
+                        //$scope.showNotificationPopup(".rlob_download_file_notify_popup",'Changing fail!',rlobConstant.notifyJsColor.danger);
+                    })
+                    .finally(function() {
+
+                    });
+                }

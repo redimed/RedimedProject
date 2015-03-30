@@ -487,20 +487,23 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,isoLang.createDocumentSuccess);
                     if(!$scope.selectedTreeNode.nodes)
                     {
+                    
                         $scope.selectedTreeNode.nodes={};
                     }
-                    $scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(response.data);
+                    $scope.selectedTreeNode.nodes[response.data.NODE_ID]=angular.copy(response.data);
                     if($scope.selectedTreeNode.DEPARTMENT_ID==null)
                     {
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.newDocument.department.DEPARTMENT_ID;
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.newDocument.department.DEPARTMENT_NAME;
+                    
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_ID=$scope.newDocument.department.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_NAME=$scope.newDocument.department.DEPARTMENT_NAME;
                     }
                     else
                     {
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
+                      
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
                     }
-                    $scope.selectedTreeNode.nodes[data.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[data.data.NODE_ID].NODE_NAME;
+                    $scope.selectedTreeNode.nodes[response.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[response.data.NODE_ID].NODE_NAME;
                 }
                 else
                 {
