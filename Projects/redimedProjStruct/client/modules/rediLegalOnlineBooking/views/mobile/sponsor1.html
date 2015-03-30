@@ -1,31 +1,141 @@
-<div class="controller">
-	<div class="row">
-		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="top-news">
-				<a href="javascript:;" class="btn blue">
-				<span>
-				Gold Price Falls </span>
-				<em>Posted on: April 14, 2013</em>
-				<em>
-				<i class="fa fa-tags"></i>
-				USA, Business, Apple </em>
-				<i class="fa fa-globe top-news-icon"></i>
-				</a>
-			</div>
-		</div>
-		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="top-news">
-				<a href="javascript:;" class="btn red">
-				<span>
-				Metronic News </span>
-				<em>Posted on: April 16, 2013</em>
-				<em>
-				<i class="fa fa-tags"></i>
-				Money, Business, Google </em>
-				<i class="fa fa-briefcase top-news-icon"></i>
-				</a>
-			</div>
-		</div>
-	</div>
-</div>
+<style>
+	.test {
+	    
+	  	/*min-height: 70%;*/
+	  	padding: 12px;
+	  	margin: auto;
+		/*min-height: 70%;*/
+		padding: 12px;
+		margin: auto;
+		/*background-color: white;*/
+		padding: 19px;
+		margin-bottom: 20px;
+		/*box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);*/
+		border-radius: 2px !important;
+		border: 0;
+		width: 90%;
+	}
+	/*.login .logo {
+	  	margin: 0 auto;
+	   	margin-top: 0px !important; 
+	  	text-align: center;
+	  	max-height: 20%;
+	  	height: 20%;
+	}
+	.logoimg {
+		width: 100% !important;
+		height: 100% !important;
+	}*/
+	.login .copyright {
+		text-align: center;
+		margin: 0 auto;
+		padding: 0px !important; 
+		color: #999;
+		font-size: 13px;
+		max-height: 10%;
+	}
+	.button{
+		vertical-align: middle;
+		height: 40px;
+		display: inline-block;
+	}
+	.button a{
+		-webkit-background-clip: padding-box;
+		-moz-background-clip: padding-box;
+		background-clip: padding-box;
+		border: 7px solid rgba(0,0,0,.3);
+		border-radius: 10px;
+		padding: 15px 30px;
+		background-color: #303437;
+		color: #a2a5aa;
+		display: block;
+		width: 205px;
+		font-weight: bold;
+		text-decoration: none;
+		text-align: center;
+	}
+	/*@media (max-width: 500px) { 
+		.login .logo {
+		  	padding: 1% 30%;
+		}
+		.test{
+	  	  	width: 90%;
+		}
+	}
+	@media (min-width: 500px) and (max-width: 768px){ 
+		.login .logo {
+		  	padding: 1% 30%;
+		}
+		.test{
+	  	  	width: 60%;
+		}
+	}
+	@media (min-width: 768px) and (max-width: 992px) {
+		.login .logo {
+		  	padding: 1% 34%;
+		}
+		.test{
+	  	  	width: 40%;
+		}
+	}
+	@media (min-width: 992px) and (max-width: 1200px) {
+		.login .logo {
+		  	padding: 1% 37%;
+		}
+		.test{
+	  	  	width: 30%;
+		}
+	}
+	@media (min-width: 1200px) {
+		.login .logo {
+		 	padding: 1% 37%;
+		}
+		.test{
+	  	  	width: 25%;
+		}
+	}*/
+	.btn-confix{
+		/*vertical-align: middle;*/
+		height: 20%;
+		/*display: inline-block;*/
+		width: 100%;
+		/*box-shadow: 10px 10px 5px #DDDDDD;*/
+		/*border-radius: 10px !important;*/
+	}
+	.a-confix{
+		-webkit-background-clip: padding-box;
+		-moz-background-clip: padding-box;
+		background-clip: padding-box;
+		border: 7px solid rgba(255, 255, 255, 1);
+		border-radius: 10px !important;
+		padding: 15px 30px;
+		background-color: #B31C43;
+		color: white;
+		display: block;
+		width: 100%;
+		font-weight: bold;
+		text-decoration: none;
+		/* height: 95%; */
+		height: 100%;
+		text-align: center;
+		/*margin-top: 15%;*/
+		/* display: table-cell; */
+		font-size: 17px;
+  		/*color: rgb(26, 43, 90);*/
+  		outline: none;
+	}
+</style>
 
+<div ui-view>
+	<div class="test">
+		<div class="btn-confix">
+			<button class="a-confix" ui-sref="security.rlobSponsor.emergency"><span style="position: relative;
+	  top: 19%;"><i style="font-size: 40px;" class="fa fa-user-md"></i></i>&nbsp;&nbsp;Emergency</span></button>
+	    </div>
+	    
+	    <div class="btn-confix">
+			<button class="a-confix" style="background-color: #238A41;margin-top: 10%;" ui-sref="security.rlobSponsor.nonemergency"><span style="  position: relative;
+	  top: 19%;"><i style="font-size: 40px;" class="fa fa-user-md"></i></i>&nbsp;&nbsp;Non - Emergency</span></button>
+	    </div>
+	</div>
+<div>

@@ -44,7 +44,9 @@ angular.module("app", [
     'opentok-whiteboard',
     'ui.mask',
     'app.sponsor1.controller',
-    'infinite-scroll'//tannv.dts@gmail.com	
+    'infinite-scroll',//tannv.dts@gmail.com	
+    'app.sponsor1.emergency.controller',
+    'app.sponsor1.nonemergency.controller'
     // 'angular-underscore'
 ])
 .factory('socket', function (socketFactory) {

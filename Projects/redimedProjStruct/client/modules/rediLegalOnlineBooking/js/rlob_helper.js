@@ -97,6 +97,10 @@ var rlobConstant={
         success:'success',
         error:'error'
     },
+    sponsorType:{
+        emergency:'EMERGENCY',
+        nonemergency:'NONEMERGENCY'
+    }
 }
 
 var exlog={

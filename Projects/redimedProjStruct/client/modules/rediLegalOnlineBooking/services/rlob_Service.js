@@ -328,6 +328,22 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/cln_specialties/edit-specialties');
             return result.post({SPECIALTIESNAME:SPECIALTIESNAME,SPECIALTIESTYPE:SPECIALTIESTYPE});
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //insert emergency
+        rlobService.insertEmergency=function(info)
+        {
+            var result=api.all('rlob/sponsor/insert-emergency');
+            return result.post({info:info});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //insert nonemergency
+        rlobService.insertNonEmergency=function(info)
+        {
+            var result=api.all('rlob/sponsor/insert-nonemergency');
+            return result.post({info:info});
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');
