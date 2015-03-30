@@ -1,11 +1,6 @@
 angular.module("app.sponsor1.emergency.controller",[])
 .controller('rlobEmergencyController',function($scope,FileUploader,rlobService,toastr){
-	// alert('aaaaaaaaa');
-       // $scope.showSelectPicture = function(){
-       // 		angular.element('#choose').click();
-       // }
-        // $scope.medicareno = null;
-        // $scope.medicareref = null;
+	
        $scope.geoLocation = function(){
             window.navigator.geolocation.getCurrentPosition(function(position) {
                 $scope.$apply(function() {
