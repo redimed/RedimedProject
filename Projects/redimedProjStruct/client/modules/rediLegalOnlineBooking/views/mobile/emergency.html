@@ -136,7 +136,7 @@ input:focus ~ .highlight {
   isplay: inline-block;
   vertical-align: baseline;
   width: 100% !important;
-  height: 120 !important;
+  /*height: 120 !important;*/
 }
 #map{
 	width: 100% !important;
@@ -323,16 +323,15 @@ input:focus ~ .highlight {
 		</div>
 		<div class="form-group">
 	        <div class="row">
-	        	<div style="margin-bottom: 35px;" class="col-md-12">
+	        	<div class="col-md-12">
               <button ng-click="showSelectPicture()" class="btn btn-success">Picture</button>
-    				  <input style="  opacity: 0;" id="choose" type="file" nv-file-select="" uploader="uploader" multiple  />
+    				  <input style=" opacity : 0;margin-bottom: 10px;" id="choose" type="file" nv-file-select="" uploader="uploader" multiple  />
+
             </div>
           <div class="col-md-12">
-              <div style="  width: 40%;height: 120px;float: left;margin-right: 20px;margin-bottom: 20px;" ng-repeat="item in uploader.queue">
-                  <div id="picture" ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"><canvas ng-style="width: 100%;"></canvas></div>
-                  <div>
-                      <button class="btn btn-danger" style="position: relative;top: -120px;border: none;outline: 0;padding: 5px 10px;" ng-click="item.remove()"><i class="fa fa-trash"></i></button>
-                  </div>
+              <div style="width: 100%;margin-right: 20px;margin-bottom: 20px;" ng-repeat="item in uploader.queue">
+              		<button class="btn btn-danger" style="position: relative;top: 25px;border: none;outline: 0;padding: 5px 10px;" ng-click="item.remove()"><i class="fa fa-trash"></i></button>
+                  <div id="picture" ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 500 }"><canvas ng-style="width: 100%;"></canvas></div>
               </div>
             </div>
           </div>
@@ -426,8 +425,8 @@ input:focus ~ .highlight {
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-		        <div style="width: 40%;height: 120px;float: left;margin-right: 20px;margin-bottom: 20px;" ng-repeat="item in uploader.queue">
-		            <div id="picture" ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }">
+		        <div style="width: 100%;margin-right: 20px;margin-bottom: 20px;" ng-repeat="item in uploader.queue">
+		            <div id="picture" ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 500 }">
 		            	<canvas></canvas>
 		            </div>
 		        </div>
