@@ -30,6 +30,16 @@ h2 small {
 }
 .confix-input:focus 		{ outline:none; }
 
+.confix-input-no 				{
+  /*font-size:18px;*/
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:100%;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+.confix-input-no:focus 		{ outline:none; }
+
 /* LABEL ======================================= */
 .confix-label 				 {
   color:#999; 
@@ -44,8 +54,19 @@ h2 small {
   -webkit-transition:0.2s ease all;
 }
 
+.confix-input-no:focus ~ label {
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+.color-label{
+	top:-20px !important;
+  	font-size:14px !important;
+  	color:#5264AE !important;
+}
+
 /* active state */
-.confix-input:focus ~ label, input:valid ~ label 		{
+.confix-input:focus ~ label, .confix-input:valid ~ label {
   top:-20px;
   font-size:14px;
   color:#5264AE;
@@ -251,7 +272,7 @@ input:focus ~ .highlight {
 						{{info.CONTACT_NO}} 
 					</span>
 				</li>
-				<li>
+				<li ng-show="info.MEDICARE_NO != null && info.MEDICARE_NO !=''">
 					<span class="sale-info">
 						Medicare No <i class="fa fa-img-down"></i>
 					</span>
@@ -259,12 +280,12 @@ input:focus ~ .highlight {
 						{{info.MEDICARE_NO}} 
 					</span>
 				</li>
-				<li>
+				<li ng-show="info.MEDICARE_REF !=null && info.MEDICARE_REF !=''">
 					<span class="sale-info">
-						Medicare No <i class="fa fa-img-down"></i>
+						Medicare Ref <i class="fa fa-img-down"></i>
 					</span>
 					<span class="sale-num">
-						{{info.MEDICARE_NO}} 
+						{{info.MEDICARE_REF}} 
 					</span>
 				</li>
 				<li>
@@ -397,29 +418,27 @@ input:focus ~ .highlight {
                 </div>
 	        </div>
 		</div>		
-		<div class="form-group" show-errors='{showSuccess: true}'>
+		<div class="form-group">
 	        <div class="row">
 	        	<div class="col-md-12">
                     <div class="group">      
-						<input ng-model="medicareno" id="medicareno" name="mediacareno" class="confix-input" type="text" required>
+						<input ng-model="medicareno" id="medicareno" name="mediacareno" class="confix-input-no" type="text" ng-blur="setColorMedicareNo()">
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Medicare No <span style="color: red;">*</span></label>
+						<label id="medicareno-confix" class="confix-label">Medicare No </label>
 					</div>
-					<span class="help-block pull-right" if="FormNonemergency.medicareno.$error.required">Medicare no is required!</span>
                 </div>
 	        </div>
 		</div>
-		<div class="form-group" show-errors='{showSuccess: true}'>
+		<div class="form-group">
 	        <div class="row">
 	        	<div class="col-md-12">
                     <div class="group">      
-						<input ng-model="medicareref" id="medicareref" name="medicareref" class="confix-input" type="text" required>
+						<input ng-model="medicareref" id="medicareref" name="medicareref" class="confix-input-no" type="text" ng-blur="setColorMedicareRef()">
 						<span class="highlight"></span>
 						<span class="bar"></span>
-						<label class="confix-label">Medicare Ref <span style="color: red;">*</span></label>
+						<label id="medicareref-confix" class="confix-label">Medicare Ref </label>
 					</div>
-					<span class="help-block pull-right" if="FormNonemergency.medicareref.$error.required">Medicare no is required!</span>
                 </div>
 	        </div>
 		</div>

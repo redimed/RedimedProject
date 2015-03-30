@@ -26,7 +26,7 @@ module.exports =
         var CAL_ID=kiss.checkData(req.body.info.CAL_ID)?req.body.info.CAL_ID:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
         // console.log(req.body.info.ADD);
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,MEDICARE_NO,MEDICARE_REF,TYPE_NAME,INJURY,CAL_ID))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY,CAL_ID))
         {
             kiss.exlog('insertNonEmergency',"Loi data truyen den");
             res.json({status:'fail'});
@@ -79,7 +79,7 @@ module.exports =
         var LONGITUDE=kiss.checkData(req.body.info.LONGITUDE)?req.body.info.LONGITUDE:null;
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,MEDICARE_NO,MEDICARE_REF,TYPE_NAME,INJURY))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY))
         {
             kiss.exlog('insertEmergency',"Loi data truyen den");
             res.json({status:'fail'});

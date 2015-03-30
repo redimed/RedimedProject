@@ -4,8 +4,8 @@ angular.module("app.sponsor1.emergency.controller",[])
        // $scope.showSelectPicture = function(){
        // 		angular.element('#choose').click();
        // }
-        $scope.Lat = null;
-        $scope.Lng = null;
+        // $scope.medicareno = null;
+        // $scope.medicareref = null;
        $scope.geoLocation = function(){
             window.navigator.geolocation.getCurrentPosition(function(position) {
                 $scope.$apply(function() {
@@ -172,5 +172,19 @@ angular.module("app.sponsor1.emergency.controller",[])
                     }
                 }
             });
+        }
+        $scope.setColorMedicareRef = function(){
+            if ($scope.medicareref != null && $scope.medicareref != '') {
+                $('#medicareref-confix').addClass('color-label');
+            }else{
+                $('#medicareref-confix').removeClass('color-label');
+            }
+        }
+        $scope.setColorMedicareNo = function(){
+            if ($scope.medicareno != null && $scope.medicareno != '') {
+                $('#medicareno-confix').addClass('color-label');
+            }else{
+                $('#medicareno-confix').removeClass('color-label');
+            }
         }
 })
