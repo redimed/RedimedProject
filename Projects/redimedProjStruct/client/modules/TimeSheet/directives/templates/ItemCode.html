@@ -146,11 +146,11 @@
                     </tr>
                     </tbody>
                     </table>
-                    <footer class="table-footer " ng-show="listNode.result!==null || (listNode.result.length!==0 && listNode.result!==null)">
+                    <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                         <div class="row ">
                             <div class="col-ms-6 page-num-info ">
                                 <div class="col-md-4 col-sm-5 ">
-                                    <span class="bold custom-timesheet">Total: {{listNode.count}}</span>
+                                    <span class="bold custom-timesheet">Total: {{list.count}}</span>
                                     <span class="custom-timesheet">Show</span>
                                     <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
                                     </select>
