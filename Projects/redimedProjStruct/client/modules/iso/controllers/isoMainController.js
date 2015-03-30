@@ -185,7 +185,8 @@ angular.module('app.loggedIn.iso.main.controller',[])
             viewYourRequest:{name:'viewYourRequest',url:'iso_view_your_request.html',header:'Your Requests'},
             viewAllRequest:{name:'viewAllRequest',url:'iso_view_all_request.html',header:'All Requests'},
             forceCheckInDocument:{name:'forceCheckInDocument',url:'iso_force_check_in_document.html',header:'Force Check In Document'},
-            createNewCheckInDocument:{name:'createNewCheckInDocument',url:'iso_create_new_check_in_document.html',header:'Create New Check In Document (skip Check Out)'}
+            createNewCheckInDocument:{name:'createNewCheckInDocument',url:'iso_create_new_check_in_document.html',header:'Create New Check In Document (skip Check Out)'},
+            renameNode:{name:'renameNode',url:'iso_rename_node_template.html',header:'Rename'}
         };
         //action hien tai dang dc thao tac
         $scope.currentTreeAction={};
@@ -289,7 +290,9 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 case $scope.treeActions.createNewCheckInDocument.name:
                     $scope.currentTreeAction=$scope.treeActions.createNewCheckInDocument;
                     break;
-
+                case $scope.treeActions.renameNode.name:
+                    $scope.currentTreeAction=$scope.treeActions.renameNode;
+                    break;
             }
             $("#iso-tree-actions-menu-popup").modal('hide');
             $("#iso-tree-action-content-popup").modal({show:true,backdrop:'static'});
@@ -1221,6 +1224,10 @@ angular.module('app.loggedIn.iso.main.controller',[])
             isoService.checkOutIn.downloadSpecificCheckIn(item.NODE_ID,item.ID);
         }
 
+        $scope.changeNodeName=function()
+        {
+            
+        }
     })
 
 
