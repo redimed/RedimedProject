@@ -73,16 +73,26 @@ angular.module("app.security",[
          }
      }
     })
-    .state("security.rlobMobile", {
-     url: "/rlob-mobile",
+    .state("security.rlobSponsor", {
+     url: "/rlob-sponsor",
      views: {
          "main-content": {
                 templateUrl: "/modules/rediLegalOnlineBooking/views/mobile/sponsor1.html",
                 controller:'rlobSponsor1Controller'
-         }
-     }
+            }
+        }
+    }) 
+    .state("security.rlobSponsor.emergency", {
+        url: "/emergency",
+        templateUrl: "/modules/rediLegalOnlineBooking/views/mobile/emergency.html",
+        controller:'rlobEmergencyController'
     })
-
+    .state("security.rlobSponsor.nonemergency", {
+        url: "/nonemergency",
+        templateUrl: "/modules/rediLegalOnlineBooking/views/mobile/nonemergency.html",
+        controller:'rlobNonEmergencyController'
+    })
+    
     //REDIRECT
     .state("security.redirect", {
         url: "/redirect/:userId/:patient_id",
