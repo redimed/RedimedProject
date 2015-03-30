@@ -77,7 +77,9 @@ angular.module("app.loggedIn", [
     //MODULE CONSULTATION
     'app.loggedIn.consult',
 
-    'app.loggedIn.claim'
+    'app.loggedIn.claim',
+
+    'app.loggedIn.medicine'
 
 ])
 
