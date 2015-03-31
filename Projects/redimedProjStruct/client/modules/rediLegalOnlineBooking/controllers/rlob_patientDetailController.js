@@ -526,6 +526,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
             rlobService.core.saveBookingInfo($scope.newBooking)
             .then(function(data){
+
                 if (data.status == 'success') {
                     $scope.scrollTo($('.bookingSuccess'),-200);
                     bookingService.setBookingInfo($scope.newBooking);
@@ -535,6 +536,10 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                     $scope.getAppointmentCalendarUpcoming();
                     //Gui email confirm  cho khach hang
                     $scope.sendConfirmEmail();
+                    for(var i=0;i<data.data.length;i++)
+                    {
+                        JSON.stringify(data.data[i]);
+                    }
                 }
                 else
                 {

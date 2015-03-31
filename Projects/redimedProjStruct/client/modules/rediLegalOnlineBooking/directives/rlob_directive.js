@@ -617,7 +617,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //Khoi tao data paginator
                 if($scope.bookingType=='REDiLEGAL')
                 {
-                    $scope.selectedFilter.var1=moment().add(14,'day');
+                    // $scope.selectedFilter.var1=moment().add(14,'day');
+                    $scope.selectedFilter.var1=moment().add(60,'day');
                 }
                 else
                 {

@@ -147,7 +147,7 @@ app.get('/api/rlob/register/get-states', rlRegisterController.getStates);
 
 app.post('/api/rlob/core/get-list-appointment-after-time', rlobController.getListAppointmentAfterTime);
 // app.post('/api/rlob/core/handle-periodtime-appointment-calendar', rlobController.handlePeriodTimeAppointmentCalendar);
-app.post('/api/rlob/core/save-booking-info', rlobController.saveBookingInfo);
+app.post('/api/rlob/core/save-booking-info', rlobController.handlePeriodTimeAppointmentCalendar);
 
 //phanquocchien.c1109g@gmail.com
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);
