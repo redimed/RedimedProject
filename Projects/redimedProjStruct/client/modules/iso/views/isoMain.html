@@ -80,6 +80,16 @@
                             Create Folder
                         </button>
 
+                        <div class='iso-action-group iso_action_type3'>
+                        <button 
+                            ng-show="permissionFunction[selectedTreeNode.PERMISSION].renameNode"
+                            type="button" 
+                            class="btn btn-default iso_action_button"
+                            ng-click="showTreeActionContentPopup(treeActions.renameNode.name);">
+                            Rename Folder
+                            </button>
+                        </div>
+
                         <button
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].deleteFolder"
                             type="button" 
@@ -117,6 +127,8 @@
                             Create Document
                         </button>
                     </div>
+
+                    
                     
                 </div>
 
@@ -188,6 +200,15 @@
                     </div>
 
                     <div class='iso-action-group iso_action_type2'>
+                        <div class='iso-action-group iso_action_type3'>
+                            <button 
+                                ng-show="permissionFunction[selectedTreeNode.PERMISSION].renameNode"
+                                type="button" 
+                                class="btn btn-default iso_action_button"
+                                ng-click="showTreeActionContentPopup(treeActions.renameNode.name);">
+                                Rename Document
+                            </button>
+                        </div>
                         <button 
                             ng-show="permissionFunction[selectedTreeNode.PERMISSION].deleteDocument"
                             type="button" 
