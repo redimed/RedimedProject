@@ -15,5 +15,9 @@ angular.module("app.loggedIn.consult.services",[])
 			return api.all('consultation/patient/company').post({patient_id: patientId});
 		}
 
+		services.searchScript = function(info){
+			return api.all('erm/v2/medicine/search').post({search: info});
+		}
+
 		return services;
 	})

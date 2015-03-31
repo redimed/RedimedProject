@@ -28,7 +28,8 @@
 	                        <div class="form-group">
 	                            <label class="bold control-label col-md-2 col-sm-2">Medication:</label>
 	                            <div class="col-md-10 col-sm-10">
-	                                <input ng-model="scriptInfo.medication" type="text" class="form-control" />
+	                               <!--  <input ng-change="searchScript(scriptInfo.medication)" ng-model="scriptInfo.medication" type="text" class="form-control" /> -->
+	                               <div angucomplete id="ex2" placeholder="Search people" pause="300" selectedobject="selectedPerson" localdata="people" searchfields="firstName,surname" titlefield="firstName,surname" descriptionfield="twitter" minlength="1" inputclass="form-control form-control-small"/>
 	                            </div>
 	                        </div>
 	                    </div>
