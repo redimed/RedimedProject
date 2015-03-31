@@ -88,9 +88,8 @@ angular.module("app.loggedIn.iso.grantUserPermission.directive", [])
                     });
                 }
                 $scope.$watchCollection('selectedTreeNode',function(newValues,oldValues){
-                    if($scope.selectedTreeNode && $scope.selectedTreeNode.NODE_ID)
+                    if($scope.selectedTreeNode)
                     {
-                        // alert("ok");
                         $scope.refreshNodePermission();
                     }
                     
