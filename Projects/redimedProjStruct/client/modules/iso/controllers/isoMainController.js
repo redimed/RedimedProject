@@ -185,7 +185,8 @@ angular.module('app.loggedIn.iso.main.controller',[])
             viewYourRequest:{name:'viewYourRequest',url:'iso_view_your_request.html',header:'Your Requests'},
             viewAllRequest:{name:'viewAllRequest',url:'iso_view_all_request.html',header:'All Requests'},
             forceCheckInDocument:{name:'forceCheckInDocument',url:'iso_force_check_in_document.html',header:'Force Check In Document'},
-            createNewCheckInDocument:{name:'createNewCheckInDocument',url:'iso_create_new_check_in_document.html',header:'Create New Check In Document (skip Check Out)'}
+            createNewCheckInDocument:{name:'createNewCheckInDocument',url:'iso_create_new_check_in_document.html',header:'Create New Check In Document (skip Check Out)'},
+            renameNode:{name:'renameNode',url:'iso_rename_node_template.html',header:'Rename'}
         };
         //action hien tai dang dc thao tac
         $scope.currentTreeAction={};
@@ -289,7 +290,10 @@ angular.module('app.loggedIn.iso.main.controller',[])
                 case $scope.treeActions.createNewCheckInDocument.name:
                     $scope.currentTreeAction=$scope.treeActions.createNewCheckInDocument;
                     break;
-
+                case $scope.treeActions.renameNode.name:
+                    $scope.currentTreeAction=$scope.treeActions.renameNode;
+                    $scope.newName={value:$scope.selectedTreeNode.NODE_NAME};
+                    break;
             }
             $("#iso-tree-actions-menu-popup").modal('hide');
             $("#iso-tree-action-content-popup").modal({show:true,backdrop:'static'});
@@ -487,20 +491,23 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,isoLang.createDocumentSuccess);
                     if(!$scope.selectedTreeNode.nodes)
                     {
+                    
                         $scope.selectedTreeNode.nodes={};
                     }
-                    $scope.selectedTreeNode.nodes[data.data.NODE_ID]=angular.copy(response.data);
+                    $scope.selectedTreeNode.nodes[response.data.NODE_ID]=angular.copy(response.data);
                     if($scope.selectedTreeNode.DEPARTMENT_ID==null)
                     {
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.newDocument.department.DEPARTMENT_ID;
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.newDocument.department.DEPARTMENT_NAME;
+                    
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_ID=$scope.newDocument.department.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_NAME=$scope.newDocument.department.DEPARTMENT_NAME;
                     }
                     else
                     {
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
-                        $scope.selectedTreeNode.nodes[data.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
+                      
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_ID=$scope.selectedTreeNode.DEPARTMENT_ID;
+                        $scope.selectedTreeNode.nodes[response.data.NODE_ID].DEPARTMENT_NAME=$scope.selectedTreeNode.DEPARTMENT_NAME;
                     }
-                    $scope.selectedTreeNode.nodes[data.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[data.data.NODE_ID].NODE_NAME;
+                    $scope.selectedTreeNode.nodes[response.data.NODE_ID].relativePath=$scope.selectedTreeNode.relativePath+"\\"+$scope.selectedTreeNode.nodes[response.data.NODE_ID].NODE_NAME;
                 }
                 else
                 {
@@ -690,6 +697,7 @@ angular.module('app.loggedIn.iso.main.controller',[])
                         }
                     }
                     deletex($scope.selectedTreeNode);
+                    $scope.getTreeDir();
                 }
                 else
                 {
@@ -1218,6 +1226,37 @@ angular.module('app.loggedIn.iso.main.controller',[])
             isoService.checkOutIn.downloadSpecificCheckIn(item.NODE_ID,item.ID);
         }
 
+        $scope.newName={value:''};
+        $scope.changeNodeName=function()
+        {
+            if ($scope.actionContentForm.$valid)
+            {
+                isoService.treeDir.renameNode($scope.selectedTreeNode.NODE_ID,$scope.selectedTreeNode.NODE_NAME,$scope.newName.value)
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,'Rename success!');
+                        $scope.getTreeDir();
+                    }   
+                    else
+                    {
+                        msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Rename fail!');
+                    }
+
+                },function(err){
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Rename fail!');
+                })
+                .then(function(){
+                    $("#iso-tree-action-content-popup").modal('hide');
+                    $scope.newName={value:''};
+                })
+            }
+            else
+            {
+
+            }
+            
+        }
     })
 
 

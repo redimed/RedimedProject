@@ -8,6 +8,7 @@ var isoCheckInOutController=require('./isoCheckInOutController');
 var cookieParser = require('cookie-parser');
 var Archiver = require('Archiver');
 var rimraf = require('rimraf');
+var kiss=require('../kissUtilsController');
 
 
 function cleanTempFolder(path)
@@ -23,6 +24,82 @@ function cleanTempFolder(path)
             isoUtil.exlog('clean temp folder success');
         }
     });
+}
+
+var renameNode=function(req,res)
+{
+    if(isoUtil.checkUserPermission(req,isoUtil.isoPermission.create)===false)
+    {
+        res.json({status:'fail'});
+        return;
+    }
+
+    var nodeId=kiss.checkData(req.body.nodeId)?req.body.nodeId:'';
+    var oldName=kiss.checkData(req.body.oldName)?req.body.oldName:'';
+    var newName=kiss.checkData(req.body.newName)?req.body.newName:'';
+    kiss.exlog(req.body)
+    if(!kiss.checkListData(nodeId,oldName,newName))
+    {
+        kiss.exlog("renameNode","loi data truyen den");
+        res.json({status:'fail'});
+    }
+    var sql="UPDATE `iso_tree_dir` SET ? WHERE `NODE_ID`=?";
+    kiss.exlog(req.body)
+    var updateData={
+        NODE_NAME:newName
+    }
+    kiss.beginTransaction(req,function(){
+        kiss.executeQuery(req,sql,[updateData,nodeId],function(result){
+            var sql =
+                " SELECT treeDir.`NODE_NAME`                                                      "+
+                " FROM `iso_node_ancestor` ancestor                                               "+
+                " INNER JOIN `iso_tree_dir` treeDir ON ancestor.`ANCESTOR_ID`=treeDir.`NODE_ID`   "+
+                " WHERE ancestor.`NODE_ID`=?   AND  ancestor.`ISENABLE`=1                         "+
+                " ORDER BY ancestor.`ANCESTOR_ID` ASC                                             ";
+            kiss.executeQuery(req,sql,[nodeId],function(data){
+                var relativePath = '.';
+                data.forEach(function(path){
+                    relativePath += '/'+path.NODE_NAME;
+                });
+                var oldPath=relativePath+'/'+oldName;
+                var newPath=relativePath+'/'+newName;
+                fs.rename(oldPath, newPath, function (err) 
+                {
+                    if(err)
+                    {
+                        kiss.exlog("renameNode","Khong the rename thu muc",err);
+                        kiss.rollback(req,function(){
+                            res.json({status:'fail'});
+                        })
+                    }
+                    else
+                    {
+                        kiss.commit(req,function(){
+                            res.json({status:'success'});
+                        },function(err){
+                            res.json({status:'fail'});
+                        })
+                    }
+                    
+                });
+            },function(err){
+                kiss.log("renameNode","loi lay ancestor",err);
+                kiss.rollback(req,function(){
+                    res.json({status:'fail'});
+                });
+            });
+            
+        },function(err){
+            kiss.exlog("renameNode","Loi insert newName vao database",err);
+            kiss.rollback(req,function(){
+                res.json({status:'fail'});
+            })
+        });
+    },function(err){
+        kiss.exlog("renameNode","Khong the mo transaction",err);
+        res.json({status:'fail'});
+    });
+    
 }
 
 module.exports =
@@ -674,23 +751,44 @@ module.exports =
             "               WHERE ancestor.`ANCESTOR_ID`=? AND ancestor.`ISENABLE`=1                                            "+
             "           )                                                                                                       "+
             "   OR treeDir.`NODE_ID`=?                                                                                          ";
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(sql,[userId,lastUpdatedDate,nodeId,nodeId],function(err,rows)
-            {
-                if(err)
-                {
-                    isoUtil.exlog({status:'fail',msg:err});
+        
+        kiss.beginTransaction(req,function(){
+            kiss.executeQuery(req,sql,[userId,lastUpdatedDate,nodeId,nodeId],function(result){
+                var sql="SELECT * FROM `iso_tree_dir` WHERE `NODE_ID`=?";
+                kiss.executeQuery(req,sql,[nodeId],function(data){
+                    if(data.length>0)
+                    {
+                        var oldName=data[0].NODE_NAME;
+                        var newName=data[0].NODE_NAME+" --remove on "+moment().format("HH.mm.ss DD-MM-YYYY");
+                        req.body.oldName=oldName;
+                        req.body.newName=newName;
+                        renameNode(req,res);
+                    }
+                    else
+                    {
+                        kiss.exlog("deleteNode","khong co node nao ton tai");
+                        kiss.rollback(req,function(){
+                            res.json({status:'fail'});
+                        })
+                    }
+                },function(err){
+                    kiss.exlog("deleteNode","Loi khong select duoc node",err);
+                    kiss.rollback(req,function(){
+                        res.json({status:'fail'});
+                    })
+                });
+            },function(err){
+                kiss.exlog("deleteNode","Loi update isEnable",err);
+                kiss.rollback(req,function(){
                     res.json({status:'fail'});
-                }
-                else
-                {
-                    isoUtil.exlog(rows);;
-                    res.json({status:'success'});
-                }
-            });
-            isoUtil.exlog(query.sql);
-        }); 
+                })
+            })
+        },function(err){
+            kiss.exlog("deleteNode","Khong the mo transaction")
+            res.json({status:'fail'});
+        })
+
+        
     },
 
     /**
@@ -1184,5 +1282,11 @@ module.exports =
             });
             isoUtil.exlog(query.sql);
         }); 
-    }
+    },
+
+    /**
+     * Thay doi ten node
+     * tannv.dts@gmail.com
+     */
+    renameNode:renameNode
 }

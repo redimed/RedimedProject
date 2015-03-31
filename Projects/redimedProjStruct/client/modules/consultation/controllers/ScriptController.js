@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.consult.script.controller",[])
-	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,$stateParams, script){
+	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, script){
 		$scope.scriptInfo = {
 			medication: null,
 			strength: null,
@@ -15,6 +15,8 @@ angular.module("app.loggedIn.consult.script.controller",[])
 			category: null
 		};
 
+		$scope.selectedPerson = null;
+
 		if(script != null)
 			$scope.scriptInfo = angular.copy(script);
 
@@ -23,8 +25,37 @@ angular.module("app.loggedIn.consult.script.controller",[])
 		}
 
 		$scope.okClick = function(){
+			console.log($scope.selectedPerson);
 			$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 		}
+
+		$scope.searchScript = function(name){
+			ConsultationService.searchScript({medicine_name: name}).then(function(rs){
+				console.log(rs);
+			})
+		}
+
+		$scope.people = [
+            {firstName: "Daryl", surname: "Rowland", twitter: "@darylrowland"},
+            {firstName: "Alan", surname: "Partridge", twitter: "@alangpartridge"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
+            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"}
+        ];
+
+        
 
 	})
 

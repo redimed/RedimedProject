@@ -523,7 +523,7 @@ module.exports =
             " SELECT dep.`departmentid` AS DEPARTMENT_ID,                                                 "+   
             " redi.`id` AS SITE_ID,CONCAT(redi.`Site_name`,' - ',dep.`departmentName`) AS DEPARTMENT_NAME "+   
             " FROM `departments` dep INNER JOIN `redimedsites` redi ON dep.`locationID`=redi.`id`         "+   
-            " WHERE dep.`departmentType`=?                                                                ";
+            " WHERE dep.`departmentType`=? order by DEPARTMENT_NAME ASC                                                                ";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,isoUtil.departmentType,function(err,rows)

@@ -1,19 +1,33 @@
 angular.module("app.loggedIn.consult.directives",[])
-	.directive('consultDrawing', function ($window,Restangular, ConfigService, $timeout) {
+	.directive('consultDrawing', function ($window,Restangular, ConfigService, $timeout, toastr, socket) {
 	    return {
 	        restrict: 'E',
+	        scope: {
+	        	images: '=',
+	        	patient: '=',
+	        	calling: '=',
+	        	callee: '='
+	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {
 	            var canvas = element.context.querySelector("canvas");
-	            var container = element.context.querySelector("#divCanvas");
+	            var imageLoader = element.context.querySelector("#imageLoader");
 	            var ctx = canvas.getContext("2d");
 	            var drawing = false;
 	            var lastX;
 	      		var lastY;
-	      		var isDrag = false;
-				var isResizeDrag = false;
-				var expectResize = -1;
-				var mx, my;
+
+	      		scope.isCalling = false;
+	      		scope.callUser = null;
+
+	      		scope.$watch('calling',function(val){
+  					scope.isCalling = val;
+	      		})
+
+	      		scope.$watch('callee',function(val){
+	      			if(val != null)
+	      				scope.callUser = val;
+	      		})
 
 	            scope.colors = [{'color': 'blue-ebonyclay'},
 	            				{'color': 'green'},
@@ -80,11 +94,7 @@ angular.module("app.loggedIn.consult.directives",[])
 		            	})
 	            	}
 	            }
-
-	            scope.uploadImage = function(image){
-	                loadImage(image);
-	            };
-	            
+          
 	            scope.changeColor = function (c) {
 	            	if(c == 'blue-ebonyclay')
 		                scope.color = 'black';
@@ -106,7 +116,18 @@ angular.module("app.loggedIn.consult.directives",[])
 	            };
 	            
 	            scope.capture = function () {
-	                window.open(canvas.toDataURL('image/png'));
+	                var imgData = canvas.toDataURL('image/png');
+	                
+	                Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, imgData: imgData}).then(function(rs){
+	                	if(rs.status == 'success')
+	                	{
+	                		scope.images.push(rs.id);
+	                		socket.emit("shareImage",rs.id,scope.callUser);
+	                		toastr.success("Success!");
+	                	}
+	                	else
+	                		toastr.error("Error!");
+	                })
 	            };
 
 	            var draw = function(lX, lY, cX, cY)
@@ -119,6 +140,18 @@ angular.module("app.loggedIn.consult.directives",[])
 			        ctx.lineTo(cX,cY);
 			        ctx.stroke();
 	            }
+
+	            angular.element(imageLoader).on('change',function(e){
+	            	var reader = new FileReader();
+				    reader.onload = function(event){
+				        var img = new Image();
+				        img.onload = function(){
+				            ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+				        }
+				        img.src = event.target.result;
+				    }
+				    reader.readAsDataURL(e.target.files[0]); 
+	            });
 
 	            angular.element(canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', 
 	              function (event) {

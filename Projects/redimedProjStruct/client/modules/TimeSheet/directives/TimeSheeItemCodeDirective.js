@@ -10,9 +10,9 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
             },
             link: function(scope, elem, attrs) {
                 scope.$watch('ngModel', function(newModel, oldModel) {
-                    if (newModel !== undefined && newModel.item !== undefined) {
+                    if (newModel !== undefined && newModel.item !== undefined && newModel.item.length !== 0) {
                         angular.forEach(newModel.item, function(item, index) {
-                            if (item !== undefined && item.deleted === 0) {
+                            if (item !== undefined && item.deleted !== 1) {
                                 scope.items.push(item);
                             }
                         });

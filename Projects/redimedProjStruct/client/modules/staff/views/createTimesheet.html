@@ -23,7 +23,7 @@
             <span ng-hide='isEdit'>Create New Timesheet</span>
             <span ng-hide='!isEdit'>Edit Timesheet</span>
         </div>
-        <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="checkTimeInLieu()" style="margin-top:10px;width:103px;">Check Time in Lieu</a>
+        <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="checkTimeInLieu()" style="margin-top:10px;">Check Time in Lieu</a>
         <a class="btn pull-right btn-xs">
             <label for="weekFrom" style="color:white;margin-top:9px;">Week From</label>
             <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black; font-weight:bold; font-size:13px;" />
@@ -97,7 +97,7 @@
                         </td>
                         <td style="vertical-align: middle">{{task.date | date : 'EEE, dd MMM'}}</td>
                         <td style="width: 16%">
-                            <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities">
+                            <select style="font-size: 12px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME group by activity.type_name for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
                                 <option value="">--Select Activity--</option>
                             </select>
                         </td>
@@ -117,7 +117,7 @@
                             <input ng-disabled="task.activity_id != 1 || task.activity_id === 18" style="margin-left: 28px; margin-top:5px;" type="checkbox" class="checkbox center" ng-model="task.isInputItem" ng-true-value="1" ng-false-value="0" ng-checked="task.isInputItem==1" />
                         </td>
                         <td style="width: 2%" style="text-align: center">
-                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge(task)" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="task.activity_id === 18||task.isInputItem==1" class="form-control input-sm">
+                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;width: 100%" ng-disabled="task.activity_id === 18||task.isInputItem==1|| task.activity_id===null ||task.activity_id===undefined || task.activity_id===''" class="form-control input-sm">
                         </td>
                         <td style="width: 20%">
                             <input type="text" ng-disabled="task.isInputItem==1 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
@@ -125,7 +125,7 @@
                         </td>
                         <td style="text-align:center;">
                             <span ng-disabled="task.isInputItem==0 || task.activity_id === 18 || task.activity_id === 15 || task.activity_id === 16 || 
-                            task.activity_id === 17 || task.activity_id === 19 || task.isInputItem!=1" ng-click="chooseItem(task)" class="btn btn-xs blue-dark" style="margin-top:3px;margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
+                            task.activity_id === 17 || task.activity_id === 19 || task.isInputItem!=1" ng-click="chooseItem(task)" class="btn btn-xs blue-dark" style="margin-left:5px;"><i class="fa fa-search"></i>&nbsp; Choose Item</span>
                         </td>
                     </tr>
                     <tr>
@@ -136,23 +136,23 @@
                             <input disabled class="form-control input-sm" ui-mask="99:99" ng-model="info.time_charge" style="text-align:center;" />
                         </td>
                         <td colspan="2">
-                            <!-- BUTTON -->
-                            <!-- BUTTON WHEN ADDNEW -->
-                            <!-- BUTTON WHEN EDIT -->
-                            <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.TimeSheetHome" style="width:70px;margin-top:3px;">Cancel</a>
-                            <!-- END EDIT-->
-                            <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheet.view" style="width:70px;margin-top:3px;">Cancel</a>
-                            <a class="btn btn-xs green pull-right" ng-show="!isEdit || checkStatus===1" ng-click="addAllTask(2)" style="width:70px;margin-top:3px;">Submit</a>
-                            <a class="btn btn-xs purple pull-right" ng-show="isEdit && checkStatus!==1" ng-click="addAllTask(5)" style="width:70px;margin-top:3px;">Re-submit</a>
-                            <a class="btn btn-xs blue pull-right" ng-click="addAllTask(1)" style="width:70px;margin-top:3px;">Save</a>
-                            <!-- END ADDNEW-->
-                            <!-- END -->
                         </td>
                     </tr>
-                    <!-- <td colspan="10"> -->
-                    <!-- </td> -->
                 </tbody>
             </table>
+            <footer class="table-footer">
+                <!-- BUTTON -->
+                <!-- BUTTON WHEN ADDNEW -->
+                <!-- BUTTON WHEN EDIT -->
+                <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.TimeSheetHome" style="width:70px;">Cancel</a>
+                <!-- END EDIT-->
+                <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheet.view" style="width:70px;">Cancel</a>
+                <a class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2)" style="width:70px;">Submit</a>
+                <a class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5)" style="width:70px;">Re-submit</a>
+                <a class="btn btn-xs blue pull-right" ng-click="addAllTask(1)" style="width:70px;">Save</a>
+                <!-- END ADDNEW-->
+                <!-- END -->
+            </footer>
         </div>
     </div>
 </div>

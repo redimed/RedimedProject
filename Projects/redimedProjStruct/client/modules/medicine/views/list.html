@@ -1,0 +1,41 @@
+<h1>Medicine List</h1>
+
+<div class="portlet box green ng-scope">
+	<div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-person"></i> Medicine List
+        </div>
+        <div class="pull-right navbar-right">
+            <!-- Single button -->
+              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="medicineAddForm.open()">
+                  <i class="fa fa-plus"></i>	Add medicine
+              </button>
+        </div>
+    </div>
+
+    <div class="portlet-body">
+    	<my-data-table options="medicine.options" numrows="10"></my-data-table>
+    </div>
+</div>
+
+<!--MEDICINE ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="medicineAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="medicineAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <medicine-detail options="options" onsuccess="medicineAddForm.success" />
+</div>
+<!--END MEDICINE ADD FORM-->
+
+<!--MEDICINE EDIT FORM-->
+<div class="mdt-search" style="display: block;" ng-if="medicineEditForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="medicineEditForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <medicine-detail options="options" onsuccess="medicineEditForm.success" data="{id:'{{medicine.id}}'}"/>
+</div>
+<!--END MEDICINE EDIT FORM-->

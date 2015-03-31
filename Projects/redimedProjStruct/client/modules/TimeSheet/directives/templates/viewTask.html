@@ -63,7 +63,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-show="l.sumDATE!==0">
+                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-hide="(l.sumDATE===0 && l.activity_id !==18)">
                                 <td class="btn btn-xs" style="text-align:left;">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
                                 <td class="btn btn-xs">{{(l.AC[1]!==undefined && l.AC[1]!==0)?(l.AC[1] | customHours):"-"}}</td>
                                 <td class="btn btn-xs">{{(l.AC[2]!==undefined && l.AC[2]!==0)?(l.AC[2] | customHours):"-"}}</td>

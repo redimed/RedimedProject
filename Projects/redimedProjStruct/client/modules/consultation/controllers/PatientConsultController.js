@@ -1,29 +1,50 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($filter,$cookieStore,$scope,$state,$modal,toastr,socket,$stateParams,ConsultationService,PatientService){
-		var patient_id = $stateParams.patient_id;
-		var cal_id = $stateParams.cal_id;
+	.controller("PatientConsultController",function($filter,$window,$document,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,$stateParams,ConsultationService,PatientService,UserService){
+		$scope.patient_id = $stateParams.patient_id;
+		$scope.cal_id = $stateParams.cal_id;
+		$scope.userInfo = $cookieStore.get('userInfo');
 
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		$scope.patientInfo = {};
+		$scope.companyInfo = {};
 		$scope.problemArr = [];
 
 		$scope.isMeasure = false;
 		$scope.isScript = false;
 
 		$scope.consultInfo = {
-			patient_id: patient_id,
-			cal_id: cal_id,
+			patient_id: $scope.patient_id,
+			cal_id: $scope.cal_id,
 			problem_id: null,
 			history: null,
 			examination: null,
 			treatment: null,
 			diagnosis: null,
 			measurements: [],
-			scripts: []
+			scripts: [],
+			images: []
 		}
 
-		PatientService.get(patient_id).then(function(rs){
+	    $scope.refreshList = function(){
+	    	refresh($scope.patient_id);
+	    }
+
+	    refresh($scope.patient_id);
+
+	    
+
+	    function refresh(patientId){
+	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
+				if(rs.status.toLowerCase() == 'success' && rs.info)
+				{
+					$scope.companyInfo = rs.info;
+					console.log($scope.companyInfo.users);
+				}
+			})
+	    }
+
+		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				var fName = [];
@@ -37,7 +58,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			}
 		})
 
-		ConsultationService.getPatientProblem(patient_id).then(function(rs){
+		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				console.log(rs.data);
@@ -116,7 +137,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/scriptModal.html',
-					size: 'lg',
+					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
 						script: function(){
@@ -136,7 +157,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/scriptModal.html',
-					size: 'lg',
+					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
 						script: function(){
@@ -182,8 +203,8 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$scope.submitClick = function(){
 			for(var i=0 ; i< $scope.consultInfo.measurements.length ; i++)
 			{
-				$scope.consultInfo.measurements[i].patient_id = patient_id;
-				$scope.consultInfo.measurements[i].cal_id = cal_id;
+				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
+				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
 
 			ConsultationService.submitConsult($scope.consultInfo).then(function(res){
@@ -193,6 +214,183 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 					toastr.success("Submit Consultation Failed!");
 			})
 		};
+
+		//==================================MAKE CALL============================
+		$scope.startCall = false;
+		var apiKey = null;
+        var sessionId = null;
+        var token = null;
+
+        $scope.callUserInfo = null;
+        $scope.isCaller = true;
+        $scope.callUser = null;
+
+        $scope.isAudioMuted = false;
+        $scope.isVideoMuted = false;
+
+        $scope.session = null;
+
+        socket.on("messageReceived",function(fromId,fromUser,message){
+            if(message.type === 'answer')
+            {
+                $scope.isAccept = true;
+            }
+            if(message.type === 'ignore')
+            {
+                toastr.error("Call Have Been Rejected!");
+                disconnect();
+                $scope.startCall = false;
+                $scope.isAccept = false;
+            }
+            if(message.type === 'cancel')
+            {
+                toastr.error("Call Have Been Cancelled!");
+                disconnect();
+                $scope.startCall = false;
+                $scope.isAccept = false;
+            }
+
+        })
+
+        $scope.muteAudio = function(){
+            $scope.isAudioMuted = !$scope.isAudioMuted;
+        }
+
+        $scope.muteVideo = function(){
+            $scope.isVideoMuted = !$scope.isVideoMuted;
+        }
+
+        var disconnect = function() {
+            if($scope.session != null)
+            {
+                $scope.session.disconnect();
+            }
+            $scope.session = null;
+            $scope.callUser = null;
+        }
+
+        $scope.cancelCall = function(){
+            socket.emit("sendMessage",$scope.userInfo.id,$scope.callUser,{type:'cancel'});
+            disconnect();
+            $scope.startCall = false;
+            $scope.isAccept = false;
+        }
+
+         var publisherProperties =
+        {
+            insertMode: "append",
+            resolution: '1280x720',
+            width: window.outerWidth / 10,
+            height: window.outerHeight / 10
+        };
+
+       
+
+		$scope.makeCall = function(user){
+			$scope.startCall = true;
+
+	        UserService.getUserInfo(user.id).then(function(data){
+	            if(!data.img)
+	                data.img = "theme/assets/icon.png"
+
+	            $scope.callUserInfo = data;
+	            $scope.callUser = user.id;
+
+	            // var modalInstance = $modal.open({
+	            //     templateUrl: 'common/views/call.html',
+	            //     controller: 'callController',
+	            //     size: 'lg',
+	            //     resolve:{
+	            //         callUserInfo: function(){
+	            //             return data;
+	            //         },
+	            //         callUser: function(){
+	            //             return user.id;
+	            //         },
+	            //         isCaller: function(){
+	            //             return true;
+	            //         },
+	            //         opentokInfo: function(){
+	            //             return null;
+	            //         }
+	            //     },
+	            //     backdrop: 'static',
+	            //     keyboard: false
+	            // })
+
+				if(apiKey == null && sessionId == null)
+				{
+					socket.emit("generateSession",$scope.userInfo.id);
+
+		            socket.on("generateSessionSuccess",function(opentokRoom){
+		                if ($scope.session != null) {
+		                    $scope.session.disconnect();
+		                }
+
+		                apiKey = opentokRoom.apiKey;
+		                sessionId = opentokRoom.sessionId;
+		                token = opentokRoom.token;
+
+		                var publisher = OT.initPublisher('selfVideo', publisherProperties);
+
+				        $scope.session = OT.initSession(apiKey, sessionId);
+				        $scope.session.on({
+				            'streamCreated': function (event) {
+				                var subscriber = $scope.session.subscribe(event.stream, "callerVideo", {
+				                    insertMode: "replace",
+				                    resolution: "1280x720",
+				                    width: '100%',
+				                    height: '100%'
+				                });
+				            }
+				        });
+				        $scope.session.connect(token, function (error) {
+				            if (error) {
+				                console.log(error.message);
+				            }
+				            else {
+				                $scope.session.publish(publisher);
+				                socket.emit("sendMessage", $scope.userInfo.id,$scope.callUser, {
+				                    type: 'call',
+				                    sessionId: sessionId
+				                });
+				            }
+				        });
+		                               
+		            })
+				}
+				else
+				{
+					var publisher = OT.initPublisher('selfVideo', publisherProperties);
+
+			        $scope.session = OT.initSession(apiKey, sessionId);
+			        $scope.session.on({
+			            'streamCreated': function (event) {
+			                var subscriber = $scope.session.subscribe(event.stream, "callerVideo", {
+			                    insertMode: "replace",
+			                    resolution: "1280x720",
+			                    width: '100%',
+			                    height: '100%'
+			                });
+			            }
+			        });
+			        $scope.session.connect(token, function (error) {
+			            if (error) {
+			                console.log(error.message);
+			            }
+			            else {
+			                $scope.session.publish(publisher);
+			                socket.emit("sendMessage", $scope.userInfo.id,$scope.callUser, {
+			                    type: 'call',
+			                    sessionId: sessionId
+			                });
+			            }
+			        });
+				}
+
+	        })
+	
+	    }
 
 	})
 

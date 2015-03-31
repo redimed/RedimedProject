@@ -5,8 +5,6 @@ eval(fs.readFileSync('./routes/authenticate_route.js')+'');
 //
 eval(fs.readFileSync('./routes/calendar_route.js')+'');
 //
-eval(fs.readFileSync('./routes/company_route.js')+'');
-//
 eval(fs.readFileSync('./routes/function_route.js')+'');
 //
 eval(fs.readFileSync('./routes/menu_route.js')+'');
@@ -46,3 +44,12 @@ eval(fs.readFileSync('./routes/Time_Sheet_Route.js') + '');
 
 //Consultation
 eval(fs.readFileSync('./routes/consult_route.js') + '');
+
+//Vo Duc Giap
+//Phamacist
+eval(fs.readFileSync('./routes/phamacist_route.js')+ '')
+
+/* ************************************************ VUONG TEAM ************************************************* */
+//eval(fs.readFileSync('./routes/claim.js') + '');
+/* ************************************************ END VUONG TEAM ********************************************* */
+
