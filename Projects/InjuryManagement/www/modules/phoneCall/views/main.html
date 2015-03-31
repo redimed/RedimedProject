@@ -52,12 +52,12 @@
         <div class="image-shareScreen" ng-show="isAccept">
             <img ng-src="{{imgDetail.src}}" width="100%" height="100%" style="background-color: #EAE9E3;" ng-show="isImage" ng-click="videoClick()"/>
 
-            <a class="button button-icon icon"
-               ng-class="clicked ? 'ion-android-arrow-dropleft-circle' : 'ion-android-arrow-dropright-circle'"
-               ng-click="clicked = !clicked"></a>
-
             <div class="listImgShare sliderImg" ng-show="isImage" ng-class="{'listImgShare-show': clicked}">
-                <ion-scroll direction="y">
+                <a class="button button-icon icon btn-showListImage"
+                   ng-class="clicked ? 'ion-ios7-arrow-left' : 'ion-ios7-arrow-right'"
+                   ng-click="toggleListImage()"></a>
+
+                <ion-scroll direction="y" style="height: 100%;">
                     <a ng-repeat="imgLst in imgObj track by $index" ng-click="selectImg(imgLst)">
                         <img ng-src="{{imgLst.src}}" class="img-shareCall" ng-class="{'imgShareCallSelect': imgLst.id === imgDetail.id}" />
                     </a>

@@ -296,8 +296,9 @@ angular.module('starter.phoneCall.controller',[])
                         id: idImgShareScreen++,
                         src: result.data
                     });
-                    $scope.imgDetail = $scope.imgObj;
-                    $scope.selectImg($scope.imgObj);
+                    $scope.imgDetail.id = $scope.imgObj.id;
+                    $scope.imgDetail.src = result.data;
+                    $scope.$apply();
                 }
             })
         }
@@ -311,6 +312,7 @@ angular.module('starter.phoneCall.controller',[])
         }, 5 * 1000)
 
         $scope.selectImg = function(imgSrc) {
+            console.log(imgSrc);
             $scope.imgDetail.src = imgSrc.src;
             $scope.imgDetail.id = imgSrc.id;
         }
