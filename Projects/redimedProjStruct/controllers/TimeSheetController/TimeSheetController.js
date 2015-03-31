@@ -906,7 +906,7 @@ module.exports = {
 
     ViewOnDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task,time_item_task.units, time_item_task.ratio, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task,time_item_task.units,time_item_code.ITEM_NAME, time_item_code.IS_BILLABLE, time_item_task.ratio, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
@@ -918,6 +918,7 @@ module.exports = {
             "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " +
+            "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
             "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
             " AND time_tasks.deleted = 0" +
             " ORDER BY time_tasks.order ASC";
@@ -941,8 +942,14 @@ module.exports = {
 
     LoadItemCode: function(req, res) {
         var searchObj = req.body.searchObj;
-        var strSearch = " WHERE ";
+        var strSearch = " WHERE 1 = 1 AND ";
         var strOrder = " ORDER BY ";
+        var activity = "";
+        // CHECK ISBILLABLE OR NOT
+        if (searchObj.isBillable === false) {
+            activity = " AND time_item_code.ACTIVITY_ID = " + searchObj.activity_id + " ";
+        }
+        //END
         //get search
         for (var keySearch in searchObj.data) {
             if (searchObj.data[keySearch] !== undefined &&
@@ -952,11 +959,8 @@ module.exports = {
                     "%' AND ";
             }
         }
-        if (strSearch.length === 7) {
-            strSearch = "";
-        } else {
-            strSearch = strSearch.substring(0, strSearch.length - 5);
-        }
+
+        strSearch = strSearch.substring(0, strSearch.length - 5);
         //end get search
 
         //get ORDER
@@ -973,8 +977,8 @@ module.exports = {
             strOrder = strOrder.substring(0, strOrder.length - 2);
         }
         //end get ORDER
-        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_item_code.ITEM_UNITS FROM time_item_code " + strSearch + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
-        var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + strOrder;
+        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_item_code.ITEM_UNITS FROM time_item_code " + strSearch + activity + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
+        var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + activity + strOrder;
         db.sequelize.query(query)
             .success(function(result) {
                 if ((result === undefined || result === null || result.length === 0) && strSearch === "") {

@@ -576,7 +576,7 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, i.units, i.ratio, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_item_code.ITEM_NAME, time_item_code.IS_BILLABLE , i.units, i.ratio, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
                 "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`units`,i.`COMMENT` AS comment " +
                 "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
                 "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
@@ -586,6 +586,7 @@ module.exports = {
                 "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
                 "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
                 "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
+                "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = i.item_id " +
                 "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (t.time_charge!=0 OR t.activity_id=18) ORDER BY t.`tasks_id`", null, {
                     raw: true
                 }, [idWeek])

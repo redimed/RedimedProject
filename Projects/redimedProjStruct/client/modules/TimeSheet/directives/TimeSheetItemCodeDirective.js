@@ -9,33 +9,26 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 ngModel: "="
             },
             link: function(scope, elem, attrs) {
-                //LOAD STATIC LOCATION
-                var arrayLocation = {
-                    1: "Belmont",
-                    2: "Joondalup",
-                    3: "Rockingham"
-                };
-                //END
-
-                //LOAD STATIC DEPARTMENT
-                //END
                 scope.$watch('ngModel', function(newModel, oldModel) {
-                    if (newModel !== undefined && newModel.item !== undefined && newModel.item.length !== 0) {
+                    scope.items = [];
+                    if (newModel !== undefined) {
                         //LOAD LOCATION NAME - DEPARTMENT NAME
                         scope.locationName = newModel.locationName;
                         scope.departmentName = newModel.departmentName;
                         //END
-                        angular.forEach(newModel.item, function(item, index) {
-                            if (item !== undefined && item.deleted !== 1) {
-                                scope.items.push(item);
-                            }
+                        if (newModel.item !== undefined && newModel.item.length !== 0) {
+                            angular.forEach(newModel.item, function(item, index) {
+                                if (item !== undefined && item.deleted !== 1) {
+                                    scope.items.push(item);
+                                }
+                            });
+                        }
+                        //SHOW ALL ITEM
+                        angular.forEach(scope.items, function(item, index) {
+                            scope.items[index].show = true;
                         });
+                        //END
                     }
-                    //SHOW ALL ITEM
-                    angular.forEach(scope.items, function(item, index) {
-                        scope.items[index].show = true;
-                    });
-                    //END
                 });
                 //FUNCTION SETPAGE
                 scope.setPage = function() {
@@ -84,6 +77,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         offset: 0,
                         currentPage: 1,
                         maxSize: 5,
+                        isBillable: true,
                         order: {
                             "time_item_code.ITEM_ID": null
                         },
@@ -140,7 +134,6 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                     scope.isShow = true;
                     angular.element('#itemCodeID').focus();
                 };
-                scope.items = [];
                 scope.addItem = function(ITEM_ID, ITEM_NAME, UNITS) {
                     if (scope.isShow === true) {
                         var check = false;

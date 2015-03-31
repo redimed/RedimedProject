@@ -79,7 +79,7 @@
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
                                 <td class="btn btn-xs">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?"N/A":l.item_id}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{l.IS_BILLABLE===1?(l.item_id):(l.ITEM_NAME)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.ratio===null||l.ratio==="" || l.ratio===undefined)?"N/A":l.ratio}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(l.units===null||l.units==="" || l.units===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>

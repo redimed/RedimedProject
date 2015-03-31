@@ -461,18 +461,31 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     };
     //END ADD ALL TASK OF WEEK
 
-    //CHOOSE ITEM THANH
+    //CHOOSE ITEM
     $scope.chooseItem = function(task) {
         if (task !== undefined && task.activity_id === 1) {
+            //GET LOCAION NAME
             if ($scope.locations !== undefined &&
-                $scope.locations[task.location_id] !== undefined &&
-                $scope.locations[task.location_id].NAME !== undefined &&
-                $scope.departments !== undefined &&
-                $scope.departments[task.location_id] !== undefined &&
-                $scope.departments[task.location_id].NAME !== undefined) {
-                task.locationName = $scope.departments[task.location_id].NAME;
-                task.departmentName = $scope.departments[task.department_code_id].NAME;
+                $scope.locations !== null &&
+                $scope.locations.length !== 0) {
+                angular.forEach($scope.locations, function(location, index) {
+                    if (location.location_id === task.location_id) {
+                        task.locationName = location.NAME;
+                    }
+                });
+            } //END
+
+            //GET DEPARTMENT NAME
+            if ($scope.departments !== undefined &&
+                $scope.departments !== null &&
+                $scope.departments.length !== 0) {
+                angular.forEach($scope.departments, function(department, index) {
+                    if ($scope.departments[index].departmentid === task.department_code_id) {
+                        task.departmentName = $scope.departments[index].departmentName;
+                    }
+                });
             }
+            //END
             //MODAL BILLABLE
             var modalInstance = $modal.open({
                 templateUrl: "ItemCode",
@@ -534,12 +547,34 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 }
             });
             //END
-        } else {
+        } else if (task !== undefined) {
+            //GET LOCAION NAME
+            if ($scope.locations !== undefined &&
+                $scope.locations !== null &&
+                $scope.locations.length !== 0) {
+                angular.forEach($scope.locations, function(location, index) {
+                    if (location.location_id === task.location_id) {
+                        task.locationName = location.NAME;
+                    }
+                });
+            } //END
+
+            //GET DEPARTMENT NAME
+            if ($scope.departments !== undefined &&
+                $scope.departments !== null &&
+                $scope.departments.length !== 0) {
+                angular.forEach($scope.departments, function(department, index) {
+                    if ($scope.departments[index].departmentid === task.department_code_id) {
+                        task.departmentName = $scope.departments[index].departmentName;
+                    }
+                });
+            }
+            //END
             //NOT BILLABLE
             var modalInstanceAC = $modal.open({
                 templateUrl: "ActivityDetail",
                 controller: function($scope) {
-                    $scope.items = angular.copy(task);
+                    $scope.activities = angular.copy(task);
                     //click cancel
                     $scope.clickCancel = function() {
                         modalInstanceAC.close({
@@ -580,7 +615,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         var c = 0;
                         for (var i = 0; i < list.length; i++) {
                             if (list[i].isAction !== 'delete') {
-                                t.push(list[i].ITEM_ID);
+                                t.push(list[i].ITEM_NAME);
                                 c = c + StaffService.convertShowToFull(list[i].time_charge);
                             }
                         }
@@ -600,7 +635,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
 
     };
-    //END CHOOSE ITEM THANH
+    //END CHOOSE ITEM
 
     //SET CALENDAR TODAY
     $scope.setCalendarToToday = function() {

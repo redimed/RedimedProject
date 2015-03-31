@@ -9,6 +9,10 @@
                 <div class="panel-body table-dynamic">
                     <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
                     </center>
+                    <!-- LOCATION - DEPARTMENT -->
+                    <span class="btn btn-xs pull-right">Department:&nbsp;<span class="text-info bold">{{departmentName}}</span></span>
+                    <span class="btn-xs pull-right">Location:&nbsp;<span class="text-info bold">{{locationName}}</span></span>
+                    <!-- END -->
                     <span class="bold" style="margin-left:3px;">Selected Task / Item Number<span>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                         <thead ng-show="list.result!==null">
@@ -54,30 +58,28 @@
                                 <td ng-show="item.show===true" class="btn btn-xs">{{item.ITEM_ID}}</td>
                                 <!-- MORE -->
                                 <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
-                            <div ng-show="item.show===true" ng-if="item.status===false">
-                                {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
-                            </div>
-                            <div ng-show="item.show===true" ng-if="item.status===true">
-                                {{item.ITEM_NAME}}<a ng-click="clickShowSelected($index)">&nbsp;Close</a>
-                            </div>
-                        </td>
-                        <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
-                            {{(item.ITEM_NAME | readMoreSelected).value}}
-                        </td>
+                                    <div ng-show="item.show===true" ng-if="item.status===false">
+                                        {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
+                                    </div>
+                                    <div ng-show="item.show===true" ng-if="item.status===true">
+                                        {{item.ITEM_NAME}}<a ng-click="clickShowSelected($index)">&nbsp;Close</a>
+                                    </div>
+                                </td>
+                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
+                                    {{(item.ITEM_NAME | readMoreSelected).value}}
+                                </td>
                                 <!-- END MORE -->
                                 <td ng-show="item.show===true" style="text-align:center">
                                     <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
-                                    <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID" time-charge>
-                                </div>
+                                        <input type="text" tabindex="4" class="input-sm" ui-mask="99:99" name="time_charge" ng-model="items[$index].time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="time_chargeID" time-charge>
+                                    </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
-                                   
-                                    <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="ratioID" ng-value="1" ng-disabled="true">
+                                        <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="ratioID" only-digits ng-disabled="true">
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
-                                    <input type="text" tabindex="5" class="input-sm form-control" name="units" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" ng-disabled="true" ng-value="1">
+                                    <input type="text" tabindex="5" class="input-sm form-control" name="units" ng-model="items[$index].totalUnits" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" ng-disabled="true">
                                 </td>
-                                
                                 <td ng-show="item.show===true" style="text-align:center;">
                                     <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:20px;" id="commentID">
                                 </td>
