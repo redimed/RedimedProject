@@ -57,8 +57,17 @@
                  <span for="phone" class="help-block">Check your phone</span>
             </span>
         </div>
-
-        <div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Company:</label>
+            <div class="input-icon">
+                <i class="fa fa-home"></i>
+                <input class="form-control placeholder-no-fix ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" type="text" placeholder="Company" name="Company" ng-model="user.companyTemp" required="">
+            </div>
+            <span ng-show="registerForm.Company.$error.required &amp;&amp; showClickedValidation" class="has-error ng-hide">
+                <span for="email" class="help-block">Phone is required.</span>
+            </span>
+        </div>
+        <!-- <div>
             <i class="fa fa-home"></i>
             <label>Company</label>
         </div>
@@ -73,7 +82,7 @@
             <span ng-show="registerForm.company.$error.required && showClickedValidation" class="has-error">
                  <span for="company" class="help-block">Please select company.</span>
              </span>
-        </div>
+        </div> -->
         <div>
             <label>Company State</label>
         </div>
@@ -170,7 +179,7 @@
             </small>
         </div>
 
-        <div class="form-group">
+       <!--  <div class="form-group">
 
             <label class="checkbox">
                     <input type="checkbox" checkbox ng-model="ang" 
@@ -179,11 +188,11 @@
             </label>
             <div id="register_tnc_error">
             </div>
-        </div>
+        </div> -->
         <div class="form-actions">
             <button id="register-back-btn" ui-sref="security.login" type="button" class="btn">
                 <i class="m-icon-swapleft"></i> Back </button>
-            <button  id="register-submit-btn" class="btn green pull-right" ng-disabled="!ang" ng-click="register()">
+            <button  id="register-submit-btn" class="btn green pull-right" ng-disabled="!user.isAccessReportOnline"  ng-click="register()">
                 Sign Up <i class="m-icon-swapright m-icon-white"></i>
             </button>
         </div>

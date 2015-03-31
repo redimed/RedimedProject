@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService,Mailto) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
 
@@ -1166,4 +1166,25 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 alert("Khong ton tai Booking ID");
             };
         };
+        $scope.openOutlook = function(){
+            $scope.emailContent=
+                "{Title} Redimed Medico-Legal Newsletter\n\n"+
+                "{Title} News\n"+
+                "Section for us to easily update\n"+
+                "{Title} Appointment Availability\n"+
+                "Section for us to easily update\n"+
+                "Contact Medico-Legal Department at Redimed on (08) 9230 0900 or log to the online booking system link\n";
+            rlobService.listMailUserOnlineBooking().then(function(data){
+                if (data.status == 'success') {
+                    var recepient = '"'+data.data+'"';
+                    var options = {
+                        subject: ("Medico-Legal Newsletter"),
+                        body: $scope.emailContent
+                    };
+                    console.log(recepient);
+                    $scope.mailtoLink = Mailto.url(recepient, options);
+                    $window.location.href = $scope.mailtoLink;
+                };
+            })
+        }
     });

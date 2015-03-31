@@ -108,8 +108,9 @@ module.exports =
 
 	insertNewUser:function(req,res)
 	{
-		var newUser=kiss.checkData(req.body.newUser)?req.body.newUser:{};
-		if(!kiss.checkListData(newUser.fullName,newUser.email,newUser.phone,newUser.companyId,
+        var newUser=kiss.checkData(req.body.newUser)?req.body.newUser:{};
+
+		if(!kiss.checkListData(newUser.fullName,newUser.email,newUser.phone,newUser.companyTemp,
 			newUser.userName,newUser.password,newUser.isAccessReportOnline))
 		{
 			kiss.exlog("insertNewUser","Loi data truyen den");
@@ -124,7 +125,7 @@ module.exports =
 			Booking_Person: newUser.fullName,
             Contact_email: newUser.email,
             Contact_number: newUser.phone,
-            company_id: newUser.companyId,
+            COMPANY_TEMP: newUser.companyTemp,
             COMPANY_STATE:newUser.companyState,
             user_name: newUser.userName,
             password: hashPass,

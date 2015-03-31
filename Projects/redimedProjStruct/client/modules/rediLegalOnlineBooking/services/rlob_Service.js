@@ -344,6 +344,14 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/sponsor/insert-nonemergency');
             return result.post({info:info});
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list mail user online booking
+        rlobService.listMailUserOnlineBooking=function()
+        {
+            var result=api.one('rlob/rl_bookings/admin/list-mail-user-online-booking');
+            return result.get();
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');

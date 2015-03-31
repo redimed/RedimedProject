@@ -1838,5 +1838,45 @@ module.exports =
                     }
                 });
         });
+    },
+    /*
+    phan quoc chien
+    phanquocchien.c1109g@gmail.com
+    list mail user booking
+     */
+    listMailUserOnlineBooking:function(req,res){
+        var sql=
+            "SELECT `Contact_email` FROM `users` WHERE `MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        var listUser = '';
+                        for (var i = 1; i < rows.length; i++)
+                        {
+                            if (i == rows.length -1) {
+                                listUser+=rows[i].Contact_email;
+                            }else{
+                                listUser+=rows[i].Contact_email+';';
+                            };
+                        }
+                        res.json({status:'success',data:listUser})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
     }
 }

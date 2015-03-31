@@ -82,6 +82,7 @@ app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-docum
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
 app.get('/api/rlob/rl_bookings/admin/get-document-status-summary',rlBookingsController.getDocumentStatusSummary);
 app.get('/api/rlob/rl_bookings/admin/sendResultNotificationEmail',rlBookingsController.sendResultNotificationEmail);
+app.get('/api/rlob/rl_bookings/admin/list-mail-user-online-booking',rlBookingsController.listMailUserOnlineBooking);
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);
