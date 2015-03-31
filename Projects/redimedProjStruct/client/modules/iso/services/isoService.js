@@ -114,6 +114,12 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all("iso/iso-tree-dir/send-request-to-edit-document");
                 return result.post({userRequestInfo:userRequestInfo});
+            },
+
+            renameNode:function(nodeId,oldName,newName)
+            {
+                var result = api.all("iso/iso-tree-dir/rename-node");
+                return result.post({nodeId:nodeId,oldName:oldName,newName:newName});
             }
 
         };

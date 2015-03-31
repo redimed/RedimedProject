@@ -25,6 +25,8 @@ angular.module("app.security.login.controller",[
             if($scope.modelUser.isAgree)
             {
                 SecurityService.login($scope.modelUser).then(function (response) {
+                    $cookieStore.put('token', 'abcdefghklf');
+
                     socket.emit('checkLogin', $scope.modelUser.username);
 
                     socket.on('isSuccess', function () {

@@ -100,7 +100,10 @@
 
     /*--------------------------------------------*/
     .panel-explorer{
-        height: 500px;
+        /*height: 500px;
+        overflow-y:auto;*/
+        max-height: 700px;
+        overflow: overlay;
     }
 
     .admin-notification-box{
@@ -601,8 +604,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Success</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Success</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Success</h4> -->
             </div>
 
             <div class="modal-body">
@@ -624,8 +632,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Upload files</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Upload files</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Upload files</h4> -->
             </div>
 
             <div class="modal-body">
@@ -651,13 +664,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="row" style="margin-right: 0;margin-left: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="caption">
+                        <i class="fa fa-plus-square font-red-sunglo"></i>
+                        <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
+                        <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
+                    </div>
+                    <img style="height: 35px;float: right;margin-top: -25px; width: 190px;margin-right: 10px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
                 <!--<h4 class="modal-title">Enter message</h4>-->
-                <div class="caption">
+               <!--  <div class="caption">
                     <i class="fa fa-plus-square font-red-sunglo"></i>
                     <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
                     <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
-                </div>
+                </div> -->
             </div>
 
             <div class="modal-body">
@@ -708,8 +730,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Change Appointment Calendar</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Change Appointment Calendar</h4> -->
             </div>
 
             <div class="modal-body">
@@ -741,8 +768,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">{{listBookingNotificationHeader}}</h4>
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-4 col-sm-4 col-xs-5">{{listBookingNotificationHeader}}</h4>
+                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <!-- <h4 class="modal-title">{{listBookingNotificationHeader}}</h4> -->
             </div>
 
             <div class="modal-body">

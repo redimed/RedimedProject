@@ -1,0 +1,224 @@
+
+<style type="text/css">
+    .setColorDatePicker{
+        background-color: #5bbd72 !important;
+        color: #fff !important;
+        text-shadow: none !important;
+        background-image: none !important;
+        border: 1px solid rgb(241, 243, 250) !important;
+    }
+    .setColorDatePicker:hover{
+        background-color: rgba(102, 193, 123, 0.5) !important;
+        color: #fff !important;
+        text-shadow: none !important;
+    }
+    .ablue{
+        background-color: #00b5ad;
+        color: #fff;
+        text-shadow: none;
+        background-image: none;
+    }
+    .ablue:hover{
+        background-color: rgba(0, 196, 188, 0.5);
+        color: #fff;
+        text-shadow: none;
+    }
+</style>
+<style type="text/css">
+* { box-sizing:border-box; }
+
+/* basic stylings ------------------------------------------ */
+
+/*h2 		 { 
+  text-align:center; 
+  margin-bottom:50px; 
+}
+h2 small { 
+  font-weight:normal; 
+  color:#888; 
+  display:block; 
+}
+.footer 	{ text-align:center; }
+.footer a  { color:#53B2C8; }
+*/
+/* form starting stylings ------------------------------- */
+.group 			  { 
+  position:relative; 
+  margin-bottom:10px; 
+}
+.confix-input 				{
+  /*font-size:18px;*/
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:100%;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+.confix-input:focus 		{ outline:none; }
+
+/* LABEL ======================================= */
+.confix-label 				 {
+  color:#999; 
+  /*font-size:18px;*/
+  /*font-weight:normal;*/
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+.confix-input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+.form-group .help-block {
+  	display: none;
+}
+	 
+.form-group.has-error .help-block {
+	display: block;
+}
+.help-block{
+	  color: #FF0404 !important;
+}
+.login .content .form-actions {
+	border-bottom: none !important;
+}
+.login .content p {
+  color: #999 !important;
+}
+</style>
+<div style="padding: 0px;" class="modal-body">
+	<div style="margin-top: 40px;" class="form-group">
+	        <div class="row">
+	        	<div class="col-md-12">
+                    <div class="group">      
+						<input ng-model="selectedFilter.var1" id="daydatepicker" name="daydatepicker" class="confix-input" type="text" required>
+						<span class="highlight"></span>
+						<span class="bar"></span>
+						<label class="confix-label">Date</label>
+					</div>
+					<span class="help-block pull-right" if="FormNonemergency.daydatepicker.$error.required">Date is required!</span>
+                </div>
+	        </div>
+		</div>
+    <div class="actions">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <p>Location</p>
+                <!--chien-->
+                <!--phanquocchien.c1109g@gmail.com-->
+                <p>
+                    <select class="form-control" ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()">
+                        <option  value="">All</option>
+                    </select>
+                </p>
+            </div>
+            <div class="col-md-12  col-sm-12">
+                <p>Doctor</p>
+                <!--chien-->
+                <!--phanquocchien.c1109g@gmail.com-->
+                <p>
+                    <select class="form-control "  ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();">
+                        <option  value="">All</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+    <div style="margin-top: 20px;">
+        <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
+            <h4>No Results</h4>
+        </div>
+        <div ng-repeat="doctor in appointmentsFilter" class="row">
+              <div class="col-md-12">
+                 <span>{{doctor.DOCTOR_NAME}}</span>
+              </div>
+              <div class="col-md-12" ng-repeat="location in doctor.LOCATION_ITEMS">
+                  <div class="row">
+                      <div class="col-md-12">
+                         <span>{{location.SITE_NAME}}</span>
+                      </div>
+                      <div class="col-md-12" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px;padding-bottom: 20px;margin-top: 15px;">
+                          <div ng-repeat="appointment in location.APPOINTMENT_ITEMS" class="btn-group">
+                              <a ng-show="CAL_ID != appointment.CAL_ID" class="btn btn-sm ablue filter-submit margin-bottom"
+                                 style="margin-bottom: 10px; width: 55px" ng-click="selectAppointmentCalendar(appointment)">
+                                  {{ appointment.APPOINTMENT_TIME }}
+                              </a>
+                              <a ng-show="CAL_ID == appointment.CAL_ID" class="btn btn-sm ablue filter-submit margin-bottom"
+                                 style="margin-bottom: 10px; width: 55px; background-color: rgb(6, 126, 121);" ng-click="selectAppointmentCalendar(appointment)">
+                                  {{ appointment.APPOINTMENT_TIME }}
+                              </a>
+                          </div>
+                       </div>
+                  </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

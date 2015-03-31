@@ -1,8 +1,8 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.TimeSheetHome">Timesheet</a>
+            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheet</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -11,7 +11,6 @@
         </li>
     </ul>
 </div>
-
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ApproveTask">Approve timesheet</a>
@@ -110,7 +109,6 @@
                         <div class="col-md-4 col-sm-5 ">
                             <div class="input-group ">
                                 <span class="custom-timesheet">Total: {{list.count}}</span>
-
                                 <span class="custom-timesheet">Show</span>
                                 <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
                                 </select>

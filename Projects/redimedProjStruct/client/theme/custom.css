@@ -1201,7 +1201,7 @@ table.timetable-table td:last-child {
 }
 
 .error-input {
-    border: 1px solid #d84a38;
+    border: 1px solid #f3565d;
 }
 
 .table-dynamic .table-bordered>thead>tr>th>input[type=checkbox],

@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, CompanyService, ReceptionistService, toastr, $filter, $state){
+.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',

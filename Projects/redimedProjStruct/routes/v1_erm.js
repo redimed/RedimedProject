@@ -52,6 +52,8 @@ var v2_TimetableController = require('./controllers/v2_TimetableController');
 
 var v2_PaperlessController = require('./controllers/v2_PaperlessController');
 
+var v2_MedicineController = require('./controllers/v2_MedicineController');
+
 
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
 k_route.setRoute(app, v2_InsurersController, '/api/erm/v2/insurers/');
@@ -74,3 +76,5 @@ k_route.setRoute(app, v2_PatientController, '/api/erm/v2/patient/');
 
 k_route.setRoute(app, v2_TimetableController, '/api/erm/v2/timetable/');
 k_route.setRoute(app, v2_PaperlessController, '/api/erm/v2/paperless/');
+
+k_route.setRoute(app, v2_MedicineController, '/api/erm/v2/medicine/');

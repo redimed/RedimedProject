@@ -136,29 +136,6 @@ angular.module("app.model", [])
 })
 // END PATIENT MODEL
 
-// CLAIM MODEL
-.value("ClaimModel", {
-	Claim_id: null,
-	Patient_id: null,
-	Injury_name: '', //yes
-	Injury_date: null, //yes
-	How_Injury_Occurred: '', //yes
-	Location: '', // yes
-	ENTITY_Id: null,
-	Claim_date: new Date(), //yes
-	Insurer: '', //yes
-	Address: '', //yes
-	Claim_no: '', //yes
-	PO_number: null, //yes
-	Case_manager: '', //yes
-	Isenable: '1', //yes
-	Created_by: null,
-	Last_updated_by: null,
-	isCurr: '1', //yes
-	insurer_site: null
-})
-// END CLAIM MODEL
-
 // OUTSIDE REFERRAL
 .value("OutsideReferralModel", {
 	id: null,
@@ -754,3 +731,17 @@ angular.module("app.model", [])
 	last_updated_by: null,
 })
 // END RECALL 
+
+// MEDICINE
+.value('MedicineModel',{
+	medicine_id: null,
+	medicine_name: '',
+	medicine_price: null,
+	medicine_unit: '',
+	isEnable: null,
+	created_by: null,
+	creation_date: null,
+	last_updated_by: null,
+	last_update_date: null
+})
+// END MEDICINE

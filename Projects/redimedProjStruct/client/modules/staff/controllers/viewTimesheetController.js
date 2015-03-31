@@ -167,8 +167,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
 
-
-    StaffService.showWeek();
+    //CHECK MOTH AND WEEK
+    StaffService.showWeek($cookieStore.get('userInfo').id);
+    //END
 })
 
 .controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, infoWeek) {
@@ -181,7 +182,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         return date.getDay() === 0 ? 7 : date.getDay();
     };
 
-    // $scope.employee_name = $cookieStore.get("userInfo").Booking_Person;
     $scope.week = infoWeek;
 
     $scope.getFortMatTimeCharge = function(val) {
@@ -199,26 +199,30 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
     //summit on date
-    $scope.summitClick = function(idWeek, STATUS) {
-        var status = 0;
-        if (STATUS == 'Awaiting for Submit') {
-            status = 2;
-        } else if (STATUS == 'Rejected') {
-            status = 5;
-        }
-        StaffService.SubmitOnView(idWeek, status).then(function(response) {
-            if (response.status === 'error') {
-                toastr.error("Submit fail!", "Error");
-                $modalInstance.close();
-            } else if (response.status === 'success') {
-                $modalInstance.close();
-                $state.go("loggedIn.timesheet.view", null, {
-                    "reload": true
-                });
-                toastr.success("Submit success", "Success");
+    $scope.submitClick = function(idWeek, STATUS) {
+        if ($scope.week.time_charge < (38 * 60)) {
+            toastr.warning("Please check time charge(>=38)", "Error");
+        } else {
+            var status = 0;
+            if (STATUS == 'Awaiting for Submit') {
+                status = 2;
+            } else if (STATUS == 'Rejected') {
+                status = 5;
             }
+            StaffService.SubmitOnView(idWeek, status).then(function(response) {
+                if (response.status === 'error') {
+                    toastr.error("Submit fail!", "Error");
+                    $modalInstance.close();
+                } else if (response.status === 'success') {
+                    $modalInstance.close();
+                    $state.go("loggedIn.timesheet.view", null, {
+                        "reload": true
+                    });
+                    toastr.success("Submit success", "Success");
+                }
 
-        });
+            });
+        }
     };
     //end
 
@@ -230,10 +234,14 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             } else if (response['status'] == 'success') {
                 var result = response.data;
                 //get status and employee name
-                $scope.ID_WEEK = result[0].tasks_week_id;
-                $scope.STATUS = result[0].STATUS;
-                $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
-                //edn get
+                if (result !== undefined &&
+                    result[0] !== undefined) {
+                    $scope.ID_WEEK = result[0].tasks_week_id;
+                    $scope.STATUS = result[0].STATUS;
+                    $scope.after_status_id = result[0].after_status_id;
+                    $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
+                }
+                //end get
                 if (infoWeek.date != 'full') {
                     $scope.one = true;
                     $scope.Title = "TimeSheet Detail"; //seet title TimeSheet Detail
@@ -288,25 +296,29 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $modalInstance.close();
     };
     $scope.submitClick = function(idWeek, STATUS) {
-        var status = 0;
-        if (STATUS == 'Awaiting for Submit') {
-            status = 2;
-        } else if (STATUS == 'Rejected') {
-            status = 5;
-        }
-        StaffService.SubmitOnView(idWeek, status).then(function(response) {
-            if (response.status === 'error') {
-                toastr.error("Submit fail!", "Error");
-                $modalInstance.close();
-            } else if (response.status === 'success') {
-                $modalInstance.close();
-                $state.go("loggedIn.timesheet.view", null, {
-                    "reload": true
-                });
-                toastr.success("Submit success", "Success");
+        if ($scope.week.time_charge < (38 * 60)) {
+            toastr.warning("Please check time charge(>=38)", "Error");
+        } else {
+            var status = 0;
+            if (STATUS == 'Awaiting for Submit') {
+                status = 2;
+            } else if (STATUS == 'Rejected') {
+                status = 5;
             }
+            StaffService.SubmitOnView(idWeek, status).then(function(response) {
+                if (response.status === 'error') {
+                    toastr.error("Submit fail!", "Error");
+                    $modalInstance.close();
+                } else if (response.status === 'success') {
+                    $modalInstance.close();
+                    $state.go("loggedIn.timesheet.view", null, {
+                        "reload": true
+                    });
+                    toastr.success("Submit success", "Success");
+                }
 
-        });
+            });
+        }
     };
     $scope.okClick = function() {
         $modalInstance.close();
@@ -322,10 +334,16 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'success') {
+
+                //SET SOME VALUE CHECK STATUS AND BUTTON
                 var result = response.data;
-                $scope.STATUS = result[0].status;
-                $scope.ID_WEEK = result[0].tasks_week_id;
-                $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
+                if (result !== undefined && result[0] !== undefined) {
+                    $scope.STATUS = result[0].status;
+                    $scope.ID_WEEK = result[0].tasks_week_id;
+                    $scope.afterStatusID = result[0].after_status_id;
+                    $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
+                }
+                // END
                 $scope.tasks = _.chain(response['data'])
                     .groupBy("date")
                     .map(function(value, key) {
@@ -346,7 +364,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     .value();
                 var sum = 0;
                 angular.forEach($scope.tasks, function(data) {
-                    data.arrActivity = ['00:00', '00:00', '00:00', '00:00', '00:00'];
+                    data.arrActivity = ['-', '-', '-', '-', '-'];
                     sum = 0;
                     angular.forEach(data.rows, function(row) {
                         sum = sum + row.time_charge;

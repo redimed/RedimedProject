@@ -12,7 +12,6 @@ angular.module("app.loggedIn", [
     "app.loggedIn.vaccinob", //Vaccination Online Booking
     "app.loggedIn.iso", //ISO manage files
     "app.loggedIn.payroll",//PAYROLL (TANNV.DTS@GMAIL.COM)
-    "app.loggedIn.company", // COMPANY MODULE
     "app.loggedIn.doctor", // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",
@@ -27,8 +26,6 @@ angular.module("app.loggedIn", [
     'app.loggedIn.mdtappointment',
 
     'app.loggedIn.mdtinsurer',
-
-    'app.loggedIn.mdtclaim',
 
     'app.loggedIn.mdtoutdoctor',
 
@@ -78,7 +75,11 @@ angular.module("app.loggedIn", [
     //END MODULE TIMESHEET
 
     //MODULE CONSULTATION
-    'app.loggedIn.consult'
+    'app.loggedIn.consult',
+
+    'app.loggedIn.claim',
+
+    'app.loggedIn.medicine'
 
 ])
 

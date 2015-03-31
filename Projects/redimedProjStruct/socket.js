@@ -25,6 +25,15 @@ module.exports = function(io,cookie,cookieParser) {
 
         // console.log(ua);
 
+        socket.on("shareImage",function(id){
+            db.User.find({where:{id: 227}},{raw:true})
+                .success(function(user){
+                    console.log("===Send To: ",user.user_name);
+                    io.to(user.socket)
+                        .emit('receiveImage',id);
+                })
+        })
+
         socket.on("generateSession",function(id){
             opentok.createSession(function(err, ses) {
                 if (err) 

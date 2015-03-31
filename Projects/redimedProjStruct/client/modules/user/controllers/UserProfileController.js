@@ -125,15 +125,32 @@ angular.module('app.loggedIn.user.profile.controller',[])
             $modalInstance.dismiss('cancel');
         }
 
-        $scope.okClick = function(){
-            OnlineBookingService.changeUserPassword($scope.info).then(function(data){
-                if(data.status === 'success')
-                {
-                    toastr.success("Change Password Successfully","Success");
-                    $modalInstance.dismiss('cancel');
-                }
-                else if(data.status === 'error')
-                    toastr.error("Change Password Failed", "Error");
-            })
+        $scope.okClick = function(changePassForm){
+            $scope.showClickedValidation = true;
+            if(changePassForm.$invalid){
+                toastr.error("Please Input All Required Information!", "Error");
+            }
+            else 
+            {
+              swal({
+                  title: "Confirm",
+                  text: "Are You Sure Want To Change Your Password?",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes",
+                  closeOnConfirm: true
+              }, function() {
+                  OnlineBookingService.changeUserPassword($scope.info).then(function(data){
+                      if(data.status === 'success')
+                      {
+                          toastr.success("Change Password Successfully","Success");
+                          $modalInstance.dismiss('cancel');
+                      }
+                      else if(data.status === 'error')
+                          toastr.error("Change Password Failed", "Error");
+                  })
+              })
+            }
         }
     })

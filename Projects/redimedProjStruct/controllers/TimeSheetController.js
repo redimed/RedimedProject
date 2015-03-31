@@ -15,7 +15,8 @@ module.exports = {
                 time_charge: info.time_temp,
                 user_id: info.userID,
                 created_by: info.userID,
-                task_status_id: info.statusID
+                task_status_id: info.statusID,
+                time_in_lieuChoose: info.time_in_lieuFull
             }, {
                 raw: true
             })
@@ -33,6 +34,7 @@ module.exports = {
                                             tasks_week_id: max,
                                             "department_code_id": allTask[task].department_code_id,
                                             "task": allTask[task].task,
+                                            "isParent": allTask[task].isParent,
                                             "order": allTask[task].order,
                                             "date": moment(allTask[task].date).format('YYYY-MM-DD'),
                                             "location_id": allTask[task].location_id,
@@ -40,7 +42,6 @@ module.exports = {
                                             "time_charge": allTask[task].time_temp
                                         })
                                     )
-
                                     if (allTask[task].item.length > 0) {
                                         for (var i = 0; i < allTask[task].item.length; i++) {
                                             var a = allTask[task].item[i];
@@ -96,7 +97,6 @@ module.exports = {
     editTask: function(req, res) {
         var allTask = req.body.allTask;
         var info = req.body.info;
-        console.log(info);
         db.timeTasks.max('tasks_id')
             .success(function(id) {
                 var tId = id;
@@ -105,6 +105,7 @@ module.exports = {
                     if (allTask[i].isAction == 'update') {
                         chainer.add(
                             db.timeTasks.update({
+                                "order": allTask[i].order,
                                 "department_code_id": allTask[i].department_code_id,
                                 "task": allTask[i].task,
                                 "date": allTask[i].date,
@@ -128,7 +129,7 @@ module.exports = {
                                             item_id: a.ITEM_ID,
                                             quantity: a.quantity,
                                             time_charge: a.time_temp,
-                                            comment: a.comment
+                                            comment: a.comment,
                                         })
                                     )
                                 } else if (a.isAction == 'update') {
@@ -160,7 +161,7 @@ module.exports = {
                         chainer.add(
                             db.timeTasks.create({
                                 tasks_id: tId,
-                                "tasks_week_id": allTask[i].task_week_id,
+                                "tasks_week_id": info.idWeek,
                                 "department_code_id": allTask[i].department_code_id,
                                 "task": allTask[i].task,
                                 "order": allTask[i].order,
@@ -250,12 +251,11 @@ module.exports = {
         var offset = (req.body.offset) ? req.body.offset : 0;
         var fields = req.body.fields;
         var search_data = req.body.search;
-        // console.log(search_data)
         var agrs = [];
         for (var key in search_data) {
             if (search_data[key])
                 agrs.push(key + " LIKE '" + search_data[key] + "%'");
-        };
+        }
 
         var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;
 
@@ -407,12 +407,12 @@ module.exports = {
 
     showDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
+        db.sequelize.query("SELECT t.`date`, time_tasks_week.after_status_id, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
                 " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
                 " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
                 " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
                 " hr_employee.Employee_ID  = users.employee_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-                " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0 ORDER BY t.date ASC", null, {
+                " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0 ORDER BY t.order ASC", null, {
                     raw: true
                 }, [info])
             .success(function(tasks) {
@@ -439,15 +439,8 @@ module.exports = {
 
     showEdit: function(req, res) {
         var info = req.body.info;
-        db.timeTasks.findAll({
-                where: {
-                    tasks_week_id: info,
-                    deleted: 0
-                },
-                order: 'date'
-            }, {
-                raw: true
-            })
+        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " + info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
+        db.sequelize.query(query)
             .success(function(tasks) {
                 if (tasks === null || tasks.length === 0) {
                     console.log("Not found tasks in table");
@@ -456,7 +449,7 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT time_tasks_week.task_status_id, t.`tasks_id`,c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.`quantity`,i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`quantity`,i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
                             " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
@@ -522,7 +515,7 @@ module.exports = {
                     status: 'error'
                 });
                 console.log(err);
-            })
+            });
     },
 
     getTaskList: function(req, res) {
@@ -551,7 +544,7 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT t.`tasks_id`,t.`tasks_week_id`,t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_tasks_week.after_status_id, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
                 "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
                 "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
                 "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
@@ -560,8 +553,8 @@ module.exports = {
                 "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
                 "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
                 "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
-                "LEFT JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id`" +
-                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (i.`deleted` = 0 OR i.`deleted` IS NULL)  ORDER BY t.`tasks_id`", null, {
+                "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
+                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (t.time_charge!=0 OR t.activity_id=18) ORDER BY t.`tasks_id`", null, {
                     raw: true
                 }, [idWeek])
             .success(function(data) {
@@ -590,7 +583,6 @@ module.exports = {
 
     getAllTaskAMonth: function(req, res) {
         var searchObj = req.body.search;
-        console.log(searchObj);
         //SEARCH
         var strSearch = " AND ";
         var strWeek = "";
@@ -657,31 +649,6 @@ module.exports = {
                 });
                 return;
             });
-
-        // db.sequelize.query("SELECT time_tasks_week.*,time_task_status.`name` AS STATUS " +
-        //         "FROM `time_tasks_week` time_tasks_week INNER JOIN `time_task_status` time_task_status " +
-        //         "ON time_task_status.`task_status_id` = time_tasks_week.`task_status_id` " +
-        //         "WHERE  time_tasks_week.`user_id` = ? AND time_tasks_week.`deleted` = 0 ORDER BY time_tasks_week.`start_date` DESC LIMIT ? OFFSET ?", null, {
-        //             raw: true
-        //         }, [search.userID, search.limit, search.offset])
-        //     .success(function(task) {
-        //         if (task === null || task.length === 0) {
-        //             console.log("Not found task in table");
-        //             res.json({
-        //                 status: 'no task'
-        //             });
-        //             return false;
-        //         } else {
-        //             res.json(task);
-        //         }
-        //     })
-        //     .error(function(err) {
-        //         console.log("*****ERROR:" + err + "*****");
-        //         res.json({
-        //             status: 'error',
-        //             err: err
-        //         });
-        //     });
     },
 
     checkMonth: function(req, res) {
@@ -752,7 +719,7 @@ module.exports = {
                                 status: 'error'
                             });
                             console.log(err);
-                        })
+                        });
                 }
             })
             .error(function(err) {
@@ -760,7 +727,7 @@ module.exports = {
                     status: 'error'
                 });
                 console.log(err);
-            })
+            });
     },
 
     LoadContract: function(req, res) {
@@ -796,6 +763,29 @@ module.exports = {
             .error(function(err) {
                 res.json({
                     status: "error"
+                });
+                return;
+            });
+    },
+    CheckTimeInLieu: function(req, res) {
+        var weekNo = req.body.weekNo;
+        var USER_ID = req.body.USER_ID;
+        var weekStart = weekNo - 4;
+        var query = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = " +
+            USER_ID + " AND time_tasks_week.task_status_id = 3 AND time_tasks_week.week_no BETWEEN " + weekStart + " AND " + weekNo;
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "success",
+                    result: []
                 });
                 return;
             });

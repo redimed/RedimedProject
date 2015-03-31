@@ -1,24 +1,79 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($scope,$state,$modal,toastr,socket,$stateParams,ConsultationService,PatientService){
-		var patient_id = $stateParams.patient_id;
-		var cal_id = $stateParams.cal_id;
+	.controller("PatientConsultController",function($filter,$cookieStore,$scope,$state,$modal,toastr,socket,$stateParams,ConsultationService,PatientService,UserService){
+		$scope.patient_id = $stateParams.patient_id;
+		$scope.cal_id = $stateParams.cal_id;
+		$scope.userInfo = $cookieStore.get('userInfo');
+
+		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		$scope.patientInfo = {};
+		$scope.companyInfo = {};
 		$scope.problemArr = [];
 
+		$scope.isMeasure = false;
+		$scope.isScript = false;
+
 		$scope.consultInfo = {
-			patient_id: patient_id,
-			cal_id: cal_id,
+			patient_id: $scope.patient_id,
+			cal_id: $scope.cal_id,
 			problem_id: null,
 			history: null,
 			examination: null,
 			treatment: null,
 			diagnosis: null,
 			measurements: [],
-			scripts: []
+			scripts: [],
+			images: []
 		}
 
-		PatientService.get(patient_id).then(function(rs){
+		$scope.makeCall = function(user){
+	        UserService.getUserInfo(user.id).then(function(data){
+	            if(!data.img)
+	                data.img = "theme/assets/icon.png"
+
+	            var modalInstance = $modal.open({
+	                templateUrl: 'common/views/call.html',
+	                controller: 'callController',
+	                size: 'lg',
+	                resolve:{
+	                    callUserInfo: function(){
+	                        return data;
+	                    },
+	                    callUser: function(){
+	                        return user.id;
+	                    },
+	                    isCaller: function(){
+	                        return true;
+	                    },
+	                    opentokInfo: function(){
+	                        return null;
+	                    }
+	                },
+	                backdrop: 'static',
+	                keyboard: false
+	            })
+
+	        })
+
+	    }
+
+	    $scope.refreshList = function(){
+	    	refresh($scope.patient_id);
+	    }
+
+	    refresh($scope.patient_id);
+
+	    function refresh(patientId){
+	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
+				if(rs.status.toLowerCase() == 'success' && rs.info)
+				{
+					$scope.companyInfo = rs.info;
+					console.log($scope.companyInfo.users);
+				}
+			})
+	    }
+
+		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				var fName = [];
@@ -32,7 +87,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			}
 		})
 
-		ConsultationService.getPatientProblem(patient_id).then(function(rs){
+		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				console.log(rs.data);
@@ -51,188 +106,143 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 				$scope.problemArr = [];
 		};
 
-		$scope.newMeasure = function(){
-			var modalInstance = $modal.open({
-				templateUrl:'modules/consultation/views/modal/measureModal.html',
-				windowClass: "consult-modal-window",
-				controller: "MeasurementController",
-				resolve:{
-					measure:function(){
-						return null;
+		$scope.measureAction = function(type,index){
+			if(type == 'new')
+			{
+				var modalInstance = $modal.open({
+					templateUrl:'modules/consultation/views/modal/measureModal.html',
+					windowClass: "consult-modal-window",
+					controller: "MeasurementController",
+					resolve:{
+						measure:function(){
+							return null;
+						}
 					}
-				}
-			})
+				})
 
-			modalInstance.result.then(function(data){
-				if(data.type == 'ok')
-					$scope.consultInfo.measurements.push(data.value);
+				modalInstance.result.then(function(data){
+					if(data.type == 'ok')
+						$scope.consultInfo.measurements.push(data.value);
+				})
+			}
+
+			if(type == 'edit')
+			{
+				var modalInstance = $modal.open({
+					templateUrl:'modules/consultation/views/modal/measureModal.html',
+					windowClass: "consult-modal-window",
+					controller: "MeasurementController",
+					resolve:{
+						measure: function(){
+							return $scope.consultInfo.measurements[index];
+						}
+					}
+				})
+
+				modalInstance.result.then(function(data){
+					if(data.type == 'ok')
+						$scope.consultInfo.measurements[index] = data.value;;
+				})
+			}
+
+			if(type == 'delete')
+			{
+				swal({
+	                title: "Confirm Delete",
+	                text: "Are You Sure Want To Delete This Measure?",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "Yes",
+	                closeOnConfirm: true
+	            }, function() {
+	                $scope.consultInfo.measurements.splice(index,1);
+	            })
+			}
+		};
+
+		$scope.scriptAction = function(type,index){
+			if(type == 'new')
+			{
+				var modalInstance = $modal.open({
+					templateUrl:'modules/consultation/views/modal/scriptModal.html',
+					windowClass: "consult-modal-window",
+					controller:'ScriptController',
+					resolve: {
+						script: function(){
+							return null;
+						}
+					}
+				})
+
+				modalInstance.result.then(function(data){
+					if(data.type == 'ok')
+						$scope.consultInfo.scripts.push(data.value);
+				})
+			}
+
+			if(type == 'edit')
+			{
+
+				var modalInstance = $modal.open({
+					templateUrl:'modules/consultation/views/modal/scriptModal.html',
+					windowClass: "consult-modal-window",
+					controller:'ScriptController',
+					resolve: {
+						script: function(){
+							return $scope.consultInfo.scripts[index];
+						}
+					}
+				})
+
+				modalInstance.result.then(function(data){
+					if(data.type == 'ok')
+						$scope.consultInfo.scripts[index] = data.value;
+				})
+			}
+
+			if(type == 'delete')
+			{
+				swal({
+	                title: "Confirm Delete",
+	                text: "Are You Sure Want To Delete This Script?",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "Yes",
+	                closeOnConfirm: true
+	            }, function() {
+	                $scope.consultInfo.scripts.splice(index,1);
+	            })
+			}
+		};
+
+		$scope.backClick = function(){
+			 var from = $cookieStore.get('fromState');
+			 var params = {};
+			 if(from.fromParams != null || typeof from.fromParams !== 'undefined')
+	        {
+	            angular.forEach(from.fromParams, function(value , key) {
+	                params[key] = value;
+	            })
+	        }
+	        $state.go(from.fromState.name,params);
+		};
+
+		$scope.submitClick = function(){
+			for(var i=0 ; i< $scope.consultInfo.measurements.length ; i++)
+			{
+				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
+				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
+			}
+
+			ConsultationService.submitConsult($scope.consultInfo).then(function(res){
+				if(res.status == 'success')
+					toastr.success("Submit Consultation Success!");
+				else
+					toastr.success("Submit Consultation Failed!");
 			})
 		};
 
-		$scope.editMeasure = function(index){
-			var modalInstance = $modal.open({
-				templateUrl:'modules/consultation/views/modal/measureModal.html',
-				windowClass: "consult-modal-window",
-				controller: "MeasurementController",
-				resolve:{
-					measure: function(){
-						return $scope.consultInfo.measurements[index];
-					}
-				}
-			})
-
-			modalInstance.result.then(function(data){
-				if(data.type == 'ok')
-					$scope.consultInfo.measurements[index] = data.value;;
-			})
-		}
-
-		$scope.delMeasure = function(index){
-			swal({
-                title: "Confirm Delete",
-                text: "Are You Sure Want To Delete This Measure?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function() {
-                $scope.consultInfo.measurements.splice(index,1);
-            })
-			
-		}
-
 	})
 
-.directive('drawings', ['$window', function ($window) {
-    return {
-        restrict: 'E',
-        templateUrl: "common/views/whiteboard.html",
-        link: function (scope, element, attrs) {
-            var canvas = element.context.querySelector("canvas");
-            var ctx = canvas.getContext("2d");
-            var drawing = false;
-            var lastX;
-      		var lastY;
-
-            scope.colors = [{'color': 'blue-ebonyclay'},
-            				{'color': 'green'},
-                            {'color': 'blue'},
-                            {'color': 'red'}];
-
-            scope.color = 'black';
-            scope.lineWidth = attrs.linewidth;
-
-			canvas.width = attrs.width || element.width();
-            canvas.height = attrs.height || element.height();
-            
-            var clearCanvas = function () {
-                ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.restore();
-            };
-
-            scope.uploadImage = function(image){
-                var reader = new FileReader();
-                reader.onload = function(event){
-                    var img = new Image();
-                    img.onload = function(){
-                        ctx.drawImage(img,0,0);
-                    }
-                    img.src = event.target.result;
-                }
-                reader.readAsDataURL(image[0]);
-            };
-            
-            scope.changeColor = function (c) {
-            	if(c == 'blue-ebonyclay')
-	                scope.color = 'black';
-	            else
-	            	scope.color = c;
-
-                scope.lineWidth = attrs.linewidth;
-                scope.erasing = false;
-            };
-            
-            scope.clear = function () {
-                clearCanvas();
-            };
-            
-            scope.erase = function () {
-                scope.color = element.find('#myCanvas').css("background-color");
-                scope.lineWidth = 50;
-                scope.erasing = true;
-            };
-            
-            scope.capture = function () {
-                window.open(canvas.toDataURL('image/png'));
-            };
-
-            var draw = function(lX, lY, cX, cY)
-            {
-            	ctx.lineCap = "round";
-            	ctx.fillStyle = "solid";
-            	ctx.strokeStyle = scope.color;
-		        ctx.lineWidth = scope.lineWidth;
-		        ctx.moveTo(lX,lY);
-		        ctx.lineTo(cX,cY);
-		        ctx.stroke();
-            }
-
-            angular.element(canvas).on('mousedown mousemove mouseup mouseout touchstart touchmove touchend', 
-              function (event) {
-                if (event.type === 'mousemove' && !drawing) {
-                    // Ignore mouse move Events if we're not dragging
-                    return;
-                }
-                event.preventDefault();
-                
-                switch (event.type) {
-                case 'mousedown':
-                case 'touchstart':
-
-                    if(event.offsetX!==undefined){
-			          lastX = event.offsetX;
-			          lastY = event.offsetY;
-			        } else {
-			          lastX = event.layerX - event.currentTarget.offsetLeft;
-			          lastY = event.layerY - event.currentTarget.offsetTop;
-			        }
-			        
-			        ctx.beginPath();
-			        
-			        drawing = true;
-
-                    break;
-                case 'mousemove':
-                case 'touchmove':
-
-                    if(drawing){
-			          // get current mouse position
-			          if(event.offsetX!==undefined){
-			            currentX = event.offsetX;
-			            currentY = event.offsetY;
-			          } else {
-			            currentX = event.layerX - event.currentTarget.offsetLeft;
-			            currentY = event.layerY - event.currentTarget.offsetTop;
-			          }
-			          
-			          draw(lastX, lastY, currentX, currentY);
-			          
-			          // set current coordinates to last one
-			          lastX = currentX;
-			          lastY = currentY;
-			        }
-
-                    break;
-                case 'mouseup':
-                case 'touchend':
-                case 'mouseout':
-                    drawing = false;
-                }
-            });
-            
-        }
-    };
-}])

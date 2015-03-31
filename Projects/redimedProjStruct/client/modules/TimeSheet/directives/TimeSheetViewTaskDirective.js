@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
-    .directive('viewTask', function(toastr, $state, TimeSheetService, $modal, MIN_TO_DEC, StaffService) {
+    .directive('viewTask', function(toastr, $state, TimeSheetService, $modal, MIN_TO_DEC, StaffService, $cookieStore) {
         return {
             restrict: "EA",
             require: "ngModel",
@@ -36,7 +36,10 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.info.hasReject = true;
                                     scope.info.comments = scope.list.result[0].comments;
                                 }
-                                scope.info.time_rest = parseFloat(parseFloat(scope.list.result[0].chargeWeek) - parseFloat(38.00)).toFixed(2);
+                                scope.info.time_rest = scope.list.result[0].chargeWeek - (38 * 60);
+                                if (scope.info.time_restFull < 0) {
+                                    scope.info.time_restFull = 0;
+                                }
                                 scope.info.time_in_lieu = null;
                                 scope.info.over_time = null;
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
@@ -68,55 +71,37 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                 };
                 scope.changeTimeInLieu = function() {
                     if (scope.info.time_in_lieu !== undefined) {
+                        //process
                         if (scope.info.time_in_lieu.length === 0) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
+                        } else if (StaffService.convertShowToFull(scope.info.time_in_lieu) > scope.info.time_rest) {
+                            scope.info.time_in_lieu = null;
+                            scope.info.over_time = null;
                         } else {
-                            console.log(scope.info.time_rest);
-                            scope.info.time_in_lieu_Real = StaffService.covertTimeCharge(scope.info.time_in_lieu).toFixed(2);
-                            scope.info.over_time_Real = parseFloat(scope.info.time_rest - scope.info.time_in_lieu_Real).toFixed(2);
-                            scope.info.over_time = StaffService.unCovertTimeCharge(scope.info.over_time_Real);
+                            scope.info.time_in_lieuFull = StaffService.convertShowToFull(scope.info.time_in_lieu);
+                            scope.info.over_timeFull = scope.info.time_rest - scope.info.time_in_lieuFull;
+                            scope.info.over_time = StaffService.convertFromFullToShow(scope.info.over_timeFull);
                         }
+                        //end
                     }
                 };
 
                 scope.changeOverTime = function() {
                     if (scope.info.over_time !== undefined) {
+                        //process
                         if (scope.info.over_time.length === 0) {
                             scope.info.over_time = null;
                             scope.info.time_in_lieu = null;
+                        } else if (StaffService.convertShowToFull(scope.info.over_time) > scope.info.time_rest) {
+                            scope.info.time_in_lieu = null;
+                            scope.info.over_time = null;
                         } else {
-
-                            var hour = parseInt(scope.info.over_time.substring(0, 2));
-                            var minute = parseInt(scope.info.over_time.substring(2, 4));
-                            if ((hour + (minute / 60)) > scope.info.time_rest) {
-                                scope.info.over_time = null;
-                                scope.info.time_in_lieu = null;
-                            } else {
-                                //set over time auto
-                                var tempMinute = (scope.info.time_rest * 60 - (minute + hour * 60));
-                                var minuteOVER = tempMinute % 60;
-                                var hourOVER = (parseInt(tempMinute / 60)) * 100;
-                                if (hourOVER === 0) {
-                                    if (minuteOVER < 10) {
-                                        scope.info.time_in_lieu = "000" + minuteOVER.toString();
-                                    } else {
-                                        scope.info.time_in_lieu = "00" + minuteOVER.toString();
-                                    }
-                                } else {
-                                    if (hourOVER < 10000) {
-                                        if (minuteOVER < 10) {
-                                            scope.info.time_in_lieu = "0" + (hourOVER / 100).toString() + "0" + minuteOVER.toString();
-                                        } else {
-                                            scope.info.time_in_lieu = "0" + (hourOVER / 100).toString() + minuteOVER.toString();
-                                        }
-                                    } else {
-                                        scope.info.time_in_lieu = hourOVER.toString() + minuteOVER.toString();
-                                    }
-                                }
-                                //end set over time auto
-                            }
+                            scope.info.over_timeFull = StaffService.convertShowToFull(scope.info.over_time);
+                            scope.info.time_in_lieuFull = scope.info.time_rest - scope.info.over_timeFull;
+                            scope.info.time_in_lieu = StaffService.convertFromFullToShow(scope.info.time_in_lieuFull);
                         }
+                        //end
                     }
                 };
 

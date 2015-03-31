@@ -3,7 +3,7 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService){
+    .controller("callController", function($scope,$modalInstance,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService, callUserInfo, callUser, isCaller, opentokInfo){
         socket.removeAllListeners();
 
         var audio = new Audio('theme/assets/phone_calling.mp3');
@@ -17,8 +17,8 @@ angular.module("app.call.controller",[
         $scope.session = null;
 
         $scope.userInfo = null;
-        $scope.callUserInfo = $stateParams.callUserInfo;
-        $scope.isCaller = $stateParams.isCaller;
+        $scope.callUserInfo = callUserInfo;
+        $scope.isCaller = isCaller;
         $scope.isAccept = false;
 
         $scope.isAudioMuted = false;
@@ -64,30 +64,38 @@ angular.module("app.call.controller",[
         };
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
-            $state.go('security.login',null,{location: "replace"});
+            // $state.go('security.login',null,{location: "replace"});
+            $modalInstance.close();
         else
-        {
             $scope.userInfo = $cookieStore.get('userInfo');
-        }
 
-        if(typeof from !== 'undefined')
-        {
-            if(from.fromParams != null || typeof from.fromParams !== 'undefined')
-            {
-                angular.forEach(from.fromParams, function(value , key) {
-                    params[key] = value;
-                })
-            }
-            if($stateParams.callUser == null || typeof $stateParams === 'undefined')
-            {
-                disconnect();
-                $state.go(from.fromState.name,params,{location: "replace",reload: true});
-            }
-        }
 
         $scope.notMine = function(stream) {
             return stream.connection.connectionId != $scope.session.connection.connectionId;
         };
+
+        $scope.maximizeWindow = function(){
+            console.log($modalInstance);
+        }
+
+        $scope.closeWindow = function(){
+
+            swal({
+                title: "Confirm Cancel",
+                text: "Are You Sure Want To Cancel The Call?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true
+            }, function() {
+                audio.pause();
+                socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
+                disconnect();
+
+                $modalInstance.close();
+            })
+        }
 
 
         if($scope.isCaller)
@@ -127,7 +135,7 @@ angular.module("app.call.controller",[
                         }
                     };
                     $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
-                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
+                    socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'call',sessionId: sessionId});
                 });
 
                 $scope.publishing = true;
@@ -136,9 +144,9 @@ angular.module("app.call.controller",[
         }
         else
         {
-            if($stateParams.opentokInfo != null)
+            if(opentokInfo != null)
             {
-                var info = $stateParams.opentokInfo;
+                var info = opentokInfo;
 
                 apiKey = info.apiKey;
                 sessionId = info.sessionId;
@@ -169,7 +177,7 @@ angular.module("app.call.controller",[
                         }
                     };
                     $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
-                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
+                    socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'answer'});
                 });
 
                 $scope.publishing = true;
@@ -189,8 +197,10 @@ angular.module("app.call.controller",[
                 toastr.error("Call Have Been Rejected!");
                 disconnect();
 
-                if(typeof from !== 'undefined')
-                    $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                $modalInstance.close();
+
+                // if(typeof from !== 'undefined')
+                    // $state.go(from.fromState.name,params,{location: "replace", reload: true});
             }
             if(message.type === 'cancel')
             {
@@ -198,8 +208,10 @@ angular.module("app.call.controller",[
                 toastr.error("Call Have Been Cancelled!");
                 disconnect();
                 
-                if(typeof from !== 'undefined')
-                    $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                // if(typeof from !== 'undefined')
+                    // $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+                $modalInstance.close();
 
             }
 
@@ -214,49 +226,26 @@ angular.module("app.call.controller",[
         }
 
         var disconnect = function() {
-            $scope.session.disconnect();
-            $scope.session.on('sessionDisconnected', function () {
-            });
+            if($scope.session != null)
+            {
+                $scope.session.disconnect();
+                $scope.session.on('sessionDisconnected', function () {
+                });
+            }
         }
 
         $scope.cancelCall = function(){
             audio.pause();
-            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+            socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
             disconnect();
             
-            if(typeof from !== 'undefined')
-                $state.go(from.fromState.name,params,{location: "replace", reload: true});
+            // if(typeof from !== 'undefined')
+            //     $state.go(from.fromState.name,params,{location: "replace", reload: true});
+
+            $modalInstance.close();
 
         }
 
-        $scope.recordVideo = function(){
-            var signal = {
-                type: 'send',
-                data: 'Test Data'
-            };
-            if(OTSession.session)
-            {
-                OTSession.session.signal(signal,function(error) {
-                    if (error) {
-                      console.log("signal error: " + error.message);
-                    } else {
-                      console.log("signal sent");
-                    }
-                })
-            }
-        }
-
-       
-        if(OTSession.session)
-        {
-            OTSession.session.on({
-                'signal:send':function(event){
-                    console.log("receive: ");
-                    console.log(event);
-                }
-            })
-        }
-        
         $scope.installScreenshareExtension = function () {
               chrome.webstore.install('https://chrome.google.com/webstore/detail/pkakgggplhfilfbailbaibljfpalofjn', function () {
                 console.log('successfully installed');

@@ -88,10 +88,18 @@ var rlobConstant={
     },
 
     registerStatus:{
-        pending:'PENDING',
-        accepted:'ACCEPTED',
-        rejected:'REJECTED',
-        deactivate:'DEACTIVATE'
+        PENDING:{value:'PENDING',display:'Pending',style:'success'},
+        APPROVE:{value:'APPROVE',display:'Approve',style:''},
+        REJECT:{value:'REJECT',display:'Reject',style:'warning'}
+    },
+
+    msgPopupType:{
+        success:'success',
+        error:'error'
+    },
+    sponsorType:{
+        emergency:'EMERGENCY',
+        nonemergency:'NONEMERGENCY'
     }
 }
 
@@ -137,6 +145,27 @@ var rlobDate={
     }
 }
 
-
+var rlobLang={
+    rlobHeader:'Medico-Legal Online Booking'
+}
+var rlobMsg={
+    popup:function(header,type,content)
+    {
+        $('#rlob-global-msg-popup .rlob-global-msg-popup-header').text(header);
+        if(type==rlobConstant.msgPopupType.success)
+        {
+            $('#rlob-global-msg-popup .rlob-global-msg-popup-success').show();
+            $('#rlob-global-msg-popup .rlob-global-msg-popup-error').hide();
+            $('#rlob-global-msg-popup .rlob-global-msg-popup-success .rlob-global-msg-popup-content').text(content);
+        }
+        if(type==rlobConstant.msgPopupType.error)
+        {
+            $('#rlob-global-msg-popup .rlob-global-msg-popup-error').show();
+            $('#rlob-global-msg-popup .rlob-global-msg-popup-success').hide();
+            $('#rlob-global-msg-popup .rlob-global-msg-popup-error .rlob-global-msg-popup-content').text(content);
+        }
+        $("#rlob-global-msg-popup").modal({show:true,backdrop:'static'});
+    }
+}
 
 

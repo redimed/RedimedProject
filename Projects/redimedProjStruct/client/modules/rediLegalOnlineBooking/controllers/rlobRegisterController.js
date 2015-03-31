@@ -1,12 +1,10 @@
 angular.module('app.rlobRegister.controller',[])
     .controller("rlobRegisterController", function($scope, $state, $cookieStore, SecurityService, rlobService,toastr) {
     	$scope.register = function(){
+            $scope.user.username=$scope.user.email;
             var checkmail = '';
             var checkuser='';
             $scope.showClickedValidation = true;
-
-
-
             if($scope.registerForm.$invalid){
                 toastr.error("Please check form.", "Error");
                 //console.log("1");
@@ -32,12 +30,14 @@ angular.module('app.rlobRegister.controller',[])
                                 }else{
                                     var user =
                                     {
-                                        fullName: $scope.user.fname + $scope.user.lname,
+                                        fullName: $scope.user.fname +' '+ $scope.user.lname,
                                         email:$scope.user.email,
                                         userName: $scope.user.username,
                                         password: $scope.user.password,
                                         phone: $scope.user.phone,
-                                        companyId: $scope.user.companyId
+                                        companyId: $scope.user.companyId,
+                                        companyState:$scope.user.companyState,
+                                        isAccessReportOnline:$scope.user.isAccessReportOnline?$scope.user.isAccessReportOnline:0
                                     };
 
                                     console.log(user);
@@ -67,4 +67,17 @@ angular.module('app.rlobRegister.controller',[])
         SecurityService.company().then(function(response){
             $scope.companyList = response;
         })
+
+        $scope.stateList=[];
+        rlobService.getStates('Australia')
+        .then(function(data){
+            if(data.status=='success')
+            {
+                $scope.stateList=data.data;
+            }
+            else
+            {
+                $scope.stateList=[];
+            }
+        });
 });

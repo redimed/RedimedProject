@@ -63,14 +63,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'">
-                                <td class="btn btn-xs">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
-                                <td class="btn btn-xs">{{l.AC[1]!==undefined?(l.AC[1] | customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[2]!==undefined?(l.AC[2] | customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[3]!==undefined?(l.AC[3]| customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[4]!==undefined?(l.AC[4]| customHours):"00:00"}}</td>
-                                <td class="btn btn-xs">{{l.AC[5]!==undefined?(l.AC[5]| customHours):"00:00"}}</td>
-                                <td class="btn btn-xs bold">{{l.sumDATE | customHours}}</td>
+                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-hide="(l.sumDATE===0 && l.activity_id !==18)">
+                                <td class="btn btn-xs" style="text-align:left;">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
+                                <td class="btn btn-xs">{{(l.AC[1]!==undefined && l.AC[1]!==0)?(l.AC[1] | customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{(l.AC[2]!==undefined && l.AC[2]!==0)?(l.AC[2] | customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{(l.AC[3]!==undefined && l.AC[3]!==0)?(l.AC[3]| customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{(l.AC[4]!==undefined && l.AC[1]!==0)?(l.AC[4]| customHours):"-"}}</td>
+                                <td class="btn btn-xs">{{(l.AC[5]!==undefined && l.AC[1]!==0)?(l.AC[5]| customHours):"-"}}</td>
+                                <td class="btn btn-xs bold">{{(l.sumDATE!==undefined && l.sumDATE!==0)?(l.sumDATE | customHours):"-"}}</td>
                                 <td style="text-align:center;"><a class="btn btn-xs" ng-click="ViewDetail(list.result[0].task_week_id,l.date, 'on-date')">View Detail</a></td>
                             </tr>
                         </tbody>
@@ -110,9 +110,9 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
-        <a class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
-        <a class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4">Reject</a>
+        <a style="width:70px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
+        <a style="width:70px;" class="btn blue pull-right btn-xs" ng-click="onApprove({return: info})" ng-hide="info.isReject===true || statusID===3 || statusID ===4" ng-disabled="(viewTask.time_in_lieu.$error.required || viewTask.over_time.$error.required) && info.isApprove===true">Approve</a>
+        <a style="width:70px;" class="btn red pull-right btn-xs" ng-click="onReject({return: info})" ng-disabled="(info.isReject===true && viewTask.comments.$error.required) ||(info.isReject===true && viewTask.comments.$error.maxlength)" ng-hide="info.isApprove===true || statusID===3 || statusID ===4">Reject</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>
