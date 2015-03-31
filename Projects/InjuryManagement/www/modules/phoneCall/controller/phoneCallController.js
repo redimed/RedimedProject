@@ -2,7 +2,7 @@ angular.module('starter.phoneCall.controller',[])
 
     .controller('phoneCallController', function ($scope, $state, localStorageService,
                                                  $rootScope, $timeout, $ionicModal,
-                                                 $stateParams, signaling, UserService, OTSession, $ionicSideMenuDelegate, phoneCallService) {
+                                                 $stateParams, signaling, UserService, $ionicSideMenuDelegate, phoneCallService) {
 
 
         var from = localStorageService.get('fromState');
@@ -23,7 +23,10 @@ angular.module('starter.phoneCall.controller',[])
         $scope.mic = false;
         $scope.camera = false;
         $scope.isImage = false;
-        $scope.imgSrc = null;
+        $scope.controllerbtn = true;
+        $scope.imgObj = [];
+        $scope.imgDetail = [];
+        var idImgShareScreen = 0;
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
         var src = "/android_asset/www/phone_calling.mp3";
@@ -36,6 +39,7 @@ angular.module('starter.phoneCall.controller',[])
                 media.pause();
             }
         };
+        media = new Media(src, null, null, loop);
 
         $ionicSideMenuDelegate.canDragContent(false);
         UserService.getUserInfo($stateParams.callUser).then( function(data) {
@@ -49,9 +53,8 @@ angular.module('starter.phoneCall.controller',[])
             }
         });
 
-        $scope.streams = OTSession.streams;
+        //$scope.streams = OTSession.streams;
         if ($scope.isCaller) {
-            media = new Media(src, null, null, loop);
             media.play();
 
             var publisherProperties =
@@ -109,6 +112,8 @@ angular.module('starter.phoneCall.controller',[])
         }
         else {
             if ($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null) {
+
+                $scope.isAccept = true;
 
                 var publisherProperties =
                 {
@@ -169,6 +174,7 @@ angular.module('starter.phoneCall.controller',[])
             resolution: '1280x720',
             frameRate: 30
         }
+
         $scope.subscriberProps = {
             name:'face',
             width: window.outerWidth / 2,
@@ -206,10 +212,18 @@ angular.module('starter.phoneCall.controller',[])
             $scope.isImage = !$scope.isImage;
             if($scope.isImage) {
                 $scope.subscriber.subscribeToVideo(false);
-                //TB.updateViews();
+                TB.updateViews();
+                $timeout(function(){
+                    $scope.subscriber.subscribeToVideo(false);
+                    TB.updateViews();
+                }, 0.5 * 1000);
             } else {
                 $scope.subscriber.subscribeToVideo(true);
-                //TB.updateViews();
+                TB.updateViews();
+                $timeout(function(){
+                    $scope.subscriber.subscribeToVideo(true);
+                    TB.updateViews();
+                }, 0.5 * 1000);
             }
         }
 
@@ -217,9 +231,17 @@ angular.module('starter.phoneCall.controller',[])
             if($scope.isImage) {
                 $scope.subscriber.subscribeToVideo(false);
                 TB.updateViews();
+                $timeout(function(){
+                    $scope.subscriber.subscribeToVideo(false);
+                    TB.updateViews();
+                }, 0.5 * 1000);
             } else {
                 $scope.subscriber.subscribeToVideo(true);
                 TB.updateViews();
+                $timeout(function(){
+                    $scope.subscriber.subscribeToVideo(true);
+                    TB.updateViews();
+                }, 0.5 * 1000);
             }
         }, false);
 
@@ -270,9 +292,35 @@ angular.module('starter.phoneCall.controller',[])
         function getImage(id) {
             phoneCallService.getImageShareScreen(id).then(function(result) {
                 if(result.status.toLowerCase() == 'success'){
-                    $scope.imgSrc =  result.data;
+                    $scope.imgObj.push({
+                        id: idImgShareScreen++,
+                        src: result.data
+                    });
+                    $scope.imgDetail = $scope.imgObj;
+                    $scope.selectImg($scope.imgObj);
                 }
             })
+        }
+
+        $timeout(function(){
+            if($scope.isImage) {
+                if($scope.controllerbtn) {
+                    $scope.controllerbtn = false;
+                }
+            }
+        }, 5 * 1000)
+
+        $scope.selectImg = function(imgSrc) {
+            $scope.imgDetail.src = imgSrc.src;
+            $scope.imgDetail.id = imgSrc.id;
+        }
+
+        $scope.toggleListImage = function() {
+            $scope.clicked = !$scope.clicked;
+        };
+
+        $scope.videoClick = function() {
+            $scope.controllerbtn = !$scope.controllerbtn;
         }
 
         signaling.on('messageReceived', onMessageReceive);

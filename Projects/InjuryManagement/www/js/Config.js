@@ -2,7 +2,7 @@ angular.module('app.config', [])
 
     .constant('HOST_CONFIG', {
         //'host':'testapp.redimed.com.au',
-        'host':'192.168.135.49',
+        'host':'192.168.135.131',
         'port':'3000'
     })
 
@@ -20,7 +20,13 @@ angular.module('app.config', [])
         {'code': 'Female', 'name': 'Female'}
     ])
 
-    .factory('ConfigService', function (SEX_LIST, SYS_TITLE) {
+    .constant("ACC_TYPE", [
+        {"code":"PRIVATE", "name": "Private"},
+        {"code":"PUBLIC", "name": "Public"},
+        {"code":"WORKCOVER", "name":"Work Cover"}
+    ])
+
+    .factory('ConfigService', function (SEX_LIST, SYS_TITLE, ACC_TYPE) {
         var configService = {};
 
         configService.sex_option = function () {
@@ -29,6 +35,10 @@ angular.module('app.config', [])
 
         configService.title_option = function(){
             return SYS_TITLE;
+        };
+
+        configService.ac_type_option =function(){
+            return ACC_TYPE;
         }
 
         return configService;

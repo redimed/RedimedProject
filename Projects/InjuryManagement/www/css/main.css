@@ -782,7 +782,7 @@ form i.icon.error {
     text-align: center;
     bottom: 0;
     width: 100%;
-    padding-bottom: 20px;
+    padding-bottom: 3%;
     z-index: 9999;
 }
 .controllers-call-black {
@@ -1184,7 +1184,7 @@ form i.icon.error {
 }
 
 .cus-callerVideo {
-    height: 90%;
+    height: 80%;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1475,3 +1475,53 @@ ul.tabs li.tab {
     }
 }
 /**/
+.reveal-animation.ng-enter, .reveal-animation.ng-leave {
+    -webkit-transition:0.3s linear all;
+    transition:0.3s linear all;
+}
+
+.reveal-animation.ng-enter {
+    opacity: 0;
+}
+
+.reveal-animation.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.reveal-animation.ng-leave {
+    opacity: 1;
+}
+
+.reveal-animation.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.img-shareCall {
+    margin: 0 10px 0 10px;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: wheat;
+    padding: 5px;
+}
+.imgShareCallSelect {
+    border: 2px solid #4d4d4d;
+}
+.listImgShare {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    padding-bottom: 3%;
+    white-space: nowrap;
+    transition: width 1s;
+}
+.listImgShare-show {
+    width: 100%;
+}
+
+/*.wrapper {*/
+    /*width: 0;*/
+    /*background: blue;*/
+    /**/
+/*}*/
+
