@@ -31,6 +31,12 @@ angular.module("app.sponsor1.nonemergency.controller",[])
     }
     $scope.insertNonEmergency = function(){
         $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.gender) {
+                angular.element('#label-gender').css('display','block');
+                $scope.showFormData();
+            }else{
+                angular.element('#label-gender').css('display','none');
+            };
         if ($scope.FormNonemergency.$valid) {
             $scope.info = {
                 FIRSTNAME:$scope.fristname,
