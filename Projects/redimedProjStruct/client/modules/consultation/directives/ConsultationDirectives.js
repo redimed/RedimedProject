@@ -4,7 +4,9 @@ angular.module("app.loggedIn.consult.directives",[])
 	        restrict: 'E',
 	        scope: {
 	        	images: '=',
-	        	patient: '='
+	        	patient: '=',
+	        	calling: '=',
+	        	callee: '='
 	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {
@@ -14,6 +16,18 @@ angular.module("app.loggedIn.consult.directives",[])
 	            var drawing = false;
 	            var lastX;
 	      		var lastY;
+
+	      		scope.isCalling = false;
+	      		scope.callUser = null;
+
+	      		scope.$watch('calling',function(val){
+  					scope.isCalling = val;
+	      		})
+
+	      		scope.$watch('callee',function(val){
+	      			if(val != null)
+	      				scope.callUser = val;
+	      		})
 
 	            scope.colors = [{'color': 'blue-ebonyclay'},
 	            				{'color': 'green'},
@@ -108,7 +122,7 @@ angular.module("app.loggedIn.consult.directives",[])
 	                	if(rs.status == 'success')
 	                	{
 	                		scope.images.push(rs.id);
-	                		socket.emit("shareImage",rs.id);
+	                		socket.emit("shareImage",rs.id,scope.callUser);
 	                		toastr.success("Success!");
 	                	}
 	                	else

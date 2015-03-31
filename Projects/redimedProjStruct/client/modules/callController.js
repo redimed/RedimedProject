@@ -75,7 +75,9 @@ angular.module("app.call.controller",[
         };
 
         $scope.maximizeWindow = function(){
-            console.log($modalInstance);
+            // console.log($modalInstance);
+            // $modalInstance.close({type:'minimize',streams: $scope.streams});
+            $modalInstance.dismiss('ok');
         }
 
         $scope.closeWindow = function(){

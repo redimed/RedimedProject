@@ -25,8 +25,8 @@ module.exports = function(io,cookie,cookieParser) {
 
         // console.log(ua);
 
-        socket.on("shareImage",function(id){
-            db.User.find({where:{id: 227}},{raw:true})
+        socket.on("shareImage",function(id,callUser){
+            db.User.find({where:{id: callUser}},{raw:true})
                 .success(function(user){
                     console.log("===Send To: ",user.user_name);
                     io.to(user.socket)
@@ -52,31 +52,6 @@ module.exports = function(io,cookie,cookieParser) {
                 socket.emit("generateSessionSuccess",opentokRoom);
             });
         });
-
-        socket.on("sendArchive",function(info){
-            console.log(info);
-            
-            if(info.type === "start")
-            {
-                opentok.startArchive(info.sessionId, {
-                    name: 'Test Archiving'
-                  }, function(err, archive) {
-                    if (err) 
-                        socket.emit("receiveArchive",{type:"start",status:'error',error: err});
-                    else
-                        socket.emit("receiveArchive",{type:"start",status:'success',archive: archive});
-                  });
-            }
-            if(info.type === "stop")
-            {
-                opentok.stopArchive(info.archiveId, function(err, archive) {
-                     if (err) 
-                        socket.emit("receiveArchive",{type:"stop",status:'error',error: err});
-                    else
-                        socket.emit("receiveArchive",{type:"stop",status:'success',archive: archive});
-                });
-            }
-        })
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
             console.log("===========From: "+currUser);
