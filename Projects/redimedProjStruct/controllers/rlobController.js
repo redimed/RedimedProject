@@ -121,12 +121,36 @@ var saveBookingInfo=function(req,res)
 								        }
 								        var sql="INSERT INTO `rl_bookings` SET ?";
 								        kiss.executeQuery(req,sql,[insertBookingInfo],function(result){
-								        	kiss.commit(req,function(){
-								        		res.json({status:'success',data:req.body.list});
-		                    				},function(err)
-		                    				{
-		                    					res.json({status:'fail'});
-		                    				})
+								        	//Cap nhat appointment calendar status (thay the trigger after_rl_bookings_insert)
+								        	var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID`=?";
+								        	var appointmentUpdateStatus={
+								        		NOTES:rlobUtil.sourceType.REDiLEGAL,
+								        		BOOKED:rlobUtil.calendarStatus.booked
+								        	}
+								        	kiss.executeQuery(req,sql,[appointmentUpdateStatus,bookingInfo.CAL_ID],function(result){
+								        		if(result.affectedRows>0)
+								        		{
+								        			kiss.commit(req,function(){
+										        		res.json({status:'success'});
+				                    				},function(err)
+				                    				{
+				                    					res.json({status:'fail'});
+				                    				});
+								        		}
+								        		else
+								        		{
+								        			kiss.exlog("saveBookingInfo","Khong co appointment calendar nao duoc cap nhat status");
+								        			kiss.rollback(req,function(){
+						        						res.json({status:"fail"});
+						        					});
+								        		}
+								        	},function(err){
+								        		kiss.exlog("saveBookingInfo","Loi cap nhat appointmentCalendarStatus");
+								        		kiss.rollback(req,function(){
+					        						res.json({status:"fail"});
+					        					});
+								        	})
+								        	
 								        },function(err){
 								        	kiss.exlog("saveBookingInfo","Loi insert booking info",err);
 								        	kiss.rollback(req,function(){
@@ -229,8 +253,12 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
 		})
 		return;
 	}
+	//Thoi gian can thiet 
 	var periodRequire=rlobUtil.periodTimeOfRlType[rlTypeId].value;
+	//service REDiLEGAL id=7
 	var serviceId = rlobUtil.redilegalServiceId;
+	//Lay danh cac session, ke tu selectedSession, cac session nay phai thuoc redilegal
+	//phai con trong va phai co periodTime>0 tuc la con thoi gian. 
 	var sql=
 		" SELECT calendar.*,MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) AS `PERIOD_TIME`   "+
 		" FROM `cln_appointment_calendar` calendar                                                       "+
@@ -245,134 +273,166 @@ var handlePeriodTimeAppointmentCalendar=function(req,res)
 		kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,serviceId],function(data){
 			if(data.length>0)
 			{
+				//selectedItem, day chinh la session duoc chon de booking
 				var selectedItem=data[0];
+				//khoang thoi gian cua selectedSession
 	            var selectedItemPeriodTime=moment(new Date(selectedItem.TO_TIME)).diff(moment(new Date(selectedItem.FROM_TIME)),'minutes');
-	            var periodLack=periodRequire-selectedItemPeriodTime;
-
-	            if(periodLack>0)
+	            //Neu selectedSession co khoang thoi gian nho hon khoang default mac dinh
+	            //thi khong duoc phep booking, chung nao bang hoac lon hon khoang thoi gian
+	            //mac dinh thi moi duoc "xet" booking
+	            if(selectedItemPeriodTime>=periodTimeDefault)
 	            {
-	                var listY=[];
-	                listY.push(selectedItem);
-	                var previousToTime=moment(new Date(selectedItem.TO_TIME));
-	                for(var i=1;i<data.length;i++)
-	                {
-	                    var item=data[i];
-	                    var fromTime=moment(new Date(item.FROM_TIME));
-	                    if(fromTime.diff(previousToTime,'minutes')==0)
-	                    {
-	                        listY.push(item);
-	                        previousToTime=moment(new Date(item.TO_TIME));
-	                    }
-	                    else
-	                    {
-	                        break;
-	                    }
-
-	                    var periodTime=moment(new Date(item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
-	                    if(periodTime<periodTimeDefault)
-	                    {
-	                    	break;
-	                    }
-	                }
-
-	                if(listY.length>1)
-	                {
-	                	var listChanged=[];
-	                    //xu ly slot dau tien
-	                    listY[0].TO_TIME=moment(new Date(listY[0].TO_TIME)).add(periodLack,"minutes").toDate();
-	                    listChanged.push(listY[0]);
-	                    for(var i=1;i<listY.length;i++)
-	                    {
-	                        var item=listY[i];
-	                        var periodTime=moment(new Date(item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
-	                        if(periodTime>=periodRequire)
-	                        {
-	                            item.FROM_TIME=moment(new Date(item.FROM_TIME)).add(periodLack,"minutes").toDate();
-	                            listChanged.push(item);
-	                            break;
-	                        }
-	                        else
-	                        {
-	                            item.FROM_TIME=moment(new Date(item.FROM_TIME)).add(periodLack,"minutes").toDate();
-	                            if(i<listY.length-1)
-	                            	item.TO_TIME=moment(new Date(item.TO_TIME)).add(periodLack,"minutes").toDate();
-	                            listChanged.push(item);
-	                        }
-	                    }
-
-	                    function updateAppointmentCalendar(req,list,index)
-	                    {
-	                    	var item=list[index];
-	                    	var sql="UPDATE `cln_appointment_calendar` SET ? WHERE CAL_ID=?";
-	                    	var updateInfo={
-	                    		FROM_TIME:moment(new Date(item.FROM_TIME)).format("YYYY/MM/DD HH:mm:ss"),
-	                    		TO_TIME:moment(new Date(item.TO_TIME)).format("YYYY/MM/DD HH:mm:ss")
-	                    	}
-	                    	kiss.executeQuery(req,sql,[updateInfo,item.CAL_ID],function(result){
-	                    		if(result.affectedRows>0)
-	                    		{
-	                    			if(index<list.length-1)
-	                    			{
-	                    				updateAppointmentCalendar(req,list,index+1);
-	                    			}
-	                    			else
-	                    			{
-	                    				req.body.list=list;
-	                    				saveBookingInfo(req,res);
-	                    				
-	                    			}
-	                    		}
-	                    		else
-	                    		{
-	                    			kiss.exlog("handlePeriodTimeAppointmentCalendar","updateAppointmentCalendar -> khong co dong nao duoc doi");
-	                    			kiss.rollback(req,function(){
-		                    			res.json({status:'fail'});
-		                    		})
-	                    		}
-	                    	},function(err)
-	                    	{
-	                    		kiss.exlog("handlePeriodTimeAppointmentCalendar","updateAppointmentCalendar-> loi khi chay cau update",err);
-	                    		kiss.rollback(req,function(){
-	                    			res.json({status:'fail'});
-	                    		})
-
-	                    	})
-	                    }
-
-	                    // for(var i=0;i<listChanged.length;i++)
-	                    // {
-	                    //     console.log(moment(new Date(listChanged[i].FROM_TIME)).format("HH:mm DD/MM/YYYY")+
-	                    //         " "+moment(new Date(listChanged[i].TO_TIME)).format("HH:mm DD/MM/YYYY"));
-	                    // }
-	                    updateAppointmentCalendar(req,listChanged,0);
-	                }
-	                else
-	                {
-	                	kiss.exlog("handlePeriodTimeAppointmentCalendar","session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru");
-	                	kiss.rollback(req,function(){
-	                		res.json({status:'fail',msg:"session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru"});
-	                	})
-	                }
+	            	kiss.exlog("handlePeriodTimeAppointmentCalendar","selectedSession con qua it thoi gian, nho hon khoang thoi gian mac dinh");
+	            	res.json({status:'fail'});
 	            }
 	            else
 	            {
-	            	kiss.commit(req,function(){
-	                	res.json({status:'success',msg:'Co the booking voi this session vi session nay co du thoi gian'});
-					},function(err)
-					{
-						res.json({status:'fail'});
-					})
+	            	//tinh xem do chenh lech cua selectedSession va khoang thoi gian can thiet
+		            var periodLack=periodRequire-selectedItemPeriodTime;
+		            //Neu selectedSession co khoang thoi gian lon hon khoang thoi gian can thiet
+		            //thi duoc quyen booking ngay
+		            //neu khong (selectedSession khong du khoang thoi gian) phai xem xet de dich chuyen thoi gian
+		            if(periodLack>0)
+		            {
+		            	//mang Y nay se chua cac session bao bong selectedSession va cac session lien ke liep tiep
+		            	//tat cac cac session phai trong va deu thuoc redilegal
+		            	//qua trinh lay cac item cua i se duong lai khi
+		            	//- Phat hien thay co session khong lien ke (do co mot booking chen ngang chang han)
+		            	//- Khi co mot session khong toan ven ve khoang thoi gian, tuc co khoang thoi gian>0 nhung nho hon khoang thoi gian mac dinh
+		                var listY=[];
+		                //day selectedItem vao mang
+		                listY.push(selectedItem);
+		                var previousToTime=moment(new Date(selectedItem.TO_TIME));
+		                for(var i=1;i<data.length;i++)
+		                {
+		                    var item=data[i];
+		                    var fromTime=moment(new Date(item.FROM_TIME));
+		                    //kiem tra tinh lien ke lien tiep cua cac sesssion
+		                    if(fromTime.diff(previousToTime,'minutes')==0)
+		                    {
+		                        listY.push(item);
+		                        previousToTime=moment(new Date(item.TO_TIME));
+		                    }
+		                    else
+		                    {
+		                        break;
+		                    }
+		                    //neu currentSession khong phai la mot session du (<default), ma la mot session thieu
+		                    //thi ngung lai
+		                    
+		                    var periodTime=moment(new (item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
+		                    if(periodTime<periodTimeDefault)
+		                    {
+		                    	break;
+		                    }
+		                    //hoac currentSession la mot session du(>default) thi cung ngung lai
+		                    if(periodTime>periodTimeDefault)
+		                    {
+		                    	break;
+		                    }
+		                }
+
+		                //Vi hien tai selectedSession khong du thoi gian
+		                //nen phai can cac session lien ke de bu tru
+		                //Neu khong co cac session lien ke de bu tru thi khong the booking
+		                if(listY.length>1)
+		                {
+		                	var listChanged=[];
+		                    //cong them khoang thoi gian thieu cho selectedSession
+		                    listY[0].TO_TIME=moment(new Date(listY[0].TO_TIME)).add(periodLack,"minutes").toDate();
+		                    listChanged.push(listY[0]);
+		                    for(var i=1;i<listY.length;i++)
+		                    {
+		                        var item=listY[i];
+		                        var periodTime=moment(new Date(item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
+		                        //neu currentSession co khoang thoi gian lon hon khoang thoi gian mac dinh
+		                        //thi ngung tai day va chi can cong FROM_TIME
+		                        if(periodTime>periodTimeDefault)
+		                        {
+		                            item.FROM_TIME=moment(new Date(item.FROM_TIME)).add(periodLack,"minutes").toDate();
+		                            listChanged.push(item);
+		                            break;
+		                        }
+		                        else
+		                        {
+		                            item.FROM_TIME=moment(new Date(item.FROM_TIME)).add(periodLack,"minutes").toDate();
+		                            //Neu la session cuoi cung trong mang thi khong dich chuyen TO_TIME nua
+		                            //neu khong phai la session cuoi cung thi dich chuyen ca FROM_TIME va TO_TIME
+		                            if(i<listY.length-1)
+		                            	item.TO_TIME=moment(new Date(item.TO_TIME)).add(periodLack,"minutes").toDate();
+		                            listChanged.push(item);
+		                        }
+		                    }
+
+		                    function updateAppointmentCalendar(req,list,index)
+		                    {
+		                    	var item=list[index];
+		                    	var sql="UPDATE `cln_appointment_calendar` SET ? WHERE CAL_ID=?";
+		                    	var updateInfo={
+		                    		FROM_TIME:moment(new Date(item.FROM_TIME)).format("YYYY/MM/DD HH:mm:ss"),
+		                    		TO_TIME:moment(new Date(item.TO_TIME)).format("YYYY/MM/DD HH:mm:ss")
+		                    	}
+		                    	kiss.executeQuery(req,sql,[updateInfo,item.CAL_ID],function(result){
+		                    		if(result.affectedRows>0)
+		                    		{
+		                    			if(index<list.length-1)
+		                    			{
+		                    				updateAppointmentCalendar(req,list,index+1);
+		                    			}
+		                    			else
+		                    			{
+		                    				req.body.list=list;
+		                    				saveBookingInfo(req,res);
+		                    			}
+		                    		}
+		                    		else
+		                    		{
+		                    			kiss.exlog("handlePeriodTimeAppointmentCalendar","updateAppointmentCalendar -> khong co dong nao duoc doi");
+		                    			kiss.rollback(req,function(){
+			                    			res.json({status:'fail'});
+			                    		})
+		                    		}
+		                    	},function(err)
+		                    	{
+		                    		kiss.exlog("handlePeriodTimeAppointmentCalendar","updateAppointmentCalendar-> loi khi chay cau update",err);
+		                    		kiss.rollback(req,function(){
+		                    			res.json({status:'fail'});
+		                    		})
+		                    	})
+		                    }
+
+		                    // for(var i=0;i<listChanged.length;i++)
+		                    // {
+		                    //     console.log(moment(new Date(listChanged[i].FROM_TIME)).format("HH:mm DD/MM/YYYY")+
+		                    //         " "+moment(new Date(listChanged[i].TO_TIME)).format("HH:mm DD/MM/YYYY"));
+		                    // }
+		                    updateAppointmentCalendar(req,listChanged,0);
+		                }
+		                else
+		                {
+		                	kiss.exlog("handlePeriodTimeAppointmentCalendar","session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru");
+		                	kiss.rollback(req,function(){
+		                		res.json({status:'fail',msg:"session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru"});
+		                	})
+		                }
+		            }
+		            else
+		            {
+		            	kiss.exlog("handlePeriodTimeAppointmentCalendar","Co the booking voi this session vi session nay co du thoi gian");
+		            	saveBookingInfo(req,res);
+		            }
 	            }
+	            
 			}
 			else
 			{
-				kiss.exlog("handlePeriodTimeAppointmentCalendar","Khong the booking voi session nay");
+				kiss.exlog("handlePeriodTimeAppointmentCalendar","Khong the booking voi session nay; vi khong the lay duoc thong tin session");
 				kiss.rollback(req,function(){
 	        		res.json({status:'fail'});
-	        	})
+	        	});
 			}
 		},function(err){
-			kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi truy van",err);
+			kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi truy van, truy van lay cac session",err);
 			kiss.rollback(req,function(){
 	    		res.json({status:'fail'});
 	    	})

@@ -74,5 +74,10 @@ module.exports =
         pending:'PENDING',
         approve:'APPROVE',
         reject:'REJECT'
+    },
+
+    appointmentStatus:{
+        noAppointment:'No Appointment',
+        booked:'BOOKED'
     }
 }
