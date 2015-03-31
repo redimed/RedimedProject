@@ -10,8 +10,8 @@
                     <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
                     </center>
                     <!-- LOCATION - DEPARTMENT -->
-                    <span class="btn btn-xs pull-right">Department:&nbsp;<span class="text-info bold">{{departmentName}}</span></span>
-                    <span class="btn-xs pull-right">Location:&nbsp;<span class="text-info bold">{{locationName}}</span></span>
+                    <span class="btn btn-xs pull-right">Department:&nbsp;<span class="text-info bold">{{(departmentName===undefined || departmentName==='' || departmentName===null)?"N/A":departmentName}}</span></span>
+                    <span class="btn-xs pull-right">Location:&nbsp;<span class="text-info bold">{{(locationName===undefined || locationName ===null || locationName==='')?"N/A":locationName}}</span></span>
                     <!-- END -->
                     <span class="bold" style="margin-left:3px;">Selected Task / Item Number<span>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
