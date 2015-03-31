@@ -9,6 +9,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         item_id: DataTypes.STRING(20),
         units: DataTypes.FLOAT,
+        ratio: DataTypes.FLOAT,
         time_charge: DataTypes.FLOAT,
         comment: DataTypes.TEXT,
         Created_by: DataTypes.INTEGER(11),

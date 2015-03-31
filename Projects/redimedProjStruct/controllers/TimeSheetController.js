@@ -50,6 +50,7 @@ module.exports = {
                                                     task_id: tId,
                                                     item_id: a.ITEM_ID,
                                                     units: a.totalUnits,
+                                                    ratio: a.ratio,
                                                     time_charge: a.time_temp,
                                                     comment: a.comment
                                                 })
@@ -143,6 +144,7 @@ module.exports = {
                                             task_id: taskId,
                                             item_id: a.ITEM_ID,
                                             units: a.totalUnits,
+                                            ratio: a.ratio,
                                             time_charge: a.time_temp,
                                             comment: a.comment,
                                         })
@@ -151,6 +153,7 @@ module.exports = {
                                     chainer.add(
                                         db.TimeItemTask.update({
                                             units: a.totalUnits,
+                                            ratio: a.ratio,
                                             time_charge: a.time_temp,
                                             comment: a.comment
                                         }, {
@@ -197,6 +200,7 @@ module.exports = {
                                         task_id: tId,
                                         item_id: a.ITEM_ID,
                                         units: a.totalUnits,
+                                        ratio: a.ratio,
                                         time_charge: a.time_temp,
                                         comment: a.comment
                                     })
@@ -477,7 +481,7 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`units`,i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
                             " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
@@ -572,7 +576,7 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, i.units, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, i.units, i.ratio, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
                 "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`units`,i.`COMMENT` AS comment " +
                 "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
                 "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +

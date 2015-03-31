@@ -12,7 +12,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         startingDay: 1
     };
     //END DATE
-    
+
     // SET DEFAULT VALUE
     $scope.info = {};
     $scope.info.time_temp = 0;
@@ -119,11 +119,10 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHANGE ACTIVITY
     $scope.ChangeActivity = function(activity_id, index) {
-        if (activity_id === null || activity_id === undefined || activity_id === "" || activity_id === 18) {
-            $scope.tasks[index].time_charge = null;
-            $scope.tasks[index].time_temp = null;
-        }
-
+        $scope.tasks[index].time_charge = null;
+        $scope.tasks[index].time_temp = null;
+        $scope.tasks[index].item = [];
+        $scope.tasks[index].task = null;
         //SET TIME CHARGE-INLIEU
         $scope.changeTimeCharge();
         //END
@@ -301,13 +300,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                     if (data.tasks_id === item.tasks_id &&
                                         item.ITEM_ID !== null &&
                                         item.deleted === 0) {
-
-                                        data.isInputItem = 1;
-                                        data.isBillable = 1;
                                         item.isAction = 'update';
                                         item.time_temp = item.time_charge;
                                         item.deleted = item.deleted;
                                         item.totalUnits = item.units;
+                                        item.ratio = item.ratio;
                                         item.time_charge = StaffService.convertFromFullToShow(item.time_charge);
                                         data.item.push(item);
                                     }
@@ -466,66 +463,142 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHOOSE ITEM THANH
     $scope.chooseItem = function(task) {
-        var modalInstance = $modal.open({
-            templateUrl: "ItemCode",
-            controller: function($scope) {
-                $scope.items = angular.copy(task);
-                //click cancel
-                $scope.clickCancel = function() {
-                    modalInstance.close({
-                        type: "cancel"
-                    });
-                };
-                //end click cancel
+        if (task !== undefined && task.activity_id === 1) {
+            if ($scope.locations !== undefined &&
+                $scope.locations[task.location_id] !== undefined &&
+                $scope.locations[task.location_id].NAME !== undefined &&
+                $scope.departments !== undefined &&
+                $scope.departments[task.location_id] !== undefined &&
+                $scope.departments[task.location_id].NAME !== undefined) {
+                task.locationName = $scope.departments[task.location_id].NAME;
+                task.departmentName = $scope.departments[task.department_code_id].NAME;
+            }
+            //MODAL BILLABLE
+            var modalInstance = $modal.open({
+                templateUrl: "ItemCode",
+                controller: function($scope) {
+                    $scope.items = angular.copy(task);
+                    //click cancel
+                    $scope.clickCancel = function() {
+                        modalInstance.close({
+                            type: "cancel"
+                        });
+                    };
+                    //end click cancel
 
-                //click save
-                $scope.clickSave = function(info, formValid) {
-                    if (formValid.$invalid === true) {
-                        toastr.warning("Please Input All Required Information!", "Error");
-                    } else {
-                        if (info !== undefined && info !== null) {
-                            for (var i = 0; i < info.length; i++) {
-                                info[i].time_temp = StaffService.convertShowToFull(info[i].time_charge);
+                    //click save
+                    $scope.clickSave = function(info, formValid) {
+                        if (formValid.$invalid === true) {
+                            toastr.warning("Please Input All Required Information!", "Error");
+                        } else {
+                            if (info !== undefined && info !== null) {
+                                for (var i = 0; i < info.length; i++) {
+                                    info[i].time_temp = StaffService.convertShowToFull(info[i].time_charge);
+                                }
+                            }
+                            modalInstance.close({
+                                type: "ok",
+                                value: info
+                            });
+                        }
+                    };
+                    //end click save
+                },
+                size: 'lg',
+            });
+
+            modalInstance.result.then(function(obj) {
+                if (obj.type == "ok") {
+                    var list = [];
+                    list = obj.value;
+                    task.item = list;
+
+                    if (list.length > 0) {
+                        var t = [];
+                        var c = 0;
+                        for (var i = 0; i < list.length; i++) {
+                            if (list[i].isAction !== 'delete') {
+                                t.push(list[i].ITEM_ID);
+                                c = c + StaffService.convertShowToFull(list[i].time_charge);
                             }
                         }
-                        modalInstance.close({
-                            type: "ok",
-                            value: info
-                        });
+                        task.task = t.join(' , ');
+                        task.time_charge = StaffService.convertFromFullToShow(c);
+                        task.time_temp = c;
+                        $scope.changeTimeCharge();
+                    } else {
+                        task.task = null;
+                        task.time_charge = null;
+                        $scope.changeTimeCharge();
                     }
-                };
-                //end click save
-            },
-            size: 'lg',
-        });
-
-        modalInstance.result.then(function(obj) {
-            if (obj.type == "ok") {
-                var list = [];
-                list = obj.value;
-                task.item = list;
-
-                if (list.length > 0) {
-                    var t = [];
-                    var c = 0;
-                    for (var i = 0; i < list.length; i++) {
-                        if (list[i].isAction !== 'delete') {
-                            t.push(list[i].ITEM_ID);
-                            c = c + StaffService.convertShowToFull(list[i].time_charge);
-                        }
-                    }
-                    task.task = t.join(' , ');
-                    task.time_charge = StaffService.convertFromFullToShow(c);
-                    task.time_temp = c;
-                    $scope.changeTimeCharge();
-                } else {
-                    task.task = null;
-                    task.time_charge = null;
-                    $scope.changeTimeCharge();
                 }
-            }
+            });
+            //END
+        } else {
+            //NOT BILLABLE
+            var modalInstanceAC = $modal.open({
+                templateUrl: "ActivityDetail",
+                controller: function($scope) {
+                    $scope.items = angular.copy(task);
+                    //click cancel
+                    $scope.clickCancel = function() {
+                        modalInstanceAC.close({
+                            type: "cancel"
+                        });
+                    };
+                    //end click cancel
 
-        });
+                    //click save
+                    $scope.clickSave = function(info, formValid) {
+                        if (formValid.$invalid === true) {
+                            toastr.warning("Please Input All Required Information!", "Error");
+                        } else {
+                            if (info !== undefined && info !== null) {
+                                for (var i = 0; i < info.length; i++) {
+                                    info[i].time_temp = StaffService.convertShowToFull(info[i].time_charge);
+                                }
+                            }
+                            modalInstanceAC.close({
+                                type: "ok",
+                                value: info
+                            });
+                        }
+                    };
+                    //end click save
+                },
+                size: 'lg',
+            });
+
+            modalInstanceAC.result.then(function(obj) {
+                if (obj.type == "ok") {
+                    var list = [];
+                    list = obj.value;
+                    task.item = list;
+
+                    if (list.length > 0) {
+                        var t = [];
+                        var c = 0;
+                        for (var i = 0; i < list.length; i++) {
+                            if (list[i].isAction !== 'delete') {
+                                t.push(list[i].ITEM_ID);
+                                c = c + StaffService.convertShowToFull(list[i].time_charge);
+                            }
+                        }
+                        task.task = t.join(' , ');
+                        task.time_charge = StaffService.convertFromFullToShow(c);
+                        task.time_temp = c;
+                        $scope.changeTimeCharge();
+                    } else {
+                        task.task = null;
+                        task.time_charge = null;
+                        $scope.changeTimeCharge();
+                    }
+                }
+            });
+            //END
+
+        }
+
     };
     //END CHOOSE ITEM THANH
 

@@ -9,8 +9,22 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 ngModel: "="
             },
             link: function(scope, elem, attrs) {
+                //LOAD STATIC LOCATION
+                var arrayLocation = {
+                    1: "Belmont",
+                    2: "Joondalup",
+                    3: "Rockingham"
+                };
+                //END
+
+                //LOAD STATIC DEPARTMENT
+                //END
                 scope.$watch('ngModel', function(newModel, oldModel) {
                     if (newModel !== undefined && newModel.item !== undefined && newModel.item.length !== 0) {
+                        //LOAD LOCATION NAME - DEPARTMENT NAME
+                        scope.locationName = newModel.locationName;
+                        scope.departmentName = newModel.departmentName;
+                        //END
                         angular.forEach(newModel.item, function(item, index) {
                             if (item !== undefined && item.deleted !== 1) {
                                 scope.items.push(item);
@@ -101,12 +115,12 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 //ORDER BY
 
                 //FUNCTION CHANGE TIMECHARGE
-                scope.changeTimeCharge = function(index, time_charge) {
-                    if (time_charge !== undefined &&
-                        time_charge !== null &&
-                        time_charge !== "" &&
-                        time_charge.length !== 0) {
-                        scope.items[index].totalUnits = ((StaffService.convertShowToFull(time_charge) / 15) * scope.items[index].UNITS).toFixed(1);
+                scope.changeTimeCharge = function(index, ratio) {
+                    if (ratio !== undefined &&
+                        ratio !== null &&
+                        ratio !== "" &&
+                        !isNaN(ratio)) {
+                        scope.items[index].totalUnits = (ratio * scope.items[index].UNITS);
                     } else {
                         scope.items[index].totalUnits = null;
                     }

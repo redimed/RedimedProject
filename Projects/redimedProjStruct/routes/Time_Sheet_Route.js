@@ -37,7 +37,6 @@ app.post("/api/TimeSheet/post-approve-taskweek", TimeSheet.ApproveTaskWeek);
 
 //VIEW DETAIL TIMESHEET
 app.post("/api/TimeSheet/post-detail-one", TimeSheet.ViewOnDate);
-app.post("/api/TimeSheet/post-detail-all", TimeSheet.ViewAllDate);
 //END VIEW DETAIL TIMESHEET
 
 //ROLE

@@ -856,7 +856,7 @@ module.exports = {
         var strActivity = "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " +
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName "+
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
@@ -906,7 +906,7 @@ module.exports = {
 
     ViewOnDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task,time_item_task.units, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task,time_item_task.units, time_item_task.ratio, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
             "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
@@ -921,41 +921,6 @@ module.exports = {
             "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
             " AND time_tasks.deleted = 0" +
             " ORDER BY time_tasks.order ASC";
-        db.sequelize.query(strQuery)
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-
-    ViewAllDate: function(req, res) {
-        var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_item_task.units, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
-            "time_tasks.time_charge, time_item_task.item_id, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
-            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, time_tasks_week.time_in_lieu, " +
-            "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
-            "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
-            "INNER JOIN users ON users.id=time_tasks_week.user_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
-            "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
-            "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " +
-            "WHERE time_tasks.tasks_week_id = " + info.ID +
-            " AND time_tasks.deleted = 0  AND (time_tasks.time_charge != 0 OR time_tasks.activity_id=18)" +
-            " ORDER BY time_tasks.date ASC";
         db.sequelize.query(strQuery)
             .success(function(result) {
                 res.json({

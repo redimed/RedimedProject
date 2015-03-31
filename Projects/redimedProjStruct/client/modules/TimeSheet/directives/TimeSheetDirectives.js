@@ -9,5 +9,6 @@ angular.module("app.loggedIn.TimeSheet.Directives", [
     "app.loggedIn.TimeSheet.Filter",
     "app.loggedIn.TimeSheet.ItemCode.Directive",
     "app.loggedIn.TimeSheet.Digits.Directive",
-    "app.loggedIn.TimeSheet.StepEmployee.Directive"
+    "app.loggedIn.TimeSheet.StepEmployee.Directive",
+    "app.loggedIn.TimeSheet.ActivityDetail.Directive"
 ]);

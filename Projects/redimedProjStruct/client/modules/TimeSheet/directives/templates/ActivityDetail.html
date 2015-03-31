@@ -71,12 +71,11 @@
                                 </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
-                                   <div ng-class="{'error-input':items[$index].ratio==='' || items[$index].ratio ===null || items[$index].ratio===undefined}">
-                                    <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="ratioID" ng-change="changeTimeCharge($index,items[$index].ratio)" only-digits>
-                                </div>
+                                   
+                                    <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" style="font-size:13px;border:1px solid #ccc;height:20px; text-align:center;" id="ratioID" ng-value="1" ng-disabled="true">
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center">
-                                    <input type="text" tabindex="5" class="input-sm form-control" name="units" ng-model="items[$index].totalUnits" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" ng-disabled="true">
+                                    <input type="text" tabindex="5" class="input-sm form-control" name="units" style="text-align:center;font-size:13px;border:1px solid #ccc; height:20px;" id="quantityID" ng-disabled="true" ng-value="1">
                                 </td>
                                 
                                 <td ng-show="item.show===true" style="text-align:center;">
@@ -97,7 +96,7 @@
                                 <td></td>
                                 <td>&nbsp;</td>
                             </tr>
-                            <td colspan="6 ">
+                            <td colspan="7 ">
                             <a class="btn btn-xs" style="color:#26a69a;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a>
                         </td>
                             <!-- end temp row -->
@@ -132,7 +131,7 @@
                     <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
                         <td class="btn btn-xs" style="text-align:left;width:5%;">{{l.ITEM_ID}}</td>
                         <td class="btn btn-xs">
-                            {{l.ITEM_UNITS}}
+                            1
                         </td>
                         <td style="border:1px solid #ccc; text-align:left;" ng-if="(l.ITEM_NAME | readMore).check===true">
                             <div ng-if="l.status===false">

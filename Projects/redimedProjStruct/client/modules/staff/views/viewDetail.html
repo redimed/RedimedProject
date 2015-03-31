@@ -57,6 +57,11 @@
                                 </th>
                                 <th>
                                     <div class="th">
+                                        Standard Ratio
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
                                         Standard Unit
                                     </div>
                                 </th>
@@ -75,6 +80,7 @@
                                 <td class="btn btn-xs" style="text-align:left;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
                                 <td class="btn btn-xs">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(task.ITEM_ID===null||task.ITEM_ID==="" ||task.ITEM_ID ===undefined)?"N/A":task.ITEM_ID}}</td>
+                                <td class="btn btn-xs" style="text-align:left;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
                                 <td class="btn btn-xs" style="text-align:left;">{{(task.units===null||task.units==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
                             </tr>
