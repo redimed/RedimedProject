@@ -51,5 +51,6 @@ eval(fs.readFileSync('./routes/phamacist_route.js')+ '')
 
 /* ************************************************ VUONG TEAM ************************************************* */
 //eval(fs.readFileSync('./routes/claim.js') + '');
+eval(fs.readFileSync('./routes/company.js') + '');
 /* ************************************************ END VUONG TEAM ********************************************* */
 

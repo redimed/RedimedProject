@@ -78,6 +78,7 @@ angular.module("app.loggedIn", [
     'app.loggedIn.consult',
 
     'app.loggedIn.claim',
+    'app.loggedIn.company',
 
     'app.loggedIn.medicine'
 
