@@ -215,7 +215,7 @@ module.exports =
 			" left JOIN `companies` c ON u.`company_id`=c.`id`                                              "+
 			" WHERE 	u.`MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL AND u.id<>?                             "+
 			" 	AND u.`Contact_email` LIKE CONCAT('%',?,'%') AND u.`Booking_Person` LIKE CONCAT('%',?,'%')   "+
-			" 	AND c.Company_name LIKE CONCAT('%',?,'%') and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%')       "+//AND u.`isEnable`=1 
+			" 	AND (c.Company_name LIKE CONCAT('%',?,'%') or c.Company_name is null) and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%')       "+//AND u.`isEnable`=1 
 			" ORDER BY u.`Creation_date` DESC                                                                "+
 			" LIMIT ?,?                                                                                      ";
 
@@ -224,7 +224,7 @@ module.exports =
 			" left JOIN `companies` c ON u.`company_id`=c.`id`                                               "+
 			" WHERE 	u.`MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL AND u.id<>?                              "+
 			" 	AND u.`Contact_email` LIKE CONCAT('%',?,'%') AND u.`Booking_Person` LIKE CONCAT('%',?,'%')    "+
-			" 	AND c.Company_name LIKE CONCAT('%',?,'%') and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%') ";//AND u.`isEnable`=1
+			" 	AND (c.Company_name LIKE CONCAT('%',?,'%') or c.Company_name is null) and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%') ";//AND u.`isEnable`=1
 
     	kiss.executeQuery(req,sql,[userId,emailKey,nameKey,companyKey,statusKey,startIndex,itemsPerPage],function(rows){
     		kiss.executeQuery(req,sqlCount,[userId,emailKey,nameKey,companyKey,statusKey],function(result){
