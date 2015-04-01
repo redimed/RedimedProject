@@ -90,17 +90,17 @@
                         </td>
                         <td style="vertical-align: middle; width:130px;">{{task.date | date : 'EEE, dd MMM yyyy'}}
                         </td>
-                        <td style="width:160;">
+                        <td style="width:200;">
                             <select style="font-size: 14px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
                                 <option value="">--Select Activity--</option>
                             </select>
                         </td>
-                        <td style="width:160px;">
+                        <td style="width:200px;">
                             <select style="font-size: 14px" ng-disabled='task.activity_id ===5' ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
                                 <option value="">--Select Location--</option>
                             </select>
                         </td>
-                        <td style="width:185px;">
+                        <td style="width:200px;">
                             <select style="font-size: 14px" ng-disabled='task.activity_id === 5' ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
                                 <option value="">--Select Department--</option>
                             </select>

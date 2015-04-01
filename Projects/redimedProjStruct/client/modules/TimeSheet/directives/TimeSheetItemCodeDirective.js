@@ -18,7 +18,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         //END
                         if (newModel.item !== undefined && newModel.item.length !== 0) {
                             angular.forEach(newModel.item, function(item, index) {
-                                if (item !== undefined && item.deleted !== 1) {
+                                if (item !== undefined && item.deleted !== 1 && item.show !== false) {
                                     scope.items.push(item);
                                 }
                             });
@@ -138,7 +138,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                     if (scope.isShow === true) {
                         var check = false;
                         angular.forEach(scope.items, function(item, index) {
-                            if (item.ITEM_ID === ITEM_ID) {
+                            if (item.ITEM_ID === ITEM_ID && item.show === true) {
                                 toastr.warning("Item exist in list selected!", "Fail");
                                 check = true;
                             }
@@ -168,7 +168,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 };
                 scope.deleteItem = function(index) {
                     swal({
-                        title: "Do you want to delete this Item Number?",
+                        title: "Do you want to delete this Task / Item?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
@@ -179,6 +179,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         if (scope.items[index].isAction === "update") {
                             scope.items[index].isAction = "delete";
                         }
+                        scope.isShow = true;
                     });
                 };
             },

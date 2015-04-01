@@ -530,7 +530,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         var t = [];
                         var c = 0;
                         for (var i = 0; i < list.length; i++) {
-                            if (list[i].isAction !== 'delete') {
+                            if (list[i].isAction !== 'delete' && list[i].show === true) {
                                 t.push(list[i].ITEM_ID);
                                 c = c + StaffService.convertShowToFull(list[i].time_charge);
                             }
@@ -614,7 +614,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         var t = [];
                         var c = 0;
                         for (var i = 0; i < list.length; i++) {
-                            if (list[i].isAction !== 'delete') {
+                            if (list[i].isAction !== 'delete' && list[i].show === true) {
                                 t.push(list[i].ITEM_NAME);
                                 c = c + StaffService.convertShowToFull(list[i].time_charge);
                             }
