@@ -412,6 +412,10 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.letterType=rlobConstant.letterType;
                 $scope.notificationType=rlobConstant.notificationType;
                 $scope.rlob_add_notification=rlobService.add_notification;
+
+
+
+
                 function getFilesUpload() {
                     $http({
                         method: "GET",
@@ -513,6 +517,58 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }
                     
                 }
+
+
+                $scope.showDialogSetResult=function()
+                {
+                    $scope.filesClone=angular.copy($scope.files);
+                    $("#rlob-dialog-set-result").modal({show:true,backdrop:'static'});
+                }
+
+                /**
+                 * Ham set mot chuoi cac file la result sau do gui mail thong bao den khach hang
+                 * tannv.dts@gmail.com
+                 */
+                $scope.setListResultFiles=function()
+                {
+                    var listResult=[];
+                    for(var i=0;i<$scope.filesClone.length;i++)
+                    {
+                        var item=$scope.filesClone[i];
+                        if(item.isClientDownLoad==1)
+                        {
+                            listResult.push(item);
+                        }
+                    }
+
+                    if(listResult.length>0)
+                    {
+                        // rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"send file result success");
+                        rlobService.rlobBookingFile.setListResultFiles(listResult)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"send file result success");
+                                $scope.rlob_add_notification(listResult[0].ASS_ID,listResult[0].BOOKING_ID,$scope.bookingType,$scope.letterType.result,$scope.notificationType.letter,'');
+                                getFilesUpload();
+                            }
+                            else
+                            {
+                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Set list result files fail.");
+                            }
+                        },function(err){
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Set list result files fail.");
+                        })
+                        .then(function(){
+                            $("#rlob-dialog-set-result").modal('hide');
+                        })
+                    }
+                    else
+                    {
+                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"No files chosen.");
+                    }
+                }
+
             }
         };
     })
@@ -617,7 +673,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //Khoi tao data paginator
                 if($scope.bookingType=='REDiLEGAL')
                 {
-                    $scope.selectedFilter.var1=moment().add(14,'day');
+                    // $scope.selectedFilter.var1=moment().add(14,'day');
+                    $scope.selectedFilter.var1=moment().add(60,'day');
                 }
                 else
                 {
@@ -1053,7 +1110,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.updateAppoinmentsList();
                 $scope.selectAppointmentCalendar=function(appointmentCalendar,RL_TYPE_ID,Specialties_id)
                 {
-//                    appointmentCalendar.RL_TYPE_ID=$scope.selectedFilter.rltypeSelected.RL_TYPE_ID;
+                    
+//                  appointmentCalendar.RL_TYPE_ID=$scope.selectedFilter.rltypeSelected.RL_TYPE_ID;
                     appointmentCalendar.RL_TYPE_ID=RL_TYPE_ID;
                     //appointmentCalendar.Specialties_id=$scope.selectedFilter.clnSpecialitySelected.Specialties_id;
                     appointmentCalendar.Specialties_id=Specialties_id;
@@ -1396,6 +1454,8 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_booking_change_status_template.html',
             controller: function ($scope)
             {
+                $scope.bookingStatus=rlobConstant.bookingStatus;
+                $scope.bookingStatusDisplay=rlobConstant.bookingStatusDisplay;
                 //$scope.bookingStatusChangedFlag =0;
                 $scope.rlob_change_status=function(assId,bookingId,bookingType,status)
                 {

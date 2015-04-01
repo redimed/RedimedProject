@@ -1,0 +1,15 @@
+.pr_button_border{
+	border-radius: 5px!important;
+	border:none!important;
+	background-color: #B8D9B7;
+}
+.pr_button_border:hover{
+	background-color: #D8EBD8!important;
+}
+
+.pr_button_border:focus{
+	background-color: #D8EBD8!important;
+}
+.pr_table_selected_row{
+	background-color: #EDEDEB;
+}

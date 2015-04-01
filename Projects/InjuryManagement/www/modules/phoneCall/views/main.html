@@ -1,71 +1,72 @@
-
 <ion-view hide-nav-bar="true">
     <div class="content content-scroll-custom">
-        <div class="waiting-screen" ng-show="isCaller && !isAccept">
+        <div class="waiting-screen" ng-show="!isAccept">
             <div style="border: 1px solid rgba(255, 255, 255, .1); border-radius: 50%; width: 400px; height: 400px;" class="waiting-screen" ></div>
-            <div style="border: 1px solid rgba(255, 255, 255, .3);; border-radius: 50%; width: 300px; height: 300px;" class="waiting-screen div2" ></div>
+            <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 50%; width: 300px; height: 300px;" class="waiting-screen div2" ></div>
             <div style="border: 1px solid rgba(255, 255, 255, .5); border-radius: 50%; width: 200px; height: 200px;" class="waiting-screen div1" ></div>
             <div class="main">
                 <img width="145" height="145" ng-src="{{avatarCaller}}" class="avatar-calling"/>
             </div>
         </div>
 
-        <div class="calling-container" ng-show="isCaller && !isAccept">
-            <div style="color: whitesmoke; margin-bottom: 50px;">
+        <div class="controllers-call reveal-animation" ng-if="controllerbtn">
+            <div style="color: whitesmoke; margin-bottom: 20px;" ng-show="!isAccept">
                 <div style="margin-bottom: 15px;">
-                    <span style="font-size: 15px; font-weight: 300">Calling...</span>  <br>
+                    <span style="font-size: 15px; font-weight: 300">Calling...</span><br>
                 </div>
                 <div>
                     <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
                 </div>
             </div>
-            <div style="margin-bottom: 10px">
-                <div style="margin-bottom: 30px;">
-                    <button class="button custom-bottom-control button-icon"
-                            ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
-                    </button>
+            <a class="button custom-bottom-control button-icon"
+               ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToggle()">
+            </a>
 
-                    <button class="button custom-bottom-control button-icon"
-                            ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
-                    </button>
-                </div>
-                <div>
-                    <button class="button button-cancel_main" ng-click="cancelCall(offMedia = true)">
-                        <img class="img-responsive margin-auto" src="img/call-down.png" />
-                    </button>
-                </div>
+            <a class="button custom-bottom-control button-icon"
+               ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToggle()">
+            </a>
+
+            <a class="button custom-bottom-control button-icon icon ion-ios7-monitor" ng-click="viewImage()">
+            </a>
+
+            <a class="button button-cancel_main button-icon icon ion-power" ng-click="cancelCall(offMedia = true)">
+            </a>
+        </div>
+
+        <!--<ot-layout props="{animate:false,bigFixedRatio:true}" class="cus-callerVideo">-->
+        <!--<ot-subscriber  ng-click="callerClick()"-->
+        <!--ng-repeat="stream in streams"-->
+        <!--stream="stream"-->
+        <!--session="session"-->
+        <!--props="subscriberProps"-->
+        <!--ng-class="{OT_big: (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}">-->
+        <!--</ot-subscriber>-->
+        <!--</ot-layout>-->
+
+        <!--<ot-publisher class="cus-selfVideo" props="facePublisherProps"></ot-publisher>-->
+
+        <div class="cus-callerVideo" ng-hide="isImage">
+            <div class="cus-callerVideo" id="callerVideo" ng-hide="isImage"></div>
+        </div>
+
+        <div class="image-shareScreen" ng-show="isAccept">
+            <img ng-src="{{imgDetail.src}}" width="100%" height="100%" style="background-color: #EAE9E3;" ng-show="isImage" ng-click="videoClick()"/>
+
+            <div class="listImgShare sliderImg" ng-show="isImage" ng-class="{'listImgShare-show': clicked}">
+                <a class="button button-icon icon btn-showListImage"
+                   ng-class="clicked ? 'ion-ios7-arrow-left' : 'ion-ios7-arrow-right'"
+                   ng-click="toggleListImage()"></a>
+
+                <ion-scroll direction="y" style="height: 100%;">
+                    <a ng-repeat="imgLst in imgObj track by $index" ng-click="selectImg(imgLst)">
+                        <img ng-src="{{imgLst.src}}" class="img-shareCall" ng-class="{'imgShareCallSelect': imgLst.id === imgDetail.id}" />
+                    </a>
+                </ion-scroll>
             </div>
         </div>
 
-        <div class="calling-container" ng-show="!isCaller || isAccept">
-            <div style="color: whitesmoke; color: whitesmoke; position: fixed; top: 0; left: 0; right: 0; margin-top: 20px;">
-                <div style="margin-bottom: 15px;">
-                    <span style="font-size: 15px; font-weight: 300">Call in progress...</span><br>
-                </div>
-                <div>
-                    <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
-                </div>
-            </div>
-
-            <button class="button custom-bottom-control button-icon"
-                    ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToogle()">
-            </button>
-
-            <button class="button button-cancel_main" ng-click="cancelCall(offMedia = false)">
-                <img class="img-responsive margin-auto" src="img/call-down.png" />
-            </button>
-
-            <button style="z-index: 9999" class="button custom-bottom-control button-icon"
-                    ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToogle()">
-            </button>
-
-        </div>
-
-
-        <div id="callerVideo" class="cus-callerVideo" ng-show="!isCaller || isAccept"></div>
-
-        <div class="cus-selfVideo">
-            <div id="selfVideo"></div>
+        <div class="cus-selfVideo"  ng-hide="isImage">
+            <div id="selfVideo"  ng-hide="isImage"></div>
         </div>
     </div>
 </ion-view>

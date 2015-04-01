@@ -178,7 +178,7 @@
                     </li>
                     <li class="dropdown dropdown-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle hide1" style="width:50px;height:50px;margin-bottom:20px;" ng-src="{{userImg}}" />
+                            <img alt="" class="img-circle hide1" style="width:50px;height:50px;margin-bottom:20px;" ng-src="./theme/assets/icon.png" />
                             <span class="username username-hide-on-mobile">
                     {{user}} </span>
                             <i class="fa fa-angle-down"></i>
@@ -243,7 +243,7 @@
         <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
         <div class="page-sidebar navbar-collapse collapse">
             <!-- BEGIN SIDEBAR MENU -->
-            <ul class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <ul style="margin-bottom: 0px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                 <li class="start">
                     <a href="javascript:;" ng-click="userclick()">
                         <i class="icon-home"></i>
@@ -269,6 +269,14 @@
                 </li>
             </ul>
             <!-- END SIDEBAR MENU -->
+            <div ng-show="have_redilegal_components.value==1" style="border-top: 1px solid #43525c;color: #dce2e6;">
+                <div style="margin-top: 20px;margin-left: 5px" >
+                    <div ng-repeat="item in contactDetails">
+                        <label>{{item.label}}</label><br/>
+                        <label>{{item.content}}</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- END SIDEBAR -->
@@ -316,10 +324,13 @@
                                 <td>{{item.time_created |date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                 <td>{{item.msg}}</td>
                                 <td>
-                                    <a ng-show="item.TYPE=='bell'" class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="closeNotificationListPopup()" ui-sref="{{item.link}}">
-                                    View details
-                                </a>
-                                    <a ng-show="item.TYPE=='letter'" class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" href="/api/download/structure/attach-file/{{item.source_name}}/{{item.ref_id}}">
+                                    <!-- <a ng-show="item.TYPE=='bell'" class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="closeNotificationListPopup()" ui-sref="{{item.link}}">
+                                        View details
+                                    </a> -->
+                                    <a class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="closeNotificationListPopup()" ui-sref="{{item.link}}">
+                                        View details
+                                    </a>
+                                    <a ng-show="item.TYPE=='letter'" class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="downloadRlobResult(item.ref_id);">
                                     Download document
                                 </a>
                                 </td>

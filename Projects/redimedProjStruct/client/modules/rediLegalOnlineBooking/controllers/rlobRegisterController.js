@@ -35,7 +35,7 @@ angular.module('app.rlobRegister.controller',[])
                                         userName: $scope.user.username,
                                         password: $scope.user.password,
                                         phone: $scope.user.phone,
-                                        companyId: $scope.user.companyId,
+                                        companyTemp: $scope.user.companyTemp,
                                         companyState:$scope.user.companyState,
                                         isAccessReportOnline:$scope.user.isAccessReportOnline?$scope.user.isAccessReportOnline:0
                                     };
@@ -63,10 +63,10 @@ angular.module('app.rlobRegister.controller',[])
             }
         };
 
-        $scope.companyList = [];
-        SecurityService.company().then(function(response){
-            $scope.companyList = response;
-        })
+        // $scope.companyList = [];
+        // SecurityService.company().then(function(response){
+        //     $scope.companyList = response;
+        // })
 
         $scope.stateList=[];
         rlobService.getStates('Australia')

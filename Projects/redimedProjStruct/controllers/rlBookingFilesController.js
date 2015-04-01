@@ -104,6 +104,81 @@ module.exports =
         //     })
 
     },
+
+
+    /**
+     * Chon cac file lam file result ma khac hang co the tai ve
+     * tannv.dts@gmail.com
+     */
+    setListResultFiles:function(req,res)
+    {
+        var listResult=kiss.checkData(req.body.listResult)?req.body.listResult:[];
+        if(listResult.length<=0)
+        {
+            kiss.exlog("setListResultFiles","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var listResultId=[];
+        for(var i=0;i<listResult.length;i++)
+        {
+            listResultId.push(listResult[i].FILE_ID);
+        }
+
+        var bookingId=listResult[0].BOOKING_ID;
+        kiss.beginTransaction(req,function(){
+            var sql="UPDATE `rl_booking_files` SET `isClientDownLoad`=0 WHERE `BOOKING_ID`=?";
+            kiss.executeQuery(req,sql,[bookingId],function(result){
+                if(result.affectedRows>0)
+                {
+                    var sql="UPDATE `rl_booking_files` SET `isClientDownLoad`=1 WHERE `FILE_ID` IN (?)";
+                    kiss.executeQuery(req,sql,[listResultId],function(result){
+                        if(result.affectedRows>0)
+                        {
+                            kiss.commit(req,function(){
+                                req.body.bookingId=bookingId;
+                                rlBookingsController.sendResultNotificationEmail(req,res);
+                                res.json({status:'success'});
+                            },function(err){
+                                kiss.exlog("setListResultFiles","Loi commit",err);
+                                res.json({status:'fail'});
+                            })
+                        }
+                        else
+                        {
+                            kiss.exlog("setListResultFiles","Khong co dong nao duoc cap nhat");
+                            kiss.rollback(req,function(){
+                                res.json({status:'fail'});
+                            })
+                        }
+                    },function(err){
+                        kiss.exlog("setListResultFiles","Loi truy van",err);
+                        kiss.rollback(req,function(){
+                            res.json({status:'fail'});
+                        });
+                    })
+                }
+                else
+                {
+                    kiss.exlog("setListResultFiles","Khong co dong nao duoc cap nhat");
+                    kiss.rollback(req,function(){
+                        res.json({status:'fail'});
+                    })
+                }
+            },function(err){
+                kiss.exlog("setListResultFiles","Loi truy van",err);
+                kiss.rollback(req,function(){
+                    res.json({status:'fail'});
+                })
+            });
+        },function(err){
+            kiss.exlog("setListResultFiles","Khong the mo transaction");
+            res.json({status:'fail'});
+        })
+    },
+
+
     
     // BUI VUONG
     listByBooking:function(req,res){

@@ -12,7 +12,7 @@ var sysUserNotificationsController=require('./controllers/sysUserNotificationsCo
 var structureController=require('./controllers/structureController');
 var rlobBookingPaperlessController=require('./controllers/rlobBookingPaperlessController');
 var rlRegisterController=require('./controllers/rlRegisterController');
-
+var rlobController=require('./controllers/rlobController');
 var rlobBookingMobileController=require('./controllers/rlobBookingMobileController');
 //-------------------------------------------------------------
 
@@ -75,13 +75,16 @@ app.post('/api/rlob/rl_bookings/change-booking',rlBookingsController.changeBooki
 app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: get pass booking have not result
 app.post('/api/rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result',rlBookingsController.getCountReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: count total number of pass booking have not result
 app.post('/api/rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result',rlBookingsController.getItemsOfPageReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: items of page pass booking have not result
-
+app.get('/api/rlob/rl_bookings/admin/report/list-location-report',rlBookingsController.listLocationReport);
+app.get('/api/rlob/rl_bookings/admin/report/list-doctor-report',rlBookingsController.listDoctorReport);
 
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
 app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
 app.get('/api/rlob/rl_bookings/admin/get-document-status-summary',rlBookingsController.getDocumentStatusSummary);
 app.get('/api/rlob/rl_bookings/admin/sendResultNotificationEmail',rlBookingsController.sendResultNotificationEmail);
+app.get('/api/rlob/rl_bookings/admin/list-mail-user-online-booking',rlBookingsController.listMailUserOnlineBooking);
+
 
 //rl_booking_files
 app.get('/api/rlob/rl_booking_files/get-new-key',rlBookingFilesController.getNewKey);
@@ -144,6 +147,12 @@ app.post('/api/rlob/register/update-redilegal-user-status', rlRegisterController
 app.post('/api/rlob/register/update-user-info', rlRegisterController.updateUserInfo);
 app.get('/api/rlob/rl_bookings/get-upcomming-booking-have-not-document-to-notification-customer', rlBookingsController.getUpcommingBookingHaveNotDocumentToNotificationCustomer);
 app.get('/api/rlob/register/get-states', rlRegisterController.getStates);
+
+app.post('/api/rlob/core/save-booking-info', rlobController.handleSaveBookingInfo);
+app.post('/api/rlob/core/check-period-time-to-booking', rlobController.checkPeriodTimeToBooking);
+app.post('/api/rlob/core/set-list-result-files', rlBookingFilesController.setListResultFiles);
+app.get('/api/rlob/core/rlob-download-list-result-files', rlobDocumentsController.rlobDownloadListResultFiles);
+
 //phanquocchien.c1109g@gmail.com
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);
 app.post('/api/rlob/sponsor/insert-nonemergency', rlobBookingMobileController.insertNonEmergency);

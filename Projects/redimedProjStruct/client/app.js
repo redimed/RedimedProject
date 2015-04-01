@@ -43,9 +43,11 @@ angular.module("app", [
         'jsTree.directive',
         'app.rlobRegister.controller',
         'opentok-whiteboard',
+        'angucomplete',
         'ui.mask',
         'app.sponsor1.controller',
-	'app.sponsor1.emergency.controller',
+    	'infinite-scroll',//tannv.dts@gmail.com	
+	   'app.sponsor1.emergency.controller',
     	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'
     ])

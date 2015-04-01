@@ -11,7 +11,7 @@ module.exports = {
 		var agrs = [];
 		for (var key in search_data) {
 			if(search_data[key])
-			agrs.push(key + " = '"+ search_data[key] +"'");
+    			agrs.push(key + " = '"+ search_data[key] +"'");
 		};
 
 		var whereOpt = agrs.length ? db.Sequelize.and.apply(null, agrs) : null;

@@ -108,8 +108,9 @@ module.exports =
 
 	insertNewUser:function(req,res)
 	{
-		var newUser=kiss.checkData(req.body.newUser)?req.body.newUser:{};
-		if(!kiss.checkListData(newUser.fullName,newUser.email,newUser.phone,newUser.companyId,
+        var newUser=kiss.checkData(req.body.newUser)?req.body.newUser:{};
+
+		if(!kiss.checkListData(newUser.fullName,newUser.email,newUser.phone,newUser.companyTemp,
 			newUser.userName,newUser.password,newUser.isAccessReportOnline))
 		{
 			kiss.exlog("insertNewUser","Loi data truyen den");
@@ -124,7 +125,7 @@ module.exports =
 			Booking_Person: newUser.fullName,
             Contact_email: newUser.email,
             Contact_number: newUser.phone,
-            company_id: newUser.companyId,
+            COMPANY_TEMP: newUser.companyTemp,
             COMPANY_STATE:newUser.companyState,
             user_name: newUser.userName,
             password: hashPass,
@@ -211,7 +212,7 @@ module.exports =
     	}
 		var sql=
 			" SELECT u.*,c.`Company_name` FROM `users` u                                          			 "+                 
-			" INNER JOIN `companies` c ON u.`company_id`=c.`id`                                              "+
+			" left JOIN `companies` c ON u.`company_id`=c.`id`                                              "+
 			" WHERE 	u.`MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL AND u.id<>?                             "+
 			" 	AND u.`Contact_email` LIKE CONCAT('%',?,'%') AND u.`Booking_Person` LIKE CONCAT('%',?,'%')   "+
 			" 	AND c.Company_name LIKE CONCAT('%',?,'%') and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%')       "+//AND u.`isEnable`=1 
@@ -220,7 +221,7 @@ module.exports =
 
 		var sqlCount=
 			" SELECT COUNT(u.`user_name`) AS TOTAL_ITEMS FROM `users` u                                       "+   
-			" INNER JOIN `companies` c ON u.`company_id`=c.`id`                                               "+
+			" left JOIN `companies` c ON u.`company_id`=c.`id`                                               "+
 			" WHERE 	u.`MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL AND u.id<>?                              "+
 			" 	AND u.`Contact_email` LIKE CONCAT('%',?,'%') AND u.`Booking_Person` LIKE CONCAT('%',?,'%')    "+
 			" 	AND c.Company_name LIKE CONCAT('%',?,'%') and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%') ";//AND u.`isEnable`=1
@@ -236,7 +237,7 @@ module.exports =
     	},function(err){
     		kiss.exlog("getRedilegalUsers","Loi truy van");
     		res.json({status:'fail'});
-    	});
+    	},true);
 	},
 
 	updateRedilegalUserStatus:function(req,res){
