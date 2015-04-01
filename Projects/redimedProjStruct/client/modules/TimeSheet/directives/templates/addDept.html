@@ -6,20 +6,20 @@
             <div data-row-span="12">
                 <!-- NAME DEPT -->
                 <div data-field-span="6">
-                    <label>name of Dept</label>
-                    <input type="text" name="departmentName" ng-model="info.departmentName" ng-required="true" ng-maxlength="100" style="font-size:13px;" custom-tr="info.departmentName" custom-fr="deptForm.departmentName">
+                    <label style="font-size:14px;">name of Dept</label>
+                    <input type="text" name="departmentName" ng-model="info.departmentName" ng-required="true" ng-maxlength="100" style="font-size:14px;" custom-tr="info.departmentName" custom-fr="deptForm.departmentName">
                 </div>
                 <!-- END NAME DEPT -->
                 <!-- LOCATION NAME -->
                 <div data-field-span="6">
-                    <label>Location</label>
-                    <select ng-options="local.location_id as local.NAME for local in location" ng-model="info.locationID" style="font-size:13px;" ng-required="true" name="locationID" custom-tr="info.locationID" custom-fr="deptForm.locationID"></select>
+                    <label style="font-size:14px;">Location</label>
+                    <select ng-options="local.location_id as local.NAME for local in location" ng-model="info.locationID" style="font-size:14px;" ng-required="true" name="locationID" custom-tr="info.locationID" custom-fr="deptForm.locationID"></select>
                 </div>
                 <!-- END LOCATION NAME -->
             </div>
         </fieldset>
-                <a class="btn red pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
-        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-click="onSave({return: info})" ng-disabled="deptForm.departmentName.$error.required || deptForm.locationID.$error.required">{{addOrUpdateButton}}</a>
+                <a class="btn red pull-right btn-xs" style="width:50px; font-size:14px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px; font-size:14px;" ng-click="onSave({return: info})" ng-disabled="deptForm.departmentName.$error.required || deptForm.locationID.$error.required">{{addOrUpdateButton}}</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

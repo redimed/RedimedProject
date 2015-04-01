@@ -5,15 +5,15 @@
             <legend>{{addOrUpdateTitle}}</legend>
             <div data-row-span="1">
                 <!-- NAME NODE -->
-                <div data-field-span="1">
+                <div data-field-span="1" style="font-size:14px;">
                     <label>Name of function</label>
-                    <input type="text" ng-model="info.TYPE_NAME" name="TYPE_NAME" custom-tr="info.TYPE_NAME" custom-fr="AddFunction.TYPE_NAME" ng-required="true" ng-maxlength="200" style="font-size:13px;">
+                    <input type="text" ng-model="info.TYPE_NAME" name="TYPE_NAME" custom-tr="info.TYPE_NAME" custom-fr="AddFunction.TYPE_NAME" ng-required="true" ng-maxlength="200" style="font-size:14px;">
                 </div>
                 <!-- END NAME NODE -->
             </div>
         </fieldset>
-        <a class="btn btn-danger pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
-        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-disabled="AddFunction.TYPE_NAME.$error.required" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
+        <a class="btn btn-danger pull-right btn-xs" style="width:50px; font-size:14px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px; font-size:14px;" ng-disabled="AddFunction.TYPE_NAME.$error.required" ng-click="onSave({return: info})">{{addOrUpdateButton}}</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

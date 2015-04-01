@@ -6,32 +6,32 @@
             <div data-row-span="3">
                 <!-- NAME TYPE -->
                 <div data-field-span="1">
-                    <label>name of tree</label>
-                    <input type="text" name="GROUP_NAME" ng-required="true" custom-tr="info.GROUP_NAME" custom-fr="addFunction.GROUP_NAME" ng-model="info.GROUP_NAME" style="font-size:13px;">
+                    <label style="font-size:14px;">name of tree</label>
+                    <input type="text" name="GROUP_NAME" ng-required="true" custom-tr="info.GROUP_NAME" custom-fr="addFunction.GROUP_NAME" ng-model="info.GROUP_NAME" style="font-size:14px;">
                 </div>
                 <!-- END NAME TYPE -->
                 <!-- COMPANY NAME -->
                 <div data-field-span="1">
-                    <label>company</label>
-                    <select ng-options="company.id as company.Company_name for company in companies" ng-model="info.COMPANY_ID" style="font-size:13px;" name="COMPANY_ID" ng-required="true" custom-tr="info.COMPANY_ID" custom-fr="addFunction.COMPANY_ID"></select>
+                    <label style="font-size:14px;">company</label>
+                    <select ng-options="company.id as company.Company_name for company in companies" ng-model="info.COMPANY_ID" style="font-size:14px;" name="COMPANY_ID" ng-required="true" custom-tr="info.COMPANY_ID" custom-fr="addFunction.COMPANY_ID"></select>
                 </div>
                 <!-- END COMPANY NAME -->
                 <!-- SITE NAME -->
                 <div data-field-span="1">
-                    <label>site</label>
-                    <select ng-options="site.id as site.Site_name for site in sites" ng-model="info.SITE_ID" style="font-size:13px;" name="SITE_ID" ng-required="true" custom-tr="info.SITE_ID" custom-fr="addFunction.SITE_ID"></select>
+                    <label style="font-size:14px;">site</label>
+                    <select ng-options="site.id as site.Site_name for site in sites" ng-model="info.SITE_ID" style="font-size:14px;" name="SITE_ID" ng-required="true" custom-tr="info.SITE_ID" custom-fr="addFunction.SITE_ID"></select>
                 </div>
                 <!-- END SITE NAME -->
             </div>
             <div data-row-span="3">
                 <div data-field-span="3">
-                    <label>decription</label>
-                    <textarea ng-model="info.DECRIPTION" style="font-size:13px;"></textarea>
+                    <label style="font-size:14px;">decription</label>
+                    <textarea ng-model="info.DECRIPTION" style="font-size:14px;"></textarea>
                 </div>
             </div>
         </fieldset>
-        <a class="btn red pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
-        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-click="onSave({return: info})" ng-disabled="addFunction.GROUP_NAME.$error.required || addFunction.COMPANY_ID.$error.required || addFunction.SITE_ID.$error.required">{{addOrUpdateButton}}</a>
+        <a class="btn red pull-right btn-xs" style="width:50px; font-size:14px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px; font-size:14px;" ng-click="onSave({return: info})" ng-disabled="addFunction.GROUP_NAME.$error.required || addFunction.COMPANY_ID.$error.required || addFunction.SITE_ID.$error.required">{{addOrUpdateButton}}</a>
         <!-- END MAIN INFO -->
     </form>
 </div>

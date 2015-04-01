@@ -3,19 +3,19 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.home">Home</a>
+            <a ui-sref="loggedIn.home" style="font-size:15px; font-weight:bold;">Home</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.ListFunction">Functions</a>
+            <a ui-sref="loggedIn.ListFunction" style="font-size:15px; font-weight:bold;">Functions</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn blue pull-right btn-xs" style="margin-top:10px;" ng-click="AddFunction()">New function</a>
-        <div class="caption" style="font-size:13px;">
+        <a class="btn blue pull-right btn-xs" style="margin-top:10px; font-size:14px;" ng-click="AddFunction()">New function</a>
+        <div class="caption" style="font-size:14px; font-weight:bold;">
             <i class="fa fa-cogs"></i>List of function
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -52,7 +52,7 @@
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                         <!-- FUNCTION NAME -->
                         <td>
-                            <input type="text " id="TYPE_NAME " ng-model="searchObjectMap.data.TYPE_NAME " ng-change="loadList(TYPE_NAME) " class="form-control input-sm ">
+                            <input type="text " id="TYPE_NAME " ng-model="searchObjectMap.data.TYPE_NAME " ng-change="loadList(TYPE_NAME) " class="form-control input-sm " style="font-size:14px;">
                         </td>
                         <!-- END FUNCTION NAME -->
 
@@ -63,27 +63,27 @@
 
                     <!-- NOT DATA -->
                     <tr ng-show="list.result === null">
-                        <td colspan="4">
+                        <td colspan="4" style="font-size:14px;">
                             <h4>There is no items</h4>
                         </td>
                     </tr>
                     <!-- END NOT DATA -->
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; ">
-                        <td class="btn btn-xs" style="text-align:left;">{{l.TYPE_NAME || " " }}</td>
-                        <td class="btn btn-xs" style="text-align:left;">{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.TYPE_NAME || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.Creation_date | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                         <td style="text-align: center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a" style="width:50px;">More<span class="caret"></span>
+                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a" style="width:50px; font-size:14px;">More<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a ng-click="goToTree(l.TYPE_NAME)"><i class="fa fa-check"></i>Detail</a>
+                                    <li><a ng-click="goToTree(l.TYPE_NAME)" style="font-size:14px;"><i class="fa fa-check"></i>Detail</a>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a ng-click="EditFunction(l.TYPE_NAME)"><i class="fa fa-pencil"></i>Edit</a>
+                                    <li><a ng-click="EditFunction(l.TYPE_NAME)" style="font-size:14px;"><i class="fa fa-pencil"></i>Edit</a>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a ng-click="DeleteFunction(l.TYPE_NAME)"><i class="fa fa-times"></i>Delete</a>
+                                    <li><a ng-click="DeleteFunction(l.TYPE_NAME)" style="font-size:14px;"><i class="fa fa-times"></i>Delete</a>
                                     </li>
                                 </ul>
                             </li>
@@ -96,12 +96,12 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                                <span class="bold custom-timesheet">Total: {{list.count}}</span>
+                                <span class="bold custom-timesheet" style="font-size:14px;">Total: {{list.count}}</span>
 
-                                <span class="custom-timesheet">Show</span>
-                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                                <span class="custom-timesheet" style="font-size:14px;">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:14px;">
                                 </select>
-                                <span class="custom-timesheet">entries per page</span>
+                                <span class="custom-timesheet" style="font-size:14px;">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
