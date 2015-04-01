@@ -11,7 +11,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.rlob", //Redi Legal Online Booking
     "app.loggedIn.vaccinob", //Vaccination Online Booking
     "app.loggedIn.iso", //ISO manage files
-    "app.loggedIn.payroll",//PAYROLL (TANNV.DTS@GMAIL.COM)
+    "app.loggedIn.pr",//PAYROLL (TANNV.DTS@GMAIL.COM)
     "app.loggedIn.doctor", // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",

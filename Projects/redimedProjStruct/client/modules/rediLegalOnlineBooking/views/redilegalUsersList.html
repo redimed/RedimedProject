@@ -89,7 +89,7 @@
 				</td>
 				
 				<td>
-					{{item.Company_name}}
+					{{item.Company_name?item.Company_name:item.COMPANY_TEMP+'(temp)'}}
 				</td>
 				<td>
 					{{item.Creation_date|date:'dd-MM-yyyy'}}

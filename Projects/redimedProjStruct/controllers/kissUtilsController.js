@@ -184,12 +184,21 @@ module.exports =
         }
     },
 
-    rollback:function(req)
+    rollback:function(req,functionFinishRollback)
     {
-        req.kissConnection.rollback(function() 
+        if(req.kissConnection)
         {
-            exlog("kissUtil","rollback success!");
-        });
+            req.kissConnection.rollback(function() 
+            {
+                exlog("kissUtil","rollback success!");
+                functionFinishRollback();
+            });
+        }
+        else
+        {
+            functionFinishRollback();
+        }
+        
     },
 
     commit:function(req,functionSuccess,functionError)

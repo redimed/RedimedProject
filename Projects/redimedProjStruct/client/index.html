@@ -352,14 +352,15 @@ RLOB PAPERLESS STRUCTURE -->
     <script src="modules/rediLegalOnlineBooking/controllers/rlob_paperlessController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/paperless/rlob_paperless_ams6Controller.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/paperless/rlob_paperless_ams5Controller.js"></script>
-    <script src="modules/rediLegalOnlineBooking/controllers/rlob_rltypeController.js"></script>
-    <script src="modules/rediLegalOnlineBooking/controllers/rlob_specialtiesController.js"></script>
-    <script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobSponsor1Controller.js"></script>
+	<script src="modules/rediLegalOnlineBooking/controllers/rlob_rltypeController.js"></script>
+	<script src="modules/rediLegalOnlineBooking/controllers/rlob_specialtiesController.js"></script>
+	<script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobSponsor1Controller.js"></script>
 	<script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobEmergencyController.js"></script>
 	<script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobNonEmergencyController.js"></script>
     <!-- TANNV.DTS@GMAIL.COM RLOB REGISTER -->
     <script src="modules/rediLegalOnlineBooking/controllers/rlobRegisterController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/rlob_admin_redilegalUsersListController.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/rlobBookingBehalfController.js"></script>
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <!-- TANNV.DTS@GMAIL.COM -->
     <!-- ISO MODULE -->
@@ -386,13 +387,19 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <!-- HR_PAYROLL START MODULE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
-    <link rel="stylesheet" href="modules/hrPayroll/css/payroll.css">
-    <script src="modules/hrPayroll/libs/payroll_helper.js"></script>
-    <script src="modules/hrPayroll/payroll.js"></script>
-    <script src="modules/hrPayroll/controllers/payrollController.js"></script>
-    <script src="modules/hrPayroll/directives/payrollDirective.js"></script>
-    <script src="modules/hrPayroll/services/payrollService.js"></script>
-    <!-- HR_PAYROLL END MODULE -->
+<script src="vendor/ng-infinite-scroll/ng-infinite-scroll.min.js"></script>
+<link rel="stylesheet" href="modules/hrPayroll/css/pr.css">
+<script src="modules/hrPayroll/libs/pr_helper.js"></script>
+<script src="modules/hrPayroll/pr.js"></script>
+<script src="modules/hrPayroll/controllers/prController.js"></script>
+<script src="modules/hrPayroll/directives/prDirective.js"></script>
+<script src="modules/hrPayroll/directives/prImportTaxList.js"></script>
+<script src="modules/hrPayroll/services/prService.js"></script>
+<script src="modules/hrPayroll/controllers/prTaxListController.js"></script>
+
+
+<!-- HR_PAYROLL END MODULE -->
+
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <!--END MODULE REDI-LEGAL ONLINE BOOKING -->
     <!-- MODULE INSURER -->

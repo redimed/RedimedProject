@@ -10,9 +10,20 @@
                 items-per-page="itemsPerPageReport1"
                 ng-change="pagingHandlerUpcommingBookingHaveNotResult()">
     </pagination>
+     <div style="margin-bottom: 10px;color: #555555 !important;margin-top: 10px;margin-left: -10px;" class="row">
+        <div class="col-md-12">
+            Color notes : &nbsp;&nbsp;<span id="aaaaa" style="background-color: #f2dede;" class="label label-sm">&nbsp;&nbsp;&nbsp;&nbsp;</span> Docment status(Received).
+            &nbsp;&nbsp;<span style="background-color: #d9edf7;" class="label label-sm warning">&nbsp;&nbsp;&nbsp;&nbsp;</span> Docment status(Not received).
+            &nbsp;&nbsp;<span style="background-color: #fcf8e3;" class="label label-sm danger">&nbsp;&nbsp;&nbsp;&nbsp;</span> Docment status(Not confirmed).
+            
+        </div>
+    </div>
     <table class="table table-hover table-light">
         <thead class="flip-content">
         <tr>
+            <th>
+                APPOINTMENT DATE
+            </th>
             <th>
                 SURNAME
             </th>
@@ -25,16 +36,22 @@
             <th>
                 DOCTOR
             </th>
-            <th>
-                APPOINTMENT DATE
-            </th>
         </tr>
         <tr>
+            <td>
+                <rlob-choose-period from-date="filterInfo.FromAppointmentDate" to-date="filterInfo.ToAppointmentDate"></rlob-choose-period>
+            </td>
             <td>
                 <input class="form-control input-sm" type="text" ng-model="filterInfo.Surname" ng-change="initPagingReportUpcommingBookingHaveNotResult()">
             </td>
             <td>
-                <input class="form-control input-sm" type="text" ng-model="filterInfo.Location" ng-change="initPagingReportUpcommingBookingHaveNotResult()">
+                <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo.Location" ng-change="initPagingReportUpcommingBookingHaveNotResult()"> -->
+                <select class="form-control input-sm"
+                        ng-model="locationSelected"
+                        ng-options="location.Site_name for location in locationList"
+                        ng-change="initPagingReportUpcommingBookingHaveNotResult()">
+                    <option  value="">ALL</option>
+                </select>
             </td>
             <td>
                 <select class="form-control input-sm"
@@ -45,21 +62,25 @@
                 </select>
             </td>
             <td>
-                <input class="form-control input-sm" type="text" ng-model="filterInfo.Doctor" ng-change="initPagingReportUpcommingBookingHaveNotResult()">
+                <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo.Doctor" ng-change="initPagingReportUpcommingBookingHaveNotResult()"> -->
+                <select class="form-control input-sm"
+                        ng-model="doctorSelected"
+                        ng-options="doctor.NAME for doctor in doctorList"
+                        ng-change="initPagingReportUpcommingBookingHaveNotResult()">
+                    <option  value="">ALL</option>
+                </select>
             </td>
-            <td>
-                <rlob-choose-period from-date="filterInfo.FromAppointmentDate" to-date="filterInfo.ToAppointmentDate"></rlob-choose-period>
-            </td>
+            
             <!-- END SEARCH -->
         </tr>
         </thead>
         <tbody ng-repeat="booking1 in reportUpcommingBookingsList">
         <tr ng-class='booking1.style_class' ng-click="setSelectedBooking(booking1.BOOKING_ID)">
+            <td><label>{{booking1.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
             <td><label>{{booking1.WRK_SURNAME}}</label></td>
             <td><label>{{booking1.Site_name}}</label></td>
             <td><label>{{booking1.Rl_TYPE_NAME}}</label></td>
             <td><label>{{booking1.NAME}}</label></td>
-            <td><label>{{booking1.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
         </tr>
         </tbody>
     </table>

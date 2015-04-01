@@ -30,7 +30,7 @@
 
 	<form name="FormAms6" novalidate>
 		<fieldset ng-disabled="isSaving">
-		<div class="portlet-body">
+		<div class="portlet-body" id="bodydata">
 			<div class="alert alert-danger display-hide errorSummaryAms6" style="display: block;position: fixed;z-index: 9;right: 41px;max-height: 350px;overflow: auto;" ng-show="FormAms6.$invalid && hadForcused">
 		        <button data-close="alert" class="close"></button>
 		       	<a ng-click="goToName('WRK_NAME')" class="help-block" ng-if="FormAms6.WRK_NAME.$error.required">Name is required!</a>

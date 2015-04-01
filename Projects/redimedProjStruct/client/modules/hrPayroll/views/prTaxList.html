@@ -1,0 +1,106 @@
+
+
+<div class="portlet light" >
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-list"></i>
+            <span class="caption-subject uppercase">Approval Document</span>
+        </div>
+
+        <div class="portlet-body" >
+            <div class="table-responsive" >
+                <table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Tax Type</th>
+						<th>Start Date</th>
+						<th>Date Create</th>
+						<th>Enable</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in taxList" ng-click="setSelectedTaxList(item);" ng-class="{pr_table_selected_row:item.id==selectedTaxList.id}">
+						<td>{{item.tax_type}}</td>
+						<td>{{item.start_date|date:'dd-MM-yyyy'}}</td>
+						<td>{{item.CREATION_DATE|date:'dd-MM-yyyy'}}</td>
+						<td>
+							<input ng-disabled="true" type="checkbox"  ng-model="item.ISENABLE"  ng-true-value="1" ng-false-value="0"
+                        		ng-checked="item.ISENABLE==1"/>
+						</td>
+						<td>
+							<div class="btn-group dropdown ">
+								<button 
+									type="button" 
+									class="pr_button_border btn btn-default dropdown-toggle btn-sm " 
+									data-toggle="dropdown" 
+									aria-expanded="false">
+									Actions <span class="glyphicon glyphicon-cog"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</div>
+
+						</td>
+					</tr>
+					
+				</tbody>
+				</table>
+            </div>
+			
+
+            <div  class="table-responsive" style="height:600px;overflow-y:auto" infinite-scroll='taxListLoader.loadMore()' infinite-scroll-disabled='taxListLoader.busy' infinite-scroll-distance='1' >
+            	
+                <table class="table table-hover" >
+				<thead>
+					<tr>
+						<th>Earning</th>
+						<th>With tax-free</th>
+						<th>No tax-free</th>
+						<th>Enable</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="detail in taxListLoader.taxListDetail">
+						<td>{{detail.earnings}}</td>
+						<td>{{detail.with_tax_free}}</td>
+						<td>{{detail.no_tax_free}}</td>
+						<td>
+							<input ng-disabled="true" type="checkbox"  ng-model="detail.ISENABLE"  ng-true-value="1" ng-false-value="0"
+                        		ng-checked="detail.ISENABLE==1"/>
+						</td>
+						<td>
+							<div class="btn-group dropdown ">
+								<button 
+									type="button" 
+									class="pr_button_border btn btn-default dropdown-toggle btn-sm " 
+									data-toggle="dropdown" 
+									aria-expanded="false">
+									Actions <span class="glyphicon glyphicon-cog"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</div>
+
+						</td>
+					</tr>
+					
+				</tbody>
+				</table>
+            </div>
+
+        </div>
+    </div>
+</div>
+

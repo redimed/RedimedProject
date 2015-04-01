@@ -19,6 +19,7 @@ angular.module('app.loggedIn.rlob.services',[])
     var bookingInfo={};
     var bookingList=[];
     var bookingInfoReuse=null;
+    var bookingBehalfInfo=null;
     this.getSelectedInfo=function(){
         return selectedInfo;
     }
@@ -41,6 +42,14 @@ angular.module('app.loggedIn.rlob.services',[])
     this.getBookingInfoResuse=function()
     {
         return bookingInfoReuse;
+    }
+    this.setBookingBehalfInfo=function(b)
+    {
+        bookingBehalfInfo=b;
+    }
+    this.getBookingBehalfInfo=function()
+    {
+        return bookingBehalfInfo;
     }
 
 })
@@ -335,6 +344,30 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.all('rlob/sponsor/insert-nonemergency');
             return result.post({info:info});
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list mail user online booking
+        rlobService.listMailUserOnlineBooking=function()
+        {
+            var result=api.one('rlob/rl_bookings/admin/list-mail-user-online-booking');
+            return result.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list dortor
+        rlobService.listDoctorReport=function()
+        {
+            var result=api.one('rlob/rl_bookings/admin/report/list-doctor-report');
+            return result.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list location
+        rlobService.listLocationReport=function()
+        {
+            var result=api.one('rlob/rl_bookings/admin/report/list-location-report');
+            return result.get();
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');
@@ -509,6 +542,44 @@ angular.module('app.loggedIn.rlob.services',[])
         {
             var result=api.one('rlob/register/get-states');
             return result.get({nation:nation});
+        }
+
+        rlobService.core={
+            /**
+             * selectedDate: javascript Date Object
+             * tannv.dts@gmail.com
+             */
+            getListAppointmentAfterTime:function(doctorId,siteId,selectedAppFromTime)
+            {
+                var result=api.all('rlob/core/get-list-appointment-after-time');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime});
+            },
+
+            handlePeriodTimeAppointmentCalendar:function(doctorId,siteId,selectedAppFromTime,rlTypeId)
+            {
+                var result=api.all('rlob/core/handle-periodtime-appointment-calendar');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime,rlTypeId:rlTypeId});
+            },
+
+            saveBookingInfo:function(bookingInfo)
+            {
+                var result=api.all('rlob/core/save-booking-info');
+                return result.post({bookingInfo:bookingInfo});
+            },
+
+            checkPeriodTimeToBooking:function(doctorId,siteId,selectedAppFromTime,rlTypeId)
+            {
+                var result=api.all('rlob/core/check-period-time-to-booking');
+                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime,rlTypeId:rlTypeId});
+            }
+        }
+
+        rlobService.rlobBookingFile={
+            setListResultFiles:function(listResult)
+            {
+                var result=api.all('rlob/core/set-list-result-files');
+                return result.post({listResult:listResult});
+            }
         }
         
         return rlobService;
