@@ -37,6 +37,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.reset = function() {
         $scope.searchObjectMap = angular.copy($scope.searchObject);
         $scope.loadList();
+        $scope.dateWeekFrom = null;
+
     };
     //END FUNCTION RESET
 

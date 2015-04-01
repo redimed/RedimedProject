@@ -948,6 +948,8 @@ module.exports = {
         // CHECK ISBILLABLE OR NOT
         if (searchObj.isBillable === false) {
             activity = " AND time_item_code.ACTIVITY_ID = " + searchObj.activity_id + " ";
+        } else {
+            activity = " AND time_item_code.IS_BILLABLE = 1 ";
         }
         //END
         //get search
