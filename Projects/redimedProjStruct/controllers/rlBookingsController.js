@@ -1878,5 +1878,62 @@ module.exports =
                 }
             });
         });
+    },
+    /*
+    phan quoc chien
+    phanquocchien.c1109g@gmail.com
+    list dortor
+     */
+    listDoctorReport:function(req,res){
+        var sql=
+            "SELECT `NAME` FROM `doctors` ORDER BY `NAME` ASC";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+    listLocationReport:function(req,res){
+        var sql=
+            "SELECT `Site_name` FROM `redimedsites` ORDER BY `Site_name` ASC";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
     }
 }

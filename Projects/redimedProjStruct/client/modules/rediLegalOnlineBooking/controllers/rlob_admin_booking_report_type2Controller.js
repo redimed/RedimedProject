@@ -37,10 +37,27 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
             return deferred.promise;
         }
 
+        //list type
         $scope.rlTypeList=[];
         rlobService.getRlTypeList($scope.bookingType)
             .then(function(data){
                 $scope.rlTypeList=data;
+            });
+        // list doctor
+        $scope.doctorList=[];
+        rlobService.listDoctorReport()
+            .then(function(data){
+                if (data.status == 'success') {
+                    $scope.doctorList=data.data;
+                };
+            });
+        // list location
+        $scope.locationList=[];
+        rlobService.listLocationReport()
+            .then(function(data){
+                if (data.status == 'success') {
+                    $scope.locationList=data.data;
+                };
             });
 
         /**
@@ -61,6 +78,8 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
         {
             $scope.removeSelectedBooking();
             $scope.filterInfo1.Type=$scope.rlTypeSelected && $scope.rlTypeSelected.Rl_TYPE_NAME?$scope.rlTypeSelected.Rl_TYPE_NAME:'';
+            $scope.filterInfo1.Location=$scope.locationSelected && $scope.locationSelected.Site_name?$scope.locationSelected.Site_name:'';
+            $scope.filterInfo1.Doctor=$scope.doctorSelected && $scope.doctorSelected.NAME?$scope.doctorSelected.NAME:'';
             rlobService.getCountReportStatusBookings($scope.bookingType,$scope.doctorId,$scope.filterInfo1)
                 .then(function(data)
                 {

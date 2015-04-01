@@ -352,6 +352,22 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.one('rlob/rl_bookings/admin/list-mail-user-online-booking');
             return result.get();
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list dortor
+        rlobService.listDoctorReport=function()
+        {
+            var result=api.one('rlob/rl_bookings/admin/report/list-doctor-report');
+            return result.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list location
+        rlobService.listLocationReport=function()
+        {
+            var result=api.one('rlob/rl_bookings/admin/report/list-location-report');
+            return result.get();
+        }
         rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
         {
             var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');
