@@ -39,6 +39,11 @@
             <table class="table table-responsive table-hover">
                 <thead>
                     <tr>
+                        <th>
+                            Appointment Date
+                            <rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
+                        </th>
+
                         <th ng-if="bookingType=='REDiLEGAL'">
                             Claim No.
                             <!-- <rlob-order-by field-name="CLAIM_NO" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by> -->
@@ -60,10 +65,7 @@
                             <rlob-order-by field-name="Rl_TYPE_NAME" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                         </th>
 
-                        <th>
-                            Appointment Date
-                            <rlob-order-by field-name="APPOINTMENT_DATE" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
-                        </th>
+                        
 
                         <th>
                             Booking Status
@@ -81,6 +83,9 @@
                     </tr>
                     <tr>
                         <!-- SEARCH -->
+                        <td>
+                            <rlob-choose-period from-date="searchInfo.appointmentDateFromTemp" to-date="searchInfo.appointmentDateToTemp"></rlob-choose-period>
+                        </td>
                         <td ng-if="bookingType=='REDiLEGAL'">
                             <input class="form-control input-sm" type="text" ng-model="searchInfo.claimNo" ng-change="searchHandle()">
                         </td>
@@ -102,9 +107,7 @@
                         </td>
 
                     
-                        <td>
-                            <rlob-choose-period from-date="searchInfo.appointmentDateFromTemp" to-date="searchInfo.appointmentDateToTemp"></rlob-choose-period>
-                        </td>
+                        
 
                         <td>
                             <select ng-model="searchInfo.bookingStatus" class="form-control input-sm"
@@ -129,12 +132,12 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="l in list" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
+                        <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
                         <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
                         <!-- <td>{{l.WRK_SURNAME}}</td> -->
                         <td>{{l.FULL_NAME}}</td>
                         <td>{{l.Rl_TYPE_NAME}}</td>
-                        <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
                         <td>{{l.STATUS}}</td>
                         <td>{{documentStatusDisplay[l.DOCUMENT_STATUS]}}</td>
                         <td>
@@ -166,7 +169,7 @@
                                         </a>
                                     </li>
 
-                                    <li ng-show="selectedBooking.STATUS!=bookingStatus.canel">
+                                    <li ng-show="selectedBooking.STATUS!=bookingStatus.cancel">
                                         <a class="pointer" role="menuitem" tabindex="1" ng-click="cancelBooking()">
                                             Cancel booking
                                     </li>

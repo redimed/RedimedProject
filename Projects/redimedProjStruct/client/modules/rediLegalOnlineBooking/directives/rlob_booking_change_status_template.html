@@ -9,42 +9,50 @@
     </a>
 
     <ul class="dropdown-menu" role="menu">
-        <li ng-hide="selectedBooking.STATUS=='Confirmed'" >
-            <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
-               ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Confirmed')">
+        <li ng-hide="selectedBooking.STATUS==bookingStatus.confirmed" >
+            <a ng-hide="selectedBooking.STATUS==bookingStatus.confirmed" class="pointer" role="menuitem" tabindex="4"
+               ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,bookingStatus.confirmed)">
                 <span>Confirmed</span>
 
             </a>
         </li>
 
-        <li ng-hide="selectedBooking.STATUS=='Arrived'">
+        <li ng-hide="selectedBooking.STATUS==bookingStatus.arrived">
             <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Arrived')">
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,bookingStatus.arrived)">
                 <span>Arrived</span>
 
             </a>
         </li>
 
-        <li ng-hide="selectedBooking.STATUS=='Not Arrived'">
+        <li ng-hide="selectedBooking.STATUS==bookingStatus.notArrived">
             <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-               ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Not Arrived')">
+               ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,bookingStatus.notArrived)">
                 <span>Not Arrived</span>
 
             </a>
         </li>
 
-        <li ng-hide="selectedBooking.STATUS=='Completed'">
+        <li ng-hide="selectedBooking.STATUS==bookingStatus.completed">
             <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
-                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Completed')">
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,bookingStatus.completed)">
                 <span>Completed</span>
             </a>
         </li>
-        <li ng-hide="selectedBooking.STATUS=='Cancel'">
+        <li ng-hide="selectedBooking.STATUS==bookingStatus.cancel">
             <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
-                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,'Cancel')">
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,bookingStatus.cancel)">
                 <span>Cancel</span>
             </a>
         </li>
+
+        <li ng-hide="selectedBooking.STATUS==bookingStatus.lateCancellation">
+            <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
+                ng-click="rlob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,selectedBooking.BOOKING_TYPE,bookingStatus.lateCancellation)">
+                <span>Late Cancellation</span>
+            </a>
+        </li>
+
     </ul>
 </div>
 {{selectedBooking.STATUS}}

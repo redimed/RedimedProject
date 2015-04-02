@@ -16,7 +16,7 @@ var rlobConstant={
         arrived:'Arrived',
         notArrived:'Not Arrived',
         completed:'Completed',
-        canel:'Cancel'
+        cancel:'Cancel'
     },
     
     bellType:{

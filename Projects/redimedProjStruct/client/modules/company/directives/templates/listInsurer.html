@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col-md-12">
+		<table class="mdt-table">
+			<thead>
+				<tr>
+					<th>Insurer Name</th>
+					<th>Address</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in company.list" ng-click="onRowClick({row: row})">
+					<td>{{row.insurer_name}}</td>
+					<td>{{row.address}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

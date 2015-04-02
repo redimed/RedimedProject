@@ -179,13 +179,6 @@ app.post('/api/meditek/v1/department/add', DepartmentController.postAdd);
 app.post('/api/meditek/v1/department/edit', DepartmentController.postEdit);
 app.post('/api/meditek/v1/department/byId', DepartmentController.postById);
 
-var ScriptController = require('./controllers/ScriptController');
-
-app.post('/api/meditek/v1/script/search', ScriptController.postSearch);
-app.post('/api/meditek/v1/script/add', ScriptController.postAdd);
-app.post('/api/meditek/v1/script/edit', ScriptController.postEdit);
-app.post('/api/meditek/v1/script/byId', ScriptController.postById);
-
 var ReferralController = require('./controllers/ReferralController');
 
 app.post('/api/meditek/v1/referral/search', ReferralController.postSearch);
@@ -223,3 +216,11 @@ app.post('/api/meditek/v1/sysservices/byId', SysServicesController.postById);
 
 var mdtAutoController = require('./controllers/mdtAutoController');
 app.get("/api/meditek/v1/auto/module", mdtAutoController.postModule);
+
+/* SCRIPT */
+var ScriptController = require('./controllers/ScriptController');
+app.post('/api/meditek/v1/script/list', ScriptController.postList);
+app.post('/api/meditek/v1/script/byid', ScriptController.postById);
+app.post('/api/meditek/v1/script/add', ScriptController.postAdd);
+app.post('/api/meditek/v1/script/remove', ScriptController.postRemove);
+/* END SCRIPT */

@@ -109,14 +109,14 @@ angular.module('starter', ['ionic',
                     $state.go("security.login");
                 }
             }
-            if( toState.name == "app.injury.desInjury" || toState.name == "app.injury.desInjurySuccess" || toState.name == "app.injury.modelBody")
+            if( $state.is("app.injury.desInjury") || $state.is("app.injury.desInjurySuccess"))
             {
                 $ionicSideMenuDelegate.canDragContent(false);
             } else
             {
                 $ionicSideMenuDelegate.canDragContent(true);
             }
-            if( toState.name == "app.mainBluetooth" || toState.name == "app.detailDeviceBluetooth" ) {
+            if( $state.is("app.mainBluetooth")) {
                 window.bluetooth.enable();
             }
             ionPlatform.ready.then(function (device) {
@@ -141,5 +141,15 @@ angular.module('starter', ['ionic',
                     console.log("Register Push Notification Status: " + err)
                 });
             });
+            if($state.is("app.phoneCall")) {
+                screen.lockOrientation('landscape');
+            }
         });
     });
+//if (!OT) {
+//    var OT = {};
+//}
+//OT.onLoad = function(fn) {
+//    document.addEventListener('deviceReady', fn);
+//};
+//OT.$ = OT.getHelper();

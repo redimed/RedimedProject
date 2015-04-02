@@ -136,6 +136,7 @@ angular.module('app.loggedIn.rlob.paperless.ams6.controller',[])
 								$scope.isSaving = true;
 								// $scope.AMS6_ID_NEW = data.data;
 								// console.log($scope.AMS6_ID_NEW);
+								$scope.scrollTo($("#bodydata']"),-200);
 							}
 							else{
 								toastr.error("Update Failed!","Error");
@@ -161,6 +162,7 @@ angular.module('app.loggedIn.rlob.paperless.ams6.controller',[])
 								$scope.isSaving = true;
 								$scope.info.AMS6_ID = data.data;
 								console.log($scope.info);
+								$scope.scrollTo($("#bodydata]"),-200);
 							}
 							else{
 								toastr.error("Insert Failed!","Error");
@@ -196,6 +198,7 @@ angular.module('app.loggedIn.rlob.paperless.ams6.controller',[])
 						if (data.status == 'success') {
 							toastr.success("Edit Success!","Success");
 							$scope.isSaving = true;
+							$scope.scrollTo($("#bodydata"),-200);
 							// $scope.AMS6_ID_NEW = data.data;
 							// console.log($scope.AMS6_ID_NEW);
 						}

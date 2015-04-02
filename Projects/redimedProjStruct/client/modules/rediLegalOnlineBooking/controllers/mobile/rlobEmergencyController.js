@@ -1,11 +1,6 @@
 angular.module("app.sponsor1.emergency.controller",[])
 .controller('rlobEmergencyController',function($scope,FileUploader,rlobService,toastr){
-	// alert('aaaaaaaaa');
-       // $scope.showSelectPicture = function(){
-       // 		angular.element('#choose').click();
-       // }
-        $scope.Lat = null;
-        $scope.Lng = null;
+	
        $scope.geoLocation = function(){
             window.navigator.geolocation.getCurrentPosition(function(position) {
                 $scope.$apply(function() {
@@ -95,23 +90,29 @@ angular.module("app.sponsor1.emergency.controller",[])
         console.info('uploader', uploader);
         $scope.insertEmergency = function(){
             $scope.$broadcast('show-errors-check-validity');
-            if ($scope.FormEmergency.$valid) {
-            	$scope.info = {
-                    FIRSTNAME:$scope.fristname,
-                    LASTNAME:$scope.lastname,
-                    GENDER:$scope.gender,
-                    DOB:moment($scope.dob).format('YYYY/MM/DD'),
-                    ADD:$scope.address,
-                    CONTACT_NO:$scope.contactus,
-                    MEDICARE_NO:$scope.medicareno,
-                    MEDICARE_REF:$scope.medicareref,
-                    TYPE_NAME:rlobConstant.sponsorType.emergency,
-                    LONGITUDE:$scope.Lng,
-                    LATITUDE:$scope.Lat,
-                    INJURY:$scope.injury
-                }
-                // console.log($scope.info);
-                rlobService.insertEmergency($scope.info).then(function(data){
+            if (!$scope.gender) {
+                angular.element('#label-gender').css('display','block');
+                $scope.scrollTo($(".logo"));
+            }else{
+                angular.element('#label-gender').css('display','none');
+                if ($scope.FormEmergency.$valid) {
+                    $scope.info = {
+                        FIRSTNAME:$scope.fristname,
+                        LASTNAME:$scope.lastname,
+                        GENDER:$scope.gender,
+                        DOB:moment($scope.dob).format('YYYY/MM/DD'),
+                        ADD:$scope.address,
+                        CONTACT_NO:$scope.contactus,
+                        MEDICARE_NO:$scope.medicareno,
+                        MEDICARE_REF:$scope.medicareref,
+                        TYPE_NAME:rlobConstant.sponsorType.emergency,
+                        LONGITUDE:$scope.Lng,
+                        LATITUDE:$scope.Lat,
+                        INJURY:$scope.injury
+                    }
+                    // $scope.info.LONGITUDE != -77.028333
+                    // console.log($scope.info);
+                    rlobService.insertEmergency($scope.info).then(function(data){
                     if (data.status == 'success') {
                         // console.log(data.data);
                         toastr.success("Booking Success!","Success");
@@ -129,8 +130,10 @@ angular.module("app.sponsor1.emergency.controller",[])
                     }else{
                         toastr.error("Booking Failed!","Error");
                     };
-                })
-            }
+                    })
+                }
+            };
+            
         }
         // $scope.geoLocation();
         $scope.Lat = -12.043333;
@@ -171,5 +174,19 @@ angular.module("app.sponsor1.emergency.controller",[])
                     }
                 }
             });
+        }
+        $scope.setColorMedicareRef = function(){
+            if ($scope.medicareref != null && $scope.medicareref != '') {
+                $('#medicareref-confix').addClass('color-label');
+            }else{
+                $('#medicareref-confix').removeClass('color-label');
+            }
+        }
+        $scope.setColorMedicareNo = function(){
+            if ($scope.medicareno != null && $scope.medicareno != '') {
+                $('#medicareno-confix').addClass('color-label');
+            }else{
+                $('#medicareno-confix').removeClass('color-label');
+            }
         }
 })

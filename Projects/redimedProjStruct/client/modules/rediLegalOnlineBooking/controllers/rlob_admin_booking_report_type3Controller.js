@@ -42,12 +42,29 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
          * tannv.dts@gmail.com
          */
 
+        
+        //list type
         $scope.rlTypeList=[];
         rlobService.getRlTypeList($scope.bookingType)
             .then(function(data){
                 $scope.rlTypeList=data;
             });
-
+        // list doctor
+        $scope.doctorList=[];
+        rlobService.listDoctorReport()
+            .then(function(data){
+                if (data.status == 'success') {
+                    $scope.doctorList=data.data;
+                };
+            });
+        // list location
+        $scope.locationList=[];
+        rlobService.listLocationReport()
+            .then(function(data){
+                if (data.status == 'success') {
+                    $scope.locationList=data.data;
+                };
+            });
         $scope.reportPassBookingHaveNotResult=[];
         $scope.getReportPassBookingHaveNotResult=function(doctorId)
         {
@@ -80,6 +97,8 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
         {
             $scope.removeSelectedBooking();
             $scope.searchKeys.rltype=$scope.rlTypeSelected && $scope.rlTypeSelected.Rl_TYPE_NAME?$scope.rlTypeSelected.Rl_TYPE_NAME:'';
+            $scope.searchKeys.location=$scope.locationSelected && $scope.locationSelected.Site_name?$scope.locationSelected.Site_name:'';
+            $scope.searchKeys.doctor=$scope.doctorSelected && $scope.doctorSelected.NAME?$scope.doctorSelected.NAME:'';
             rlobService.getCountReportPassBookingHaveNotResult($scope.bookingType,doctorId,$scope.searchKeys)
                 .then(function(data){
 //                    exlog.alert(data)

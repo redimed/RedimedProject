@@ -19,12 +19,12 @@ angular.module("starter.menu.controller",[])
         var src = "/android_asset/www/receive_phone.mp3";
         var media = null;
         var loop = function (status) {
-            // if (status === Media.MEDIA_STOPPED) {
+            //if (status === Media.MEDIA_STOPPED) {
             //     media.play();
-            // }
-            // else if (status === Media.MEDIA_PAUSED) {
+            //}
+            //else if (status === Media.MEDIA_PAUSED) {
             //     media.pause();
-            // }
+            //}
         };
         var stopInterval;
 

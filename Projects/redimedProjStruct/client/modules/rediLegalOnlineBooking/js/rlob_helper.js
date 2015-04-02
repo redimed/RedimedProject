@@ -16,8 +16,18 @@ var rlobConstant={
         arrived:'Arrived',
         notArrived:'Not Arrived',
         completed:'Completed',
-        canel:'Cancel'
+        cancel:'Cancel',
+        lateCancellation:'Late Cancellation'
     },
+
+    // bookingStatusDisplay={
+    //     'Confirmed':{display:'Confirmed'},
+    //     'Arrived':{display:'Arrived'},
+    //     'Not Arrived':{display:'Not Arrived'},
+    //     'Completed':{display:'Completed'},
+    //     'Cancel':{display:'Cancelled'},
+    //     'Late Cancellation':{display:'Late Cancellation'}
+    // },
     
     bellType:{
         'changeStatus':"Change Booking Status",

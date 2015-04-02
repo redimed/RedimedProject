@@ -84,7 +84,12 @@
         <div class="table-responsive" style="margin-top: 20px">
             <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
                 <h4>No Results</h4>
-                <a ng-show="mailtoLink" ng-click="sendEmail()">Please contact us to make an appointment</a>
+                <p>Please contact us to make an appointment</p>
+                <p>
+                    Email:
+                    <a ng-show="mailtoLink" ng-click="sendEmail()">medicolegal@redimed.com.au</a>
+                <p>
+                    <p>Phone: (08) 9230 0900</p>
             </div>
 
             <div ng-repeat="type in appointmentsFilter">

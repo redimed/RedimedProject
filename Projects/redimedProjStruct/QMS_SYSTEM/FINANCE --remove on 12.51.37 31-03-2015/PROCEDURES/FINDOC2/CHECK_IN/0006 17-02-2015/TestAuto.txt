@@ -1,0 +1,4 @@
+selenium webdriver: client
+karma: client
+protractor: client
+mocha: server

@@ -21,7 +21,6 @@ angular.module('app.config', [])
         "code": "done",
         "label": "Done"
     }])
-    
     .constant("ACC_TYPE", [{
         "code": "PRIVATE",
         "name": "Private"
@@ -898,6 +897,25 @@ angular.module('app.config', [])
 
         return Math.ceil(dayOfYear / 7);
 
+    };
+
+    configService.convertToHHMM = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var hour = string.substring(0,2);
+        var minute = string.substring(2,4);
+
+        return hour+':'+minute;
+    };
+
+    configService.convertToDB = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var split = string.split('/');
+
+        return split[2]+'-'+split[1]+'-'+split[0];
     };
     //end thanh
     return configService;

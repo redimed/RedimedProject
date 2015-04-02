@@ -21,7 +21,8 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.paperless.ams5.controller'
     ,'app.loggedIn.rlob.rltype.controller'
     ,'app.loggedIn.rlob.specialties.controller'
-    ,'app.loggedIn.rlob.redilegalUsersListController.controller'])
+    ,'app.loggedIn.rlob.redilegalUsersListController.controller'
+    ,'app.loggedIn.rlob.bookingBehalf.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -122,11 +123,17 @@ angular.module('app.loggedIn.rlob',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/specialties.html',
                 controller: 'rlob_specialtiesController'
             })
-		.state('loggedIn.rlob.rlob_admin_redilegalUsersList',{
-	        url:'/users-list',
-	        templateUrl: '/modules/rediLegalOnlineBooking/views/redilegalUsersList.html',
-	        controller: 'rlob_admin_redilegalUsersListController'
+    		.state('loggedIn.rlob.rlob_admin_redilegalUsersList',{
+    	        url:'/users-list',
+    	        templateUrl: '/modules/rediLegalOnlineBooking/views/redilegalUsersList.html',
+    	        controller: 'rlob_admin_redilegalUsersListController'
             })
+            .state('loggedIn.rlob.rlob_admin_bookingBehalf',{
+                url:'/booking-behalf',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/bookingBehalf.html',
+                controller: 'rlob_admin_bookingBehalfController'
+            })
+
 //            .state('loggedIn.rlob.rlob_booking_detail', {
 //                url: '/booking/booking-detail/:bookingId',
 //                views: {

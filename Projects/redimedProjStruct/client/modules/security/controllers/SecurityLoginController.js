@@ -8,7 +8,7 @@ angular.module("app.security.login.controller",[
     $scope.modelUser = {
         username : null,
         password : null,
-        isAgree: false,
+        // isAgree: false,
         isRemember: false
     }
 
@@ -22,8 +22,8 @@ angular.module("app.security.login.controller",[
             // $scope.isLogging = true;
 
             // if($scope.isLogging) {
-            if($scope.modelUser.isAgree)
-            {
+            // if($scope.modelUser.isAgree)
+            // {
                 SecurityService.login($scope.modelUser).then(function (response) {
                     $cookieStore.put('token', 'abcdefghklf');
 
@@ -59,11 +59,11 @@ angular.module("app.security.login.controller",[
                 });
 
                 socket.removeAllListeners();
-            }
-            else
-            {
-                toastr.warning("Please Agree With Terms And Conditions!");
-            }
+            // }
+            // else
+            // {
+            //     toastr.warning("Please Agree With Terms And Conditions!");
+            // }
 
             // }
 
