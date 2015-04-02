@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:14px;">
-                <span>Total Worked Hours:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Total Worked Hours:<span class="text-info bold" style="margin-left:15px;">{{list.result[0].chargeWeek | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">OverTime:&nbsp;<span class="text-info bold">{{list.result[0].over_time | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
@@ -95,9 +95,9 @@
             <!-- APPROVE -->
             <div data-row-span="12" ng-show="info.isApprove===true">
                 <div class="col-md-12" style="margin-top:5px; font-size:14px;">
-                    <span>Ordinary Hours:&nbsp;<span class="text-info bold">38:00
+                    <span>Ordinary Hours:<span class="text-info bold" style="margin-left:42px;">38:00
                 </div>
-                    <span class="col-md-3" style="font-size:14px;width:250px;">Additional Worked Hours <span class="text-info bold">{{info.time_rest | customHours}}</span> to be:</span>
+                    <span class="col-md-3" style="font-size:14px;width:250px;margin-top:5px;">Additional Worked Hours <span class="text-info bold">{{info.time_rest | customHours}}</span> to be:</span>
                     <div class="col-md-2" style="width:auto;margin-left:20px;">
                         <!-- DIV ERR -->
                         <div ng-class="{'error-input': viewTask.over_time.$error.required}">
@@ -106,7 +106,7 @@
                         <!-- END DIV -->
                     </div>
                     <div class="col-md-2">
-                        <label class="control-label" style="font-size:14px;">PAID AS OVERTIME</label>
+                        <label class="control-label" style="font-size:14px;margin-top:2px;margin-left:-25px;">PAID AS OVERTIME</label>
                     </div>
                     <!-- TIME IN LIEU -->
                     <div class="col-md-12" style="margin-bottom:5px;">
@@ -119,7 +119,7 @@
                             </div>
                             <!-- END DIV -->
                         </div>
-                        <div class="col-md-2" style="font-size:14px;">
+                        <div class="col-md-2" style="font-size:14px;margin-top:2px;margin-left:-25px;">
                             <span>BANKED AS TIME IN LIEU</span>
                         </div>
                     </div>
