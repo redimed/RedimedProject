@@ -36,7 +36,8 @@ module.exports =
         }
         else
         {
-            return "Health Screening Mailbox <medicolegal@redimed.com.au>";
+            return "Health Screening Mailbox <healthscreenings@redimed.com.au>";
+            // return "Health Screening Mailbox <medicolegal@redimed.com.au>";
         }
     },
 
