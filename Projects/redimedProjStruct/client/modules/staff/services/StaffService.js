@@ -241,6 +241,84 @@ angular.module("app.loggedIn.staff.service", [])
         });
 
     };
+    // SERVICE REPORT
+    service.showWeekChooseFrom = function() {
+        var startDate;
+        var endDate;
+        var array = [],
+            info = {},
+            temp,
+            now = new Date(),
+            monthTemp;
 
+        info.userID = userID;
+
+        var date = new Date();
+        info.month = date.getMonth();
+        info.year = date.getFullYear();
+        var selectCurrentWeek = function() {
+            window.setTimeout(function() {
+                $('.ui-weekpicker').find('.ui-datepicker-current-day a').addClass('ui-state-active').removeClass('ui-state-default');
+            }, 1);
+        };
+        var setDates = function(input) {
+            var $input = $(input);
+            var date = $input.datepicker('getDate');
+            var firstDay = $input.datepicker("option", "firstDay");
+            $input.datepicker("option", "dateFormat", "dd-mm-yy");
+            $input.datepicker('option', 'firstDay', 1);
+            if (date !== null) {
+                var dayAdjustment = date.getDay() - firstDay;
+                if (dayAdjustment < 0) {
+                    dayAdjustment += 7;
+                }
+                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment);
+                endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayAdjustment + 6);
+                $input.datepicker("setDate", startDate);
+            }
+        };
+        var dateRunTimeSheet = new Date('2015-03-30'); //SET DATE TO RUN TIMESHEET
+        $('.week-picker').datepicker({
+            beforeShow: function() {
+                $('#ui-datepicker-div').addClass('ui-weekpicker');
+                selectCurrentWeek();
+            },
+            onClose: function() {
+                $('#ui-datepicker-div').removeClass('ui-weekpicker');
+            },
+
+            minDate: dateRunTimeSheet,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            onSelect: function(dateText, inst) {
+                setDates(this);
+                selectCurrentWeek();
+                $(this).change();
+            },
+            beforeShowDay: function(date) {
+                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                var cssClass = '';
+                if (date >= startDate && date <= endDate)
+                    cssClass = 'ui-datepicker-current-day';
+                return [array.indexOf(string) == -1, cssClass];
+            },
+            onChangeMonthYear: function(year, month, inst) {
+                selectCurrentWeek();
+            }
+        });
+
+        setDates('.week-picker');
+
+        var $calendarTR = $('.ui-weekpicker .ui-datepicker-calendar tr');
+        $calendarTR.live('mousemove', function() {
+            $(this).find('td a').addClass('ui-state-hover');
+        });
+        $calendarTR.live('mouseleave', function() {
+            $(this).find('td a').removeClass('ui-state-hover');
+        });
+
+    };
+
+    //END
     return service;
 });
