@@ -8,7 +8,6 @@ module.exports = {
 
 		var postData = req.body.data;
 
-
 		var sql = knex
 		.column('cln_scripts.ID',
 		'cln_scripts.Patient_id',
