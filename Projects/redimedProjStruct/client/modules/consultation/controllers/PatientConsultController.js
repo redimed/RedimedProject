@@ -36,7 +36,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$interval.cancel(checkCallInfo);
 
 		checkCallInfo = $interval(function(){
-			refresh($scope.patient_id);
 			if(typeof $cookieStore.get('callInfo') !== 'undefined')
 			{
 				$scope.callInfo = $cookieStore.get('callInfo');
