@@ -14,7 +14,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 				page: 1,
 				offset: 0,
 				limit: parseInt(scope.limit),
-				patient_id,
+				patient_id:'',
 				Company_name:'',
 				Industry:'',
 				Addr:'',

@@ -77,7 +77,7 @@ app.post('/api/patient/editClaim', ClientController.editClaim);
 console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 // COMPANY
  app.post('/api/erm/company/getDetail', CompanyController.getDetail);
- // END COMPANY
+// END COMPANY
 
 
  //dqt
