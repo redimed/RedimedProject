@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.script.directive.edit', [])
 
-.directive('scriptEdit', function(ScriptModel, PatientService, ConfigService, $cookieStore, $filter, $state, $stateParams){
+.directive('scriptEdit', function(ScriptModel, PatientService, $cookieStore, $filter, $state, $stateParams){
 
 	return {
 
@@ -29,8 +29,6 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				ScriptModel.byid($stateParams.scriptId).then(function(response){
 					console.log(response.data);
 					scope.script.form = angular.copy(response.data);
-					scope.script.form.doctordate = ConfigService.convertToDB(scope.script.form.doctordate).format('DD/MM/YYYY');
-					scope.script.form.patientDate = ConfigService.convertToDB(scope.script.form.patientDate).format('DD/MM/YYYY');
 				}, function(error){})
 			}
 

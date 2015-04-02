@@ -21,7 +21,6 @@ angular.module('app.config', [])
         "code": "done",
         "label": "Done"
     }])
-    
     .constant("ACC_TYPE", [{
         "code": "PRIVATE",
         "name": "Private"
