@@ -35,6 +35,7 @@ angular.module("app", [
         'ngSanitize',
         'ngMap',
         'btford.socket-io',
+        'btford.modal',
         'dateRangePicker',
         'angular-svg-round-progress',
         'angular-flot',
@@ -50,6 +51,13 @@ angular.module("app", [
     	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'
     ])
+    .factory('callModal', function (btfModal) {
+      return btfModal({
+        controller: 'callController',
+        controllerAs: 'modal',
+        templateUrl: 'common/views/call.html'
+      });
+    })
     .factory('socket', function(socketFactory) {
         var host = location.hostname;
         var port = location.port;

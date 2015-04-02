@@ -15,7 +15,20 @@ angular.module("app.loggedIn.consult.script.controller",[])
 			category: null
 		};
 
-		$scope.selectedPerson = null;
+		$scope.medications = [];
+		$scope.selectedMedication = null;
+		$scope.checkMedication = false;
+
+		ConsultationService.searchScript({medicine_name: ''}).then(function(rs){
+			$scope.medications = rs.list;
+			for(var i=0; i<$scope.medications.length; i++)
+			{
+				var item = $scope.medications[i];
+				var unit = 'Unit: '+item.medicine_unit;
+
+				$scope.medications[i].desc = unit;
+			}
+		})
 
 		if(script != null)
 			$scope.scriptInfo = angular.copy(script);
@@ -25,37 +38,23 @@ angular.module("app.loggedIn.consult.script.controller",[])
 		}
 
 		$scope.okClick = function(){
-			console.log($scope.selectedPerson);
 			$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 		}
 
-		$scope.searchScript = function(name){
-			ConsultationService.searchScript({medicine_name: name}).then(function(rs){
-				console.log(rs);
-			})
-		}
+		$scope.$watch('selectedMedication',function(val){
+			if(typeof val !== 'undefined' && val != null)
+			{
+				$scope.checkMedication = true;
+				var medicine = val.originalObject;
 
-		$scope.people = [
-            {firstName: "Daryl", surname: "Rowland", twitter: "@darylrowland"},
-            {firstName: "Alan", surname: "Partridge", twitter: "@alangpartridge"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"},
-            {firstName: "Annie", surname: "Rowland", twitter: "@anklesannie"}
-        ];
-
-        
+				$scope.scriptInfo.medicine_name = medicine.medicine_name;
+				$scope.scriptInfo.qty = 1;
+			}
+			else
+			{
+				$scope.checkMedication = false;
+			}
+		})
 
 	})
 

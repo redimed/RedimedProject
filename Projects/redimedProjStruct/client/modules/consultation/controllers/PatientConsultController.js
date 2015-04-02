@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($filter,$window,$document,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,$stateParams,ConsultationService,PatientService,UserService){
+	.controller("PatientConsultController",function($filter,$window,$document,callModal,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,$stateParams,ConsultationService,PatientService,UserService){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
@@ -31,8 +31,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 	    }
 
 	    refresh($scope.patient_id);
-
-	    
 
 	    function refresh(patientId){
 	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
@@ -148,7 +146,10 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
+					{
 						$scope.consultInfo.scripts.push(data.value);
+						$scope.totalPrice = calTotal($scope.consultInfo.scripts);
+					}
 				})
 			}
 
@@ -168,7 +169,10 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
+					{
 						$scope.consultInfo.scripts[index] = data.value;
+						$scope.totalPrice = calTotal($scope.consultInfo.scripts);
+					}
 				})
 			}
 
@@ -184,9 +188,20 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 	                closeOnConfirm: true
 	            }, function() {
 	                $scope.consultInfo.scripts.splice(index,1);
+					$scope.totalPrice = calTotal($scope.consultInfo.scripts);
 	            })
 			}
 		};
+
+		function calTotal(obj)
+		{
+			var total = 0;
+			for(var i=0; i<obj.length; i++)
+			{
+				total = total + parseFloat(obj[i].price);
+			}
+			return total;
+		}
 
 		$scope.backClick = function(){
 			 var from = $cookieStore.get('fromState');
@@ -216,180 +231,13 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		};
 
 		//==================================MAKE CALL============================
-		$scope.startCall = false;
-		var apiKey = null;
-        var sessionId = null;
-        var token = null;
-
-        $scope.callUserInfo = null;
-        $scope.isCaller = true;
-        $scope.callUser = null;
-
-        $scope.isAudioMuted = false;
-        $scope.isVideoMuted = false;
-
-        $scope.session = null;
-
-        socket.on("messageReceived",function(fromId,fromUser,message){
-            if(message.type === 'answer')
-            {
-                $scope.isAccept = true;
-            }
-            if(message.type === 'ignore')
-            {
-                toastr.error("Call Have Been Rejected!");
-                disconnect();
-                $scope.startCall = false;
-                $scope.isAccept = false;
-            }
-            if(message.type === 'cancel')
-            {
-                toastr.error("Call Have Been Cancelled!");
-                disconnect();
-                $scope.startCall = false;
-                $scope.isAccept = false;
-            }
-
-        })
-
-        $scope.muteAudio = function(){
-            $scope.isAudioMuted = !$scope.isAudioMuted;
-        }
-
-        $scope.muteVideo = function(){
-            $scope.isVideoMuted = !$scope.isVideoMuted;
-        }
-
-        var disconnect = function() {
-            if($scope.session != null)
-            {
-                $scope.session.disconnect();
-            }
-            $scope.session = null;
-            $scope.callUser = null;
-        }
-
-        $scope.cancelCall = function(){
-            socket.emit("sendMessage",$scope.userInfo.id,$scope.callUser,{type:'cancel'});
-            disconnect();
-            $scope.startCall = false;
-            $scope.isAccept = false;
-        }
-
-         var publisherProperties =
-        {
-            insertMode: "append",
-            resolution: '1280x720',
-            width: window.outerWidth / 10,
-            height: window.outerHeight / 10
-        };
-
-       
-
 		$scope.makeCall = function(user){
-			$scope.startCall = true;
-
-	        UserService.getUserInfo(user.id).then(function(data){
-	            if(!data.img)
+			UserService.getUserInfo(user.id).then(function(data){
+				if(!data.img)
 	                data.img = "theme/assets/icon.png"
 
-	            $scope.callUserInfo = data;
-	            $scope.callUser = user.id;
-
-	            // var modalInstance = $modal.open({
-	            //     templateUrl: 'common/views/call.html',
-	            //     controller: 'callController',
-	            //     size: 'lg',
-	            //     resolve:{
-	            //         callUserInfo: function(){
-	            //             return data;
-	            //         },
-	            //         callUser: function(){
-	            //             return user.id;
-	            //         },
-	            //         isCaller: function(){
-	            //             return true;
-	            //         },
-	            //         opentokInfo: function(){
-	            //             return null;
-	            //         }
-	            //     },
-	            //     backdrop: 'static',
-	            //     keyboard: false
-	            // })
-
-				if(apiKey == null && sessionId == null)
-				{
-					socket.emit("generateSession",$scope.userInfo.id);
-
-		            socket.on("generateSessionSuccess",function(opentokRoom){
-		                if ($scope.session != null) {
-		                    $scope.session.disconnect();
-		                }
-
-		                apiKey = opentokRoom.apiKey;
-		                sessionId = opentokRoom.sessionId;
-		                token = opentokRoom.token;
-
-		                var publisher = OT.initPublisher('selfVideo', publisherProperties);
-
-				        $scope.session = OT.initSession(apiKey, sessionId);
-				        $scope.session.on({
-				            'streamCreated': function (event) {
-				                var subscriber = $scope.session.subscribe(event.stream, "callerVideo", {
-				                    insertMode: "replace",
-				                    resolution: "1280x720",
-				                    width: '100%',
-				                    height: '100%'
-				                });
-				            }
-				        });
-				        $scope.session.connect(token, function (error) {
-				            if (error) {
-				                console.log(error.message);
-				            }
-				            else {
-				                $scope.session.publish(publisher);
-				                socket.emit("sendMessage", $scope.userInfo.id,$scope.callUser, {
-				                    type: 'call',
-				                    sessionId: sessionId
-				                });
-				            }
-				        });
-		                               
-		            })
-				}
-				else
-				{
-					var publisher = OT.initPublisher('selfVideo', publisherProperties);
-
-			        $scope.session = OT.initSession(apiKey, sessionId);
-			        $scope.session.on({
-			            'streamCreated': function (event) {
-			                var subscriber = $scope.session.subscribe(event.stream, "callerVideo", {
-			                    insertMode: "replace",
-			                    resolution: "1280x720",
-			                    width: '100%',
-			                    height: '100%'
-			                });
-			            }
-			        });
-			        $scope.session.connect(token, function (error) {
-			            if (error) {
-			                console.log(error.message);
-			            }
-			            else {
-			                $scope.session.publish(publisher);
-			                socket.emit("sendMessage", $scope.userInfo.id,$scope.callUser, {
-			                    type: 'call',
-			                    sessionId: sessionId
-			                });
-			            }
-			        });
-				}
-
-	        })
-	
+	            callModal.activate({callUserInfo: data, callUser: user.id, isCaller: true, opentokInfo: null});
+			})
 	    }
 
 	})

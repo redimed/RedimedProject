@@ -2,7 +2,7 @@ angular.module("app.loggedIn.controller",[
 ])
 
 
-.controller("callDialogController",function($scope, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
+.controller("callDialogController",function($scope,callModal, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
@@ -49,30 +49,7 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-             var modalInstance = $modal.open({
-                templateUrl: 'common/views/call.html',
-                controller: 'callController',
-                size: 'lg',
-                resolve:{
-                    callUserInfo: function(){
-                        return userInfo;
-                    },
-                    callUser: function(){
-                        return userInfo.id;
-                    },
-                    isCaller: function(){
-                        return false;
-                    },
-                    opentokInfo: function(){
-                        return opentokRoom;
-                    }
-                },
-                backdrop: 'static',
-                keyboard: false
-            })
-
-            // $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false,opentokInfo: opentokRoom},{reload:true});
-
+            callModal.activate({callUserInfo: userInfo, callUser: userInfo.id, isCaller: false, opentokInfo: opentokRoom});
         }
 
     })
@@ -116,9 +93,6 @@ angular.module("app.loggedIn.controller",[
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
-
-            
-
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
@@ -201,39 +175,6 @@ angular.module("app.loggedIn.controller",[
             }
         })
     }
-
-    // $scope.makeCall = function(user){
-    //     UserService.getUserInfo(user.id).then(function(data){
-    //         if(!data.img)
-    //             data.img = "theme/assets/icon.png"
-
-    //         var modalInstance = $modal.open({
-    //             templateUrl: 'common/views/call.html',
-    //             controller: 'callController',
-    //             size: 'lg',
-    //             resolve:{
-    //                 callUserInfo: function(){
-    //                     return data;
-    //                 },
-    //                 callUser: function(){
-    //                     return user.id;
-    //                 },
-    //                 isCaller: function(){
-    //                     return true;
-    //                 },
-    //                 opentokInfo: function(){
-    //                     return null;
-    //                 }
-    //             },
-    //             backdrop: 'static',
-    //             keyboard: false
-    //         })
-
-    //         // $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true,opentokInfo:null},{reload:true});
-    //     })
-
-    // }
-
 
     // DATE
     $scope.dateOptions = {

@@ -3,7 +3,7 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,$modalInstance,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,$location,$stateParams,UserService, callUserInfo, callUser, isCaller, opentokInfo){
+    .controller("callController", function($scope,callModal,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, callUserInfo, callUser, isCaller, opentokInfo){
         socket.removeAllListeners();
 
         var audio = new Audio('theme/assets/phone_calling.mp3');
@@ -23,6 +23,8 @@ angular.module("app.call.controller",[
 
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
+
+        $scope.isMinimize = false;
 
         $scope.streams = OTSession.streams;
         $scope.sharingMyScreen = false;
@@ -64,24 +66,15 @@ angular.module("app.call.controller",[
         };
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
-            // $state.go('security.login',null,{location: "replace"});
-            $modalInstance.close();
+           disconnect();
         else
             $scope.userInfo = $cookieStore.get('userInfo');
 
-
-        $scope.notMine = function(stream) {
-            return stream.connection.connectionId != $scope.session.connection.connectionId;
+        $scope.maximizeWindow = function(){
+            $scope.isMinimize = !$scope.isMinimize;
         };
 
-        $scope.maximizeWindow = function(){
-            // console.log($modalInstance);
-            // $modalInstance.close({type:'minimize',streams: $scope.streams});
-            $modalInstance.dismiss('ok');
-        }
-
         $scope.closeWindow = function(){
-
             swal({
                 title: "Confirm Cancel",
                 text: "Are You Sure Want To Cancel The Call?",
@@ -94,11 +87,8 @@ angular.module("app.call.controller",[
                 audio.pause();
                 socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
                 disconnect();
-
-                $modalInstance.close();
             })
         }
-
 
         if($scope.isCaller)
         {   
@@ -129,10 +119,9 @@ angular.module("app.call.controller",[
                     $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
                     var whiteboardUpdated = function() {
                         if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
-                          // Someone did something to the whiteboard while we weren't looking
                           $scope.$apply(function() {
                             $scope.whiteboardUnread = true;
-                            $scope.mouseMove = true; // Show the bottom bar
+                            $scope.mouseMove = true; 
                           });
                         }
                     };
@@ -171,10 +160,9 @@ angular.module("app.call.controller",[
                     $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
                     var whiteboardUpdated = function() {
                         if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
-                          // Someone did something to the whiteboard while we weren't looking
                           $scope.$apply(function() {
                             $scope.whiteboardUnread = true;
-                            $scope.mouseMove = true; // Show the bottom bar
+                            $scope.mouseMove = true; 
                           });
                         }
                     };
@@ -198,23 +186,12 @@ angular.module("app.call.controller",[
                 audio.pause();
                 toastr.error("Call Have Been Rejected!");
                 disconnect();
-
-                $modalInstance.close();
-
-                // if(typeof from !== 'undefined')
-                    // $state.go(from.fromState.name,params,{location: "replace", reload: true});
             }
             if(message.type === 'cancel')
             {
                 audio.pause();
                 toastr.error("Call Have Been Cancelled!");
                 disconnect();
-                
-                // if(typeof from !== 'undefined')
-                    // $state.go(from.fromState.name,params,{location: "replace", reload: true});
-
-                $modalInstance.close();
-
             }
 
         })
@@ -232,20 +209,27 @@ angular.module("app.call.controller",[
             {
                 $scope.session.disconnect();
                 $scope.session.on('sessionDisconnected', function () {
+                    callModal.deactivate();
                 });
             }
+            else
+                callModal.deactivate();
         }
 
         $scope.cancelCall = function(){
-            audio.pause();
-            socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
-            disconnect();
-            
-            // if(typeof from !== 'undefined')
-            //     $state.go(from.fromState.name,params,{location: "replace", reload: true});
-
-            $modalInstance.close();
-
+             swal({
+                title: "Confirm Cancel",
+                text: "Are You Sure Want To Cancel The Call?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true
+            }, function() {
+                audio.pause();
+                socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
+                disconnect();
+            })
         }
 
         $scope.installScreenshareExtension = function () {
@@ -295,6 +279,7 @@ angular.module("app.call.controller",[
 
         
          $scope.$on("changeSize", function (event) {
+            console.log(event);
             if (event.targetScope.stream.oth_large === undefined) {
                 event.targetScope.stream.oth_large = event.targetScope.stream.name !== "screen";
             } else {
@@ -358,8 +343,4 @@ angular.module("app.call.controller",[
           }
           $scope.session = null;
         });
-
-
-        
-
     })
