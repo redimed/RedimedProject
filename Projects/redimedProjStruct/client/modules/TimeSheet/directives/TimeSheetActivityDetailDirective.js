@@ -18,7 +18,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         //END
                         if (newModel.item !== undefined && newModel.item.length !== 0) {
                             angular.forEach(newModel.item, function(item, index) {
-                                if (item !== undefined && item.deleted !== 1 && item.show!==false) {
+                                if (item !== undefined && item.deleted !== 1 && item.show !== false) {
                                     scope.items.push(item);
                                 }
                             });
@@ -178,11 +178,21 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             confirmButtonText: "Yes",
                             closeOnConfirm: true
                         }, function() {
-                            scope.items[index].show = false;
                             if (scope.items[index].isAction === "update") {
                                 scope.items[index].isAction = "delete";
+                                scope.items[index].show = false;
+                            } else if (scope.items[index].isAction === "insert") {
+                                scope.items.splice(index, 1);
                             }
-                            scope.isShow = true;
+                            var count = 0;
+                            angular.forEach(scope.items, function(item, index) {
+                                if (item.show === true) {
+                                    ++count;
+                                }
+                            });
+                            if (count === 0) {
+                                scope.isShow = true;
+                            }
                         });
                     };
                 });

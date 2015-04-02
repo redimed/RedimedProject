@@ -175,11 +175,21 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         confirmButtonText: "Yes",
                         closeOnConfirm: true
                     }, function() {
-                        scope.items[index].show = false;
                         if (scope.items[index].isAction === "update") {
                             scope.items[index].isAction = "delete";
+                            scope.items[index].show = false;
+                        } else if (scope.items[index].isAction === "insert") {
+                            scope.items.splice(index, 1);
                         }
-                        scope.isShow = true;
+                        var count = 0;
+                        angular.forEach(scope.items, function(item, index) {
+                            if (item.show === true) {
+                                ++count;
+                            }
+                        });
+                        if (count === 0) {
+                            scope.isShow = true;
+                        }
                     });
                 };
             },

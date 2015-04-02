@@ -106,10 +106,11 @@
                             </select>
                         </td>
                         <td style="text-align:center;width:100px;">
-                            <a ng-disabled="(task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined ||task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined)&&task.activity_id!==5" ng-click="chooseItem(task)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
+                            <a ng-disabled="((task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined || task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined)&&task.activity_id!==5) || ((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31
+                            ) && task.activity_id===1)" ng-click="chooseItem(task)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
                         </td>
                         <td style="text-align: center;width:100px;">
-                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center; font-size:14px;" ng-disabled="true" class="form-control input-sm" time-charge />
+                            <input type="text" ui-mask="99:99" name="time_charge" ng-model="task.time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center; font-size:14px;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
                         </td>
                         <td>
                             <input style="font-size:14px;" type="text" class="form-control input-sm" ng-model="task.task" />
@@ -117,7 +118,7 @@
                     </tr>
                     <tr>
                         <td colspan="7" style="vertical-align: middle">
-                            <label class="bold pull-right" style="margin-top:5px;">Total Hour: </label>
+                            <label class="bold pull-right" style="margin-top:5px;">Total Worked Hours: </label>
                         </td>
                         <td style="width:100px;">
                             <input disabled class="form-control input-sm" ui-mask="99:99" ng-model="info.time_charge" style="text-align:center; font-weight:bold;font-size:14px;" />

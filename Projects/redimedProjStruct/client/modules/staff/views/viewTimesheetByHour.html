@@ -54,7 +54,7 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Total Hour
+                                        Total Worked Hours
                                     </div>
                                 </th>
                                 <th>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:14px;">
-                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Total Worked Hours:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="font-size:14px;">Status:&nbsp;
                 <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaiting for Submit',
                             're-submitted':STATUS==='Re-submitted'}">{{STATUS}}</span> </span>
@@ -88,7 +88,7 @@
         </fieldset>
         <!-- BUTTON -->
         <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()' style="width:70px;font-size:14px;">Cancel</a>
-        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+        <a style="width:70px; font-size:14px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
         <a style="width:70px;font-size:14px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
