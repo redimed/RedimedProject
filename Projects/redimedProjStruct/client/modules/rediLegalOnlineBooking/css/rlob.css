@@ -141,3 +141,15 @@ tannv.dts@gmail.com*/
 .portlet-title-rlob-custom{
     background-color: #45B6AF!important;
 }
+.modal-header{
+    height: 65px !important;
+}
+.modal-header div img{
+    float: right !important;
+    margin-top: -20px;
+    width: 200px !important;
+}
+.modal-header div .img-confix{
+    margin-top: -40px !important;
+    margin-right: 15px;
+}
