@@ -15,4 +15,29 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
             id: 3,
             label: "Danny"
         }];
+        //TRANLATION TEXT
+        $scope.translationTextDept = {};
+        $scope.translationTextDept = {
+            checkAll: 'Check All Department',
+            uncheckAll: 'Uncheck All Department',
+            selectionCount: 'Department Selected',
+            selectionOf: '/',
+            searchPlaceholder: 'Search...',
+            buttonDefaultText: '--Choose Department--',
+            dynamicButtonTextSuffix: 'Department Selected'
+        };
+        //END
+
+        //TRANLATION TEXT
+        $scope.translationTextEmp = {};
+        $scope.translationTextEmp = {
+            checkAll: 'Check All Employee',
+            uncheckAll: 'Uncheck All Employee',
+            selectionCount: 'Employee Selected',
+            selectionOf: '/',
+            searchPlaceholder: 'Search...',
+            buttonDefaultText: '--Choose Employee--',
+            dynamicButtonTextSuffix: 'Employee Selected'
+        };
+        //END
     });
