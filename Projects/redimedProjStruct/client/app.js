@@ -47,6 +47,7 @@ angular.module("app", [
         'angucomplete',
         'ui.mask',
         'app.sponsor1.controller',
+    	'infinite-scroll',//tannv.dts@gmail.com	
 	   'app.sponsor1.emergency.controller',
     	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'

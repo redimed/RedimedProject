@@ -54,7 +54,7 @@ angular.module("app.loggedIn.controller",[
 
     })
 
-.controller("loggedInController", function(beforeUnload,$scope,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+.controller("loggedInController", function(beforeUnload,$scope,$window,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
     $scope.isShow = true;
 
@@ -1105,4 +1105,9 @@ angular.module("app.loggedIn.controller",[
         
 
         $scope.have_redilegal_components={value:0};
+		$scope.downloadRlobResult=function(bookingId){
+            $window.location.href = "/api/rlob/core/rlob-download-list-result-files?bookingId="+bookingId;
+			
+        }
+		$scope.contactDetails = [];
 	})
