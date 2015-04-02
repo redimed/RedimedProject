@@ -34,8 +34,7 @@ module.exports = {
 		var sqlInsertPharmacist = 
 			"INSERT INTO ph_phamacists(surname,firstname,DOB,email,phone,mobile,address,surburb,postcode,state,country,gender,preferred_name,user_id,APHRA,Proficient,isHMR,isCPOP,isCompounding) "+
 			"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//
-
+		var sqlSelectCompanyName = "SELECT company_name FROM ph_companies WHERE company_name =  ? ";
 		req.getConnection(function(err,connection){
             var query = connection.query(sqlInsertUser,[data.username,password,data.user_type,data.firstname,data.surname,data.mobile,data.email],function(err,rows){
                 if(err){
@@ -57,41 +56,58 @@ module.exports = {
 
 								//check user type if user_type = company call query insert company
 				                if(data.user_type=="Company"){
-				                    req.getConnection(function(err,connection){
-				                     	var query = connection.query(sqlInsertCompany,[data.name_company,data.address_company,data.surburb_company,data.postcode_company,data.state_company,data.country_company,data.contact_name_company,data.contact_number_company,data.email_company,data.phone_company,data.mobile_company,data.compouding_company,data.CPOP_company,data.dispendingsoftware_company,data.multishop_company],function(err,resultInsertCompany){
-				                     		if(err){
-				                     				console.log(err);
-				                    				res.json({status:'fail'});
-				                     		}else{
-				                     			console.log("Success Insert Company");
-				                     			//select companyid by company name
-				                     			req.getConnection(function(err,connection){
-				                     				var query = connection.query(sqlSelctCompanyId,data.name_company,function(err,companyid){
-				                     					if(err){
-				                     						console.log(err);
-				                    						res.json({status:'fail'});
-				                     					}else{
-				                     						console.log(companyid)
-				                     						//insert table company user 
-				                     						req.getConnection(function(err,connection){
-							                     				var query = connection.query(sqlInsertCompanyUser,[userID,companyid[0].company_id,1,1],function(err,rows){
-							                     					if(err){
-							                     						console.log(err);
-							                    						res.json({status:'fail'});
-							                     					}else{
-							                     						console.log("Success company user")
-							                     						res.json({status:'Success'});
-							                     					}
-							                     				})
-							                     			})
 
-				                     					}
-				                     				})
-				                     			})
+				                	 req.getConnection(function(err,connection){
+										var query = connection.query(sqlSelectUserId,data.name_company,function(err,rows){
+											if(err){
+												console.log(err);
+												res.json({status:'fail'});
+											}else{
+												console.log(rows)
+												if(typeof rows[0] !== ''){
+													console.log("--------------Trung")
+													res.json({status:'have Company in database'});
+												}else{
+													req.getConnection(function(err,connection){
+								                     	var query = connection.query(sqlInsertCompany,[data.name_company,data.address_company,data.surburb_company,data.postcode_company,data.state_company,data.country_company,data.contact_name_company,data.contact_number_company,data.email_company,data.phone_company,data.mobile_company,data.compouding_company,data.CPOP_company,data.dispendingsoftware_company,data.multishop_company],function(err,resultInsertCompany){
+								                     		if(err){
+								                     				console.log(err);
+								                    				res.json({status:'fail'});
+								                     		}else{
+								                     			console.log("Success Insert Company");
+								                     			//select companyid by company name
+								                     			req.getConnection(function(err,connection){
+								                     				var query = connection.query(sqlSelctCompanyId,data.name_company,function(err,companyid){
+								                     					if(err){
+								                     						console.log(err);
+								                    						res.json({status:'fail'});
+								                     					}else{
+								                     						console.log(companyid)
+								                     						//insert table company user 
+								                     						req.getConnection(function(err,connection){
+											                     				var query = connection.query(sqlInsertCompanyUser,[userID,companyid[0].company_id,1,1],function(err,rows){
+											                     					if(err){
+											                     						console.log(err);
+											                    						res.json({status:'fail'});
+											                     					}else{
+											                     						console.log("Success company user")
+											                     						res.json({status:'Success'});
+											                     					}
+											                     				})
+											                     			})
 
-				                     		}
-				                     	})
-				                    });
+								                     					}
+								                     				})
+								                     			})
+
+								                     		}
+								                     	})
+								                    })
+												}
+											}
+										})
+									})	
+				                    
 
 				                 }else{
 				                     // user type is Pharmarcis asd
@@ -119,7 +135,6 @@ module.exports = {
                 }
             })
         })
-		
 	},
 	//login user 
 	login: function(req,res){
@@ -171,7 +186,6 @@ module.exports = {
 				}
 			})
 		})
-
 	},
 	//check user 
 	checkUserName:function(req,res){
@@ -194,27 +208,96 @@ module.exports = {
 				}
 			})
 		})	
+	},
+	//forgot pass
+	forgotpass:function(req,res){
+		var data= req.body.username;
+		//random new pass
+		var newpassword = randomstr.generate();
+		//enscript new pass
+		var enscriptNewpass=bcrypt.hashSync(newpassword);
+		
+		//query select email by username
+		var sql = "SELECT email FROM ph_users WHERE username = ? ";
+		//query update newpassword
+		var sqlUpdate = "UPDATE ph_users SET PASSWORD = ? WHERE username= ? ";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,data,function(err,rows){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					res.json({status:'success'})
+				
+					if(typeof rows[0] !== 'undefined'){
+							console.log(rows[0].email);
+							//update new pass 
+							req.getConnection(function(err,connection){
+								var query = connection.query(sqlUpdate,[enscriptNewpass,data],function(err){
+									if(err){
+										console.log(err);
+										res.json({status:'fail'});
+									}else{
+										console.log('update password success');
+												//
+												var transport = nodemailer.createTransport({
+										               service: 'Gmail',
+										               auth: {
+										                   user:'vnlegal123@gmail.com',//test
+										                   pass:'redimed123'//test
+										               }
+										           });
+
+										        var mailOptions = {
+										            from: "REDiMED <healthscreenings@redimed.com.au>", // sender address.  Must be the same as authenticated user if using Gmail.
+										            to: rows[0].email, // receiver
+										            subject: "Forgot New Password", // Subject line
+										            html: "New Password:"+newpassword
+										        }
+
+										        transport.sendMail(mailOptions, function(error, response){  //callback
+										            if(error){
+										                console.log(error);
+										                res.json({status:"fail"});
+										            }else{
+										                console.log("Message sent: " + response.message);
+										                res.json({status:"success"});
+										            }
+										            transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+										        })
+									}
+								})
+							})
+
+					}else{
+							console.log("no user")
+					}
+
+			
+				}
+			})
+		})
+	},
+	updateUser:function(req,res){
+		var userInfo = req.body;
+		console.log(userInfo);
+		//query update Ph_user
+		var sqlUpdateUser = "UPDATE ph_users SET firstname= ? ,surname= ? , mobile = ? , email = ? WHERE user_id = ? ";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sqlUpdateUser,[userInfo.firstname,userInfo.surname,userInfo.mobile,userInfo.email,userInfo.user_id],function(err){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}
+				else{
+					console.log("success update")
+					res.json({status:'success'});
+				}
+			})
+		})
 	}
-	//check pharmacist
-	// checkPharmacist:function(req,res){
-	// 	var data= req.body.username;
-	// 	console.log(data);
-	// 	var sqlSelectUserId = "SELECT username FROM ph_users WHERE  username = ? ";
-	// 	 req.getConnection(function(err,connection){
-	// 			var query = connection.query(sqlSelectUserId,data,function(err,rows){
-	// 				if(err){
-	// 				console.log(err);
-	// 				res.json({status:'fail'});
-	// 			}else{
-	// 				console.log(rows)
-	// 				if(typeof rows[0] !== 'undefined'){
-	// 					console.log("--------------Trung")
-	// 					res.json({status:'have username in database'});
-	// 				}else{
-	// 					res.json({status:'can nextForm'})
-	// 				}
-	// 			}
-	// 		})
-	// 	})	
-	// }
+
+	
+
+
 }
