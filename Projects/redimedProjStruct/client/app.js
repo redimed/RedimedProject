@@ -204,6 +204,7 @@ angular.module("app", [
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
         $cookieStore.remove("fromState");
+        $cookieStore.remove("toState");
         $state.go("security.login", null, {
             location: "replace",
             reload: true
@@ -281,10 +282,19 @@ angular.module("app", [
             e.preventDefault();
             return;
         }
-        $cookieStore.put("fromState", {
-            fromState: fromState,
-            fromParams: fromParams
+        if(fromState.name != '' || fromState.name != null)
+        {
+             $cookieStore.put("fromState", {
+                fromState: fromState,
+                fromParams: fromParams
+            });
+        }
+
+         $cookieStore.put("toState", {
+            toState: toState,
+            toParams: toParams
         });
+       
         if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');

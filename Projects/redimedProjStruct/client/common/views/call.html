@@ -429,9 +429,9 @@ border-bottom-right-radius: 3px;
 
 </style>
 
-<div draggable="false" ng-class="{'btf-modal-big' : !isMinimize , 'btf-modal-small':isMinimize}">
+<div draggable drag="isDrag" ng-class="{'btf-modal-big' : !isMinimize , 'btf-modal-small':isMinimize}">
   <div class="modal-content">
-    <div style="background-color:#3D4A53; border-bottom: 1px solid #3D4A53 !important;" class="modal-header">
+    <div style="background-color:#16181A; border-bottom: 1px solid #16181A !important;" class="modal-header">
         <div class="row"> 
           <div class="col-md-12 col-sm-12">
               <div class="pull-left">
@@ -445,7 +445,7 @@ border-bottom-right-radius: 3px;
           </div>
         </div>
     </div>
-    <div style="background-color:#3D4A53;" class="modal-body" ng-class="{'modal-body-big':!isMinimize , 'modal-body-small':isMinimize}">
+    <div style="background-color:#16181A;" class="modal-body" ng-class="{'modal-body-big':!isMinimize , 'modal-body-small':isMinimize}">
       <div ng-class="{'mouse-move': mouseMove}">
 
           <div ng-show="isCaller && !isAccept">
@@ -515,7 +515,7 @@ border-bottom-right-radius: 3px;
       <br/>
       <br/>
     </div>
-    <div ng-hide="isMinimize" style="background-color:#3D4A53; border-top: 1px solid #3D4A53 !important;" class="modal-footer">
+    <div ng-hide="isMinimize" style="background-color:#16181A; border-top: 1px solid #16181A !important;" class="modal-footer">
         <div class="button-group-navigation" target="_blank" style="text-align: center;">
             <li>
               <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" class="btn-bottom-menu" ng-class="{active : sharingMyScreen}" ng-click="toggleShareScreen()" href="javascript:;">
@@ -552,47 +552,6 @@ border-bottom-right-radius: 3px;
     })
 </script>
 
-<!-- <div ng-if="isMinimize" class="btf-modal-small" draggable="true">
-  <div class="modal-content">
-    <div style="background-color:#3D4A53; border-bottom: 1px solid #3D4A53 !important;" class="modal-header">
-        <div class="row"> 
-          <div class="col-md-12 col-sm-12">
-              <div class="pull-left">
-                <a href="javascript:;" ng-click="maximizeWindow()" class="btn btn-icon-only btn-circle blue-steel">
-                  <i class="fa fa-minus"></i>
-                </a>
-                <a href="javascript:;" ng-click="closeWindow()" class="btn btn-icon-only btn-circle red-flamingo">
-                  <i class="fa fa-times"></i>
-                </a>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div style="background-color:#3D4A53; height: 200px !important;" class="modal-body">
-      <div ng-class="{'mouse-move': mouseMove}">
-        <ot-layout props="{animate:true,bigFixedRatio:true}">
-            <ot-subscriber ng-repeat="stream in streams" 
-                stream="stream" 
-                style="width: 100% !important; height: 100% !important"
-                props="{style: {nameDisplayMode: 'off'}}" 
-                ng-dblclick="$emit('changeSize')">
-                    <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeSize');"></button>
-            </ot-subscriber>
-        </ot-layout>
-        <div id="facePublisher"
-            ng-hide="true"
-            >
-            <ot-publisher id="facePublisher"
-                props="facePublisherProps"
-                mute-video="isVideoMuted"
-                mute-audio="isAudioMuted">
-            </ot-publisher>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
- -->
 
 
 

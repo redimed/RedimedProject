@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($filter,$window,$document,callModal,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,$stateParams,ConsultationService,PatientService,UserService){
+	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,callModal,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,$stateParams,ConsultationService,PatientService,UserService){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
@@ -26,6 +26,23 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			images: []
 		}
 
+		$scope.callInfo = {
+			isCalling: null,
+			callUser: null
+		}
+
+		var checkCallInfo = null;
+
+		$interval.cancel(checkCallInfo);
+
+		checkCallInfo = $interval(function(){
+			refresh($scope.patient_id);
+			if(typeof $cookieStore.get('callInfo') !== 'undefined')
+			{
+				$scope.callInfo = $cookieStore.get('callInfo');
+			}
+		},1 * 1000);
+
 	    $scope.refreshList = function(){
 	    	refresh($scope.patient_id);
 	    }
@@ -37,7 +54,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 				if(rs.status.toLowerCase() == 'success' && rs.info)
 				{
 					$scope.companyInfo = rs.info;
-					console.log($scope.companyInfo.users);
 				}
 			})
 	    }
@@ -59,7 +75,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
-				console.log(rs.data);
 				$scope.problemList = rs.data;
 			}
 		})

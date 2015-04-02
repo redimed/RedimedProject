@@ -7,7 +7,8 @@ angular.module("app.call.controller",[
         socket.removeAllListeners();
 
         var audio = new Audio('theme/assets/phone_calling.mp3');
-        var from = $cookieStore.get('fromState');
+        var toSt= $cookieStore.get('toState');
+
         var params = {};
 
         var apiKey = null;
@@ -66,12 +67,19 @@ angular.module("app.call.controller",[
         };
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
-           disconnect();
+            disconnect();
         else
             $scope.userInfo = $cookieStore.get('userInfo');
 
+        $scope.isDrag = true;
         $scope.maximizeWindow = function(){
             $scope.isMinimize = !$scope.isMinimize;
+
+            if($scope.isMinimize)
+            {
+                $scope.showWhiteboard = false;
+                $scope.sharingMyScreen = false;
+            }
         };
 
         $scope.closeWindow = function(){
@@ -180,6 +188,9 @@ angular.module("app.call.controller",[
             {
                 audio.pause();
                 $scope.isAccept = true;
+
+                if($scope.isCaller)
+                    $cookieStore.put('callInfo',{isCalling: true, callUser: fromId})
             }
             if(message.type === 'ignore')
             {
@@ -214,6 +225,9 @@ angular.module("app.call.controller",[
             }
             else
                 callModal.deactivate();
+
+            $state.go(toSt.toState.name,toSt.toParams,{reload: true});
+            $cookieStore.remove("callInfo");
         }
 
         $scope.cancelCall = function(){
@@ -279,7 +293,6 @@ angular.module("app.call.controller",[
 
         
          $scope.$on("changeSize", function (event) {
-            console.log(event);
             if (event.targetScope.stream.oth_large === undefined) {
                 event.targetScope.stream.oth_large = event.targetScope.stream.name !== "screen";
             } else {

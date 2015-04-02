@@ -93,6 +93,7 @@ angular.module("app.loggedIn.controller",[
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
+            console.log("==============receive call=============");
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
@@ -132,7 +133,7 @@ angular.module("app.loggedIn.controller",[
                             backdrop: 'static',
                             keyboard: false
                         })
-                    }, 0.75 * 1000);
+                    }, 0.5 * 1000);
                    
                 }
             })
@@ -382,6 +383,7 @@ angular.module("app.loggedIn.controller",[
             $cookieStore.remove("companyInfo");
             $cookieStore.remove("doctorInfo");
             $cookieStore.remove("fromState");
+            $cookieStore.remove("toState");
             $state.go("security.login",null,{location: "replace", reload: true});
 
             socket.removeAllListeners();
