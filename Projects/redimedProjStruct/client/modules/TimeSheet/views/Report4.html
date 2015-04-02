@@ -12,12 +12,46 @@
         </li>
     </ul>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
+        <a class="btn btn-xs pull-right blue" style="font-size:14px;">Print PDF</a>
+        <a class="btn btn-xs pull-right green" style="font-size:14px;">Review</a>
+    </div>
+</div>
+&nbsp;
 <div class="panel panel-info">
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-12">
-                <input type="text" class="form-control" name="DATE" datepicker-popup="dd/MM/yyyy" ng-model="info.FROM_DATE" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" />
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">From Week:</span>
+                    <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" style="text-align:center;font-size:14px;">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">To Week:</span>
+                    <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" style="text-align:center;font-size:14px;">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">Department:</span>
+                    <select class="form-control input-sm" style="text-align:center;">
+                        <option>--All Department--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">Employee:</span>
+                    <select class="form-control input-sm" style="text-align:center;">
+                        <option>--All Employee--</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
-    <!-- END INFO SYS -->
+</div>
+<!-- END INFO SYS -->
