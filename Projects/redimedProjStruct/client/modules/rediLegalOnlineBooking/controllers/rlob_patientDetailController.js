@@ -21,7 +21,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 DESC_INJURY:bookingInfoReuse.DESC_INJURY
             }
             $scope.WRK_DOB_TEMP=bookingInfoReuse.WRK_DOB;
-            $scope.WRK_DATE_OF_INJURY_TEMP=bookingInfoReuse.WRK_DATE_OF_INJURY_TEMP;
+            $scope.WRK_DATE_OF_INJURY_TEMP=bookingInfoReuse.WRK_DATE_OF_INJURY;
             bookingService.setBookingInfoReuse(null);
         }
         else
@@ -53,6 +53,9 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.companyInfo=data;
         })
         .error(function (data) {
+            $scope.companyInfo={
+                Company_name:'[Name of Company]'
+            }
         })
         .finally(function() {
 
@@ -291,6 +294,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
          */
         
         var bookingBehalfInfo=angular.copy(bookingService.getBookingBehalfInfo());
+        $scope.isBehalf=false;
         if(bookingBehalfInfo!=null)
         {
             $scope.newBooking.ASS_ID=bookingBehalfInfo.ASS_ID;
@@ -298,6 +302,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.ASS_OTHERNAMES=bookingBehalfInfo.ASS_OTHERNAMES;
             $scope.newBooking.ASS_CONTACT_NO=bookingBehalfInfo.ASS_CONTACT_NO;
             $scope.newBooking.ASS_EMAIL=bookingBehalfInfo.ASS_EMAIL;
+            $scope.isBehalf=true;
             bookingService.setBookingBehalfInfo(null);
         }
         else
@@ -428,7 +433,13 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
 //            $scope.isSaving=true;
             //Set mailto
-
+            if($scope.isBehalf==true)
+            {
+                $scope.companyInfo={
+                    Company_name:'[Name of company]'
+                }
+                $scope.isBehalf=false;
+            }
             $scope.mailBodyData={
                 requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',

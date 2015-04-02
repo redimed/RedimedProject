@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService,Mailto) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService,Mailto,bookingService) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
 
@@ -1205,5 +1205,19 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     $window.location.href = $scope.mailtoLink;
                 };
             })
+        }
+
+        $scope.rechedule=function()
+        {
+            var bookingBehalfInfo={
+                ASS_SURNAME:$scope.selectedBooking.ASS_SURNAME,
+                ASS_OTHERNAMES:$scope.selectedBooking.ASS_OTHERNAMES,
+                ASS_CONTACT_NO:$scope.selectedBooking.ASS_CONTACT_NO,
+                ASS_EMAIL:$scope.selectedBooking.ASS_EMAIL,
+                ASS_ID:$scope.selectedBooking.ASS_ID
+            }
+            bookingService.setBookingBehalfInfo(bookingBehalfInfo);
+            bookingService.setBookingInfoReuse($scope.selectedBooking);
+            $state.go("loggedIn.rlob.rlob_booking");
         }
     });

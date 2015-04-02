@@ -605,58 +605,60 @@ angular.module("app.loggedIn.rlob.directive", [])
                 {
           
                     console.log($cookieStore.get('companyInfo'));
+                    var Company_name='[Name of Company]'
                     if($cookieStore.get('companyInfo'))
                     {
-                    
                         $scope.companyInfo=$cookieStore.get('companyInfo');
-                        $scope.mailTemplate={
-                            REDiLEGAL:{
-                                label:'Please contact us to make an appointment',
-                                recepient : "medicolegal@redimed.com.au",
-                                options:{
-                                    subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                                    body:
-                                        " I would like to make a booking for       \n"+
-                                        " Claim Number:                            \n"+
-                                        " Injured Workers's Name:                  \n"+
-                                        " Contact Number:                          \n"+
-                                        " Address:                                 \n"+
-                                        " Date of Birth:                           \n"+
-                                        " Date of Injury:                          \n"+
-                                        " Description of Injury:                   \n"+
-                                        " Location of Appointment:                 \n"+
-                                        " Timeframe for Appointment:               \n\n"+
-                                        " Please note that this booking is not confirmed in our system until approved by REDIMED."
-                                }
-
-                            },
-                            Vaccination:{
-                                label:'Please contact us to make an appointment',
-                                recepient : '',
-                                options:{
-                                    subject:($scope.companyInfo?$scope.companyInfo.Company_name:'')+' - Request Booking',
-                                    body:
-                                        "Please booking for me..."
-                                }
-
+                        Company_name=$scope.companyInfo.Company_name;
+                    }
+                    
+                    $scope.mailTemplate={
+                        REDiLEGAL:{
+                            label:'Please contact us to make an appointment',
+                            recepient : "medicolegal@redimed.com.au",
+                            options:{
+                                subject:Company_name+' - Request Booking',
+                                body:
+                                    " I would like to make a booking for       \n"+
+                                    " Claim Number:                            \n"+
+                                    " Injured Workers's Name:                  \n"+
+                                    " Contact Number:                          \n"+
+                                    " Address:                                 \n"+
+                                    " Date of Birth:                           \n"+
+                                    " Date of Injury:                          \n"+
+                                    " Description of Injury:                   \n"+
+                                    " Location of Appointment:                 \n"+
+                                    " Timeframe for Appointment:               \n\n"+
+                                    " Please note that this booking is not confirmed in our system until approved by REDIMED."
                             }
-                        };
 
-                        if($scope.bookingType=='REDiLEGAL')
-                        {
-                            $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
-                        
-                        }
-                        else if($scope.bookingType=='Vaccination')
-                        {
-                            $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
-                        
-                        }
+                        },
+                        Vaccination:{
+                            label:'Please contact us to make an appointment',
+                            recepient : '',
+                            options:{
+                                subject:Company_name+' - Request Booking',
+                                body:
+                                    "Please booking for me..."
+                            }
 
-                        $scope.sendEmail=function()
-                        {
-                            $window.location.href = $scope.mailtoLink;
                         }
+                    };
+
+                    if($scope.bookingType=='REDiLEGAL')
+                    {
+                        $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
+                    
+                    }
+                    else if($scope.bookingType=='Vaccination')
+                    {
+                        $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
+                    
+                    }
+
+                    $scope.sendEmail=function()
+                    {
+                        $window.location.href = $scope.mailtoLink;
                     }
                 }
                 $scope.updateMailtoLink();
@@ -1072,6 +1074,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                     .finally(function() {
 
                     });
+
                 }
 
 

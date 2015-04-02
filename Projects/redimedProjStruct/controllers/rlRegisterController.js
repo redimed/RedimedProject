@@ -48,7 +48,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                 textBody:''
                 };
                 emailInfo.subject='Redimed Medico-Legal Registration';
-                emailInfo.senders=rlobUtil.getMailSender();
+                emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
                 //emailInfo.senders="tannv.solution@gmail.com";
                 emailInfo.recipients=userInfo.Contact_email;
                 emailInfo.htmlBody=template;
@@ -83,7 +83,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                 textBody:''
                 };
                 emailInfo.subject='Redimed Medico-Legal Registration';
-                emailInfo.senders=rlobUtil.getMailSender();
+                emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
                 //emailInfo.senders="tannv.solution@gmail.com";
                 emailInfo.recipients=userInfo.Contact_email;
                 emailInfo.htmlBody=template;
