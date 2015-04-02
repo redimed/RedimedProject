@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=false;
+var isTestSendMail=true;
 module.exports =
 {
     //Khoang thoi gian mac dinh cua 1 phien kham benh
