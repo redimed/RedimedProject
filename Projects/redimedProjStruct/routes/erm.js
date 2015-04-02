@@ -74,10 +74,11 @@ app.post('/api/patient/getClaim', ClientController.getClaim);
 app.post('/api/patient/insertClaim', ClientController.insertClaim);
 app.post('/api/patient/editClaim', ClientController.editClaim);
 // END VUONG
-
+console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 // COMPANY
  app.post('/api/erm/company/getDetail', CompanyController.getDetail);
  // END COMPANY
+
 
  //dqt
 app.post('/api/patient/getReferral', ClientController.getReferral);
@@ -88,7 +89,6 @@ app.post('/api/patient/getScript', ClientController.getScript);
 app.post('/api/patient/updateScript', ClientController.updateScript);
 app.post('/api/patient/insertScript', ClientController.insertScript);
 //end dqt
-
 app.get("/api/v1/skinapp/patient/getAll", ClientController.getAll);
 app.post("/api/v1/skinapp/patient/image", ClientController.getSkinAppImage);
 app.post("/api/v1/skinapp/patient/add", ClientController.addSkinApp);
