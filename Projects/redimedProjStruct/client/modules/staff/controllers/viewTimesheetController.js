@@ -170,7 +170,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
 
     //CHECK MOTH AND WEEK
-    StaffService.showWeek($cookieStore.get('userInfo').id);
+    StaffService.showWeek(); //    VIEW NOT DISABLE
     //END
 })
 

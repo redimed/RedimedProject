@@ -57,7 +57,7 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Standard Ratio
+                                        Actual Unit
                                     </div>
                                 </th>
                                 <th>
@@ -80,8 +80,8 @@
                                 <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
                                 <td class="btn btn-xs" style="font-size:14px;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
                                 <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.units===null||task.units==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
                             </tr>
                         </tbody>

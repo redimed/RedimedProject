@@ -57,7 +57,7 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Standard Ratio
+                                        Actual Unit
                                     </div>
                                 </th>
                                 <th>
@@ -80,8 +80,8 @@
                                 <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
                                 <td class="btn btn-xs" style="font-size:14px;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
                                 <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.IS_BILLABLE===1?(l.item_id):(l.ITEM_NAME)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.ratio===null||l.ratio==="" || l.ratio===undefined)?"N/A":l.ratio}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(l.ratio===null||l.ratio==="" || l.ratio===undefined)?"N/A":l.ratio}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
                                 <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.units===null||l.units==="" || l.units===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
                             </tr>
                         </tbody>

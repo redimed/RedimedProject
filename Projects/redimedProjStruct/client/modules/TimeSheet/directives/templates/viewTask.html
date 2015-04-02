@@ -80,7 +80,7 @@
             <div class="col-md-12" style="margin-top:5px; font-size:14px;">
                 <span>Total Worked Hours:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{list.result[0].over_time | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span ng-show="list.result[0].status==='Approved'">OverTime:&nbsp;<span class="text-info bold">{{list.result[0].over_time | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaitting for Submit',
                             're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span>
             </div>
@@ -105,7 +105,7 @@
                         </div>
                         <!-- END DIV -->
                     </div>
-                    <div class="col-md-2" style="width:auto;margin-left:-15px;">
+                    <div class="col-md-2" style="width:auto;margin-left:-15px; font-size:14px;">
                         <span>TIME IN LIEU</span>
                     </div>
                     <div class="col-md-2" style="width:auto;margin-left:20px;">
@@ -116,7 +116,7 @@
                         <!-- END DIV -->
                     </div>
                     <div class="col-md-2">
-                        <label class="control-label">OVER TIME</label>
+                        <label class="control-label" style="font-size:14px;">OVERTIME</label>
                     </div>
                 </div>
                 <!-- END APPROVE -->
