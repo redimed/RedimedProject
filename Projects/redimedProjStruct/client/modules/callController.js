@@ -78,24 +78,13 @@ angular.module("app.call.controller",[
             if($scope.isMinimize)
             {
                 $scope.showWhiteboard = false;
-                $scope.sharingMyScreen = false;
             }
         };
 
         $scope.closeWindow = function(){
-            swal({
-                title: "Confirm Cancel",
-                text: "Are You Sure Want To Cancel The Call?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function() {
-                audio.pause();
-                socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
-                disconnect();
-            })
+            audio.pause();
+            socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
+            disconnect();
         }
 
         if($scope.isCaller)
@@ -233,19 +222,9 @@ angular.module("app.call.controller",[
         }
 
         $scope.cancelCall = function(){
-             swal({
-                title: "Confirm Cancel",
-                text: "Are You Sure Want To Cancel The Call?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function() {
-                audio.pause();
-                socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
-                disconnect();
-            })
+            audio.pause();
+            socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
+            disconnect();
         }
 
         $scope.installScreenshareExtension = function () {

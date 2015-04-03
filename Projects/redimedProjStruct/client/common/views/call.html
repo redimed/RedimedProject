@@ -470,6 +470,7 @@ border-bottom-right-radius: 3px;
               <ot-layout props="{animate:true,bigFixedRatio:true}">
                   <ot-subscriber id="myDiv" ng-repeat="stream in streams" 
                       stream="stream" 
+                      ng-hide="stream.name == 'screen' && isMinimize"
                       props="{style: {nameDisplayMode: 'off'}}" 
                        ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large , 'subscriber-small' : isMinimize}" 
                       ng-dblclick="$emit('changeSize')">
@@ -477,6 +478,7 @@ border-bottom-right-radius: 3px;
                   </ot-subscriber>
                   <ot-publisher id="screenPublisher"
                       ng-if="sharingMyScreen"
+                      ng-hide="isMinimize"
                       props='screenPublisherProps'
                       ng-class="{OT_big: screenBig}" 
                       ng-dblclick="$emit('changeScreenSize');">
