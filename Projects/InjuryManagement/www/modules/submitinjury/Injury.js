@@ -22,7 +22,6 @@ angular.module('starter.injury', [
                         templateUrl: "modules/submitinjury/views/info.html"
                     }
                 }
-
             })
             .state('app.injury.desInjury', {
                 url: "/des_injury",
@@ -48,7 +47,7 @@ angular.module('starter.injury', [
                     }
                 }
             })
-	    .state('app.injury.mapCompany',{
+            .state('app.injury.mapCompany',{
                 url:"/mapCompany",
                 views:{
                     'main':{
@@ -56,20 +55,20 @@ angular.module('starter.injury', [
                     }
                 }
             })
-        .state('app.injury.historyInjury',{
+            .state('app.injury.historyInjury',{
                 url:"/historyInjury",
                 views:{
                     'main':{
                         templateUrl:"modules/submitinjury/views/historyInjury.html"
                     }
                 }
-        })
-        .state('app.injury.historyDetail',{
-            url:"/historyDetail",
-            views:{
-                'main':{
-                    templateUrl:"modules/submitinjury/views/historyDetail.html"
+            })
+            .state('app.injury.historyDetail',{
+                url:"/historyDetail",
+                views:{
+                    'main':{
+                        templateUrl:"modules/submitinjury/views/historyDetail.html"
+                    }
                 }
-            }
-        })
+            })
     })
