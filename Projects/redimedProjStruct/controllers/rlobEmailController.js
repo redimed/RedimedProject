@@ -27,7 +27,8 @@ module.exports =
                from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
                to: emailInfo.recipients, // receiver
                subject: emailInfo.subject, // Subject line
-               html: emailInfo.htmlBody
+               html: emailInfo.htmlBody,
+               attachments:emailInfo.attachments?emailInfo.attachments:[]
            }
         }
         else
@@ -48,7 +49,8 @@ module.exports =
               from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
               to: emailInfo.recipients, // receiver
               subject: emailInfo.subject, // Subject line
-              html: emailInfo.htmlBody
+              html: emailInfo.htmlBody,
+              attachments:emailInfo.attachments?emailInfo.attachments:[]
 
           }
         }

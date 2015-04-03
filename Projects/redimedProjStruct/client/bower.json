@@ -64,7 +64,8 @@
     "opentok-angular": "~0.2.4",
     "ionicons": "~2.0.1",
     "opentok-whiteboard": "~0.1.2",
-    "angucomplete": "*"
+    "angucomplete": "*",
+    "angular-modal": "~0.5.0"
   },
   "resolutions": {
     "angular": "1.2.25",

@@ -73,14 +73,9 @@ angular.module("app.lockscreen.controller",[
                     if(response != null && response.status == 'success')
                     {
                         isLocking = false;
-                        if(params != null || typeof params !== 'undefined')
-                        {
-                            $state.go(from.fromState.name,params,{location: "replace", reload: true});
-                        }
-                        else
-                        {
-                            $state.go(from.fromState.name,params,{location: "replace", reload: true});
-                        }
+                       
+                        $state.go(from.fromState.name,params,{location: "replace", reload: true});
+                        
 
                     }
                     else

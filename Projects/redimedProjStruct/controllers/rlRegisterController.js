@@ -48,7 +48,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                 textBody:''
                 };
                 emailInfo.subject='Redimed Medico-Legal Registration';
-                emailInfo.senders=rlobUtil.getMailSender();
+                emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
                 //emailInfo.senders="tannv.solution@gmail.com";
                 emailInfo.recipients=userInfo.Contact_email;
                 emailInfo.htmlBody=template;
@@ -83,7 +83,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                 textBody:''
                 };
                 emailInfo.subject='Redimed Medico-Legal Registration';
-                emailInfo.senders=rlobUtil.getMailSender();
+                emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
                 //emailInfo.senders="tannv.solution@gmail.com";
                 emailInfo.recipients=userInfo.Contact_email;
                 emailInfo.htmlBody=template;
@@ -108,8 +108,9 @@ module.exports =
 
 	insertNewUser:function(req,res)
 	{
-		var newUser=kiss.checkData(req.body.newUser)?req.body.newUser:{};
-		if(!kiss.checkListData(newUser.fullName,newUser.email,newUser.phone,newUser.companyId,
+        var newUser=kiss.checkData(req.body.newUser)?req.body.newUser:{};
+
+		if(!kiss.checkListData(newUser.fullName,newUser.email,newUser.phone,newUser.companyTemp,
 			newUser.userName,newUser.password,newUser.isAccessReportOnline))
 		{
 			kiss.exlog("insertNewUser","Loi data truyen den");
@@ -124,7 +125,7 @@ module.exports =
 			Booking_Person: newUser.fullName,
             Contact_email: newUser.email,
             Contact_number: newUser.phone,
-            company_id: newUser.companyId,
+            COMPANY_TEMP: newUser.companyTemp,
             COMPANY_STATE:newUser.companyState,
             user_name: newUser.userName,
             password: hashPass,
@@ -135,7 +136,8 @@ module.exports =
             IS_ACCESS_REPORTS_ONLINE:newUser.isAccessReportOnline,
             HAVE_BELL:1,
             HAVE_LETTER:1,
-            HAVE_CALENDAR:1
+            HAVE_CALENDAR:1,
+            isEnable: 0
 		}
 		var sql="SELECT * FROM `user_type` WHERE user_type=?";
 		kiss.beginTransaction(req,function(){
@@ -158,6 +160,45 @@ module.exports =
                         kiss.executeQuery(req,sql,[menuData],function(result){
                             kiss.commit(req,function(){
                                 res.json({status:'success',userInfo:newUser});
+
+                                var userInfo=newUser;
+                                var template=null;
+                                var emailData=null;
+                                var linkWebsite = req.protocol + '://' + req.get('host');
+                               
+                                template=
+                                    " <p>Hi {{fullName}},</p>                                                                "+
+                                    " <p>                                                                                    "+
+                                    "   Thanks you for signing up to the Medico-Legal online booking system  at Redimed.     "+
+                                    "   Your application has been accepted. You log in details are below:                    "+
+                                    " </p>                                                                                   "+
+                                    " <p>Username: {{userName}}</p>                                                          "+
+                                    // " <p>Password: {{password}}</p>                                                           "+
+                                    " <p>Website: {{linkWebsite}}</p>                         "+
+                                    " <p>Thank you</p>                                                                       "+
+                                    " <p>Kind Regards,</p>                                                                   "+
+                                    " <p>Medico-Legal Department</p>                                                         ";
+                                emailData={
+                                    fullName:userInfo.Booking_Person,
+                                    userName:userInfo.user_name,
+                                    password:userInfo.password,
+                                    linkWebsite:linkWebsite
+                                }
+                                template=kiss.tokenBinding(template,emailData);
+
+                                var emailInfo={
+                                subject:'',
+                                senders:'',
+                                recipients:'',
+                                htmlBody:'',
+                                textBody:''
+                                };
+                                emailInfo.subject='Redimed Medico-Legal Registration';
+                                emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
+                                emailInfo.recipients=rlobUtil.getMedicoLegalMailSender();
+                                emailInfo.htmlBody=template;
+                                rlobEmailController.sendEmail(req,res,emailInfo);
+
                             },function(err){
                                 kiss.exlog("Commit fail");
                                 res.json({status:'fail'});
@@ -211,19 +252,19 @@ module.exports =
     	}
 		var sql=
 			" SELECT u.*,c.`Company_name` FROM `users` u                                          			 "+                 
-			" INNER JOIN `companies` c ON u.`company_id`=c.`id`                                              "+
+			" left JOIN `companies` c ON u.`company_id`=c.`id`                                              "+
 			" WHERE 	u.`MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL AND u.id<>?                             "+
 			" 	AND u.`Contact_email` LIKE CONCAT('%',?,'%') AND u.`Booking_Person` LIKE CONCAT('%',?,'%')   "+
-			" 	AND c.Company_name LIKE CONCAT('%',?,'%') and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%')       "+//AND u.`isEnable`=1 
+			" 	AND (c.Company_name LIKE CONCAT('%',?,'%') or c.Company_name is null) and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%')       "+//AND u.`isEnable`=1 
 			" ORDER BY u.`Creation_date` DESC                                                                "+
 			" LIMIT ?,?                                                                                      ";
 
 		var sqlCount=
 			" SELECT COUNT(u.`user_name`) AS TOTAL_ITEMS FROM `users` u                                       "+   
-			" INNER JOIN `companies` c ON u.`company_id`=c.`id`                                               "+
+			" left JOIN `companies` c ON u.`company_id`=c.`id`                                               "+
 			" WHERE 	u.`MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL AND u.id<>?                              "+
 			" 	AND u.`Contact_email` LIKE CONCAT('%',?,'%') AND u.`Booking_Person` LIKE CONCAT('%',?,'%')    "+
-			" 	AND c.Company_name LIKE CONCAT('%',?,'%') and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%') ";//AND u.`isEnable`=1
+			" 	AND (c.Company_name LIKE CONCAT('%',?,'%') or c.Company_name is null) and u.MEDICO_LEGAL_REGISTER_STATUS like CONCAT('%',?,'%') ";//AND u.`isEnable`=1
 
     	kiss.executeQuery(req,sql,[userId,emailKey,nameKey,companyKey,statusKey,startIndex,itemsPerPage],function(rows){
     		kiss.executeQuery(req,sqlCount,[userId,emailKey,nameKey,companyKey,statusKey],function(result){
@@ -236,7 +277,7 @@ module.exports =
     	},function(err){
     		kiss.exlog("getRedilegalUsers","Loi truy van");
     		res.json({status:'fail'});
-    	});
+    	},true);
 	},
 
 	updateRedilegalUserStatus:function(req,res){
@@ -266,7 +307,8 @@ module.exports =
     	var updateRow={
     		MEDICO_LEGAL_REGISTER_STATUS:status,
     		Last_updated_by:userId,
-    		Last_update_date:currentTime
+    		Last_update_date:currentTime,
+            isEnable: status==rlobUtil.registerStatus.approve ? 1 : 0
     	}
 
     	kiss.executeQuery(req,sql,[updateRow,redilegalUserName],function(data){
@@ -301,6 +343,8 @@ module.exports =
             res.json({status:'fail'});
             return;
         }
+        var status = updateInfo.MEDICO_LEGAL_REGISTER_STATUS;
+
         var updateRow={
             Booking_Person:updateInfo.Booking_Person,
             Contact_number:updateInfo.Contact_number,
@@ -310,10 +354,12 @@ module.exports =
             HAVE_BELL:updateInfo.HAVE_BELL,
             HAVE_LETTER:updateInfo.HAVE_LETTER,
             HAVE_CALENDAR:updateInfo.HAVE_CALENDAR,
-            MEDICO_LEGAL_REGISTER_STATUS:updateInfo.MEDICO_LEGAL_REGISTER_STATUS,
+            MEDICO_LEGAL_REGISTER_STATUS:status,
             isEnable:updateInfo.isEnable,
             Last_updated_by:userId,
-            Last_update_date:currentTime
+            Last_update_date:currentTime,
+            isEnable: status==rlobUtil.registerStatus.approve ? 1 : 0
+                    
         }
 
         var sql="UPDATE users SET ? WHERE user_name=?";

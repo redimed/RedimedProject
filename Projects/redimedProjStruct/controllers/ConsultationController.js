@@ -159,7 +159,8 @@ module.exports = {
                                 instructions: s.instructions,
                                 repeat: s.repeat,
                                 reason: s.reason,
-                                category: s.category
+                                category: s.category,
+                                price: s.price
                             })
                         )
                     }

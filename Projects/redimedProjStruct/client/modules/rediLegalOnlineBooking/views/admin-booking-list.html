@@ -133,7 +133,7 @@
     */
     #bookingstatusdiv2{
         position: fixed;
-        width: 40%;
+        width: 46%;
         top: 0px;
         right: 0px;
         bottom: 0px;
@@ -213,6 +213,11 @@
                     {{listPassBookingNotChangeStatus.length}} Change Appointment Status
                 </a>
             </span>
+            <span class="pull-right">
+                <a style="color: #4db3a2 !important;font-size: 17px;" ng-click="openOutlook()">
+                    Newsletter
+                </a>
+            </span>
         </div>
 
     </div>
@@ -277,7 +282,14 @@
 
     </div>
 
-
+    <div style="margin-bottom: 20px;color: #4db3a2 !important;" class="row">
+        <div class="col-md-12">
+            Docment status : &nbsp;&nbsp;<span class="label label-sm rlob_document_status_checked">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;   Received
+            &nbsp;&nbsp;<span class="label label-sm rlob_document_status_no_document">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;   Not received
+            &nbsp;&nbsp;<span class="label label-sm rlob_document_status_not_confirmed">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;   Not confirmed.
+            
+        </div>
+    </div>
     <!--mydata-->
     <div ng-show="mydata.length>0" class="row" style="margin-bottom: 10px;">
         <div class="col-md-12">
@@ -327,6 +339,12 @@
                     <li>
                         <a class="pointer" role="menuitem" tabindex="2" ng-click="documentstatusfadeIn()">
                             Set Documents Status
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="pointer" role="menuitem" tabindex="2" ng-click="rechedule()">
+                            Rechedule
                         </a>
                     </li>
                     <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
@@ -489,6 +507,11 @@
                                     Set Documents Status
                                 </a>
                             </li>
+                            <li>
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="rechedule()">
+                                    Rechedule
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
@@ -607,7 +630,7 @@
                 <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Success</h4>
-                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
                 </div>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Success</h4> -->
@@ -635,7 +658,7 @@
                 <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Upload files</h4>
-                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
                 </div>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Upload files</h4> -->
@@ -671,7 +694,7 @@
                         <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
                         <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
                     </div>
-                    <img style="height: 35px;float: right;margin-top: -25px; width: 190px;margin-right: 10px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                    <img class="col-md-5 col-sm-5 col-xs-5 img-confix" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
                 </div>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
                 <!--<h4 class="modal-title">Enter message</h4>-->
@@ -683,7 +706,7 @@
             </div>
 
             <div class="modal-body">
-            <textarea style="margin-bottom: 20px;" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
+            <textarea style="margin-bottom: 20px;width: 100%;" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
             <!--<div ng-repeat="item in ListBookingMessages">-->
                 <!--&lt;!&ndash;<input type="radio" name="bookingMessage.message" ng-model="color" name="milestone" ng-value="item.CONTENTS" ng-click="check(color)" ng-model="color" ng-change="check(color)"> &nbsp; {{item.CONTENTS}}&ndash;&gt;-->
                 <!--<label style="margin-left: 15px;margin-top: 3px color:red" ng-click="check(item.CONTENTS)"><i class="fa fa-bars"></i> &nbsp; {{item.CONTENTS}}</label>-->
@@ -732,8 +755,8 @@
             <div class="modal-header">
                 <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title col-md-3 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
-                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
                 </div>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Change Appointment Calendar</h4> -->
@@ -770,8 +793,8 @@
             <div class="modal-header">
                 <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title col-md-4 col-sm-4 col-xs-5">{{listBookingNotificationHeader}}</h4>
-                    <img style="height: 35px;float: right;margin-top: -5px; width: 190px;" class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">{{listBookingNotificationHeader}}</h4>
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
                 </div>
                 <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
                 <!-- <h4 class="modal-title">{{listBookingNotificationHeader}}</h4> -->
@@ -796,37 +819,43 @@
         <i style="color: #ffffff;position: absolute;right: 10px;top: 10px;font-size: 25px;" class="fa fa-times-circle-o" ng-click="bookingstatusfadeOut()"></i>
         <div class="row" style="display: table-cell;padding-top: 10px;">
             <ul style="margin-left: -30px;">
-                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Confirmed'" class="btn btn-primary" >
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS==bookingStatus.confirmed" class="btn btn-primary" >
                     <a ng-hide="selectedBooking.STATUS=='Confirmed'" class="pointer" role="menuitem" tabindex="4"
-                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Confirmed',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,bookingStatus.confirmed,currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Confirmed</span>
                     </a>
                 </li>
 
-                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Arrived'" class="btn btn-success">
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS==bookingStatus.arrived" class="btn btn-success">
                     <a  class="pointer" role="menuitem" class="pointer" role="menuitem" tabindex="5"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Arrived',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,bookingStatus.arrived,currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Arrived</span>
                     </a>
                 </li>
 
-                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Not Arrived'" class="btn btn-info">
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS==bookingStatus.notArrived" class="btn btn-info">
                     <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Not Arrived',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
+                       ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,bookingStatus.notArrived,currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Not Arrived</span>
                     </a>
                 </li>
 
-                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Completed'" class="btn btn-warning">
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS==bookingStatus.completed" class="btn btn-warning">
                     <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="7"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Completed',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,bookingStatus.completed,currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Completed</span>
                     </a>
                 </li>
-                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS=='Cancel'" class="btn btn-danger">
+                <li style="width: 100px;margin-top: 5px" ng-hide="selectedBooking.STATUS==bookingStatus.cancel" class="btn btn-danger">
                     <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
-                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,'Cancel',currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,bookingStatus.cancel,currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
                         <span>Cancel</span>
+                    </a>
+                </li>
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.STATUS==bookingStatus.lateCancellation" class="btn btn-danger">
+                    <a  class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="8"
+                        ng-click="lob_change_status(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID,bookingStatus.lateCancellation,currentNodeBooking,selectedBooking.CAL_ID,selectedBooking.PATIENT_ID)">
+                        <span>Late Cancellation</span>
                     </a>
                 </li>
             </ul>

@@ -1,6 +1,6 @@
 
 angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
-        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService) {
+        .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService,Mailto,bookingService) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong
 
@@ -508,7 +508,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.lob_change_status=function(assId,bookingId,status,scope,calID,patientID)
         {
             // alert(status);
-            // alert($scope.bookingStatus.canel);
+            // alert($scope.bookingStatus.cancel);
             rlobService.getBookingById(bookingId)
                 .then(function(data){
                     if(data.status=='success')
@@ -540,7 +540,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     if(data.status=='success')
                     {
                         console.log($scope.selectedBooking);
-                        if ($scope.selectedBooking.STATUS == $scope.bookingStatus.canel) {
+                        if ($scope.selectedBooking.STATUS == $scope.bookingStatus.cancel) {
                             rlobService.selectAppointment($scope.selectedBooking.CAL_ID).then(function(data){
                                 console.log(data.data.PATIENTS);
                                 if (data.data.PATIENTS === null) {
@@ -578,7 +578,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                                 };
                             });
                         }else{
-                            if (status == $scope.bookingStatus.canel) {
+                            if (status == $scope.bookingStatus.cancel) {
                                 rlobService.cancelBooking(calID,patientID).then(function(data){
                                     if (data.status == 'success') {
                                         rlobService.changeBookingStatus(bookingId,status).then(function(data){
@@ -677,15 +677,34 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
 
         $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
+
             if($scope.selectedAppointmentCalendar)
             {
-                $scope.changeAppointmentCalendar(
-                    $scope.selectedAppointmentCalendar.CAL_ID,
-                    $scope.selectedAppointmentCalendar.FROM_TIME,
+                rlobService.core.checkPeriodTimeToBooking(
                     $scope.selectedAppointmentCalendar.DOCTOR_ID,
                     $scope.selectedAppointmentCalendar.SITE_ID,
-                    $scope.selectedAppointmentCalendar.RL_TYPE_ID,
-                    $scope.selectedAppointmentCalendar.Specialties_id);
+                    $scope.selectedAppointmentCalendar.FROM_TIME,
+                    $scope.selectedAppointmentCalendar.RL_TYPE_ID
+                )
+                .then(function(data){
+                    if(data.status=='success'){
+                        $scope.changeAppointmentCalendar(
+                        $scope.selectedAppointmentCalendar.CAL_ID,
+                        $scope.selectedAppointmentCalendar.FROM_TIME,
+                        $scope.selectedAppointmentCalendar.DOCTOR_ID,
+                        $scope.selectedAppointmentCalendar.SITE_ID,
+                        $scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                        $scope.selectedAppointmentCalendar.Specialties_id);
+                    }
+                    else
+                    {
+                        $scope.showMsgDialog('.lob-msg-dialog','Medico-Legal','fail','Not enough time!');
+                    }
+                },function(err){
+                    $scope.showMsgDialog('.lob-msg-dialog','Medico-Legal','fail','Error!');
+                });
+
+                
             }
 
         });
@@ -1166,4 +1185,39 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 alert("Khong ton tai Booking ID");
             };
         };
+        $scope.openOutlook = function(){
+            $scope.emailContent=
+                "{Title} Redimed Medico-Legal Newsletter\n\n"+
+                "{Title} News\n"+
+                "Section for us to easily update\n"+
+                "{Title} Appointment Availability\n"+
+                "Section for us to easily update\n"+
+                "Contact Medico-Legal Department at Redimed on (08) 9230 0900 or log to the online booking system link\n";
+            rlobService.listMailUserOnlineBooking().then(function(data){
+                if (data.status == 'success') {
+                    var recepient = '"'+data.data+'"';
+                    var options = {
+                        subject: ("Medico-Legal Newsletter"),
+                        body: $scope.emailContent
+                    };
+                    console.log(recepient);
+                    $scope.mailtoLink = Mailto.url(recepient, options);
+                    $window.location.href = $scope.mailtoLink;
+                };
+            })
+        }
+
+        $scope.rechedule=function()
+        {
+            var bookingBehalfInfo={
+                ASS_SURNAME:$scope.selectedBooking.ASS_SURNAME,
+                ASS_OTHERNAMES:$scope.selectedBooking.ASS_OTHERNAMES,
+                ASS_CONTACT_NO:$scope.selectedBooking.ASS_CONTACT_NO,
+                ASS_EMAIL:$scope.selectedBooking.ASS_EMAIL,
+                ASS_ID:$scope.selectedBooking.ASS_ID
+            }
+            bookingService.setBookingBehalfInfo(bookingBehalfInfo);
+            bookingService.setBookingInfoReuse($scope.selectedBooking);
+            $state.go("loggedIn.rlob.rlob_booking");
+        }
     });

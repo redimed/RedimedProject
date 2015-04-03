@@ -1,6 +1,7 @@
 <div class="row form-group" id="file-download-panel">
+    
     <div ng-repeat="f in files" class="col-lg-12 col-md-12 col-sm-12">
-
+        
         <!--<a href="/api/download/lob/document/{{f.FILE_ID}}"><i class="fa fa-paperclip"></i> {{f.FILE_NAME}}{{f.isClientDownLoad?' Can download':' Cannot download'}}</a>-->
 
         <div class="btn-group dropdown">
@@ -18,7 +19,7 @@
                     </a>
                 </li>
 
-                <li ng-hide="f.isClientDownLoad==1 || !isAdminGetFiles">
+                <!-- <li ng-hide="f.isClientDownLoad==1 || !isAdminGetFiles">
                     <a class="pointer" role="menuitem" tabindex="2" ng-click="rlob_change_booking_file_role(f.ASS_ID,f.BOOKING_ID,f.FILE_ID,'1')">
                         Set: Is file result
                     </a>
@@ -28,14 +29,64 @@
                     <a class="pointer" role="menuitem" tabindex="3" ng-click="rlob_change_booking_file_role(f.ASS_ID,f.BOOKING_ID,f.FILE_ID,'0')">
                         Set: Is not file result
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
 
 
     </div>
+        <button ng-hide="!isAdminGetFiles" style="margin-left: 22px;  margin-top: 10;" type="button" class="btn btn-default" ng-click="showDialogSetResult();">
+            Set result files
+        </button>
+    
 </div>
 
 <!--MESSAGE DIALOG LAYOUT-->
 <rlob-dialog dialog-class="rlob-file-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
 <div class='notifications top-right rlob_download_file_notify_popup'></div>
+
+
+<div  id="rlob-dialog-set-result" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-4 col-sm-4 col-xs-5">     
+                        Set Result Files
+                    </h4>
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <!-- <h4 class="modal-title">{{listBookingNotificationHeader}}</h4> -->
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>File name</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="f in filesClone">
+                        <td>{{f.FILE_NAME}}</td>
+                        <td>
+                            <input type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="f.isClientDownLoad==1"
+                           ng-model="f.isClientDownLoad"/>
+                       </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <button type="button" class="btn btn-default" ng-click="setListResultFiles();">Send Result</button>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

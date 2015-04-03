@@ -10,7 +10,7 @@
             <th ng-show="uploader.isHTML5">Size</th>
             <th ng-show="uploader.isHTML5">Progress</th>
             <th>Status</th>
-            <th ng-show="isAdminUpload">Is File Result</th>
+            <!-- <th ng-show="isAdminUpload">Is File Result</th> -->
             <th>Actions</th>
         </tr>
         </thead>
@@ -30,10 +30,9 @@
                 <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
             </td>
 
-            <td ng-show="isAdminUpload" class="text-center">
-                <!--<input ng-model="item.isClientDownLoad" type="checkbox">-->
+            <!-- <td ng-show="isAdminUpload" class="text-center">
                 <input type="checkbox" ng-model="item.formData[0].isClientDownLoad" ng-true-value="1" ng-false-value="0" ng-init="item.formData[0].isClientDownLoad=0">
-            </td>
+            </td> -->
 
             <td nowrap>
                 <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">

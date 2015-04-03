@@ -491,7 +491,6 @@ angular.module('app.loggedIn.iso.main.controller',[])
                     msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,isoLang.createDocumentSuccess);
                     if(!$scope.selectedTreeNode.nodes)
                     {
-                    
                         $scope.selectedTreeNode.nodes={};
                     }
                     $scope.selectedTreeNode.nodes[response.data.NODE_ID]=angular.copy(response.data);

@@ -10,6 +10,10 @@ var rlobEmailController=require('./rlobEmailController');
 var rlobUtil=require('./rlobUtilsController');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
+var rlobController=require('./rlobController');
+
+
+
 module.exports =
 {
 
@@ -1505,77 +1509,93 @@ module.exports =
             "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                         "+
             "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=redi.`id`                                 "+
             " WHERE     booking.`BOOKING_ID`=?                                                                ";
-        req.getConnection(function(err,connection)
+        
+        kiss.executeQuery(req,sql,[bookingId],function(rows)
         {
-            var query = connection.query(sql ,[bookingId],function(err,rows)
+            if(rows.length<=0)
             {
-                if(err)
-                {
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length<=0)
+                kiss.exlog("sendResultNotificationEmail","Khong lay duoc data");
+                res.json({status:'fail'});
+            }
+            else
+            {
+
+                var row=rows[0];
+                var emailInfo={
+                    subject:'',
+                    senders:'',
+                    recipients:'',
+                    htmlBody:'',
+                    textBody:''
+                };
+                emailInfo.subject=row.Rl_TYPE_NAME+" - "+row.WRK_SURNAME+" - "+row.CLAIM_NO;
+                emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
+                emailInfo.recipients=row.Contact_email;
+
+                var emailTemplate=
+                    " <p>                                                                                                                           "+
+                    "   Hi {{user_name}},                                                                    "+
+                    " </p>                                                                                                                          "+
+                    " <p>                                                                                                                           "+
+                    "     The {{Rl_TYPE_NAME}} completed for {{WRK_OTHERNAMES}} {{WRK_SURNAME}} by {{NAME}} on the {{APPOINTMENT_DATE}} has been uploaded to your Medico-Legal login.      "+
+                    " </p>                                                                                                                          "+
+                    " <p>                                                                                                                           "+
+                    "     The original of the report will also be posted through to your office along with the invoice.                             "+
+                    " </p>                                                                                                                          "+
+                    " <p>                                                                                                                           "+
+                    "   Thank you                                                                                                                   "+
+                    " </p>                                                                                                                          "+
+                    // " <div style='width:400px;height:300px'>                                                                                        "+
+                    // "   <img src='{{mapUrl}}'/>                                                                                                     "+
+                    // "   <div> Site address: {{siteAddress}} </div>                                                                                  "+
+                    // " </div>                                                                                                                        "+
+                    " <p>                                                                                                                           "+
+                    "     Kind Regards                                                                                                              "+
+                    " </p>                                                                                                                          "+
+                    " <p>                                                                                                                           "+
+                    "     Redimed Medico-Legal                                                                                                   "+
+                    " </p>                                                                                                                          ";
+
+                emailInfo.htmlBody=
+                    kiss.tokenBinding(emailTemplate,{
+                        user_name:row.user_name,
+                        WRK_OTHERNAMES:row.WRK_OTHERNAMES,
+                        WRK_SURNAME:row.WRK_SURNAME,
+                        Rl_TYPE_NAME:row.Rl_TYPE_NAME,
+                        NAME:row.NAME,
+                        APPOINTMENT_DATE:moment(new Date(row.APPOINTMENT_DATE)).format("HH:mm DD/MM/YYYY"),
+                        mapUrl:mapUrl,
+                        siteAddress:siteAddress
+                    });
+
+                var sql="SELECT * FROM `rl_booking_files` files WHERE files.`BOOKING_ID`=? AND files.`isClientDownLoad`=1";
+                kiss.executeQuery(req,sql,[bookingId],function(rows){
+                    if(rows.length>0)
                     {
-                        res.json({status:'fail'});
+                        var attachments=[];
+                        for(var i=0;i<rows.length;i++)
+                        {
+                            attachments.push({filename:rows[i].FILE_NAME,path:'./'+rows[i].FILE_PATH});
+                        }
+                        emailInfo.attachments=attachments;
+                        rlobEmailController.sendEmail(req,res,emailInfo);
                     }
                     else
                     {
-                        var row=rows[0];
-                        var emailInfo={
-                            subject:'',
-                            senders:'',
-                            recipients:'',
-                            htmlBody:'',
-                            textBody:''
-                        };
-                        emailInfo.subject=row.Rl_TYPE_NAME+" - "+row.WRK_SURNAME+" - "+row.CLAIM_NO;
-                        emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
-                        emailInfo.recipients=row.Contact_email;
-
-                        var emailTemplate=
-                            " <p>                                                                                                                           "+
-                            "   Hi {{user_name}},                                                                    "+
-                            " </p>                                                                                                                          "+
-                            " <p>                                                                                                                           "+
-                            "     The {{Rl_TYPE_NAME}} completed for {{WRK_OTHERNAMES}} {{WRK_SURNAME}} by {{NAME}} on the {{APPOINTMENT_DATE}} has been uploaded to your Medico-Legal login.      "+
-                            " </p>                                                                                                                          "+
-                            " <p>                                                                                                                           "+
-                            "     The original of the report will also be posted through to your office along with the invoice.                             "+
-                            " </p>                                                                                                                          "+
-                            " <p>                                                                                                                           "+
-                            "   Thank you                                                                                                                   "+
-                            " </p>                                                                                                                          "+
-                            // " <div style='width:400px;height:300px'>                                                                                        "+
-                            // "   <img src='{{mapUrl}}'/>                                                                                                     "+
-                            // "   <div> Site address: {{siteAddress}} </div>                                                                                  "+
-                            // " </div>                                                                                                                        "+
-                            " <p>                                                                                                                           "+
-                            "     Kind Regards                                                                                                              "+
-                            " </p>                                                                                                                          "+
-                            " <p>                                                                                                                           "+
-                            "     Redimed Medico-Legal                                                                                                   "+
-                            " </p>                                                                                                                          ";
-
-                        emailInfo.htmlBody=
-                            kiss.tokenBinding(emailTemplate,{
-                                user_name:row.user_name,
-                                WRK_OTHERNAMES:row.WRK_OTHERNAMES,
-                                WRK_SURNAME:row.WRK_SURNAME,
-                                Rl_TYPE_NAME:row.Rl_TYPE_NAME,
-                                NAME:row.NAME,
-                                APPOINTMENT_DATE:moment(new Date(row.APPOINTMENT_DATE)).format("HH:mm DD/MM/YYYY"),
-                                mapUrl:mapUrl,
-                                siteAddress:siteAddress
-                            });
-
-                        rlobEmailController.sendEmail(req,res,emailInfo);
+                        kiss.exlog("sendResultNotificationEmail","Khong lay duoc data");
+                        res.json({status:'fail'});
                     }
-                }
-            });
-
+                },function(err){
+                    kiss.exlog("sendResultNotificationEmail","Loi truy van",err);
+                });
+                
+            }
+        },function(err){
+            kiss.exlog("sendResultNotificationEmail","Loi truy van",err);
+            res.json({status:'fail'});
         });
     },
+
     cln_appointment_calendar_update:function(req,res){
         var CAL_ID=req.body.CAL_ID;
         var PATIENTS=req.body.PATIENTS;
@@ -1781,6 +1801,7 @@ module.exports =
                 });
         });
     },
+
     /*
     phan quoc chien 
     phanquocchien.c1109g@gmail.com
@@ -1794,6 +1815,7 @@ module.exports =
         var NOTES = rlobUtil.sourceType.REDiLEGAL;
         var STATUS = rlobUtil.calendarStatus.booked;
         console.log(PATIENT);
+
         req.getConnection(function(err,connection)
         {
             var query = connection.query(
@@ -1837,6 +1859,103 @@ module.exports =
                         };
                     }
                 });
+        });
+    },
+    /*
+    phan quoc chien
+    phanquocchien.c1109g@gmail.com
+    list mail user booking
+     */
+    listMailUserOnlineBooking:function(req,res){
+        var sql=
+            "SELECT `Contact_email` FROM `users` WHERE `MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        var listUser = '';
+                        for (var i = 1; i < rows.length; i++)
+                        {
+                            if (i == rows.length -1) {
+                                listUser+=rows[i].Contact_email;
+                            }else{
+                                listUser+=rows[i].Contact_email+';';
+                            };
+                        }
+                        res.json({status:'success',data:listUser})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+    /*
+    phan quoc chien
+    phanquocchien.c1109g@gmail.com
+    list dortor
+     */
+    listDoctorReport:function(req,res){
+        var sql=
+            "SELECT `NAME` FROM `doctors` ORDER BY `NAME` ASC";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
+        });
+    },
+    listLocationReport:function(req,res){
+        var sql=
+            "SELECT `Site_name` FROM `redimedsites` ORDER BY `Site_name` ASC";
+
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length>0)
+                    {
+                        res.json({status:'success',data:rows})
+                    }
+                    else
+                    {
+                        res.json({status:'fail'});
+                    }
+                }
+            });
         });
     }
 }

@@ -2,7 +2,7 @@ angular.module("app.loggedIn.controller",[
 ])
 
 
-.controller("callDialogController",function($scope, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
+.controller("callDialogController",function($scope,callModal, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
@@ -49,35 +49,12 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-             var modalInstance = $modal.open({
-                templateUrl: 'common/views/call.html',
-                controller: 'callController',
-                size: 'lg',
-                resolve:{
-                    callUserInfo: function(){
-                        return userInfo;
-                    },
-                    callUser: function(){
-                        return userInfo.id;
-                    },
-                    isCaller: function(){
-                        return false;
-                    },
-                    opentokInfo: function(){
-                        return opentokRoom;
-                    }
-                },
-                backdrop: 'static',
-                keyboard: false
-            })
-
-            // $state.go("call",{callUserInfo: userInfo,callUser:userInfo.id,isCaller:false,opentokInfo: opentokRoom},{reload:true});
-
+            callModal.activate({callUserInfo: userInfo, callUser: userInfo.id, isCaller: false, opentokInfo: opentokRoom});
         }
 
     })
 
-.controller("loggedInController", function(beforeUnload,$scope,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+.controller("loggedInController", function(beforeUnload,$scope,$window,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
     $scope.isShow = true;
 
@@ -116,9 +93,7 @@ angular.module("app.loggedIn.controller",[
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
         {
-
-            
-
+            console.log("==============receive call=============");
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
@@ -158,7 +133,7 @@ angular.module("app.loggedIn.controller",[
                             backdrop: 'static',
                             keyboard: false
                         })
-                    }, 0.75 * 1000);
+                    }, 0.5 * 1000);
                    
                 }
             })
@@ -201,39 +176,6 @@ angular.module("app.loggedIn.controller",[
             }
         })
     }
-
-    // $scope.makeCall = function(user){
-    //     UserService.getUserInfo(user.id).then(function(data){
-    //         if(!data.img)
-    //             data.img = "theme/assets/icon.png"
-
-    //         var modalInstance = $modal.open({
-    //             templateUrl: 'common/views/call.html',
-    //             controller: 'callController',
-    //             size: 'lg',
-    //             resolve:{
-    //                 callUserInfo: function(){
-    //                     return data;
-    //                 },
-    //                 callUser: function(){
-    //                     return user.id;
-    //                 },
-    //                 isCaller: function(){
-    //                     return true;
-    //                 },
-    //                 opentokInfo: function(){
-    //                     return null;
-    //                 }
-    //             },
-    //             backdrop: 'static',
-    //             keyboard: false
-    //         })
-
-    //         // $state.go("call",{callUserInfo:data,callUser:user.id,isCaller:true,opentokInfo:null},{reload:true});
-    //     })
-
-    // }
-
 
     // DATE
     $scope.dateOptions = {
@@ -441,6 +383,7 @@ angular.module("app.loggedIn.controller",[
             $cookieStore.remove("companyInfo");
             $cookieStore.remove("doctorInfo");
             $cookieStore.remove("fromState");
+            $cookieStore.remove("toState");
             $state.go("security.login",null,{location: "replace", reload: true});
 
             socket.removeAllListeners();
@@ -1164,4 +1107,9 @@ angular.module("app.loggedIn.controller",[
         
 
         $scope.have_redilegal_components={value:0};
+		$scope.downloadRlobResult=function(bookingId){
+            $window.location.href = "/api/rlob/core/rlob-download-list-result-files?bookingId="+bookingId;
+			
+        }
+		$scope.contactDetails = [];
 	})

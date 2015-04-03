@@ -2,112 +2,6 @@
     .consult-modal-window .modal-dialog {
       width: 900px;
     }
-
-    #facePublisher {
-    width: 178px;
-    height: 100px;
-    display: block;
-    position: absolute;
-    cursor: move;
-    cursor: -webkit-grab;
-    cursor: -moz-grab;
-    top: 10px;
-    right: 10px;
-    border-radius: 5px;
-    z-index: 99;
-    transition: width 200ms, height 200ms ease;
-}
-
-#facePublisher ot-publisher {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-#facePublisher:active {
-  cursor: -webkit-grabbing;
-  cursor: -moz-grabbing;
-}
-
-#session {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-ot-layout ot-subscriber {
-    background-color: #262422;
-    display: inline-block;
-}
-ot-layout {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-ot-layout button.resize-btn {
-    transition-property: top,bottom,opacity;
-    transition-duration: .5s;
-    transition-timing-function: ease-in;
-    opacity: 0;
-    width: 25px;
-    height: 25px;
-    font-size: 27px;
-    cursor: pointer;
-    position: absolute;
-    background-color: transparent;
-    top: -25px;
-    margin-top: 2px;
-    right: 38px;
-    border: none;
-    z-index: 99;
-}
-
-ot-layout > .OT_big button.resize-btn:before {
-    content: "\f267";
-}
-
-ot-layout > :hover button.resize-btn {
-    top: 0;
-    opacity: 1;
-}
-
-@media screen and (max-width: 650px) {  
-  #facePublisher {
-      width: 89px;
-      height: 50px;
-  }
-  
-  #statusMessages {
-      width: 340px;
-      left: calc(50% - 180px);
-  }
-}
-
-@media only screen and (orientation: portrait) {
-    #facePublisher {
-        width: 100px;
-        height: 150px;
-    }
-}
-
-@media only screen and (orientation: portrait) and (max-width: 650px) {
-    #facePublisher {
-        width: 50px;
-        height: 75px;
-    }
-}
-
-.calling-title{
-  font-size: 50px;
-  font-family: "Arial Rounded MT", "Helvetica Rounded", Arial, sans-serif;
-  font-weight: bold;
-  color: white;
-}
-
 </style>
 <h3 class="page-title">Consultation</h3>
 <div class="page-bar">
@@ -198,32 +92,6 @@ ot-layout > :hover button.resize-btn {
                 </span>
             </div>
         </div>
-    </div>
-</div>
-<div class="portlet blue-chambray box" ng-if="startCall">
-    <div class="portlet-title">
-        <div class="caption ">
-            <span class="caption-subject uppercase">Calling {{callUserInfo.user_name}}</span>
-        </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="cancelCall()" class="btn btn-icon-only btn-circle red">
-             <i class="fa fa-times"></i>
-            </a>
-        </div>
-    </div>
-    <div style="background-color:#3D4A53;" class="portlet-body">
-        <div ng-show="isCaller && !isAccept">
-          <div class="row-fluid" >
-            <div class="span4 offset4 text-center">
-              <div class="calling-title">Calling <span style="color: red;">{{callUserInfo.user_name}}</span>...</div>
-            </div>
-          </div>
-        </div>
-
-        <div id="selfVideo"></div>
-        <div id="callerVideo"></div>
-
-            
     </div>
 </div>
 <div class="portlet blue-chambray box">
@@ -570,12 +438,12 @@ ot-layout > :hover button.resize-btn {
                                 </th>
                                 <th>
                                     <div class="th">
-                                        <span style="color: white;">Code</span>
+                                        <span style="color: white;">Frequency</span>
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        <span style="color: white;">Frequency</span>
+                                        <span style="color: white;">Price ($)</span>
                                     </div>
                                 </th>
                                 <th>
@@ -595,7 +463,7 @@ ot-layout > :hover button.resize-btn {
                                 </td>
                             </tr>
                             <tr class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
-                                 <td style="vertical-align: middle">
+                                <td style="vertical-align: middle">
                                     {{m.medication}}
                                 </td>
                                 <td style="vertical-align: middle">
@@ -611,10 +479,10 @@ ot-layout > :hover button.resize-btn {
                                     {{m.dose}}
                                 </td>
                                 <td style="vertical-align: middle">
-                                    {{m.code}}
+                                    {{m.frequency}}
                                 </td>
                                 <td style="vertical-align: middle">
-                                    {{m.frequency}}
+                                    {{m.price}}
                                 </td>
                                 <td align="center">
                                     <a ng-click="scriptAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
@@ -638,8 +506,7 @@ ot-layout > :hover button.resize-btn {
                             lineWidth="4"
                             images= "consultInfo.images"
                             patient= "consultInfo.patient_id"
-                            calling="isAccept"
-                            callee="callUser">
+                            call-info="callInfo">
                         </consult-drawing>
                     </div>
                 </div>

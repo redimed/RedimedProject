@@ -277,24 +277,26 @@ module.exports =
         var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var serviceId = rlobUtil.redilegalServiceId;
+        var periodTimeDefault=rlobUtil.periodTimeDefault;
         var sql = 
-            "  SELECT  DISTINCT DATE(h.`FROM_TIME`) AS APPOINTMENT_DATE                                                       "+
-            "  FROM      `cln_appointment_calendar` h                                                                         "+
-            "    INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                            "+
-            "    INNER JOIN `cln_specialties` spec ON d.`Specialties_id`=spec.`Specialties_id`                                "+
-            "    INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                        "+
-            "    INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                        "+
-            "    INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                              "+
-            "  WHERE     h.`NOTES` IS NULL                                                                                    "+
-            "    AND h.`PATIENTS` IS NULL                                                                                     "+
-            "    AND h.`SERVICE_ID` = ?                                                                                       "+
-            "    AND                                                                                                          "+
-            "    rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                      "+
-            "    AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)   "+
-            "ORDER BY APPOINTMENT_DATE ASC                                                                                    ";
+            " SELECT  DISTINCT DATE(h.`FROM_TIME`) AS APPOINTMENT_DATE                                                           "+
+            " FROM      `cln_appointment_calendar` h                                                                             "+
+            "   INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                                "+
+            "   INNER JOIN `cln_specialties` spec ON d.`Specialties_id`=spec.`Specialties_id`                                    "+
+            "   INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                            "+
+            "   INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                            "+
+            "   INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                  "+
+            " WHERE     h.`NOTES` IS NULL                                                                                        "+
+            "   AND h.`PATIENTS` IS NULL                                                                                         "+
+            "   AND h.`SERVICE_ID` = ?                                                                                           "+
+            "   AND                                                                                                              "+
+            "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                     "+
+            "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)       "+
+            "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                              "+
+            " ORDER BY APPOINTMENT_DATE ASC                                                                                      ";
             req.getConnection(function(err,connection)
             {
-                var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE],function(err,rows)
+                var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE,periodTimeDefault],function(err,rows)
                     {
                         if(err){
                             console.log("Error Selecting : %s ",err );
@@ -322,26 +324,28 @@ module.exports =
         var RL_TYPE_ID=req.query.RL_TYPE_ID?req.query.RL_TYPE_ID:'%';
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var serviceId = rlobUtil.redilegalServiceId;
+        var periodTimeDefault=rlobUtil.periodTimeDefault;
         var sql =
-            " SELECT  DISTINCT h.*,CONCAT(DATE_FORMAT(h.`FROM_TIME`,'%H'),':',DATE_FORMAT(h.`FROM_TIME`,'%i')) AS appointment_time,      "+
-            "    `redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`,spec.`Specialties_id`,                               "+
-            "    spec.`Specialties_name`,`rltype`.`RL_TYPE_ID`,rltype.`Rl_TYPE_NAME`                                                     "+
-            "  FROM      `cln_appointment_calendar` h                                                                                    "+
-            "    INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                                       "+
-            "    INNER JOIN `cln_specialties` spec ON d.`Specialties_id`=spec.`Specialties_id`                                           "+
-            "    INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                                   "+
-            "    INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                                   "+
-            "    INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                         "+
-            "  WHERE     h.`NOTES` IS NULL                                                                                               "+
-            "    AND h.`PATIENTS` IS NULL                                                                                                "+
-            "    AND h.`SERVICE_ID` = ?                                                                                                  "+
-            "    AND                                                                                                                     "+
-            "    rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                            "+
-            "    AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                                               "+
-            "  ORDER BY `appointment_time` ASC                                                                                           ";
+            " SELECT  DISTINCT h.*,CONCAT(DATE_FORMAT(h.`FROM_TIME`,'%H'),':',DATE_FORMAT(h.`FROM_TIME`,'%i')) AS appointment_time,    "+  
+            "   `redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`,spec.`Specialties_id`,                              "+ 
+            "   spec.`Specialties_name`,`rltype`.`RL_TYPE_ID`,rltype.`Rl_TYPE_NAME`                                                    "+ 
+            " FROM      `cln_appointment_calendar` h                                                                                   "+ 
+            "   INNER JOIN `doctor_specialities` d ON h.`DOCTOR_ID`=d.`doctor_id`                                                      "+ 
+            "   INNER JOIN `cln_specialties` spec ON d.`Specialties_id`=spec.`Specialties_id`                                          "+ 
+            "   INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                                  "+ 
+            "   INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                                  "+ 
+            "   INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                        "+ 
+            " WHERE     h.`NOTES` IS NULL                                                                                              "+ 
+            "   AND h.`PATIENTS` IS NULL                                                                                               "+ 
+            "   AND h.`SERVICE_ID` = ?                                                                                                 "+ 
+            "   AND                                                                                                                    "+ 
+            "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                           "+ 
+            "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                                              "+
+            "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                                    "+
+            " ORDER BY `appointment_time` ASC                                                                                          ";
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME],function(err,rows)
+            var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,periodTimeDefault],function(err,rows)
                 {
                     if(err)
                     {
@@ -349,7 +353,6 @@ module.exports =
                     }
                     res.json(rows);
                 });
-            console.log(query);
         });
     },
     

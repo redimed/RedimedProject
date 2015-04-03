@@ -787,8 +787,6 @@ module.exports =
             kiss.exlog("deleteNode","Khong the mo transaction")
             res.json({status:'fail'});
         })
-
-        
     },
 
     /**

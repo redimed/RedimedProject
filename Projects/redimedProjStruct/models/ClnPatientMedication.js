@@ -7,6 +7,7 @@ module.exports = function(sequelize,DataTypes){
 	  strength: DataTypes.STRING(200),
 	  form: DataTypes.STRING(200),
 	  qty: DataTypes.INTEGER(11),
+	  price: DataTypes.FLOAT,
 	  code: DataTypes.STRING(100),
 	  script: DataTypes.TEXT,
 	  dose: DataTypes.STRING(200),

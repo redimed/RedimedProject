@@ -270,10 +270,10 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                         .then(function(data){
                             if (data.status == 'success') 
                             {
-                                rlobService.changeBookingStatus($scope.selectedBooking.BOOKING_ID,rlobConstant.bookingStatus.canel).then(function(data){
+                                rlobService.changeBookingStatus($scope.selectedBooking.BOOKING_ID,rlobConstant.bookingStatus.cancel).then(function(data){
                                     if(data.status=='success')
                                     {
-                                        $scope.selectedBooking.STATUS=rlobConstant.bookingStatus.canel;
+                                        $scope.selectedBooking.STATUS=rlobConstant.bookingStatus.cancel;
                                         rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Cancel booking success!");
                                         $scope.pagingHandle();
                                     }
