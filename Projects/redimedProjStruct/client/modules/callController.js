@@ -226,8 +226,10 @@ angular.module("app.call.controller",[
             else
                 callModal.deactivate();
 
-            $state.go(toSt.toState.name,toSt.toParams,{reload: true});
-            $cookieStore.remove("callInfo");
+            if(typeof $cookieStore.get("callInfo") !== undefined)
+                $cookieStore.remove("callInfo");
+
+            $state.transitionTo(toSt.toState.name,toSt.toParams,{reload: true});
         }
 
         $scope.cancelCall = function(){
