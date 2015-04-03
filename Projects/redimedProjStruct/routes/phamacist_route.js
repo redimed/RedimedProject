@@ -1,5 +1,5 @@
 var ph_userController = require("./controllers/phController/ph_userController");
-var ph_companyController = require("./controller/phController/ph_companyController");
+var ph_companyController = require("./controllers/phController/ph_companyController");
 //vo duc giap
 app.post('/api/phUser/signup',ph_userController.signup);
 app.post('/api/phUser/login',ph_userController.login);
