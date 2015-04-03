@@ -91,9 +91,10 @@ angular.module("app.loggedIn.controller",[
     })
 
     socket.on("messageReceived",function(fromId,fromUser,message){
+        console.log("=====receive message=====",message);
         if(message.type == 'call')
         {
-            console.log("==============receive call=============");
+            
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
