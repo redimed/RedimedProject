@@ -1,0 +1,43 @@
+<div class="modal-body">
+	<form>
+		<div class="row">
+			<!-- WEEK -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="week_ord_of_month">Week</label>
+					<select id="week_ord_of_month" ng-model="site.form.week_ord_of_month" class="form-control" 
+                            ng-options="s.code as s.value for s in site.options.weeks">
+	                    <option value="">Week</option>
+	                </select>
+				</div>
+			</div>
+			<!-- END WEEK -->
+
+			<!-- SITE -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="site_id">Site</label>
+					<select id="site_id" ng-model="site.form.site_id" class="form-control"
+                            ng-options="s.id as s.Site_name for s in site.options.sites">
+	                    <option value="">Site</option>
+	                </select>
+				</div>
+			</div>
+			<!-- ENS SITE -->
+
+			<!-- DESCRIPTION -->
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Description</label>
+					<textarea ng-model="site.form.description" class="form-control"></textarea>
+				</div>
+			</div>
+			<!-- END DESCRIPTION -->
+
+		</div>
+
+		<div class="row">
+			<div class="btn btn-primary" style="margin-left: 20px;" ng-click="site.save()">Save</div>
+		</div>
+	</form>
+</div>
