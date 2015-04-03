@@ -1,16 +1,21 @@
 angular.module('app.loggedIn.script.directive.list', [])
 
-.directive('scriptList', function(ScriptModel, $filter, $state, $stateParams){
+.directive('scriptList', function(ScriptModel, $filter, $stateParams, $state){
 	return {
 
 		restrict: 'EA',
 		templateUrl: 'modules/script/directives/templates/list.html',
 		scope:{
-			options: '='
+			options: '=',
+			limit: '@'
 		},
 		link: function(scope, ele, attrs){
 
 			var search = {
+				page: 1,
+				limit: 20,
+				offset: 0,
+				max_size: 5,
 				scriptNum: '',
 				Medicare: '',
 				Patient_id: $stateParams.patientId,
@@ -19,9 +24,10 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			var load = function(){
-
 				ScriptModel.list(search).then(function(response){
+
 					scope.script.list = response.data;
+					scope.script.count = response.count;
 					//console.log(response.data);					
 				}, function(error) {})
 
@@ -59,12 +65,16 @@ angular.module('app.loggedIn.script.directive.list', [])
 			var edit = function(id){
 				$state.go('loggedIn.script.edit', {scriptId: id});
 			}
-
+			scope.setPage = function (page) {
+				scope.script.search.offset = (page-1)*scope.script.search.limit;
+				scope.script.load();
+			}
 
 			scope.script = {
 				search: search,
 				loading: false,
 				list: [],
+				count: 0,
 				error: '',
 				load: function(){ load(); },
 				add: function(){ add(); },

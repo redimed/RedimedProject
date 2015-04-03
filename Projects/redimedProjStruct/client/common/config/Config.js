@@ -932,6 +932,34 @@ angular.module('app.config', [])
         return Math.ceil(dayOfYear / 7);
 
     };
+
+    configService.convertToHHMM = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var hour = string.substring(0,2);
+        var minute = string.substring(2,4);
+
+        return hour+':'+minute;
+    };
+
+    configService.convertToDB = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var split = string.split('/');
+
+        return split[2]+'-'+split[1]+'-'+split[0];
+    };
+    configService.convertToDate_F = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var k = string.slice(0,10).split('-');
+        console.log(k);
+
+        return k[2]+'/'+k[1]+'/'+k[0];
+    };
     //end thanh
     return configService;
 });
