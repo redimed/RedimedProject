@@ -295,6 +295,56 @@ module.exports = {
 				}
 			})
 		})
+	},
+	changePass:function(req,res){
+		 var infoPass = req.body.infoPass;
+		 var user_id = req.body.user_id;
+		console.log(infoPass.newpass)
+		var sqlgetPassword = "SELECT PASSWORD FROM ph_users WHERE user_id = ? ";
+		var sqlUpdateUser = "UPDATE ph_users SET PASSWORD = ? WHERE user_id = ? ";
+
+
+		req.getConnection(function(err,connection){
+			var query= connection.query(sqlgetPassword,user_id,function(err,rows){
+				if(err){
+					console.log(err);
+                    res.json({status:'fail'});
+				}else{
+					console.log(rows)
+					//check rows !== undefine 
+					if(typeof rows[0] !== 'undefined'){
+						//check password
+						bcrypt.compare(infoPass.oldpass.toString(), rows[0].PASSWORD, function (err, compareResult) {
+	                        if (compareResult == true) {
+	                        	//if pass true get data with user
+	                        	
+	                        	var password=bcrypt.hashSync(infoPass.newpass);
+	                        	req.getConnection(function(err,connection){
+	                        		var query = connection.query(sqlUpdateUser,[password,user_id],function(err){
+	                        			if(err){
+	                        				console.log(err);
+                    						res.json({status:'fail'});
+	                        			}else{
+	                        				console.log("changepass success");
+	                        				res.json({status:'success'});
+	                        			}
+	                        		})
+	                        	})
+
+
+	                        }else{
+	                        	res.json({status:'fail'});
+	                        	console.log("sai");
+	                        }
+	                    });
+
+					}else{
+						 res.json({status:'fail'});
+					}	
+
+				}
+			})
+		})
 	}
 
 	
