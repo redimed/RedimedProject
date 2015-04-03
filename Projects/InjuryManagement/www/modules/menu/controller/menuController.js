@@ -253,7 +253,7 @@ angular.module("starter.menu.controller",[])
             backdropClickToClose: false,
             hardwareBackButtonClose: false
         }).then(function(modal) {
-            $scope.modal = modal;
+            $scope.modalreceivePhone = modal;
         });
 
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
@@ -271,23 +271,23 @@ angular.module("starter.menu.controller",[])
                     media = new Media(src, null, null, loop);
                     media.play();
                     if ($state.current.name === 'app.phoneCall') { return; }
-                    $scope.modal.show();
+                    $scope.modalreceivePhone.show();
                     $scope.acceptCall = function() {
-                        $scope.modal.hide();
+                        $scope.modalreceivePhone.hide();
                         media.pause();
                         $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
                             tokenID: message.token, isCaller: false }, {reload: true});
                     }
                     $scope.ignoreCall = function() {
-                        $scope.modal.hide();
+                        $scope.modalreceivePhone.hide();
                         media.pause();
                         signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
                     }
                     break;
                 case 'cancel':
-                    if($scope.modal.isShown()) {
+                    if($scope.modalreceivePhone.isShown()) {
                         media.pause();
-                        $scope.modal.hide();
+                        $scope.modalreceivePhone.hide();
                     }
                     break;
             }
@@ -308,7 +308,7 @@ angular.module("starter.menu.controller",[])
         $scope.$on("$stateChangeSuccess", function() {
             document.addEventListener('backbutton', function(){
                 if($state.is("app.injury.info") || $state.is("app.driver.list")) {
-                    if(!$scope.modal.isShown()) {
+                    if(!$scope.modalreceivePhone.isShown()) {
                         navigator.app.exitApp();
                     }
                 }

@@ -2,7 +2,7 @@ angular.module('starter.phoneCall.controller',[])
 
     .controller('phoneCallController', function ($scope, $state, localStorageService,
                                                  $rootScope, $timeout, $ionicModal,
-                                                 $stateParams, signaling, UserService, $ionicSideMenuDelegate, phoneCallService) {
+                                                 $stateParams, signaling, UserService, $ionicSideMenuDelegate, phoneCallService, $ionicModal) {
 
 
         var from = localStorageService.get('fromState');
@@ -26,7 +26,10 @@ angular.module('starter.phoneCall.controller',[])
         $scope.controllerbtn = true;
         $scope.imgObj = [];
         $scope.imgDetail = [];
-        var idImgShareScreen = 0;
+        $scope.idImgShareScreen = 0;
+        $scope.imgCount = null;
+        $scope.btnShowlstImg = true;
+        $scope.blueTooth = false;
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
         var src = "/android_asset/www/phone_calling.mp3";
@@ -42,6 +45,7 @@ angular.module('starter.phoneCall.controller',[])
         media = new Media(src, null, null, loop);
 
         $ionicSideMenuDelegate.canDragContent(false);
+
         UserService.getUserInfo($stateParams.callUser).then( function(data) {
             $scope.contactNameJson.contactName = data.user_name;
             $scope.contactNameJson.background = colors[Math.floor(Math.random() * colors.length)];
@@ -208,9 +212,33 @@ angular.module('starter.phoneCall.controller',[])
             }
         }
 
-        $scope.viewImage = function() {
+        $scope.imageShareToggle = function() {
             $scope.isImage = !$scope.isImage;
+            $scope.blueTooth = false;
             if($scope.isImage) {
+                $scope.imgCount = null;
+                $scope.controllerbtn = false;
+                $scope.subscriber.subscribeToVideo(false);
+                TB.updateViews();
+                $timeout(function(){
+                    $scope.subscriber.subscribeToVideo(false);
+                    TB.updateViews();
+                }, 0.5 * 1000);
+            } else {
+                $scope.subscriber.subscribeToVideo(true);
+                TB.updateViews();
+                $timeout(function(){
+                    $scope.subscriber.subscribeToVideo(true);
+                    TB.updateViews();
+                }, 0.5 * 1000);
+            }
+        }
+
+        $scope.medicalDeviceToggle = function() {
+            $scope.blueTooth = !$scope.blueTooth;
+            $scope.isImage= false;
+            if($scope.blueTooth) {
+                $scope.controllerbtn = false;
                 $scope.subscriber.subscribeToVideo(false);
                 TB.updateViews();
                 $timeout(function(){
@@ -229,6 +257,7 @@ angular.module('starter.phoneCall.controller',[])
 
         window.addEventListener("orientationchange", function() {
             if($scope.isImage) {
+                $scope.controllerbtn = false;
                 $scope.subscriber.subscribeToVideo(false);
                 TB.updateViews();
                 $timeout(function(){
@@ -293,12 +322,14 @@ angular.module('starter.phoneCall.controller',[])
             phoneCallService.getImageShareScreen(id).then(function(result) {
                 if(result.status.toLowerCase() == 'success'){
                     $scope.imgObj.push({
-                        id: idImgShareScreen++,
+                        id: $scope.idImgShareScreen++,
                         src: result.data
                     });
-                    $scope.imgDetail.id = $scope.imgObj.id;
                     $scope.imgDetail.src = result.data;
-                    $scope.$apply();
+                    $scope.btnShowlstImg = false;
+                    if(!$scope.isImage) {
+                        $scope.imgCount++;
+                    }
                 }
             })
         }
@@ -309,19 +340,19 @@ angular.module('starter.phoneCall.controller',[])
                     $scope.controllerbtn = false;
                 }
             }
-        }, 5 * 1000)
+        }, 3 * 1000)
 
         $scope.selectImg = function(imgSrc) {
-            console.log(imgSrc);
             $scope.imgDetail.src = imgSrc.src;
             $scope.imgDetail.id = imgSrc.id;
         }
 
         $scope.toggleListImage = function() {
-            $scope.clicked = !$scope.clicked;
+            $scope.btnShowlstImg = !$scope.btnShowlstImg;
         };
 
-        $scope.videoClick = function() {
+        $scope.actionControlButton = function() {
+            console.log('actionControlButton');
             $scope.controllerbtn = !$scope.controllerbtn;
         }
 

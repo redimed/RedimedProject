@@ -782,8 +782,15 @@ form i.icon.error {
     text-align: center;
     bottom: 0;
     width: 100%;
-    padding-bottom: 3%;
-    z-index: 9999;
+    height: 100px;
+    z-index: 1;
+}
+.div_controlButton {
+    text-align: center;
+    height: 100%;
+    width: 50%;
+    margin: auto;
+    background-color: rgba(255,255,255,0.2);
 }
 .controllers-call-black {
     background-color: black !important;
@@ -839,22 +846,28 @@ form i.icon.error {
     width: 50%;
     margin-left: 5px;
 }
-.button-cancel_main {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-color: #FF3A2D;
-    width: 130px;
-    height: 40px;
-    color: #ffffff;
+.buttonCall-control {
+    width: 19.25%;
+    height: 100%;
+    padding-top: 20px;
+    border-right: 1px solid rgba(0, 0, 0, 0.2) ;
 }
-.custom-bottom-control {
-    background-color: #5A6883;
-    border: none;
-    width: 70px;
-    height: 40px;
-    color: #ffffff;
+.active-buttonCall-control {
+    border-bottom: 3px solid #019875;
+    color: #019875 !important;
 }
-.custom-bottom-control:hover, .custom-bottom-control:active, .custom-bottom-control:focus  {
+
+.image-count {
+    background-color: #E74C3C;
     color: #ffffff;
+    position: relative;
+    top: -25px;
+    border-radius: 5px;
+}
+.image-count span {
+    padding: 0 10px 0 10px;
+    font-size: 10px;
+    font-family: fantasy;
 }
 
 .margin-auto {
@@ -1197,7 +1210,7 @@ form i.icon.error {
     z-index: -1 !important;
 }
 
-.image-shareScreen {
+.wrapper-funCall {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -1507,23 +1520,28 @@ ul.tabs li.tab {
 .imgShareCallSelect {
     border: 2px solid #4d4d4d;
 }
-.listImgShare {
+.wrap-lstImageShare {
     position: absolute;
     right: 0;
     top: 0;
-    width: 130px;
+    z-index: 2;
+    width: 150px;
     height: 100%;
-    transition: width 1s;
+    transition: width 0.1s;
 }
 .listImgShare-show {
-    width: 0;
+    width: 30px;
 }
-.btn-showListImage {
-    position: absolute;
-    top: 0px;
-    right: 110px;
-    background-color: wheat;
-    margin-right: 15px;
+
+.wrap-ble {
+    background-color: #EAE9E3;
+    width: 100%;
+    height: 100%;
+}
+.wrap-imgShare {
+    width: 100%;
+    height: 100%;
+    background-color: #EAE9E3;
 }
 
 ion-scroll[direction=y] {

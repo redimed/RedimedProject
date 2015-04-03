@@ -66,8 +66,8 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 console.log('All Device Click ', Isclick);
                 window.bluetooth.startDiscovery(onDeviceDiscovered, onDiscoveryFinished, onError);
             }
-
             console.log('starting Discovery');
+
             $scope.isLoad = true;
             $scope.isShowGif = false;
             $scope.deviceType = null;
@@ -115,10 +115,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
             $scope.address = address;
             $scope.deviceType = deviceType;
             $scope.device_id = device_id;
-            $scope.$apply(function (){
-                $scope.copydataReceive = {};
-            })
-
+            $scope.copydataReceive = {};
             $scope.isLoad = true;
             $scope.isShowGif = true;
             $scope.disableList = true;
@@ -378,6 +375,10 @@ angular.module('starter.bluetooth.mainBlueController',[])
             } else {
                 console.log('deviceType === spiro and blood ', $scope.deviceType);
             }
+        }
+
+        $scope.demoClick = function() {
+            alert('mainControllerBlue');
         }
 
         function writeData() {

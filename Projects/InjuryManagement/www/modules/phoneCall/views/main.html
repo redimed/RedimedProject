@@ -18,19 +18,44 @@
                     <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
                 </div>
             </div>
-            <a class="button custom-bottom-control button-icon"
-               ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToggle()">
-            </a>
 
-            <a class="button custom-bottom-control button-icon"
-               ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToggle()">
-            </a>
+            <!--controller button calling to...-->
+            <div style="width: 100%; text-align: center;" ng-if="isCaller">
+                <a class="button custom-bottom-control button-icon"
+                   ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToggle()">
+                </a>
+                <a class="button custom-bottom-control button-icon"
+                   ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToggle()">
+                </a>
+                <a class="button custom-bottom-control button-icon icon ion-ios7-monitor" ng-click="viewImage()">
+                <span style="background-color: #E74C3C; width: 10px; height: 10px;">
 
-            <a class="button custom-bottom-control button-icon icon ion-ios7-monitor" ng-click="viewImage()">
-            </a>
+                </span>
+                </a>
+                <a class="button button-cancel_main button-icon icon ion-power" ng-click="cancelCall(offMedia = true)">
+                </a>
+            </div>
 
-            <a class="button button-cancel_main button-icon icon ion-power" ng-click="cancelCall(offMedia = true)">
-            </a>
+            <!--controller button receive call-->
+            <div class="div_controlButton" ng-if="!isCaller">
+                <a class="button buttonCall-control button-icon icon ion-ios-videocam"
+                   ng-class="{'active-buttonCall-control': !camera}" ng-click="videoToggle()">
+                </a>
+                <a class="button buttonCall-control button-icon icon ion-ios7-mic"
+                   ng-class="{'active-buttonCall-control': !mic}" ng-click="micToggle()">
+                </a>
+                <a class="button buttonCall-control button-icon icon ion-ios7-monitor"
+                   ng-class="{'active-buttonCall-control': isImage}" ng-click="imageShareToggle()">
+                    <span class="image-count" ng-if="imgCount !== null">
+                        <span>{{imgCount}}</span>
+                    </span>
+                </a>
+                <a class="button buttonCall-control button-icon icon ion-bluetooth"
+                   ng-class="{'active-buttonCall-control': blueTooth}" ng-click="medicalDeviceToggle()">
+                </a>
+                <a class="button buttonCall-control button-icon icon ion-power" style="color: #E74C3C;" ng-click="cancelCall(offMedia = true)">
+                </a>
+            </div>
         </div>
 
         <!--<ot-layout props="{animate:false,bigFixedRatio:true}" class="cus-callerVideo">-->
@@ -45,28 +70,125 @@
 
         <!--<ot-publisher class="cus-selfVideo" props="facePublisherProps"></ot-publisher>-->
 
-        <div class="cus-callerVideo" ng-hide="isImage">
-            <div class="cus-callerVideo" id="callerVideo" ng-hide="isImage"></div>
+        <div class="cus-callerVideo" ng-hide="isImage || blueTooth">
+            <div class="cus-callerVideo" id="callerVideo" ng-hide="isImage || blueTooth"></div>
         </div>
 
-        <div class="image-shareScreen" ng-show="isAccept">
-            <img ng-src="{{imgDetail.src}}" width="100%" height="100%" style="background-color: #EAE9E3;" ng-show="isImage" ng-click="videoClick()"/>
+        <div class="wrapper-funCall" ng-show="isAccept">
+            <!--Image share screen-->
+            <div class="wrap-imgShare" ng-show="isImage" ng-click="actionControlButton()">
+                <img ng-src="{{imgDetail.src}}"/>
+                <div class="wrap-lstImageShare" ng-class="{'listImgShare-show': btnShowlstImg}">
+                    <div style="float: left; width: 30px; height: 100%;" ng-click="toggleListImage()">
+                        <div style="position: absolute; top: 45%; bottom: 45%;">
+                            <a class="button button-icon icon"
+                               ng-class="btnShowlstImg ? 'ion-ios7-arrow-left' : 'ion-ios7-arrow-right'"></a>
+                        </div>
+                    </div>
 
-            <div class="listImgShare sliderImg" ng-show="isImage" ng-class="{'listImgShare-show': clicked}">
-                <a class="button button-icon icon btn-showListImage"
-                   ng-class="clicked ? 'ion-ios7-arrow-left' : 'ion-ios7-arrow-right'"
-                   ng-click="toggleListImage()"></a>
+                    <div style="float: left; width: 120px; height: 100%;">
+                        <ion-scroll direction="y" style="height: 100%;">
+                            <a ng-repeat="imgLst in imgObj track by $index" ng-click="selectImg(imgLst)">
+                                <img ng-src="{{imgLst.src}}" class="img-shareCall"
+                                     ng-class="{'imgShareCallSelect': imgLst.id === imgDetail.id}"/>
+                            </a>
+                        </ion-scroll>
+                    </div>
+                </div>
+            </div>
 
-                <ion-scroll direction="y" style="height: 100%;">
-                    <a ng-repeat="imgLst in imgObj track by $index" ng-click="selectImg(imgLst)">
-                        <img ng-src="{{imgLst.src}}" class="img-shareCall" ng-class="{'imgShareCallSelect': imgLst.id === imgDetail.id}" />
-                    </a>
-                </ion-scroll>
+            <!--blueTooth calling-->
+            <div class="wrap-ble" ng-show="blueTooth" ng-controller="mainBlueController" ng-click="actionControlButton()">
+                <ion-content>
+                    <div class="item-input label-custom-field padding" style="text-align: center">
+                        <div class="col">
+                            <a class="button button-stable" ng-click="DiscoveryDevice(Isclick = false)" ng-disabled="isLoad" style="background-color: #e74c3c !important; color: whitesmoke; border: none; border-radius: 5px; width: 60%;">
+                                <i class="fa fa-hand-o-right"></i> All Device
+                            </a>
+                        </div>
+
+
+                        <div class="col">
+                            <a class="button button-stable" ng-click="DiscoveryDevice(Isclick = true)" ng-disabled="isLoad" style="background-color: #34495e !important; color: whitesmoke; border: none; border-radius: 5px; width: 60%;">
+                                One Device <i class="fa fa-hand-o-left"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div ng-hide="deviceType == null">
+                        <div ng-show="deviceType == 'Pulse Oximeter'">
+                            <div class="content text-center">
+                                <div class="row-stretch">
+                                    <div class="margin-bot0 row">
+                                        <div class="col">
+                                            <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">Pulse</span>
+                                        </div>
+                                        <div class="col">
+                                            <span style="font-size: 30px; font-weight: lighter; color: #4CD964">SpO2</span>
+                                        </div>
+                                    </div>
+                                    <div class="margin-bot0 row">
+                                        <div class="col">
+                                            <label class="font-responsive" style="color: #1AD6FD">{{dataReceive.pulse == NaN ? 0 : dataReceive.pulse}}</label>
+                                        </div>
+                                        <div class="col">
+                                            <label class="font-responsive" style="color: #4CD964">{{dataReceive.spO2 == NaN ? 0 : dataReceive.spO2}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="deviceType !== 'Pulse Oximeter'">
+                            <div class="content text-center">
+                                <div class="row-stretch">
+                                    <div class="margin-bot0 row margin-top50"  ng-repeat="(k,v) in copydataReceive" ng-if="k !== 'deviceType'">
+                                        <div class="col">
+                                            <span style="font-size: 30px; font-weight: lighter; text-transform: uppercase;">{{k}}</span>
+                                            <hr class="hr-data-device" style="margin-top: 0; margin-bottom: 30px;">
+                                        </div>
+                                        <div class="col">
+                                            <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{v == NaN ? 0 : v}}</span>
+                                            <hr style="margin-top: 0; margin-bottom: 30px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ion-list class="padding" show-reorder="disableList">
+                        <div class="list border-top">
+                            <!--<a class="item item-avatar" ng-repeat="device in listDiscover"-->
+                            <!--ng-click="selectDevice(device.deviceType, device.address)">-->
+                            <!--{{device.deviceType}}-->
+                            <!--</a>-->
+
+                            <!--ui-sref="app.detailDeviceBluetooth({ deviceType: device.deviceType, address: device.address })" ui-sref-opts="{reload: true}"-->
+
+                            <a class="item item-avatar custom-item-listDevice" ng-repeat="device in listDiscover"
+                               ng-click="selectDevice(device.device_name, device.address, device.id)"
+                               ng-class="{'opacity02': !device.isOnline, 'opacity1': device.isOnline}">
+                                <div class="fLeft">
+                                    <div class="parallelogram">
+                                        <img ng-src="{{device.imgDevice}}" width="100" />
+                                    </div>
+                                </div>
+                                <div class="info-device">
+                                    <h3 class="nameDevice" style="font-size: 20px; font-weight: 300; line-height: 1.1em"> - {{device.device_name}}
+                                <span class="status-device">
+                                    <i class="icon ion-ios7-circle-filled" ng-class="{'green-text':device.isOnline, 'red-text':!device.isOnline}"></i>
+                                </span>
+                                    </h3>
+                                </div>
+                            </a>
+                        </div>
+                    </ion-list>
+                </ion-content>
             </div>
         </div>
 
-        <div class="cus-selfVideo"  ng-hide="isImage">
-            <div id="selfVideo"  ng-hide="isImage"></div>
+        <div class="cus-selfVideo"  ng-hide="isImage || blueTooth">
+            <div id="selfVideo"  ng-hide="isImage || blueTooth"></div>
         </div>
     </div>
 </ion-view>
