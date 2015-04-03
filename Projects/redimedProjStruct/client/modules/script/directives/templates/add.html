@@ -9,31 +9,25 @@
 				</div>
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Prescriber</span>
-					<input type="text" class="form-control" ng-model="script.form.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" required />
-					<span ng-show="FrForm.prescriber.$error.required"></span>
+					<input type="text" class="form-control" ng-model="script.form.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" />
 				</div>
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Script Number</span>
 					<input type="text" class="form-control" ng-model="script.form.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" required />
-					<span ng-show="FrForm.scriptNum.$error.required"></span>
-					<span ng-show="FrForm.scriptNum.$error.number"></span>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Medicare</span>
 					<input type="text" class="form-control" ng-model="script.form.Medicare" placeholder="Medicare" id="Medicare" name="Medicare" required />
-					<span ng-show="FrForm.Medicare.$error.required"></span>
 				</div>
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">EntitlementNo</span>
 					<input type="text" class="form-control" ng-model="script.form.EntitlementNo" placeholder="EntitlementNo" id="EntitlementNo" name="EntitlementNo" required />
-					<span ng-show="FrForm.EntitlementNo.$error.required"></span>
 				</div>
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Pharmacist</span>
 					<input type="text" class="form-control" ng-model="script.form.pharmacist" placeholder="Pharmarcist" id="pharmacist" name="pharmacist" required />
-					<span ng-show="FrForm.pharmacist.$error.required"></span>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
@@ -41,19 +35,14 @@
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Doctor Date</span>
 					<input custom-date class="form-control" placeholder="Doctor Date" ng-model="script.form.doctordate" id="doctordate" name="doctordate" float-label required />
-					<span ng-show="FrForm.doctordate.$error.required"></span>
-					<span ng-show="FrForm.doctordate.$error.date"></span>
 				</div>
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Patient Date</span>
 					<input custom-date class="form-control" placeholder="Patient Date" ng-model="script.form.patientDate" id="patientDate" name="patientDate" float-label required />
-					<span ng-show="FrForm.patientDate.$error.required"></span>
-					<span ng-show="FrForm.patientDate.$error.date"></span>
 				</div>
 				<div class="col-xs-4">
 					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Agent Address</span>
 					<input type="text" class="form-control" ng-model="script.form.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" required />
-					<span ng-show="FrForm.agentAddress.$error.required"></span>
 				</div>
 			</div>
 			<div class="form-group">

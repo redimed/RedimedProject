@@ -1,5 +1,9 @@
 var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 var db = require('../models');
+var S = require('string');
+var moment = require('moment');
+var _ = require('lodash');
 
 module.exports = {
 
@@ -58,16 +62,42 @@ module.exports = {
 	postAdd: function(req, res){
 
 		var postData = req.body.data;
+		var errors = [];
+		var required = [
+			{field: 'prescriber', message: 'Prescriber is required'},
+			{field: 'scriptNum', message: 'Script Number is required'},
+			{field: 'Medicare', message: 'Medicare is required'},
+			{field: 'EntitlementNo', message: 'EntitlementNo is required'},
+			{field: 'pharmacist', message: 'Pharmacist is required'},
+			{field: 'doctordate', message: 'Doctor Date is required'},
+			{field: 'patientDate', message: 'Patient Date is required'},
+			{field: 'agentAddress', message: 'Agent Address is required'}
+		]
+
+		_.forIn(postData, function(value, field){
+			_.forEach(required, function(field_error){
+				if(field_error.field === field && S(value).isEmpty()){
+					errors.push(field_error);
+					return;
+				}
+			})
+		})
+
+		if(errors.length>0){
+			res.status(500).json({errors: errors});
+			return;
+		}
+
 		console.log(postData);
 		var sql = knex('cln_scripts')
 		.insert(postData)
 		.toString();
 		db.sequelize.query(sql)
 		.success(function(data){
-			res.json({'data': data});
+			res.json({data: data});
 		})
 		.error(function(error){
-			res.json(500, {'status': 'error', 'message': error});
+			res.json(500, {error: error, sql: sql});
 		})
 
 	},//end postAdd
@@ -96,6 +126,32 @@ module.exports = {
 
 		var postData = req.body.data;
 
+		var errors = [];
+		var required = [
+			{field: 'prescriber', message: 'Prescriber is required'},
+			{field: 'scriptNum', message: 'Script Number is required'},
+			{field: 'Medicare', message: 'Medicare is required'},
+			{field: 'EntitlementNo', message: 'EntitlementNo is required'},
+			{field: 'pharmacist', message: 'Pharmacist is required'},
+			{field: 'doctordate', message: 'Doctor Date is required'},
+			{field: 'patientDate', message: 'Patient Date is required'},
+			{field: 'agentAddress', message: 'Agent Address is required'}
+		]
+
+		_.forIn(postData, function(value, field){
+			_.forEach(required, function(field_error){
+				if(field_error.field === field && S(value).isEmpty()){
+					errors.push(field_error);
+					return;
+				}
+			})
+		})
+
+		if(errors.length>0){
+			res.status(500).json({errors: errors});
+			return;
+		}
+		
 		var sql = knex('cln_scripts')
 		.where({
 			ID: postData.ID
@@ -110,7 +166,7 @@ module.exports = {
 			res.json({'data': data});
 		})
 		.error(function(error){
-			res.json({'status': 'error', 'message': error});
+			res.json(500, {error: error, sql: sql});
 		})
 
 	}, //end postEdit

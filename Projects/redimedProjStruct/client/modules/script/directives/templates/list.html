@@ -34,8 +34,8 @@
 					<td>{{row.scriptNum}}</td>
 					<td>{{row.Medicare}}</td>
 					<td align="center">
-						<a><i class="fa fa-times" ng-click="script.remove(row.ID)"></i></a>&nbsp;
 						<a><i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>
+						<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;
 					</td>
 				</tr>
 			</tbody>
@@ -44,3 +44,12 @@
 </pagination>
 	</div>
 </div>
+<script type="text/ng-template" id="notifyToRemove">
+    <div class="modal-body">
+        <p>Do you want to remove this site ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>

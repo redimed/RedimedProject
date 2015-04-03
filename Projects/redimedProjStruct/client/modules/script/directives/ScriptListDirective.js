@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.script.directive.list', [])
 
-.directive('scriptList', function(ScriptModel, $filter, $stateParams, $state){
+.directive('scriptList', function(ScriptModel, $modal, $filter, $stateParams, $state, toastr){
 	return {
 
 		restrict: 'EA',
@@ -50,10 +50,33 @@ angular.module('app.loggedIn.script.directive.list', [])
 
 			var remove = function(id){
 
-				ScriptModel.remove(id).then(function(deleted){
-					scope.script.load();
-				}, 
-					function(error){});
+				var modalInstance = $modal.open({
+					templateUrl: 'notifyToRemove',
+					controller: function($scope, id, $modalInstance){
+						$scope.ok = function(){
+							$modalInstance.close(id);
+						}
+						$scope.cancel = function(){
+							$modalInstance.dismiss('cancel');
+						}
+					},
+					size: 'sm',
+					resolve: {
+						id: function(){
+							return id;
+						}
+					}
+				});
+				modalInstance.result.then(function(id){
+					if(id){
+						ScriptModel.remove(id).then(function(deleted){
+							toastr.success('Deleted Successfully');
+							scope.script.load();
+						}, function(error){
+
+						})
+					}
+				})
 			}
 
 			var add = function(){
@@ -72,6 +95,9 @@ angular.module('app.loggedIn.script.directive.list', [])
 
 			scope.script = {
 				search: search,
+				dialog: {
+					remove: function(id){ remove(id); }
+				},
 				loading: false,
 				list: [],
 				count: 0,
@@ -79,7 +105,6 @@ angular.module('app.loggedIn.script.directive.list', [])
 				load: function(){ load(); },
 				add: function(){ add(); },
 				edit: function(id){ edit(id); },
-				remove: function(id){ remove(id); },
 				onSearch: function(option){ onSearch(option); }
 			}
 

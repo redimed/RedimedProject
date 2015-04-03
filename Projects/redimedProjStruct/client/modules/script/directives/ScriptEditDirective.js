@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.script.directive.edit', [])
 
-.directive('scriptEdit', function(ScriptModel, PatientService, ConfigService, $cookieStore, $filter, $state, $stateParams){
+.directive('scriptEdit', function(ScriptModel, PatientService, ConfigService, $cookieStore, $filter, $state, $stateParams, toastr){
 
 	return {
 
@@ -39,6 +39,9 @@ angular.module('app.loggedIn.script.directive.edit', [])
 
 			var save = function(){
 
+				ConfigService.beforeSave(scope.script.errors);
+				scope.script.errors = [];
+
 				var postData = angular.copy(scope.script.form); 
 
 
@@ -54,14 +57,19 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				ScriptModel.edit(postData)
 				.then(function(response){
 					console.log(postData);
+					toastr.success('Edited Successfully');
 					$state.go('loggedIn.script');
-				}, function(error){})
+				}, function(error){
+					scope.script.errors = angular.copy(error.data.errors);
+					ConfigService.beforeError(scope.script.errors);
+				})
 
 			}
 
 			scope.script = {
 
 				save: function(id){ save(); },
+				errors: [],
 				load: function(){ load(); },
 				form: {
 					ID: '',
