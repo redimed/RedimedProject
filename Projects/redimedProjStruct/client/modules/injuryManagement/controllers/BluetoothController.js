@@ -5,11 +5,8 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		var colors = ["blue-soft","red-soft","purple-soft","green-soft"];
 		var icons = ["fa fa-plus-square","fa fa-medkit","fa fa-heart","fa fa-stethoscope"];
 		$scope.haveData = false;
-
-		$scope.pulseData = {
-			pulse: null,
-			spO2 : null
-		}
+		$scope.currDevice = null;
+		$scope.chartData = [];
 
 		socket.on('getMeasureData',function(rs){
 			if(rs.info){
@@ -88,6 +85,13 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
             }
 		};
 
+		$scope.changeHistory = function(dateRange){
+			if($scope.data != null && $scope.currDevice != null)
+			{
+				getHistory($scope.currDevice.toLowerCase() , $scope.data , moment(dateRange.start) , moment(dateRange.end));
+			}
+		}
+
 		$scope.showHistory = function(device){
 			$scope.data = null;
 			$scope.haveData = false;
@@ -110,119 +114,9 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 
 						$scope.data = rs.data;
 
-						var date = new Date();
-						var currDate = $filter('date')(date,'dd/MM/yyyy');
-						var previousDate = $filter('date')(date.setDate(date.getDate() - 1),'dd/MM/yyyy');
+						$scope.historyDates = moment().range(moment().subtract(1, 'days'), moment());
 
-						$scope.chartTitle = "Measure data from "+previousDate+" to "+currDate;
-
-						switch (deviceType)
-						{
-							case "pulse oximeter":
-							{
-
-								var pulse = [], spO2 = [];
-								
-								for(var i=0; i<$scope.data.length;i++)
-								{
-									var measureDate = $filter('date')($scope.data[i].measure_date,'dd/MM/yyyy');
-									if(measureDate == currDate || measureDate == previousDate)
-									{
-										pulse.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.pulse]);
-										spO2.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.spO2])
-									}
-								}
-
-								console.log(pulse);
-
-								$scope.chartData = [
-									{ 	
-										data: pulse, 
-										label: "Pulse",
-					        		},
-									{ 	
-										data: spO2, 
-										label: "SpO2",
-					        		},
-								];
-
-								break;
-							}
-
-							case "spirometer":
-							{
-
-								var fev1 = [], fvc = [], pef = [];
-								
-								for(var i=0; i<$scope.data.length;i++)
-								{
-									var measureDate = $filter('date')($scope.data[i].measure_date,'dd/MM/yyyy');
-									if(measureDate == currDate || measureDate == previousDate)
-									{
-										fev1.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.FEV1]);
-										fvc.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.FVC]);
-										pef.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.PEF])
-									}
-								}
-
-								$scope.chartData = [
-									{ 	
-										data: fev1, 
-										label: "FEV1",
-					        		},
-									{ 	
-										data: fvc, 
-										label: "FVC",
-					        		},
-					        		{ 	
-										data: pef, 
-										label: "PEF",
-					        		},
-								];
-
-								break;
-							}
-
-							case "blood pressure":
-							{
-								var sys = [], dia = [], bpm = [], mmHg = [];
-								
-								for(var i=0; i<$scope.data.length;i++)
-								{
-									var measureDate = $filter('date')($scope.data[i].measure_date,'dd/MM/yyyy');
-									if(measureDate == currDate || measureDate == previousDate)
-									{
-										sys.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.sys]);
-										dia.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.dia]);
-										bpm.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.bpm]);
-										mmHg.push([$filter('date')($scope.data[i].measure_date,'dd/MM/yyyy-hh:mm a'),$scope.data[i].jsonData.mmHg]);
-									}
-								}
-
-								$scope.chartData = [
-									{ 	
-										data: sys, 
-										label: "SYS",
-					        		},
-									{ 	
-										data: dia, 
-										label: "DIA",
-					        		},
-					        		{ 	
-										data: bpm, 
-										label: "BPM",
-					        		},
-					        		{ 	
-										data: mmHg, 
-										label: "mmHg",
-					        		},
-								];
-
-								break;
-							}
-
-						}
-
+						getHistory(deviceType , $scope.data , moment().subtract(1, 'days') , moment());
 						
 						if($scope.data != null)
 						{
@@ -256,7 +150,91 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 	                $scope.haveData = false;
 	            }
 			})
-		}
+		};
+
+		var getHistory = function(deviceType,data,from,to)
+		{
+			var fromDate = moment(from).format('YYYY-MM-DD');
+			var toDate = moment(to).format('YYYY-MM-DD');
+
+			var pulse = [], spO2 = [];
+			var fev1 = [], fvc = [], pef = [];
+			var sys = [], dia = [], bpm = [], mmHg = [];
+
+			$scope.chartData = [];
+
+			for(var i=0; i<data.length;i++)
+			{
+				var measureDate = $filter('date')(data[i].measure_date,'yyyy-MM-dd');
+				var measureDateHrs = $filter('date')(data[i].measure_date,'dd/MM/yyyy-hh:mm a');
+
+				switch (deviceType)
+				{
+					case "pulse oximeter":
+					{
+						if(moment(measureDate).isBefore(toDate) && moment(measureDate).isAfter(fromDate) || (moment(measureDate).isSame(fromDate) || moment(measureDate).isSame(toDate)))
+						{
+							pulse.push([measureDateHrs,data[i].jsonData.pulse]);
+							spO2.push([measureDateHrs,data[i].jsonData.spO2])
+						}
+						break;
+					}
+
+					case "spirometer":
+					{
+						if(moment(measureDate).isBefore(toDate) && moment(measureDate).isAfter(fromDate) || (moment(measureDate).isSame(fromDate) || moment(measureDate).isSame(toDate)))
+						{
+							fev1.push([measureDateHrs,data[i].jsonData.FEV1]);
+							fvc.push([measureDateHrs,data[i].jsonData.FVC]);
+							pef.push([measureDateHrs,data[i].jsonData.PEF])
+						}
+						break;
+					}
+
+					case "blood pressure":
+					{
+						if(moment(measureDate).isBefore(toDate) && moment(measureDate).isAfter(fromDate) || (moment(measureDate).isSame(fromDate) || moment(measureDate).isSame(toDate)))
+						{
+							sys.push([measureDateHrs,data[i].jsonData.sys]);
+							dia.push([measureDateHrs,data[i].jsonData.dia]);
+							bpm.push([measureDateHrs,data[i].jsonData.bpm]);
+							mmHg.push([measureDateHrs,data[i].jsonData.mmHg]);
+						}
+						break;
+					}
+
+				}
+			}
+
+			switch (deviceType)
+			{
+				case "pulse oximeter":
+				{
+					$scope.chartData.push({data: pulse, label: 'Pulse'});
+					$scope.chartData.push({data: spO2, label: 'SpO2'});
+					break;
+				}
+
+				case "spirometer":
+				{
+					$scope.chartData.push({data: fev1, label: 'FEV1'});
+					$scope.chartData.push({data: fvc, label: 'FVC'});
+					$scope.chartData.push({data: pef, label: 'PEF'});
+					break;
+				}
+
+				case "blood pressure":
+				{
+					$scope.chartData.push({data: sys, label: 'SYS'});
+					$scope.chartData.push({data: dia, label: 'DIA'});
+					$scope.chartData.push({data: bpm, label: 'BPM'});
+					$scope.chartData.push({data: mmHg, label: 'mmHg'});
+					break;
+				}
+
+			}
+
+		};
 
 
 

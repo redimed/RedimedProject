@@ -369,16 +369,20 @@ angular.module("app.directive.common", [
                         var pageX = getEventProp(event, 'pageX');
                         var pageY = getEventProp(event, 'pageY');
 
-                        switch (position) {
-                            case "relative":
-                                startX = pageX - x;
-                                startY = pageY - y;
-                                break;
-                            case "absolute":
-                                startX = pageX - element.context.offsetLeft;
-                                startY = pageY - element.context.offsetTop;
-                                break;
-                        }
+                        startX = pageX - element.context.offsetLeft;
+                        startY = pageY - element.context.offsetTop;
+
+                        // switch (position) {
+                        //     case "relative":
+                        //         startX = pageX - x;
+                        //         startY = pageY - y;
+                        //         break;
+                        //     case "absolute":
+                        //         startX = pageX - element.context.offsetLeft;
+                        //         startY = pageY - element.context.offsetTop;
+                        //         break;
+
+                        // }
                         $document.on("mousemove touchmove", mouseMoveHandler);
                         $document.on("mouseup touchend", mouseUpHandler);
                         $($document[0].body).on("mouseleave", mouseUpHandler);
@@ -388,6 +392,8 @@ angular.module("app.directive.common", [
         }
     } 
 })
+
+
 
 
 // SELECT FROM DATE TO DATE

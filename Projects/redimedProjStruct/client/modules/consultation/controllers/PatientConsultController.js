@@ -255,5 +255,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			})
 	    }
 
+
 	})
 
