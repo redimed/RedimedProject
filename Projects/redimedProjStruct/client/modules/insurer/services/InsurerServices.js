@@ -2,6 +2,7 @@ angular.module("app.loggedIn.insurer.services", [])
 .factory("InsurerService", function (Restangular) {
     var instanceService = {};
     var appApi = Restangular.all("api/erm");
+    var insurerApi = Restangular.all("api/meditek/v1/insurer");
     
     
     instanceService.detail = function(id) {
@@ -21,6 +22,11 @@ angular.module("app.loggedIn.insurer.services", [])
     instanceService.delete = function(id) {
         var instanceApi = appApi.all("v2/insurer/delete");
         return instanceApi.post({id: id});
+    }
+
+    instanceService.oneFollowPatient = function(data){
+        var instanceApi =  insurerApi.all('oneFollowPatient');
+        return instanceApi.post({data: data});
     }
 
     return instanceService;

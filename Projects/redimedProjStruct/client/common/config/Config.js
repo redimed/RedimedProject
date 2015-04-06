@@ -881,6 +881,13 @@ angular.module('app.config', [])
         return hour+':'+minute;
     }
 
+    configService.convertToDate = function(string){
+        var date = string.substring(0, 10);
+
+        var split = date.split('-');
+        return split[2]+'/'+split[1]+'/'+split[0];
+    }
+
     configService.convertToDB = function(string){
         if(typeof string === 'undefined' || !string)
             return '';

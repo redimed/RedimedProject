@@ -1,0 +1,8 @@
+<button class="btn btn-primary" ng-click="claim.dialog.add()">Add Claim</button>
+<claim-patient-list reload="claim.reload" limit="claim.limit"></claim-patient-list>
+
+<script type="text/ng-template" id="dialogClaimAdd">
+    <div class="modal-body">
+        <claim-patient-add patient-id="patientId" cal-id="calId" success="success"></claim-patient-add>
+    </div>
+</script>

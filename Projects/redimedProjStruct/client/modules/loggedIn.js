@@ -84,7 +84,8 @@ angular.module("app.loggedIn", [
     'app.loggedIn.appointment',
     'app.loggedIn.medicine',
     
-    'app.loggedIn.company'
+    'app.loggedIn.company',
+    'app.loggedIn.alert'
 ])
 
 .config(function($stateProvider) {

@@ -1,8 +1,8 @@
-angular.module("app.loggedIn.claim.model", [])
+angular.module("app.loggedIn.alert.model", [])
     
-.factory("ClaimModel", function (Restangular) {
+.factory("AlertModel", function (Restangular) {
     var instanceService = {};
-    var appApi = Restangular.all("api/meditek/v1/claim");
+    var appApi = Restangular.all("api/meditek/v1/alert");
 
     instanceService.listFollowPatient = function (data) {
         var detailApi = appApi.all("listFollowPatient");
@@ -11,6 +11,11 @@ angular.module("app.loggedIn.claim.model", [])
 
     instanceService.listNoFollowPatient = function (data) {
         var detailApi = appApi.all("listNoFollowPatient");
+        return detailApi.post({data: data});
+    }
+
+    instanceService.list = function (data) {
+        var detailApi = appApi.all("list");
         return detailApi.post({data: data});
     }
   

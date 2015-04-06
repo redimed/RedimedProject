@@ -6,7 +6,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
 		link: function(scope, elem, attrs){
 			scope.goToAppDetail = function(CAL_ID, Patient_id){
-				console.log('test');
 				$state.go('loggedIn.patient.appointment', {cal_id: CAL_ID, patient_id: Patient_id});
 			}
 
@@ -133,8 +132,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						}
 					}) // end forEach
 
-					console.log(scope.appointment.list);
-
 				}, function(error){})
 			}
 
@@ -174,6 +171,24 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						var modalInstance = $modal.open({
 							templateUrl: 'notifyClaim',
 							controller: function($scope, $modalInstance, new_patient){
+								$scope.selectClaim = function(){
+									$modal.open({
+										templateUrl: 'claimSelect',
+										controller: function($scope, $modalInstance, new_patient){
+											$scope.claim = {
+												limit: 10,
+												reload: false
+											}
+										},
+										size: 'lg',
+										resolve: {
+											new_patient: function(){
+												return new_patient;
+											}
+										}
+									})
+								}
+
 								$scope.addClaim = function(){
 									$modal.open({
 										templateUrl: 'claimAdd',

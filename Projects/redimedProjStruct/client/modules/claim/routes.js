@@ -6,11 +6,19 @@ angular.module('app.loggedIn.claim', [
 
 	$stateProvider
 
-	.state('loggedIn.claim', {
-		url: '/claim',
-		templateUrl: 'modules/claim/views/index.html',
-		controller: 'ClaimIndexController'
+	.state('loggedIn.patient.claim', {
+		abstract: true,
+		url: '/:patientId/cal/:calId/claim'
 	})
 
+	.state('loggedIn.patient.claim.list', {
+		url: '/list',
+		views: {
+			'main-content@loggedIn.patient': {
+				templateUrl: 'modules/claim/views/patient/list.html',
+				controller: 'ClaimPatientListController'
+			}
+		}
+	})
 
 })
