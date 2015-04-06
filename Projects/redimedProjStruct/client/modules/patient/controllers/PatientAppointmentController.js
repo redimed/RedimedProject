@@ -138,9 +138,9 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             }
 
         }, function(error) {
-            console.log(error)
-            toastr.error(error.data.message, 'Error')
-            $state.go('loggedIn.receptionist.appointment');
+            //console.log(error)
+            //toastr.error(error.data.message, 'Error')
+            //$state.go('loggedIn.receptionist.appointment');
         });
 
 		

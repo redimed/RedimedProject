@@ -1,0 +1,152 @@
+<div class="ui segment">
+	<div class="ui form">
+		
+		<div class="four fields">
+			<!-- FULL NAME -->
+			<div class="field">
+				<label>Full Name</label>
+				{{patient.item.First_name}} {{patient.item.Middle_name}} {{patient.item.Sur_name}}
+			</div>
+			<!-- END FULL NAME -->
+			<!-- KNOWN AS -->
+			<div class="field">
+				<label>Known As</label>
+				{{patient.item.Known_as | empty}}
+			</div>
+			<!-- END KNOWN AS -->
+			<!-- ADDRESS -->
+			<div class="field">
+				<label>Address</label>
+				{{patient.item.Address1 | empty}}
+			</div>
+			<!-- END ADDRESS -->
+			<!-- SUBURB -->
+			<div class="field">
+				<label>Surburb</label>
+				{{patient.item.Surburb | empty}}
+			</div>
+			<!-- END SUBURB -->
+		</div>
+
+		<div class="four fields">
+			<!-- EMAIL -->
+			<div class="field">
+				<label>Email</label>
+				{{patient.item.Email | empty}}
+			</div>
+			<!-- END EMAIL -->
+			<!-- WORK PHONE -->
+			<div class="field">
+				<label>Work Phone</label>
+				{{patient.item.Work_phone | empty}}
+			</div>
+			<!-- END WORK PHONE -->
+			<!-- MOBILE -->
+			<div class="field">
+				<label>Mobile Phone</label>
+				{{patient.item.Mobile | empty}}
+			</div>
+			<!-- END MOBILE -->
+			<!-- MEDICARE NO -->
+			<div class="field">
+				<label>Medicare No</label>
+				{{patient.item.Medicare_no | empty}}
+			</div>
+			<!-- END MEDICARE NO -->
+		</div>
+
+	</div>
+</div>
+
+<div class="ui basic segment">
+	<div class="ui cards">
+		<div class="black card">
+	    	<div class="content">
+	      		<div class="header">Paperless</div>
+	      		<div class="description">
+	        		Paperless of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Paperless
+	    	</div>
+	  	</div>
+	  	<div class="black card">
+	    	<div class="content">
+	      		<div class="header">Claim</div>
+	      		<div class="description">
+	        		Claim of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Claim
+	    	</div>
+	  	</div>
+		<div class="black card">
+	    	<div class="content">
+	      		<div class="header">Allergy</div>
+	      		<div class="description">
+	        		Allergy of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Allergy
+	    	</div>
+	  	</div>
+	  	<div class="blue card">
+	    	<div class="content">
+	      		<div class="header">Problem</div>
+	      		<div class="description">
+	        		Problem of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Problem
+	    	</div>
+	  	</div>
+
+	  	<div class="blue card">
+	    	<div class="content">
+	      		<div class="header">Measurement</div>
+	      		<div class="description">
+	        		Measurement of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Measurement
+	    	</div>
+	  	</div>
+
+	  	<div class="blue card">
+	    	<div class="content">
+	      		<div class="header">Medicine</div>
+	      		<div class="description">
+	        		Medicine of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Medicine
+	    	</div>
+	  	</div>
+
+	  	<div class="blue card">
+	    	<div class="content">
+	      		<div class="header">Consult</div>
+	      		<div class="description">
+	        		Consult of this Patient.
+	      		</div>
+	    	</div>
+	    	<div class="ui bottom attached button">
+	      		<i class="right arrow icon"></i>
+	      		Go to Consult
+	    	</div>
+	  	</div>
+
+	</div>
+</div>

@@ -871,6 +871,40 @@ angular.module('app.config', [])
         return newDate;
     }
 
+    configService.convertToHHMM = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var hour = string.substring(0,2);
+        var minute = string.substring(2,4);
+
+        return hour+':'+minute;
+    }
+
+    configService.convertToDB = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var split = string.split('/');
+
+        return split[2]+'-'+split[1]+'-'+split[0];
+    }
+
+    configService.beforeSave = function(errors){
+        _.forEach(errors, function(error){
+            angular.element('#'+error.field).parent().find('div').remove();
+        })
+    }
+
+    configService.beforeError = function(errors){
+        if(errors){
+            _.forEach(errors, function(error){
+                var html = '<div style="color: red; margin-bottom: 5px;">'+error.message+'</div>';
+                angular.element('#'+error.field).parent().append(html);
+            })
+        }
+    }
+
     /*
      *  END DATE TIME FUNCTION 
      */
@@ -916,6 +950,15 @@ angular.module('app.config', [])
         var split = string.split('/');
 
         return split[2]+'-'+split[1]+'-'+split[0];
+    };
+    configService.convertToDate_F = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var k = string.slice(0,10).split('-');
+        console.log(k);
+
+        return k[2]+'/'+k[1]+'/'+k[0];
     };
     //end thanh
     return configService;

@@ -1,15 +1,12 @@
 angular.module('app.loggedIn.claim.directives.list', [])
 
-.directive('claimList', function(ClaimModel){
+.directive('claimList', function(){
 	return {
 		restrict: 'EA',
+		scope:{},
 		templateUrl: 'modules/claim/directives/templates/list.html',
 		link: function(scope, elem, attrs){
-			ClaimModel.list().then(function(response){
-
-			}, function(error){
-
-			})
+			
 		}
-	}//end return
-})//end directive
+	}
+})//END Claim List
