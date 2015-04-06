@@ -952,7 +952,7 @@ angular.module('app.config', [])
 
     configService.convertToDB = function(string){
         if(typeof string === 'undefined' || !string)
-            return '';
+            return null;
 
         var split = string.split('/');
 
