@@ -260,6 +260,8 @@ module.exports = {
 			.limit(postData.limit)
 			.offset(postData.offset)
 			.toString();
+
+		sql = sql.replace(/\"/g, '"');
 				
 		var count_sql = knex('cln_alerts')
 			.count('id as a')
@@ -267,6 +269,8 @@ module.exports = {
 			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
 			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
 			.toString();
+
+		count_sql = count_sql.replace(/\"/g, '"');
 
 		db.sequelize.query(sql)
 		.success(function(rows){
