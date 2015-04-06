@@ -705,3 +705,15 @@ angular.module("app.model", [])
 	last_update_date: null
 })
 // END MEDICINE
+
+//ALLERGY
+.value("AllergyModel",{
+	allergy_id: null,
+	allergy_name: '',
+	isEnable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+// END ALLERGY
