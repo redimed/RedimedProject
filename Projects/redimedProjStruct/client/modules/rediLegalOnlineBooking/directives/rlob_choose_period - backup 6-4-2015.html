@@ -1,8 +1,4 @@
-<style>
-    #ui-datepicker-div{
-        z-index: 1000000!important;
-    }
-</style>
+
 <div id="choose-period-dialog" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -22,16 +18,14 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 form-group" ng-class="{'has-error':choosePeriodForm.FROM_DATE_TEMP.$invalid  && hadForcused}">
                             <p class="input-group">
-                                <!-- <input id="FROM_DATE_TEMP" name="FROM_DATE_TEMP" type="text" class="form-control" datepicker-popup="{{format}}"
+                                <input id="FROM_DATE_TEMP" name="FROM_DATE_TEMP" type="text" class="form-control" datepicker-popup="{{format}}"
                                        ng-model="FROM_DATE_TEMP" is-open="opened1" datepicker-options="dateOptions"
                                        ng-required="true"
                                        required
                                        close-text="Close" placeholder="From Date"/>
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
- -->
-                                <input id="FROM_DATE_TEMP" name="FROM_DATE_TEMP" type="text" class="form-control" ng-model="FROM_DATE_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" placeholder="DD/MM/YYYY" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
                             </p>
                             <small class="help-block pull-right" ng-show="choosePeriodForm.FROM_DATE_TEMP.$error.required  && hadForcused">
                                 From Date is required.
@@ -44,16 +38,14 @@
 
                         <div class="col-lg-6 col-md-6 col-sm-12 form-group" ng-class="{'has-error':choosePeriodForm.TO_DATE_TEMP.$invalid  && hadForcused}">
                             <p class="input-group">
-                                <!-- <input id="TO_DATE_TEMP" name="TO_DATE_TEMP" type="text" class="form-control" datepicker-popup="{{format}}"
+                                <input id="TO_DATE_TEMP" name="TO_DATE_TEMP" type="text" class="form-control" datepicker-popup="{{format}}"
                                        ng-model="TO_DATE_TEMP" is-open="opened2" datepicker-options="dateOptions"
                                        ng-required="true"
                                        required
                                        close-text="Close" placeholder="To Date"/>
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span> -->
-
-                                <input id="TO_DATE_TEMP" name="TO_DATE_TEMP" type="text" class="form-control" ng-model="TO_DATE_TEMP" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" placeholder="DD/MM/YYYY" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
                             </p>
                             <small class="help-block pull-right" ng-show="choosePeriodForm.TO_DATE_TEMP.$error.required  && hadForcused">
                                 To Date is required.

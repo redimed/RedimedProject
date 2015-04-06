@@ -128,6 +128,7 @@ tannv.dts@gmail.com*/
 
 .rlobdatepicker{
     z-index: 9999999 !important;
+    font-family: calibri !important;
 }
 
 .testhover:hover .hover1{
@@ -152,4 +153,8 @@ tannv.dts@gmail.com*/
 .modal-header div .img-confix{
     margin-top: -40px !important;
     margin-right: 15px;
+}
+
+.rlob_button_search:hover {
+    font-weight: bold;
 }

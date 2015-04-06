@@ -99,7 +99,7 @@ Page Header
   padding-top: 12px;
 }
 .page-header.navbar .page-top {
-  height: 68px;
+  /*height: 68px;*/
   background: #BAC0B6;
 }
 .page-header.navbar .search-form {

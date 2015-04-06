@@ -8,10 +8,18 @@
     </a>
     
     <ul class="dropdown-menu" role="menu">
-        <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" >
+        <!-- <li ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" >
             <a ng-hide="selectedDocument.DOCUMENT_STATUS=='Not confirmed'" class="pointer" role="menuitem" tabindex="4"
                ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.notConfirmed.value)">
                 <span>{{documentStatus.notConfirmed.display}}</span>
+
+            </a>
+        </li> -->
+
+        <li ng-hide="selectedDocument.DOCUMENT_STATUS=='No documents'">
+            <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
+               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.noDocuments.value)">
+                <span>{{documentStatus.noDocuments.display}}</span>
 
             </a>
         </li>
@@ -24,13 +32,7 @@
             </a>
         </li>
 
-        <li ng-hide="selectedDocument.DOCUMENT_STATUS=='No documents'">
-            <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-               ng-click="rlob_document_change_status(selectedDocument.BOOKING_ID,documentStatus.noDocuments.value)">
-                <span>{{documentStatus.noDocuments.display}}</span>
-
-            </a>
-        </li>
+        
     </ul>
 </div>
 {{documentStatusDisplay[selectedDocument.DOCUMENT_STATUS]}}

@@ -9,19 +9,28 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
          * client se chon bookinginfo hien co sau do dung no de book 1 lich moi
          * tannv.dts@gmail.com
          */
+        $scope.selectedAppointmentCalendar=appointmentCalendarService.getSelectedAppointmentCalendar();
+        
+        if ($scope.selectedAppointmentCalendar.CAL_ID===undefined || $scope.selectedAppointmentCalendar.CAL_ID===null || $scope.selectedAppointmentCalendar.CAL_ID==='') {
+            $state.go("loggedIn.home");
+            return;
+        };
         var bookingInfoReuse=bookingService.getBookingInfoResuse();
+        $scope.isReschedule=0;
         if(bookingInfoReuse)
         {
+            $scope.isReschedule=1;
             $scope.newBooking={
                 CLAIM_NO:bookingInfoReuse.CLAIM_NO,
                 WRK_SURNAME:bookingInfoReuse.WRK_SURNAME,
                 WRK_OTHERNAMES:bookingInfoReuse.WRK_OTHERNAMES,
                 WRK_EMAIL:bookingInfoReuse.WRK_EMAIL,
                 WRK_CONTACT_NO:bookingInfoReuse.WRK_CONTACT_NO,
-                DESC_INJURY:bookingInfoReuse.DESC_INJURY
+                DESC_INJURY:bookingInfoReuse.DESC_INJURY,
+                COMPANY_ID:bookingInfoReuse.COMPANY_ID
             }
-            $scope.WRK_DOB_TEMP=bookingInfoReuse.WRK_DOB;
-            $scope.WRK_DATE_OF_INJURY_TEMP=bookingInfoReuse.WRK_DATE_OF_INJURY;
+            $scope.WRK_DOB_TEMP=new Date(bookingInfoReuse.WRK_DOB);
+            $scope.WRK_DATE_OF_INJURY_TEMP=new Date(bookingInfoReuse.WRK_DATE_OF_INJURY);
             bookingService.setBookingInfoReuse(null);
         }
         else
@@ -30,30 +39,61 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         }
 
         $scope.selectedAppointmentCalendar=appointmentCalendarService.getSelectedAppointmentCalendar();
-        /***
-         * An ngan can thay doi url khi change state
-         * tannv.dts@gmail.com
-         */
-//        $scope.$on('$stateChangeStart', function(event, newUrl, oldUrl) {
-//            event.preventDefault();
-//        });
-//        
-//        
+
+        // 
         var patientData = angular.copy(PatientModel);
         var claimData = angular.copy(ClaimModel);
 
+        /**
+         * Danh cho admin booking gium client
+         * Admin se chon user sau do dung thong tin user de booking
+         * tannv.dts@gmail.com
+         */
         $scope.loginInfo=$cookieStore.get('userInfo');
-
+        var bookingBehalfInfo=angular.copy(bookingService.getBookingBehalfInfo());
+        if(bookingBehalfInfo!=null)
+        {
+            $scope.newBooking.ASS_ID=bookingBehalfInfo.ASS_ID;
+            $scope.newBooking.ASS_SURNAME=bookingBehalfInfo.ASS_SURNAME;
+            $scope.newBooking.ASS_OTHERNAMES=bookingBehalfInfo.ASS_OTHERNAMES;
+            $scope.newBooking.ASS_CONTACT_NO=bookingBehalfInfo.ASS_CONTACT_NO;
+            $scope.newBooking.ASS_EMAIL=bookingBehalfInfo.ASS_EMAIL;
+            $scope.newBooking.COMPANY_ID=bookingBehalfInfo.COMPANY_ID;
+            bookingService.setBookingBehalfInfo(null);
+        }
+        else
+        {
+            $scope.newBooking.ASS_ID=$scope.loginInfo.id;
+            $scope.newBooking.ASS_SURNAME=$scope.loginInfo.Booking_Person;
+            $scope.newBooking.ASS_OTHERNAMES=$scope.loginInfo.Booking_Person;
+            $scope.newBooking.ASS_CONTACT_NO=$scope.loginInfo.Contact_number;
+            $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
+        } 
+        //Lay thong tin company info
+        //Neu booking la reschedule thi lay thong tin company id cua booking cu
+        //Neu booking la booking moi thi lay thong tin tu userlogin
+        //tannv.dts@gmail.com
+        $scope.companyId=null;
+        if($scope.newBooking.COMPANY_ID!==null && $scope.newBooking.COMPANY_ID!==undefined)
+        {
+            $scope.companyId=$scope.newBooking.COMPANY_ID;
+        }
+        else
+        {
+            $scope.companyId=$scope.loginInfo.company_id
+        }
         $http({
             method:"POST",
             url:"/api/company/info",
-            data:{comId:$scope.loginInfo.company_id}
+            data:{comId:$scope.companyId}
         })
         .success(function(data) {
+            
             $scope.companyInfo=data;
         })
         .error(function (data) {
             $scope.companyInfo={
+                id:null,
                 Company_name:'[Name of Company]'
             }
         })
@@ -287,35 +327,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
             });
 
-        /**
-         * Danh cho admin booking gium client
-         * Admin se chon user sau do dung thong tin user de booking
-         * tannv.dts@gmail.com
-         */
-        
-        var bookingBehalfInfo=angular.copy(bookingService.getBookingBehalfInfo());
-        $scope.isBehalf=false;
-        if(bookingBehalfInfo!=null)
-        {
-            $scope.newBooking.ASS_ID=bookingBehalfInfo.ASS_ID;
-            $scope.newBooking.ASS_SURNAME=bookingBehalfInfo.ASS_SURNAME;
-            $scope.newBooking.ASS_OTHERNAMES=bookingBehalfInfo.ASS_OTHERNAMES;
-            $scope.newBooking.ASS_CONTACT_NO=bookingBehalfInfo.ASS_CONTACT_NO;
-            $scope.newBooking.ASS_EMAIL=bookingBehalfInfo.ASS_EMAIL;
-            $scope.isBehalf=true;
-            bookingService.setBookingBehalfInfo(null);
-        }
-        else
-        {
-            $scope.newBooking.ASS_ID=$scope.loginInfo.id;
-            $scope.newBooking.ASS_SURNAME=$scope.loginInfo.Booking_Person;
-            $scope.newBooking.ASS_OTHERNAMES=$scope.loginInfo.Booking_Person;
-            $scope.newBooking.ASS_CONTACT_NO=$scope.loginInfo.Contact_number;
-            $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
-        } 
-        
-        
-
 
         /***
          * scroll den 1 id xac dinh
@@ -391,7 +402,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 $http({
                 method:"POST",
                 url:"/api/rlob/rl_bookings/admin/send-comfirm-email",
-                data:{bookingId:$scope.newBooking.BOOKING_ID,siteAddress:siteAddress,mapUrl:mapUrl}
+                data:{bookingId:$scope.newBooking.BOOKING_ID,siteAddress:siteAddress,mapUrl:mapUrl,isReschedule:$scope.isReschedule}
                 })
                 .success(function(data) {
                     if(data.status=='success')
@@ -420,7 +431,28 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
         $scope.isSaving=false;
         $scope.save=function()
-        {
+        {   
+            if($scope.loginInfo.company_id==undefined || $scope.loginInfo.company_id==null || $scope.loginInfo.company_id=='')
+            {
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the company is unknown!");
+                return;
+            }else if(selectedInfo.rltypeSelected.RL_TYPE_ID==undefined || selectedInfo.rltypeSelected.RL_TYPE_ID==null || selectedInfo.rltypeSelected.RL_TYPE_ID==''){
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the type of injury is unknown!");
+                return;
+            }else if(selectedInfo.clnSpecialitySelected.Specialties_id==undefined || selectedInfo.clnSpecialitySelected.Specialties_id==null || selectedInfo.clnSpecialitySelected.Specialties_id==''){
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the doctor's specialties is unknown!");
+                return;
+            }else if (selectedInfo.doctorSelected.doctor_id==undefined || selectedInfo.doctorSelected.doctor_id==null || selectedInfo.doctorSelected.doctor_id=='') {
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the doctor's name is unknown!");
+                return;
+            }else if (selectedInfo.locationSelected.id==undefined || selectedInfo.locationSelected.id==null || selectedInfo.locationSelected.id=='') {
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the site is unknown!");
+                return;
+            }else if (cal_id==undefined || cal_id==null || cal_id=='') {
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the appointment calendar is not selected!");
+                return;
+            };
+
             $scope.$broadcast('show-errors-check-validity');
 
             if($scope.bookingForm.$invalid)
@@ -431,15 +463,6 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 return;
             }
 
-//            $scope.isSaving=true;
-            //Set mailto
-            if($scope.isBehalf==true)
-            {
-                $scope.companyInfo={
-                    Company_name:'[Name of company]'
-                }
-                $scope.isBehalf=false;
-            }
             $scope.mailBodyData={
                 requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
@@ -485,7 +508,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             //---------------------------------------------------------------------------
             $scope.newBooking.BOOKING_DATE=moment().format("YYYY-MM-DD HH:mm");
             $scope.newBooking.APPOINTMENT_DATE=$scope.from_time.format("YYYY-MM-DD HH:mm");
-            $scope.newBooking.COMPANY_ID=$scope.loginInfo.company_id;
+            $scope.newBooking.COMPANY_ID=$scope.companyInfo.id;
             $scope.newBooking.RL_TYPE_ID=selectedInfo.rltypeSelected.RL_TYPE_ID;
             $scope.newBooking.SPECIALITY_ID=selectedInfo.clnSpecialitySelected.Specialties_id;
             $scope.newBooking.DOCTOR_ID=selectedInfo.doctorSelected.doctor_id;
@@ -561,6 +584,15 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             })
 
         }
+
+        $scope.filesUpdateFlag=0;
+        $scope.$watch("filesUpdateFlag", function(newValue, oldValue){
+            if($scope.filesUpdateFlag && $scope.filesUpdateFlag>0)
+            {
+                //$("#lob-client-upload-dialog").modal('hide');
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Upload documents success!");
+            }
+        });
 });
 
 

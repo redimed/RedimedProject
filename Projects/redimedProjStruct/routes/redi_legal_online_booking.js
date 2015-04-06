@@ -63,24 +63,28 @@ app.get('/api/rlob/rl_bookings/admin/filter-booking',rlBookingsController.lob_fi
 app.post('/api/rlob/rl_bookings/admin/change-appointment-calendar',rlBookingsController.changeAppointmentCalendar);
 app.get('/api/rlob/rl_bookings/admin/get-files-by-booking-id',rlBookingsController.get_files_booking);//nguyen khank
 app.post('/api/rlob/rl_bookings/admin/send-comfirm-email',rlBookingsController.sendConfirmEmail);
-app.post('/api/rlob/rl_bookings/count-report-upcomming-bookings',rlBookingsController.getCountReportUpcommingBookings);//chien Upcomming booking
-app.post('/api/rlob/rl_bookings/get-items-of-paging-report-upcomming-bookings',rlBookingsController.getItemsOfPageReportUpcommingBookings);//chien Upcomming booking
-app.post('/api/rlob/rl_bookings/count-report-status-bookings',rlBookingsController.getCountReportStatusBookings);//chien Status
-app.post('/api/rlob/rl_bookings/get-items-of-paging-report-status-bookings',rlBookingsController.getItemsOfPageReportStatusBookings);//chien Status
+//online booking reprot 1 (upcomming)
+app.post('/api/rlob/rl_bookings/admin/report-1/count-report-upcomming-bookings',rlBookingsController.getCountReportUpcommingBookings);//chien Upcomming booking
+app.post('/api/rlob/rl_bookings/admin/report-1/get-items-of-paging-report-upcomming-bookings',rlBookingsController.getItemsOfPageReportUpcommingBookings);//chien Upcomming booking
+//online booking report 2 (outstanding) 
+app.post('/api/rlob/rl_bookings/admin/report-2/count-report-outstanding-bookings',rlBookingsController.getCountReportOutstandingBookings);//chien outstanding boongking
+app.post('/api/rlob/rl_bookings/admin/report-2/get-items-of-paging-report-outstanding-bookings',rlBookingsController.getItemsOfPageReportOutstandingBookings);//chien outstanding booking
+// online booking report 3 (archive)
+app.post('/api/rlob/rl_bookings/admin/report-3/get-count-archive-booking',rlBookingsController.getCountReportArchiveBooking);// chien archive booking
+app.post('/api/rlob/rl_bookings/admin/report-3/get-items-of-page-archive-booking',rlBookingsController.getItemsOfPageReportArchiveBooking);// chien archive booking
+
 app.post('/api/rlob/rl_bookings/update-appointment-calendar',rlBookingsController.cln_appointment_calendar_update);//chien update 
 app.post('/api/rlob/rl_bookings/update-patient-booking',rlBookingsController.updatePatientIdInBooking);//chien update 
 
 app.post('/api/rlob/rl_bookings/cancel-booking',rlBookingsController.cancelBooking);// chien 
 app.post('/api/rlob/rl_bookings/change-booking',rlBookingsController.changeBooking);// chien 
-app.get('/api/rlob/rl_bookings/admin/report/get-pass-booking-have-not-result',rlBookingsController.getReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: get pass booking have not result
-app.post('/api/rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result',rlBookingsController.getCountReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: count total number of pass booking have not result
-app.post('/api/rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result',rlBookingsController.getItemsOfPageReportPassBookingHaveNotResult);//tannv.dts@gmail.com/report: items of page pass booking have not result
+
 app.get('/api/rlob/rl_bookings/admin/report/list-location-report',rlBookingsController.listLocationReport);
 app.get('/api/rlob/rl_bookings/admin/report/list-doctor-report',rlBookingsController.listDoctorReport);
 
 app.get('/api/rlob/rl_bookings/admin/get-pass-booking-not-change-status',rlBookingsController.getPassBookingNotChangeStatus);
-app.get('/api/rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document',rlBookingsController.getUpcommingBookingHaveNotClientDocument);
-app.get('/api/rlob/rl_bookings/admin/get-pass-booking-have-not-result',rlBookingsController.getPassBookingHaveNotResult);
+app.get('/api/rlob/rl_bookings/admin/get-list-upcomming-booking-waiting-paperwork',rlBookingsController.getListUpcommingBookingWaitingPaperwork);
+app.get('/api/rlob/rl_bookings/admin/list-booking-outstanding-notification',rlBookingsController.getListBookingOutstandingNotification);
 app.get('/api/rlob/rl_bookings/admin/get-document-status-summary',rlBookingsController.getDocumentStatusSummary);
 app.get('/api/rlob/rl_bookings/admin/sendResultNotificationEmail',rlBookingsController.sendResultNotificationEmail);
 app.get('/api/rlob/rl_bookings/admin/list-mail-user-online-booking',rlBookingsController.listMailUserOnlineBooking);
@@ -151,6 +155,7 @@ app.get('/api/rlob/register/get-states', rlRegisterController.getStates);
 app.post('/api/rlob/core/save-booking-info', rlobController.handleSaveBookingInfo);
 app.post('/api/rlob/core/check-period-time-to-booking', rlobController.checkPeriodTimeToBooking);
 app.post('/api/rlob/core/set-list-result-files', rlBookingFilesController.setListResultFiles);
+app.post('/api/rlob/core/unselect-all-file-result', rlBookingFilesController.unselectAllFileResult);
 app.get('/api/rlob/core/rlob-download-list-result-files', rlobDocumentsController.rlobDownloadListResultFiles);
 
 //phanquocchien.c1109g@gmail.com

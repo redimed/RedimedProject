@@ -1,9 +1,12 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=false;
+var isTestSendMail=true;
 module.exports =
 {
+    //Neu user la cua redilegal thi function co id= rlobFirstScreenFunctionId duoc chon lam man hinh chinh
+    //tannv.dts@gmail.com
+    rlobFirstScreenFunctionId:22,
     //Khoang thoi gian mac dinh cua 1 phien kham benh
     periodTimeDefault:30,
     //Khoang thoi gian kham benh cua cac rlType
@@ -20,11 +23,11 @@ module.exports =
     {
         if(isTestSendMail)
         {
-            return "REDiMED <vnlegal123@gmail.com>";
+            return "MEDICO-LEGAL <vnlegal123@gmail.com>";
         }
         else
         {
-            return "REDiMED <healthscreenings@redimed.com.au>";
+            return "MEDICO-LEGAL <healthscreenings@redimed.com.au>";
         }
     },
 
@@ -32,14 +35,27 @@ module.exports =
     {
         if(isTestSendMail)
         {
-            return "REDiMED <vnlegal123@gmail.com>";
+            return "MEDICO-LEGAL <vnlegal123@gmail.com>";
         }
         else
         {
-            return "Health Screening Mailbox <healthscreenings@redimed.com.au>";
-            // return "Health Screening Mailbox <medicolegal@redimed.com.au>";
+            return "MEDICO-LEGAL <healthscreenings@redimed.com.au>";
+            //return "MEDICO-LEGAL <medicolegal@redimed.com.au>";
         }
     },
+
+    getMedicoLegalCC:function()
+    {
+        if(isTestSendMail)
+        {
+            return "MEDICO-LEGAL <vnlegal123@gmail.com>";
+        }
+        else
+        {
+            return "MEDICO-LEGAL <medicolegal@redimed.com.au>";
+        }
+    },
+
 
     fulltext:function(str)
     {
@@ -61,7 +77,8 @@ module.exports =
         arrived:'Arrived',
         notArrived:'Not Arrived',
         completed:'Completed',
-        canel:'Cancel'
+        canel:'Cancel',
+        lateCancellation:'Late Cancellation'
     },
 
     redilegalServiceId:7,
@@ -75,5 +92,11 @@ module.exports =
         pending:'PENDING',
         approve:'APPROVE',
         reject:'REJECT'
-    }
+    },
+
+    documentStatus:{
+        noDocuments:'No documents',
+        notConfirmed:'Not confirmed',
+        checked:'Checked'
+    },
 }

@@ -1514,7 +1514,41 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_period.html',
             controller: function ($scope)
             {
-                
+                /**
+                 * angular bootstrap datepicker handle
+                 */
+                // Disable weekend selection
+
+                $scope.disabled = function(date, mode) {
+                    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+                };
+                $scope.toggleMin = function() {
+                    $scope.minDate = $scope.minDate ? null : new Date();
+                };
+                $scope.toggleMin();
+
+                $scope.open1  = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened1 = true;
+                };
+                $scope.open2 = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened2 = true;
+                };
+
+                $scope.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                //    $scope.initDate = new Date('1980-1-1');
+                $scope.formats = ['d/M/yyyy','dd/MM/yyyy','dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                $scope.format = $scope.formats[0];
+
+                //--------------------------------------------------------------------------------------
+
                 $scope.showDialogChoose=function(){
                     if($scope.fromDate && $scope.toDate)
                     {
@@ -1539,8 +1573,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }
                 },true);
 
-                $scope.FROM_DATE_TEMP=null;
-                $scope.TO_DATE_TEMP=null;
+                $scope.FROM_DATE_TEMP='';
+                $scope.TO_DATE_TEMP='';
 
                 $scope.localError=false;
                 $scope.periodDisplay='ALL';
@@ -1571,8 +1605,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 }
                 $scope.resetDate=function()
                 {
-                    $scope.FROM_DATE_TEMP=null;
-                    $scope.TO_DATE_TEMP=null;
+                    $scope.FROM_DATE_TEMP='';
+                    $scope.TO_DATE_TEMP='';
                     $scope.fromDate='';
                     $scope.toDate='';
                     $scope.localError=false;

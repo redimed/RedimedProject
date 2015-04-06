@@ -65,9 +65,9 @@ var rlobConstant={
         noDocuments:'No documents'
 	},*/
     documentStatus:{
-        noDocuments:{value:'No documents',display:'Not received'},
-        notConfirmed:{value:'Not confirmed',display:'Not confirmed'},
-        checked:{value:'Checked',display:'Received'}
+        noDocuments:{value:'No documents',display:'Not received',isEnable:true},
+        notConfirmed:{value:'Not confirmed',display:'Not confirmed',isEnable:false},
+        checked:{value:'Checked',display:'Received',isEnable:true}
     },
 
     documentStatusDisplay:{

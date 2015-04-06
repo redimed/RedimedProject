@@ -62,6 +62,32 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         // initPickers();
         //--------------------------------------------------
 
+
+        $scope.loginInfo=$cookieStore.get('userInfo');
+        $scope.doctorInfo=null;
+        $scope.getDoctorInfoByUserId=function()
+        {
+            var deferred=$q.defer();
+            $http({
+                method:"GET",
+                url:"/api/rlob/doctors/get-doctors-info-by-userid",
+                params:{userId:$scope.loginInfo.id}
+            })
+            .success(function(data) {
+                if(data.status=='success')
+                {
+                    $scope.doctorInfo=data.data;
+                }
+            })
+            .error(function (data) {
+                console.log("error");
+            })
+            .finally(function() {
+                deferred.resolve();
+            });
+            return deferred.promise;
+        }
+
         /**
          * Chuyen danh sach booking thanh JSON array
          *
@@ -191,8 +217,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.lobAdminSearch={
-            fromDateKey: moment().toDate(),
-            toDateKey: moment().add(30,'d').toDate(),
+            fromDateKey:moment().format("DD/MM/YYYY"),
+            toDateKey:moment().add(30,'d').format("DD/MM/YYYY"),
             doctorKey:'',
             workerKey:'',
             documentStatusKey:{}
@@ -200,8 +226,10 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.filterBooking=function()
         {
-            var fromDate=moment($scope.lobAdminSearch.fromDateKey);
-            var toDate=moment($scope.lobAdminSearch.toDateKey);
+            var fromDate=moment($scope.lobAdminSearch.fromDateKey,'DD/MM/YYYY');
+            var toDate=moment($scope.lobAdminSearch.toDateKey,'DD/MM/YYYY');
+            //var doctorKey=$scope.lobAdminSearch.doctorKey!=null && $scope.lobAdminSearch.doctorKey!=undefined?$scope.lobAdminSearch.doctorKey:'';
+            //var workerKey=$scope.lobAdminSearch.workerKey!=null && $scope.lobAdminSearch.workerKey!=undefined?$scope.lobAdminSearch.workerKey:'';
             var doctorKey=$scope.lobAdminSearch.doctorKey;
             var workerKey=$scope.lobAdminSearch.workerKey;
             var documentStatusKey=$scope.lobAdminSearch.documentStatusKey.value;
@@ -380,7 +408,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         $scope.selectedBooking=data.data;
                         uploader.formData[0]={};
                         uploader.formData[0].booking_id=$scope.selectedBooking.BOOKING_ID;
-                        uploader.formData[0].company_id=$scope.userInfo.company_id;
+                        uploader.formData[0].company_id=$scope.loginInfo.company_id;
                         uploader.formData[0].worker_name=$scope.selectedBooking.WRK_SURNAME;
                         $("#lob-upload-file-dialog").modal({show:true,backdrop:'static'});
                         $scope.currentNode=scope.$modelValue;
@@ -902,15 +930,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.localNotificationType={
             type1:{
-                header:'Need To Change Status',
+                header:'Change Appointment Status',
                 alias:'passBookingNotChangeStatus'
             },
             type2:{
-                header:'Waiting On Paperwork',
+                header:'Waiting on Paperwork',
                 alias:'upcommingBookingHaveNotDucment'
             },
             type3:{
-                header:'Outstanding Booking',
+                header:'Outstanding reports',
                 alias:'passBookingHaveNotResult'
             }
 
@@ -940,14 +968,14 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * Danh sach cac booking sap toi va client chua upload document
          * tannv.dts@gmail.com
          */
-        $scope.listUpcommingBookingWaitingPaperwork=[];
-        $scope.getListUpcommingBookingWaitingPaperwork=function(doctorId)
+        $scope.listUpcommingBookingHaveNotClientDocument=[];
+        $scope.getUpcommingBookingHaveNotClientDocument=function(doctorId)
         {
-            rlobService.getListUpcommingBookingWaitingPaperwork($scope.bookingType,doctorId)
+            rlobService.getUpcommingBookingHaveNotClientDocument($scope.bookingType,doctorId)
                 .then(function(data){
                     if(data.status=='success')
                     {
-                        $scope.listUpcommingBookingWaitingPaperwork=data.data;
+                        $scope.listUpcommingBookingHaveNotClientDocument=data.data;
                     }
                 },
                 function(error)
@@ -960,14 +988,14 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * Danh sach cac booking da complete nhung chua co result
          * tannv.dts@gmail.com
          */
-        $scope.listBookingOutstandingNotification=[];
-        $scope.getListBookingOutstandingNotification=function(doctorId)
+        $scope.listPassBookingHaveNotResult=[];
+        $scope.getListPassBookingHaveNotResult=function(doctorId)
         {
-            rlobService.getListBookingOutstandingNotification($scope.bookingType,doctorId)
+            rlobService.getPassBookingHaveNotResult($scope.bookingType,doctorId)
                 .then(function(data){
                     if(data.status=='success')
                     {
-                        $scope.listBookingOutstandingNotification=data.data;
+                        $scope.listPassBookingHaveNotResult=data.data;
                     }
                 },
                 function(error)
@@ -989,11 +1017,11 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     $scope.listBookingNotificationHeader=$scope.localNotificationType.type1.header;
                     break;
                 case $scope.localNotificationType.type2.alias:
-                    $scope.listBookingNotification=$scope.listUpcommingBookingWaitingPaperwork;
+                    $scope.listBookingNotification=$scope.listUpcommingBookingHaveNotClientDocument;
                     $scope.listBookingNotificationHeader=$scope.localNotificationType.type2.header;
                     break;
                 case $scope.localNotificationType.type3.alias:
-                    $scope.listBookingNotification=$scope.listBookingOutstandingNotification;
+                    $scope.listBookingNotification=$scope.listPassBookingHaveNotResult;
                     $scope.listBookingNotificationHeader=$scope.localNotificationType.type3.header;
                     break;
             }
@@ -1018,10 +1046,22 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          */
         $scope.updateAdminLocalNotification=function()
         {
-            var doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:null;
+            var doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:'';
             $scope.getPassBookingNotChangeStatus(doctorId);
-            $scope.getListUpcommingBookingWaitingPaperwork(doctorId);
-            $scope.getListBookingOutstandingNotification(doctorId);
+            $scope.getUpcommingBookingHaveNotClientDocument(doctorId);
+            $scope.getListPassBookingHaveNotResult(doctorId);
+        }
+
+        if($scope.loginInfo.UserType.user_type==rlobConstant.userType.doctor)
+        {
+            $scope.getDoctorInfoByUserId()
+                .then($scope.filterBooking)
+                .then($scope.updateAdminLocalNotification)
+        }
+        else
+        {
+            $scope.filterBooking();
+            $scope.updateAdminLocalNotification();
         }
 
         //$scope.updateAdminLocalNotification();
@@ -1174,60 +1214,10 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 ASS_OTHERNAMES:$scope.selectedBooking.ASS_OTHERNAMES,
                 ASS_CONTACT_NO:$scope.selectedBooking.ASS_CONTACT_NO,
                 ASS_EMAIL:$scope.selectedBooking.ASS_EMAIL,
-                ASS_ID:$scope.selectedBooking.ASS_ID,
-                COMPANY_ID:$scope.selectedBooking.COMPANY_ID
+                ASS_ID:$scope.selectedBooking.ASS_ID
             }
             bookingService.setBookingBehalfInfo(bookingBehalfInfo);
             bookingService.setBookingInfoReuse($scope.selectedBooking);
             $state.go("loggedIn.rlob.rlob_booking");
         }
-
-
-
-        //Khoi tao cay, khoi  tao notification
-        //Cot loi cua page
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        $scope.userInfo=$cookieStore.get('userInfo');
-        $scope.doctorInfo=null;
-        $scope.getDoctorInfoByUserId=function()
-        {
-            var deferred=$q.defer();
-            rlobService.getDoctorInfoByUserId($scope.userInfo.id)
-            .then(function(data){
-                if(data.status=='success')
-                {
-                    $scope.doctorInfo=data.data;
-                }
-            },function(err){
-                console.log("Khong the lay thong tin doctor");
-            })
-            .then(function(){
-                deferred.resolve();
-            });
-            
-            return deferred.promise;
-        }
-
-        
-        if($scope.userInfo.user_type==rlobConstant.userType.doctor)
-        {
-            $scope.getDoctorInfoByUserId()
-                .then($scope.filterBooking)
-                .then($scope.updateAdminLocalNotification)
-        }
-        else
-        {
-            $scope.filterBooking();
-            $scope.updateAdminLocalNotification();
-        }
-
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
-        //-----------------------------------------------------------------------------
     });

@@ -89,7 +89,10 @@
                 </td>
                 
                 <td>
-					{{item.Company_name?item.Company_name:item.COMPANY_TEMP+'(temp)'}}
+					{{item.Company_name?item.Company_name:item.COMPANY_TEMP}}
+                    <p style="color:#AF4242;text-align:left" ng-show="item.Company_name==null">
+                        (Please reselect the information of the company)
+                    </p>
                 </td>
                 <td>
                     {{item.Creation_date|date:'dd-MM-yyyy'}}
