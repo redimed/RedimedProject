@@ -4,7 +4,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
 
-		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
+		$scope.currDate = $filter('date')(new Date(),'DD/MM/YYYY hh:mm a');
 
 		$scope.patientInfo = {};
 		$scope.companyInfo = {};
