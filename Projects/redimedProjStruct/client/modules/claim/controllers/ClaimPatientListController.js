@@ -31,7 +31,9 @@ angular.module('app.loggedIn.claim.controllers.patientList', [])
 			}
 		},
 		reload: false,
-		limit: 20
+		limit: 20,
+		Patient_id: $stateParams.patientId,
+		CAL_ID: $stateParams.calId
 	}//end claim
 })
 

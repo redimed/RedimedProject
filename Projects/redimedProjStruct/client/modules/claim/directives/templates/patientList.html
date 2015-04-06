@@ -36,17 +36,17 @@
 			<td></td>
 			<td></td>
 		</tr>
-		<tr ng-repeat="l in claim.list">
+		<tr ng-repeat="l in claim.list" ng-click="onRowClick({row: l})" style="cursor: pointer;">
 			<td>{{l.Claim_no}}</td>
-			<td>{{l.Claim_date | date:'DD/MM/YYYY'}}</td>
+			<td>{{l.Claim_date | filterdate:'DD/MM/YYYY'}}</td>
 			<td>{{l.Injury_name}}</td>
-			<td>{{l.Injury_date | date: 'DD/MM/YYYY'}}</td>
+			<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
-				<a ng-click="claim.dialog.edit(l)">
+				<a ng-click="claim.dialog.edit(l)" ng-if="action.edit">
 					<i class="fa fa-pencil"></i>
 				</a>
 				&nbsp
-				<a ng-click="claim.dialog.remove(l)">
+				<a ng-click="claim.dialog.remove(l)" ng-if="action.remove">
 					<i class="fa fa-remove"></i>
 				</a>
 			</td>

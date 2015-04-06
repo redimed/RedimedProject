@@ -36,10 +36,10 @@
 			</td>
 			<td>{{l.name}}</td>
 			<td>{{l.description}}</td>
-			<td>{{l.Creation_date | date: 'DD/MM/YYYY'}}</td>
+			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
 				<a ng-click="alert.dialog.edit(l)" ng-if="action.edit">
-					<i class="fa fa-pencil"></i> {{permission}}
+					<i class="fa fa-pencil"></i>
 				</a>
 				&nbsp
 				<a ng-click="alert.dialog.remove(l)" ng-if="action.remove">

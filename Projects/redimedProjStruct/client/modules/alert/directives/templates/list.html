@@ -29,7 +29,7 @@
 		<tr ng-repeat="l in alert.list">
 			<td>{{l.name}}</td>
 			<td>{{l.description}}</td>
-			<td>{{l.Creation_date | date: 'DD/MM/YYYY'}}</td>
+			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
 				<a ng-click="alert.dialog.edit(l)">
 					<i class="fa fa-pencil"></i>

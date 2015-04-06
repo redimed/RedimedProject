@@ -19,6 +19,11 @@ angular.module("app.loggedIn.claim.model", [])
     	return detailApi.post({data: data});
     }
 
+    instanceService.addPatient = function(data){
+        var detailApi = appApi.all('addPatient');
+        return detailApi.post({data: data});
+    }
+
     instanceService.edit = function(data){
         var detailApi = appApi.all('edit');
         return detailApi.post({data: data});

@@ -964,7 +964,7 @@ angular.module("app.directive.common", [
     }
 })
 
-.filter('date', function(){
+.filter('filterdate', function(){
     return function(input, date){
         if(!moment(input).isValid()) return '###';
         if(typeof input === 'undefined' && !input) return '###';

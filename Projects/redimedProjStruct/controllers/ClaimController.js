@@ -92,6 +92,22 @@ module.exports = {
 		})
 	},
 
+	postAddPatient: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('cln_patient_claim')
+				.insert(postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: created});
+		})
+		.error(function(error){
+			res.json(500, {error: error});	
+		})
+	},
+
 	postAdd: function(req, res){
 		var postData = req.body.data;
 		var CAL_ID = postData.CAL_ID;
@@ -160,7 +176,6 @@ module.exports = {
 		var sql = knex
 				.column(
 					'cln_claims.Claim_id',
-					'cln_patient_claim.Patient_id',
 					'Claim_date',
 					'Injury_date',
 					knex.raw('IFNULL(Claim_no,"") AS Claim_no'),
