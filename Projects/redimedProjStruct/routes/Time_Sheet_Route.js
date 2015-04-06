@@ -50,3 +50,9 @@ app.post("/api/TimeSheet/post-itemcode-list", TimeSheet.LoadItemCode);
 //EMPLOYEE
 app.post("/api/TimeSheet/post-list-emp", TimeSheet.StepEmployee);
 //END
+
+// REPORT
+app.post("/api/TimeSheet/post-list-deptRP", TimeSheet.LoadDeptReport);
+app.post("/api/TimeSheet/post-list-empRP", TimeSheet.LoadEmpReport);
+app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
+//END REPORT

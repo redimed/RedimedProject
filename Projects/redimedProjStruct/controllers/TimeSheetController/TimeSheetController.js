@@ -1537,6 +1537,168 @@ module.exports = {
                 return;
             });
         //END ROLE
+    },
+
+    LoadDeptReport: function(req, res) {
+        var USER_ID = req.body.USER_ID;
+        var query = "SELECT hr_employee.TITLE FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id  = hr_employee.Employee_ID " +
+            "WHERE users.id = " + USER_ID;
+        db.sequelize.query(query)
+            .success(function(result) {
+                if (result !== undefined && result !== null && result.length !== 0) {
+                    var TITLE = result[0].TITLE;
+                    var queryDept = "";
+                    if (TITLE === "Director") {
+                        //ALL DEPT
+                        queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
+                            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                            "WHERE departments.departmentType = 'Time Sheet'";
+                    } else if (TITLE === "Head of Dept.") {
+                        //ONE DEPT
+                        queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
+                            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                            "WHERE departments.departmentType = 'Time Sheet' AND users.id = " + USER_ID;
+                    }
+                    db.sequelize.query(queryDept)
+                        .success(function(resultDept) {
+                            res.json({
+                                status: "success",
+                                result: resultDept
+                            });
+                            return;
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                result: []
+                            });
+                            return;
+                        });
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+    LoadEmpReport: function(req, res) {
+        var listDept = req.body.listDept;
+        var strListDept = "";
+        for (var i = 0; i < listDept.length; i++) {
+            strListDept += listDept[i].id + ", ";
+        }
+        if (strListDept !== undefined && strListDept !== null && strListDept !== "" && strListDept.length !== 0) {
+            strListDept = strListDept.substring(0, strListDept.length - 2);
+        } else {
+            strListDept = null;
+        }
+        var query = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+            "WHERE departments.departmentid IN (" + strListDept + ")";
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+    LoadReports1: function(req, res) {
+        var info = req.body.info;
+        var weekNoFrom = info.weekNoFrom;
+        var weekNoTo = info.weekNoTo - 1;
+        var listEMP = info.listEMP;
+
+        //STR EMP
+        var strListEmp = "";
+        for (var i = 0; i < listEMP.length; i++) {
+            strListEmp += listEMP[i].id + ", ";
+        }
+        if (strListEmp !== undefined && strListEmp !== null && strListEmp !== "" && strListEmp.length !== 0) {
+            strListEmp = strListEmp.substring(0, strListEmp.length - 2);
+        } else {
+            strListEmp = null;
+        }
+        //END
+
+        var query = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
+            "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
+            "FROM time_tasks_week " +
+            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+            "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo +
+            " GROUP BY hr_employee.Employee_ID, time_tasks.activity_id ORDER BY departments.departmentid";
+        db.sequelize.query(query)
+            .success(function(result) {
+                var querySumTimeCharge = "SELECT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
+                    "C.Employee_ID, C.FirstName, C.LastName, C.departmentName " +
+                    " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
+                    "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, " +
+                    "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
+                    "FROM time_tasks_week " +
+                    "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+                    "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+                    "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+                    "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+                    "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+                    "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
+                db.sequelize.query(querySumTimeCharge)
+                    .success(function(result2) {
+                        // SET TIME_CHARGE
+                        for (var i = 0; i < result2.length; i++) {
+                            result2[i].CONVERT = (result2[i].SUM_CHARGE * 37.25) / 2235;
+                            result2[i].SUM_CHARGE_ACTIVITY = [];
+                            for (var j = 0; j < result.length; j++) {
+                                if (result2[i].Employee_ID === result[j].Employee_ID) {
+                                    result2[i].SUM_CHARGE_ACTIVITY[result[j].activity_id] = result[j].SUM_CHARGE_ACTIVITY;
+                                }
+                            }
+                        }
+                        //END
+                        res.json({
+                            status: "success",
+                            result: result2
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: []
+                        });
+                        return;
+                    });
+
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
     }
 };
 
