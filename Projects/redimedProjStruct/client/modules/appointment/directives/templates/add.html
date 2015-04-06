@@ -1,0 +1,101 @@
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn btn-primary" ng-click="app_patient.dialog.add()">Add Patient</button>
+		&nbsp
+		<button class="btn btn-primary" ng-click="app_patient.dialog.select()">Select Patient</button>
+	</div>
+</div>
+
+<div class="row">
+	<!-- PHONE -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Phone</label>
+			<input id="PHONE" type="text" ng-model="appointment.form.PHONE" class="form-control">
+		</div>
+	</div>
+	<!-- END PHONE -->
+	<!-- APP TYPE -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>App Type</label>
+			<input id="APP_TYPE" type="text" ng-model="appointment.form.APP_TYPE" class="form-control">
+		</div>
+	</div>
+	<!-- END APP TYPE -->
+	<!-- STATUS -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Status</label>
+			<input id="STATUS" type="text" ng-model="appointment.form.STATUS" class="form-control">
+		</div>
+	</div>
+	<!-- END STATUS -->
+	<!-- AVAILABLE -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Available</label>
+			<input id="AVAILABLE" type="text" ng-model="appointment.form.AVAILABLE" class="form-control">
+		</div>
+	</div>
+	<!-- END AVAILABLE -->
+</div>
+
+<div class="row">
+	<!-- ARR_TIME -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Arrange Time</label>
+			<input id="ARR_TIME" custom-date ng-model="appointment.form.ARR_TIME" class="form-control">
+		</div>
+	</div>
+	<!-- END ARR_TIME -->
+	<!-- ATTEND_TIME -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Attend Time</label>
+			<input id="ATTEND_TIME" custom-date ng-model="appointment.form.ATTEND_TIME" class="form-control">
+		</div>
+	</div>
+	<!-- END ATTEND_TIME -->
+	<!-- BILL TO -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Bill To</label>
+			<input id="bill_to" ng-model="appointment.form.bill_to" class="form-control">
+		</div>
+	</div>
+	<!-- END BILL TO -->
+	<!-- ACCOUNT TYPE -->
+	<div class="col-md-3">
+		<div class="form-group">
+			<label>Account Type</label>
+			<select id="ACC_TYPE" ng-model="appointment.form.ACC_TYPE" class="form-control"
+				ng-options="acc.Account_id as acc.Account_name for acc in acc_type.list">
+			</select>
+		</div>
+	</div>
+	<!-- END ACCOUNT TYPE -->
+</div>
+
+<div class="row">
+	<!-- SERVICE ID -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Service</label>
+			<select id="SERVICE_ID" ng-model="appointment.form.SERVICE_ID" class="form-control"
+				ng-options="s.SERVICE_ID as s.SERVICE_NAME for s in service.list">
+			</select>
+		</div>
+	</div>
+	<!-- END SERVICE ID -->
+
+	<!-- NOTES -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Notes</label>
+			<textarea id="NOTES" ng-model="appointment.form.NOTES" class="form-control">
+		</div>
+	</div>
+	<!-- END NOTES -->
+</div>

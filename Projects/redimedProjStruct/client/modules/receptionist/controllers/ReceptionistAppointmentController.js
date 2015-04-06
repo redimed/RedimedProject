@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.appointment.controller", [])
 
-.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, mdtClaimService, localStorageService, sysServiceService) {
+.controller("ReceptionistAppointmentController", function ($scope, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService) {
 	$scope.cancelStatus = function(data, overId, docId){
 		$scope.selectedCalId = data.cals[docId];
 
@@ -71,10 +71,7 @@ angular.module("app.loggedIn.receptionist.appointment.controller", [])
 			CAL_ID: $scope.selectedCalId
 		}
 
-		mdtClaimService.addPatient(post_data).then(function(result){
-			toastr.success("Add Claim Successfully", "Success");
-			angular.element(claimListSelectId).fadeOut();
-		})
+		
 	}
 
 	$scope.addClaim = function(){
