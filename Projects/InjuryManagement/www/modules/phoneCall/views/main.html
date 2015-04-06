@@ -28,9 +28,7 @@
                    ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToggle()">
                 </a>
                 <a class="button custom-bottom-control button-icon icon ion-ios7-monitor" ng-click="viewImage()">
-                <span style="background-color: #E74C3C; width: 10px; height: 10px;">
-
-                </span>
+                    <span style="background-color: #E74C3C; width: 10px; height: 10px;"></span>
                 </a>
                 <a class="button button-cancel_main button-icon icon ion-power" ng-click="cancelCall(offMedia = true)">
                 </a>
@@ -72,6 +70,10 @@
 
         <div class="cus-callerVideo" ng-hide="isImage || blueTooth">
             <div class="cus-callerVideo" id="callerVideo" ng-hide="isImage || blueTooth"></div>
+        </div>
+
+        <div class="cus-selfVideo"  ng-hide="isImage || blueTooth">
+            <div id="selfVideo"  ng-hide="isImage || blueTooth"></div>
         </div>
 
         <div class="wrapper-funCall" ng-show="isAccept">
@@ -185,10 +187,6 @@
                     </ion-list>
                 </ion-content>
             </div>
-        </div>
-
-        <div class="cus-selfVideo"  ng-hide="isImage || blueTooth">
-            <div id="selfVideo"  ng-hide="isImage || blueTooth"></div>
         </div>
     </div>
 </ion-view>
