@@ -1,0 +1,25 @@
+<div class="row">
+	<!-- NAME -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Alert Name</label>
+			<input ng-model="alert.form.name" class="form-control input-sm" id="name">
+		</div>
+	</div>
+	<!-- END NAME -->
+
+	<!-- DESCRIPTION -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label>Description</label>
+			<textarea ng-model="alert.form.description" class="form-control input-sm" id="description"></textarea>
+		</div>
+	</div>
+	<!-- END DESCRIPTION -->
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn btn-primary" ng-click="alert.save()">Save</button>
+	</div>
+</div>

@@ -51,12 +51,14 @@ eval(fs.readFileSync('./routes/phamacist_route.js')+ '')
 
 /* ************************************************ VUONG TEAM ************************************************* */
 
-//eval(fs.readFileSync('./routes/claim.js') + '');
+eval(fs.readFileSync('./routes/claim.js') + '');
+eval(fs.readFileSync('./routes/alert.js') + '');
 eval(fs.readFileSync('./routes/company.js') + '');
 eval(fs.readFileSync('./routes/company_route.js') + '');
 
 
 eval(fs.readFileSync('./routes/timetable.js') + '');
 eval(fs.readFileSync('./routes/appointment.js') + '');
+eval(fs.readFileSync('./routes/insurer.js') + '');
 /* ************************************************ END VUONG TEAM ********************************************* */
 

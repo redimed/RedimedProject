@@ -524,6 +524,7 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/waWorkCover/controllers/waworkcoverGeneralController.js"></script>
     <script type="text/javascript" src="modules/waworkcover/services/waworkcoverServices.js"></script>
     <!--END MODULE WA_WORKCOVER-->
+    
     <!-- REFERRAL MODULE   -->
     <script type="text/javascript" src="modules/referral/Referral.js"></script>
     <script type="text/javascript" src="modules/referral/directives/ReferralDirectives.js"></script>
@@ -829,15 +830,33 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="vendor/tooltipster-master/js/jquery.tooltipster.js"></script>
     <!-- END TOOLTIPS -->
     <!-- ------------------------------------------------------ VUONG TEAM ------------------------------------------------ -->
+    
     <!-- CLAIM -->
     <script type="text/javascript" src="modules/claim/routes.js"></script>
     <script type="text/javascript" src="modules/claim/include.js"></script>
     <script type="text/javascript" src="modules/claim/models/ClaimModel.js"></script>
-    <script type="text/javascript" src="modules/claim/controllers/ClaimIndexController.js"></script>
-    <script type="text/javascript" src="modules/claim/directives/ClaimListDirective.js"></script>
-    <script type="text/javascript" src="modules/claim/directives/ClaimAddDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientEditDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/controllers/ClaimPatientListController.js"></script>
     <!-- END CLAIM -->
+
+    <!-- MODULE ALERT -->
+    <script type="text/javascript" src="modules/alert/routes.js"></script>
+    <script type="text/javascript" src="modules/alert/include.js"></script>
+    <script type="text/javascript" src="modules/alert/models/AlertModel.js"></script>
+    
+    <script type="text/javascript" src="modules/alert/controllers/AlertListController.js"></script>
+    <script type="text/javascript" src="modules/alert/controllers/AlertPatientListController.js"></script>
+
+    <script type="text/javascript" src="modules/alert/directives/AlertListDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertAddDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertEditDirective.js"></script>
+    <!-- END ALERT -->
+
     <!-- ------------------------------------------------------ VUONG TEAM --------------------------------------------- -->
+
     <!-- MODULE COMPANIES -->
     <script type="text/javascript" src="modules/company/routes.js"></script>
     <script type="text/javascript" src="modules/company/include.js"></script>

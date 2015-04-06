@@ -1,0 +1,64 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>
+				Creation Date&nbsp
+				<a ng-if="alert.search.Creation_date === 'asc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'desc'})">
+					<i class="fa fa-caret-up"></i>
+				</a>
+				<a ng-if="alert.search.Creation_date === 'desc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'asc'})">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<input class="form-control input-sm" ng-model="alert.search.name" ng-enter="alert.onSearch()">
+			</td>
+			<td>
+				<input class="form-control input-sm" ng-model="alert.search.description" ng-enter="alert.onSearch()">
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr ng-repeat="l in alert.list">
+			<td>{{l.name}}</td>
+			<td>{{l.description}}</td>
+			<td>{{l.Creation_date | date: 'DD/MM/YYYY'}}</td>
+			<td>
+				<a ng-click="alert.dialog.edit(l)">
+					<i class="fa fa-pencil"></i>
+				</a>
+				&nbsp
+				<a ng-click="alert.dialog.remove(l)">
+					<i class="fa fa-remove"></i>
+				</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<pagination boundary-links="true" total-items="alert.count" ng-model="alert.search.page" 
+    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+    items-per-page="alert.search.limit" max-size="alert.search.max_size" ng-change="alert.onPage(alert.search.page)">
+</pagination>
+
+<script type="text/ng-template" id="dialogAlertRemove">
+    <div class="modal-body">
+        <p>Do you want to remove this alert ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="dialogAlertEdit">
+    <div class="modal-body">
+        <alert-edit alert-id="alert.id" success="alert.success"></alert-edit>
+    </div>
+ </script>

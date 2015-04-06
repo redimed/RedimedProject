@@ -1,0 +1,8 @@
+<button class="btn btn-primary" ng-click="alert.dialog.add()">Add Alert</button>
+<alert-list limit="alert.limit" reload="alert.reload"></alert-list>
+
+<script type="text/ng-template" id="dialogAlertAdd">
+    <div class="modal-body">
+    	<alert-add success="alert.success"></alert-add>
+    </div>
+ </script>
