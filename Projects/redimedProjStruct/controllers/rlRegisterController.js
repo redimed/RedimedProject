@@ -370,6 +370,7 @@ module.exports =
             if(result.affectedRows>0)
             {
                 res.json({status:'success'});
+                emailConfirm(req,res,updateTo,status);
             }
             else
             {
