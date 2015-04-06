@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.company.directives.add', [])
 
-.directive('addCompany', function(CompanyModel, $filter,$state,$modal  ){
+.directive('addCompany', function(CompanyModel, $filter,$state,$modal,$stateParams,toastr,$cookieStore,ConfigService){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/add.html',
@@ -37,21 +37,42 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        Insurer:'',
 		        Phone:'',
 		        Site_medic:'',
-		        User_id:'',
+		        User_id: $cookieStore.get('userInfo').id,
 		        isPO:'',
 		        isExtra:'',
 		        parent_id :'',
-		        listInsurerid :[]
+		        listInsurerid :[],
+		        patient_id :$stateParams.patientId
+			}
+
+			var remove = function(row){
+				$modal.open({
+					templateUrl:  'modules/company/dialogs/templates/remove.html',
+					controller: 'CompanyRemoveDialog',
+					size: 'sm',
+					resolve: {
+						row: function(){
+							return row;
+						}
+					}
+				})
+			    .result.then(function(row){
+			    	CompanyModel.removeInsurer(row)
+					.then(function(response){
+						toastr.success('Delete Successfully');
+					}, function(error){})
+			    })
 			}
 			var addCompany = function(size){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addParent.html',
 			      controller: 'CompanyAddParentDialgosController',
-			      size :'lg'
+			      size :''
 			    })
 			    .result.then(function(row){
 			    	scope.company.Company_name_Parent = row.Company_name;
 			    	scope.company.form.parent_id = row.id;
+			    	scope.company.father_id = row.id;
 			    })
 			}
 
@@ -77,23 +98,28 @@ angular.module('app.loggedIn.company.directives.add', [])
 				})
 			}
 			var save = function(){
+				ConfigService.beforeSave(scope.company.errors);
 		    	var postData = angular.copy(scope.company.form);
 		    	postData.listInsurerid = scope.company.listTemp;
-		    	console.log(postData);
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
+		  				toastr.success('Add Company Successfully');
 		  				$state.go('loggedIn.company');
 		  			}, function(error){
+		  				scope.company.errors = angular.copy(error.data.errors);
+					   ConfigService.beforeError(scope.company.errors);
 		  			})
 		    }
 		    scope.company = {
 		    	form:form,
 		    	listInsurer:[],
 		    	listTemp:[],
+		    	errors:[],
 		    	Company_name_Parent:'',
-		    	save :function(){save();},
+		    	save: function(){ save(); },
 		    	addCompany :function(){addCompany();},
-		    	addInsurer :function(){addInsurer();}
+		    	addInsurer :function(){addInsurer();},
+		    	remove : function(row){remove(row);}
 		    }
 		}//end link
 		

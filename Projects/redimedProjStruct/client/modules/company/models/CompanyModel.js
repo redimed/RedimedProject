@@ -2,32 +2,43 @@ angular.module("app.loggedIn.company.models", [])
     
 .factory("CompanyModel", function (Restangular) {
 
-   var mainModel = {};
+   var instanceService = {};
     var mainApi = Restangular.all('api/meditek/v1/company');
 
-    mainModel.list = function(data){
-     var detailApi = mainApi.one("list");
-        return detailApi.get();
+   instanceService.list = function(data){
+        var instanceApi = mainApi.all('list');
+        return instanceApi.post({data: data});
     }
-
-    mainModel.add = function(data){
+    instanceService.add = function(data){
         var instanceApi = mainApi.all('add');
         return instanceApi.post({data: data});
     }
-    mainModel.listParent = function(data){
+    instanceService.listParent = function(data){
         var instanceApi = mainApi.all('listParent');
         return instanceApi.post({data: data});
     }
-     mainModel.byCompanyId = function(data){
+     instanceService.byCompanyId = function(data){
         var instanceApi = mainApi.all('byCompanyId');
         return instanceApi.post({data: data});
     }
 
-     mainModel.listInsurer = function(data){
+     instanceService.listInsurer = function(data){
         var instanceApi = mainApi.all('listInsurer');
         return instanceApi.post({data: data});
     }
-    return mainModel;
+      instanceService.edit = function(data){
+        var instanceApi = mainApi.all('edit');
+        return instanceApi.post({data: data});
+    }
+    instanceService.remove = function(data){
+        var instanceApi = mainApi.all('remove');
+        return instanceApi.post({data: data});
+    }
+    instanceService.removeInsurer = function(data){
+        var instanceApi = mainApi.all('removeInsurer');
+        return instanceApi.post({data: data});
+    }
+    return instanceService;
 })
 
 
@@ -62,13 +73,13 @@ angular.module("app.loggedIn.company.models", [])
 // angular.module('app.loggedIn.company.models', [])
 
 // .factory('CompanyModel', function(Restangular){
-// 	var mainModel = {};
+// 	var instanceService = {};
 // 	var mainApi = Restangular.all('company');
 
-// 	mainModel.list = function(data){
+// 	instanceService.list = function(data){
 // 		var instanceApi = mainApi.all('list');
 // 		return instanceApi.post({data: data});
 // 	}
-// 	return mainModel;
+// 	return instanceService;
 
 // })

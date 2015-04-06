@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.company.directives.list', [])
 
-.directive('listCompany', function(CompanyModel, $filter,$state,$stateParams){
+.directive('listCompany', function(CompanyModel, $filter,$state,$stateParams,$modal,toastr){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/list.html',
@@ -14,16 +14,39 @@ angular.module('app.loggedIn.company.directives.list', [])
 				page: 1,
 				offset: 0,
 				limit: parseInt(scope.limit),
-				patient_id:'',
+				company_id :$stateParams.companyId,
+				patient_id :$stateParams.patientId,
 				Company_name:'',
 				Industry:'',
 				Addr:'',
 				country:''
 			}
 
+			var remove = function(row){
+				$modal.open({
+					templateUrl:  'modules/company/dialogs/templates/remove.html',
+					controller: 'CompanyRemoveDialog',
+					size: 'sm',
+					resolve: {
+						row: function(){
+							return row;
+						}
+					}
+				})
+			    .result.then(function(row){
+			    	CompanyModel.remove(row)
+					.then(function(response){
+						toastr.success('Delete Successfully');
+						scope.company.load();
+					}, function(error){})
+			    })
+			}
+
+			scope.clickEdit = function(row){
+					$state.go('loggedIn.company.edit',{companyId:row.id});
+			}
 			var load = function(){
 				scope.company.loading = true;
-				scope.company.search.patient_id = $stateParams.patient_id;
 				CompanyModel.list(search).then(function(response){
 					console.log(response.data);
 					scope.company.loading = false;
@@ -71,7 +94,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 				list: [],
 				load: function(){ load(); },
 				loadPage: function(page){ loadPage(page); },
-				onSearch: function(option){ onSearch(option)}
+				onSearch: function(option){ onSearch(option)},
+				remove : function(size){remove(size)}
 			}
 
 			/* LOAD FIRST */

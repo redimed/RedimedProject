@@ -10,16 +10,20 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 			onRowClick: '&'
 		},
 		link: function(scope, elem, attrs){
+			scope.setPage = function(page){
+				scope.company.search.offset = (page-1)*scope.company.search.limit;
+				scope.company.load();
+			}
 			var search = {
 				page: 1,
 				offset: 0,
-				limit: 10,
+				limit: 7,
+				max_size: 5,
 				Company_name: '',
 				Industry:'',
 				Addr:'',
 				country:''
 			}
-
 			var load = function(){
 				scope.company.loading = true;
 				CompanyModel.listParent(search).then(function(response){
@@ -27,7 +31,6 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 					scope.company.error = '';
 					scope.company.list = response.data;
 					scope.company.count = response.count;
-					scope.company.search.page = 1;
 				}, function(error){
 					scope.company.loading = false;
 					scope.company.error = $filter('translate')(error.data.code);
@@ -54,11 +57,7 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 				scope.company.load();
 				loadPage(1);
 			}
-			
-			var loadPage = function(page){
-				scope.company.search.offset = (page-1)*scope.company.search.limit;
-				scope.company.load();
-			}
+		
 			
 			scope.company = {
 				search: search,

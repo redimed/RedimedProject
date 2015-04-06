@@ -1,4 +1,4 @@
-<div class="portlet box blue ng-scope">
+ <div class="portlet box blue ng-scope">
     <div class="portlet-title">
         <div class="caption">
             <i class="fa fa-medkit"></i> Add Company
@@ -12,12 +12,19 @@
     </div>
     <div class="portlet-body">
 		 <!-- FORM --> 
-		   	<form>
+	   	<form name="FirstForm" novalidate>
 			<div class="row">
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Company_name" required >Company name</label>
-				    <input type="text" class="form-control" ng-model="company.form.Company_name">
+				    <label for="company.form.User_id">User id</label>
+				    <input type="text" class="form-control" ng-model="company.form.User_id" disabled="true">
+				 </div>
+			  </div>
+			  <div class="col-md-3">
+			  	<div class="form-group">
+				    <label for="company.form.Company_name">Company name</label>
+				    <input type="text" class="form-control" ng-model="company.form.Company_name" name="CompanyName" id="Company_name">
+				    <!-- <span ng-show="FirstForm.CompanyName.$error.required">Required Company Name</span> -->
 				 </div>
 			  </div>
 			  <div class="col-md-3">
@@ -32,12 +39,6 @@
 				    <input type="text" class="form-control" ng-model="company.form.Addr">
 				 </div>
 			  </div>
-			  <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.postcode">Postcode</label>
-				    <input type="text" class="form-control" ng-model="company.form.postcode">
-				 </div>
-			  </div>
 			</div>
 
 			<div class="row">
@@ -47,10 +48,10 @@
 				    <input type="text" class="form-control" ng-model="company.form.PO_number">
 				 </div>
 			  </div>
-			   <div class="col-md-3">
+			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.User_id">User id</label>
-				    <input type="text" class="form-control" ng-model="company.form.User_id">
+				    <label for="company.form.postcode">Postcode</label>
+				    <input type="text" class="form-control" ng-model="company.form.postcode">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
@@ -95,38 +96,37 @@
 			<div class="row">
 			  <div class="col-md-2">
 			  	<div class="form-group">
-				    
-				    <input type="checkbox" ng-model="company.form.isExtra" ng-true-value=1 ng-false-value=0>
+				    <input type="checkbox" id="company.form.isExtra" ng-model="company.form.isExtra"  ng-true-value=1 ng-false-value=0>
 				    <label for="company.form.isExtra">Is Extra</label>
 				 </div>
 			  </div>
 			  <div class="col-md-2">
 			  	<div class="form-group">
-				    <input type="checkbox" ng-model="company.form.isPO" ng-true-value=1 ng-false-value=0>
+				    <input type="checkbox" id="company.form.isPO" ng-model="company.form.isPO" ng-true-value=1 ng-false-value=0>
 				     <label for="company.form.isPO">Is PO</label>
 				 </div>
 			  </div>
 			  <div class="col-md-2">
 			  	<div class="form-group">
-				    <input type="checkbox" ng-model="company.form.isProject" ng-true-value=1 ng-false-value=0>
+				    <input type="checkbox" id="company.form.isProject" ng-model="company.form.isProject" ng-true-value=1 ng-false-value=0>
 				     <label for="company.form.isProject">Is Project</label>
 				 </div>
 			  </div>
 			  <div class="col-md-2">
 			  	<div class="form-group">
-				    <input type="checkbox" ng-model="company.form.isCalendar" ng-true-value=1 ng-false-value=0>
+				    <input type="checkbox" id="company.form.isCalendar" ng-model="company.form.isCalendar" ng-true-value=1 ng-false-value=0>
 				    <label for="company.form.isCalendar">Is Calendar</label>
 				 </div>
 			  </div>
 			  <div class="col-md-2">
 			  	<div class="form-group">
-				    <input type="checkbox" ng-model="company.form.isInvoicetextToUser" ng-true-value=1 ng-false-value=0>
+				    <input type="checkbox" id="company.form.isInvoicetextToUser" ng-model="company.form.isInvoicetextToUser" ng-true-value=1 ng-false-value=0>
 				    <label for="company.form.isInvoicetextToUser">Is Invoice</label>
 				 </div>
 			  </div>
 			   <div class="col-md-2">
 			  	<div class="form-group">    
-				    <input type="checkbox" ng-model="company.form.isAddContacttextToResult" ng-true-value=1 ng-false-value=0>
+				    <input type="checkbox" id="company.form.isAddContacttextToResult" ng-model="company.form.isAddContacttextToResult" ng-true-value=1 ng-false-value=0>
 				    <label for="company.form.isAddContacttextToResult">Is Add To Result</label>
 				 </div>
 			  </div>
@@ -150,10 +150,10 @@
 				    <input type="text" class="form-control" ng-model="company.form.default_status">
 				 </div>
 			  </div>
-			  <div class="col-md-3">
+			   <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.father_id">Father Id</label>
-				    <input type="text" class="form-control" ng-model="company.form.father_id">
+				    <label for="company.form.Phone">Phone</label>
+				    <input type="text" class="form-control" ng-model="company.form.Phone" >
 				 </div>
 			  </div>
 			</div>
@@ -199,16 +199,17 @@
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Phone">Phone</label>
-				    <input type="text" class="form-control" ng-model="company.form.Phone" >
+				    <label for="company.form.father_id">Father Id</label>
+				    <input type="text" class="form-control" ng-model="company.father_id" disabled="true">
 				 </div>
 			  </div>
+			 
 			  <!-- parent_id -->
 			  <div class="col-md-3">
 			  	<div class="form-group">
 				    <label for="company.form.parent_id">Parent Company</label>
 				   <!--  <input type="text" class="form-control" ng-model="company.form.parent_id" placeholder="parent_id"> -->
-				   <button class="form-control" ng-model="company.form.parent_id" ng-click="company.addCompany()">
+				   <button class="form-control btn btn-default green" ng-model="company.form.parent_id" ng-click="company.addCompany()">
 				   	<span  ng-if="company.Company_name_Parent">{{company.Company_name_Parent}}</span>
 					<span  ng-if="!company.Company_name_Parent">Select Parent Company</span>
 				   </button>
@@ -218,18 +219,16 @@
 			 <!-- parent_id -->
 			</div>
 			<div class="row">
-			  <div class="col-md-3">
+			  <div class="col-md-4">
 			  </div>
-			  <div class="col-md-6">
+			  <div class="col-md-4">
 			  	<div class="form-group">
-				    <label for="company.form.Insurer">Insurer</label>
-				   <!--  <input type="text" class="form-control" ng-model="company.form.Insurer" placeholder="Insurer"> -->
-				   <button class="form-control" ng-model="company.form.Insurer" ng-click="company.addInsurer()">Select Insurer</button>
+				   <button class="form-control btn btn-default green" ng-model="company.form.Insurer" ng-click="company.addInsurer()">Select Insurer</button>
 				 </div>
 			  </div>
 			<!-- add -->
 			</div>
-			<!-- -- -->
+			<!-- -->
 			<div class="row">
 				<div class="col-md-12">
 					<table class="mdt-table">
@@ -237,12 +236,14 @@
 							<tr>
 								<th>Insurer Name</th>
 								<th>Address</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="row in company.listInsurer track by $index">
 								<td>{{row.insurer_name}}</td>
 								<td>{{row.address}}</td>
+								<td align="center"><a><i class="fa fa-times" ng-click="company.remove(row)"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
