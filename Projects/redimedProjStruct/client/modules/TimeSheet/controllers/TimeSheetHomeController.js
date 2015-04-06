@@ -17,7 +17,7 @@ angular.module("app.loggedIn.TimeSheet.Home.Controller", [])
                 });
                 toastr.error("You not permission on Timesheet system!", "Fail");
             } else if (response.status === "success") {
-                localStorageService.set("position", response.position[0].NODE_CODE);
+                localStorageService.set("position", response.position[0].TITLE);
                 $scope.position = localStorageService.get("position");
             } else {
                 //catch exception

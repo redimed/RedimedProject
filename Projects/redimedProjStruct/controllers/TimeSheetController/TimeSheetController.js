@@ -1472,10 +1472,13 @@ module.exports = {
     //ROLE
     LoadRole: function(req, res) {
         var USER_ID = req.body.USER_ID;
-        var query = "SELECT NODE_CODE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
+        var query = "SELECT hr_employee.TITLE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
             "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
             " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
-            "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
+            "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+            "INNER JOIN users ON users.id = sys_hierarchies_users.USER_ID " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
             " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
         db.sequelize.query(query)
             .success(function(result) {
@@ -1638,7 +1641,24 @@ module.exports = {
         }
         //END
 
-        var query = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
+        // SELECT DEPT
+        var queryDept = "SELECT DISTINCT departments.departmentName, departments.departmentid FROM departments " +
+            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN time_tasks_week ON time_tasks_week.user_id  = users.id " +
+            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " ORDER BY departments.departmentName ASC";
+        // END DEPT
+
+        // var queryEmp = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.employee_id, departments.departmentid FROM departments " +
+        //     "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+        //     "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        //     "INNER JOIN time_tasks_week.user_id  = users.id " +
+        //     "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+        //     "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " ORDER BY departments.departmentName";
+
+        // SELECT TIMECHARGE ACTIVITY
+        var queryActivity = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
             "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
             "FROM time_tasks_week " +
             "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
@@ -1648,38 +1668,67 @@ module.exports = {
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo +
             " GROUP BY hr_employee.Employee_ID, time_tasks.activity_id ORDER BY departments.departmentid";
-        db.sequelize.query(query)
-            .success(function(result) {
-                var querySumTimeCharge = "SELECT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
-                    "C.Employee_ID, C.FirstName, C.LastName, C.departmentName " +
-                    " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
-                    "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, " +
-                    "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
-                    "FROM time_tasks_week " +
-                    "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-                    "INNER JOIN users ON users.id = time_tasks_week.user_id " +
-                    "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-                    "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
-                    "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
-                    "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
+        // END ACTIVITY
+
+        // SELECT TIMECHARGE ALL
+        var querySumTimeCharge = "SELECT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
+            "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
+            " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
+            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, " +
+            "hr_employee.FirstName, hr_employee.LastName, departments.departmentName, departments.departmentid " +
+            "FROM time_tasks_week " +
+            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+            "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
+        // END ALL
+        db.sequelize.query(queryDept)
+            .success(function(resultDept) {
                 db.sequelize.query(querySumTimeCharge)
-                    .success(function(result2) {
-                        // SET TIME_CHARGE
-                        for (var i = 0; i < result2.length; i++) {
-                            result2[i].CONVERT = (result2[i].SUM_CHARGE * 37.25) / 2235;
-                            result2[i].SUM_CHARGE_ACTIVITY = [];
-                            for (var j = 0; j < result.length; j++) {
-                                if (result2[i].Employee_ID === result[j].Employee_ID) {
-                                    result2[i].SUM_CHARGE_ACTIVITY[result[j].activity_id] = result[j].SUM_CHARGE_ACTIVITY;
+                    .success(function(resultTimeCharge) {
+                        db.sequelize.query(queryActivity)
+                            .success(function(resultActivity) {
+                                for (var i = 0; i < resultDept.length; i++) {
+                                    resultDept[i].listEmployee = [];
+                                    for (var j = 0; j < resultTimeCharge.length; j++) {
+                                        if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
+                                            //PUSH DATA
+                                            resultDept[i].listEmployee.push({
+                                                employee_id: resultTimeCharge[j].Employee_ID,
+                                                name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
+                                                time_charge: resultTimeCharge[j].SUM_CHARGE,
+                                                time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
+                                                over_time: resultTimeCharge[j].SUM_OVER_TIME,
+                                                SUM_CHARGE_ACTIVITY: [],
+                                                activity_id: resultTimeCharge[j].activity_id
+                                            });
+                                            //END
+                                            for (var k = 0; k < resultActivity.length; k++) {
+                                                if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
+                                                    resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    //RES.JSON
+                                    res.json({
+                                        status: "success",
+                                        result: resultDept
+                                    });
+                                    return;
+                                    //END
                                 }
-                            }
-                        }
-                        //END
-                        res.json({
-                            status: "success",
-                            result: result2
-                        });
-                        return;
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "error",
+                                    result: []
+                                });
+                                return;
+                            });
                     })
                     .error(function(err) {
                         console.log("*****ERROR:" + err + "*****");

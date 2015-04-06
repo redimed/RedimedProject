@@ -63,7 +63,6 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
             TimeSheetService.LoadReports1(info).then(function(response) {
                 if (response.status === "success") {
                     $scope.reports1 = response.result;
-                    console.log($scope.reports1);
                 } else if (response.status === "error") {
                     $state.go("loggedIn.TimeSheetHome", null, {
                         "reload": true
@@ -79,6 +78,43 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
             });
 
         };
+
+        // SET COLOR
+        $scope.setColorDept = function(l) {
+            var countHeight = 0;
+            for (var i = 0; i < l.listEmployee.length; i++) {
+                if (l.listEmployee[i].over_time !== 0 || l.listEmployee[i].time_in_lieu !== 0) {
+                    countHeight += 3;
+                } else {
+                    countHeight += 1;
+                }
+            }
+            return {
+                height: (countHeight * 21) + 'px'
+            };
+        };
+
+        $scope.setColorEmp = function(emp) {
+            if (emp.time_in_lieu !== 0 || emp.over_time !== 0) {
+                return {
+                    height: (3 * 21) + 'px'
+                };
+            } else {
+                return {
+                    height: (1 * 21) + 'px'
+                };
+            }
+        };
+        // END COLOR
+
+        // GET EMP INIT
+        $scope.getEmp = function(index) {
+            if ($scope.reports1[index] !== undefined || $scope.reports1[index] !== null) {
+                return $scope.reports1[index].listEmployee;
+            }
+            return [];
+        };
+        // END
 
         // END DEPT
         TimeSheetService.LoadDeptReport($cookieStore.get("userInfo").id).then(function(response) {
