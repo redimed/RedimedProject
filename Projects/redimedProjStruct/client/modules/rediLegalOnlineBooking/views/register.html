@@ -255,7 +255,7 @@ input:focus ~ .highlight {
             <div class="row">
                 <div class="col-md-12">
                     <div class="group">      
-                        <input ng-model="user.email" id="email" name="email" class="confix-input" type="text" ng-maxlength="50" ng-pattern="/^\w+@[a-zA-Z_]/" required>
+                        <input ng-model="user.email" id="email" name="email" class="confix-input" type="text" ng-maxlength="50" ng-pattern="regexEmail" required>
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label class="confix-label">Email <span style="color: red;">*</span></label>
