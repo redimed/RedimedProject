@@ -519,20 +519,15 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.BOOKING_TYPE=$scope.bookingType;
             // console.log($scope.WRK_DATE_OF_INJURY_TEMP);
             // console.log($scope.WRK_DOB_TEMP);
-            if($scope.WRK_DOB_TEMP==undefined)
+            if($scope.WRK_DOB_TEMP!=undefined && $scope.WRK_DOB_TEMP!=null)
             {
-                alert("Worker's birthay fail!");
-                return;
+                $scope.newBooking.WRK_DOB=moment($scope.WRK_DOB_TEMP).format("YYYY-MM-DD") ;
+            }
+            if($scope.WRK_DATE_OF_INJURY_TEMP!=undefined && $scope.WRK_DATE_OF_INJURY_TEMP!=null)
+            {
+                $scope.newBooking.WRK_DATE_OF_INJURY=moment($scope.WRK_DATE_OF_INJURY_TEMP).format("YYYY-MM-DD");
             }
 
-            $scope.newBooking.WRK_DOB=moment($scope.WRK_DOB_TEMP).format("YYYY-MM-DD") ;
-            if($scope.WRK_DATE_OF_INJURY_TEMP==undefined)
-            {
-                alert("Worker's birthay fail!");
-                return;
-            }
-
-            $scope.newBooking.WRK_DATE_OF_INJURY=moment($scope.WRK_DATE_OF_INJURY_TEMP).format("YYYY-MM-DD");
             $scope.showDialogAddSuccess=function()
             {
                 $("#lob-client-add-booking-success").modal({show:true,backdrop:'static'});

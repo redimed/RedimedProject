@@ -246,7 +246,7 @@ module.exports =
     	var currentPage=kiss.checkData(searchInfo.currentPage)?searchInfo.currentPage:'';
         var itemsPerPage=kiss.checkData(searchInfo.itemsPerPage)?searchInfo.itemsPerPage:'';
         var startIndex=((currentPage-1)*itemsPerPage);
-
+        //var isActive=kiss.checkData(req.body.isActive)?req.body.isActive:'';
     	if(!kiss.checkListData(userId))
     	{
     		kiss.exlog("getRedilegalUsers","Loi data truyen den");
