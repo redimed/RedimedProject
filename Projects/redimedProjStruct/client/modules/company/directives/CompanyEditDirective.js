@@ -91,8 +91,10 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				ConfigService.beforeSave(scope.company.errors);
 				var postData = angular.copy(scope.company.form);
 				postData.listInsurerid = scope.company.listInsurer;
-				CompanyModel.edit(postData).then(function(response){
-					console.log(response);
+				CompanyModel.edit(postData)
+				.then(function(response){
+					toastr.success('Edit Company Successfully');
+		  					$state.go('loggedIn.company');
 				}, function(error){
 					scope.company.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.company.errors);

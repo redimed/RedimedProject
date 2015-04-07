@@ -1,54 +1,23 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Leave
+    </div>
+    <div class="panel-body">
+    	<div class="form-group">
+            <label class="control-label col-md-2 col-sm-3 col-xs-6">From Date</label>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <input placeholder="From Date" ng-model="leave.form.from_date" 
+                    id ="from_date" class="form-control" custom-date>
+            </div>
+             <label class="control-label col-md-2 col-sm-3 col-xs-6">To Date</label>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <input placeholder="To Date" ng-model="leave.form.to_date" 
+                    id="to_date" class="form-control" custom-date>
+            </div>
 
-<div class="panel-body">
-	<div class="form-group">
-        <label class="control-label col-md-2 col-sm-3 col-xs-6">
-            From Time
-            <span class="required"> * </span>
-        </label>
-        <div class="col-md-2 col-sm-3 col-xs-6">
-            <input placeholder="From Time" ng-model="objectMap.from_time" 
-            	name="from_time" class="form-control" custom-date>
-        </div>
-         <label class="control-label col-md-2 col-sm-3 col-xs-6">
-            To Time
-            <span class="required"> * </span>
-        </label>
-        <div class="col-md-2 col-sm-3 col-xs-6">
-            <input placeholder="To Time" ng-model="objectMap.to_time" 
-                name="to_time" class="form-control" custom-date>
-        </div>
-
-        <div class="col-md-2 col-sm-3 col-xs-6">
-        	<button class="btn green" ng-click="submitLeave()"> <i class="fa fa-send"></i> Submit</button>
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <button class="btn green" ng-click="leave.submitLeave()"> <i class="fa fa-send"></i> Submit</button>
+            </div>
         </div>
     </div>
-
 </div>
-    <div class="clearfix" style="margin: 10px 5px;"></div>
-    <div ng-if="isSubmit" class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Booked Appointments</h3>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>From time</th>
-            <th>To time</th>
-            <th>Patients</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="appt in booking" >
-            <td>{{$index + 1}}</td>
-            <td>{{appt.FROM_TIME}}</td>
-            <td>{{appt.TO_TIME}}</td>
-            <td>
-            	<span ng-repeat="p in appt.PATIENTS">
-            	   <a ng-click="goToAppointment(appt, p)">{{p.Patient_name}}</a>	|
-            	</span> 
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
