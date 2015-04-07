@@ -196,6 +196,8 @@ module.exports = {
 				.orderBy('cln_claims.Injury_date', postData.Injury_date)
 				.toString();
 
+		sql = sql.replace(/\"/g, '"');
+
 		var count_sql = knex('cln_claims')
 				.whereNotExists(function(){
 					this.select('*').from('cln_patient_claim')
@@ -207,6 +209,8 @@ module.exports = {
 				.where(knex.raw('IFNULL(Claim_no,"") LIKE "%'+postData.Claim_no+'%"'))
 				.where(knex.raw('IFNULL(Injury_name,"") LIKE "%'+postData.Injury_name+'%"'))
 				.toString();
+
+		count_sql = count_sql.replace(/\"/g, '"');
 
 		db.sequelize.query(sql)
 		.success(function(rows){
@@ -247,6 +251,8 @@ module.exports = {
 				.orderBy('cln_claims.Injury_date', postData.Injury_date)
 				.toString();
 
+		sql = sql.replace(/\"/g, '"');
+
 		var count_sql = knex('cln_claims')
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.count('cln_claims.Claim_id as a')
@@ -255,6 +261,8 @@ module.exports = {
 				.where(knex.raw('IFNULL(Injury_name,"") LIKE "%'+postData.Injury_name+'%"'))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				.toString();
+
+		count_sql = count_sql.replace(/\"/g, '"');
 
 		db.sequelize.query(sql)
 		.success(function(rows){
