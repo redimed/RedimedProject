@@ -11,8 +11,8 @@ module.exports = {
 		var sql = knex('cln_alerts')
 			.column(
 				'cln_alerts.id',
-				knex.raw('IFNULL(name,"") AS name'),
-				knex.raw('IFNULL(description,"") AS description'),
+				knex.raw('IFNULL(name,\'\') AS name'),
+				knex.raw('IFNULL(description,\'\') AS description'),
 				'cln_alerts.Creation_date'
 			)
 			.whereNotExists(function(){
@@ -21,8 +21,8 @@ module.exports = {
 				.where('cln_patient_alerts.patient_id', postData.Patient_id);
 			})
 			.where('cln_alerts.isenable', 1)
-			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
-			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
 			.offset(postData.offset)
 			.orderBy('cln_alerts.Creation_date', postData.Creation_date)
@@ -36,15 +36,15 @@ module.exports = {
 				.where('cln_patient_alerts.patient_id', postData.Patient_id);
 			})
 			.where('cln_alerts.isenable', 1)
-			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
-			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
 
 		db.sequelize.query(sql)
 		.success(function(rows){
 			db.sequelize.query(count_sql)
 			.success(function(count){
-				res.json({data: rows, count: count[0].a});
+				res.json({data: rows, count: count[0].a, sql: sql});
 			})
 			.error(function(error){
 				res.json(500, {error: error});
@@ -61,15 +61,15 @@ module.exports = {
 		var sql = knex('cln_alerts')
 			.column(
 				'cln_alerts.id',
-				knex.raw('IFNULL(name,"") AS name'),
-				knex.raw('IFNULL(description,"") AS description'),
+				knex.raw('IFNULL(name,\'\') AS name'),
+				knex.raw('IFNULL(description,\'\') AS description'),
 				'cln_alerts.Creation_date'
 			)
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
 			.where('cln_alerts.isenable', 1)
-			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
-			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
 			.offset(postData.offset)
 			.orderBy('cln_alerts.Creation_date', postData.Creation_date)
@@ -80,8 +80,8 @@ module.exports = {
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
 			.where('cln_alerts.isenable', 1)
-			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
-			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
 
 		db.sequelize.query(sql)
@@ -181,9 +181,20 @@ module.exports = {
 			.del()
 			.toString();
 
+		var sub_sql = knex('cln_patient_alerts')
+			.where('alert_id', postData.id)
+			.del()
+			.toString();
+
 		db.sequelize.query(sql)
 		.success(function(del){
-			res.json({data: del});
+			db.sequelize.query(sub_sql)
+			.success(function(del){
+				res.json({data: del});
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})
 		})
 		.error(function(error){
 			res.json(500, {error: error});
@@ -281,7 +292,20 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {error: error});
 		})
-	}
+	},
 
-	
+	postSelect: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('cln_patient_alerts')
+				.insert(postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: created});
+		}, function(error){
+			res.json(500, {error: error});
+		})
+	}
 }

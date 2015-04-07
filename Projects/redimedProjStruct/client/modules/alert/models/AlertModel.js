@@ -39,5 +39,10 @@ angular.module("app.loggedIn.alert.model", [])
         return detailApi.post({data: data});   
     }
 
+    instanceService.select = function(data){
+        var detailApi = appApi.all('select');
+        return detailApi.post({data: data});
+    }
+
     return instanceService;
 })

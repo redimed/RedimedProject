@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.alert.directives.patientList', [])
 
-.directive('alertPatientList', function($modal, AlertModel, toastr){
+.directive('alertPatientList', function($modal, $stateParams, AlertModel, toastr){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -8,7 +8,8 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			limit: '=',
 			reload: '=',
 			permission: '@',
-			withoutPatient: '@'
+			withoutPatient: '@',
+			onSavecheck: '&'
 		},
 		templateUrl: 'modules/alert/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
@@ -113,6 +114,21 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				scope.alert.load();
 			}
 
+			var onCheckbox = function(option){
+				if(option.value){
+					scope.alert.checkbox.push({patient_id: scope.patientId, cal_id: $stateParams.calId, alert_id: option.list.id});
+				}else{
+					var i = 0;
+					_.forEach(scope.alert.checkbox, function(checkbox){
+						if(checkbox.alert_id === option.list.id){
+							scope.alert.checkbox.splice(i, 1);							
+							return;
+						}
+						i++;
+					})
+				}
+			}
+
 			scope.alert = {
 				dialog: {
 					remove: function(list){
@@ -125,9 +141,11 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				search: angular.copy(search),
 				load: function(){load();},
 				list: [],
+				checkbox: [],
 				onSearch: function(){ onSearch(); },
 				onOrderBy: function(option){ onOrderBy(option); },
-				onPage: function(page){ onPage(page); }
+				onPage: function(page){ onPage(page); },
+				onCheckbox: function(option){ onCheckbox(option); }
 			}
 
 			scope.alert.load();

@@ -1,3 +1,4 @@
+<button class="btn btn-primary" ng-if="action.checkbox" ng-click="onSavecheck({data: alert.checkbox})">Select</button>
 <table class="table">
 	<thead>
 		<tr>
@@ -18,9 +19,6 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td ng-if="action.checkbox">
-				<input type="checkbox" class="form-control" ng-model="checkbox.all">
-			</td>
 			<td>
 				<input class="form-control input-sm" ng-model="alert.search.name" ng-enter="alert.onSearch()">
 			</td>
@@ -32,7 +30,8 @@
 		</tr>
 		<tr ng-repeat="l in alert.list">
 			<td ng-if="action.checkbox">
-				<input type="checkbox" class="form-control" ng-model="checkbox.item[$index]">
+				<input type="checkbox" class="form-control" ng-model="itemcheck" 
+					ng-change="alert.onCheckbox({value: itemcheck, list: l})">
 			</td>
 			<td>{{l.name}}</td>
 			<td>{{l.description}}</td>
