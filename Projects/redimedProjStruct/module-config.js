@@ -53,6 +53,7 @@ eval(fs.readFileSync('./routes/phamacist_route.js')+ '')
 
 eval(fs.readFileSync('./routes/claim.js') + '');
 eval(fs.readFileSync('./routes/alert.js') + '');
+eval(fs.readFileSync('./routes/outreferral.js') + '');
 eval(fs.readFileSync('./routes/company.js') + '');
 eval(fs.readFileSync('./routes/company_route.js') + '');
 
