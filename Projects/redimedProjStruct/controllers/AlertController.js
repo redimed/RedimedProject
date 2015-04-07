@@ -248,35 +248,31 @@ module.exports = {
 		var sql = knex
 			.column(
 				'id',
-				knex.raw('IFNULL(name,"") AS name'),
-				knex.raw('IFNULL(description,"") AS description'),
+				knex.raw('IFNULL(name,\'\') AS name'),
+				knex.raw('IFNULL(description,\'\') AS description'),
 				'Creation_date'
 			)
 			.from('cln_alerts')
 			.where('isenable', 1)
-			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
-			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.orderBy('Creation_date', postData.Creation_date)
 			.limit(postData.limit)
 			.offset(postData.offset)
 			.toString();
-
-		sql = sql.replace(/\"/g, '"');
 				
 		var count_sql = knex('cln_alerts')
 			.count('id as a')
 			.where('isenable', 1)
-			.where(knex.raw('IFNULL(name,"") LIKE "%'+postData.name+'%"'))
-			.where(knex.raw('IFNULL(description,"") LIKE "%'+postData.description+'%"'))
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
-
-		count_sql = count_sql.replace(/\"/g, '"');
 
 		db.sequelize.query(sql)
 		.success(function(rows){
 			db.sequelize.query(count_sql)
 			.success(function(count){
-				res.json({data: rows, count: count[0].a});
+				res.json({data: rows, count: count[0].a, sql: sql});
 			})
 			.error(function(error){
 				res.json(500, {error: error});	
