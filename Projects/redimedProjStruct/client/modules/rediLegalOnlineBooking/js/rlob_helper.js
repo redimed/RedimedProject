@@ -179,3 +179,27 @@ var rlobMsg={
 }
 
 
+/***
+* scroll den 1 id xac dinh
+* @param el
+* @param offeset
+* tannv.dts@gmail.com
+*/
+var rlobScrollTo= function(selector, offeset)
+{
+    var el=$(selector);
+    var pos = (el && el.size() > 0) ? el.offset().top : 0;
+
+    if (el) {
+        if ($('body').hasClass('page-header-fixed')) {
+            pos = pos - $('.page-header').height();
+        }
+        pos = pos + (offeset ? offeset : -1 * el.height());
+    }
+
+    $('html,body').animate({
+        scrollTop: pos
+    }, 'slow');
+};
+
+

@@ -1629,6 +1629,29 @@ angular.module("app.loggedIn.rlob.directive", [])
         };
     })
 
+    .directive('rlobSendClientMessage', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                actionCenter:'='
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_send_client_message.html',
+            controller: function ($scope)
+            {
+                rlobService.getListBookingMessages().then(function(data){
+                    $scope.ListBookingMessages = data;
+                });
+                $scope.actionCenter.run=function()
+                {
+                    
+                }
+
+            }
+        };
+    })
+
     .directive('rlobInlineMessage', function(rlobService) {
         return {
             restrict: 'E',

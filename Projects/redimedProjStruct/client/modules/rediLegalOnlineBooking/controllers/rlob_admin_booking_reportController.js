@@ -3,7 +3,7 @@
  */
 
 angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
-    .controller("rlob_admin_bookingReportController", function($scope,$http,$cookieStore,$q,$state,rlobService) {
+    .controller("rlob_admin_bookingReportController", function($scope,$http,$cookieStore,$q,$state,rlobService,bookingService) {
         // chien status
         $scope.report = 'report1';
         $scope.status = "Confirmed";
@@ -64,4 +64,24 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
 
 	    $scope.documentStatusChangedFlag=0;
     	$scope.bookingStatusChangedFlag=0;
+
+        //Reschedule booking
+        //tannv.dts@gmail.com
+        $scope.reschedule=function()
+        {
+            var bookingBehalfInfo={
+                ASS_SURNAME:$scope.selectedBooking.ASS_SURNAME,
+                ASS_OTHERNAMES:$scope.selectedBooking.ASS_OTHERNAMES,
+                ASS_CONTACT_NO:$scope.selectedBooking.ASS_CONTACT_NO,
+                ASS_EMAIL:$scope.selectedBooking.ASS_EMAIL,
+                ASS_ID:$scope.selectedBooking.ASS_ID,
+                COMPANY_ID:$scope.selectedBooking.COMPANY_ID
+            }
+            bookingService.setBookingBehalfInfo(bookingBehalfInfo);
+            bookingService.setBookingInfoReuse($scope.selectedBooking);
+            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Please choose appointment calendar!");
+            $state.go("loggedIn.rlob.rlob_booking");
+        }
+
+        $scope.actionCenter={};
     });

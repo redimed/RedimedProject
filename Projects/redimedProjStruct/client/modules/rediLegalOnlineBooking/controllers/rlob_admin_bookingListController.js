@@ -464,7 +464,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             $('#lob-send-booking-message').modal({show:true,backdrop:'static'});
         }
 
-
         $scope.sendBookingMessage=function()
         {
             $scope.rlob_add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.bellType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
@@ -1167,7 +1166,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             })
         }
 
-        $scope.rechedule=function()
+        $scope.reschedule=function()
         {
             var bookingBehalfInfo={
                 ASS_SURNAME:$scope.selectedBooking.ASS_SURNAME,
@@ -1179,6 +1178,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             }
             bookingService.setBookingBehalfInfo(bookingBehalfInfo);
             bookingService.setBookingInfoReuse($scope.selectedBooking);
+            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Please choose appointment calendar!");
             $state.go("loggedIn.rlob.rlob_booking");
         }
 

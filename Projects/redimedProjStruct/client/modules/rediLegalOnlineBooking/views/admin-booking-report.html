@@ -56,7 +56,16 @@
 
 
 <div ng-show="selectedBooking" class="action">
-    <h2 style="margin:10px;">Selected Booking Info:</h2>
+    <h2 style="margin:10px;">
+        <span>Selected Booking Info: </span>
+        <a style="font-size:23px" class="pointer" ng-click="reschedule()">
+            Reschedule
+        </a>
+        
+        <a style="font-size:23px" class="pointer" >
+            Send Message
+        </a>
+    </h2>
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <rlob-change-document-status selected-document="selectedBooking" document-status-changed-flag="documentStatusChangedFlag"></rlob-change-document-status>
@@ -94,9 +103,6 @@
         </div>
     </div>
 
-
-
 </div>
-
 
 

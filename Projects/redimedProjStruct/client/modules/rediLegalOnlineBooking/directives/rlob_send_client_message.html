@@ -1,0 +1,46 @@
+
+<div  id="lob-send-booking-message" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row" style="margin-right: 0;margin-left: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="caption">
+                        <i class="fa fa-plus-square font-red-sunglo"></i>
+                        <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
+                        <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
+                    </div>
+                    <img class="col-md-5 col-sm-5 col-xs-5 img-confix" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <textarea style="margin-bottom: 20px;width: 100%;" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
+                <div  style="width: 98%;margin-left: 10px;overflow-y: scroll;min-height: 300px;max-height: 310px;}" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2" data-initialized="1">
+                    <ul class="feeds">
+                        <li ng-repeat="item in ListBookingMessages" class="message" ng-click="check(item.CONTENTS)">
+                            <div class="col1">
+                                <div class="cont">
+                                    <div class="cont-col1">
+            							<div class="label label-sm label-danger">
+            								<i class="fa fa-envelope-o"></i>
+            							</div>
+            						</div>
+                                    <div class="cont-col2">
+                                        <div class="desc" style="min-height: 25px">
+                                            {{item.CONTENTS}}.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn red" ng-click="sendBookingMessage()">OK</button>
+                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
