@@ -10,7 +10,7 @@ angular.module('app.loggedIn.rlob.controller',[])
             $scope.contactDetails.push({label:'',content:$scope.bookingTypeObj.display});
             $scope.contactDetails.push({label:'Phone :',content:'(08) 9230 0900'});
             $scope.contactDetails.push({label:'Email :',content:'medicolegal@redimed.com.au'});
-            console.log($scope.contactDetails);
+            // console.log($scope.contactDetails);
         // };
         $scope.have_redilegal_components.value=1;
         // console.log($scope.REDiLEGAL);

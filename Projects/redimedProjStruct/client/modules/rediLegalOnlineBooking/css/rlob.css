@@ -158,3 +158,7 @@ tannv.dts@gmail.com*/
 .rlob_button_search:hover {
     font-weight: bold;
 }
+.collapse.in {
+        display: block;
+        overflow: overlay !important;
+}

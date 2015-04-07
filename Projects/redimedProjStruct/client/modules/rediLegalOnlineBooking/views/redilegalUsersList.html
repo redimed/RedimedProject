@@ -131,13 +131,15 @@
                             Actions
                         <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" ng-click="showViewAndUpdateDialog();">View & Edit</a></li>
-                            <li role="presentation" class="divider"></li>
-                            Register Status:
-                            <li ng-show="item.MEDICO_LEGAL_REGISTER_STATUS!=registerStatus.PENDING.value" role="presentation"><a role="menuitem" tabindex="1" ng-click="updateRedilegalUserStatus(item.user_name,registerStatus.PENDING.value)" >Pending</a></li>
-                            <li ng-show="item.MEDICO_LEGAL_REGISTER_STATUS!=registerStatus.APPROVE.value" role="presentation"><a role="menuitem" tabindex="2" ng-click="updateRedilegalUserStatus(item.user_name,registerStatus.APPROVE.value)" >Approve</a></li>
-                            <li ng-show="item.MEDICO_LEGAL_REGISTER_STATUS!=registerStatus.REJECT.value" role="presentation"><a role="menuitem" tabindex="3" ng-click="updateRedilegalUserStatus(item.user_name,registerStatus.REJECT.value)" >Reject</a></li>
+                        <ul style="min-width: 142px;" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" ng-click="showViewAndUpdateDialog(item.MEDICO_LEGAL_REGISTER_STATUS);">View & Edit</a></li>
+                            <div style="margin-top: -9px;" ng-show="item.MEDICO_LEGAL_REGISTER_STATUS==registerStatus.PENDING.value">
+                                <li role="presentation" class="divider"></li>
+                                Register Status:
+                                <!-- <li ng-show="item.MEDICO_LEGAL_REGISTER_STATUS!=registerStatus.PENDING.value" role="presentation"><a role="menuitem" tabindex="1" ng-click="updateRedilegalUserStatus(item.user_name,registerStatus.PENDING.value)" >Pending</a></li> -->
+                                <li role="presentation"><a role="menuitem" tabindex="2" ng-click="updateRedilegalUserStatus(item.user_name,registerStatus.APPROVE.value)" >Approve</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="3" ng-click="updateRedilegalUserStatus(item.user_name,registerStatus.REJECT.value)" >Reject</a></li>
+                            </div>
                         </ul>
                     </div>
                 </td>
@@ -152,7 +154,7 @@
             <div class="modal-header">
 	            <div class="row" style="margin-right: 0;margin-bottom: -5px;">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title">Medico-Legal Online Booking</h4>
+	                <h4 class="modal-title col-md-5 col-sm-5 col-xs-5">Medico-Legal Online Booking</h4>
 	                <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
 	            </div>
             </div>
@@ -194,7 +196,7 @@
                     <div class="form-group">
                         <label class="control-label visible-ie8 visible-ie9">Company</label>
                         <div class="input-icon">
-                            <select ng-model="editItem.company_id" class="form-control" ng-options="com.id as com.Company_name for com in companyList" name="company" required>
+                            <select ng-model="editItem.company_id" class="form-control" ng-options="com.id as com.Company_name for com in companyList" name="company" ><!-- required -->
                                 <option value="">---Select Your Company---</option>
                             </select>
                         </div>
@@ -256,9 +258,9 @@
                         <label>Register status</label>
                     </div>
                     <div class="form-group form-inline">
-                        <input type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.PENDING.value"> {{registerStatus.PENDING.display}} 
-                        <input type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.APPROVE.value"> {{registerStatus.APPROVE.display}} 
-                        <input type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.REJECT.value"> {{registerStatus.REJECT.display}}  
+                        <!-- <input type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.PENDING.value"> {{registerStatus.PENDING.display}}  -->
+                        <input ng-disabled="!(editItem.MEDICO_LEGAL_REGISTER_STATUS===registerStatus.PENDING.value)" type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.APPROVE.value"> {{registerStatus.APPROVE.display}} 
+                        <input ng-disabled="!(editItem.MEDICO_LEGAL_REGISTER_STATUS===registerStatus.PENDING.value)" type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.REJECT.value"> {{registerStatus.REJECT.display}}  
                     </div>
                     
                     <!-- <div class="form-group">

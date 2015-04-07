@@ -295,11 +295,16 @@ input:focus ~ .highlight {
             </div>
         </div>
         <div class="form-group">
+			
             <label class="checkbox">
                     <input type="checkbox" checkbox ng-model="user.isAccessReportOnline" ng-true-value="1" ng-false-value="0" name="isAccessReportOnline">
                     Access Reports Online
             </label>
-
+            <label class="checkbox">
+                    <input type="checkbox" checkbox ng-model="ang" 
+                        name="ang">
+                    I Agree To The <a ui-sref="security.term">Terms And Conditions</a>
+            </label>
             <small>
                 You will receive a notification as soon as your report has been completed. You can download your report directly from your account.
             </small>
@@ -309,15 +314,15 @@ input:focus ~ .highlight {
         <div class="form-actions">
             <button id="register-back-btn" ui-sref="security.login" type="button" class="btn">
                 <i class="m-icon-swapleft"></i> Back </button>
-            <button  id="register-submit-btn" class="btn green pull-right"  ng-click="register()">
+            <button  id="register-submit-btn" class="btn green pull-right" ng-disabled="!ang"  ng-click="register()">
                 Sign Up <i class="m-icon-swapright m-icon-white"></i>
             </button>
         </div>
         </div>
         <div class="portlet sale-summary" style="margin-top: 40px;display: none;" id="data-success">
         <div class="portlet-body">
-            <h3 style="margin-bottom: 20px;">Register successfully</h3>
-            <ul class="list-unstyled">
+            <h3 style="margin-bottom: 20px;">Register Information</h3>
+            <ul style="margin-bottom: 35px;" class="list-unstyled">
                 <li>
                     <span class="sale-info">
                         First Name <i class="fa fa-img-up"></i>
@@ -375,10 +380,10 @@ input:focus ~ .highlight {
                     </span>
                 </li>
             </ul>
-        </div>
-        <div style="margin-top: 40px;" class="row">
-            <button id="register-back-btn" ui-sref="security.login" type="button" class="btn pull-right">
-                <i class="m-icon-swapleft"></i> Login </button>
+            <small style="color: #999;">
+                - Thank you for signing up to the Medico-Legal online booking system at Redimed.<br/>
+                - Your application will be reviewed soon.
+            </small>
         </div>
         </div>
         
