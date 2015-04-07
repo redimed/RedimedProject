@@ -2,6 +2,7 @@ module.exports = function(sequelize,DataTypes){
     var UploadFile = sequelize.define('UploadFile',{
         id : {type: DataTypes.INTEGER(11), primaryKey: true},
         description: DataTypes.TEXT,
+        fileName: DataTypes.STRING(200),
         url: DataTypes.TEXT,
         Created_by : DataTypes.INTEGER(11) ,
         Creation_date : DataTypes.DATE ,

@@ -257,7 +257,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		      'success': function (file, response) {
 		      	if(response.status == 'success')
 		      	{
-		      		socket.emit("shareFile",response.id,$scope.callInfo.callUser);
+		      		socket.emit("shareFile",response.id,response.fileName,$scope.callInfo.callUser);
 		      		toastr.success("Upload File Successfully!");
 		      	}
 		      	else

@@ -40,10 +40,11 @@ module.exports = {
                     .success(function(max){
                          db.UploadFile.create({
                             id: max + 1,
+                            fileName: req.files.file.name,
                             url: targetFolderForSave + "\\" + req.files.file.name
                         })
                             .success(function(data){
-                                res.json({status:"success", id: data.values.id});
+                                res.json({status:"success", id: data.values.id, fileName: data.values.fileName});
                             })
                             .error(function(err){
                                 res.json({status:'error'});
@@ -80,31 +81,6 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
-
-    mobileDownloadFile: function(req,res){
-        var id = req.params.id;
-
-        db.UploadFile.find({where:{id:id}},{raw:true})
-            .success(function(data){
-                if(data)
-                {
-                    if(data.url!=null || data.url!='')
-                    {
-                        var ex = fs.existsSync(data.url);
-
-                        if(ex)
-                            res.sendfile(data.url);
-                        else
-                            res.json({status:'error'});
-                    }
-                }
-            })
-            .error(function(err){
-                res.json({status:'error',error:err})
-            })
-    },
-
-
 
     saveImage: function(req,res){
         var patient_id = req.body.patient_id;

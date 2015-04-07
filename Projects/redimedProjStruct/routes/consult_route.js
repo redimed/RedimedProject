@@ -15,4 +15,3 @@ app.post('/api/consultation/patient/company',ConsultationController.getPatientCo
 
 app.post('/api/upload',multipartMiddleware,ConsultationController.uploadFile);
 app.get('/api/download/:id',ConsultationController.downloadFile);
-app.get('/api/mobile/download/:id',ConsultationController.mobileDownloadFile);
