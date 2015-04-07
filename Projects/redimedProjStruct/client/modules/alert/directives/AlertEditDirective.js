@@ -38,11 +38,12 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 				AlertModel.one(postData)
 				.then(function(response){
 					angular.extend(scope.alert.form, response.data);
+					delete scope.alert.form.Creation_date;
 				}, function(error){})
 			}
 
 			scope.alert = {
-				form: form,
+				form: angular.copy(form),
 				load: function(){ load(); },
 				errors: [],
 				save: function(){ save(); }

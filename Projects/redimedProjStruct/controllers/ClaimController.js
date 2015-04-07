@@ -239,7 +239,7 @@ module.exports = {
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
-				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE "%'+postData.Injury_name+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				.limit(postData.limit)
 				.offset(postData.offset)
@@ -252,7 +252,7 @@ module.exports = {
 				.count('cln_claims.Claim_id as a')
 				.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
-				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE "%'+postData.Injury_name+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				.toString();
 
