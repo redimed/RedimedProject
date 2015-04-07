@@ -267,26 +267,19 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 											$modalInstance.dismiss('cancel');
 										}
 
-										$scope.selectReferral = function(){
-											$modal.open({
-												templateUrl: 'referralSelect',
-												controller: function($scope, $modalInstance, new_patient){
-													
-												},
-												size: 'lg',
-												resolve: {
-													new_patient: function(){
-														return new_patient;
-													}
-												}
-											});
-										}
-
 										$scope.addReferral = function(){
 											$modal.open({
 												templateUrl: 'referralAdd',
 												controller: function($scope, $modalInstance, new_patient){
+													$scope.patientId = new_patient.Patient_id;
+													$scope.success = false;
 
+													$scope.$watch('success', function(success){
+														if(success){
+															toastr.success('You have choose Referral');
+															$modalInstance.close('success');
+														}
+													})
 												},
 												size: 'lg',
 												resolve: {

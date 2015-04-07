@@ -98,8 +98,7 @@
     <div class="modal-body">
         <p>
         	Do you want to&nbsp;
-        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button> or&nbsp;
-        	<button class="btn btn-primary btn-xs" ng-click="selectReferral()">Select</button> Referral ?
+        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button> Referral ?
         </p>
     </div>
     <div class="modal-footer">
@@ -124,12 +123,6 @@
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<referral-detail></referral-detail>
-	</div>
-</script>
-
-<script type="text/ng-template" id="referralSelect">
-	<div class="modal-body">	
-		<referral-search></referral-search>
+		<outreferral-patient-add patient-id="patientId" success="success"></outreferral-patient-add>
 	</div>
 </script>
