@@ -6,6 +6,48 @@ var moment = require('moment');
 var _ = require('lodash');
 
 module.exports = {
+	  postLeaveCal:function(req,res){
+        var postData = req.body.data;
+		var errors = [];
+		var required = [	
+			{field: 'from_date', message: 'From Date required'},
+			{field: 'to_date', message: 'To Date required'}
+		]
+
+
+		_.forIn(postData, function(value, field){
+			_.forEach(required, function(field_error){
+				if(field_error.field === field && S(value).isEmpty()){
+					errors.push(field_error);
+					return;
+				}
+			})
+		})
+
+		if(postData.from_date && postData.to_date){
+			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
+				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
+			}
+		}
+		if(errors.length > 0){
+			res.status(500).json({errors: errors});
+			return;
+		}	
+        var sql = knex('cln_appointment_calendar_backup')
+            .where('doctor_id', postData.doctor_id)
+            .where('CURRENT_DATE','>=',postData.from_date)
+            .where('CURRENT_DATE','<=',postData.to_date)
+            .del()
+            .toString();
+        db.sequelize.query(sql)
+        .success(function(del){
+            res.json({data: del ,sql:sql});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        }) 
+    	},
 	/*postByDoctor: function(req, res){
 		var postData = req.body.data;
 

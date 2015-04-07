@@ -33,7 +33,7 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 			var save = function(){
 				ConfigService.beforeSave(scope.claim.errors);
 				var postData = angular.copy(scope.claim.form);
-				postData.Creation_date = postData.Last_update_date = moment().format('YYYY-MM-DD');
+				postData.Last_update_date = moment().format('YYYY-MM-DD');
 
 				if(postData.Injury_date)
 					postData.Injury_date = ConfigService.convertToDB(postData.Injury_date);
@@ -72,6 +72,8 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 					scope.claim.form.Claim_date = ConfigService.convertToDate(scope.claim.form.Claim_date);
 					scope.claim.form.Injury_date = ConfigService.convertToDate(scope.claim.form.Injury_date);
 					scope.claim.form.isCurr = scope.claim.form.isCurr.toString();
+
+					delete scope.claim.form.Creation_date;
 				}, function(error){})
 			}
 

@@ -189,7 +189,7 @@ angular.module("app", [
     })
 
 //When update any route
-.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService) {
+.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService) {
 
 
 

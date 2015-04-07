@@ -5,7 +5,7 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
     .controller("rlob_bookingController", function($window,$scope,$http,$state,$modal,appointmentCalendarService,$cookieStore,rlobService) {
 //    UIDatepaginator.init();
 //    Metronic.init();
-
+        rlobScrollTo("#topPageBooking",-200);
         $scope.showMsgDialog=function(styleClass,header,status,content)
         {
             $scope.msgHeader=header;

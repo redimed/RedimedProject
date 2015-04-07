@@ -17,7 +17,7 @@ documentStatus:{
 /*
 //phanquocchien.c1109g@gmail.com
 //Trigger khi client upload document phai tu cap nhap lai document status
-- khi client upload document(insert 1 rl_booking_files) thi trigger after_rlbooking_files_insert se chay de cap nhap document status (change DOCUMENT_STATUS trong bang rl_bookings sang 'Not confirmed' khi DOCUMENT_STATUS la 'No documents')
+- khi client upload document(insert 1 rl_booking_files) thi trigger after_rlbooking_files_insert se chay de cap nhap document status (change DOCUMENT_STATUS trong bang rl_bookings sang 'Checked' khi DOCUMENT_STATUS la 'No documents')
 */
 
 /*

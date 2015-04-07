@@ -646,7 +646,9 @@ angular.module('app.config', [])
                 if (key.toLowerCase().indexOf("is") === 0)
                     data[key] = data[key].toString();
                 else if (key.toLowerCase().indexOf("_date") != -1 || key.toLowerCase().indexOf("date") != -1)
-                    data[key] = new Date(data[key]);
+                    {
+                        if(key !== "Last_updated_by") data[key] = new Date(data[key]);
+                    }
             }
         }
     }
@@ -952,7 +954,7 @@ angular.module('app.config', [])
 
     configService.convertToDB = function(string){
         if(typeof string === 'undefined' || !string)
-            return '';
+            return null;
 
         var split = string.split('/');
 

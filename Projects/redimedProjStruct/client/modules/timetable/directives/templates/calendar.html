@@ -15,8 +15,8 @@
             <div class="content">{{row.SERVICE_NAME}}</div>
             <div class="content">{{row.from_time}}</div>
             <div class="content">{{row.to_time}}</div>
-            <div class="content">{{row.from_date | date: 'DD/MM/YYYY'}}</div>
-            <div class="content">{{row.to_date | date: 'DD/MM/YYYY'}}</div>
+            <div class="content">{{row.from_date | filterdate: 'DD/MM/YYYY'}}</div>
+            <div class="content">{{row.to_date | filterdate: 'DD/MM/YYYY'}}</div>
             <div class="content">
                 <a ng-click="timetable.dialog.removeDay(row)">
                     <i class="fa fa-remove"></i>

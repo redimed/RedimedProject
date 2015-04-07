@@ -170,43 +170,75 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 						var modalInstance = $modal.open({
 							templateUrl: 'notifyClaim',
-							controller: function($scope, $modalInstance, new_patient){
+							controller: function($scope, $modalInstance, new_patient, ClaimModel){
 								$scope.selectClaim = function(){
 									$modal.open({
 										templateUrl: 'claimSelect',
-										controller: function($scope, $modalInstance, new_patient){
+										controller: function($scope, $modalInstance, new_patient, col, toastr){
+											var clickRow = function(row){
+												var postData = {Patient_id: new_patient.Patient_id, CAL_ID: col.CAL_ID, Claim_id: row.Claim_id};
+
+												$modalInstance.close('success');
+
+												ClaimModel.addPatient(postData)
+												.then(function(response){
+													toastr.success('You have choose claim');
+												}, function(error){})
+											}
+
 											$scope.claim = {
 												limit: 10,
-												reload: false
+												reload: false,
+												Patient_id: new_patient.Patient_id,
+												CAL_ID: col.CAL_ID,
+												clickRow: function(row){ clickRow(row); }
 											}
 										},
 										size: 'lg',
 										resolve: {
 											new_patient: function(){
 												return new_patient;
+											},
+											col: function(){
+												return col;
 											}
 										}
+									})
+									.result.then(function(success){
+										if(success === 'success')
+											$modalInstance.close('cancel');
 									})
 								}
 
 								$scope.addClaim = function(){
 									$modal.open({
 										templateUrl: 'claimAdd',
-										controller: function($scope, $modalInstance, new_patient){
-											$scope.params = {
-												permission: {
-													add: true,
-													edit: false
-												},
-												Patient_id: new_patient.Patient_id
+										controller: function($scope, $modalInstance, new_patient, col, toastr){
+											$scope.claim = {
+												Patient_id: new_patient.Patient_id,
+												CAL_ID: col.CAL_ID,
+												success: false
 											}
+
+											$scope.$watch('claim.success', function(success){
+												if(success){
+													toastr.success('You have choose claim');
+													$modalInstance.close('success');
+												}
+											})
 										},
 										size: 'lg',
 										resolve: {
 											new_patient: function(){
 												return new_patient;
+											},
+											col: function(){
+												return col;
 											}
 										}
+									})
+									.result.then(function(success){
+										if(success === 'success') $modalInstance.close('cancel');
 									})
 								}//end addClaim
 

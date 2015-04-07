@@ -92,6 +92,22 @@ module.exports = {
 		})
 	},
 
+	postAddPatient: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('cln_patient_claim')
+				.insert(postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: created});
+		})
+		.error(function(error){
+			res.json(500, {error: error});	
+		})
+	},
+
 	postAdd: function(req, res){
 		var postData = req.body.data;
 		var CAL_ID = postData.CAL_ID;
@@ -160,11 +176,10 @@ module.exports = {
 		var sql = knex
 				.column(
 					'cln_claims.Claim_id',
-					'cln_patient_claim.Patient_id',
 					'Claim_date',
 					'Injury_date',
-					knex.raw('IFNULL(Claim_no,"") AS Claim_no'),
-					knex.raw('IFNULL(Injury_name,"") AS Injury_name')
+					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
+					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)
 				.from('cln_claims')
 				.whereNotExists(function(){
@@ -173,8 +188,8 @@ module.exports = {
 					.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				})
 				.where('cln_claims.Isenable', 1)
-				.where(knex.raw('IFNULL(Claim_no,"") LIKE "%'+postData.Claim_no+'%"'))
-				.where(knex.raw('IFNULL(Injury_name,"") LIKE "%'+postData.Injury_name+'%"'))
+				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.limit(postData.limit)
 				.offset(postData.offset)
 				.orderBy('cln_claims.Claim_date', postData.Claim_date)
@@ -189,15 +204,15 @@ module.exports = {
 				})
 				.count('cln_claims.Claim_id as a')
 				.where('cln_claims.Isenable', 1)
-				.where(knex.raw('IFNULL(Claim_no,"") LIKE "%'+postData.Claim_no+'%"'))
-				.where(knex.raw('IFNULL(Injury_name,"") LIKE "%'+postData.Injury_name+'%"'))
+				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.toString();
 
 		db.sequelize.query(sql)
 		.success(function(rows){
 			db.sequelize.query(count_sql)
 			.success(function(count){
-				res.json({data: rows, count: count[0].a});
+				res.json({data: rows, count: count[0].a, sql: sql});
 			})
 			.error(function(error){
 				res.json(500, {error: error});	
@@ -217,14 +232,14 @@ module.exports = {
 					'cln_patient_claim.Patient_id',
 					'Claim_date',
 					'Injury_date',
-					knex.raw('IFNULL(Claim_no,"") AS Claim_no'),
-					knex.raw('IFNULL(Injury_name,"") AS Injury_name')
+					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
+					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)
 				.from('cln_claims')
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.where('cln_claims.Isenable', 1)
-				.where(knex.raw('IFNULL(Claim_no,"") LIKE "%'+postData.Claim_no+'%"'))
-				.where(knex.raw('IFNULL(Injury_name,"") LIKE "%'+postData.Injury_name+'%"'))
+				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				.limit(postData.limit)
 				.offset(postData.offset)
@@ -236,8 +251,8 @@ module.exports = {
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.count('cln_claims.Claim_id as a')
 				.where('cln_claims.Isenable', 1)
-				.where(knex.raw('IFNULL(Claim_no,"") LIKE "%'+postData.Claim_no+'%"'))
-				.where(knex.raw('IFNULL(Injury_name,"") LIKE "%'+postData.Injury_name+'%"'))
+				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				.toString();
 

@@ -4,7 +4,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 .config(function($stateProvider){
 	$stateProvider
 	 .state('loggedIn.company', {
-		url: 'patient_id/:patient_id/company/:companyId',
+		url: '/patientid/:patientId/company',
 		templateUrl: 'modules/company/views/list.html',
 		controller: 'CompanyListController'
 			
@@ -51,6 +51,15 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				'@loggedIn': {
 					templateUrl: 'modules/company/views/listInsurer.html',
 					controller: 'CompanylistInsurerController'
+				}
+			}//end views
+		})
+	.state('loggedIn.company.edit', {
+			url: '/:companyId/edit',
+			views: {
+				'@loggedIn': {
+					templateUrl: 'modules/company/views/edit.html',
+					controller: 'CompanyEditController'
 				}
 			}//end views
 		})

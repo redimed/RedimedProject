@@ -29,10 +29,24 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 		restrict: 'EA',
 		scope:{
 			reload: '=',
-			limit: '='
+			limit: '=',
+			patientId: '=',
+			calId: '=',
+			withoutPatient: '@',
+			permission: '@',
+			onRowClick: '&'
 		},
 		templateUrl: 'modules/claim/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
+			if(typeof scope.permission === 'undefined'){
+				scope.action = {
+					edit: true,
+					remove: true
+				}
+			}else{
+				scope.action = scope.$eval(scope.permission);
+			}
+
 			var search = {
 				page: 1,
 				limit: scope.limit,
@@ -41,18 +55,26 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				Claim_no: '',
 				Claim_date: 'desc',
 				Injury_name: '',
-				Injury_date: 'asc'
+				Injury_date: 'asc',
+				Patient_id: scope.patientId
 			}
 
 			var load = function(){
 				var postData = angular.copy(scope.claim.search);
-				postData.Patient_id = $stateParams.patientId;
 
-				ClaimModel.listFollowPatient(postData)
-				.then(function(response){
-					scope.claim.list = response.data;
-					scope.claim.count = response.count;
-				}, function(error){})
+				if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
+					ClaimModel.listNoFollowPatient(postData)
+					.then(function(response){
+						scope.claim.list = response.data;
+						scope.claim.count = response.count;
+					}, function(error){})
+				}else{
+					ClaimModel.listFollowPatient(postData)
+					.then(function(response){
+						scope.claim.list = response.data;
+						scope.claim.count = response.count;
+					}, function(error){})
+				}
 			}
 
 			var onPage = function(page){
@@ -129,7 +151,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				load: function(){ load(); },
 				list: [],
 				count: 0,
-				search: search,
+				search: angular.copy(search),
 				onPage: function(page){ onPage(page); },
 				onSearch: function(){ onSearch(); },
 				onOrderBy: function(option){ onOrderBy(option); }
@@ -139,6 +161,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 			scope.claim.load();
 
 			scope.$watch('reload', function(reload){
+				scope.claim.search = angular.copy(search);
 				if(reload) scope.claim.load();
 			})
 		}

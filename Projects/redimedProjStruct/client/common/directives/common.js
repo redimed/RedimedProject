@@ -964,14 +964,16 @@ angular.module("app.directive.common", [
     }
 })
 
-// .filter('date', function(){
-//     return function(input, date){
-//         if(!moment(input).isValid()) return '###';
-//         if(typeof input === 'undefined' && !input) return '###';
 
-//         return moment(input).format(date);
-//     }
-// })
+.filter('filterdate', function(){
+    return function(input, date){
+        if(!moment(input).isValid()) return '###';
+        if(typeof input === 'undefined' && !input) return '###';
+
+        return moment(input).format(date);
+    }
+})
+
 
 .directive('ngEnter', function () {
     return function (scope, element, attrs) {

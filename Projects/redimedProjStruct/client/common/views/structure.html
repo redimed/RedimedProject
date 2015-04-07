@@ -16,12 +16,13 @@
         <!-- BEGIN PAGE TOP -->
         <div class="page-top">
             <!-- BEGIN TOP NAVIGATION MENU -->
-            <div class="pull-left col-md-4 col-sm-5" style="position: relative;top: 15px;left: 20px;">
-                <button class="btn btn-circle" ng-click="navigator.prev()"> <i class="fa fa-long-arrow-left"></i> Prev </button>
-                <button class="btn btn-circle" ng-click="navigator.next()"> Next <i class="fa fa-long-arrow-right"></i> </button>
-            </div>
-            <img ng-show="have_redilegal_components.value==1" style="margin-top: -10px;width: 200px;" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-            <div class="top-menu">
+            <div style="margin-right: 0px;margin-left: 0px;" class="row">
+                <div class="pull-left col-md-4 col-sm-4 hidden-xs" style="position: relative;top: 15px;left: 20px;">
+                    <button class="btn btn-circle" ng-click="navigator.prev()"> <i class="fa fa-long-arrow-left"></i> Prev </button>
+                    <button class="btn btn-circle" ng-click="navigator.next()"> Next <i class="fa fa-long-arrow-right"></i> </button>
+                </div>
+                    <img ng-show="have_redilegal_components.value==1" style="margin-top: -10px;width: 200px;" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
                     <li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -180,6 +181,7 @@
                     </li>
                 </ul>
             </div>
+        </div>
             <!-- END TOP NAVIGATION MENU -->
         </div>
         <!-- END PAGE TOP -->

@@ -8,7 +8,7 @@
                 boundary-links="true"
                 rotate="false"
                 items-per-page="itemsPerPageReport2"
-                ng-change="pagingHandlerStatusBookingHaveNotResult()">
+                ng-change="pagingHandlerOutstandingBooking()">
     </pagination>
     <table class="table table-hover table-light">
         <thead class="flip-content">
@@ -34,14 +34,14 @@
                 <rlob-choose-period from-date="filterInfo1.FromAppointmentDate" to-date="filterInfo1.ToAppointmentDate"></rlob-choose-period>
             </td>
             <td>
-                <input class="form-control input-sm" type="text" ng-model="filterInfo1.Surname" ng-change="initPagingReportStatusBookingHaveNotResult()">
+                <input class="form-control input-sm" type="text" ng-model="filterInfo1.Surname" ng-change="initPagingReportOutstandingBooking()">
             </td>
             <td>
-                <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo1.Location" ng-change="initPagingReportStatusBookingHaveNotResult()"> -->
+                <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo1.Location" ng-change="initPagingReportOutstandingBooking()"> -->
                 <select class="form-control input-sm"
                         ng-model="locationSelected"
                         ng-options="location.Site_name for location in locationList"
-                        ng-change="initPagingReportStatusBookingHaveNotResult()">
+                        ng-change="initPagingReportOutstandingBooking()">
                     <option  value="">ALL</option>
                 </select>
             </td>
@@ -49,16 +49,16 @@
                 <select class="form-control input-sm"
                         ng-model="rlTypeSelected"
                         ng-options="rltype.Rl_TYPE_NAME for rltype in rlTypeList"
-                        ng-change="initPagingReportStatusBookingHaveNotResult()">
+                        ng-change="initPagingReportOutstandingBooking()">
                     <option  value="">ALL</option>
                 </select>
             </td>
             <td>
-                <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo1.Doctor" ng-change="initPagingReportStatusBookingHaveNotResult()"> -->
+                <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo1.Doctor" ng-change="initPagingReportOutstandingBooking()"> -->
                 <select class="form-control input-sm"
                         ng-model="doctorSelected"
                         ng-options="doctor.NAME for doctor in doctorList"
-                        ng-change="initPagingReportStatusBookingHaveNotResult()">
+                        ng-change="initPagingReportOutstandingBooking()">
                     <option  value="">ALL</option>
                 </select>
             </td>
@@ -66,13 +66,13 @@
             <!-- END SEARCH -->
         </tr>
         </thead>
-        <tbody ng-repeat="booking2 in reportStatusBookingsList">
-        <tr ng-class='booking2.style_class' ng-click="setSelectedBooking(booking2.BOOKING_ID)">
-            <td><label>{{booking2.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
-            <td><label>{{booking2.WRK_SURNAME}}</label></td>
-            <td><label>{{booking2.Site_name}}</label></td>
-            <td><label>{{booking2.Rl_TYPE_NAME}}</label></td>
-            <td><label>{{booking2.NAME}}</label></td>
+        <tbody ng-repeat="outstanding in listOutstandingBookings">
+        <tr ng-class='outstanding.style_class' ng-click="setSelectedBooking(outstanding.BOOKING_ID)">
+            <td><label>{{outstanding.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
+            <td><label>{{outstanding.WRK_SURNAME}}</label></td>
+            <td><label>{{outstanding.Site_name}}</label></td>
+            <td><label>{{outstanding.Rl_TYPE_NAME}}</label></td>
+            <td><label>{{outstanding.NAME}}</label></td>
         </tr>
         </tbody>
     </table>

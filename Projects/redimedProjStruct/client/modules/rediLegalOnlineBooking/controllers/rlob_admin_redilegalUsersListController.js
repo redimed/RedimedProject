@@ -89,6 +89,11 @@ angular.module('app.loggedIn.rlob.redilegalUsersListController.controller',[])
         }
         $scope.updateRedilegalUserStatus=function(user_name,status)
         {
+            if($scope.selectedItem.Company_name==null)
+            {
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Please reselect the infomation of company!");
+                return;
+            }
             rlobService.updateRedilegalUserStatus(user_name,status)
             .then(function(data){
                 if(data.status=='success')
@@ -144,6 +149,12 @@ angular.module('app.loggedIn.rlob.redilegalUsersListController.controller',[])
 
         $scope.updateUser=function()
         {
+            if($scope.editItem.Company_name==null)
+            {
+                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Please reselect the infomation of company!");
+                return;
+            }
+
             $scope.showClickedValidation = true;
             if($scope.editForm.$invalid){
                 toastr.error("Please check form.", "Error");

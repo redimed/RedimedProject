@@ -1,4 +1,4 @@
-<div class="rlob-admin-local-notification-list" style="height: 300px;">
+<div class="rlob-admin-local-notification-list" style="max-height: 300px;overflow: auto;">
 
     <table class="table table-hover">
         <tr>
@@ -10,7 +10,7 @@
 
         <tbody>
         <tr ng-repeat="booking in listBookingNotification" ng-click="setSelectedBooking(booking.BOOKING_ID)">
-            <td>{{booking.APPOINTMENT_DATE |date:'dd-MM-yyyy HH:mm'}}</td>
+            <td>{{booking.APPOINTMENT_DATE |date:'HH:mm dd-MM-yyyy'}}</td>
             <td>{{booking.WRK_SURNAME}}</td>
             <td>{{booking.Company_name}}</td>
             <td>{{booking.Rl_TYPE_NAME}}</td>
@@ -37,6 +37,7 @@
                                             booking-type="bookingType"
                                             is-admin-get-files="isAdminGetFiles"
                                             files-update-flag="filesUpdateFlag"
+                                            number-of-docs="numberOfDocs"
                                 >
                         </rlob-file-download>
 

@@ -1,173 +1,299 @@
+<style type="text/css">
+* { box-sizing:border-box; }
+.group            { 
+  position:relative; 
+  margin-bottom:10px; 
+}
+.confix-input               {
+  /*font-size:18px;*/
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:100%;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+.confix-input:focus         { outline:none; }
+
+/* LABEL ======================================= */
+.confix-label                {
+  color:#999; 
+  /*font-size:18px;*/
+  /*font-weight:normal;*/
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+.confix-input:focus ~ label, .confix-input:valid ~ label        {
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+.color-label{
+    top:-20px !important;
+    font-size:14px !important;
+    color:#5264AE !important;
+}
+
+/* BOTTOM BARS ================================= */
+.bar    { position:relative; display:block; }
+.bar:before, .bar:after     {
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+    from { background:#5264AE; }
+  to    { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+    from { background:#5264AE; }
+  to    { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+    from { background:#5264AE; }
+  to    { width:0; background:transparent; }
+}
+.form-group .help-block {
+    display: none;
+}
+     
+.form-group.has-error .help-block {
+    display: block;
+}
+.help-block{
+      color: #FF0404 !important;
+}
+.login .content .form-actions {
+    border-bottom: none !important;
+}
+.login .content p {
+  color: #999 !important;
+}
+.login .content{
+    width: 400px !important;
+}
+.sale-summary ul {
+  margin-top: -10px;
+}
+
+.sale-summary li {
+  padding: 10px 0;
+  overflow: hidden;
+  border-top: solid 1px #eee;
+}
+
+.sale-summary li:first-child {
+  border-top: none;
+}
+
+.sale-summary li .sale-info {
+  margin-top: 4px;
+  float: left;
+  color: #999;
+  /*font-size: 14px;*/
+  /*text-transform: uppercase;*/
+}
+
+.sale-summary li .sale-num {
+  float: right;
+  /*color: #999;*/
+  /*font-size: 20px;*/
+  font-weight: 300;
+  font-size: 14px;
+  color: #5264AE;
+}
+
+.sale-summary li span i {
+  top: 1px;
+  width: 13px;
+  height: 14px;
+  margin-left: 3px;
+  position: relative;
+  display: inline-block;
+}
+
+.sale-summary li i.icon-img-up {
+  background: url(../../img/icon-img-up.png) no-repeat !important;
+}
+
+.sale-summary li i.icon-img-down {
+  background: url(../../img/icon-img-down.png) no-repeat !important;
+}
+
+.sale-summary .caption h4 {
+  color: #383839;
+  /*font-size: 18px;*/
+}
+
+.sale-summary .caption {
+  border-color: #c9c9c9;
+}
+#label-gender{
+    display: none;
+    color:red;
+    text-align: -webkit-right;
+}
+</style>
 <div class="content">
     <form  class="register-form" novalidate name="registerForm" style="display: block;" >
-        <h3>Sign Up</h3>
-        <p>
+      <div id="form-data">
+        <h3 style="margin-bottom: 20px;">Sign Up</h3>
+        <p style="margin-bottom: 25px;">
             Enter your personal details below:
         </p>
-
-
-        <div class="form-group">
-
+        <div class="form-group" show-errors='{showSuccess: true}'>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="input-icon">
-                        <i class="fa fa-font"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="First Name" name="firstname" ng-model="user.fname" ng-maxlength="20" required/>
-
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.fname" id="firstname" name="firstname" class="confix-input" type="text" ng-maxlength="20" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">First Name <span style="color: red;">*</span></label>
                     </div>
-
-                </div>
-                <div class="col-md-6">
-                    <div class="input-icon">
-                        <i class="fa fa-font"></i>
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Surname" name="lastname" ng-model="user.lname" ng-maxlength="20" required/>
-                    </div>
+                    <span class="help-block pull-right" ng-show="registerForm.firstname.$error.required">First name  is required.</span>
+                    <span class="help-block pull-right" ng-show="registerForm.firstname.$error.maxlength">Your first name cannot be longer than 20 characters</span>
                 </div>
             </div>
         </div>
-        <!--validate -->
-        <!--first name-->
-        <span ng-show="registerForm.firstname.$error.maxlength && showClickedValidation" class="has-error">
-            <span for="firstname" class="help-block">Your first name cannot be longer than 20 characters</span>
-        </span>
-        <span ng-show="registerForm.firstname.$error.required && showClickedValidation" class="has-error">
-            <span for="firstname" class="help-block"> First name  is required.</span>
-        </span>
-        <!--last name-->
-        <span ng-show="registerForm.lastname.$error.maxlength && showClickedValidation" class="has-error">
-            <span for="lastname" class="help-block">Your surname cannot be longer than 20 characters</span>
-        </span>
-        <span ng-show="registerForm.lastname.$error.required && showClickedValidation" class="has-error">
-            <span for="lastname" class="help-block">Surname is required.</span>
-        </span>
-        <!--end validate -->
-
-        
-
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Phone:</label>
-            <div class="input-icon">
-                <i class="fa fa-phone"></i>
-                <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone" ng-model="user.phone" ng-pattern="/^[0-9-]{9,15}$/" required/>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.lname" id="lastname" name="lastname" class="confix-input" type="text" ng-maxlength="20" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">Surname <span style="color: red;">*</span></label>
+                    </div>
+                    <span class="help-block pull-right" ng-show="registerForm.lastname.$error.required">Surname is required.</span>
+                    <span class="help-block pull-right" ng-show="registerForm.lastname.$error.maxlength">Your surname cannot be longer than 20 characters</span>
+                </div>
             </div>
-            <span ng-show="registerForm.phone.$error.required && showClickedValidation" class="has-error">
-                <span for="email" class="help-block">Phone is required.</span>
-            </span>
-            <span ng-show="registerForm.phone.$error.pattern && showClickedValidation" class="has-error">
-                 <span for="phone" class="help-block">Check your phone</span>
-            </span>
         </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Company:</label>
-            <div class="input-icon">
-                <i class="fa fa-home"></i>
-                <input class="form-control placeholder-no-fix ng-pristine ng-invalid ng-invalid-required ng-valid-pattern" type="text" placeholder="Company" name="Company" ng-model="user.companyTemp" required="">
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.phone" id="phone" name="phone" class="confix-input" type="text" ng-pattern="/^[0-9-]{9,15}$/" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">Phone <span style="color: red;">*</span></label>
+                    </div>
+                    <span class="help-block pull-right" ng-show="registerForm.phone.$error.required">Phone is required.</span>
+                    <span class="help-block pull-right" ng-show="registerForm.phone.$error.pattern">Check your phone</span>
+                </div>
             </div>
-            <span ng-show="registerForm.Company.$error.required &amp;&amp; showClickedValidation" class="has-error ng-hide">
-                <span for="email" class="help-block">Phone is required.</span>
-            </span>
         </div>
-        <!-- <div>
-            <i class="fa fa-home"></i>
-            <label>Company</label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Company</label>
-            <div class="input-icon">
-                <select ng-model="user.companyId" class="form-control" ng-options="com.id as com.Company_name for com in companyList" name="company" required>
-                    <option value="">---Select Your Company---</option>
-                </select>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.companyTemp" id="Company" name="Company" class="confix-input" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">Company <span style="color: red;">*</span></label>
+                    </div>
+                    <span class="help-block pull-right" ng-show="registerForm.Company.$error.required">Company is required.</span>
+                </div>
             </div>
-            <span ng-show="registerForm.company.$error.required && showClickedValidation" class="has-error">
-                 <span for="company" class="help-block">Please select company.</span>
-             </span>
-        </div> -->
-        <div>
-            <label>Company State</label>
         </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Company State</label>
-            <div class="input-icon">
-                <select ng-model="user.companyState" class="form-control" ng-options="state.id as state.State for state in stateList" name="companyState" required>
+        <div  class="form-group" show-errors='{showSuccess: true}'>
+                <p>Company State</p>
+                <p>
+                    <select style="width:100%" ng-model="user.companyState" class="form-control" ng-options="state.id as state.State for state in stateList" name="companyState" required>
                     <option value="">---Select State---</option>
-                </select>
-            </div>
-            <span ng-show="registerForm.companyState.$error.required && showClickedValidation" class="has-error">
-                 <span for="companyState" class="help-block">Please select company state.</span>
-             </span>
+                    </select>
+                </p>
+                <span class="help-block pull-right clearfix" ng-show="registerForm.companyState.$error.required">Please select company state.</span>
         </div>
-
-
-        <p>
-            Enter your account details below:
+        <p style="margin-bottom: 25px;" class="row">
+            <label class="col-md-12">Enter your account details below:</label>
         </p>
-
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Email</label>
-            <div class="input-icon">
-                <i class="fa fa-envelope"></i>
-                <input class="form-control placeholder-no-fix" type="email" placeholder="Email" name="email" ng-model="user.email" ng-maxlength="50" required/>
-            </div>
-            <span ng-show="registerForm.$error.email && showClickedValidation" class="has-error">
-                <span for="email" class="help-block"> Email is invalid.</span>
-             </span>
-            <span ng-show="registerForm.firstname.$error.required && showClickedValidation" class="has-error">
-                <span for="email" class="help-block">Email  is required.</span>
-            </span>
-            <span ng-show="registerForm.email.$error.maxlength && showClickedValidation" class="has-error">
-                <span for="firstname" class="help-block">Your email address cannot be longer than 50 characters</span>
-            </span>
-            <span ng-show="check==true" class="has-error">
-                <span for="email" class="help-block">Email is existed.</span>
-             </span>
-        </div>
-
-
-        <!-- <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Username</label>
-            <div class="input-icon">
-                <i class="fa fa-user"></i>
-                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" ng-model="user.username" name="username" ng-pattern="/^[a-z0-9_-]{6,30}$/" required/>
-            </div>
-            <span ng-show="registerForm.username.$error.pattern && showClickedValidation" class="has-error">
-                 <span for="username" class="help-block">Username 6-30 characters.</span>
-            </span>
-            <span ng-show="registerForm.username.$error.required && showClickedValidation" class="has-error">
-                 <span for="username" class="help-block">Username is required.</span>
-            </span>
-        </div> -->
-
-
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Password</label>
-            <div class="input-icon">
-                <i class="fa fa-lock"></i>
-                <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" ng-model="user.password" placeholder="Password" name="password" ng-pattern="/^[a-z0-9_-]{6,30}$/" required/>
-            </div>
-            <span ng-show="registerForm.password.$error.pattern && showClickedValidation" class="has-error">
-                     <span for="password" class="help-block">Password 6-30 characters.</span>
-            </span>
-             <span ng-show="registerForm.password.$error.required && showClickedValidation" class="has-error">
-                 <span for="password" class="help-block">Password is required.</span>
-             </span>
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
-            <div class="controls">
-                <div class="input-icon">
-                    <i class="fa fa-check"></i>
-                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" ng-model="user.repassword" placeholder="Re-type Your Password" name="rpassword" pw-check="register_password" required/>
+         <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.email" id="email" name="email" class="confix-input" type="text" ng-maxlength="50" ng-pattern="regexEmail" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">Email <span style="color: red;">*</span></label>
+                    </div>
+                    <span class="help-block pull-right" ng-show="registerForm.email.$error.pattern">Email is invalid.</span>
+                    <span class="help-block pull-right" ng-show="registerForm.email.$error.required">Email  is required.</span>
+                    <span class="help-block pull-right" ng-show="registerForm.email.$error.maxlength">Your email address cannot be longer than 50 characters</span>
                 </div>
             </div>
-            <span class="has-error" ng-show="registerForm.rpassword.$error.pwmatch" style="color:#a94442">
-		        Passwords don't match.
-	        </span>
-             <span ng-show="registerForm.rpassword.$error.required && showClickedValidation" class="has-error">
-                 <span for="password" class="help-block">Password is required.</span>
-             </span>
         </div>
-
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.password" id="register_password" name="password" class="confix-input" type="password" ng-pattern="/^[a-z0-9_-]{6,30}$/" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">Password <span style="color: red;">*</span></label>
+                    </div>
+                    <span class="help-block pull-right" ng-show="registerForm.password.$error.required">Password is required.</span>
+                    <span class="help-block pull-right" ng-show="registerForm.password.$error.pattern">Password 6-30 characters.</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="group">      
+                        <input ng-model="user.repassword" name="rpassword" class="confix-input" type="password" pw-check="register_password" autocomplete="off" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="confix-label">Re-type Your Password <span style="color: red;">*</span></label>
+                    </div>
+                    <span style="text-align: right;margin-right: -15px;" class="help-block pull-right col-md-12" ng-show="registerForm.rpassword.$error.pwmatch">Passwords don't match.</span>
+                    <span style="text-align: right;margin-right: -15px;" class="help-block pull-right col-md-12" ng-show="registerForm.rpassword.$error.required">Password is required.</span>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <label class="checkbox">
                     <input type="checkbox" checkbox ng-model="user.isAccessReportOnline" ng-true-value="1" ng-false-value="0" name="isAccessReportOnline">
@@ -178,23 +304,85 @@
                 You will receive a notification as soon as your report has been completed. You can download your report directly from your account.
             </small>
         </div>
+        
 
-       <!--  <div class="form-group">
-
-            <label class="checkbox">
-                    <input type="checkbox" checkbox ng-model="ang" 
-                        name="ang">
-                    I Agree To The <a ui-sref="security.term">Terms And Conditions!</a>
-            </label>
-            <div id="register_tnc_error">
-            </div>
-        </div> -->
         <div class="form-actions">
             <button id="register-back-btn" ui-sref="security.login" type="button" class="btn">
                 <i class="m-icon-swapleft"></i> Back </button>
-            <button  id="register-submit-btn" class="btn green pull-right" ng-disabled="!user.repassword"  ng-click="register()">
+            <button  id="register-submit-btn" class="btn green pull-right"  ng-click="register()">
                 Sign Up <i class="m-icon-swapright m-icon-white"></i>
             </button>
         </div>
+        </div>
+        <div class="portlet sale-summary" style="margin-top: 40px;display: none;" id="data-success">
+        <div class="portlet-body">
+            <h3 style="margin-bottom: 20px;">Register successfully</h3>
+            <ul class="list-unstyled">
+                <li>
+                    <span class="sale-info">
+                        First Name <i class="fa fa-img-up"></i>
+                    </span>
+                    <span class="sale-num">
+                        {{user.fname}}
+                    </span>
+                </li>
+                <li>
+                    <span class="sale-info">
+                        Surname <i class="fa fa-img-down"></i>
+                    </span>
+                    <span class="sale-num">
+                        {{user.lname}} 
+                    </span>
+                </li>
+                <li>
+                    <span class="sale-info">
+                        Phone <i class="fa fa-img-down"></i>
+                    </span>
+                    <span class="sale-num">
+                        {{user.phone}} 
+                    </span>
+                </li>
+                <li>
+                    <span class="sale-info">
+                        Company <i class="fa fa-img-down"></i>
+                    </span>
+                    <span class="sale-num">
+                        {{user.companyTemp}} 
+                    </span>
+                </li>
+                <li>
+                    <span class="sale-info">
+                        Company State <i class="fa fa-img-down"></i>
+                    </span>
+                    <span class="sale-num">
+                        {{companyStateName}} 
+                    </span>
+                </li>
+                <li>
+                    <span class="sale-info">
+                        Email <i class="fa fa-img-down"></i>
+                    </span>
+                    <span class="sale-num">
+                        {{user.email}} 
+                    </span>
+                </li> 
+                <li>
+                    <span class="sale-info">
+                        Access Reports Online <i class="fa fa-img-down"></i>
+                    </span>
+                    <span class="sale-num">
+                        <input type="checkbox" disabled="true" checkbox ng-model="user.isAccessReportOnline" ng-true-value="1" ng-false-value="0" name="isAccessReportOnline"> 
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div style="margin-top: 40px;" class="row">
+            <button id="register-back-btn" ui-sref="security.login" type="button" class="btn pull-right">
+                <i class="m-icon-swapleft"></i> Login </button>
+        </div>
+        </div>
+        
+    </div>
     </form>
+  
 </div>

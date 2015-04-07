@@ -5,136 +5,286 @@ var S = require('string');
 var db = require('../models');
 
 module.exports = {
+    postRemoveInsurer : function(req,res){
+       var postData = req.body.data;
+        var sql = knex('company_insurers')
+            .where('insurer_id', postData.insurer_id)
+            .del()
+            .toString();
 
-	getList: function(req, res){
+        db.sequelize.query(sql)
+        .success(function(del){
+            res.json({data: del});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        }) 
+    },
+    postRemove :function(req,res){
+        var postData = req.body.data;
+        var sql = knex('patient_companies')
+            .where('company_id', postData.company_id)
+            .del()
+            .toString();
+
+        db.sequelize.query(sql)
+        .success(function(del){
+            res.json({data: del});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+    postEdit : function(req,res){
+        var postData = req.body.data;
+            var errors = [];
+            var required = [
+                {field: 'Company_name', message: 'Company Name required'}
+            ]
+            _.forIn(postData, function(value, field){
+                _.forEach(required, function(field_error){
+                    if(field_error.field === field && S(value).isEmpty()){
+                        errors.push(field_error);
+                        return;
+                    }
+                })
+            })
+
+            if(errors.length > 0){
+                res.status(500).json({errors: errors});
+                return;
+            }
+            var fatherId = postData.fatherId == null || postData.fatherId == '' ? null : postData.fatherId;
+            var status = postData.status == '' ? 'Pending' : postData.status;
+            var sql =
+            knex('companies')
+            .update({
+                Company_name: postData.Company_name,
+                Industry: postData.Industry,
+                Addr: postData.Addr,
+                postcode: postData.postCode,
+                State: postData.State,
+                Description: postData.Description,
+                country: postData.country,
+                result_email: postData.result_email,
+                invoice_email: postData.invoice_email,
+                PO_number: postData.PO_number,
+                isProject:  postData.isProject == '1' ? 1 : 0 ,
+                isCalendar :postData.isCalendar == '1' ? 1 :0,
+                father_id: fatherId,
+                report_to_email: postData.report_to_email,
+                default_status : postData.default_status,
+                isInvoiceEmailToUser:  postData.isInvoiceEmailToUser == '1' ? 1 : 0,
+                isAddContactEmailToResult:  postData.isAddContactEmailToResult == '1' ? 1 : 0,
+                IMA : postData.IMA,
+                Site_name : postData.Site_name,
+                Medic_contact_no : postData.Medic_contact_no,
+                Email : postData.Email,
+                CODE : postData.CODE,
+                Phone : postData.Phone,
+                Site_medic : postData.Site_medic,
+                User_id : postData.User_id,
+                isPO:  postData.isPO == '1' ? 1 : 0,
+                isExtra:  postData.isExtra == '1' ? 1 : 0,        
+            })
+            .where({'id':postData.id})
+            .toString()
+            db.sequelize.query(sql)
+            .success(function(data){
+                        var sql1 =
+                                knex('company_insurers')
+                              .where('company_id', postData.id)
+                              .del()
+                              .toString()
+                              db.sequelize.query(sql1)
+                              .success(function(data1){
+                                    var company_insurers_array = [];
+                                    _.forEach(postData.listInsurerid, function(id){
+                                        company_insurers_array.push({insurer_id: id.id, company_id: postData.id});
+                                    })  
+                                   
+                                    if(company_insurers_array.length > 0){
+                                        var sql2 =
+                                             knex('company_insurers')
+                                            .insert(company_insurers_array)
+                                            .toString()
+                                            db.sequelize.query(sql2)
+                                            .success(function(data){
+                                                res.json({'status': 'success', 'data': data});
+                                            })
+                                            .error(function(error){
+                                                res.json(500, {error: error, sql: sql2});
+                                            })
+                                    }
+                              })
+                             .error(function(error){
+                                res.json(500, {error: error, sql: sql2});
+                            })
+            })
+             .error(function(error){
+                res.json(500, {error: error});
+            })
+
+    },
+	postList: function(req, res){
 		var postData = req.body.data;
+        var pagination = req.body.pagination;
 		var sql = knex
 		.select('*')
 		.from('companies')
+        .limit(postData.limit)
+        .offset(postData.offset)
 		.innerJoin('patient_companies', 'companies.id', '=', 'patient_companies.company_id')
 		.where(
 			'patient_companies.patient_id', postData.patient_id
 		)
-		.toString()
-		db.sequelize.query(sql)
-		.success(function(detail){
-			if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
-			res.json({'status': 'success', 'data': detail});
-		})
-		.error(function(error){
-			res.json(500, {'status': 'error', 'message': error});
-		})
-	},
-	// postAdd : function(req,res){
- //        var postData = req.body.data;
-
- //        var fatherId = postData.fatherId == null || postData.fatherId == '' ? null : postData.fatherId;
- //        var status = postData.status == '' ? 'Pending' : postData.status;
- //        var sql =
- //        knex('companies')
- //        .insert({
- //            Company_name: postData.Company_name,
- //            Industry: postData.Industry,
- //            Addr: postData.Addr,
- //            postcode: postData.postCode,
- //            State: postData.State,
- //            Description: postData.Description,
- //            country: postData.country,
- //            PO_number: postData.PO_number,
- //            isInvoiceEmailToUser:  postData.isInvoiceEmailToUser == '1' ? 1 : 0,
- //            invoice_email: postData.invoice_email,
- //            isAddContactEmailToResult:  postData.isAddContactEmailToResult == '1' ? 1 : 0,
- //            result_email: postData.result_email,
- //            report_to_email: postData.report_to_email,
- //            isProject:  postData.isProject == '1' ? 1 : 0 ,
- //            isPO:  postData.isPO == '1' ? 1 : 0,
- //            isExtra:  postData.isExtra == '1' ? 1 : 0,
- //            father_id: fatherId
- //        })
- //        .toString()
- //        db.sequelize.query(sql)
- //        .success(function(data){
- //            res.json({'status': 'success', 'data': data});
- //        })
- //        .error(function(error){
- //            res.json(500, {'status': 'error', 'message': error});
- //        })
- //    },//end postAdd
- postAdd : function(req,res){
-        var postData = req.body.data;
-        postData.listInsurerid;
-        var fatherId = postData.fatherId == null || postData.fatherId == '' ? null : postData.fatherId;
-        var status = postData.status == '' ? 'Pending' : postData.status;
-        var sql =
-        knex('companies')
-        .insert({
-            Company_name: postData.Company_name,
-            Industry: postData.Industry,
-            Addr: postData.Addr,
-            postcode: postData.postCode,
-            State: postData.State,
-            Description: postData.Description,
-            country: postData.country,
-            PO_number: postData.PO_number,
-            isInvoiceEmailToUser:  postData.isInvoiceEmailToUser == '1' ? 1 : 0,
-            invoice_email: postData.invoice_email,
-            isAddContactEmailToResult:  postData.isAddContactEmailToResult == '1' ? 1 : 0,
-            result_email: postData.result_email,
-            report_to_email: postData.report_to_email,
-            isProject:  postData.isProject == '1' ? 1 : 0 ,
-            isPO:  postData.isPO == '1' ? 1 : 0,
-            isExtra:  postData.isExtra == '1' ? 1 : 0,
-            father_id: fatherId
-        })
-        .toString()
+        .toString();
+        var sql_count = knex('cln_insurers')
+            .count('id as a')
+            .toString();
         db.sequelize.query(sql)
-        .success(function(data){
-            var sql1 =
-             knex('companies')
-             .max('id as id')
-             .toString()
-             db.sequelize.query(sql1)
-                .success(function(data){
-                           var company_insurers_array = [];
-
-                            _.forEach(postData.listInsurerid, function(insurer_id){
-                                company_insurers_array.push({insurer_id: insurer_id, company_id: data[0].id});
-                            })
-
-                            if(company_insurers_array.length > 0){
-                                var sql2 =
-                                     knex('company_insurers')
-                                    .insert(company_insurers_array)
-                                    .toString()
-                                    db.sequelize.query(sql2)
-                                    .success(function(data){
-                                        res.json({'status': 'success', 'data': data});
-                                    })
-                                    .error(function(error){
-                                        res.json(500, {'status': 'error', 'message': error});
-                                    })
-                            }
-                    
-                })
-                .error(function(error){
-                    res.json(500, {'status': 'error', 'message': error});
-                    
-                })//end sql1
+        .success(function(detail){
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: detail, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
         })
         .error(function(error){
             res.json(500, {'status': 'error', 'message': error});
         })
-    },//end postAdd
+	},
+    postAdd : function(req,res){
+            var postData = req.body.data;
+           var errors = [];
+            var required = [
+                {field: 'Company_name', message: 'Company Name required'}
+            ]
+
+            _.forIn(postData, function(value, field){
+                _.forEach(required, function(field_error){
+                    if(field_error.field === field && S(value).isEmpty()){
+                        errors.push(field_error);
+                        return;
+                    }
+                })
+            })
+
+            if(errors.length > 0){
+                res.status(500).json({errors: errors});
+                return;
+            }
+            var fatherId = postData.fatherId == null || postData.fatherId == '' ? null : postData.fatherId;
+            var sql =
+            knex('companies')
+            .insert({
+                Company_name: postData.Company_name,
+                Industry: postData.Industry,
+                Addr: postData.Addr,
+                postcode: postData.postCode,
+                State: postData.State,
+                Description: postData.Description,
+                latitude : postData.latitude,
+                longitude :postData.longitude,
+                country: postData.country,
+                result_email: postData.result_email,
+                invoice_email: postData.invoice_email,
+                PO_number: postData.PO_number,
+                isProject:  postData.isProject == '1' ? 1 : 0 ,
+                isCalendar :postData.isCalendar == '1' ? 1 :0,
+                father_id: fatherId,
+                report_to_email: postData.report_to_email,
+                default_status : postData.default_status,
+                isInvoiceEmailToUser:  postData.isInvoiceEmailToUser == '1' ? 1 : 0,
+                isAddContactEmailToResult:  postData.isAddContactEmailToResult == '1' ? 1 : 0,
+                IMA : postData.IMA,
+                Site_name : postData.Site_name,
+                Medic_contact_no : postData.Medic_contact_no,
+                Email : postData.Email,
+                CODE : postData.CODE,
+                Insurer :postData.Insurer,
+                Phone : postData.Phone,
+                Site_medic : postData.Site_medic,
+                User_id : postData.User_id,
+                isPO:  postData.isPO == '1' ? 1 : 0,
+                isExtra:  postData.isExtra == '1' ? 1 : 0
+                
+            })
+            .toString()
+            db.sequelize.query(sql)
+            .success(function(data){
+                var sql1 =
+                 knex('companies')
+                 .max('id as id')
+                 .toString()
+                 db.sequelize.query(sql1)
+                    .success(function(data){
+                               var company_insurers_array = [];
+                                _.forEach(postData.listInsurerid, function(insurer_id){
+                                    company_insurers_array.push({insurer_id: insurer_id, company_id: data[0].id});
+                                })
+
+                                if(company_insurers_array.length > 0){
+                                    
+                                    var sql2 =
+                                         knex('company_insurers')
+                                        .insert(company_insurers_array)
+                                        .toString()
+                                        db.sequelize.query(sql2)
+                                        .success(function(data){
+                                            res.json({'status': 'success', 'data': data});
+                                        })
+                                        .error(function(error){
+                                            res.json(500, {error: error});
+                                        })
+                                }
+                                 var sql3 =
+                                         knex('patient_companies')
+                                        .insert({
+                                                patient_id:postData.patient_id,
+                                                company_id:data[0].id
+                                             })
+                                        .toString()
+                                        db.sequelize.query(sql3)
+                                        .success(function(data){ 
+                                            res.json({'status': 'success', 'data': data});
+                                        })
+                                         .error(function(error){
+                                            res.json(500, {error: error});
+                                        })
+                        res.json({'status': 'success', 'data': data});
+                        
+                    })
+                    .error(function(error){
+                        res.json(500, {error: error});
+                    })
+            })
+             .error(function(error){
+                res.json(500, {error: error});
+            })
+        },//end postAdd
     postlistInsurer: function(req, res){
         var postData = req.body.data;
         var sql = knex
         .select('*')
         .from('cln_insurers')
-        .toString()
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .toString();
+        var sql_count = knex('cln_insurers')
+            .count('id as a')
+            .toString();
         db.sequelize.query(sql)
         .success(function(detail){
-            if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
-            res.json({'status': 'success', 'data': detail});
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: detail, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
         })
         .error(function(error){
             res.json(500, {'status': 'error', 'message': error});
@@ -145,11 +295,23 @@ module.exports = {
         var sql = knex
         .select('*')
         .from('companies')
-        .toString()
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .toString();
+
+        var sql_count = knex('companies')
+            .count('id as a')
+            .toString();
+
         db.sequelize.query(sql)
         .success(function(detail){
-            if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
-            res.json({'status': 'success', 'data': detail});
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: detail, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
         })
         .error(function(error){
             res.json(500, {'status': 'error', 'message': error});
@@ -157,21 +319,50 @@ module.exports = {
     },
     postbyCompanyId: function(req, res){
         var postData = req.body.data;
-        var sql = knex
-        .select('*')
-        .from('companies')
-        .where('id', postData.id)
-        .toString()
-        db.sequelize.query(sql)
-        .success(function(detail){
-            if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
-            res.json({'status': 'success', 'data': detail});
-        })
-        .error(function(error){
-            res.json(500, {'status': 'error', 'message': 'sao no ko ra'});
-        })
+            var sql 
+                    = knex
+                    .select('*')
+                    .from('companies')
+                    .where({id:postData.id})
+                    .toString()
+                    db.sequelize.query(sql)
+                    .success(function(data){
+                       var sql1
+                            =knex
+                            .select('cln_insurers.*')
+                            .from('company_insurers')
+                            .where({company_id:postData.id})
+                            .innerJoin('cln_insurers','company_insurers.insurer_id','=', 'cln_insurers.id')
+                            .toString()
+                            db.sequelize.query(sql1)
+                            .success(function(data1){
+                                var sql2 = knex
+                                        .select('Company_name')
+                                        .from('companies')
+                                        .where({id:data[0].parent_id})
+                                        .toString()
+                                        db.sequelize.query(sql2)
+                                        .success(function(data2){
+                                             if(data2.length <= 0)
+                                             {
+                                                data2 = [{Company_name:null}];
+                                             } 
+                                            res.json({'status': 'success', 'data': data,'data1':data1,'data2':data2});
+                                        })
+                                        .error(function(error){
+                                            res.json(500, {'status': 'error', 'message': 'error'});
+                                        })
+                                
+                            })
+                            .error(function(error){
+                                res.json(500, {'status': 'error', 'message': 'error'});
+                            })
+                    })
+                    .error(function(error){
+                        res.json(500, {'status': 'error', 'message': 'error'});
+                    })
     },
-    ///////////
+   ///////////Ben Tan
     getDetail: function(req, res){
         var company_id = req.body.company_id;
 

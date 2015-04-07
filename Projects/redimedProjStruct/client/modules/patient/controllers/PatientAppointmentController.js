@@ -45,7 +45,9 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
 	   {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
-            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},   
+            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},
+        {'name':'Problem list', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
+            'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patient_id+'})'},
 
 
     ];
