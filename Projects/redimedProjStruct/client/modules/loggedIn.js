@@ -86,7 +86,8 @@ angular.module("app.loggedIn", [
     'app.loggedIn.allergy',
     
     'app.loggedIn.company',
-    'app.loggedIn.alert'
+    'app.loggedIn.alert',
+    'app.loggedIn.problem'
 ])
 
 .config(function($stateProvider) {

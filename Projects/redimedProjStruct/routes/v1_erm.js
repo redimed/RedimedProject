@@ -54,6 +54,7 @@ var v2_PaperlessController = require('./controllers/v2_PaperlessController');
 
 var v2_MedicineController = require('./controllers/v2_MedicineController');
 var v2_AllergyController = require('./controllers/v2_AllergyController');
+var v2_ProblemController = require('./controllers/v2_ProblemController');
 
 
 k_route.setRoute(app, v2_CompanyController, '/api/erm/v2/companies/');
@@ -80,3 +81,4 @@ k_route.setRoute(app, v2_PaperlessController, '/api/erm/v2/paperless/');
 
 k_route.setRoute(app, v2_MedicineController, '/api/erm/v2/medicine/');
 k_route.setRoute(app, v2_AllergyController, '/api/erm/v2/allergy/');
+k_route.setRoute(app, v2_ProblemController, '/api/erm/v2/problem/');
