@@ -86,7 +86,7 @@
             </div>
             <div class="col-md-10 col-sm-10" >
                 <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
-                    <a ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
+                    <a ng-disabled="isCalling" ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
                         <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
                     </a>
                 </span>
@@ -199,8 +199,13 @@
                     Drawings
                 </a>
             </li>
-            <li>
+            <li ng-if="callInfo.isCalling">
                 <a href="index.html#tab_1_5" data-toggle="tab">
+                    File Sharing
+                </a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_6" data-toggle="tab">
                     Medical Devices
                 </a>
             </li>
@@ -516,7 +521,14 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_1_5">
+            <div ng-if="callInfo.isCalling" class="tab-pane" id="tab_1_5">
+                <div class='row'>
+                    <div class="col-md-12 col-sm-12">
+                        <div dropzone="dropzoneConfig" class="dropzone"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_1_6">
                 <div ng-controller="BluetoothController" class="tabbable-custom nav-justified">
                     <ul class="nav nav-tabs nav-justified">
                         <li class="active">
@@ -534,7 +546,7 @@
                         <div class="tab-pane active" id="tab_1_1_1">
                             <div class="row">
                                 <div ng-click="showHistory(device)" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
-                                    <a href="javascript:;"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
+                                    <a href="javascript:;" style="margin-bottom: 20 !important"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
                                         <div class="visual">
                                             <i class="{{device.icon}}"></i>
                                         </div>

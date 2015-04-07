@@ -34,7 +34,6 @@ angular.module("app", [
         'ngPDFViewer',
         'ngSanitize',
         'ngMap',
-        'ngDragDrop',
         'btford.socket-io',
         'btford.modal',
         'dateRangePicker',
