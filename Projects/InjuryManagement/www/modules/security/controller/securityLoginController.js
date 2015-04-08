@@ -1,10 +1,10 @@
 angular.module('starter.security.login.controller',[])
-    .controller('securityLoginController',function($scope, $state, UserService, SecurityService,
+    .controller('securityLoginController',function($scope, $rootScope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
                                                    $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
         $scope.notifications = [];
 
-        $scope.$on('pushNotificationReceived', function (event, notification) {
+        $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
             localStorageService.set("notificationLS", notification);
             if (ionic.Platform.isAndroid()) {
                 handleAndroid(notification);
