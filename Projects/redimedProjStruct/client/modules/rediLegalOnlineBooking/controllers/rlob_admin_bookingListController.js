@@ -456,19 +456,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * Gui loi nhan tu client
          */
 
-        $scope.bookingMessage={};
-        $scope.showDialogSendBookingMessage=function(assId,bookingId)
-        {
-            $scope.bookingMessage.assId=assId;
-            $scope.bookingMessage.bookingId=bookingId;
-            $('#lob-send-booking-message').modal({show:true,backdrop:'static'});
-        }
-
-        $scope.sendBookingMessage=function()
-        {
-            $scope.rlob_add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.bellType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
-            $("#lob-send-booking-message").modal('hide');
-        }
+        
 
 
         /**
@@ -1126,12 +1114,29 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                 angular.element('#bookingstatus').fadeOut();
             }
         });
+
+        $scope.bookingMessage={};
+        $scope.showDialogSendBookingMessage=function(assId,bookingId)
+        {
+            $scope.bookingMessage.assId=assId;
+            $scope.bookingMessage.bookingId=bookingId;
+            $('#lob-send-booking-message').modal({show:true,backdrop:'static'});
+        }
+
+
+        $scope.sendBookingMessage=function()
+        {
+            $scope.rlob_add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,$scope.sourceName,$scope.bellType.message,$scope.notificationType.bell,$scope.bookingMessage.message);
+            $("#lob-send-booking-message").modal('hide');
+        }
+
         rlobService.getListBookingMessages().then(function(data){
-            $scope.ListBookingMessages = data;
+            if (data.status == 'success') {
+                $scope.ListBookingMessages = data.data;
+            };
         });
-        
-        $scope.check = function(aa){
-            $scope.bookingMessage.message = aa;
+        $scope.check = function(data){
+            $scope.bookingMessage.message = data;
         };
         //chien set booking id in paperless
         //phanquocchien.c1109g@gmail.com

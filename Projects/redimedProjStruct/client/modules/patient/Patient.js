@@ -117,7 +117,7 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.outside_referral", {
+    /*.state("loggedIn.patient.outside_referral", {
         url: "/:patient_id/outside_referral",
         views: {
             "main-content": {
@@ -125,7 +125,7 @@ angular.module("app.loggedIn.patient", [
                 controller: "PatientOutsideReferralsController"
             }
         }
-    })
+    })*/
     .state("loggedIn.patient.itemsheet",{
         url:"/appointment/:patient_id/:cal_id/itemsheet",
         views: {

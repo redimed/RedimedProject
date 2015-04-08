@@ -1,7 +1,7 @@
 angular.module('app.rlobRegister.controller',[])
     .controller("rlobRegisterController", function($scope, $state, $cookieStore, SecurityService, rlobService,toastr) {
         $scope.user={};
-        $scope.regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        $scope.regexEmail=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         $scope.register = function(){
             $scope.$broadcast('show-errors-check-validity');
             $scope.user.username=$scope.user.email;
@@ -21,6 +21,8 @@ angular.module('app.rlobRegister.controller',[])
                         $scope.showClickedValidation = true;
                         toastr.error("Username da Ton Tai", "Error");
                     }else{
+                        $scope.user.fname = $scope.user.fname.charAt(0).toUpperCase() + $scope.user.fname.substr(1);
+                        $scope.user.lname = $scope.user.lname.charAt(0).toUpperCase() + $scope.user.lname.substr(1);
                         var user =
                         {
                             fullName: $scope.user.fname +' '+ $scope.user.lname,
@@ -35,7 +37,6 @@ angular.module('app.rlobRegister.controller',[])
                             lname: $scope.user.lname
                         };
 
-                        console.log(user);
                         rlobService.insertNewUser(user).then(function(data){
                             if(data.status=='success')
                             {
@@ -43,6 +44,7 @@ angular.module('app.rlobRegister.controller',[])
                                 toastr.success("Register Success!","Success");
                                 angular.element('#form-data').css('display','none');
                                 angular.element('#data-success').css('display','block');
+                                console.log(user.companyState);
                                 for (var i = 0; i < $scope.stateList.length; i++) {
                                     if ( $scope.user.companyState == $scope.stateList[i].id  ) {
                                         $scope.companyStateName = $scope.stateList[i].State;
@@ -64,14 +66,13 @@ angular.module('app.rlobRegister.controller',[])
         // SecurityService.company().then(function(response){
         //     $scope.companyList = response;
         // })
-
+        
         $scope.stateList=[];
         rlobService.getStates('Australia')
         .then(function(data){
             if(data.status=='success')
             {
                 $scope.stateList=data.data;
-                console.log($scope.stateList);
             }
             else
             {

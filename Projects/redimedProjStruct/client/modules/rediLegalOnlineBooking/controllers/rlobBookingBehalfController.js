@@ -27,7 +27,7 @@ angular.module('app.loggedIn.rlob.bookingBehalf.controller',[])
             emailKey:'',
             nameKey:'',
             companyKey:'',
-            statusKey:''
+            statusKey:rlobConstant.registerStatus.APPROVE.value
         }
 
         /**

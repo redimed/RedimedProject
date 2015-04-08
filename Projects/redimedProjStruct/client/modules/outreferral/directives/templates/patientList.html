@@ -1,0 +1,49 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Outside Doctor</th>
+			<th>Referred Doctor</th>
+			<th>Date Started</th>
+			<th>Date Expire</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="l in outreferral.list" ng-click="onRowClick({row: l})" style="cursor: pointer;">
+			<td>{{l.outdoctor_name}}</td>
+			<td>{{l.doctor_name}}</td>
+			<td>{{l.date_started | filterdate: 'DD/MM/YYYY'}}</td>
+			<td>{{l.expire_date | filterdate: 'DD/MM/YYYY'}}</td>
+			<td>
+				<a ng-click="outreferral.dialog.edit(l)" ng-if="action.edit">
+					<i class="fa fa-pencil"></i>
+				</a>
+				&nbsp
+				<a ng-click="outreferral.dialog.remove(l)" ng-if="action.remove">
+					<i class="fa fa-remove"></i>
+				</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<pagination boundary-links="true" total-items="outreferral.count" ng-model="outreferral.search.page" 
+    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+    items-per-page="outreferral.search.limit" max-size="outreferral.search.max_size" ng-change="outreferral.onPage(outreferral.search.page)">
+</pagination>
+
+<script type="text/ng-template" id="dialogOutreferralRemove">
+    <div class="modal-body">
+        <p>Do you want to remove this Referral ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="dialogOutreferralEdit">
+    <div class="modal-body">
+        <outreferral-patient-edit id="outreferral.id" patient-id="outreferral.patient_id" success="outreferral.success">
+        </outreferral-patient-edit>
+    </div>
+ </script>

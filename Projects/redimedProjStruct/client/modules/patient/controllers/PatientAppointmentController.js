@@ -16,7 +16,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.outside_referral({patient_id:' + $stateParams.patient_id + '})'},  
+            'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patient_id + '})'},  
         {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
             'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',

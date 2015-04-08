@@ -1,17 +1,21 @@
 angular.module('app.loggedIn.alert.controllers.patientList', [])
 
-.controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id){
-	$scope.alert = {
-		success: false,
-		Patient_id: Patient_id,
-		limit: 10
-	}
+.controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id, AlertModel, toastr){
+	var onSaveCheck = function(data){
+		var postData = angular.copy(data);
 
-	$scope.$watch('alert.success', function(success){
-		if(success){
+		AlertModel.select(postData)
+		.then(function(response){
+			toastr.success('Select Successfully');
 			$modalInstance.close('success');
-		}
-	})
+		}, function(error){})
+	}
+	
+	$scope.alert = {
+		Patient_id: Patient_id,
+		limit: 10,
+		onSaveCheck: function(data){ onSaveCheck(data); }
+	}
 })
 
 .controller('AlertPatientListController', function($scope, $modal, $stateParams, toastr){
@@ -30,7 +34,6 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 		})
 		.result.then(function(response){
 			if(response === 'success'){
-				toastr.success('Added Successfully');
 				$scope.alert.reload = true;
 			}
 		})

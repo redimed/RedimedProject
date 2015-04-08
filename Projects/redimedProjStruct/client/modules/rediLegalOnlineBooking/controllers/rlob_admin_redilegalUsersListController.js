@@ -89,7 +89,7 @@ angular.module('app.loggedIn.rlob.redilegalUsersListController.controller',[])
         }
         $scope.updateRedilegalUserStatus=function(user_name,status)
         {
-            if($scope.selectedItem.Company_name==null)
+            if($scope.selectedItem.Company_name==null && status!=rlobConstant.registerStatus.REJECT.value)
             {
                 rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Please reselect the infomation of company!");
                 return;
@@ -149,7 +149,7 @@ angular.module('app.loggedIn.rlob.redilegalUsersListController.controller',[])
 
         $scope.updateUser=function()
         {
-            if($scope.editItem.Company_name==null)
+            if($scope.editItem.Company_name==null && $scope.editItem.MEDICO_LEGAL_REGISTER_STATUS!=rlobConstant.registerStatus.REJECT.value)
             {
                 rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Please reselect the infomation of company!");
                 return;

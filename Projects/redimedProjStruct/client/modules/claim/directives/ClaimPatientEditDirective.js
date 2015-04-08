@@ -27,7 +27,6 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 				Isenable: '1',
 				Created_by: user_id,
 				Last_updated_by: user_id,
-				CAL_ID: scope.calId
 			}
 
 			var save = function(){
@@ -80,7 +79,7 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 			scope.claim = {
 				errors: [],
 				load: function(){ load(); },
-				form: form,
+				form: angular.copy(form),
 				errors: [],
 				save: function(){ save(); }
 			}
