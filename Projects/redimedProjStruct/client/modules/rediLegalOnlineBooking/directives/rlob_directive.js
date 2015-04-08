@@ -273,7 +273,6 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_upload_template.html',
             controller: function ($scope,$http,$cookieStore, FileUploader,rlobService)
             {
-                $scope.filesUpdateFlag=0;
                 $scope.loginInfo = $cookieStore.get('userInfo');
                 //---------------------------------------------------------------
                 //HANDLE UPLOAD FILES
@@ -308,9 +307,6 @@ angular.module("app.loggedIn.rlob.directive", [])
                     console.info('onProgressAll', progress);
                 };
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {
-
-                    if($scope.filesUpdateFlag!=undefined || $scope.filesUpdateFlag==null)
-                        $scope.filesUpdateFlag=$scope.filesUpdateFlag+1;
                     console.info('onSuccessItem', fileItem, response, status, headers);
                 };
                 uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -320,23 +316,20 @@ angular.module("app.loggedIn.rlob.directive", [])
                     console.info('onCancelItem', fileItem, response, status, headers);
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                    if(response.fileInfo.isClientDownLoad && response.fileInfo.isClientDownLoad==1)
-                    {
-                        
-                        rlobService.add_notification($scope.selectedBooking.ASS_ID,
-                            $scope.selectedBooking.BOOKING_ID,
-                            rlobConstant.bookingType.REDiLEGAL.name,
-                            rlobConstant.letterType.result,
-                            rlobConstant.notificationType.letter,'');
-                    }
                     console.info('onCompleteItem', fileItem, response, status, headers);
                 };
                 uploader.onCompleteAll = function () {
+                    if($scope.filesUpdateFlag!=undefined)
+                    {
+                        $scope.filesUpdateFlag=$scope.filesUpdateFlag+1;
+                    }
+                    else
+                    {
+                        $scope.filesUpdateFlag=1;
+                    }
                     console.info('onCompleteAll');
                 };
-
                 console.info('uploader', uploader);
-
 
                 $scope.$watch("selectedBooking", function(newValue, oldValue){
                     if($scope.selectedBooking)
@@ -408,7 +401,10 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_download_file_template.html',
             controller: function ($scope,$http,rlobService)
             {
-                
+                if($scope.numberOfDocs===undefined)
+                {
+                    $scope.numberOfDocs=0;
+                }
                 $scope.letterType=rlobConstant.letterType;
                 $scope.notificationType=rlobConstant.notificationType;
                 $scope.rlob_add_notification=rlobService.add_notification;
@@ -567,6 +563,27 @@ angular.module("app.loggedIn.rlob.directive", [])
                     {
                         rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"No files chosen.");
                     }
+                },
+
+                $scope.unselectAllFileResult=function()
+                {
+                    rlobService.rlobBookingFile.unselectAllFileResult($scope.selectedBooking.BOOKING_ID)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Unselect all result files success.");
+                            getFilesUpload();
+                        }
+                        else
+                        {
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Unselect all result files fail.");
+                        }
+                    },function(err){
+                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Unselect all result files fail.");
+                    })
+                    .then(function(){
+                        $("#rlob-dialog-set-result").modal('hide');
+                    })
                 }
 
             }
@@ -1418,7 +1435,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 };
 
                 $scope.$watch('listBookingNotification',function(oldValue,newValue){
-                    $scope.setSlimCroll('.rlob-admin-local-notification-list');
+                    //$scope.setSlimCroll('.rlob-admin-local-notification-list');
                     if($scope.selectedBooking)
                         $scope.selectedBooking=undefined;
                 });
@@ -1497,41 +1514,7 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_period.html',
             controller: function ($scope)
             {
-                /**
-                 * angular bootstrap datepicker handle
-                 */
-                // Disable weekend selection
-
-                $scope.disabled = function(date, mode) {
-                    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-                };
-                $scope.toggleMin = function() {
-                    $scope.minDate = $scope.minDate ? null : new Date();
-                };
-                $scope.toggleMin();
-
-                $scope.open1  = function($event) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-                    $scope.opened1 = true;
-                };
-                $scope.open2 = function($event) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-                    $scope.opened2 = true;
-                };
-
-                $scope.dateOptions = {
-                    formatYear: 'yy',
-                    startingDay: 1
-                };
-
-                //    $scope.initDate = new Date('1980-1-1');
-                $scope.formats = ['d/M/yyyy','dd/MM/yyyy','dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-                $scope.format = $scope.formats[0];
-
-                //--------------------------------------------------------------------------------------
-
+                
                 $scope.showDialogChoose=function(){
                     if($scope.fromDate && $scope.toDate)
                     {
@@ -1556,8 +1539,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }
                 },true);
 
-                $scope.FROM_DATE_TEMP='';
-                $scope.TO_DATE_TEMP='';
+                $scope.FROM_DATE_TEMP=null;
+                $scope.TO_DATE_TEMP=null;
 
                 $scope.localError=false;
                 $scope.periodDisplay='ALL';
@@ -1588,8 +1571,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 }
                 $scope.resetDate=function()
                 {
-                    $scope.FROM_DATE_TEMP='';
-                    $scope.TO_DATE_TEMP='';
+                    $scope.FROM_DATE_TEMP=null;
+                    $scope.TO_DATE_TEMP=null;
                     $scope.fromDate='';
                     $scope.toDate='';
                     $scope.localError=false;
@@ -1641,6 +1624,29 @@ angular.module("app.loggedIn.rlob.directive", [])
                         });
 
                 };
+
+            }
+        };
+    })
+
+    .directive('rlobSendClientMessage', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                actionCenter:'='
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_send_client_message.html',
+            controller: function ($scope)
+            {
+                rlobService.getListBookingMessages().then(function(data){
+                    $scope.ListBookingMessages = data;
+                });
+                $scope.actionCenter.run=function()
+                {
+                    
+                }
 
             }
         };

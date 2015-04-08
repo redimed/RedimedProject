@@ -65,9 +65,9 @@ var rlobConstant={
         noDocuments:'No documents'
 	},*/
     documentStatus:{
-        noDocuments:{value:'No documents',display:'Not received'},
-        notConfirmed:{value:'Not confirmed',display:'Not confirmed'},
-        checked:{value:'Checked',display:'Received'}
+        noDocuments:{value:'No documents',display:'Not received',isEnable:true},
+        notConfirmed:{value:'Not confirmed',display:'Not confirmed',isEnable:false},
+        checked:{value:'Checked',display:'Received',isEnable:true}
     },
 
     documentStatusDisplay:{
@@ -177,5 +177,29 @@ var rlobMsg={
         $("#rlob-global-msg-popup").modal({show:true,backdrop:'static'});
     }
 }
+
+
+/***
+* scroll den 1 id xac dinh
+* @param el
+* @param offeset
+* tannv.dts@gmail.com
+*/
+var rlobScrollTo= function(selector, offeset)
+{
+    var el=$(selector);
+    var pos = (el && el.size() > 0) ? el.offset().top : 0;
+
+    if (el) {
+        if ($('body').hasClass('page-header-fixed')) {
+            pos = pos - $('.page-header').height();
+        }
+        pos = pos + (offeset ? offeset : -1 * el.height());
+    }
+
+    $('html,body').animate({
+        scrollTop: pos
+    }, 'slow');
+};
 
 

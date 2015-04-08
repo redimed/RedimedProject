@@ -2,7 +2,8 @@ angular.module('starter.phoneCall.controller',[])
 
     .controller('phoneCallController', function ($scope, $state, localStorageService,
                                                  $rootScope, $timeout, $ionicModal,
-                                                 $stateParams, signaling, UserService, $ionicSideMenuDelegate, phoneCallService, $ionicModal) {
+                                                 $stateParams, signaling, UserService, $ionicSideMenuDelegate, phoneCallService,
+                                                 $ionicModal, $cordovaFileTransfer, $cordovaFile, HOST_CONFIG) {
 
 
         var from = localStorageService.get('fromState');
@@ -29,7 +30,10 @@ angular.module('starter.phoneCall.controller',[])
         $scope.idImgShareScreen = 0;
         $scope.imgCount = null;
         $scope.btnShowlstImg = true;
-        $scope.blueTooth = false;
+        $scope.blueTooth = null;
+        var regex = "(.*/)*.+\\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP)$";
+        var patternFileType = new RegExp(regex);
+        $scope.isFileShare = false;
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
         var src = "/android_asset/www/phone_calling.mp3";
@@ -213,6 +217,7 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.imageShareToggle = function() {
+            console.log('clickImageToggle');
             $scope.isImage = !$scope.isImage;
             $scope.blueTooth = false;
             if($scope.isImage) {
@@ -319,6 +324,7 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         function getImage(id) {
+            $scope.isFileShare = false;
             phoneCallService.getImageShareScreen(id).then(function(result) {
                 if(result.status.toLowerCase() == 'success'){
                     $scope.imgObj.push({
@@ -334,13 +340,47 @@ angular.module('starter.phoneCall.controller',[])
             })
         }
 
-        $timeout(function(){
-            if($scope.isImage) {
-                if($scope.controllerbtn) {
-                    $scope.controllerbtn = false;
-                }
-            }
-        }, 3 * 1000)
+        function getFile(id, fileName) {
+            var url = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/download/" + id;
+            $scope.filename = fileName;
+            var targetPath = cordova.file.externalRootDirectory + 'InjuryManagement/' + $scope.filename;
+            var trustHosts = true
+            var options = {};
+            $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+                .then(function (result) {
+                    console.log('download success', result);
+                    if(patternFileType.test(result.name)) {
+                        console.log('true imgFile');
+                        $scope.isFileShare = true;
+                        $cordovaFile.readAsText(cordova.file.externalRootDirectory + 'InjuryManagement/', $scope.filename)
+                            .then(function (result) {
+                                convertImgToBase64URL(cordova.file.externalRootDirectory + 'InjuryManagement/' + $scope.filename, function(base64Img){
+                                    console.log(base64Img);
+                                    $scope.fileImgSrc = base64Img;
+                                });
+                            }, function (error) {
+                                console.log('error readAsText', error);
+                            });
+                    } else {
+                        $scope.isFileShare = false;
+                        console.log('false not imgFile');
+                        $cordovaFile.readAsText(cordova.file.externalRootDirectory + 'InjuryManagement/', $scope.filename)
+                            .then(function (result) {
+                                $scope.fileData = result;
+                                console.log('success ', result);
+                            }, function (error) {
+                                console.log('error ', error);
+                            });
+                    }
+                }, function (err) {
+                    console.log('Error', err);
+                }, function (progress) {
+                    $timeout(function () {
+                        $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                        console.log($scope.downloadProgress);
+                    })
+                });
+        }
 
         $scope.selectImg = function(imgSrc) {
             $scope.imgDetail.src = imgSrc.src;
@@ -352,13 +392,15 @@ angular.module('starter.phoneCall.controller',[])
         };
 
         $scope.actionControlButton = function() {
-            console.log('actionControlButton');
             $scope.controllerbtn = !$scope.controllerbtn;
+            btnControlActionCall();
         }
 
         signaling.on('messageReceived', onMessageReceive);
 
         signaling.on('receiveImage', getImage);
+
+        signaling.on('receiveFile', getFile);
 
         $scope.$on("$stateChangeSuccess", function() {
             document.addEventListener('backbutton', function(){
@@ -367,4 +409,31 @@ angular.module('starter.phoneCall.controller',[])
                 }
             });
         });
+
+        function convertImgToBase64URL(url, callback, outputFormat){
+            var canvas = document.createElement('CANVAS'),
+                ctx = canvas.getContext('2d'),
+                img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function(){
+                var dataURL;
+                canvas.height = img.height;
+                canvas.width = img.width;
+                ctx.drawImage(img, 0, 0);
+                dataURL = canvas.toDataURL(outputFormat);
+                callback(dataURL);
+                canvas = null;
+            };
+            img.src = url;
+        }
+
+        function btnControlActionCall() {
+            if($scope.isImage || $scope.blueTooth) {
+                if($scope.controllerbtn) {
+                    $timeout(function(){
+                        $scope.controllerbtn = false;
+                    }, 5 * 1000)
+                }
+            }
+        }
     })

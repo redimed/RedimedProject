@@ -1,6 +1,9 @@
 angular.module('app.loggedIn.claim.include', [
-	'app.loggedIn.claim.controllers.index',
+	'app.loggedIn.claim.directives.patientList',
+	'app.loggedIn.claim.directives.patientAdd',
+	'app.loggedIn.claim.directives.patientEdit',
+	
+	'app.loggedIn.claim.controllers.patientList',
 
-	'app.loggedIn.claim.directives.list',
 	'app.loggedIn.claim.model'
 ])

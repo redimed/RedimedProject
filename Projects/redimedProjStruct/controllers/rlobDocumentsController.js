@@ -9,13 +9,26 @@ var fs = require('fs-extra');//Read js file for import into
 var kiss=require('./kissUtilsController');
 var Archiver = require('Archiver');
 var rimraf = require('rimraf');
+var rlobUtil=require('./rlobUtilsController');
 module.exports =
 {
     rlobUploadFile:function(req, res) {
-        
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var bookingId=kiss.checkData(req.body.booking_id)?req.body.booking_id:'';
+        var companyId=kiss.checkData(req.body.company_id)?req.body.company_id:'';
+        var workerName=kiss.checkData(req.body.worker_name)?req.body.worker_name:'';
+        var isClientDownLoad=kiss.checkData(req.body.isClientDownLoad)?req.body.isClientDownLoad:0;
+        if(!kiss.checkListData(userId,bookingId,companyId,workerName,isClientDownLoad))
+        {
+            kiss.exlog("rlobUploadFile","Loi truyen data den");
+            res.json({status:'fail'});
+            return;
+        }
+        var currentTime=kiss.getCurrentTimeStr();
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-        var targetFolder=prefix+'redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
-        var targetFolderForSave='redilegal\\'+req.body.company_id+"\\"+req.body.booking_id+"_"+req.body.worker_name;
+        var targetFolder=prefix+'redilegal\\'+companyId+"\\"+bookingId+"_"+workerName;
+        var targetFolderForSave='redilegal\\'+companyId+"\\"+bookingId+"_"+workerName;
         mkdirp(targetFolder, function(err) 
         {
             if(err)
@@ -58,19 +71,49 @@ module.exports =
                         });
                     }
                 });
-                var sql="insert into rl_booking_files set ?";
-                var fileInfo={
-                    BOOKING_ID:req.body.booking_id,
-                    isClientDownLoad:req.body.isClientDownLoad,
-                    FILE_NAME:req.files.file.name,
-                    FILE_PATH:target_path_for_save
-                }
-                kiss.executeQuery(req,sql,[fileInfo],function(result){
-                    fileInfo.FILE_ID=result.insertId;
-                    res.json({status:"success",fileInfo:fileInfo});
+                kiss.beginTransaction(req,function(){
+                    //Insert thong tin file vao database
+                    var sql="insert into rl_booking_files set ?";
+                    var fileInfo={
+                        BOOKING_ID:bookingId,
+                        isClientDownLoad:isClientDownLoad,
+                        FILE_NAME:req.files.file.name,
+                        FILE_PATH:target_path_for_save,
+                        CREATED_BY:userId,
+                        CREATION_DATE:currentTime
+                    }
+                    kiss.executeQuery(req,sql,[fileInfo],function(result){
+                        fileInfo.FILE_ID=result.insertId;
+                        var sql="UPDATE `rl_bookings` booking SET ? WHERE booking.`BOOKING_ID` = ?";
+                        var updateInfo={
+                            DOCUMENT_STATUS:rlobUtil.documentStatus.checked,
+                            Last_updated_by:userId,
+                            Last_update_date:currentTime
+                        }
+                        kiss.executeQuery(req,sql,[updateInfo,bookingId],function(result){
+                            kiss.commit(req,function(){
+                                res.json({status:"success",fileInfo:fileInfo});
+                            },function(err){
+                                kiss.exlog("rlobUploadFile","Loi commit",err);
+                                res.json({status:'fail'});
+                            })
+                        },function(err){
+                            kiss.exlog("rlobUploadFile","Loi cap nhat document status",err);
+                            kiss.rollback(req,function(){
+                                res.json({status:'fail'});
+                            })
+                        });
+                    },function(err){
+                        kiss.exlog("rlobUploadFile","Loi insert thong tin file",err);
+                        kiss.rollback(req,function(){
+                            res.json({status:'fail'});
+                        })
+                    });
                 },function(err){
+                    kiss.exlog("rlobUploadFile","Khong the mo transaction");
                     res.json({status:'fail'});
-                });
+                })
+                
 
                 // req.getConnection(function(err,connection) {
                 //     var key_result=connection.query("SELECT get_pk_value('RlBookingFiles')",function(err,rows){

@@ -6,6 +6,17 @@ main.commonError = function(error, code, res){
 	return res.status(500).json({error: error, code: code});
 }
 
+main.checkDate = function(date){
+    if(!date) return false;
+    var date_split = date.toString().split('/');
+
+    if(!date_split) return false;
+    if(date_split[0] > 32) return false;
+    if(date_split[1] > 13) return false;
+
+    return true;
+}
+
 main.checkTime = function(time){
     if(!time) return false;
     var time_split = time.toString().split(':');

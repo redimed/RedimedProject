@@ -18,24 +18,15 @@ angular.module("app.loggedIn.controller",[
             }
         })
 
-        if(userInfo){
+        if(userInfo)
             $scope.username = userInfo.user_name;
-
-            if(data.img)
-                $scope.img = userInfo.img;
-            else
-                $scope.img = "theme/assets/icon.png"
-        }
-
-
+        
         $scope.ignoreCall = function(){
             audio.pause();
             if(notify != null)
                 notify.close();
             $modalInstance.close();
-
-            
-                socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
+            socket.emit("sendMessage",$cookieStore.get('userInfo').id,userInfo.id,{type:'ignore'});
         }
 
         $scope.acceptCall = function(){
@@ -91,9 +82,10 @@ angular.module("app.loggedIn.controller",[
     })
 
     socket.on("messageReceived",function(fromId,fromUser,message){
+        console.log("=====receive message=====",message);
         if(message.type == 'call')
         {
-            console.log("==============receive call=============");
+            
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
@@ -140,42 +132,6 @@ angular.module("app.loggedIn.controller",[
         }
     })
 
-    $scope.userImg = null;
-    $scope.onlineUsers = [];
-    $scope.onlineUsersTemp = [];
-
-    UserService.getOnlineUsers().then(function(rs){
-        $scope.onlineUsers = [];
-        if(rs.data)
-        {
-            $scope.onlineUsers = rs.data;
-            $scope.onlineUsersTemp = rs.data;
-         }
-    })
-
-    socket.on("online",function(data){
-        $scope.onlineUsers = [];
-        $scope.onlineUsers = data;
-        $scope.onlineUsersTemp = data;
-    })
-
-    $scope.searchOnlineUser = function(str){
-        $scope.onlineUsers = [];
-        $scope.onlineUsers = $filter('filter')($scope.onlineUsersTemp, {
-            username: str
-        });
-    }
-
-    $scope.refreshOnlineList = function(){
-        UserService.getOnlineUsers().then(function(rs){
-            $scope.onlineUsers = [];
-            if(rs.data)
-            {
-                $scope.onlineUsers = rs.data;
-                $scope.onlineUsersTemp = rs.data;
-            }
-        })
-    }
 
     // DATE
     $scope.dateOptions = {
@@ -320,9 +276,6 @@ angular.module("app.loggedIn.controller",[
         $scope.user = userInfo.Booking_Person;
 
          UserService.getUserInfo(userInfo.id).then(function(data){
-            if(data.img)
-               $scope.userImg = data.img;
-            else
                 $scope.userImg = "theme/assets/icon.png"
         })
     }

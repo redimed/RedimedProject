@@ -307,7 +307,10 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
         var api = doctorApi.all('v2/timetable/doctor_leave');
         return api.post({doctor_id: doctor_id, from_time: from_time, to_time: to_time})
     }
-
-
+    var leaveApi = Restangular.all("api/meditek/v1/appointment");
+    doctorService.leaveCal = function(data) {
+        var instanceApi = leaveApi.all('leaveCal');
+        return instanceApi.post({data: data});
+    }
      return doctorService;
  })

@@ -26,6 +26,7 @@ module.exports =
            var mailOptions = {
                from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
                to: emailInfo.recipients, // receiver
+               cc: emailInfo.cc?emailInfo.cc:[],
                subject: emailInfo.subject, // Subject line
                html: emailInfo.htmlBody,
                attachments:emailInfo.attachments?emailInfo.attachments:[]
@@ -38,8 +39,10 @@ module.exports =
             secure: false,
             port: 25, // port for secure SMTP
             auth: {
-                user: "programmer2",
-                pass: "Hello8080"
+                // user: "programmer2",
+                // pass: "Hello8080"
+                user: "redicolegal",
+                pass: "L3g@lSyst3m!"
             },
             tls: {rejectUnauthorized: false},
             debug:true
@@ -48,6 +51,7 @@ module.exports =
           var mailOptions = {
               from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
               to: emailInfo.recipients, // receiver
+              cc: emailInfo.cc?emailInfo.cc:[],
               subject: emailInfo.subject, // Subject line
               html: emailInfo.htmlBody,
               attachments:emailInfo.attachments?emailInfo.attachments:[]

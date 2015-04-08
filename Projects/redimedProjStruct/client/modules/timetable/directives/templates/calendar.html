@@ -1,0 +1,90 @@
+<div class="btn btn-default btn-xs" ng-click="timetable.dialog.addDay()">Add Day</div>
+<br><br>
+<!-- TABLE DIV -->
+<div class="table-div">
+    <div class="header">Day Of Week</div>
+    <div class="header">Service</div>
+    <div class="header">From Time</div>
+    <div class="header">To Time</div>
+    <div class="header">From Date</div>
+    <div class="header">To Date</div>
+    <div class="header">Action</div>
+    <span ng-repeat="row in timetable.list">
+        <div class="table-div-row" id="timetable_{{row.cal_header_df_id}}">
+            <div class="content">{{row.day_of_Week}}</div>
+            <div class="content">{{row.SERVICE_NAME}}</div>
+            <div class="content">{{row.from_time}}</div>
+            <div class="content">{{row.to_time}}</div>
+            <div class="content">{{row.from_date | filterdate: 'DD/MM/YYYY'}}</div>
+            <div class="content">{{row.to_date | filterdate: 'DD/MM/YYYY'}}</div>
+            <div class="content">
+                <a ng-click="timetable.dialog.removeDay(row)">
+                    <i class="fa fa-remove"></i>
+                </a>
+                &nbsp
+                <a ng-click="timetable.dialog.openTimetable(row)">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <div class="table-div-row">
+            <div class="content">
+                <a ng-click="site.dialog.addSite(row)">
+                    Add Site
+                </a>
+            </div>
+            <div class="content"><b>Week</b></div>
+            <div class="content"><b>Site</b></div>
+            <div class="content"><b>Action</b></div>
+        </div>
+        <div class="table-div-row">
+            <span ng-if="row.site.length === 0">
+                <div class="content"></div>
+                <div class="content">There is no site</div>
+            </span>
+            <span ng-repeat="s in row.site" style="margin-top: 5px;">
+                <div class="content"></div>
+                <div class="content">{{s.week_ord_of_month}}</div>
+                <div class="content">{{s.Site_name}}</div>
+                <div class="content">
+                    <a ng-click="site.dialog.removeSite(s.id)">
+                        <i class="fa fa-remove"></i>
+                    </a>
+                </div>
+                <br>
+            </span>
+        </div>
+        
+    </span>
+</div>
+<!-- END TABLE DIV -->
+
+ <script type="text/ng-template" id="notifyToSaveTimetable">
+    <div class="modal-body">
+        <p>Do you want to save timetable ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+<script type="text/ng-template" id="notifyToRemoveSite">
+    <div class="modal-body">
+        <p>Do you want to remove this site ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="notifyToRemoveDay">
+    <div class="modal-body">
+        <p>Do you want to remove this day of week ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>

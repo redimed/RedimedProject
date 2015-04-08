@@ -120,6 +120,12 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all("iso/iso-tree-dir/rename-node");
                 return result.post({nodeId:nodeId,oldName:oldName,newName:newName});
+            },
+
+            deleteNodeForever:function(nodeId)
+            {
+                var result = api.all("iso/iso-tree-dir/delete-node-forever");
+                return result.post({nodeId:nodeId});
             }
 
         };

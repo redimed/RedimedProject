@@ -10,7 +10,7 @@ module.exports = {
 	getPatientProblem: function(req,res){
 		var patientId = req.body.patient_id;
 
-		db.ClnPatientProblem.findAll({where:{patient_id: patientId}})
+		db.Problem.findAll({where:{Patient_id: patientId}})
 			.success(function(data){
 				res.json({status:'success',data: data});
 			})
@@ -19,6 +19,68 @@ module.exports = {
 				console.log(err);
 			})
 	},
+
+    uploadFile: function(req,res){
+        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+        var targetFolder = prefix+'uploadFile\\'+'PatientID_'+req.body.patient_id;
+        var targetFolderForSave='.\\uploadFile\\'+'PatientID_'+req.body.patient_id;
+            mkdirp(targetFolder, function(err) {
+                if(err) return err;
+
+                var tmp_path = req.files.file.path;
+                var target_path =targetFolder+"\\" + req.files.file.name;
+                fs.rename(tmp_path, target_path, function(err) {
+                    if (err) throw err;
+                    fs.unlink(tmp_path, function() {
+                        if (err) throw err;
+                    });
+                });
+
+                db.UploadFile.max('id')
+                    .success(function(max){
+                         db.UploadFile.create({
+                            id: max + 1,
+                            fileName: req.files.file.name,
+                            url: targetFolderForSave + "\\" + req.files.file.name
+                        })
+                            .success(function(data){
+                                res.json({status:"success", id: data.values.id, fileName: data.values.fileName});
+                            })
+                            .error(function(err){
+                                res.json({status:'error'});
+                                console.log(err);
+                            })
+                    })
+                    .error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+
+            });
+    },
+
+    downloadFile: function(req,res){
+        var id = req.params.id;
+
+        db.UploadFile.find({where:{id:id}},{raw:true})
+            .success(function(data){
+                if(data)
+                {
+                    if(data.url!=null || data.url!='')
+                    {
+                        var ex = fs.existsSync(data.url);
+
+                        if(ex)
+                            res.download(data.url);
+                        else
+                            res.json({status:'error'});
+                    }
+                }
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
 
     saveImage: function(req,res){
         var patient_id = req.body.patient_id;

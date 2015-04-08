@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.script.directive.add', [])
 
-.directive('scriptAdd', function(ScriptModel, PatientService, ConfigService, $cookieStore, $filter, $state, $stateParams){
+.directive('scriptAdd', function(ScriptModel, PatientService, ConfigService, toastr, $cookieStore, $filter, $state, $stateParams){
 	
 	return {
 
@@ -13,6 +13,9 @@ angular.module('app.loggedIn.script.directive.add', [])
 			var user_id = $cookieStore.get('userInfo').id;
 
 			var save = function(){
+
+				ConfigService.beforeSave(scope.script.errors);
+				scope.script.errors = [];
 
 				var postData = angular.copy(scope.script.form);
 
@@ -28,8 +31,12 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 				ScriptModel.add(postData)
 				.then(function(response){
+					toastr.success('Added Successfully');
 					$state.go('loggedIn.script');
-				}, function(error){})
+				}, function(error){
+					scope.script.errors = angular.copy(error.data.errors);
+					ConfigService.beforeError(scope.script.errors);
+				})
 
 			}
 			
@@ -47,6 +54,7 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 			scope.script = {
 				add: function(params){ save(params); },
+				errors: [],
 				form: {
 					prescriber: '',
 					scriptNum: '',

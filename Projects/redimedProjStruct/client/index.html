@@ -21,6 +21,7 @@
     <script src="lib/dateRangePicker/angular-date-range-picker.js"></script>
     <link rel="stylesheet" type="text/css" href="lib/dateRangePicker/angular-date-range-picker.css" />
     <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/pkakgggplhfilfbailbaibljfpalofjn">
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
     <!--<script src="vendor/bootstrap-material-design/dist/js/ripples.min.js"></script>-->
     <!--<script src="vendor/bootstrap-material-design/dist/js/material.min.js"></script>-->
     <!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>-->
@@ -206,6 +207,10 @@
     <script type="text/javascript" src="theme/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     <link rel="stylesheet" type="text/css" href="theme/assets/global/plugins/bootstrap-notify/css/bootstrap-notify.css" />
     <script type="text/javascript" src="theme/assets/global/plugins/bootstrap-notify/js/bootstrap-notify.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/dropzone.css" />
+    <script type="text/javascript" src="lib/dropzone.js"></script>
+ 
     <!-- ===============================================START MODULE====================================================== -->
     <!-- ANGULAR DIRECTIVES -->
     <script type="text/javascript" src="common/directives/common.js"></script>
@@ -524,14 +529,7 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/waWorkCover/controllers/waworkcoverGeneralController.js"></script>
     <script type="text/javascript" src="modules/waworkcover/services/waworkcoverServices.js"></script>
     <!--END MODULE WA_WORKCOVER-->
-    <!-- SCRIPT MODULE   -->
-    <script type="text/javascript" src="modules/script/Script.js"></script>
-    <script type="text/javascript" src="modules/script/directives/ScriptDirectives.js"></script>
-    <script type="text/javascript" src="modules/script/directives/ScriptDetailDirective.js"></script>
-    <script type="text/javascript" src="modules/script/controllers/scriptController.js"></script>
-    <script type="text/javascript" src="modules/script/controllers/scriptListController.js"></script>
-    <script type="text/javascript" src="modules/script/services/ScriptServices.js"></script>
-    <!-- END SCRIPT MODULE   -->
+    
     <!-- REFERRAL MODULE   -->
     <script type="text/javascript" src="modules/referral/Referral.js"></script>
     <script type="text/javascript" src="modules/referral/directives/ReferralDirectives.js"></script>
@@ -555,12 +553,7 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/doctor/modules/waitingList/directives/WaitingListDirectives.js"></script>
     <script type="text/javascript" src="modules/doctor/modules/waitingList/directives/WaitingListSearchDirective.js"></script>
     <!-- END WAITING LIST SON OF DOCTOR -->
-    <!-- TIMETABLE -->
-    <script type="text/javascript" src="modules/mdttimetable/mdtTimetable.js"></script>
-    <script type="text/javascript" src="modules/mdttimetable/services/mdtTimetableServices.js"></script>
-    <script type="text/javascript" src="modules/mdttimetable/directives/mdtTimetableDirectives.js"></script>
-    <script type="text/javascript" src="modules/mdttimetable/directives/mdtTimetableMainDirective.js"></script>
-    <!-- END TIMETABLE -->
+    
     <!-- MEDICINE LIST -->
     <script type="text/javascript" src="modules/medicine/Medicine.js"></script>
     <script type="text/javascript" src="modules/medicine/controllers/MedicineController.js"></script>
@@ -571,6 +564,27 @@ RLOB PAPERLESS STRUCTURE -->
 
 
     <!-- END MEDICINE LIST -->
+
+    <!-- ALLERGY LIST -->
+    <script type="text/javascript" src="modules/allergies/Allergy.js"></script>
+    <script type="text/javascript" src="modules/allergies/controllers/AllergyController.js"></script>
+    <script type="text/javascript" src="modules/allergies/controllers/AllergyListController.js"></script>
+    <script type="text/javascript" src="modules/allergies/services/AllergyService.js"></script>
+    <script type="text/javascript" src="modules/allergies/directives/AllergyDirective.js"></script>
+    <script type="text/javascript" src="modules/allergies/directives/AllergyDetailDirective.js"></script>
+
+
+    <!-- END ALLERGY LIST -->
+
+    <!-- PROBLEM LIST -->
+    <script type="text/javascript" src="modules/problem/Problem.js"></script>
+    <script type="text/javascript" src="modules/problem/controllers/ProblemController.js"></script>
+    <script type="text/javascript" src="modules/problem/controllers/ProblemListController.js"></script>
+    <script type="text/javascript" src="modules/problem/directives/ProblemDirective.js"></script>
+    <script type="text/javascript" src="modules/problem/directives/ProblemDetailDirective.js"></script>
+    <script type="text/javascript" src="modules/problem/services/ProblemService.js"></script>
+    <!-- END PROBLEM LIST -->
+    
     <!--AUTO CREATE-->
     <script type='text/javascript' src='modules/mdtrecall/mdtRecall.js'></script>
     <script type='text/javascript' src='modules/mdtrecall/services/mdtRecallServices.js'></script>
@@ -810,7 +824,7 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- END MODULE TIME SHEET -->
     <!--MODULE CONSULTATION-->
     <link rel="stylesheet" type="text/css" href="lib/angular-modal/modal.css">
-    <script type="text/javascript" src="lib/angular-modal/modal.js"></script>
+    <script type="text/javascript" src="lib/angular-modal/modal-4.0.js"></script>
     <link rel="stylesheet" type="text/css" href="vendor/angucomplete/angucomplete.css">
     <script type="text/javascript" src="vendor/angucomplete/angucomplete.js"></script>
 
@@ -842,14 +856,43 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="vendor/tooltipster-master/js/jquery.tooltipster.js"></script>
     <!-- END TOOLTIPS -->
     <!-- ------------------------------------------------------ VUONG TEAM ------------------------------------------------ -->
+    
     <!-- CLAIM -->
     <script type="text/javascript" src="modules/claim/routes.js"></script>
     <script type="text/javascript" src="modules/claim/include.js"></script>
     <script type="text/javascript" src="modules/claim/models/ClaimModel.js"></script>
-    <script type="text/javascript" src="modules/claim/controllers/ClaimIndexController.js"></script>
-    <script type="text/javascript" src="modules/claim/directives/ClaimListDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientEditDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/controllers/ClaimPatientListController.js"></script>
     <!-- END CLAIM -->
+
+    <!-- OUTSIDE REFERRAL -->
+    <script type="text/javascript" src="modules/outreferral/routes.js"></script>
+    <script type="text/javascript" src="modules/outreferral/include.js"></script>
+    <script type="text/javascript" src="modules/outreferral/models/OutreferralModel.js"></script>
+    <script type="text/javascript" src="modules/outreferral/controllers/OutreferralPatientListController.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientEditDirective.js"></script>
+    <!-- END OUTSIDE REFERRAL -->
+
+    <!-- MODULE ALERT -->
+    <script type="text/javascript" src="modules/alert/routes.js"></script>
+    <script type="text/javascript" src="modules/alert/include.js"></script>
+    <script type="text/javascript" src="modules/alert/models/AlertModel.js"></script>
+    
+    <script type="text/javascript" src="modules/alert/controllers/AlertListController.js"></script>
+    <script type="text/javascript" src="modules/alert/controllers/AlertPatientListController.js"></script>
+
+    <script type="text/javascript" src="modules/alert/directives/AlertListDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertAddDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertEditDirective.js"></script>
+    <!-- END ALERT -->
+
     <!-- ------------------------------------------------------ VUONG TEAM --------------------------------------------- -->
+
     <!-- MODULE COMPANIES -->
     <script type="text/javascript" src="modules/company/routes.js"></script>
     <script type="text/javascript" src="modules/company/include.js"></script>
@@ -866,7 +909,35 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/company/controllers/CompanyEditController.js"></script>
     <script type="text/javascript" src="modules/company/dialogs/CompanyAddParentDialgosController.js"></script>
     <script type="text/javascript" src="modules/company/dialogs/CompanyInsurerDialgosController.js"></script>
+    <script type="text/javascript" src="modules/company/dialogs/CompanyRemoveDialog.js"></script>
     
+    <!-- ENd MODULE COMPANIES -->
+
+    <!-- TIMETABLE OLD -->
+    <script type="text/javascript" src="modules/mdttimetable/mdtTimetable.js"></script>
+    <script type="text/javascript" src="modules/mdttimetable/services/mdtTimetableServices.js"></script>
+    <script type="text/javascript" src="modules/mdttimetable/directives/mdtTimetableDirectives.js"></script>
+    <script type="text/javascript" src="modules/mdttimetable/directives/mdtTimetableMainDirective.js"></script>
+    <!-- END TIMETABLE OLD -->
+
+    <!-- TIMETABLE -->
+    <script type="text/javascript" src="modules/timetable/routes.js"></script>
+    <script type="text/javascript" src="modules/timetable/include.js"></script>
+    <script type="text/javascript" src="modules/timetable/directives/TimetableCalendarDirective.js"></script>
+    <script type="text/javascript" src="modules/timetable/dialogs/TimetableCalendarAddDayDialog.js"></script>
+    <script type="text/javascript" src="modules/timetable/dialogs/TimetableCalendarAddSiteDialog.js"></script>
+    <script type="text/javascript" src="modules/timetable/models/TimetableModel.js"></script>
+    <!-- END TIMETABLE -->
+
+    <!-- MODULE APPOINTMENT -->
+    <script type="text/javascript" src="modules/appointment/routes.js"></script>
+    <script type="text/javascript" src="modules/appointment/include.js"></script>
+
+    <script type="text/javascript" src="modules/appointment/models/AppointmentModel.js"></script>
+    <script type="text/javascript" src="modules/appointment/controllers/AppointmentController.js"></script>
+    <script type="text/javascript" src="modules/appointment/controllers/AppointmentDetailController.js"></script>
+    <script type="text/javascript" src="modules/appointment/directives/AppointmentCalendarDirective.js"></script>
+    <script type="text/javascript" src="modules/appointment/directives/AppointmentAddDirective.js"></script>
     <!-- ENd MODULE COMPANIES -->
 
     <!-- ------------------------------------------------------ END VUONG TEAM ------------------------------------------ -->
@@ -874,10 +945,10 @@ RLOB PAPERLESS STRUCTURE -->
     <!--SCRIPT-->
     <script type="text/javascript" src="modules/script/include.js"></script>
     <script type="text/javascript" src="modules/script/routes.js"></script>
-    <script type="text/javascript" src="modules/script/controllers/scriptListController.js"></script>
-    <script type="text/javascript" src="modules/script/controllers/scriptAddController.js"></script>
-    <script type="text/javascript" src="modules/script/controllers/scriptEditController.js"></script>
-    <script type="text/javascript" src="modules/script/models/scriptModel.js"></script>
+    <script type="text/javascript" src="modules/script/controllers/ScriptListController.js"></script>
+    <script type="text/javascript" src="modules/script/controllers/ScriptAddController.js"></script>
+    <script type="text/javascript" src="modules/script/controllers/ScriptEditController.js"></script>
+    <script type="text/javascript" src="modules/script/models/ScriptModel.js"></script>
     <script type="text/javascript" src="modules/script/directives/ScriptListDirective.js"></script>
     <script type="text/javascript" src="modules/script/directives/ScriptAddDirective.js"></script>
     <script type="text/javascript" src="modules/script/directives/ScriptEditDirective.js"></script>

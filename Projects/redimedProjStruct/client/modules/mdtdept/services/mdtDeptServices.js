@@ -20,5 +20,9 @@ angular.module('app.loggedIn.mdtdept.services', [])
 		var funcApi = mdtApi.all('search');
 		return funcApi.post(option);
 	}
+	mdtService.listAll = function(){
+		var funcApi = mdtApi.one('list');
+		return funcApi.get();	
+	}
 	return mdtService;
 })

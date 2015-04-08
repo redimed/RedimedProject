@@ -12,6 +12,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 		$scope.isMeasure = false;
 		$scope.isScript = false;
+		$scope.isCalling = false;
 
 		$scope.consultInfo = {
 			patient_id: $scope.patient_id,
@@ -36,6 +37,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$interval.cancel(checkCallInfo);
 
 		checkCallInfo = $interval(function(){
+			refresh($scope.patient_id);
 			if(typeof $cookieStore.get('callInfo') !== 'undefined')
 			{
 				$scope.callInfo = $cookieStore.get('callInfo');
@@ -82,7 +84,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			$scope.problemArr = [];
 			if(id != null)
 			{
-				var index = _.findIndex($scope.problemList, { 'problem_id': id});
+				var index = _.findIndex($scope.problemList, { 'Problem_id': id});
 				$scope.problemArr.push($scope.problemList[index]);
 			}
 			else
@@ -162,7 +164,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 					if(data.type == 'ok')
 					{
 						$scope.consultInfo.scripts.push(data.value);
-						$scope.totalPrice = calTotal($scope.consultInfo.scripts);
 					}
 				})
 			}
@@ -185,7 +186,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 					if(data.type == 'ok')
 					{
 						$scope.consultInfo.scripts[index] = data.value;
-						$scope.totalPrice = calTotal($scope.consultInfo.scripts);
 					}
 				})
 			}
@@ -202,20 +202,9 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 	                closeOnConfirm: true
 	            }, function() {
 	                $scope.consultInfo.scripts.splice(index,1);
-					$scope.totalPrice = calTotal($scope.consultInfo.scripts);
 	            })
 			}
 		};
-
-		function calTotal(obj)
-		{
-			var total = 0;
-			for(var i=0; i<obj.length; i++)
-			{
-				total = total + parseFloat(obj[i].price);
-			}
-			return total;
-		}
 
 		$scope.backClick = function(){
 			 var from = $cookieStore.get('fromState');
@@ -246,6 +235,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 		//==================================MAKE CALL============================
 		$scope.makeCall = function(user){
+			$scope.isCalling = true;
 			UserService.getUserInfo(user.id).then(function(data){
 				if(!data.img)
 	                data.img = "theme/assets/icon.png"
@@ -254,5 +244,42 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			})
 	    }
 
+	    //==================================FILE SHARING============================
+	     $scope.dropzoneConfig = {
+		    'options': { 
+		      'url': 'api/upload',
+		      'addRemoveLinks':true
+		    },
+		    'eventHandlers': {
+		      'sending': function (file, xhr, formData) {
+		      	formData.append("patient_id", $scope.patient_id);
+		      },
+		      'success': function (file, response) {
+		      	if(response.status == 'success')
+		      	{
+		      		socket.emit("shareFile",response.id,response.fileName,$scope.callInfo.callUser);
+		      		toastr.success("Upload File Successfully!");
+		      	}
+		      	else
+		      		toastr.error("Upload File Failed!");
+		      }
+		    }
+		  };
+	})
+
+	.directive('dropzone', function () {
+	  return function (scope, element, attrs) {
+	    var config, dropzone;
+	 
+	    config = scope[attrs.dropzone];
+	 
+	    // create a Dropzone for the element with the given options
+	    dropzone = new Dropzone(element[0], config.options);
+	 
+	    // bind the given event handlers
+	    angular.forEach(config.eventHandlers, function (handler, event) {
+	      dropzone.on(event, handler);
+	    });
+	  };
 	})
 

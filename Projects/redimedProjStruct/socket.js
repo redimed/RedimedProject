@@ -3,8 +3,8 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var apiKey = "45178592";
-var apiSecret = "f21cb8765b7277f73989b0894d152bfb60a91aa7";
+var apiKey = "45200062";
+var apiSecret = "60d69ce10fe492342fc7fc6ae7dc382e78ff085f";
 
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
@@ -31,6 +31,15 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log("===Send To: ",user.user_name);
                     io.to(user.socket)
                         .emit('receiveImage',id);
+                })
+        })
+
+        socket.on("shareFile",function(id,fileName,callUser){
+            db.User.find({where:{id: callUser}},{raw:true})
+                .success(function(user){
+                    console.log("===Send To: ",user.user_name);
+                    io.to(user.socket)
+                        .emit('receiveFile',id,fileName);
                 })
         })
 

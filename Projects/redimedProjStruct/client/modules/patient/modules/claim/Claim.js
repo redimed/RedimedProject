@@ -4,10 +4,10 @@ angular.module("app.loggedIn.patient.claim", [
 ])
 
 .config(function ($stateProvider) {
-    $stateProvider
+    /*$stateProvider
 
     .state("loggedIn.patient.claim", {
-        url: "/:patient_id/claim",
+        url: "/:patientId/claim",
         abstract: true,
         templateUrl: "modules/patient/modules/claim/views/structure.html",
         controller: "ClaimController"
@@ -21,5 +21,5 @@ angular.module("app.loggedIn.patient.claim", [
                 controller: "ClaimListController"
             }
         }
-    })
+    })*/
 })   

@@ -178,7 +178,40 @@ module.exports =
         })
     },
 
-
+    /**
+     * Bo chon tat ca cac file result
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    unselectAllFileResult:function(req,res)
+    {
+        var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'';
+        if(!kiss.checkListData(bookingId))
+        {
+            kiss.exlog("unselectAllFileResult","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql="UPDATE `rl_booking_files` SET `isClientDownLoad`=0 WHERE `BOOKING_ID`=?";
+        kiss.beginTransaction(req,function(){
+            kiss.executeQuery(req,sql,[bookingId],function(result){
+                kiss.commit(req,function(){
+                    res.json({status:'success'});
+                },function(err){
+                    kiss.exlog("unselectAllFileResult","Khong the commit",err);
+                })
+            },function(err){
+                kiss.exlog("unselectAllFileResult","Loi cau truy van",err);
+                kiss.rollback(req,function(){
+                    res.json({status:'fail'});
+                });
+            })
+        },function(err){
+            kiss.exlog("unselectAllFileResult","Khong the mo transaction",err);
+            res.json({status:'fail'});
+        })
+    },
     
     // BUI VUONG
     listByBooking:function(req,res){

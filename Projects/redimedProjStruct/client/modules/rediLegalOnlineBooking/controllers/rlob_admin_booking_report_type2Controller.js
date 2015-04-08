@@ -7,35 +7,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
         // chien status
         $scope.report = 'report1';
         $scope.status = "Confirmed";
-        $scope.loginInfo=$cookieStore.get('userInfo');
-        /***
-         * Get Doctor Info
-         * tannv.dts@gmail.com
-         */
-        $scope.doctorInfo=undefined;
-        $scope.doctorId='';
-        $scope.getDoctorInfoByUserId=function()
-        {
-            var deferred=$q.defer();
-            $http({
-                method:"GET",
-                url:"/api/rlob/doctors/get-doctors-info-by-userid",
-                params:{userId:$scope.loginInfo.id}
-            })
-                .success(function(data) {
-                    if(data.status=='success')
-                    {
-                        $scope.doctorInfo=data.data;
-                    }
-                })
-                .error(function (data) {
-                    console.log("error");
-                })
-                .finally(function() {
-                    deferred.resolve();
-                });
-            return deferred.promise;
-        }
+        
 
         //list type
         $scope.rlTypeList=[];
@@ -74,42 +46,42 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
             ToAppointmentDate:''
         };
 
-        $scope.initPagingReportStatusBookingHaveNotResult=function()
+        $scope.initPagingReportOutstandingBooking=function()
         {
             $scope.removeSelectedBooking();
             $scope.filterInfo1.Type=$scope.rlTypeSelected && $scope.rlTypeSelected.Rl_TYPE_NAME?$scope.rlTypeSelected.Rl_TYPE_NAME:'';
             $scope.filterInfo1.Location=$scope.locationSelected && $scope.locationSelected.Site_name?$scope.locationSelected.Site_name:'';
             $scope.filterInfo1.Doctor=$scope.doctorSelected && $scope.doctorSelected.NAME?$scope.doctorSelected.NAME:'';
-            rlobService.getCountReportStatusBookings($scope.bookingType,$scope.doctorId,$scope.filterInfo1)
+            rlobService.getCountReportOutstandingBookings($scope.bookingType,$scope.doctorId,$scope.filterInfo1)
                 .then(function(data)
                 {
 
-                    $scope.totalItemsReport2=data.data.count_bookings_status;
+                    $scope.totalItemsReport2=data.data.count_outstanding_bookings;
                     //alert($scope.totalItemsReport2);
                     $scope.itemsPerPageReport2=10;
                     $scope.maxSizeReport2=10;
                     $scope.currentPageReport2=1;
                     return ({bookingType:$scope.bookingType,doctorId:$scope.doctorId,currentPage:$scope.currentPageReport2,itemsPerPage:$scope.itemsPerPageReport2,filterInfo:$scope.filterInfo1});
                 })
-                .then(rlobService.getItemsOfPageReportStatusBookings)
+                .then(rlobService.getItemsOfPageReportOutstandingBookings)
                 .then(function(data){
 
                     if(data.status == 'success')
                     {
-                        $scope.reportStatusBookingsList= data.data;
+                        $scope.listOutstandingBookings= data.data;
                     }
                     else{
-                        $scope.reportStatusBookingsList = '';
+                        $scope.listOutstandingBookings = '';
                     }
                 })
         }
-        $scope.pagingHandlerStatusBookingHaveNotResult=function()
+        $scope.pagingHandlerOutstandingBooking=function()
         {
-            if(!$scope.isChangingBookingStatus)
-            {
-                $scope.removeSelectedBooking();
-            }
-            $scope.isChangingBookingStatus=false;
+            // if(!$scope.isChangingBookingStatus)
+            // {
+            //     $scope.removeSelectedBooking();
+            // }
+            // $scope.isChangingBookingStatus=false;
 
             var info={
                 bookingType:$scope.bookingType,
@@ -118,40 +90,77 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
                 itemsPerPage:$scope.itemsPerPageReport2,
                 filterInfo:$scope.filterInfo1
             }
-            rlobService.getCountReportStatusBookings(info.bookingType,info.doctorId,$scope.filterInfo1)
+            rlobService.getCountReportOutstandingBookings(info.bookingType,info.doctorId,$scope.filterInfo1)
                 .then(function(data){
-                    $scope.totalItemsReport2=data.data.count_bookings_status;
+                    $scope.totalItemsReport2=data.data.count_outstanding_bookings;
                     //alert($scope.totalItemsReport2);
                     //alert(JSON.stringify(info));
                     return info;
                 })
-                .then(rlobService.getItemsOfPageReportStatusBookings)
+                .then(rlobService.getItemsOfPageReportOutstandingBookings)
                 .then(function(data){
 
                     if(data.status == 'success')
                     {
-                        $scope.reportStatusBookingsList= data.data;
+                        $scope.listOutstandingBookings= data.data;
                     }
                 })
 
         }
 
         $scope.$watch('[filterInfo1.FromAppointmentDate,filterInfo1.ToAppointmentDate]',function(newValue,oldValue){
-            $scope.initPagingReportStatusBookingHaveNotResult();
+            $scope.initPagingReportOutstandingBooking();
         },true);
 
-        $scope.getDoctorInfoByUserId()
-            .then(function(){
+        
+        // $scope.isChangingBookingStatus=false;
+        // $scope.$watch('bookingStatusChangedFlag',function(newValue,oldValue){
+        //     if($scope.bookingStatusChangedFlag && $scope.bookingStatusChangedFlag>0)
+        //     {
+        //         $scope.isChangingBookingStatus=true;
+        //         $scope.pagingHandlerOutstandingBooking();
+        //     }
+        // })
 
-                $scope.doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:'';
-                $scope.initPagingReportStatusBookingHaveNotResult();
-            });
-        $scope.isChangingBookingStatus=false;
-        $scope.$watch('bookingStatusChangedFlag',function(newValue,oldValue){
-            if($scope.bookingStatusChangedFlag && $scope.bookingStatusChangedFlag>0)
-            {
-                $scope.isChangingBookingStatus=true;
-                $scope.pagingHandlerStatusBookingHaveNotResult();
-            }
-        })
+        //HAM XU LY COT LOI CUA PAGE
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        /***
+         * Get Doctor Info
+         * tannv.dts@gmail.com
+         */
+        $scope.userInfo=$cookieStore.get('userInfo');
+        $scope.doctorInfo=null;
+        $scope.doctorId=null;
+        $scope.getDoctorInfoByUserId=function()
+        {
+            var deferred=$q.defer();
+            rlobService.getDoctorInfoByUserId($scope.userInfo.id)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    $scope.doctorInfo=data.data;
+                    $scope.doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:null;
+                }
+            },function(err){
+                console.log("Loi lay thong tin doctor");
+            })
+            .then(function(){
+                deferred.resolve();
+            })
+            return deferred.promise;
+        }
+
+        $scope.getDoctorInfoByUserId()
+        .then(function(){
+            $scope.initPagingReportOutstandingBooking();
+        });
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
     })

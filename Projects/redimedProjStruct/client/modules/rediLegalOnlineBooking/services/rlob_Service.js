@@ -102,22 +102,22 @@ angular.module('app.loggedIn.rlob.services',[])
         }
 	    //chien Upcomming booking
         rlobService.getCountReportUpcommingBookings=function(bookingType,doctorId,filterInfo){
-            var TotalBookings=api.all('rlob/rl_bookings/count-report-upcomming-bookings');
+            var TotalBookings=api.all('rlob/rl_bookings/admin/report-1/count-report-upcomming-bookings');
             return TotalBookings.post({bookingType:bookingType,doctorId:doctorId,filterInfo:filterInfo});
         }
         //chien Upcomming booking
         rlobService.getItemsOfPageReportUpcommingBookings=function(info){
-            var getItemsBookings=api.all('rlob/rl_bookings/get-items-of-paging-report-upcomming-bookings');
+            var getItemsBookings=api.all('rlob/rl_bookings/admin/report-1/get-items-of-paging-report-upcomming-bookings');
             return getItemsBookings.post({currentPage:info.currentPage,itemsPerPage:info.itemsPerPage,bookingType:info.bookingType,doctorId:info.doctorId,filterInfo:info.filterInfo});
         }
         //chien Status
-        rlobService.getCountReportStatusBookings=function(bookingType,doctorId,filterInfo){
-            var TotalBookings=api.all('rlob/rl_bookings/count-report-status-bookings');
+        rlobService.getCountReportOutstandingBookings=function(bookingType,doctorId,filterInfo){
+            var TotalBookings=api.all('rlob/rl_bookings/admin/report-2/count-report-outstanding-bookings');
             return TotalBookings.post({bookingType:bookingType,doctorId:doctorId,filterInfo:filterInfo});
         }
         //chien Status
-        rlobService.getItemsOfPageReportStatusBookings=function(info){
-            var getItemsBookings=api.all('rlob/rl_bookings/get-items-of-paging-report-status-bookings');
+        rlobService.getItemsOfPageReportOutstandingBookings=function(info){
+            var getItemsBookings=api.all('rlob/rl_bookings/admin/report-2/get-items-of-paging-report-outstanding-bookings');
             return getItemsBookings.post({currentPage:info.currentPage,itemsPerPage:info.itemsPerPage,bookingType:info.bookingType,doctorId:info.doctorId,filterInfo:info.filterInfo});
         }
         //chien list messages
@@ -368,11 +368,6 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.one('rlob/rl_bookings/admin/report/list-location-report');
             return result.get();
         }
-        rlobService.getReportPassBookingHaveNotResult=function(bookingType,doctorId)
-        {
-            var result=api.one('rlob/rl_bookings/admin/report/get-pass-booking-have-not-result');
-            return result.get({bookingType:bookingType,doctorId:doctorId});
-        }
 
         rlobService.getPassBookingNotChangeStatus=function(bookingType,doctorId)
         {
@@ -380,25 +375,25 @@ angular.module('app.loggedIn.rlob.services',[])
             return result.get({bookingType:bookingType,doctorId:doctorId});
         }
 
-        rlobService.getUpcommingBookingHaveNotClientDocument=function(bookingType,doctorId)
+        rlobService.getListUpcommingBookingWaitingPaperwork=function(bookingType,doctorId)
         {
-            var result=api.one('rlob/rl_bookings/admin/get-upcomming-booking-have-not-client-document');
+            var result=api.one('rlob/rl_bookings/admin/get-list-upcomming-booking-waiting-paperwork');
             return result.get({bookingType:bookingType,doctorId:doctorId});
         }
 
-        rlobService.getPassBookingHaveNotResult=function(bookingType,doctorId)
+        rlobService.getListBookingOutstandingNotification=function(bookingType,doctorId)
         {
-            var result=api.one('rlob/rl_bookings/admin/get-pass-booking-have-not-result');
+            var result=api.one('rlob/rl_bookings/admin/list-booking-outstanding-notification');
             return result.get({bookingType:bookingType,doctorId:doctorId});
         }
 
-        rlobService.getCountReportPassBookingHaveNotResult=function(bookingType,doctorId,searchKeys){
-            var result=api.all('rlob/rl_bookings/admin/report/get-count-pass-booking-have-not-result');
+        rlobService.getCountReportArchiveBooking=function(bookingType,doctorId,searchKeys){
+            var result=api.all('rlob/rl_bookings/admin/report-3/get-count-archive-booking');
             return result.post({bookingType:bookingType,doctorId:doctorId,searchKeys:searchKeys});
         }
 
-        rlobService.getItemsOfPageReportPassBookingHaveNotResult=function(info){
-            var result=api.all('rlob/rl_bookings/admin/report/get-items-of-page-pass-booking-have-not-result');
+        rlobService.getItemsOfPageReportArchiveBooking=function(info){
+            var result=api.all('rlob/rl_bookings/admin/report-3/get-items-of-page-archive-booking');
             return result.post({bookingType:info.bookingType,doctorId:info.doctorId,pageIndex:info.pageIndex,itemsPerPage:info.itemsPerPage,searchKeys:info.searchKeys});
         }
 
@@ -544,6 +539,12 @@ angular.module('app.loggedIn.rlob.services',[])
             return result.get({nation:nation});
         }
 
+        rlobService.getDoctorInfoByUserId=function(userId)
+        {
+            var result=api.one('rlob/doctors/get-doctors-info-by-userid');
+            return result.get({userId:userId});
+        }
+
         rlobService.core={
             /**
              * selectedDate: javascript Date Object
@@ -579,6 +580,12 @@ angular.module('app.loggedIn.rlob.services',[])
             {
                 var result=api.all('rlob/core/set-list-result-files');
                 return result.post({listResult:listResult});
+            },
+
+            unselectAllFileResult:function(bookingId)
+            {
+                var result=api.all('rlob/core/unselect-all-file-result');
+                return result.post({bookingId:bookingId});
             }
         }
         

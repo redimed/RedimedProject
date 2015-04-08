@@ -1,0 +1,75 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Claim No</th>
+			<th>
+				Claim Date&nbsp
+				<a ng-if="claim.search.Claim_date === 'asc'" ng-click="claim.onOrderBy({field: 'Claim_date', order: 'desc'})">
+					<i class="fa fa-caret-up"></i>
+				</a>
+				<a ng-if="claim.search.Claim_date === 'desc'" ng-click="claim.onOrderBy({field: 'Claim_date', order: 'asc'})">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</th>
+			<th>Injury Name</th>
+			<th>
+				Injury Date&nbsp
+				<a ng-if="claim.search.Injury_date === 'asc'" ng-click="claim.onOrderBy({field: 'Injury_date', order: 'desc'})">
+					<i class="fa fa-caret-up"></i>
+				</a>
+				<a ng-if="claim.search.Injury_date === 'desc'" ng-click="claim.onOrderBy({field: 'Injury_date', order: 'asc'})">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<input class="form-control input-sm" ng-model="claim.search.Claim_no" ng-enter="claim.onSearch()">
+			</td>
+			<td></td>
+			<td>
+				<input class="form-control input-sm" ng-model="claim.search.Injury_name" ng-enter="claim.onSearch()">
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr ng-repeat="l in claim.list" ng-click="onRowClick({row: l})" style="cursor: pointer;">
+			<td>{{l.Claim_no}}</td>
+			<td>{{l.Claim_date | filterdate:'DD/MM/YYYY'}}</td>
+			<td>{{l.Injury_name}}</td>
+			<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
+			<td>
+				<a ng-click="claim.dialog.edit(l)" ng-if="action.edit">
+					<i class="fa fa-pencil"></i>
+				</a>
+				&nbsp
+				<a ng-click="claim.dialog.remove(l)" ng-if="action.remove">
+					<i class="fa fa-remove"></i>
+				</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<pagination boundary-links="true" total-items="claim.count" ng-model="claim.search.page" 
+    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+    items-per-page="claim.search.limit" max-size="claim.search.max_size" ng-change="claim.onPage(claim.search.page)">
+</pagination>
+
+<script type="text/ng-template" id="dialogClaimRemove">
+    <div class="modal-body">
+        <p>Do you want to remove this Claim ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="dialogClaimEdit">
+    <div class="modal-body">
+        <claim-patient-edit claim-id="claim.Claim_id" patient-id="claim.Patient_id" success="claim.success"></claim-patient-edit>
+    </div>
+ </script>
