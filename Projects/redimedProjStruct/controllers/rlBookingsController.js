@@ -626,7 +626,7 @@ module.exports =
                         emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
-                        emailInfo.cc=isoUtil.getMedicoLegalCC();
+                        emailInfo.cc=rlobUtil.getMedicoLegalCC();
                         //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
                         var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
                         kiss.exlog(redimed_logo_1);
