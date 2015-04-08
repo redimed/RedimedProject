@@ -51,6 +51,14 @@ angular.module('app.loggedIn.allergy.detail.directive',[
                                 else toastr.error('Allergy add successfully but fail to apply allergy to patient', 'Error');
                             })
                         }
+                        else{
+                            toastr.success('Add allergy successfully', 'Successfully');
+                                scope.modelObjectMap = angular.copy(AllergyModel);
+                                scope.isSubmit = false;
+                                if (scope.onsuccess) {
+                                    scope.onsuccess(response);
+                            }
+                        }
                     }
                     else{
                         toastr.error('Fail to add allergy', 'Error');
