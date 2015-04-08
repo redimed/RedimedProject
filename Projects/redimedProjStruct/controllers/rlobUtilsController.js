@@ -39,7 +39,7 @@ module.exports =
         }
         else
         {
-            return "MEDICO-LEGAL <healthscreenings@redimed.com.au>";
+            return "MEDICO-LEGAL <medicolegal@redimed.com.au>";
             //return "MEDICO-LEGAL <medicolegal@redimed.com.au>";
         }
     },

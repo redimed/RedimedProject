@@ -39,8 +39,10 @@ module.exports =
             secure: false,
             port: 25, // port for secure SMTP
             auth: {
-                user: "programmer2",
-                pass: "Hello8080"
+                // user: "programmer2",
+                // pass: "Hello8080"
+                user: "redicolegal",
+                pass: "L3g@lSyst3m!"
             },
             tls: {rejectUnauthorized: false},
             debug:true

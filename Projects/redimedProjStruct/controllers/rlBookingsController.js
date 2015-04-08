@@ -626,6 +626,7 @@ module.exports =
                         emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
+                        emailInfo.cc=isoUtil.getMedicoLegalCC();
                         //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
                         var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
                         kiss.exlog(redimed_logo_1);
@@ -1488,7 +1489,7 @@ module.exports =
     rl_messages_select_contents:function(req,res){
         db.sequelize.query('SELECT * FROM rl_messages WHERE ISENABLE = 1',null,{raw:true})
             .success(function(data){
-                res.json(data);
+                res.json({status:'success',data:data});
             })
             .error(function(err){
                 res.json({status:'error'});
@@ -1590,8 +1591,8 @@ module.exports =
                 };
                 emailInfo.subject=row.Rl_TYPE_NAME+" - "+row.WRK_SURNAME+" - "+row.CLAIM_NO;
                 emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
-                emailInfo.recipients=row.Contact_email;
-
+                emailInfo.recipients=row.Contact_email; 
+                emailInfo.cc=isoUtil.getMedicoLegalCC();
                 var emailTemplate=
                     " <p>                                                                                                                           "+
                     "   Hi {{user_name}},                                                                    "+
