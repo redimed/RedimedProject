@@ -194,7 +194,7 @@ module.exports = {
                 PO_number: postData.PO_number,
                 isProject:  postData.isProject == '1' ? 1 : 0 ,
                 isCalendar :postData.isCalendar == '1' ? 1 :0,
-                father_id: fatherId,
+                father_id: postData.parent_id,
                 report_to_email: postData.report_to_email,
                 default_status : postData.default_status,
                 isInvoiceEmailToUser:  postData.isInvoiceEmailToUser == '1' ? 1 : 0,
@@ -209,7 +209,8 @@ module.exports = {
                 Site_medic : postData.Site_medic,
                 User_id : postData.User_id,
                 isPO:  postData.isPO == '1' ? 1 : 0,
-                isExtra:  postData.isExtra == '1' ? 1 : 0
+                isExtra:  postData.isExtra == '1' ? 1 : 0,
+                parent_id:postData.parent_id
                 
             })
             .toString()

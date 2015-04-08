@@ -72,7 +72,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 			    .result.then(function(row){
 			    	scope.company.Company_name_Parent = row.Company_name;
 			    	scope.company.form.parent_id = row.id;
-			    	scope.company.father_id = row.id;
+			    	scope.company.form.father_id = row.id;
 			    })
 			}
 
@@ -101,6 +101,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 				ConfigService.beforeSave(scope.company.errors);
 		    	var postData = angular.copy(scope.company.form);
 		    	postData.listInsurerid = scope.company.listTemp;
+		    	console.log(postData);
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');

@@ -51,6 +51,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					scope.company.error = '';
 					scope.company.form = response.data[0];
 					scope.company.form.User_id = $cookieStore.get('userInfo').id;
+					console.log(response.data[0]);
 					scope.company.listInsurer = response.data1;
                     _.forEach(scope.company.listInsurer, function(id){
                         scope.company.listTemp.push(id.id);
@@ -108,8 +109,8 @@ angular.module('app.loggedIn.company.directives.edit', [])
 			    })
 			    .result.then(function(row){
 			    	scope.company.Company_name_Parent = row.Company_name;
-			    	scope.company.parent_id = row.id;
-			    	scope.company.father_id = row.id;
+			    	scope.company.form.parent_id = row.id;
+			    	scope.company.form.father_id = row.id;
 			    })
 			}
 
