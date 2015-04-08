@@ -27,7 +27,7 @@ angular.module('app.loggedIn.rlob.bookingBehalf.controller',[])
             emailKey:'',
             nameKey:'',
             companyKey:'',
-            statusKey:''
+            statusKey:rlobConstant.registerStatus.APPROVE.value
         }
 
         /**
@@ -80,7 +80,8 @@ angular.module('app.loggedIn.rlob.bookingBehalf.controller',[])
                 ASS_OTHERNAMES:user.Booking_Person,
                 ASS_CONTACT_NO:user.Contact_number,
                 ASS_EMAIL:user.Contact_email,
-                ASS_ID:user.id
+                ASS_ID:user.id,
+                COMPANY_ID:user.company_id
         	}
         	bookingService.setBookingBehalfInfo(bookingBehalfInfo);
             $state.go("loggedIn.rlob.rlob_booking");

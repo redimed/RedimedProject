@@ -10,11 +10,13 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 0', 'icon': 'fa fa-building',
-            'state': 'loggedIn.patient.companies({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.company({patientId:' + $stateParams.patient_id + '})'},
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
-            'state': 'loggedIn.patient.claim.list({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.patient.claim.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
+        {'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
+            'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.outside_referral({patient_id:' + $stateParams.patient_id + '})'},  
+            'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patient_id + '})'},  
         {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
             'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',
@@ -43,7 +45,12 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
 	   {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
-            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},   
+            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},
+        {'name':'Problem list', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
+            'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patient_id+'})'},
+        {'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
+            'state':'loggedIn.patient.allergy.list({patient_id:'+$stateParams.patient_id+'})'},
+
 
 
     ];

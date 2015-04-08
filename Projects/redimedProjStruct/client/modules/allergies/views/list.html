@@ -1,0 +1,41 @@
+<h1>Allergy List</h1>
+
+<div class="portlet box green ng-scope">
+	<div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-person"></i> Allergy List
+        </div>
+        <div class="pull-right navbar-right">
+            <!-- Single button -->
+              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="allergyAddForm.open()">
+                  <i class="fa fa-plus"></i>	Add allergy
+              </button>
+        </div>
+    </div>
+
+    <div class="portlet-body">
+    	<my-data-table options="allergy.options" numrows="10"></my-data-table>
+    </div>
+</div>
+
+<!--ALLERGY ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="allergyAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="allergyAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <allergy-detail options="options" onsuccess="allergyAddForm.success" />
+</div>
+<!--END ALLERGY ADD FORM-->
+
+<!--ALLERGY EDIT FORM-->
+<div class="mdt-search" style="display: block;" ng-if="allergyEditForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="allergyEditForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <allergy-detail options="options" onsuccess="allergyEditForm.success" data="{id:'{{allergy.id}}'}"/>
+</div>
+<!--END ALLERGY EDIT FORM-->

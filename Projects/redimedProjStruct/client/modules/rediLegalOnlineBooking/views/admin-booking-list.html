@@ -194,23 +194,27 @@
     <div class="row">
 
         <div class="col-md-12 ">
-            <span>
+            <span style="color:#428bca;font-weight:bold">
                 <i class="fa fa-exclamation-triangle" style="color: #f3575e"></i>
+                Notification:
             </span>
             <!--label label-warning-->
+
+             <span class=" admin-notification-box">
+                <a ng-click="showListBookingNotification(localNotificationType.type2.alias);">
+                    {{listUpcommingBookingWaitingPaperwork.length}} {{localNotificationType.type2.header}} 
+                </a>
+            </span>
+            
             <span class="  admin-notification-box">
                 <a ng-click="showListBookingNotification(localNotificationType.type3.alias);">
-                    {{listPassBookingHaveNotResult.length}} Outstanding reports
+                    {{listBookingOutstandingNotification.length}} {{localNotificationType.type3.header}}
                 </a>
             </span>
-            <span class=" admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type2.alias);">
-                    {{listUpcommingBookingHaveNotClientDocument.length}} Waiting on Paperwork 
-                </a>
-            </span>
+           
             <span class="   admin-notification-box">
                 <a ng-click="showListBookingNotification(localNotificationType.type1.alias);">
-                    {{listPassBookingNotChangeStatus.length}} Change Appointment Status
+                    {{listPassBookingNotChangeStatus.length}} {{localNotificationType.type1.header}}
                 </a>
             </span>
             <span class="pull-right">
@@ -228,66 +232,79 @@
 
     <div class="row" style="margin-top:20px;margin-bottom: 10px">
         <div class="col-md-2">
-            From Date:
-            <div class=" form-group">
+            <div class="form-group">
+                <label for="exampleInputEmail1">From Date:</label>
+                <input id="fromDateKey" name="order_date_from" type="text" class="form-control" ng-model="lobAdminSearch.fromDateKey" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, yearRange:'c-20:c+20'}" placeholder="DD/MM/YYYY"/>
 
-                    <div  class="input-group date date-picker" style="width: 150px;" data-date-format="dd-mm-yyyy">
-                        <input  ng-model="lobAdminSearch.fromDateKey" id="fromDateKey" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly  name="order_date_from" >
-                    <span class="input-group-btn">
-                        <button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa fa-calendar"></i></button>
-                    </span>
-                    </div>
-
+                <!-- <input id="fromDateKey" name="order_date_from" type="text" class="form-control" ng-model="lobAdminSearch.fromDateKey" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,defaultDate:'01/01/1990'}" placeholder="DD/MM/YYYY" style="width: 100px;height:35px"/> -->
+                <!-- <div  class="input-group date date-picker" style="width: 150px;" data-date-format="dd-mm-yyyy">
+                    <input  ng-model="lobAdminSearch.fromDateKey" id="fromDateKey" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly  name="order_date_from" >
+                <span class="input-group-btn">
+                    <button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa fa-calendar"></i></button>
+                </span>
+                </div> -->
             </div>
         </div>
 
         <div class="col-md-2">
-            To Date:
+            
             <div class=" form-group">
+                    <label for="exampleInputEmail1">To Date:</label>
+                    <input id="toDateKey" name="order_date_to" type="text" class="form-control" ng-model="lobAdminSearch.toDateKey" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" placeholder="DD/MM/YYYY" />
 
-                    <div class="input-group date date-picker " style="width: 150px;" data-date-format="dd-mm-yyyy">
+                    <!-- <input id="toDateKey" name="order_date_to" type="text" class="form-control" ng-model="lobAdminSearch.toDateKey" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,defaultDate:'01/01/1990'}" placeholder="DD/MM/YYYY" style="width: 100px;height:35px"/> -->
+                    
+                    <!-- <div class="input-group date date-picker " style="width: 150px;" data-date-format="dd-mm-yyyy">
                         <input  ng-model="lobAdminSearch.toDateKey" id="toDateKey" type="text" style="height: 35px;" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="To Date">
                     <span class="input-group-btn">
                         <button class="btn btn-sm default" type="button" style="height: 35px;"><i class="fa fa-calendar"></i></button>
                     </span>
 
-                </div>
+                    </div> -->
             </div>
         </div>
 
         <div ng-hide="doctorInfo.doctor_id" class="col-md-2">
-            Doctor Name:
             <div  class=" form-group">
+                <label for="exampleInputEmail1">Doctor Name:</label>
                 <input class="form-control" type="text" ng-model="lobAdminSearch.doctorKey" id="doctorKey"/>
             </div>
         </div>
         <div class="col-md-2">
-            Worker:
             <div class=" form-group">
+                <label for="exampleInputEmail1">Worker:</label>
                 <input class="form-control" type="text" ng-model="lobAdminSearch.workerKey" id="workerKey"/>
             </div>
         </div>
         <div class="col-md-2">
-            Document Status:
-            <select class="form-control"
-                    ng-model="lobAdminSearch.documentStatusKey"
-                    ng-options="value.display for (key,value) in documentStatus" >
-                <option  value="">All</option>
-            </select>
+            <div class=" form-group">
+                <label for="exampleInputEmail1">Document Status:</label>
+                <select class="form-control"
+                        ng-model="lobAdminSearch.documentStatusKey"
+                        ng-options="value.display for (key,value) in documentStatus" >
+                    <option  value="">All</option>
+                </select>
+            </div>
+            
         </div>
         <div class="col-md-2">
-
-            <button style="margin-top: 20px" type="button" class="btn btn-info" ng-click="filterBooking();">Search</button>
+            <div class=" form-group">
+                <label for="exampleInputEmail1">&nbsp;&nbsp;</label>
+                <button class="btn btn-info form-control rlob_button_search" ng-click="filterBooking();" style="background-color:#72b8f2">Search</button>
+            </div>
         </div>
 
     </div>
 
     <div style="margin-bottom: 20px;color: #4db3a2 !important;" class="row">
         <div class="col-md-12">
-            Docment status : &nbsp;&nbsp;<span class="label label-sm rlob_document_status_checked">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;   Received
-            &nbsp;&nbsp;<span class="label label-sm rlob_document_status_no_document">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;   Not received
-            &nbsp;&nbsp;<span class="label label-sm rlob_document_status_not_confirmed">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;   Not confirmed.
-            
+            Docment status : 
+
+            &nbsp;&nbsp;<span class="label label-sm rlob_document_status_no_document">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Not received
+
+            &nbsp;&nbsp;<span class="label label-sm rlob_document_status_checked">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Received
+
+            <!-- &nbsp;&nbsp;<span class="label label-sm rlob_document_status_not_confirmed">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;Not confirmed. -->
         </div>
     </div>
     <!--mydata-->
@@ -343,9 +360,11 @@
                     </li>
 
                     <li>
-                        <a class="pointer" role="menuitem" tabindex="2" ng-click="rechedule()">
-                            Rechedule
+                       
+                        <a class="pointer" role="menuitem" tabindex="2" ng-click="reschedule()">
+                            Reschedule
                         </a>
+                  
                     </li>
                     <!--<p style="border-top: 1px solid rgba(0, 0, 0, 0.23);" role="menuitem"></p>-->
                     <!--Set Bookings Status:-->
@@ -508,8 +527,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="pointer" role="menuitem" tabindex="2" ng-click="rechedule()">
-                                    Rechedule
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="reschedule()">
+                                    Reschedule
                                 </a>
                             </li>
                         </ul>
@@ -597,7 +616,8 @@
                                 selected-booking="selectedBooking"
                                 booking-type="bookingType"
                                 is-admin-get-files="isAdminGetFiles"
-                                files-update-flag="filesUpdateFlag">
+                                files-update-flag="filesUpdateFlag"
+                                number-of-docs="numberOfDocs">
 
                         </rlob-file-download>
                     </div>
@@ -689,9 +709,9 @@
             <div class="modal-header">
                 <div class="row" style="margin-right: 0;margin-left: 0;margin-bottom: -5px;"> 
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <div class="caption">
-                        <i class="fa fa-plus-square font-red-sunglo"></i>
-                        <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
+                    <div style="color: #44b6ae" class="caption">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="caption-subject bold uppercase">Enter</span>
                         <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
                     </div>
                     <img class="col-md-5 col-sm-5 col-xs-5 img-confix" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
@@ -717,7 +737,7 @@
                 <div class="col1">
                     <div class="cont">
                         <div class="cont-col1">
-							<div class="label label-sm label-danger">
+							<div style="background-color: #44b6ae;" class="label label-sm">
 								<i class="fa fa-envelope-o"></i>
 							</div>
 						</div>
@@ -735,7 +755,7 @@
             <div class="modal-footer">
                 <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                <button type="submit" class="btn red" ng-click="sendBookingMessage()">OK</button>
+                <button type="submit" style="background-color: #44b6ae;color: white;" class="btn" ng-click="sendBookingMessage()">OK</button>
                 <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
 
                 <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
@@ -869,10 +889,17 @@ phanquocchien.c1109g@gmail.com-->
         <i style="color: #ffffff;position: absolute;right: 10px;top: 10px;font-size: 25px;" class="fa fa-times-circle-o" ng-click="documentstatusfadeOut()"></i>
         <div class="row" style="display: table-cell;padding-top: 10px;">
             <ul style="margin-left: -30px;">
-                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.notConfirmed.value" class="btn btn-warning" >
+                <!-- <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.notConfirmed.value" class="btn btn-warning" >
                     <a ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.notConfirmed.value" class="pointer" role="menuitem" tabindex="4"
                        ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,documentStatus.notConfirmed.value)">
                         <span>{{documentStatus.notConfirmed.display}}</span>
+                    </a>
+                </li> -->
+
+                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.noDocuments.value" class="btn btn-danger">
+                    <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
+                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,documentStatus.noDocuments.value)">
+                        <span>{{documentStatus.noDocuments.display}}</span>
                     </a>
                 </li>
 
@@ -882,12 +909,7 @@ phanquocchien.c1109g@gmail.com-->
                         <span>{{documentStatus.checked.display}}</span>
                     </a>
                 </li>
-                <li style="width: 120px;margin-top: 5px" ng-hide="selectedBooking.DOCUMENT_STATUS==documentStatus.noDocuments.value" class="btn btn-danger">
-                    <a class="pointer" role="menuitem" lass="pointer" role="menuitem" tabindex="6"
-                       ng-click="rlob_document_change_status(selectedBooking.BOOKING_ID,documentStatus.noDocuments.value)">
-                        <span>{{documentStatus.noDocuments.display}}</span>
-                    </a>
-                </li>
+                
             </ul>
         </div>
     </div>

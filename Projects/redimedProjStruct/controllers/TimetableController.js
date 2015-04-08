@@ -104,7 +104,7 @@ module.exports = {
 			var current_site = 2;
 			var diff_day = 0;
 
-			for(var i = weekEnd; i <= diffFromDateToToDay; i++){
+			for(var i = diffFromDateToSunday+1; i <= diffFromDateToToDay; i++){
 				var current_date = moment(postData.from_date).add(i, 'day').format('YYYY-MM-DD');
 
 				var site_id = 0;

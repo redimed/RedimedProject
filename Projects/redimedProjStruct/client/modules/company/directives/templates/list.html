@@ -1,25 +1,52 @@
-<div>
-	<button ng-click="addClick()">Add</button>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<table class="mdt-table">
-			<thead>
-				<tr>
-					<th>Company Name</th>
-					<th>Industry</th>
-					<th>Address</th>
-					<th>Country</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in company.list" >
-					<td>{{row.Company_name}}</td>
-					<td>{{row.Industry}}</td>
-					<td>{{row.Addr}}</td>
-					<td>{{row.country}}</td>
-				</tr>
-			</tbody>
-		</table>
+<div class="portlet box blue ng-scope">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-medkit"></i> Patient Company
+        </div>
+        <div class="pull-right navbar-right">
+            <!-- Single button -->
+         <button style="margin-right: 0;" type="button" class="btn btn-default green" ng-click="addClick()">
+                    Add
+              </button>
+        </div>
+    </div>
+		<div class="portlet-body">
+		    <div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Company Name</th>
+							<th>Industry</th>
+							<th>Address</th>
+							<th>Country</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in company.list" >
+							<td>{{row.Company_name}}</td>
+							<td>{{row.Industry}}</td>
+							<td>{{row.Addr}}</td>
+							<td>{{row.country}}</td>
+							<td align="center">
+								<a><i class="fa fa-pencil-square-o" ng-click="clickEdit(row)"></i></a>
+								<a><i class="fa fa-times" ng-click="company.remove(row)"></i></a>
+							</td> 
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
+
+<!-- // <script type="text/ng-template" id="dialogCompanyRemove">
+//     <div class="modal-body">
+//         <p>Do you want to remove this ?</p>
+//     </div>
+//     <div class="modal-footer">
+//         <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+//         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+//     </div>
+//  </script> -->

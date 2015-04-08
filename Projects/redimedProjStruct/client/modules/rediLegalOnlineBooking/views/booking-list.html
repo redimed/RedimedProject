@@ -132,7 +132,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="l in list" ng-click="goToBookingDetail(l)" style="cursor: pointer;">
-                        <td>{{l.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
+                        <td>{{l.APPOINTMENT_DATE | date:'HH:mm dd/MM/yyyy'}}</td>
                         <td ng-if="bookingType=='REDiLEGAL'">{{l.CLAIM_NO}}</td>
                         <td ng-if="bookingType=='Vaccination'">{{l.EMPLOYEE_NUMBER}}</td>
                         <!-- <td>{{l.WRK_SURNAME}}</td> -->
@@ -165,7 +165,7 @@
 
                                     <li>
                                         <a class="pointer" role="menuitem" tabindex="1" ng-click="reuseBookingInfo()">
-                                            Rechelule
+                                            Reschelule
                                         </a>
                                     </li>
 

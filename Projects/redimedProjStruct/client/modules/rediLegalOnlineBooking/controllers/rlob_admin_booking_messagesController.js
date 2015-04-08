@@ -6,9 +6,14 @@ angular.module('app.loggedIn.rlob.adminBookingMessages.controller',[])
     .controller("rlob_admin_bookingMessagesController", function($scope,rlobService,toastr) {
         $scope.editMessageContent = '';
         //$scope.messageContent = '';
-        rlobService.getListBookingMessages().then(function(data){
-            $scope.ListBookingMessages = data;
-        });
+        $scope.setListMessagess = function(){
+            rlobService.getListBookingMessages().then(function(data){
+                if (data.status == 'success') {
+                    $scope.ListBookingMessages = data.data;
+                };
+            });
+        }
+        $scope.setListMessagess();
         $scope.showModalAddNew = function(){
             $("#addNewModal").modal('show');
         }
@@ -16,9 +21,7 @@ angular.module('app.loggedIn.rlob.adminBookingMessages.controller',[])
             rlobService.addNewBookingMessages($scope.messageContent).then(function(data){
                 if(data.status == 'success')
                 {
-                    rlobService.getListBookingMessages().then(function(data){
-                        $scope.ListBookingMessages = data;
-                    });
+                    $scope.setListMessagess();
                     $scope.messageContent='';
                     $("#addNewModal").modal('hide');
                     toastr.success("Add Message Successfully!","Success");
@@ -34,10 +37,7 @@ angular.module('app.loggedIn.rlob.adminBookingMessages.controller',[])
             rlobService.changeIsenableMessage(ID).then(function(data){
                 if(data.status == 'success')
                 {
-                    rlobService.getListBookingMessages().then(function(data){
-                        $scope.ListBookingMessages = data;
-                        //$scope.messageContent='';
-                    });
+                    $scope.setListMessagess();
                     toastr.success("Delete Successfully!","Success");
                 }
                 else
@@ -55,10 +55,7 @@ angular.module('app.loggedIn.rlob.adminBookingMessages.controller',[])
             rlobService.updateBookingMessage($scope.editMessageID,$scope.editMessageContent).then(function(data){
                 if(data.status == 'success')
                 {
-                    rlobService.getListBookingMessages().then(function(data){
-                        $scope.ListBookingMessages = data;
-                        //$scope.messageContent='';
-                    });
+                    $scope.setListMessagess();
                     $("#editModal").modal('hide');
                     toastr.success("Edit Successfully!","Success");
                 }

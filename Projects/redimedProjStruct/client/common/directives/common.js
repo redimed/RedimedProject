@@ -218,7 +218,6 @@ angular.module("app.directive.common", [
             model: "=ngModel"
         },
      link: function(scope, element, attrs, modelCtrl) {
-       
         scope.$watch('model', function(newValue,oldValue) {
             var arr = String(newValue).split("");
             if (arr.length === 0) return;
@@ -964,7 +963,8 @@ angular.module("app.directive.common", [
     }
 })
 
-.filter('date', function(){
+
+.filter('filterdate', function(){
     return function(input, date){
         if(!moment(input).isValid()) return '###';
         if(typeof input === 'undefined' && !input) return '###';
@@ -972,6 +972,7 @@ angular.module("app.directive.common", [
         return moment(input).format(date);
     }
 })
+
 
 .directive('ngEnter', function () {
     return function (scope, element, attrs) {

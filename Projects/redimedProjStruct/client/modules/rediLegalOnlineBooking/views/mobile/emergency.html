@@ -1,21 +1,6 @@
 <style type="text/css">
 * { box-sizing:border-box; }
 
-/* basic stylings ------------------------------------------ */
-
-/*h2 		 { 
-  text-align:center; 
-  margin-bottom:50px; 
-}
-h2 small { 
-  font-weight:normal; 
-  color:#888; 
-  display:block; 
-}
-.footer 	{ text-align:center; }
-.footer a  { color:#53B2C8; }
-*/
-/* form starting stylings ------------------------------- */
 .group 			  { 
   position:relative; 
   margin-bottom:10px; 
@@ -277,7 +262,7 @@ input:focus ~ .highlight {
 						<label class="confix-label">Address <span style="color: red;">*</span></label>
 						<label class="pull-right" style="position: relative;top: -30px;" ng-click="geoLocation()"><i style="font-size: 20px;" class="fa fa-map-marker"></i></label>
 					</div>
-					<span class="help-block pull-right" if="FormEmergency.address.$error.required">Address is required!</span>
+					<span style="margin-right: -15px;" class="help-block pull-right" if="FormEmergency.address.$error.required">Address is required!</span>
 					<div id="map"></div>
 					<!-- <div id="map1"></div> -->
                 </div>

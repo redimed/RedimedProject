@@ -1,5 +1,5 @@
 <style>
-	canvas {
+	#myCanvas {
 	  border-bottom: 1px solid rgba(0,0,0,0.3); 
 	  background-color: #EAE9E3;
 	  box-shadow: 0 9px 20px -5px rgba(0,0,0,0.8);
@@ -38,11 +38,11 @@
 		    <a class="btn btn-icon-only btn-circle btn-default" ng-click="clear()" href="javascript:;"> 
 		    	<i class="fa fa-trash-o"></i>
 		    </a>
-		    <a ng-class="{disabled : !isCalling}" class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
+		    <a ng-if="isCalling" class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
 		    	<i class="fa fa-camera"></i>
 		    </a>
 		    <span class="btn btn-default btn-file">
-			    Browse... <input type="file" id="imageLoader" accept="image/*">
+			    Load Picture<input type="file" id="imageLoader" accept="image/*">
 			</span>
 		</div>
 		<br/>

@@ -34,6 +34,15 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
+        socket.on("shareFile",function(id,fileName,callUser){
+            db.User.find({where:{id: callUser}},{raw:true})
+                .success(function(user){
+                    console.log("===Send To: ",user.user_name);
+                    io.to(user.socket)
+                        .emit('receiveFile',id,fileName);
+                })
+        })
+
         socket.on("generateSession",function(id){
             opentok.createSession(function(err, ses) {
                 if (err) 

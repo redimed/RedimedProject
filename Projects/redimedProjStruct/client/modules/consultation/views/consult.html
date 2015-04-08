@@ -25,19 +25,14 @@
     </ul>
 </div>
 <div class="row">
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-6 col-sm-6">
         <a  href="javascript:;" style="width: 120px" ng-click="backClick()" class="btn btn-circle purple-plum pull-right btn-md">
             <i class="glyphicon glyphicon-backward"></i> &nbsp; Back
         </a>
     </div>
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-6 col-sm-6">
         <a href="javascript:;" ng-click="submitClick()" style="width: 120px" class="btn btn-circle btn-info pull-left btn-md">
             <i class="fa fa-check"></i> &nbsp; Submit
-        </a>
-    </div>
-    <div class="col-md-4 col-sm-4">
-        <a href="javascript:;" ng-click="bluetoothClick()" style="width: 120px" class="btn btn-circle btn-success pull-left btn-md">
-            <i class="fa fa-check"></i> &nbsp; Medical Devices
         </a>
     </div>
 </div>
@@ -91,7 +86,7 @@
             </div>
             <div class="col-md-10 col-sm-10" >
                 <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
-                    <a ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
+                    <a ng-disabled="isCalling" ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
                         <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
                     </a>
                 </span>
@@ -508,6 +503,12 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_1_4">
+                <div ng-if="callInfo.isCalling"  class='row'>
+                    <div class="col-md-12 col-sm-12">
+                        <div dropzone="dropzoneConfig" class="dropzone"></div>
+                    </div>
+                </div>
+                <br ng-if="callInfo.isCalling"/>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <consult-drawing 
@@ -539,7 +540,7 @@
                         <div class="tab-pane active" id="tab_1_1_1">
                             <div class="row">
                                 <div ng-click="showHistory(device)" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
-                                    <a href="javascript:;"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
+                                    <a href="javascript:;" style="margin-bottom: 20 !important"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
                                         <div class="visual">
                                             <i class="{{device.icon}}"></i>
                                         </div>

@@ -21,10 +21,10 @@ var emailConfirm=function(req,res,redilegalUserName,status)
             if(status==rlobUtil.registerStatus.approve)
             {
                 template=
-                    " <p>Hi {{fullName}},</p>                                                                "+
+                    " <p>Hi {{firstName}},</p>                                                                "+
                     " <p>                                                                                    "+
-                    "   Thanks you for signing up to the Medico-Legal online booking system  at Redimed.     "+
-                    "   Your application has been accepted. You log in details are below:                    "+
+                    "   Thank you for signing up to the Medico-Legal online booking system  at Redimed.     "+
+                    "   Your application has been accepted. Your log in details are below:                    "+
                     " </p>                                                                                   "+
                     " <p>Username: {{userName}}</p>                                                          "+
                     // " <p>Password: {{password}}</p>                                                           "+
@@ -33,7 +33,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                     " <p>Kind Regards,</p>                                                                   "+
                     " <p>Medico-Legal Department</p>                                                         ";
                 emailData={
-                    fullName:userInfo.Booking_Person,
+                    firstName:userInfo.FIRST_NAME,
                     userName:userInfo.user_name,
                     password:userInfo.password,
                     linkWebsite:linkWebsite
@@ -49,8 +49,8 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                 };
                 emailInfo.subject='Redimed Medico-Legal Registration';
                 emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
-                //emailInfo.senders="tannv.solution@gmail.com";
                 emailInfo.recipients=userInfo.Contact_email;
+                emailInfo.cc=rlobUtil.getMedicoLegalCC();
                 emailInfo.htmlBody=template;
                 rlobEmailController.sendEmail(req,res,emailInfo);
 
@@ -58,7 +58,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
             else if(status==rlobUtil.registerStatus.reject)
             {
                 template=
-                    " <p>Hi {{fullName}},</p>                                                                           "+
+                    " <p>Hi {{firstName}},</p>                                                                           "+
                     " <p>                                                                                               "+
                     "   Thank you for signing up to the Medico-Legal online booking system at Redimed.                  "+
                     "   Unfortunately your application has been rejected.                                               "+
@@ -70,7 +70,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                     " <p>Kind Regards,</p>                                                                              "+
                     " <p>Medico-Legal Department</p>                                                                    ";
                 emailData={
-                    fullName:userInfo.Booking_Person,
+                    firstName:userInfo.FIRST_NAME,
                     departmentPhone:'(08) 9230 0900'
                 }
                 template=kiss.tokenBinding(template,emailData);
@@ -84,8 +84,8 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                 };
                 emailInfo.subject='Redimed Medico-Legal Registration';
                 emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
-                //emailInfo.senders="tannv.solution@gmail.com";
                 emailInfo.recipients=userInfo.Contact_email;
+                emailInfo.cc=rlobUtil.getMedicoLegalCC();
                 emailInfo.htmlBody=template;
                 rlobEmailController.sendEmail(req,res,emailInfo);
             }
@@ -134,10 +134,13 @@ module.exports =
             MEDICO_LEGAL_REGISTER_STATUS:rlobUtil.registerStatus.pending,
             Creation_date:currentDate,
             IS_ACCESS_REPORTS_ONLINE:newUser.isAccessReportOnline,
+            FIRST_NAME:newUser.fname,
+            LAST_NAME:newUser.lname,
             HAVE_BELL:1,
             HAVE_LETTER:1,
             HAVE_CALENDAR:1,
-            isEnable: 0
+            isEnable: 0,
+            function_id:rlobUtil.rlobFirstScreenFunctionId
 		}
 		var sql="SELECT * FROM `user_type` WHERE user_type=?";
 		kiss.beginTransaction(req,function(){
@@ -167,21 +170,20 @@ module.exports =
                                 var linkWebsite = req.protocol + '://' + req.get('host');
                                
                                 template=
-                                    " <p>Hi {{fullName}},</p>                                                                "+
-                                    " <p>                                                                                    "+
-                                    "   Thanks you for signing up to the Medico-Legal online booking system  at Redimed.     "+
-                                    "   Your application has been accepted. You log in details are below:                    "+
-                                    " </p>                                                                                   "+
-                                    " <p>Username: {{userName}}</p>                                                          "+
-                                    // " <p>Password: {{password}}</p>                                                           "+
-                                    " <p>Website: {{linkWebsite}}</p>                         "+
-                                    " <p>Thank you</p>                                                                       "+
-                                    " <p>Kind Regards,</p>                                                                   "+
-                                    " <p>Medico-Legal Department</p>                                                         ";
+                                    " <p>Hi {{firstName}},</p>                                                                  "+
+                                    " <p>Thank you for signing up to the Medico-Legal online booking system  at Redimed.</p>   "+
+                                    " <p>                                                                                       "+
+                                    "   Registration Info:                                                                      "+
+                                    "   <p style='margin-left:20px'>Username: {{userName}}</p>                                  "+
+                                    "   <p style='margin-left:20px'>Website: {{linkWebsite}}</p>                                "+
+                                    " </p>                                                                                      "+
+                                    " <p>Your application will be reviewed. </p>                                                "+                                                                                                                                  
+                                    " <p>Thank you</p>                                                                          "+
+                                    " <p>Kind Regards,</p>                                                                      "+
+                                    " <p>Medico-Legal Department</p>                                                            ";
                                 emailData={
-                                    fullName:userInfo.Booking_Person,
-                                    userName:userInfo.user_name,
-                                    password:userInfo.password,
+                                    firstName:userInfo.fname,
+                                    userName:userInfo.userName,
                                     linkWebsite:linkWebsite
                                 }
                                 template=kiss.tokenBinding(template,emailData);
@@ -195,7 +197,8 @@ module.exports =
                                 };
                                 emailInfo.subject='Redimed Medico-Legal Registration';
                                 emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
-                                emailInfo.recipients=rlobUtil.getMedicoLegalMailSender();
+                                emailInfo.recipients=userInfo.email;
+                                emailInfo.cc=rlobUtil.getMedicoLegalCC();
                                 emailInfo.htmlBody=template;
                                 rlobEmailController.sendEmail(req,res,emailInfo);
 
@@ -243,7 +246,6 @@ module.exports =
     	var currentPage=kiss.checkData(searchInfo.currentPage)?searchInfo.currentPage:'';
         var itemsPerPage=kiss.checkData(searchInfo.itemsPerPage)?searchInfo.itemsPerPage:'';
         var startIndex=((currentPage-1)*itemsPerPage);
-
     	if(!kiss.checkListData(userId))
     	{
     		kiss.exlog("getRedilegalUsers","Loi data truyen den");
@@ -367,6 +369,7 @@ module.exports =
             if(result.affectedRows>0)
             {
                 res.json({status:'success'});
+                emailConfirm(req,res,updateTo,status);
             }
             else
             {

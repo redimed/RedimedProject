@@ -85,7 +85,7 @@ module.exports =
 
         var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
 
-        if(!kiss.checkListData(userId,BOOKING_ID,CLAIM_NO,WRK_SURNAME,WRK_OTHERNAMES,WRK_DOB,WRK_CONTACT_NO,WRK_DATE_OF_INJURY,DESC_INJURY))
+        if(!kiss.checkListData(userId,BOOKING_ID,CLAIM_NO,WRK_SURNAME,WRK_OTHERNAMES,WRK_DOB,WRK_CONTACT_NO,WRK_DATE_OF_INJURY,DESC_INJURY,COMPANY_ID,RL_TYPE_ID,SPECIALITY_ID,DOCTOR_ID,SITE_ID,CAL_ID))
         {
             kiss.exlog('add',"Loi data truyen den");
             res.json({status:'fail'});
@@ -354,29 +354,18 @@ module.exports =
             (userId!=null?' AND booking.ASS_ID=? ':'')+
             " GROUP BY booking.`BOOKING_ID`                                                                                   ";
 
-        req.getConnection(function(err,connection)
-        {
-
-            var query = connection.query(sql,userId!=null?[bookingId,userId]:[bookingId],function(err,rows)
-                {
-                    if(err)
-                    {
-                        console.log("Error Selecting : %s ",err );
-                        res.json({status:'fail'});
-                    }
-                    else
-                    {
-                        if(rows.length>0)
-                            res.json({status:'success',data:rows[0]});
-                        else
-                        {
-                            console.log("No data",err );
-                            res.json({status:'fail'});
-                        }
-                    }
-
-                });
-        });
+        kiss.executeQuery(req,sql,userId!=null?[bookingId,userId]:[bookingId],function(rows){
+            if(rows.length>0)
+                res.json({status:'success',data:rows[0]});
+            else
+            {
+                kiss.exlog("getBookingById","Khong lay duoc booking Info");
+                res.json({status:'fail'});
+            }
+        },function(err){
+            kiss.exlog("getBookingById","Loi truy van",err);
+            res.json({status:'fail'});
+        },true)
     },
 
     /**
@@ -418,35 +407,33 @@ module.exports =
         var fromDateKey=req.query.fromDateKey;
         var toDateKey=req.query.toDateKey;
         var doctorId=req.query.doctorId?req.query.doctorId:null;
+        kiss.exlog("doctorid>>>>>>>>>>>>>>>>>>>>>>>>>>>.:",doctorId);
         var bookingType=req.query.bookingType;
         var doctorKey=req.query.doctorKey?req.query.doctorKey:'%';
         var workerKey=req.query.workerKey?req.query.workerKey:'%';
         var documentStatusKey=req.query.documentStatusKey?req.query.documentStatusKey:'%';
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+doctorId);
         var sql=
-            " SELECT    booking.`BOOKING_ID`,booking.`ASS_ID`,`booking`.`BOOKING_DATE`,booking.`COMPANY_ID`,company.`Company_name`,                                           "+
-            "   booking.`RL_TYPE_ID`,`rltype`.`Rl_TYPE_NAME`,booking.`SPECIALITY_ID`,spec.`Specialties_name`,                                                "+
-            "   booking.`DOCTOR_ID`,doctor.`NAME`,booking.`SITE_ID`,redi.`Site_name`,booking.`WRK_SURNAME`, booking.DOCUMENT_STATUS,                                                  "+
-            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID, booking.ASS_OTHERNAMES,booking.WRK_OTHERNAMES,                                                                                              "+
-            "   CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
-            "   CONCAT(HOUR(calendar.`From_time`),':',DATE_FORMAT(calendar.`From_time`,'%i')) AS APPOINTMENT_TIME,                                                     "+
-            "   booking.`STATUS`,                                                                                                                            "+
-            "   `bookingfile`.`FILE_ID`,`bookingfile`.`FILE_TYPE`,`bookingfile`.`FILE_NAME`,`bookingfile`.`FILE_PATH`,`bookingfile`.`isClientDownLoad`       "+
-            " FROM  `rl_bookings` booking                                                                                                                    "+
-            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                          "+
-            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                                   "+
-            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`=spec.`Specialties_id`                                                           "+
-            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                                        "+
-            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                              "+
-            "   LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                                  "+
-            "   INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                       "+
-            " WHERE  booking.BOOKING_TYPE=? AND DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                                                     "+
-            "   AND                                                                                                                                          "+
-            "   `doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                       "+
-            "   AND                                                                                                                                          "+
-            "   `booking`.`WRK_SURNAME` LIKE CONCAT('%',?,'%') and `booking`.DOCUMENT_STATUS LIKE ?                                                                                              "+
+            " SELECT booking.*,company.`Company_name`,`rltype`.`Rl_TYPE_NAME`,spec.`Specialties_name`,                                                   "+
+            "   doctor.`NAME`,redi.`Site_name`,                                                                                                          "+
+            "   CONCAT(booking.WRK_OTHERNAMES,' ',booking.WRK_SURNAME) AS WRK_FULLNAME,                                                                  "+                                                       
+            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                           "+
+            "   CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,           "+   
+            "   CONCAT(HOUR(calendar.`From_time`),':',DATE_FORMAT(calendar.`From_time`,'%i')) AS APPOINTMENT_TIME,                                       "+
+            "   `bookingfile`.`FILE_ID`,`bookingfile`.`FILE_TYPE`,`bookingfile`.`FILE_NAME`,`bookingfile`.`FILE_PATH`,`bookingfile`.`isClientDownLoad`   "+   
+            " FROM  `rl_bookings` booking                                                                                                                "+   
+            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                      "+   
+            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                               "+   
+            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`=spec.`Specialties_id`                                                       "+   
+            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                                    "+   
+            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                          "+   
+            "   LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                              "+   
+            "   INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                   "+   
+            " WHERE  booking.BOOKING_TYPE=? AND DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                         "+   
+            "   AND `doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                               "+       
+            "   AND CONCAT(booking.WRK_OTHERNAMES,' ',booking.WRK_SURNAME) LIKE CONCAT('%',?,'%') AND `booking`.DOCUMENT_STATUS LIKE ?                   "+                                      
             (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
-            " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 ";
+            " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC      ;                                                      ";
+
         req.getConnection(function(err,connection) {
             var key_result=connection.query(sql,doctorId?[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey,doctorId]:[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey],function(err,rows){
                 if(err)
@@ -588,11 +575,18 @@ module.exports =
     sendConfirmEmail:function(req,res)
     {
 //        rlobEmailController.sendEmail("asdfasdf jasodfja sfiasjd foids>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        var bookingId=req.body.bookingId;
-        var siteAddress=req.body.siteAddress;
-        var mapUrl=req.body.mapUrl;
+        var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'' ;
+        var siteAddress=kiss.checkData(req.body.siteAddress)?req.body.siteAddress:'';
+        var mapUrl=kiss.checkData(req.body.mapUrl)?req.body.mapUrl:'';
+        var isReschedule=kiss.checkData(req.body.isReschedule)?req.body.isReschedule:0;
+        if(!kiss.checkListData(bookingId))
+        {
+            kiss.exlog("sendConfirmEmail","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
         var sql=
-            " SELECT 	u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
+            " SELECT 	u.`user_name`,u.FIRST_NAME,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
             " 	booking.`WRK_SURNAME`,booking.WRK_OTHERNAMES,booking.`CLAIM_NO`,                                                     "+
             " 	booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
             " FROM 	`rl_bookings` booking                                                                     "+
@@ -625,63 +619,141 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        if(isReschedule!=1)
+                            emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        else
+                            emailInfo.subject='Reschedule: Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
                         emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
+                        emailInfo.cc=rlobUtil.getMedicoLegalCC();
                         //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
                         var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
                         kiss.exlog(redimed_logo_1);
-                        emailInfo.htmlBody=
-                            " <div style='font:11pt Calibri'>                                                                                                                      "+
-                            "   <p>Hi "+row.user_name+",</p>                                                                                                                       "+
-                            "   <p>                                                                                                                                                "+
-                            "    Thank you for your booking request with Redimed.                                                                                                  "+
-                            "    The appointment has been confirmed for                                                                                                            "+
-                            "    <span style='font-weight: bold'>"+row.WRK_OTHERNAMES+" "+row.WRK_SURNAME+" "+row.CLAIM_NO+"</span>                                                "+
-                            "   </p>                                                                                                                                               "+
-                            "   <p>                                                                                                                                                "+
-                            "    <table>                                                                                                                                           "+
-                            "         <tr><td style='font-weight:bold'>Date:</td><td>"+moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY")+"</td></tr>                               "+
-                            "         <tr><td style='font-weight:bold'>Time:</td><td>"+moment(row.APPOINTMENT_DATE).format("HH:mm")+"</td></tr>                                    "+
-                            "         <tr><td style='font-weight:bold'>Address:</td><td>"+row.Site_addr+"</td></tr>                                                                "+
-                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>"+row.NAME+"</td></tr>                                                                      "+
-                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>"+row.Rl_TYPE_NAME+"</td></tr>                                                 "+
-                            "    </table>                                                                                                                                          "+
-                            "   </p>                                                                                                                                               "+
-                            "   <p>                                                                                                                                                "+
-                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                                      "+
-                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                            "+
-                            "   </p>                                                                                                                                               "+
-                            "   <p>                                                                                                                                                "+
-                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                             "+
-                            "    on (08) 9230 0900 or medicolegal@redimed.com.au                                                                                        "+
-                            "   </p>                                                                                                                                               "+
-                            "                                                                                                                                                      "+
-                            "   <div style='width:400px;height:300px'>                                                                                                             "+
-                            "     <img src='"+mapUrl+"'/>                                                                                                                          "+
-                            "     <div> Site address: "+siteAddress+" </div>                                                                                                       "+
-                            "   </div>                                                                                                                                             "+
-                            "   <br/>                                                                                                                                              "+
-                            "   <p>Kind Regards,</p>                                                                                                                               "+
-                            "   <p>Redimed Medico-Legal</p>                                                                                                                        "+
-                            "   <hr/>                                                                                                                                              "+
-                            "   <table>                                                                                                                                            "+
-                            "   <tr>                                                                                                                                               "+
-                            "       <td>                                                                                                                                           "+
-                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                                                                          "+
-                            "       </td>                                                                                                                                          "+
-                            "       <td>                                                                                                                                           "+
-                            "           <p><span style='font-weight: bold'>A&nbsp;</span>"+row.Site_addr+"</p>                                                                     "+
-                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                         "+
-                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>                "+
-                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                            "+
-                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                                    "+
-                            "       </td>                                                                                                                                          "+
-                            "   </tr>                                                                                                                                              "+
-                            "   </table>                                                                                                                                           "+
-                            "                                                                                                                                                      "+
-                            " </div>                                                                                                                                               ";
+                        var template='';
+                        if(isReschedule!=1)
+                        {
+                            template=
+                            " <div style='font:11pt Calibri'>                                                                                                                "+      
+                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                     "+      
+                            "   <p>                                                                                                                                          "+      
+                            "    Thank you for your booking request with Redimed.                                                                                            "+      
+                            "    The appointment has been confirmed for                                                                                                      "+      
+                            "    <span style='font-weight: bold'>{{WRK_OTHERNAMES}} {{WRK_SURNAME}} {{CLAIM_NO}}</span>                                                      "+
+                            "   </p>                                                                                                                                         "+      
+                            "   <p>                                                                                                                                          "+      
+                            "    <table>                                                                                                                                     "+      
+                            "         <tr><td style='font-weight:bold'>Date:</td><td>{{DATE}}</td></tr>                                                                      "+
+                            "         <tr><td style='font-weight:bold'>Time:</td><td>{{TIME}}</td></tr>                                                                      "+
+                            "         <tr><td style='font-weight:bold'>Address:</td><td>{{Site_addr}}</td></tr>                                                              "+  
+                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>{{DOCTOR_NAME}}</td></tr>                                                             "+         
+                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>{{Rl_TYPE_NAME}}</td></tr>                                               "+  
+                            "    </table>                                                                                                                                    "+      
+                            "   </p>                                                                                                                                         "+      
+                            "   <p>                                                                                                                                          "+      
+                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                                "+      
+                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                      "+      
+                            "   </p>                                                                                                                                         "+      
+                            "   <p>                                                                                                                                          "+      
+                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                       "+      
+                            "    on (08) 9230 0900 or medicolegal@redimed.com.au                                                                                             "+     
+                            "   </p>                                                                                                                                         "+      
+                            "                                                                                                                                                "+      
+                            "   <div style='width:400px;height:300px'>                                                                                                       "+      
+                            "     <img src='{{mapUrl}}'/>                                                                                                                    "+      
+                            "     <div> Site address: {{siteAddress}} </div>                                                                                                 "+      
+                            "   </div>                                                                                                                                       "+      
+                            "   <br/>                                                                                                                                        "+      
+                            "   <p>Kind Regards,</p>                                                                                                                         "+      
+                            "   <p>Redimed Medico-Legal</p>                                                                                                                  "+      
+                            "   <hr/>                                                                                                                                        "+      
+                            "   <table>                                                                                                                                      "+      
+                            "   <tr>                                                                                                                                         "+      
+                            "       <td>                                                                                                                                     "+      
+                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                            "+      
+                            "       </td>                                                                                                                                    "+      
+                            "       <td>                                                                                                                                     "+      
+                            "           <p><span style='font-weight: bold'>A&nbsp;</span>{{Site_addr}}</p>                                                                   "+  
+                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                   "+      
+                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>          "+      
+                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                      "+      
+                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                              "+      
+                            "       </td>                                                                                                                                    "+      
+                            "   </tr>                                                                                                                                        "+      
+                            "   </table>                                                                                                                                     "+      
+                            "                                                                                                                                                "+      
+                            " </div>                                                                                                                                         "; 
+                        }
+                        else
+                        {
+                            template=
+                            " <div style='font:11pt Calibri'>                                                                                                            "+         
+                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                 "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    Thank you for your booking request with Redimed.                                                                                        "+         
+                            "    The new appointment details for                                                                                                         "+  
+                            "    <span style='font-weight: bold'>{{WRK_OTHERNAMES}} {{WRK_SURNAME}} {{CLAIM_NO}}</span>                                                  "+
+                            "   are below:                                                                                                                               "+
+                            "   </p>                                                                                                                                     "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    <table>                                                                                                                                 "+         
+                            "         <tr><td style='font-weight:bold'>Date:</td><td>{{DATE}}</td></tr>                                                                  "+    
+                            "         <tr><td style='font-weight:bold'>Time:</td><td>{{TIME}}</td></tr>                                                                  "+    
+                            "         <tr><td style='font-weight:bold'>Address:</td><td>{{Site_addr}}</td></tr>                                                          "+     
+                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>{{DOCTOR_NAME}}</td></tr>                                                         "+            
+                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>{{Rl_TYPE_NAME}}</td></tr>                                           "+     
+                            "    </table>                                                                                                                                "+         
+                            "   </p>                                                                                                                                     "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                            "+         
+                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                  "+         
+                            "   </p>                                                                                                                                     "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                   "+         
+                            "    on (08) 9230 0900 or medicolegal@redimed.com.au                                                                                         "+        
+                            "   </p>                                                                                                                                     "+         
+                            "                                                                                                                                            "+         
+                            "   <div style='width:400px;height:300px'>                                                                                                   "+         
+                            "     <img src='{{mapUrl}}'/>                                                                                                                "+         
+                            "     <div> Site address: {{siteAddress}} </div>                                                                                             "+         
+                            "   </div>                                                                                                                                   "+         
+                            "   <br/>                                                                                                                                    "+         
+                            "   <p>Kind Regards,</p>                                                                                                                     "+         
+                            "   <p>Redimed Medico-Legal</p>                                                                                                              "+         
+                            "   <hr/>                                                                                                                                    "+         
+                            "   <table>                                                                                                                                  "+         
+                            "   <tr>                                                                                                                                     "+         
+                            "       <td>                                                                                                                                 "+         
+                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                        "+         
+                            "       </td>                                                                                                                                "+         
+                            "       <td>                                                                                                                                 "+         
+                            "           <p><span style='font-weight: bold'>A&nbsp;</span>{{Site_addr}}</p>                                                               "+     
+                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                               "+         
+                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>      "+         
+                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                  "+         
+                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                          "+         
+                            "       </td>                                                                                                                                "+         
+                            "   </tr>                                                                                                                                    "+         
+                            "   </table>                                                                                                                                 "+         
+                            "                                                                                                                                            "+         
+                            " </div>                                                                                                                                     "; 
+                        }
+         
+                        var emailData={
+                            FIRST_NAME:row.FIRST_NAME,
+                            WRK_OTHERNAMES:row.WRK_OTHERNAMES,
+                            WRK_SURNAME:row.WRK_SURNAME,
+                            CLAIM_NO:row.CLAIM_NO,
+                            DATE:moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY"),
+                            TIME:moment(row.APPOINTMENT_DATE).format("HH:mm"),
+                            Site_addr:row.Site_addr,
+                            DOCTOR_NAME:row.NAME,
+                            Rl_TYPE_NAME:row.Rl_TYPE_NAME,
+                            mapUrl:mapUrl,
+                            siteAddress:siteAddress
+                        }
+                        template=kiss.tokenBinding(template,emailData);
+                        emailInfo.htmlBody=template;
                         rlobEmailController.sendEmail(req,res,emailInfo);
                     }
 
@@ -692,7 +764,8 @@ module.exports =
         });
     },
     /**
-     *count total bookings
+     *Dem cac upcomming booking
+     *Upcomming booking: nhung booking sap toi
      * phanquocchien.c1109g@gmail.com
      */
     getCountReportUpcommingBookings:function(req,res)
@@ -717,20 +790,22 @@ module.exports =
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
         var sql=
-            " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS count_bookings      	               "+
-            " FROM `rl_bookings` booking                                                           "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`             "+
-            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                     "+
-            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                    "+
-            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                                   "+
-            " AND booking.`BOOKING_TYPE`= ?                                                        "+
-            " AND booking.DOCTOR_ID LIKE ?                                                         "+
-            " AND  dt.`NAME` LIKE ?                                                                "+  
-            " AND stite.`Site_name` LIKE ?                                                         "+ 
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                   "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                   "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)            ";
-        console.log(sql);
+            " SELECT COUNT( booking.`BOOKING_ID`) AS count_upcomming_bookings                                             "+
+            " FROM `rl_bookings` booking                                                                                  "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)    "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                       "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                  "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                            "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                           "+
+            " WHERE booking.`APPOINTMENT_DATE` > CURRENT_TIMESTAMP                                                        "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                               "+                                                
+            " AND booking.`STATUS` NOT IN ('Completed','Cancel','Late Cancellation')                                      "+                                
+            " AND booking.DOCTOR_ID LIKE ?                                                                                "+
+            " AND  dt.`NAME` LIKE ?                                                                                       "+
+            " AND stite.`Site_name` LIKE ?                                                                                "+
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                          "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   ";
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
@@ -753,7 +828,7 @@ module.exports =
                 else
                 {
                     console.log(rows[0].count_bookings);
-                    res.json({status:'success',data:{count_bookings:rows[0].count_bookings}});
+                    res.json({status:'success',data:{count_upcomming_bookings:rows[0].count_upcomming_bookings}});
                 }
             });
         });
@@ -786,22 +861,23 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                   "+
-            " FROM `rl_bookings` booking                                                           "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`             "+
-            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                     "+
-            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                    "+
-            " WHERE booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP                                   "+
-            " AND booking.`BOOKING_TYPE`= ?                                                        "+
-            " AND booking.DOCTOR_ID LIKE ?                                                         "+
-            " AND  dt.`NAME` LIKE ?                                                                "+  
-            " AND stite.`Site_name` LIKE ?                                                         "+ 
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                   "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                   "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)            "+
-            " GROUP BY booking.BOOKING_ID                                                          "+
-            " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                   ";
-        console.log(sql);
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                                          "+
+            " FROM `rl_bookings` booking                                                                                  "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)    "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                       "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                  "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                            "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                           "+
+            " WHERE booking.`BOOKING_TYPE`= ?                                                                             "+
+            " AND booking.`APPOINTMENT_DATE` > CURRENT_TIMESTAMP                                                          "+
+            " AND booking.`STATUS` NOT IN ('Completed','Cancel','Late Cancellation')                                      "+                               
+            " AND booking.DOCTOR_ID LIKE ?                                                                                "+
+            " AND  dt.`NAME` LIKE ?                                                                                       "+
+            " AND stite.`Site_name` LIKE ?                                                                                "+
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                          "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                          ";
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
@@ -835,7 +911,7 @@ module.exports =
      *count total bookings status < CURRENT_TIMESTAMP
      * phanquocchien.c1109g@gmail.com
      */
-    getCountReportStatusBookings:function(req,res)
+    getCountReportOutstandingBookings:function(req,res)
     {
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
@@ -857,22 +933,23 @@ module.exports =
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
         var sql=
-            " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS count_bookings_status                                                        "+
-            " FROM `rl_bookings` booking                                                                           "+
-            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
-            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
-            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
-            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
-            " AND rlfile.`FILE_ID` IS NULL                                                                         "+
-            " AND booking.`STATUS` = 'Completed'                                                                   "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
-            " AND  dt.`NAME` LIKE ?                                                                                "+  
-            " AND stite.`Site_name` LIKE ?                                                                         "+ 
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            ";
+            " SELECT COUNT( booking.`BOOKING_ID`) AS count_outstanding_bookings                                                   "+  
+            " FROM `rl_bookings` booking                                                                                          "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)            "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                               "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                          "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                    "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                   "+
+            " WHERE rlfile.`BOOKING_ID` IS NULL                                                                                   "+
+            // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                  "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                                       "+                                                    
+            " AND booking.`STATUS` = 'Completed'                                                                                  "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                                        "+
+            " AND  dt.`NAME` LIKE ?                                                                                               "+
+            " AND stite.`Site_name` LIKE ?                                                                                        "+
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                  "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                  "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
@@ -896,7 +973,7 @@ module.exports =
                 else
                 {
                     console.log(rows[0].count_bookings_status);
-                    res.json({status:'success',data:{count_bookings_status:rows[0].count_bookings_status}});
+                    res.json({status:'success',data:{count_outstanding_bookings:rows[0].count_outstanding_bookings}});
                 }
             });
         });
@@ -905,7 +982,7 @@ module.exports =
      *get items booking
      * phanquocchien.c1109g@gmail.com
      */
-    getItemsOfPageReportStatusBookings:function(req,res)
+    getItemsOfPageReportOutstandingBookings:function(req,res)
     {
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
@@ -929,24 +1006,24 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,rlfile.`FILE_ID`,dt.`NAME`,stite.`Site_name`                  "+
-            " FROM `rl_bookings` booking                                                                           "+
-            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
-            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
-            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
-            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
-            " AND rlfile.`FILE_ID` IS NULL                                                                         "+
-            " AND booking.`STATUS` = 'Completed'                                                                   "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
-            " AND  dt.`NAME` LIKE ?                                                                              "+  
-            " AND stite.`Site_name` LIKE ?                                                                       "+ 
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            "+
-            " GROUP BY booking.`BOOKING_ID`                                                                        "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                  ";
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                                                            "+
+            " FROM `rl_bookings` booking                                                                                                    "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)                      "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                                         "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                                    "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                              "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                             "+
+            " WHERE rlfile.`BOOKING_ID` IS NULL                                                                                             "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                                                 "+
+            // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
+            " AND booking.`STATUS` = 'Completed'                                                                                            "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                                                  "+
+            " AND  dt.`NAME` LIKE ?                                                                                                         "+
+            " AND stite.`Site_name` LIKE ?                                                                                                  "+
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                            "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                            "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                                           ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
@@ -979,48 +1056,10 @@ module.exports =
     },
 
     /**
-     * admin report: admin report: get pass booking have not result--> SELECT
-     * tannv.dts@gmail.com
-     */
-    getReportPassBookingHaveNotResult:function(req,res)
-    {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
-        var doctorId=req.query.doctorId?req.query.doctorId:'%';
-        var sql=
-            "SELECT DISTINCT dr.`NAME`,TRUNCATE(DATEDIFF(CURRENT_DATE,DATE(booking.`APPOINTMENT_DATE`))/7,0) AS WEEK_OVERDUE,                               "+
-            " 	booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,files.`FILE_NAME`                                    "+
-            " FROM 	`rl_bookings` booking                                                                                                           "+
-            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                            "+
-            " 	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                                 "+
-            " 	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                 "+
-            " 	INNER JOIN `doctors` dr ON dr.`doctor_id`=booking.`DOCTOR_ID`                                                                       "+
-            " 	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`      "+
-            " WHERE 	files.`FILE_ID` IS NULL                                                                                                     "+
-            " 	AND booking.`STATUS`='Completed'                                                                                                    "+
-            " 	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                    "+
-            " 	AND booking.`BOOKING_TYPE`=?   and booking.DOCTOR_ID like ?                                                                                                     "+
-            " ORDER BY dr.`NAME` ASC,WEEK_OVERDUE DESC, booking.`APPOINTMENT_DATE` ASC                                                              ";
-
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
-            {
-                if(err)
-                {
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    res.json({status:'success',data:rows})
-                }
-            });
-        });
-    },
-    /**
      * admin report: get pass booking have not result--->COUNT
      * tannv.dts@gmail.com
      */
-    getCountReportPassBookingHaveNotResult:function(req,res)
+    getCountReportArchiveBooking:function(req,res)
     {
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
@@ -1042,22 +1081,23 @@ module.exports =
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
         var sql=
-            " SELECT COUNT( DISTINCT booking.`BOOKING_ID`) AS TOTAL_NUMBEROF_BOOKINGS                                                        "+
-            " FROM `rl_bookings` booking                                                                           "+
-            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
-            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
-            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
-            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
-            " AND rlfile.`FILE_ID` IS NOT NULL                                                                         "+
-            " AND booking.`STATUS` = 'Completed'                                                                   "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
-            " AND  dt.`NAME` LIKE ?                                                                                "+  
-            " AND stite.`Site_name` LIKE ?                                                                         "+ 
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            ";
+            " SELECT COUNT( booking.`BOOKING_ID`) AS count_archive_bookings                                                       "+  
+            " FROM `rl_bookings` booking                                                                                          "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)            "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                               "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                          "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                    "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                   "+
+            " WHERE rlfile.`BOOKING_ID` IS NOT NULL                                                                               "+
+            // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                  "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                                       "+                                                    
+            " AND booking.`STATUS` = 'Completed'                                                                                  "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                                        "+
+            " AND  dt.`NAME` LIKE ?                                                                                               "+
+            " AND stite.`Site_name` LIKE ?                                                                                        "+
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                  "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                  "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
@@ -1080,8 +1120,8 @@ module.exports =
                 }
                 else
                 {
-                    console.log(rows[0].count_bookings_status);
-                    res.json({status:'success',data:{count_bookings_status:rows[0].count_bookings_status}});
+                    console.log(rows[0].TOTAL_NUMBEROF_BOOKINGS);
+                    res.json({status:'success',data:{count_archive_bookings:rows[0].count_archive_bookings}});
                 }
             });
         });
@@ -1090,7 +1130,7 @@ module.exports =
      * admin report: admin report: get pass booking have not result--> SELECT
      * tannv.dts@gmail.com
      */
-    getItemsOfPageReportPassBookingHaveNotResult:function(req,res)
+    getItemsOfPageReportArchiveBooking:function(req,res)
     {
         console.log(req.body);
         var bookingType=req.body.bookingType?req.body.bookingType:'';
@@ -1114,24 +1154,24 @@ module.exports =
         var pageIndex= parseInt((req.body.pageIndex-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,rlfile.`FILE_ID`,dt.`NAME`,stite.`Site_name`                  "+
-            " FROM `rl_bookings` booking                                                                           "+
-            " LEFT JOIN `rl_booking_files` rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                   "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                           "+
-            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                     "+
-            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                    "+
-            " WHERE booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                   "+                   
-            " AND booking.`BOOKING_TYPE`= ?                                                                        "+
-            " AND rlfile.`FILE_ID` IS NOT NULL                                                                     "+
-            " AND booking.`STATUS` = 'Completed'                                                                   "+
-            " AND booking.DOCTOR_ID LIKE ?                                                                         "+
-            " AND  dt.`NAME` LIKE ?                                                                                "+  
-            " AND stite.`Site_name` LIKE ?                                                                         "+ 
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                   "+
-            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                   "+
-            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                            "+
-            " GROUP BY booking.`BOOKING_ID`                                                                        "+
-            " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                  ";
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                                                            "+
+            " FROM `rl_bookings` booking                                                                                                    "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)                      "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                                         "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                                    "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                              "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                             "+
+            " WHERE rlfile.`BOOKING_ID` IS NOT NULL                                                                                         "+
+            // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
+            " AND booking.`BOOKING_TYPE`= ?                                                                                                 "+
+            " AND booking.`STATUS` = 'Completed'                                                                                            "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                                                  "+
+            " AND  dt.`NAME` LIKE ?                                                                                                         "+
+            " AND stite.`Site_name` LIKE ?                                                                                                  "+
+            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                            "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                            "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                                           ";
         console.log(sql);
         var params=[];
         params.push(bookingType);
@@ -1173,8 +1213,14 @@ module.exports =
      */
     getPassBookingNotChangeStatus:function(req,res)
     {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
-        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var bookingType=kiss.checkData(req.query.bookingType)?req.query.bookingType:'';
+        var doctorId=kiss.checkData(req.query.doctorId)?req.query.doctorId:'%';
+        if(!kiss.checkListData(bookingType))
+        {
+            kiss.exlog("getPassBookingNotChangeStatus","Loi truyen data den");
+            res.json({status:'fail'});
+            return;
+        }
         var sql=
             "SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`       "+
             "FROM 	`rl_bookings` booking                                                                "+
@@ -1216,28 +1262,34 @@ module.exports =
      * @param req
      * @param res
      */
-    getUpcommingBookingHaveNotClientDocument:function(req,res)
+    getListUpcommingBookingWaitingPaperwork:function(req,res)
     {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
-        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var bookingType=kiss.checkData(req.query.bookingType)?req.query.bookingType:'';
+        var doctorId=kiss.checkData(req.query.doctorId)?req.query.doctorId:'%';
+        if(!kiss.checkListData(bookingType))
+        {
+            kiss.exlog("getListUpcommingBookingWaitingPaperwork","Loi truyen data");
+            res.json({status:'fail'});
+            return;
+        }
         var sql=
-            " SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,         "+
-            " 	files.`FILE_NAME`                                                                           "+
-            " FROM 	`rl_bookings` booking                                                                   "+
-            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
-            " 	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`         "+
-            " 	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                         "+
-            " 	LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`               "+
-            " WHERE 	files.`FILE_ID` IS NULL                                                                 "+
-            " 	AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                            "+
-            " 	AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                 "+
-            " 	AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ? and booking.STATUS='"+rlobUtil.bookingStatus.confirmed+"' "+
-            " ORDER BY booking.`APPOINTMENT_DATE` ASC ";
+            " SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,   "+
+            "   files.`FILE_NAME`                                                                               "+
+            " FROM  `rl_bookings` booking                                                                       "+
+            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                        "+
+            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`             "+
+            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                             "+
+            "   LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`                   "+
+            " WHERE     files.`FILE_ID` IS NULL                                                                 "+
+            "   AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                                "+
+            "   AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                     "+
+            "   AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ? and booking.STATUS=?                  "+
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC                                                           ";
 
 
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
+            var query = connection.query(sql,[bookingType,doctorId,rlobUtil.bookingStatus.confirmed],function(err,rows)
             {
                 if(err)
                 {
@@ -1314,23 +1366,32 @@ module.exports =
      * @param req
      * @param res
      */
-    getPassBookingHaveNotResult:function(req,res)
+    getListBookingOutstandingNotification:function(req,res)
     {
-        var bookingType=req.query.bookingType?req.query.bookingType:'';
-        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var bookingType=kiss.checkData(req.query.bookingType)?req.query.bookingType:'';
+        var doctorId=kiss.checkData(req.query.doctorId)?req.query.doctorId:'%';
+        if(!kiss.checkListData(bookingType))
+        {
+            kiss.exlog("getListBookingOutstandingNotification","Loi truyen data den");
+            res.json({status:'fail'});
+            return;
+        }
         var sql=
-            "SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                                                "+
-            "	files.`FILE_NAME`                                                                                                                  "+
-            "FROM 	`rl_bookings` booking                                                                                                          "+
-            "	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                           "+
-            "	INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                                "+
-            "	INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
-            "	LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
-            "WHERE 	files.`FILE_ID` IS NULL                                                                                                        "+
-            "	AND booking.`STATUS`='Completed'                                                                                                   "+
-            "	AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                                   "+
-            "	AND booking.`BOOKING_TYPE`=?  and booking.DOCTOR_ID like ?                                                                                                     "+
-            "ORDER BY booking.`APPOINTMENT_DATE` ASC                                                                                               ";
+            " SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                            "+            
+            "   files.`FILE_NAME`                                                                                                        "+       
+            " FROM  `rl_bookings` booking                                                                                                "+          
+            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                 "+          
+            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                      "+          
+            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                      "+          
+            "   LEFT JOIN (SELECT f.`BOOKING_ID`,f.`FILE_NAME`,COUNT(f.`BOOKING_ID`) AS NUMBER_OF_RESULT FROM `rl_booking_files` f      "+
+            "           WHERE f.`isClientDownLoad`=1                                                                                     "+
+            "           GROUP BY f.`BOOKING_ID`,f.`FILE_NAME`) files                                                                     "+
+            "   ON booking.`BOOKING_ID`=files.`BOOKING_ID`                                                                               "+
+            " WHERE     files.`NUMBER_OF_RESULT` IS NULL                                                                                 "+                       
+            "   AND booking.`STATUS`='Completed'                                                                                         "+          
+            //"   AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                         "+          
+            "   AND booking.`BOOKING_TYPE`=?  AND booking.DOCTOR_ID LIKE ?                                                               "+          
+            " ORDER BY booking.`APPOINTMENT_DATE` ASC;                                                                                   ";
 
 
         req.getConnection(function(err,connection)
@@ -1428,7 +1489,7 @@ module.exports =
     rl_messages_select_contents:function(req,res){
         db.sequelize.query('SELECT * FROM rl_messages WHERE ISENABLE = 1',null,{raw:true})
             .success(function(data){
-                res.json(data);
+                res.json({status:'success',data:data});
             })
             .error(function(err){
                 res.json({status:'error'});
@@ -1530,8 +1591,8 @@ module.exports =
                 };
                 emailInfo.subject=row.Rl_TYPE_NAME+" - "+row.WRK_SURNAME+" - "+row.CLAIM_NO;
                 emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
-                emailInfo.recipients=row.Contact_email;
-
+                emailInfo.recipients=row.Contact_email; 
+                emailInfo.cc=rlobUtil.getMedicoLegalCC();
                 var emailTemplate=
                     " <p>                                                                                                                           "+
                     "   Hi {{user_name}},                                                                    "+

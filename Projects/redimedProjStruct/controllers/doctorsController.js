@@ -5,10 +5,9 @@
 var db = require('../models');
 var util = require('util');
 var common_function = require("../functions.js");
-
-
- var squel = require("squel");
- squel.useFlavour('mysql');
+var squel = require("squel");
+squel.useFlavour('mysql');
+var kiss=require('./kissUtilsController');
 
 module.exports =
 {
@@ -778,11 +777,19 @@ module.exports =
         });
     },
 
-//tannv.dts@gmail.com
+    /**
+     * Lay thong tin doctor thong qua userId
+     * tannv.dts@gmail.com
+     */
     getDoctorInfoByUserId:function(req,res)
     {
-        var userId=req.query.userId;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>"+userId);
+        var userId=kiss.checkData(req.query.userId)?req.query.userId:'';
+        if(!kiss.checkListData(userId))
+        {
+            kiss.exlog("getDoctorInfoByUserId","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
         req.getConnection(function(err,connection)
         {
 
@@ -792,15 +799,21 @@ module.exports =
                 {
                     if(err)
                     {
-                        console.log("Error Selecting : %s ",err );
-                        res.json({status:'fail'})
+                        // console.log("Error Selecting : %s ",err );
+                        kiss.exlog("getDoctorInfoByUserId","Loi truy van",err);
+                        res.json({status:'fail'});
                     }
                     else
                     {
                         if(rows.length>0)
+                        {
                             res.json({status:'success',data:rows[0]});
+                        }
                         else
+                        {
+                            kiss.exlog("getDoctorInfoByUserId","Khong co ket qua truy van");
                             res.json({status:'fail'});
+                        }
                     }
 
                 });

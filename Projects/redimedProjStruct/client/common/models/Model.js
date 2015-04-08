@@ -705,3 +705,31 @@ angular.module("app.model", [])
 	last_update_date: null
 })
 // END MEDICINE
+
+//ALLERGY
+.value("AllergyModel",{
+	allergy_id: null,
+	allergy_name: '',
+	isEnable: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+// END ALLERGY
+
+// PROBLEM
+.value("ProblemModel",{
+	Problem_id: null,
+  	Patient_id: null,
+  	From_date: null,
+  	To_date: null, 
+  	Notes: '',
+  	ICD10_code: '', 
+  	ICPC_code: '',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+})
+// END PROBLEM

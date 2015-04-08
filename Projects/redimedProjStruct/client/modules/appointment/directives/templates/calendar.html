@@ -98,8 +98,7 @@
     <div class="modal-body">
         <p>
         	Do you want to&nbsp;
-        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button> or&nbsp;
-        	<button class="btn btn-primary btn-xs" ng-click="selectReferral()">Select</button> Referral ?
+        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button> Referral ?
         </p>
     </div>
     <div class="modal-footer">
@@ -109,18 +108,21 @@
 
 <script type="text/ng-template" id="claimAdd">
 	<div class="modal-body">	
-		<patient-claim params="params"></patient-claim>
+		<claim-patient-add patient-id="claim.Patient_id" cal-id="claim.CAL_ID" success="claim.success"></claim-patient-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="claimSelect">
+	<div class="modal-body">	
+		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true"
+			cal-id="claim.CAL_ID"
+			permission="{edit: false, remove: false}" on-row-click="claim.clickRow(row)">
+		</claim-patient-list>
 	</div>
 </script>
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<referral-detail></referral-detail>
-	</div>
-</script>
-
-<script type="text/ng-template" id="referralSelect">
-	<div class="modal-body">	
-		<referral-search></referral-search>
+		<outreferral-patient-add patient-id="patientId" success="success"></outreferral-patient-add>
 	</div>
 </script>
