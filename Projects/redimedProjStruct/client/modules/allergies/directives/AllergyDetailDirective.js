@@ -1,7 +1,7 @@
 angular.module('app.loggedIn.allergy.detail.directive',[
 	
 ])
-.directive('allergyDetail',function(AllergyModel, AllergyService, ConfigService, toastr){
+.directive('allergyDetail',function(AllergyModel, AllergyService, ConfigService, toastr, $stateParams){
 	return {
 		restrict:'EA',
 		scope: {
@@ -11,8 +11,6 @@ angular.module('app.loggedIn.allergy.detail.directive',[
 	    },
 	    templateUrl: "modules/allergies/directives/templates/detail.html",
 	    link: function(scope, element, attrs){
-
-	    	scope.medicine_unit_options = ConfigService.medicine_unit_option();
 
 	    	var loadData = function (id) {
                 AllergyService.detail(id).then(function (data) {
@@ -34,13 +32,28 @@ angular.module('app.loggedIn.allergy.detail.directive',[
 
             var addProcess = function (postData) {
                 AllergyService.insert(postData).then(function (response) {
-                    if (response.status === 'success') {
-                        toastr.success("Allergy added", "Success");
-                        scope.modelObjectMap = angular.copy(AllergyModel);
-                        scope.isSubmit = false;
-                        if (scope.onsuccess) {
-                            scope.onsuccess(response);
+                    if (response.status === 'success') {                        
+                        if($stateParams.patient_id){
+                            var postData = {
+                                allergy_id: response.data.allergy_id,
+                                patient_id: $stateParams.patient_id
+                            };
+
+                            AllergyService.insertPatientAllergy(postData).then(function(response2){
+                                if(response2.status === 'success'){
+                                    toastr.success('Successfully add and apllied allergy to patient', 'Successfully');
+                                    scope.modelObjectMap = angular.copy(AllergyModel);
+                                    scope.isSubmit = false;
+                                    if (scope.onsuccess) {
+                                        scope.onsuccess(response);
+                                    }
+                                }
+                                else toastr.error('Allergy add successfully but fail to apply allergy to patient', 'Error');
+                            })
                         }
+                    }
+                    else{
+                        toastr.error('Fail to add allergy', 'Error');
                     }
                 })
             }

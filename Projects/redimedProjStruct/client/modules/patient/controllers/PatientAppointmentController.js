@@ -48,6 +48,9 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},
         {'name':'Problem list', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patient_id+'})'},
+        {'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
+            'state':'loggedIn.patient.allergy.list({patient_id:'+$stateParams.patient_id+'})'},
+
 
 
     ];

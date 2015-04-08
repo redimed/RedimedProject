@@ -20,5 +20,10 @@ angular.module('app.loggedIn.allergy.service',[])
 		return detailApi.post(postData);
     }
 
+    instanceService.insertPatientAllergy = function(postData) {
+        var detailApi = v2_api.all('allergy/insert_patient_allergy');
+        return detailApi.post(postData);
+    }
+
     return instanceService;
 });
