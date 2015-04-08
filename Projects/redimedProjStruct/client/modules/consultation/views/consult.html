@@ -199,13 +199,8 @@
                     Drawings
                 </a>
             </li>
-            <li ng-if="callInfo.isCalling">
-                <a href="index.html#tab_1_5" data-toggle="tab">
-                    File Sharing
-                </a>
-            </li>
             <li>
-                <a href="index.html#tab_1_6" data-toggle="tab">
+                <a href="index.html#tab_1_5" data-toggle="tab">
                     Medical Devices
                 </a>
             </li>
@@ -508,6 +503,12 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_1_4">
+                <div ng-if="callInfo.isCalling"  class='row'>
+                    <div class="col-md-12 col-sm-12">
+                        <div dropzone="dropzoneConfig" class="dropzone"></div>
+                    </div>
+                </div>
+                <br ng-if="callInfo.isCalling"/>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <consult-drawing 
@@ -521,14 +522,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="callInfo.isCalling" class="tab-pane" id="tab_1_5">
-                <div class='row'>
-                    <div class="col-md-12 col-sm-12">
-                        <div dropzone="dropzoneConfig" class="dropzone"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="tab_1_6">
+            <div class="tab-pane" id="tab_1_5">
                 <div ng-controller="BluetoothController" class="tabbable-custom nav-justified">
                     <ul class="nav nav-tabs nav-justified">
                         <li class="active">

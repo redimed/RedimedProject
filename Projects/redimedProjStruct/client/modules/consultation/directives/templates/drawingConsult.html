@@ -26,10 +26,6 @@
 </style>
 <div class="row">
 	<div class="col-md-3 col-sm-3">
-		<span class="btn btn-default btn-file">
-		    Upload Picture<input type="file" id="imageLoader" accept="image/*">
-		</span>
-		<br/>
 		<js-tree tree-data="scope" tree-model="treeArr" tree-events="dblclick:selectNodeCB"></js-tree>
 	</div>
 	<div class="col-md-9 col-sm-9">
@@ -45,6 +41,9 @@
 		    <a ng-if="isCalling" class="btn btn-icon-only btn-circle btn-default" ng-click="capture()" href="javascript:;"> 
 		    	<i class="fa fa-camera"></i>
 		    </a>
+		    <span class="btn btn-default btn-file">
+			    Load Picture<input type="file" id="imageLoader" accept="image/*">
+			</span>
 		</div>
 		<br/>
     	<canvas id="myCanvas"></canvas> 

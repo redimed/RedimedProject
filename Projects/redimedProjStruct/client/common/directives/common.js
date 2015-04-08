@@ -218,7 +218,6 @@ angular.module("app.directive.common", [
             model: "=ngModel"
         },
      link: function(scope, element, attrs, modelCtrl) {
-       
         scope.$watch('model', function(newValue,oldValue) {
             var arr = String(newValue).split("");
             if (arr.length === 0) return;
