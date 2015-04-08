@@ -1,8 +1,9 @@
 angular.module("starter.menu.controller",[])
-    .controller("menuController",function($scope, localStorageService, $state, UserService,
+    .controller("menuController",function($scope, $rootScope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
                                           $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
-                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, HOST_CONFIG, $ionicModal){
+                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices,
+                                          HOST_CONFIG, $ionicModal){
         signaling.removeAllListeners();
 
         var userInfo= localStorageService.get("userInfo");
@@ -126,7 +127,7 @@ angular.module("starter.menu.controller",[])
         }
 
 
-        $scope.$on('pushNotificationReceived', function (event, notification) {
+        $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
             if (ionic.Platform.isAndroid()) {
                 handleAndroid(notification);
             }

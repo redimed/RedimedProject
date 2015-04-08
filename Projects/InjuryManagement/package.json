@@ -21,6 +21,8 @@
     "/Users/nguyenhuy/Desktop/bluetooth/plugins/com.phonegap.plugins.bluetooth",
     "https://github.com/songz/cordova-plugin-opentok/",
     "/Users/phuongnguyen/Documents/Cordova/bluetooth/plugins/com.phonegap.plugins.bluetooth",
-    "net.yoik.cordova.plugins.screenorientation"
+    "net.yoik.cordova.plugins.screenorientation",
+    "org.apache.cordova.file",
+    "org.apache.cordova.file-transfer"
   ]
 }

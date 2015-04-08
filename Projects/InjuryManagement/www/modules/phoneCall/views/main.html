@@ -79,10 +79,15 @@
         <div class="wrapper-funCall" ng-show="isAccept">
             <!--Image share screen-->
             <div class="wrap-imgShare" ng-show="isImage" ng-click="actionControlButton()">
-                <img ng-src="{{imgDetail.src}}"/>
+                {{isFileShare}}
+                <img ng-src="{{imgDetail.src}}" width="100%" height="100%" ng-if="!isFileShare"/>
+                <img ng-src="{{fileImgSrc}}" width="100%" height="100%" ng-if="isFileShare"/>
+                <div ng-if="!isFileShare && fileData">
+                    <pre class="preFileShare">{{fileData}}</pre>
+                </div>
                 <div class="wrap-lstImageShare" ng-class="{'listImgShare-show': btnShowlstImg}">
-                    <div style="float: left; width: 30px; height: 100%;" ng-click="toggleListImage()">
-                        <div style="position: absolute; top: 45%; bottom: 45%;">
+                    <div style="float: left; width: 30px; height: 100%;">
+                        <div style="position: absolute; top: 45%; bottom: 45%;" ng-click="toggleListImage(); $event.stopPropagation()">
                             <a class="button button-icon icon"
                                ng-class="btnShowlstImg ? 'ion-ios7-arrow-left' : 'ion-ios7-arrow-right'"></a>
                         </div>
@@ -90,7 +95,7 @@
 
                     <div style="float: left; width: 120px; height: 100%;">
                         <ion-scroll direction="y" style="height: 100%;">
-                            <a ng-repeat="imgLst in imgObj track by $index" ng-click="selectImg(imgLst)">
+                            <a ng-repeat="imgLst in imgObj track by $index" ng-click="selectImg(imgLst); $event.stopPropagation()">
                                 <img ng-src="{{imgLst.src}}" class="img-shareCall"
                                      ng-class="{'imgShareCallSelect': imgLst.id === imgDetail.id}"/>
                             </a>

@@ -92,4 +92,30 @@ module.exports = {
                 });
             })
     },
+
+    postSearchPatientAllergy: function(){
+        var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+        var fields = req.body.fields;
+        // var patient_id = req.body.search.Patient_id;
+        
+        var sql = "SELECT `cln_allergies`.`allergy_id`, `cln_allergies`.`allergy_name` FROM `cln_allergies`"
+                  +"INNER JOIN `cln_patient_allergies` ON `cln_allergies`.`allergy_id` = `cln_patient_allergies`.`allergy_id`"
+                  +"WHERE `cln_patient_allergies`.`patient_id` = "+patient_id;
+        
+        
+
+        db.Problem.findAndCountAll({
+            where: whereOpt,
+            offset: offset,
+            limit: limit,
+            attributes: fields,
+            order: 'Problem_id DESC'
+        }).success(function(result){
+            res.json({"status": "success", "list": result.rows, "count": result.count});
+        })
+        .error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
+    }
 }

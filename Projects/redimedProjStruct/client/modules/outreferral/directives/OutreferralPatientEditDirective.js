@@ -91,7 +91,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 					scope.referdoctor.name = scope.outreferral.form.doctor_name;
 					scope.outdoctor.name = scope.outreferral.form.outdoctor_name;
 
-					delete scope.outreferral.form.Creation_date;
+					delete scope.outreferral.form.creation_date;
 					delete scope.outreferral.form.doctor_name;
 					delete scope.outreferral.form.outdoctor_name;
 
