@@ -10,7 +10,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         {'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 0', 'icon': 'fa fa-building',
-            'state': 'loggedIn.patient.companies({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.company({patientId:' + $stateParams.patient_id + '})'},
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.claim.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
