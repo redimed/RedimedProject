@@ -1286,5 +1286,178 @@ module.exports =
      * Thay doi ten node
      * tannv.dts@gmail.com
      */
-    renameNode:renameNode
+    renameNode:renameNode,
+
+    /**
+     * function xoa node khoi o dia vat ly
+     * tannv.dts@gmail.com
+     */
+    deleteNodeForever:function()
+    {
+        var nodeId=kiss.checkData(res.body.nodeId)?res.body.nodeId:'';
+        if(!kiss.checkListData(nodeId)){
+            kiss.exlog("deleteNodeForever","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        //Lay thong tin node can xoa (selectedNode)
+        var sql="SELECT * FROM `iso_tree_dir` tree WHERE tree.`NODE_ID`=?"
+        kiss.beginTransaction(req,function(){
+            kiss.executeQuery(req,sql,[nodeId],function(rows){
+                if(rows.length>0)
+                {
+                    var nodeName=rows[0].NODE_NAME;
+                    //Lay danh sach cac node can xoa
+                    var sql =
+                        " SELECT treeDir.`NODE_NAME`                                                      "+
+                        " FROM `iso_node_ancestor` ancestor                                               "+
+                        " INNER JOIN `iso_tree_dir` treeDir ON ancestor.`ANCESTOR_ID`=treeDir.`NODE_ID`   "+
+                        " WHERE ancestor.`NODE_ID`=?   AND  ancestor.`ISENABLE`=1                         "+
+                        " ORDER BY ancestor.`ANCESTOR_ID` ASC                                             ";
+                    kiss.executeQuery(req,sql,[nodeId],function(rows){
+                        var relativePath = '.';
+                        rows.forEach(function(path){
+                            relativePath += '/'+path.NODE_NAME;
+                        });
+                        var nodePath=relativePath+'/'+nodeName;
+                        var sql="SELECT ancestor.* FROM `iso_node_ancestor` ancestor WHERE ancestor.`ANCESTOR_ID`=?";
+                        kiss.executeQuery(req,sql,[nodeId],function(rows){
+                            var listIdDelete=[];
+                            listIdDelete.push(nodeId);
+                            for (var i=0;i<rows.length;i++)
+                            {
+                                listDelete.push(rows[i].NODE_ID);
+                            }
+
+                            //Xoa cac node can xoa (bao gom ancestor)
+                            var sql="DELETE FROM `iso_tree_dir` WHERE `NODE_ID` IN (?)";
+                            kiss.executeQuery(req,sql,[listIdDelete],function(result){
+                                if(result.affectedRows>0)
+                                {
+                                    //Xoa tat ca cac thong tin ancesstor cua cac node vua xoa
+                                    var sql="DELETE FROM `iso_node_ancestor` WHERE `NODE_ID` IN (?)";
+                                    kiss.executeQuery(req,sql,[listIdDelete],function(result){
+                                        //Xoa tat ca quyen han cua user tren cac node vua xoa
+                                        var sql="DELETE FROM `iso_tree_dir` WHERE `NODE_ID` IN (?)";
+                                        kiss.executeQuery(req,sql,[listIdDelete],function(result){
+                                            //Xoa tat ca cac checkin (truong hop node la document)
+                                            var sql="DELETE FROM `iso_check_out_in` WHERE `NODE_ID` IN (?)";
+                                            kiss.executeQuery(req,sql,[listIdDelete],function(result){
+                                                //Lay danh sach cac request edit cua cac node
+                                                var sql="SELECT request.* FROM `iso_request_edit_document` request WHERE `request`.`NODE_ID` IN (?)";
+                                                kiss.executeQuery(req,sql,[listIdDelete],function(rows){
+                                                    var listRequestEdit=[];
+                                                    listRequestEdit.push(-1);
+                                                    for (var i=0;i<rows.length;i++)
+                                                    {
+                                                        listRequestEdit.push(rows[i].ID);
+                                                    }
+                                                    //Xoa cac request edit cua cac node da duoc xoa
+                                                    var sql="DELETE FROM `iso_request_edit_document` WHERE ID IN (?)";
+                                                    kiss.executeQuery(req,sql,[listRequestEdit],function(result){
+                                                        //Xoa cac reply request edit
+                                                        var sql="DELETE FROM `iso_reply_edit_document` WHERE `ID_REQUEST` IN (?)";
+                                                        kiss.executeQuery(req,sql,[listRequestEdit],function(result){
+                                                            //Xoa node duoc luu tren o dia vat ly
+                                                            rimraf(nodePath, function (err) 
+                                                            {
+                                                                if (err)
+                                                                {
+                                                                    kiss.exlog("deleteNodeForever","Loi xoa node tren o dia vat ly",err);
+                                                                    kiss.rollback(req,function(){
+                                                                        res.json({status:"fail"});
+                                                                    });
+                                                                }
+                                                                else
+                                                                {
+                                                                    kiss.commit(req,function(){
+                                                                        res.json({status:'success'});
+                                                                    },function(err){
+                                                                        kiss.exlog("Loi commit");
+                                                                        res.json({status:'fail'});
+                                                                    })
+                                                                }
+                                                            });
+                                                            
+                                                        },function(err){
+                                                            kiss.exlog("deleteNodeForever","Loi delete cac reply cua ca request cua cac node da xoa",err);
+                                                            kiss.rollback(req,function(){
+                                                                res.json({status:'fail'});
+                                                            });
+                                                        })
+                                                    },function(err){
+                                                        kiss.exlog("deleteNodeForever","Loi delete cac request Edit cua cac node da xoa",err);
+                                                        kiss.rollback(req,function(){
+                                                            res.json({status:'fail'});
+                                                        });
+                                                    });
+                                                },function(err){
+                                                    kiss.exlog("deleteNodeForever","Loi lay thong tin cac request_edit cua cac node da xoa",err);
+                                                    kiss.rollback(req,function(){
+                                                        res.json({status:'fail'});
+                                                    });
+                                                });
+                                            },function(err){
+                                                kiss.exlog("deleteNodeForever","Loi xoa tat ca cac check in",err);
+                                                kiss.rollback(req,function(){
+                                                    res.json({status:'fail'});
+                                                });
+                                            });
+                                        },function(err){
+                                            kiss.exlog("deleteNodeForever","Loi xoa quyen han cua cac user tren cac node vua xoa",err);
+                                            kiss.rollback(req,function(){
+                                                res.json({status:'fail'});
+                                            });
+                                        });
+                                    },function(err){
+                                        kiss.exlog("deleteNodeForever","Loi xoa ancestor cua cac node vua xoa",err);
+                                        kiss.rollback(req,function(){
+                                            res.json({status:'fail'});
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    kiss.exlog("deleteNodeForever","Loi khong co node nao duoc xoa");
+                                    kiss.rollback(req,function(){
+                                        res.json({status:'fail'});
+                                    });
+                                }
+                            },function(err){
+                                kiss.exlog("deleteNodeForever","Loi khong the xoa cac node can xoa",err);
+                                kiss.rollback(req,function(){
+                                    res.json({status:'fail'});
+                                });
+                            });
+                        },function(err){
+                            kiss.exlog("deleteNodeForever","Loi lay danh sach cac node can xoa",err);
+                            kiss.rollback(req,function(){
+                                res.json({status:'fail'});
+                            });
+                        });
+                        
+                        
+                    },function(err){
+                        kiss.exlog("deleteNodeForever","Loi truy van lay nodePath",err);
+                        kiss.rollback(req,function(){
+                            res.json({status:"fail"});
+                        })
+                    });
+
+                }
+                else
+                {
+                    kiss.exlog("deleteNodeForever","Khong lay duoc thong tin node can xoa");
+                    res.json({status:'fail'});
+                }
+            },function(err){
+                kiss.exlog("deleteNodeForever","Loi truy van node can xoa",err);
+                res.json({status:'fail'});
+            });
+        },function(err){
+            kiss.exlog("deleteNodeForever","Khong the mo transaction",err);
+            res.json({status:'fail'});
+        });
+    }
 }
