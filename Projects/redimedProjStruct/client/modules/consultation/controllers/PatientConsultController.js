@@ -84,7 +84,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			$scope.problemArr = [];
 			if(id != null)
 			{
-				var index = _.findIndex($scope.problemList, { 'problem_id': id});
+				var index = _.findIndex($scope.problemList, { 'Problem_id': id});
 				$scope.problemArr.push($scope.problemList[index]);
 			}
 			else

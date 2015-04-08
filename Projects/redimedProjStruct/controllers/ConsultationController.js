@@ -10,7 +10,7 @@ module.exports = {
 	getPatientProblem: function(req,res){
 		var patientId = req.body.patient_id;
 
-		db.ClnPatientProblem.findAll({where:{patient_id: patientId}})
+		db.Problem.findAll({where:{Patient_id: patientId}})
 			.success(function(data){
 				res.json({status:'success',data: data});
 			})
