@@ -1592,7 +1592,7 @@ module.exports =
                 emailInfo.subject=row.Rl_TYPE_NAME+" - "+row.WRK_SURNAME+" - "+row.CLAIM_NO;
                 emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
                 emailInfo.recipients=row.Contact_email; 
-                emailInfo.cc=isoUtil.getMedicoLegalCC();
+                emailInfo.cc=rlobUtil.getMedicoLegalCC();
                 var emailTemplate=
                     " <p>                                                                                                                           "+
                     "   Hi {{user_name}},                                                                    "+
