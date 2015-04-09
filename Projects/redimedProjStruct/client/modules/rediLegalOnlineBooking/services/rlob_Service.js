@@ -18,8 +18,18 @@ angular.module('app.loggedIn.rlob.services',[])
     var selectedInfo={};
     var bookingInfo={};
     var bookingList=[];
+    var registerInfo={};
     var bookingInfoReuse=null;
     var bookingBehalfInfo=null;
+    var currentBookingUpdating=null;
+
+    this.getRegisterInfo=function(){
+        return registerInfo;
+    }
+    this.setRegisterInfo=function(b){
+        registerInfo=JSON.parse(JSON.stringify(b));
+    }
+
     this.getSelectedInfo=function(){
         return selectedInfo;
     }
@@ -50,6 +60,16 @@ angular.module('app.loggedIn.rlob.services',[])
     this.getBookingBehalfInfo=function()
     {
         return bookingBehalfInfo;
+    }
+
+    this.setCurrentBookingUpdating=function(booking)
+    {
+        currentBookingUpdating=booking;
+    }
+    
+    this.getCurrentBookingUpdating=function()
+    {
+        return currentBookingUpdating;
     }
 
 })
@@ -234,19 +254,7 @@ angular.module('app.loggedIn.rlob.services',[])
             var Patient=api.one('restful/ApptPatient');
             return Patient.get({Patient_id:Patient_id,CAL_ID:CAL_ID});
         }
-        //chien 
-        //phanquocchien.c1109g@gmail.com
-        //add checkApptPatient
-        rlobService.updateAppointment=function(CAL_ID,PATIENTS)
-        {
 
-            var Patient=api.all('rlob/rl_bookings/update-appointment-calendar');
-            return Patient.post({CAL_ID:CAL_ID,PATIENTS:PATIENTS});
-            // var zzz = CAL_ID + '';
-            // var test = api.all('restful/Appointment').one(zzz);
-            // test.PATIENTS = PATIENTS;
-            // return test.put();
-        }
         //chien 
         //phanquocchien.c1109g@gmail.com
         //update patient ID in booking
@@ -275,10 +283,10 @@ angular.module('app.loggedIn.rlob.services',[])
         //chien 
         //phanquocchien.c1109g@gmail.com
         //change booking
-        rlobService.changeBooking=function(CAL_ID,PATIENT_ID,PATIENT_NAME)
+        rlobService.undoCancelBooking=function(CAL_ID,PATIENT_ID)
         {
-            var result=api.all('rlob/rl_bookings/change-booking');
-            return result.post({CAL_ID:CAL_ID,PATIENT_ID:PATIENT_ID,PATIENT_NAME:PATIENT_NAME});
+            var result=api.all('rlob/rl_bookings/undo-cancel-booking');
+            return result.post({CAL_ID:CAL_ID,PATIENT_ID:PATIENT_ID});
         }
         //chien 
         //phanquocchien.c1109g@gmail.com
@@ -568,10 +576,16 @@ angular.module('app.loggedIn.rlob.services',[])
                 return result.post({bookingInfo:bookingInfo});
             },
 
-            checkPeriodTimeToBooking:function(doctorId,siteId,selectedAppFromTime,rlTypeId)
+            checkPeriodTimeToBooking:function(handlePeriodInfo)
             {
                 var result=api.all('rlob/core/check-period-time-to-booking');
-                return result.post({doctorId:doctorId,siteId:siteId,selectedAppFromTime:selectedAppFromTime,rlTypeId:rlTypeId});
+                return result.post({handlePeriodInfo:handlePeriodInfo});
+            },
+
+            changeBookingCalendar:function(actionInfo)
+            {
+                var result=api.all('rlob/core/handle-change-booking-calendar');
+                return result.post({actionInfo:actionInfo});
             }
         }
 

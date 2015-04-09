@@ -63,18 +63,10 @@ var saveBookingInfo=function(req,res)
 	        			kiss.executeQuery(req,sql,[bookingInfo.CAL_ID],function(data){
 	        				if(data.length>0)
 	        				{
-	        					if (data[0].PATIENTS == null) {
-	                                var arr = [];
-	                                arr.push({"Patient_id":patientId,"Patient_name":bookingInfo.WRK_OTHERNAMES+" "+bookingInfo.WRK_SURNAME});
-	                                var PATIENTS = JSON.stringify(arr);
-	                            }else{
-	                                var arr = JSON.parse(data[0].PATIENTS);
-	                                arr.push({"Patient_id":idPatient,"Patient_name":bookingInfo.WRK_OTHERNAMES+" "+bookingInfo.WRK_SURNAME});
-	                                var PATIENTS = JSON.stringify(arr);
-	                            };
 	                            var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID`=?";
 	                            var appointmentUpdateInfo={
-	                            	PATIENTS:PATIENTS
+	                            	STATUS:rlobUtil.calendarStatus.booked,
+									NOTES:rlobUtil.sourceType.REDiLEGAL
 	                            }
 	                            kiss.executeQuery(req,sql,[appointmentUpdateInfo,bookingInfo.CAL_ID],function(result){
 	                            	if(result.affectedRows>0)
@@ -213,20 +205,152 @@ var saveBookingInfo=function(req,res)
     		res.json({status:'fail'});
     	})
     });
-    
 }
 
+
+/**
+ * Thay doi lich kham chua benh, danh cho cac booking da dat roi nhung muon dat lai
+ * Ham nay chi duoc goi boi mot ham co beginTransaction
+ * tannv.dts@gmail.com
+ */
+var changeBookingCalendar=function(req,res)
+{
+    var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+    var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+	var actionInfo=kiss.checkData(req.body.actionInfo)?req.body.actionInfo:{};
+	var oldCalId=kiss.checkData(actionInfo.oldCalId)?actionInfo.oldCalId:'';
+	var newCalId=kiss.checkData(actionInfo.newCalId)?actionInfo.newCalId:'';
+	var patientId=kiss.checkData(actionInfo.patientId)?actionInfo.patientId:'';
+	var doctorId=kiss.checkData(actionInfo.doctorId)?actionInfo.doctorId:'';
+	var siteId=kiss.checkData(actionInfo.siteId)?actionInfo.siteId:'';
+	var appointmentDate=kiss.checkData(actionInfo.appointmentDate)?moment(new Date(actionInfo.appointmentDate)).format("YYYY/MM/DD HH:mm:ss"):null;
+	var rlTypeId=kiss.checkData(actionInfo.rlTypeId)?actionInfo.rlTypeId:'';
+	var specialtyId=kiss.checkData(actionInfo.specialtyId)?actionInfo.specialtyId:'';
+	var bookingId=kiss.checkData(actionInfo.bookingId)?actionInfo.bookingId:'';
+	var currentTime=kiss.getCurrentTimeStr();
+	if(!kiss.checkListData(userId,oldCalId,newCalId,patientId,doctorId,siteId,
+	appointmentDate,rlTypeId,specialtyId,bookingId))
+	{
+		kiss.exlog("changeAppointmentCalendar","Loi data truyen den");
+		res.json({status:'fail'});
+		return;
+	}
+
+	//Cancel booking
+	var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID` = ?";
+	kiss.executeQuery(req,sql,[oldCalId],function(rows){
+		if(rows.length>0)
+		{
+			var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
+			var updateInfo={
+				STATUS:rlobUtil.calendarStatus.noAppointment,
+				NOTES:null
+			}
+			kiss.executeQuery(req,sql,[updateInfo,oldCalId],function(result){
+				if(result.affectedRows>0)
+				{
+					var sql="DELETE FROM `cln_appt_patients` WHERE `Patient_id` = ? AND `CAL_ID` = ?";
+					kiss.executeQuery(req,sql,[patientId,oldCalId],function(result){
+						//Change booking
+						var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
+						var updateInfo={
+							STATUS:rlobUtil.calendarStatus.booked,
+							NOTES:rlobUtil.sourceType.REDiLEGAL
+						}
+						kiss.executeQuery(req,sql,[updateInfo,newCalId],function(result){
+							if(result.affectedRows>0)
+							{
+								var sql="INSERT INTO `cln_appt_patients` SET ?";
+								var insertInfo={
+									Patient_id:patientId,
+									CAL_ID:newCalId,
+									Created_by:userId,
+									Creation_date:currentTime
+								}
+								kiss.executeQuery(req,sql,[insertInfo],function(result){
+									//Cap nhat booking Info
+									var sql="UPDATE `rl_bookings` booking SET ? WHERE booking.`BOOKING_ID`=? ";
+									var updateInfo={
+										CAL_ID:newCalId,
+										DOCTOR_ID:doctorId,
+										SITE_ID:siteId,
+										APPOINTMENT_DATE:appointmentDate,
+										RL_TYPE_ID:rlTypeId,
+										SPECIALITY_ID:specialtyId,
+										Last_updated_by:userId,
+										Last_update_date:currentTime
+									}
+									kiss.executeQuery(req,sql,[updateInfo,bookingId],function(result){
+										kiss.commit(req,function(){
+											res.json({status:'success'});
+										},function(err){
+											kiss.exlog("changeAppointmentCalendar","Loi commit");
+											res.json({status:'fail'});
+										});
+									},function(err){
+										kiss.exlog("changeAppointmentCalendar","loi query cap nhat rl_bookings",err);
+										kiss.rollback(req,function(){
+											res.json({status:'fail'});
+										});
+									});
+								},function(err){
+									kiss.exlog("changeAppointmentCalendar","Khong insert duoc cln_appt_patients",err);
+									kiss.rollback(req,function(){
+										res.json({status:'fail'});
+									})
+								})
+							}
+							else
+							{
+								kiss.exlog("changeAppointmentCalendar","Khong co newCalendar duoc cap nhat");
+								kiss.rollback(req,function(){
+									res.json({status:'fail'});
+								})
+							}
+						},function(err){
+							kiss.exlog("changeAppointmentCalendar","Loi update newCalendar",err);
+							kiss.rollback(req,function(){
+								res.json({status:'fail'});
+							})
+						})
+					},function(err){
+						kiss.exlog("changeAppointmentCalendar","Loi delete thong tin cln_appt_patients",err);
+						kiss.rollback(req,function(){
+							res.json({status:'fail'});
+						});
+					})
+				}
+				else
+				{
+					kiss.exlog("changeAppointmentCalendar","Khong co oldCalendar nao duoc cap nhat");
+					kiss.rollback(req,function(){
+						res.json({status:'fail'});
+					});
+				}
+			},function(err){
+				kiss.exlog("changeAppointmentCalendar","Loi update oldCalendar status",err);
+				kiss.rollback(req,function(){
+					res.json({status:'fail'});
+				});
+			})
+
+		}
+	},function(err){
+		kiss.exlog("changeAppointmentCalendar","Loi truy van lay thong  tin oldCalendar");
+		res.json({status:'fail'});
+	});
+
+	
+}
+
+/**
+ * xu ly dieu chinh fromtime va to time cua cac appointment calendar phia sau
+ * tannv.dts@gmail.com
+ */
 var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)	
 {
-	var bookingInfo=kiss.checkData(req.body.bookingInfo)?req.body.bookingInfo:{};
-	//xu ly dieu chinh fromtime va to time cua cac appointment calendar phia sau
-	var handlePeriodInfo={
-		doctorId:bookingInfo.DOCTOR_ID,
-		siteId:bookingInfo.SITE_ID,
-		selectedAppFromTime:bookingInfo.APPOINTMENT_DATE,
-		rlTypeId:bookingInfo.RL_TYPE_ID
-	}
-	//var handlePeriodInfo=kiss.checkData(req.body.handlePeriodInfo)?req.body.handlePeriodInfo:{};
+	
+	var handlePeriodInfo=kiss.checkData(req.body.handlePeriodInfo)?req.body.handlePeriodInfo:{};
 	var doctorId=kiss.checkData(handlePeriodInfo.doctorId)?handlePeriodInfo.doctorId:'';
 	var siteId=kiss.checkData(handlePeriodInfo.siteId)?handlePeriodInfo.siteId:'';
 	var selectedAppFromTime=kiss.checkData(handlePeriodInfo.selectedAppFromTime)?
@@ -234,6 +358,7 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 	var selectedDate=kiss.checkData(handlePeriodInfo.selectedAppFromTime)?
 				moment(new Date(handlePeriodInfo.selectedAppFromTime)).format("YYYY-MM-DD"):null;
 	var rlTypeId=kiss.checkData(handlePeriodInfo.rlTypeId)?handlePeriodInfo.rlTypeId:'';
+	var oldCalId=kiss.checkData(handlePeriodInfo.oldCalId)?handlePeriodInfo.oldCalId:-1;
 	var periodTimeDefault=rlobUtil.periodTimeDefault;
 
 	if(!kiss.checkListData(doctorId,siteId,selectedAppFromTime,rlTypeId))
@@ -259,15 +384,15 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		" SELECT calendar.*,MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) AS `PERIOD_TIME`   "+
 		" FROM `cln_appointment_calendar` calendar                                                       "+
 		" WHERE calendar.`DOCTOR_ID`=? AND calendar.`SITE_ID`=?                                          "+
-		" 	AND MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) >0                            "+
+		" 	AND MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) >0                             "+
 		"   AND DATE(calendar.`FROM_TIME`)= ?                                                            "+
 		" 	AND calendar.`FROM_TIME`>=?                                                                  "+
-		" 	and calendar.`NOTES` is null                                                                 "+
+		" 	and (calendar.`NOTES` is null or calendar.CAL_ID =?)                                         "+
 		" 	and calendar.`SERVICE_ID`=?                                                                  "+
 		" ORDER BY calendar.FROM_TIME ASC                                                                ";
 
 	kiss.beginTransaction(req,function(){
-		kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,serviceId],function(data){
+		kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,oldCalId,serviceId],function(data){
 			if(data.length>0)
 			{
 				//selectedItem, day chinh la session duoc chon de booking
@@ -445,28 +570,22 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 
 module.exports =
 {
-    /**
-     * Xu ly dat lich co khoan thoi gian hon 1 session dc chon
-     * tannv.dts@gmail.com
-     */
-	// -------------------------------------------------------
+    
 
-	handleSaveBookingInfo:function(req,res)
-	{
-		handlePeriodTimeAppointmentCalendar(req,res,saveBookingInfo);
-	},
-
+	//Kiem tra xem co the dung calendar nay de book lich kham hay khong
+	//tannv.dts@gmail.com
 	checkPeriodTimeToBooking:function(req,res)
 	{
 		// var bookingInfo=kiss.checkData(req.body.bookingInfo)?req.body.bookingInfo:{};
 		// //xu ly dieu chinh fromtime va to time cua cac appointment calendar phia sau
-		var handlePeriodInfo={
-			doctorId:req.body.doctorId,
-			siteId:req.body.siteId,
-			selectedAppFromTime:req.body.selectedAppFromTime,
-			rlTypeId:req.body.rlTypeId
-		}
-		kiss.exlog("handlePeriodInfo",handlePeriodInfo);
+		// var handlePeriodInfo={
+		// 	doctorId:req.body.doctorId,
+		// 	siteId:req.body.siteId,
+		// 	selectedAppFromTime:req.body.selectedAppFromTime,
+		// 	rlTypeId:req.body.rlTypeId
+		// }
+
+		var handlePeriodInfo=kiss.checkData(req.body.handlePeriodInfo)?req.body.handlePeriodInfo:{};
 		//var handlePeriodInfo=kiss.checkData(req.body.handlePeriodInfo)?req.body.handlePeriodInfo:{};
 		var doctorId=kiss.checkData(handlePeriodInfo.doctorId)?handlePeriodInfo.doctorId:'';
 		var siteId=kiss.checkData(handlePeriodInfo.siteId)?handlePeriodInfo.siteId:'';
@@ -475,8 +594,8 @@ module.exports =
 		var selectedDate=kiss.checkData(handlePeriodInfo.selectedAppFromTime)?
 					moment(new Date(handlePeriodInfo.selectedAppFromTime)).format("YYYY-MM-DD"):null;
 		var rlTypeId=kiss.checkData(handlePeriodInfo.rlTypeId)?handlePeriodInfo.rlTypeId:'';
+		var oldCalId=kiss.checkData(handlePeriodInfo.oldCalId)?handlePeriodInfo.oldCalId:-1;
 		var periodTimeDefault=rlobUtil.periodTimeDefault;
-
 		if(!kiss.checkListData(doctorId,siteId,selectedAppFromTime,rlTypeId))
 		{
 			kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi data truyen den");
@@ -500,13 +619,13 @@ module.exports =
 			" SELECT calendar.*,MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) AS `PERIOD_TIME`   "+
 			" FROM `cln_appointment_calendar` calendar                                                       "+
 			" WHERE calendar.`DOCTOR_ID`=? AND calendar.`SITE_ID`=?                                          "+
-			" 	AND MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) >0                            "+
+			" 	AND MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) >0                             "+
 			"   AND DATE(calendar.`FROM_TIME`)= ?                                                            "+
 			" 	AND calendar.`FROM_TIME`>=?                                                                  "+
-			" 	and calendar.`NOTES` is null                                                                 "+
+			" 	and (calendar.`NOTES` is null OR calendar.CAL_ID=? )                                         "+
 			" 	and calendar.`SERVICE_ID`=?                                                                  "+
 			" ORDER BY calendar.FROM_TIME ASC                                                                ";
-		kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,serviceId],function(data){
+		kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,oldCalId,serviceId],function(data){
 			if(data.length>0)
 			{
 				//selectedItem, day chinh la session duoc chon de booking
@@ -589,7 +708,6 @@ module.exports =
 		            	res.json({status:'success'});
 		            }
 	            }
-	            
 			}
 			else
 			{
@@ -600,6 +718,43 @@ module.exports =
 			kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi truy van, truy van lay cac session",err);
 			res.json({status:'fail'});
 		},true);
+	},
+
+	/**
+     * Xu ly save booking
+     * tannv.dts@gmail.com
+     */
+	handleSaveBookingInfo:function(req,res)
+	{
+		var bookingInfo=kiss.checkData(req.body.bookingInfo)?req.body.bookingInfo:{};
+		//xu ly dieu chinh fromtime va to time cua cac appointment calendar phia sau
+		var handlePeriodInfo={
+			doctorId:bookingInfo.DOCTOR_ID,
+			siteId:bookingInfo.SITE_ID,
+			selectedAppFromTime:bookingInfo.APPOINTMENT_DATE,
+			rlTypeId:bookingInfo.RL_TYPE_ID,
+			oldCalId:null
+		}
+		req.body.handlePeriodInfo=handlePeriodInfo;
+		handlePeriodTimeAppointmentCalendar(req,res,saveBookingInfo);
+	},
+
+	/**
+	 * Xu ly doi lich hen cua booking
+	 * tannv.dts@gmail.com
+	 */
+	handleChangeBookingCalendar:function(req,res)
+	{
+		var actionInfo=kiss.checkData(req.body.actionInfo)?req.body.actionInfo:{};
+		var handlePeriodInfo={
+			doctorId:actionInfo.doctorId,
+			siteId:actionInfo.siteId,
+			selectedAppFromTime:actionInfo.appointmentDate,
+			rlTypeId:actionInfo.rlTypeId,
+			oldCalId:actionInfo.oldCalId
+		}
+		req.body.handlePeriodInfo=handlePeriodInfo;
+		handlePeriodTimeAppointmentCalendar(req,res,changeBookingCalendar);
 	}
 
 }

@@ -1,6 +1,6 @@
 angular.module('app.rlobRegister.controller',[])
-    .controller("rlobRegisterController", function($scope, $state, $cookieStore, SecurityService, rlobService,toastr) {
-        $scope.user={};
+    .controller("rlobRegisterController", function($scope, $state, $cookieStore, SecurityService, rlobService,toastr,bookingService) {
+        $scope.user=bookingService.getRegisterInfo();
         $scope.regexEmail=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         $scope.register = function(){
             $scope.$broadcast('show-errors-check-validity');
@@ -51,7 +51,7 @@ angular.module('app.rlobRegister.controller',[])
                                         // console.log($scope.companyStateName)
                                     };                                
                                 };
-                                
+                                bookingService.setRegisterInfo(null);
                             }else{
                                 toastr.error("Register Failed!","Error");
                             }

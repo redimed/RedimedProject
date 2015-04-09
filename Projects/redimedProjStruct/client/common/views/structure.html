@@ -1,28 +1,27 @@
-<!-- BEGIN HEADER -->
 <div class="page-header navbar">
-    <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner">
-        <!-- BEGIN LOGO -->
         <div class="page-logo">
             <div class="menu-toggler sidebar-toggler" ng-click="toggleMenu()">
-                <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
             </div>
         </div>
-        <!-- END LOGO -->
-        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
         </a>
-        <!-- END RESPONSIVE MENU TOGGLER -->
-        <!-- BEGIN PAGE TOP -->
+        <div class="page-actions col-md-3 col-sm-3">
+            <div class="btn-group">
+                <button type="button" class="btn btn-circle dropdown-toggle" data-toggle="dropdown" ng-click="navigator.prev()">
+                <i class="fa fa-long-arrow-left"></i>&nbsp;<span>Prev&nbsp;</span>
+                </button>
+                <button type="button" class="btn btn-circle dropdown-toggle" data-toggle="dropdown" ng-click="navigator.next()"><span>Next&nbsp;</span>&nbsp;<i class="fa fa-long-arrow-right"></i>
+                </button>
+            </div>
+        </div>
         <div class="page-top">
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <div style="margin-right: 0px;margin-left: 0px;" class="row">
-                <div class="pull-left col-md-4 col-sm-4 hidden-xs" style="position: relative;top: 15px;left: 20px;">
-                    <button class="btn btn-circle" ng-click="navigator.prev()"> <i class="fa fa-long-arrow-left"></i> Prev </button>
-                    <button class="btn btn-circle" ng-click="navigator.next()"> Next <i class="fa fa-long-arrow-right"></i> </button>
-                </div>
-                    <img ng-show="have_redilegal_components.value==1" style="margin-top: -10px;width: 200px;" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                <div class="top-menu">
+            <form class="search-form search-form-expanded ng-pristine ng-valid" action="#" method="GET">
+            <div class="input-group">
+                <img ng-show="have_redilegal_components.value==1" style="margin-left: 10px;width: 149px;" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+            </div>
+            </form>
+            <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
                     <li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -182,11 +181,7 @@
                 </ul>
             </div>
         </div>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-        <!-- END PAGE TOP -->
     </div>
-    <!-- END HEADER INNER -->
 </div>
 <!-- END HEADER -->
 <div class="clearfix">

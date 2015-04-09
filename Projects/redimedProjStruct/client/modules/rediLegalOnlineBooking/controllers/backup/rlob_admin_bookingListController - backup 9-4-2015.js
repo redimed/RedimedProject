@@ -504,7 +504,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                                 console.log(data.data.PATIENTS);
                                 if (data.data.PATIENTS === null) {
                                     var patientName = $scope.selectedBooking.WRK_OTHERNAMES+" "+$scope.selectedBooking.WRK_SURNAME;
-                                    rlobService.undoCancelBooking(calID,patientID).then(function(data){
+                                    rlobService.changeBooking(calID,patientID,patientName).then(function(data){
                                         if (data.status == 'success') {
                                             rlobService.changeBookingStatus(bookingId,status)
                                             .then(function(data){
@@ -783,6 +783,86 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             },function(err){
 
             });
+            return;
+            var patientName = $scope.selectedBooking.WRK_OTHERNAMES+" "+$scope.selectedBooking.WRK_SURNAME;
+            console.log("cu : "+$scope.selectedBooking.CAL_ID);
+            console.log("moi : "+newCalId);
+            console.log("id : "+$scope.selectedBooking.PATIENT_ID);
+            console.log("name : "+patientName);
+            rlobService.cancelBooking($scope.selectedBooking.CAL_ID,$scope.selectedBooking.PATIENT_ID).then(function(data){
+                if (data.status == 'success') {
+                    rlobService.changeBooking(newCalId,$scope.selectedBooking.PATIENT_ID,patientName).then(function(data){
+                        if (data.status == 'success') {
+                            $http({
+                                method:"POST",
+                                url:"/api/rlob/rl_bookings/admin/change-appointment-calendar",
+                                data:{bookingId:$scope.currentUpdatingItem.bookingId,
+                                    newCalId:newCalId,
+                                    doctorId:doctorId,
+                                    siteId:siteId,
+                                    appointmentDate:moment(newAppointmentDateTime).format("YYYY/MM/DD HH:mm"),
+                                    rlTypeId:rlTypeId,
+                                    specialityId:specialityId
+                                }
+                            })
+                            .success(function(data) {
+                                if(data.status=='success')
+                                {
+                                    $("#lob-change-appointment-calendar-dialog").modal('hide');
+                                    $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','success','Change appointment calendar success!');
+                                    if(newAppointmentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)
+                                    {
+                                        $scope.lobAdminSearch.fromDateKey=moment($scope.currentUpdatingItem.appointmentDateTime).format('DD/MM/YYYY');
+                                        $scope.lobAdminSearch.toDateKey=moment(newAppointmentDateTime).format("DD/MM/YYYY");
+                                    }
+                                    else
+                                    {
+                                        $scope.lobAdminSearch.fromDateKey=moment(newAppointmentDateTime).format("DD/MM/YYYY");
+                                        $scope.lobAdminSearch.toDateKey=moment($scope.currentUpdatingItem.appointmentDateTime).format('DD/MM/YYYY');
+                                    }
+
+                                    $http({
+                                        method:"GET",
+                                        url:"/api/rlob/appointment-calendar/check-same-doctor",
+                                        params:{calId1:$scope.currentUpdatingItem.calId,calId2:newCalId}
+                                    })
+                                    .success(function(data) {
+                                        if(data.status=='success')
+                                        {
+                                            if(data.data>1)
+                                            {
+                                                $scope.lobAdminSearch.doctorKey=null;
+                                            }
+                                            //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
+                                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
+                                        }
+                                    })
+                                    .error(function (data) {
+                                        console.log("error");
+                                    })
+                                    .finally(function() {
+                                        $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
+                                        $scope.newAppointmentPositionFlag=true;
+                                        $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
+                                        $scope.filterBooking();
+                                    });
+                                }
+                            })
+                            .error(function (data) {
+                                console.log("error");
+                            })
+                            .finally(function() {
+
+                            });
+                        };
+                    });
+                }
+                else{
+                    $("#lob-change-appointment-calendar-dialog").modal('hide');
+                    $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','fail','Change appointment calendar fail!');
+                };
+            });
+            
         }
 
         $scope.goToNewAppoinmentPosition=function()

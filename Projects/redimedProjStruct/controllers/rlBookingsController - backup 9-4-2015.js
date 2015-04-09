@@ -374,20 +374,26 @@ module.exports =
      */
     lob_change_status:function(req,res)
     {
-        var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'';
-        var status=kiss.checkData(req.body.status)?req.body.status:'';
-        if(!kiss.checkListData(bookingId,status))
+        console.log(JSON.stringify(req.body));
+        var bookingId=req.body.bookingId;
+        var status=req.body.status;
+        req.getConnection(function(err,connection)
         {
-            kiss.exlog("lob_change_status","Loi data truyen den");
-            res.json({status:'fail'});
-            return;
-        }
-        var sql="UPDATE `rl_bookings` booking SET booking.`STATUS`=? WHERE booking.`BOOKING_ID`=?";
-        kiss.executeQuery(req,sql,[status,bookingId],function(result){
-            res.json({status:'success'});
-        },function(err){
-            kiss.exlog("lob_change_status","Loi truy van",err);
-            res.json({status:'fail'});
+            var query = connection.query(
+                'UPDATE `rl_bookings` booking SET booking.`STATUS`=? WHERE booking.`BOOKING_ID`=?'
+                ,[status,bookingId],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        res.json({status:'success'});
+                    }
+
+                });
         });
     },
 
@@ -400,41 +406,46 @@ module.exports =
     {
         var fromDateKey=req.query.fromDateKey;
         var toDateKey=req.query.toDateKey;
-        var doctorId=req.query.doctorId?req.query.doctorId:'%';
+        var doctorId=req.query.doctorId?req.query.doctorId:null;
+        kiss.exlog("doctorid>>>>>>>>>>>>>>>>>>>>>>>>>>>.:",doctorId);
         var bookingType=req.query.bookingType;
         var doctorKey=req.query.doctorKey?req.query.doctorKey:'%';
         var workerKey=req.query.workerKey?req.query.workerKey:'%';
         var documentStatusKey=req.query.documentStatusKey?req.query.documentStatusKey:'%';
         var sql=
-            " SELECT    booking.*,                                                                                                                           "+
-            "   company.`Company_name`,                                                                                                                      "+
-            "   `rltype`.`Rl_TYPE_NAME`,                                                                                                                     "+
-            "   spec.`Specialties_name`,                                                                                                                     "+
-            "   doctor.`NAME`,                                                                                                                               "+
-            "   redi.`Site_name`,                                                                                                                            "+
-            "   CONCAT(booking.WRK_OTHERNAMES,' ',booking.WRK_SURNAME) AS WRK_FULLNAME,                                                                      "+                                                   
-            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                               "+
-            "   CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,               "+
-            "   CONCAT(HOUR(calendar.`From_time`),':',DATE_FORMAT(calendar.`From_time`,'%i')) AS APPOINTMENT_TIME,                                           "+
-            "   `bookingfile`.`FILE_ID`,`bookingfile`.`FILE_TYPE`,`bookingfile`.`FILE_NAME`,`bookingfile`.`FILE_PATH`,`bookingfile`.`isClientDownLoad`       "+
-            " FROM  `rl_bookings` booking                                                                                                                    "+
-            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                          "+
-            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                                   "+
-            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`=spec.`Specialties_id`                                                           "+
-            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                                        "+
-            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                              "+
-            "   LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                                  "+
-            "   INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                       "+
-            " WHERE  booking.BOOKING_TYPE=? AND DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                             "+
-            "   AND `doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                                   "+   
-            "   AND CONCAT(booking.WRK_OTHERNAMES,' ',booking.WRK_SURNAME) LIKE CONCAT('%',?,'%') AND `booking`.DOCUMENT_STATUS LIKE ?                       "+                                  
-            "   AND booking.DOCTOR_ID LIKE ?                                                                                                                 "+
-            " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC                                                                 ";
-        kiss.executeQuery(req,sql,[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey,doctorId],function(rows){
-            res.json(rows);
-        },function(err){
-            kiss.exlog("lob_filter_booking","Loi truy van lay list booking (admin)",err);
-            res.json({status:"fail"});
+            " SELECT booking.*,company.`Company_name`,`rltype`.`Rl_TYPE_NAME`,spec.`Specialties_name`,                                                   "+
+            "   doctor.`NAME`,redi.`Site_name`,                                                                                                          "+
+            "   CONCAT(booking.WRK_OTHERNAMES,' ',booking.WRK_SURNAME) AS WRK_FULLNAME,                                                                  "+                                                       
+            "   calendar.`FROM_TIME` AS APPOINTMENT_DATETIME, calendar.CAL_ID,                                                                           "+
+            "   CONCAT(DAYOFMONTH(calendar.`From_time`),'-',MONTH(calendar.`From_time`),'-',YEAR(`calendar`.`From_time`)) AS APPOINTMENT_DATE,           "+   
+            "   CONCAT(HOUR(calendar.`From_time`),':',DATE_FORMAT(calendar.`From_time`,'%i')) AS APPOINTMENT_TIME,                                       "+
+            "   `bookingfile`.`FILE_ID`,`bookingfile`.`FILE_TYPE`,`bookingfile`.`FILE_NAME`,`bookingfile`.`FILE_PATH`,`bookingfile`.`isClientDownLoad`   "+   
+            " FROM  `rl_bookings` booking                                                                                                                "+   
+            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                      "+   
+            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                               "+   
+            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`=spec.`Specialties_id`                                                       "+   
+            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                                    "+   
+            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                          "+   
+            "   LEFT JOIN `rl_booking_files` bookingfile ON booking.`BOOKING_ID`=`bookingfile`.`BOOKING_ID`                                              "+   
+            "   INNER JOIN `cln_appointment_calendar` calendar ON booking.`CAL_ID`=`calendar`.`CAL_ID`                                                   "+   
+            " WHERE  booking.BOOKING_TYPE=? AND DATE(calendar.`FROM_TIME`) >=? AND DATE(calendar.`FROM_TIME`)<=?                                         "+   
+            "   AND `doctor`.`NAME` LIKE CONCAT('%',?,'%')                                                                                               "+       
+            "   AND CONCAT(booking.WRK_OTHERNAMES,' ',booking.WRK_SURNAME) LIKE CONCAT('%',?,'%') AND `booking`.DOCUMENT_STATUS LIKE ?                   "+                                      
+            (doctorId?" AND booking.DOCTOR_ID=? ":' ')+
+            " ORDER BY calendar.`FROM_TIME` DESC,doctor.`NAME` ASC,booking.`WRK_SURNAME` ASC      ;                                                      ";
+
+        req.getConnection(function(err,connection) {
+            var key_result=connection.query(sql,doctorId?[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey,doctorId]:[bookingType,fromDateKey,toDateKey,doctorKey,workerKey,documentStatusKey],function(err,rows){
+                if(err)
+                {
+                    res.json({status:"fail"});
+                }
+                else
+                {
+                    res.json(rows);
+
+                }
+            });
         });
     },
 
@@ -1646,6 +1657,33 @@ module.exports =
         });
     },
 
+    cln_appointment_calendar_update:function(req,res){
+        var CAL_ID=req.body.CAL_ID;
+        var PATIENTS=req.body.PATIENTS;
+        // console.log()
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'UPDATE `cln_appointment_calendar` SET `PATIENTS` = ?WHERE `CAL_ID` = ?'
+                ,[PATIENTS,CAL_ID],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        if (rows.changedRows > 0) {
+                            res.json({status:'success'});
+                        }else{
+                            res.json({status:'fail'});
+                        };
+                    }
+
+                });
+        });
+    },
     /*
     phan quoc chien 
     phanquocchien.c1109g@gmail.com
@@ -1681,9 +1719,10 @@ module.exports =
     phan quoc chien 
     phanquocchien.c1109g@gmail.com
     cancel booking
-    mofify:tannv.dts@gmail.com
     */
     cancelBooking:function(req,res){
+        var patientId = req.body.PATIENT_ID;
+        var calId = req.body.CAL_ID;
         var patientId=kiss.checkData(req.body.PATIENT_ID)?req.body.PATIENT_ID:'';
         var calId=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:'';
         if(!kiss.checkListData(patientId,calId))
@@ -1722,13 +1761,13 @@ module.exports =
                         }
                         else
                         {
-                            kiss.exlog("cancelBooking","Khong co calendar nao duoc cap nhat");
+                            kiss.exlog("changeAppointmentCalendar","Khong co oldCalendar nao duoc cap nhat");
                             kiss.rollback(req,function(){
                                 res.json({status:'fail'});
                             });
                         }
                     },function(err){
-                        kiss.exlog("cancelBooking","Loi update calendar status",err);
+                        kiss.exlog("changeAppointmentCalendar","Loi update oldCalendar status",err);
                         kiss.rollback(req,function(){
                             res.json({status:'fail'});
                         });
@@ -1751,6 +1790,144 @@ module.exports =
             kiss.exlog("cancelBooking","Loi mo transaction",err);
             res.json({status:'fail'});
         });
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(
+                'SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID` = ?'
+                ,calId,function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        if (rows.length>0) {
+                            console.log(rows[0]);
+                            console.log(rows[0].PATIENTS);
+                            var PATIENT = JSON.parse(rows[0].PATIENTS);
+                            if (PATIENT != null) {
+                                if (PATIENT.length <= 1) {
+                                    console.log(PATIENT[0].Patient_id)
+                                    if (patientId == PATIENT[0].Patient_id) {
+                                        console.log("nhooooooo" +PATIENT.length);
+                                        PATIENT = null;
+                                        console.log("22222222222222222222"+JSON.stringify(PATIENT));
+                                        var STATUS = rlobUtil.calendarStatus.noAppointment;
+                                        req.getConnection(function(err,connection)
+                                        {
+                                            var query = connection.query(
+                                                'UPDATE `cln_appointment_calendar` SET `STATUS` = ?,`NOTES` = NULL, `PATIENTS` = ? WHERE `CAL_ID` = ?'
+                                                ,[STATUS,PATIENT,calId],function(err,rows)
+                                                {
+                                                    if(err)
+                                                    {
+                                                        console.log("Error Selecting : %s ",err );
+                                                        res.json({status:'fail'});
+                                                    }
+                                                    else
+                                                    {
+                                                        if (rows.changedRows > 0) {
+                                                            /*
+                                                            phan quoc chien
+                                                            phanquocchien.c1109g@gmail.com
+                                                            delete appt patients
+                                                             */
+                                                            req.getConnection(function(err,connection)
+                                                            {
+                                                                var query = connection.query(
+                                                                    'DELETE FROM `cln_appt_patients`WHERE `Patient_id` = ? AND `CAL_ID` = ?'
+                                                                    ,[patientId,calId],function(err,rows)
+                                                                    {
+                                                                        if(err)
+                                                                        {
+                                                                            console.log("Error Selecting : %s ",err );
+                                                                            res.json({status:'fail'});
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            console.log("delete delete"+JSON.stringify(rows));
+                                                                            res.json({status:'success'});
+                                                                        }
+
+                                                                    });
+                                                            });
+                                                        }else{
+                                                            res.json({status:'fail'});
+                                                        };
+                                                    }
+                                                });
+                                        });
+                                    }else{
+                                        res.json({status:'fail'});
+                                    };
+                                }else{
+                                    console.log("lonnnnnnn" + PATIENT.length);
+                                    var PATIENT1 = PATIENT.filter(function(el){ return el.Patient_id != patientId; });
+                                    console.log("lonnnnnnn" + PATIENT1.length);
+                                    if (PATIENT1.length < PATIENT.length) {
+                                        var PATIENTNEW = JSON.stringify(PATIENT1);
+                                        console.log("22222222222222222222"+JSON.stringify(PATIENTNEW));
+                                        req.getConnection(function(err,connection)
+                                        {
+                                            var query = connection.query(
+                                                'UPDATE `cln_appointment_calendar` SET `PATIENTS` = ?,`NOTES` = NULL WHERE `CAL_ID` = ?'
+                                                ,[PATIENTNEW,calId],function(err,rows)
+                                                {
+                                                    if(err)
+                                                    {
+                                                        console.log("Error Selecting : %s ",err );
+                                                        res.json({status:'fail'});
+                                                    }
+                                                    else
+                                                    {
+                                                        // console.log("aaaaaaaaaaaaa"+JSON.stringify(rows.changedRows));
+                                                        if (rows.changedRows > 0) {
+                                                            /*
+                                                            phan quoc chien
+                                                            phanquocchien.c1109g@gmail.com
+                                                            delete appt patients
+                                                             */
+                                                            req.getConnection(function(err,connection)
+                                                            {
+                                                                var query = connection.query(
+                                                                    'DELETE FROM `cln_appt_patients`WHERE `Patient_id` = ? AND `CAL_ID` = ?'
+                                                                    ,[patientId,calId],function(err,rows)
+                                                                    {
+                                                                        if(err)
+                                                                        {
+                                                                            console.log("Error Selecting : %s ",err );
+                                                                            res.json({status:'fail'});
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            console.log("delete delete"+JSON.stringify(rows));
+                                                                            res.json({status:'success'});
+                                                                        }
+
+                                                                    });
+                                                            });
+                                                        }else{
+                                                            res.json({status:'fail'});
+                                                        };
+                                                    }
+
+                                                });
+                                        });
+                                    }else{
+                                        res.json({status:'fail'});
+                                    };
+                                };
+                            }else{
+                                res.json({status:'fail'});
+                            };
+                        }else{
+                            res.json({status:'fail'});
+                        };
+                    }
+                });
+        });
     },
 
     /*
@@ -1758,60 +1935,58 @@ module.exports =
     phanquocchien.c1109g@gmail.com
     change booking
     */
-    // changeBooking:function(req,res){
-    undoCancelBooking:function(req,res){
-        // var patientId = req.body.PATIENT_ID;
-        // var calId = req.body.CAL_ID;
-        // var patientName = req.body.PATIENT_NAME;
-        // var PATIENT = '[{"Patient_id":'+patientId+',"Patient_name":"'+patientName+'"}]';
-        // var NOTES = rlobUtil.sourceType.REDiLEGAL;
-        // var STATUS = rlobUtil.calendarStatus.booked;
+    changeBooking:function(req,res){
+        var patientId = req.body.PATIENT_ID;
+        var calId = req.body.CAL_ID;
+        var patientName = req.body.PATIENT_NAME;
+        var PATIENT = '[{"Patient_id":'+patientId+',"Patient_name":"'+patientName+'"}]';
+        var NOTES = rlobUtil.sourceType.REDiLEGAL;
+        var STATUS = rlobUtil.calendarStatus.booked;
+        console.log(PATIENT);
 
-        var patientId=kiss.checkData(req.body.PATIENT_ID)?req.body.PATIENT_ID:'';
-        var calId=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:'';
-        var currentTime=kiss.getCurrentTimeStr();
-        if(!kiss.checkListData(patientId,calId))
+        req.getConnection(function(err,connection)
         {
-            kiss.exlog("undoCancelBooking","Loi data truyen den");
-            res.json({status:'fail'});
-            return;
-        }
-        kiss.beginTransaction(req,function(){
-            var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
-            var updateInfo={
-                STATUS:rlobUtil.calendarStatus.booked,
-                NOTES:rlobUtil.sourceType.REDiLEGAL
-            }
-            kiss.executeQuery(req,sql,[updateInfo,calId],function(result){
-                var sql="INSERT INTO `cln_appt_patients` set ?";
-                var insertInfo={
-                    Patient_id:patientId,
-                    CAL_ID:calId,
-                    Creation_date:currentTime
-                }
-                kiss.executeQuery(req,sql,[insertInfo],function(result){
-                    kiss.commit(req,function(){
-                        res.json({status:'success'});
-                    },function(err){
-                        kiss.exlog("undoCancelBooking","Loi commit",err);
+            var query = connection.query(
+                'UPDATE `cln_appointment_calendar` SET `STATUS` = ?,`NOTES` = ?, `PATIENTS` = ? WHERE `CAL_ID` = ?'
+                ,[STATUS,NOTES,PATIENT,calId],function(err,rows)
+                {
+                    if(err)
+                    {
+                        console.log("Error Selecting : %s ",err );
                         res.json({status:'fail'});
-                    })
-                },function(err){
-                    kiss.exlog("undoCancelBooking","Loi insert cln_appt_patients",err);
-                    kiss.rollback(req,function(){
-                        res.json({status:'fail'});
-                    })
-                })
-            },function(err){
-                kiss.exlog("undoCancelBooking","Loi cap nhat calendar status",err);
-                kiss.rollback(req,function(){
-                    res.json({status:'fail'});
-                })
-            });
+                    }
+                    else
+                    {
+                        if (rows.changedRows > 0) {
+                            /*
+                            phan quoc chien
+                            phanquocchien.c1109g@gmail.com
+                            delete appt patients
+                             */
+                            req.getConnection(function(err,connection)
+                            {
+                                var query = connection.query(
+                                    'INSERT INTO `sakila`.`cln_appt_patients`(`Patient_id`,`CAL_ID`,`Creation_date`)VALUES (?,?,NOW())'
+                                    ,[patientId,calId],function(err,rows)
+                                    {
+                                        if(err)
+                                        {
+                                            console.log("Error Selecting : %s ",err );
+                                            res.json({status:'fail'});
+                                        }
+                                        else
+                                        {
+                                            console.log("delete delete"+JSON.stringify(rows));
+                                            res.json({status:'success'});
+                                        }
 
-        },function(err){
-            kiss.exlog("changeBooking","Khong the mo transaction");
-            res.json({status:'fail'});
+                                    });
+                            });
+                        }else{
+                            res.json({status:'fail'});
+                        };
+                    }
+                });
         });
     },
     /*

@@ -65,9 +65,9 @@
             Reschedule
         </a>
         
-        <!-- <a style="font-size:23px" class="pointer" >
+        <a style="font-size:23px" class="pointer" ng-click="actionCenter.sendClientMessage();">
             Send Message
-        </a> -->
+        </a>
     </h2>
     <div class="row">
         <div class="col-md-6 col-sm-6">
@@ -107,5 +107,9 @@
     </div>
 
 </div>
+
+<rlob-send-client-message action-center="actionCenter" selected-booking="selectedBooking">
+</rlob-send-client-message>
+
 
 

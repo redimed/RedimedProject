@@ -1676,24 +1676,6 @@ angular.module("app.loggedIn.rlob.directive", [])
         };
     })
 
-    .directive('rlobChangeBookingCalendar', function(rlobService) {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                actionCenter:'=',
-                selectedBooking:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html',
-            controller: function ($scope,rlobService)
-            {
-
-                
-            }
-        };
-    })
-
     .directive('rlobInlineMessage', function(rlobService) {
         return {
             restrict: 'E',

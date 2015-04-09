@@ -333,7 +333,7 @@
 
                     <li>
                         <a class="pointer" role="menuitem" tabindex="2"
-                           ng-click="showDialogSendBookingMessage(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID)">
+                           ng-click="actionCenter.sendClientMessage();">
                             <!--Item 0- {{node.BOOKING_ID}}-->
                             Send Message
                         </a>
@@ -495,7 +495,7 @@
                             </li>
                             <li>
                                 <a class="pointer" role="menuitem" tabindex="1"
-                                   ng-click="showDialogSendBookingMessage(node.ASS_ID,node.BOOKING_ID)">
+                                   ng-click="actionCenter.sendClientMessage();">
                                     <!--Item 0- {{node.BOOKING_ID}}-->
                                     Send Message
                                 </a>
@@ -703,68 +703,6 @@
     </div>
 </div>
 
-<div  id="lob-send-booking-message" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row" style="margin-right: 0;margin-left: 0;margin-bottom: -5px;"> 
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <div style="color: #44b6ae" class="caption">
-                        <i class="fa fa-plus-square"></i>
-                        <span class="caption-subject bold uppercase">Enter</span>
-                        <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
-                    </div>
-                    <img class="col-md-5 col-sm-5 col-xs-5 img-confix" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-                <!--<h4 class="modal-title">Enter message</h4>-->
-               <!--  <div class="caption">
-                    <i class="fa fa-plus-square font-red-sunglo"></i>
-                    <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
-                    <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
-                </div> -->
-            </div>
-
-            <div class="modal-body">
-            <textarea style="margin-bottom: 20px;width: 100%;" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
-            <!--<div ng-repeat="item in ListBookingMessages">-->
-                <!--&lt;!&ndash;<input type="radio" name="bookingMessage.message" ng-model="color" name="milestone" ng-value="item.CONTENTS" ng-click="check(color)" ng-model="color" ng-change="check(color)"> &nbsp; {{item.CONTENTS}}&ndash;&gt;-->
-                <!--<label style="margin-left: 15px;margin-top: 3px color:red" ng-click="check(item.CONTENTS)"><i class="fa fa-bars"></i> &nbsp; {{item.CONTENTS}}</label>-->
-            <!--</div>-->
-            <div  style="width: 98%;margin-left: 10px;overflow-y: scroll;min-height: 300px;max-height: 310px;}" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2" data-initialized="1">
-            <ul class="feeds">
-            <li ng-repeat="item in ListBookingMessages" class="message" ng-click="check(item.CONTENTS)">
-                <div class="col1">
-                    <div class="cont">
-                        <div class="cont-col1">
-							<div style="background-color: #44b6ae;" class="label label-sm">
-								<i class="fa fa-envelope-o"></i>
-							</div>
-						</div>
-                        <div class="cont-col2">
-                            <div class="desc" style="min-height: 25px">
-                                {{item.CONTENTS}}.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            </ul>
-            </div>
-            </div>
-            <div class="modal-footer">
-                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                <button type="submit" style="background-color: #44b6ae;color: white;" class="btn" ng-click="sendBookingMessage()">OK</button>
-                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
-
-                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!--MESSAGE DIALOG LAYOUT-->
 <rlob-dialog dialog-class="lob-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
 
@@ -915,6 +853,7 @@ phanquocchien.c1109g@gmail.com-->
     </div>
 </div>
  
-
+<rlob-send-client-message action-center="actionCenter" selected-booking="selectedBooking">
+</rlob-send-client-message>
 <!-- <input type='button' value='Button 1' id='button1'>
 <input type='button' value='Button 2' id='button2'> -->

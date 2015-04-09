@@ -610,8 +610,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 selectedAppointmentCalendar:'='
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_appointment_calendar_template.html',
-            controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,bookingService) {
-                //Lay thong tin user login
+            controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout) {
                 $scope.loginInfo = $cookieStore.get('userInfo');
 
                 //Config Send mail template
@@ -999,7 +998,6 @@ angular.module("app.loggedIn.rlob.directive", [])
                                     CAL_ID:data[i].CAL_ID,
                                     APPOINTMENT_TIME:data[i].appointment_time,
                                     FROM_TIME:data[i].FROM_TIME,
-                                    TO_TIME:data[i].TO_TIME,
                                     DOCTOR_ID:data[i].DOCTOR_ID,
                                     SITE_ID:data[i].SITE_ID
                                 });
@@ -1516,7 +1514,41 @@ angular.module("app.loggedIn.rlob.directive", [])
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_period.html',
             controller: function ($scope)
             {
-                
+                /**
+                 * angular bootstrap datepicker handle
+                 */
+                // Disable weekend selection
+
+                $scope.disabled = function(date, mode) {
+                    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+                };
+                $scope.toggleMin = function() {
+                    $scope.minDate = $scope.minDate ? null : new Date();
+                };
+                $scope.toggleMin();
+
+                $scope.open1  = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened1 = true;
+                };
+                $scope.open2 = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened2 = true;
+                };
+
+                $scope.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                //    $scope.initDate = new Date('1980-1-1');
+                $scope.formats = ['d/M/yyyy','dd/MM/yyyy','dd/MMMM/yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+                $scope.format = $scope.formats[0];
+
+                //--------------------------------------------------------------------------------------
+
                 $scope.showDialogChoose=function(){
                     if($scope.fromDate && $scope.toDate)
                     {
@@ -1541,8 +1573,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                     }
                 },true);
 
-                $scope.FROM_DATE_TEMP=null;
-                $scope.TO_DATE_TEMP=null;
+                $scope.FROM_DATE_TEMP='';
+                $scope.TO_DATE_TEMP='';
 
                 $scope.localError=false;
                 $scope.periodDisplay='ALL';
@@ -1573,8 +1605,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 }
                 $scope.resetDate=function()
                 {
-                    $scope.FROM_DATE_TEMP=null;
-                    $scope.TO_DATE_TEMP=null;
+                    $scope.FROM_DATE_TEMP='';
+                    $scope.TO_DATE_TEMP='';
                     $scope.fromDate='';
                     $scope.toDate='';
                     $scope.localError=false;
@@ -1627,69 +1659,6 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                 };
 
-            }
-        };
-    })
-
-    .directive('rlobSendClientMessage', function(rlobService) {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                actionCenter:'=',
-                selectedBooking:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_send_client_message.html',
-            controller: function ($scope,rlobService)
-            {
-                $scope.showDialogSendBookingMessage=function()
-                {
-                    $scope.bookingMessage={};
-                    $scope.bookingMessage.assId=$scope.selectedBooking.ASS_ID;
-                    $scope.bookingMessage.bookingId=$scope.selectedBooking.BOOKING_ID;
-                    $('#rlob-send-client-message').modal({show:true,backdrop:'static'});
-                }
-
-
-                $scope.sendBookingMessage=function()
-                {
-                    rlobService.add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,rlobConstant.bookingType.REDiLEGAL.name,rlobConstant.bellType.message,rlobConstant.notificationType.bell,$scope.bookingMessage.message);
-                    $("#rlob-send-client-message").modal('hide');
-                }
-
-                rlobService.getListBookingMessages().then(function(data){
-                    if (data.status == 'success') {
-                        $scope.ListBookingMessages = data.data;
-                    };
-                });
-                $scope.check = function(data){
-                    $scope.bookingMessage.message = data;
-                };
-
-                $scope.actionCenter.sendClientMessage=function(){
-                    // alert("vao roi ne");
-                    $scope.showDialogSendBookingMessage();
-                }
-
-            }
-        };
-    })
-
-    .directive('rlobChangeBookingCalendar', function(rlobService) {
-        return {
-            restrict: 'E',
-            transclude:true,
-            required:['^ngModel'],
-            scope: {
-                actionCenter:'=',
-                selectedBooking:'='
-            },
-            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html',
-            controller: function ($scope,rlobService)
-            {
-
-                
             }
         };
     })
