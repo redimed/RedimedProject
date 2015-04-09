@@ -48,20 +48,12 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			if(!!$stateParams.patient_id){
 				uploader.formData[0] = {patient_id: $stateParams.patient_id, file_name:(new Date()).getTime(), editMode:true};
 			}
-			
-
-
-			
 
 			scope.openUploader = function(){
 	             $timeout(function () {
 	                $('#patient_photo_upload').click();
 	            }, 100);
         	};
-
-        	scope.displaylog = function(){
-        		console.log('this is uploader', scope.uploader);
-        	}
 
 			if(scope.isClose){
 				var idClose = "#"+scope.isClose;
@@ -142,7 +134,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 					PatientService.mdtById(scope.params.id).then(function(response){
 						if(response.status === 'success'){
 							angular.extend(scope.modelObjectMap, response.data);
-
+							console.log('this is modelObjectMap', scope.modelObjectMap);
 							for(var key in scope.modelObjectMap){
 								if(scope.modelObjectMap[key]){
 									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1 || key.indexOf("No_") != -1 || key.indexOf('Diabetic') != -1 || key.indexOf('Inactive') != -1 || key.indexOf('Deceased') != -1 || key.indexOf('Gradudate_') != -1)
@@ -155,9 +147,12 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 										scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
 									}
 									else{
-										if(scope.modelObjectMap.Sex === "Male") scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
-										else scope.modelObjectMap.avatar = "img/patient/avt/female_default.png"
+										if(scope.modelObjectMap.Sex === "0") scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+										if(scope.modelObjectMap.Sex === "1") scope.modelObjectMap.avatar = "img/patient/avt/female_default.png"
 									}
+								}
+								else{
+									avt_path=scope.modelObjectMap.avatar;
 								}
 							}
 
@@ -222,7 +217,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                        }
 	                        toastr.success('Updated Patient Successfully !!!', "Success");
 
-	                        //initObject();
+	                        initObject();
 
 	                        if(scope.isClose){
 	                        	scope.closePopup();
