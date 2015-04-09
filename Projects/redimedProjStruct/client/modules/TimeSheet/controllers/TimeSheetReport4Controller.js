@@ -11,7 +11,6 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
 
         $scope.listDepartmentChoose = [];
         $scope.listEmployeeChoose = [];
-
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
@@ -52,6 +51,11 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
         };
         //FUNCTION GET WEEK NUMBER
 
+        $scope.SENDMAIL = function() {
+            //CALL SERVICE CALL MAIL
+            //END CALL
+        };
+
         $scope.changeEmp = function(list) {
             if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
                 $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
@@ -69,6 +73,7 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                 TimeSheetService.LoadReports1(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
+                        $scope.USER_ID = $cookieStore.get('userInfo').id;
                         //END PDF
                     } else if (response.status === "error") {
                         $state.go("loggedIn.TimeSheetHome", null, {
