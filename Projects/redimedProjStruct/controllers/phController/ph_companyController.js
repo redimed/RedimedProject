@@ -123,13 +123,33 @@ module.exports = {
 	deletePharmacistQualification:function(req,res){
 		var data = req.body;
 		var sql = "DELETE FROM ph_phamacist_qualifications WHERE qualification_id = ? ";
+		console.log(data);
 		req.getConnection(function(err,connection){
 			var query = connection.query(sql,data.pharmacist_id,function(err){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
 				}else{
-				
+					console.log("delete Success")
+					res.json({status:'success'});
+				}
+			})
+		})
+	},
+	//update qualification
+	updateQulification:function(req,res){
+		var data = req.body;
+		var sql = 
+			"UPDATE ph_phamacist_qualifications "+
+			"SET qualification = ? "+
+			"WHERE qualification_id = ? ";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,[data.qualification,data.qualification_id],function(err){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					
 					res.json({status:'success'});
 				}
 			})
@@ -139,8 +159,8 @@ module.exports = {
 	addNewExp:function(req,res){
 		var data = req.body;
 		console.log(data);
-		var fromdate =  moment(data.exp.fromdate).format("YYYY-MM-DD");
-		var todate =  moment(data.exp.todate).format("YYYY-MM-DD")
+		var fromdate =  moment(data.exp.from_date).format("YYYY-MM-DD");
+		var todate =  moment(data.exp.to_date).format("YYYY-MM-DD")
 		var pharmacist_id = data.pharmacist_id;
 
 
@@ -148,7 +168,7 @@ module.exports = {
 				" INSERT INTO ph_phamacist_experiences (phamacist_id,from_date,to_date,company,POSITION,reference_name,reference_contact,duty) "+
 				" VALUES (?,?,?,?,?,?,?,?) ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlInsertExp,[pharmacist_id,fromdate,todate,data.exp.company,data.exp.position,data.exp.referencename,data.exp.referencecontact,data.exp.duty],function(err){
+			var query = connection.query(sqlInsertExp,[pharmacist_id,fromdate,todate,data.exp.company,data.exp.POSITION,data.exp.reference_name,data.exp.reference_contact,data.exp.duty],function(err){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
@@ -183,6 +203,27 @@ module.exports = {
 		var sqlDeleteExp = " DELETE FROM ph_phamacist_experiences WHERE exp_id = ? ";
 		req.getConnection(function(err,connection){
 			var query = connection.query(sqlDeleteExp,data.exp_id,function(err){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					
+					res.json({status:'success'});
+				}
+			})
+		})
+	},
+	//update exp
+	updateExp :function(req,res){
+		var data = req.body.exp;
+		var from_date = moment(data.from_date).format("YYYY-MM-DD");
+		var to_date = moment(data.to_date).format("YYYY-MM-DD");
+		var sql = 
+			"UPDATE ph_phamacist_experiences  "+
+				"SET from_date = ?  , to_date = ? , company = ? , POSITION = ? , reference_name = ? , reference_contact = ?  , duty = ?  "+
+				"WHERE exp_id = ?";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,[from_date,to_date,data.company,data.POSITION,data.reference_name,data.reference_contact,data.duty,data.exp_id],function(err){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});

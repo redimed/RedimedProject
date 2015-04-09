@@ -17,9 +17,13 @@ app.post('/api/phPharmacist/updatePharmasictInfo',ph_companyController.updatePha
 app.post('/api/phPharmacist/addNewQualification',ph_companyController.addNewQualification);
 app.post('/api/phPharmacist/getAllPharmacisQualification',ph_companyController.getAllPharmacisQualification);
 app.post('/api/phPharmacist/deletePharmacistQualification',ph_companyController.deletePharmacistQualification);
+app.post('/api/phPharmacist/updateQulification',ph_companyController.updateQulification);
+
 app.post('/api/phPharmacist/addNewExp',ph_companyController.addNewExp);
 app.get('/api/phPharmacist/getExp',ph_companyController.getExp);
 app.post('/api/phPharmacist/deleteExp',ph_companyController.deleteExp);
+app.post('/api/phPharmacist/updateExp',ph_companyController.updateExp);
+
 //shop controller
 app.post('/api/phShops/insertCompanyShop',ph_companyController.insertCompanyShop);
 app.get('/api/phShops/getCompanyShopById',ph_companyController.getCompanyShopById);
