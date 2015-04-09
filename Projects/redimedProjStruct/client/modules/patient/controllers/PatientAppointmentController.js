@@ -25,8 +25,6 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.consult.patient({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
         {'name':'Problem List', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patient_id+'})'},
-        {'name':'Medicine List', 'color':'purple-soft', 'icon':'glyphicon glyphicon-leaf', 
-            'state':'loggedIn.medicine.list'},
         {'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.allergy.list({patient_id:'+$stateParams.patient_id+'})'},
 

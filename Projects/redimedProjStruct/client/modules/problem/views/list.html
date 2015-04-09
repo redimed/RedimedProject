@@ -29,7 +29,7 @@
 </div>
 <!--END PROBLEM ADD FORM-->
 
-<!--ALLERGY EDIT FORM-->
+<!--PROBLEM EDIT FORM-->
 <div class="mdt-search" style="display: block;" ng-if="problemEditForm.is_show">
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="problemEditForm.close()">
@@ -38,4 +38,4 @@
     </div>
     <problem-detail options="options" onsuccess="problemEditForm.success" data="{id:'{{problem.id}}'}"/>
 </div>
-<!--END ALLERGY EDIT problem-->
+<!--END PROBLEM EDIT-->

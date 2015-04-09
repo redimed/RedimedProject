@@ -47,7 +47,7 @@ eval(fs.readFileSync('./routes/consult_route.js') + '');
 
 //Vo Duc Giap
 //Phamacist
-eval(fs.readFileSync('./routes/phamacist_route.js')+ '')
+eval(fs.readFileSync('./routes/phamacist_route.js')+ '');
 
 /* ************************************************ VUONG TEAM ************************************************* */
 
