@@ -9,6 +9,11 @@ angular.module("app.loggedIn.timetable.model", [])
         var detailApi = appApi.all("list");
         return detailApi.post({data: data});
     }
+
+    instanceService.one = function (data) {
+        var detailApi = appApi.all("one");
+        return detailApi.post({data: data});
+    }
   	
   	instanceService.siteList = function(data){
   		  var detailApi = appApi.all("siteList");
@@ -32,6 +37,11 @@ angular.module("app.loggedIn.timetable.model", [])
 
     instanceService.add = function(data){
         var detailApi = appApi.all("add");
+        return detailApi.post({data: data});
+    }
+
+    instanceService.edit = function(data){
+        var detailApi = appApi.all("edit");
         return detailApi.post({data: data});
     }
 

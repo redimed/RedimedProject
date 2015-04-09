@@ -5,6 +5,8 @@ var url = config.defaultUrl+'timetable/';
 var site = config.defaultUrl+'redimedsite/';
 
 app.post(url+'list', TimetableController.postList);
+app.post(url+'one', TimetableController.postOne);
+app.post(url+'edit', TimetableController.postEdit);
 app.post(url+'siteList', TimetableController.postSiteList);
 app.post(url+'add', TimetableController.postAdd);
 app.post(url+'remove', TimetableController.postRemove);

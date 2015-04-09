@@ -149,7 +149,7 @@ module.exports = {
 		.success(function(rows){
 			db.sequelize.query(sub_sql)
 			.success(function(doctors){
-				res.json({data: rows, doctors: doctors});
+				res.json({data: rows, doctors: doctors, sql: main_sql});
 			})
 			.error(function(error){
 				res.status(500).json({error: error, sql: sub_sql});	
