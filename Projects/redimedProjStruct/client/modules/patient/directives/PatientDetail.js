@@ -12,7 +12,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
-			var avt_path = '';
+			scope.avt_path = '';
 
 			var uploader = scope.uploader = new FileUploader({
 				url: '/api/erm/v2/patient/upload_avt',
@@ -33,8 +33,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		        },
 		        onCompleteItem: function(item, response, status, headers){
 		        	if(response.status==="success" && response.isEditMode===true){
-		        		avt_path = response.img_path;
-		        		console.log('replace success');
+		        		scope.avt_path = response.img_path;
+		        		console.log('replace success', scope.avt_path);
 		        		clickAction();
 		        	}
 		        }
@@ -144,17 +144,19 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 								}
 								if(!scope.modelObjectMap.avatar || scope.modelObjectMap.avatar === ""){
 									if(!scope.modelObjectMap.Sex || scope.modelObjectMap.Sex === ""){
-										scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+										scope.avt_path = "img/patient/avt/male_default.png";
 									}
 									else{
-										if(scope.modelObjectMap.Sex === "0") scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
-										if(scope.modelObjectMap.Sex === "1") scope.modelObjectMap.avatar = "img/patient/avt/female_default.png"
+										if(scope.modelObjectMap.Sex === "0") scope.avt_path = "img/patient/avt/male_default.png";
+										if(scope.modelObjectMap.Sex === "1") scope.avt_path = "img/patient/avt/female_default.png"
 									}
 								}
 								else{
-									avt_path=scope.modelObjectMap.avatar;
+									scope.avt_path=scope.modelObjectMap.avatar;
 								}
 							}
+
+							console.log('this is init avt_path', scope.avt_path);
 
 							scope.verifiedMedicare();
 							scope.loadState();
@@ -207,8 +209,13 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							postData[key] = ConfigService.getCommonDate(postData[key]);
 						}
 					}
+					console.log('this is avt_path before edit', scope.avt_path);
 					// END DATE
-					postData.avatar = avt_path;
+					if(scope.avt_path!=="img/patient/avt/male_default.png" && scope.avt_path !== "img/patient/avt/female_default.png"){
+						console.log('run here', scope.avt_path);
+						postData.avatar = scope.avt_path;
+					}
+					else postData.avatar = "";
 					if(scope.params.permission.edit === true){
 						PatientService.mdtEdit(postData).then(function(response){
 							 if (response.status != 'success') {
