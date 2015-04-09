@@ -56,3 +56,7 @@ app.post("/api/TimeSheet/post-list-deptRP", TimeSheet.LoadDeptReport);
 app.post("/api/TimeSheet/post-list-empRP", TimeSheet.LoadEmpReport);
 app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
 //END REPORT
+
+//SEND MAIL
+app.post("/api/TimeSheet/post-send-mail", TimeSheet.SendMailTimeSheet);
+// END SEND MAIL

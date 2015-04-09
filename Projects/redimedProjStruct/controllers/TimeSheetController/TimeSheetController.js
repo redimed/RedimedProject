@@ -1,4 +1,5 @@
 var db = require("../../models");
+var FunctionSendMail = require("../../controllers/TimeSheetController/timeSheetEmailController.js");
 var sys_hierarchy_group = db.sys_hierarchy_group;
 var sys_hierarchy_nodes = db.sys_hierarchy_nodes;
 var sys_hierarchies_users = db.sys_hierarchies_users;
@@ -1835,6 +1836,16 @@ module.exports = {
                 });
                 return;
             });
+    },
+
+    SendMailTimeSheet: function(req, res) {
+        var mailOptions = {
+            senders: '<timesheetnotification@gmail.com>', // sender address
+            recipients: 'tamran1101681@gmail.com', // list of receivers
+            subject: 'Hello THANH TIME SHEET NE ?', // Subject line
+            htmlBody: 'Hello world THANH ?' // html body
+        };
+        FunctionSendMail.sendEmail(req, res, mailOptions);
     }
 };
 

@@ -53,6 +53,12 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
 
         $scope.SENDMAIL = function() {
             //CALL SERVICE CALL MAIL
+            var info = {};
+            TimeSheetService.sendMailTimeSheet(info).then(function(response) {
+                if (response.status !== "success") {
+                    toastr.error("Send mail fail, Please check again!", "Error");
+                }
+            });
             //END CALL
         };
 

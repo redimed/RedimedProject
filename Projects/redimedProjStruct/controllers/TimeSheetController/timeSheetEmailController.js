@@ -8,13 +8,12 @@ var smtpPool = require('nodemailer-smtp-pool');
 var isTestEmail = true;
 module.exports = {
     sendEmail: function(req, res, emailInfo) {
-
         if (isTestEmail) {
             var transport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
-                    user: 'vnlegal123@gmail.com', //test
-                    pass: 'redimed123' //test
+                    user: 'timesheetnotification@gmail.com', //test
+                    pass: 'timesheet1234' //test
                 }
             });
 

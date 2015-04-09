@@ -222,5 +222,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 info: info
             });
         };
+
+        TimeSheetService.sendMailTimeSheet = function(info) {
+            var sendMailTimeSheet = api.all('TimeSheet/post-send-mail');
+            return sendMailTimeSheet.post({
+                info: info
+            });
+        };
         return TimeSheetService;
     });
