@@ -52,69 +52,40 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
         };
         //FUNCTION GET WEEK NUMBER
 
-        $scope.clickReview = function() {
-            $scope.isReview = true;
-            var info = {};
-            var weekNoFrom = new Date($scope.dateWeekFrom.substr(6, 4), $scope.dateWeekFrom.substr(3, 2) - 1, $scope.dateWeekFrom.substr(0, 2));
-            var weekNoTo = new Date($scope.dateWeekTo.substr(6, 4), $scope.dateWeekTo.substr(3, 2) - 1, $scope.dateWeekTo.substr(0, 2));
-            info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-            info.weekNoTo = $scope.getWeekNumber(weekNoTo);
-            info.listEMP = angular.copy($scope.listEmployeeChoose);
-            TimeSheetService.LoadReports1(info).then(function(response) {
-                if (response.status === "success") {
-                    $scope.reports1 = response.result;
-                } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Loading reports fail!", 'Error');
-                } else {
-                    //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Server not response!", 'Error');
-                }
-            });
-
-        };
-
-        // SET COLOR
-        $scope.setColorDept = function(l) {
-            var countHeight = 0;
-            for (var i = 0; i < l.listEmployee.length; i++) {
-                if (l.listEmployee[i].over_time !== 0 || l.listEmployee[i].time_in_lieu !== 0) {
-                    countHeight += 3;
-                } else {
-                    countHeight += 1;
-                }
+        $scope.changeEmp = function(list) {
+            if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
+                $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
+                $scope.listEmployeeChoose.length !== 0) {
+                var info = {};
+                var weekNoFrom = new Date($scope.dateWeekFrom.substr(6, 4), $scope.dateWeekFrom.substr(3, 2) - 1, $scope.dateWeekFrom.substr(0, 2));
+                var weekNoTo = new Date($scope.dateWeekTo.substr(6, 4), $scope.dateWeekTo.substr(3, 2) - 1, $scope.dateWeekTo.substr(0, 2));
+                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
+                info.weekNoTo = $scope.getWeekNumber(weekNoTo);
+                info.listEMP = angular.copy($scope.listEmployeeChoose);
+                info.USER_ID = $cookieStore.get('userInfo').id;
+                info.weekFrom = $scope.dateWeekFrom.substr(6, 4) + '-' + $scope.dateWeekFrom.substr(3, 2) + '-' + $scope.dateWeekFrom.substr(0, 2);
+                info.weekTo = $scope.dateWeekTo.substr(6, 4) + '-' + $scope.dateWeekTo.substr(3, 2) + '-' + $scope.dateWeekTo.substr(0, 2);
+                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
+                TimeSheetService.LoadReports1(info).then(function(response) {
+                    if (response.status === "success") {
+                        // PROCESSING PDF
+                        //END PDF
+                    } else if (response.status === "error") {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Loading reports fail!", 'Error');
+                    } else {
+                        //catch exception
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Server not response!", 'Error');
+                    }
+                });
             }
-            return {
-                height: (countHeight * 21) + 'px'
-            };
-        };
 
-        $scope.setColorEmp = function(emp) {
-            if (emp.time_in_lieu !== 0 || emp.over_time !== 0) {
-                return {
-                    height: (3 * 21) + 'px'
-                };
-            } else {
-                return {
-                    height: (1 * 21) + 'px'
-                };
-            }
         };
-        // END COLOR
-
-        // GET EMP INIT
-        $scope.getEmp = function(index) {
-            if ($scope.reports1[index] !== undefined || $scope.reports1[index] !== null) {
-                return $scope.reports1[index].listEmployee;
-            }
-            return [];
-        };
-        // END
 
         // END DEPT
         TimeSheetService.LoadDeptReport($cookieStore.get("userInfo").id).then(function(response) {

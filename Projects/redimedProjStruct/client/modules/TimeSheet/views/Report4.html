@@ -15,8 +15,7 @@
 <div class="row">
     <div class="col-md-12">
         <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
-        <a class="btn btn-xs pull-right blue" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0">Print PDF</a>
-        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0">Review</a>
+        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0" href="http://google.com" target="_blank">Print PDF</a>
     </div>
 </div>
 &nbsp;
@@ -39,95 +38,9 @@
                 <div ng-dropdown-multiselect="" extra-settings="searchDept" translation-texts="translationTextDept" options="listDept" selected-model="listDepartmentChoose" checkboxes="true" get-selected="ListNew(info)"></div>
             </div>
             <div class="col-md-3">
-                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" checkboxes="true"></div>
+                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="changeEmp(info)" checkboxes="true"></div>
             </div>
         </div>
     </div>
 </div>
 <!-- END INFO SYS -->
-<!-- REVIEW -->
-<!-- ng-if="isReview===true" -->
-<div class="panel panel-primary">
-    <div class="panel-body">
-        <!-- HEADER -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-1" style="text-align:center; font-size:14px; font-weight:bold;width:100px;background-color:#67809f;border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Department</span>
-                </div>
-                <div class="col-md-2" style="text-align:center; font-size:14px; font-weight:bold;width:145px;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Employee</span>
-                </div>
-                <div class="col-md-1" style="text-align:center; font-size:14px; font-weight:bold;width:110px;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Billable Time</span>
-                </div>
-                <div class="col-md-2" style="text-align:center; font-size:14px; font-weight:bold;width:151px;;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Administration Time</span>
-                </div>
-                <div class="col-md-1" style="text-align:center; font-size:14px; font-weight:bold;width:111px;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Training Time</span>
-                </div>
-                <div class="col-md-1" style="text-align:center; font-size:14px; font-weight:bold;width:150px;;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Development Time</span>
-                </div>
-                <div class="col-md-1" style="text-align:center; font-size:14px; font-weight:bold;width:110px;;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Non-charged</span>
-                </div>
-                <div class="col-md-2" style="text-align:center; font-size:14px;width:151px;; font-weight:bold;background-color:#67809f; border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;">
-                    <span style="text-align:center;">Total Worked Hours</span>
-                </div>
-                <div class="col-md-1" style="text-align:center;width:70px; font-size:14px;font-weight:bold;background-color:#67809f;">
-                    <span style="text-align:center;">Convert</span>
-                </div>
-            </div>
-        </div>
-        <!-- END HEADER -->
-        <!-- REPEAT DEPT -->
-        <div class="row" ng-repeat="(key, l) in reports1" ng-init='emps=getEmp(key)'>
-            <div class="col-md-12">
-                <div class="col-md-2" ng-style="setColorDept(l)" style="text-align:left;font-size:14px;width:100px;border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5; border-left-width;1px;border-left-style:solid; border-left-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;">
-                    <span style="text-align:left; ">{{l.departmentName}}</span>
-                </div>
-                <!-- REPEAT EMP -->
-                <div ng-repeat="(keyEmp, emp) in emps">
-                    <div class="col-md-1" ng-style="setColorEmp(emp)" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:145px;">
-                        <span style="font-size:14px;">{{emp.name}}</span>
-                    </div>
-                    <div>
-                        <div class="col-md-1" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:110px;text-align:center;">
-                            <span style="font-size:14px; font-weight:bold;">{{emp.SUM_CHARGE_ACTIVITY[1] | customHours}}</span>
-                        </div>
-                        <div class="col-md-1" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:151px; text-align:center;">
-                            <span style="font-size:14px;font-weight:bold;">{{emp.SUM_CHARGE_ACTIVITY[2] | customHours}}</span>
-                        </div>
-                        <div class="col-md-1" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:111px; text-align:center;">
-                            <span style="font-size:14px;font-weight:bold;">{{emp.SUM_CHARGE_ACTIVITY[3] | customHours}}</span>
-                        </div>
-                        <div class="col-md-1" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:150px;text-align:center;">
-                            <span style="font-size:14px;font-weight:bold;">{{emp.SUM_CHARGE_ACTIVITY[4] | customHours}}</span>
-                        </div>
-                        <div class="col-md-2" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:110px; text-align:center;">
-                            <span style="font-size:14px;font-weight:bold;">{{emp.SUM_CHARGE_ACTIVITY[5] | customHours}}</span>
-                        </div>
-                        <div class="col-md-2" style="border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;text-align:center; width:151px;">
-                            <span style="font-size:14px;font-weight:bold;">{{emp.time_charge | customHours}}</span>
-                        </div>
-                        <div class="col-md-1" style="border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;width:70px;text-align:center;border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;">
-                            <span style="font-size:14px;font-weight:bold;">{{emp.time_charge | customHours}}</span>
-                        </div>
-                    </div>
-                    <div class="col-md-9" style="border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;text-align:left;border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;width:853px;">
-                        <span style="font-size:14px; margin-left:-10px;font-style: italic;">Over Time:<span class="text-info" style="font-style: normal;margin-left:19px;">{{emp.time_in_lieu | customHours}}</span></span>
-                    </div>
-                    <div class="col-md-9" style="border-bottom-width:1px;border-bottom-style:solid; border-bottom-color:#e5e5e5;text-align:left;border-right-width:1px;border-right-style:solid; border-right-color:#e5e5e5;border-bottom-width:1px;width:853px;">
-                        <span style="font-size:14px;margin-left:-10px;font-style: italic;">Time in Lieu:&nbsp;&nbsp;&nbsp;<span class='text-info' style="font-style: normal;">{{emp.over_time | customHours}}</span></span>
-                    </div>
-                    <!-- END EMP -->
-                </div>
-            </div>
-            <!-- END -->
-        </div>
-        <!-- END DEPT-->
-    </div>
-</div>
-<!-- END REVIEW -->

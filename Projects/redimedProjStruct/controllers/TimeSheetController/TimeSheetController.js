@@ -1628,7 +1628,9 @@ module.exports = {
         var weekNoFrom = info.weekNoFrom;
         var weekNoTo = info.weekNoTo - 1;
         var listEMP = info.listEMP;
-
+        var USER_ID = info.USER_ID;
+        var weekFrom = info.weekFrom;
+        var weekTo = info.weekTo;
         //STR EMP
         var strListEmp = "";
         for (var i = 0; i < listEMP.length; i++) {
@@ -1649,13 +1651,6 @@ module.exports = {
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " ORDER BY departments.departmentName ASC";
         // END DEPT
-
-        // var queryEmp = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.employee_id, departments.departmentid FROM departments " +
-        //     "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
-        //     "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-        //     "INNER JOIN time_tasks_week.user_id  = users.id " +
-        //     "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
-        //     "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " ORDER BY departments.departmentName";
 
         // SELECT TIMECHARGE ACTIVITY
         var queryActivity = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
@@ -1712,14 +1707,106 @@ module.exports = {
                                             }
                                         }
                                     }
-                                    //RES.JSON
-                                    res.json({
-                                        status: "success",
-                                        result: resultDept
-                                    });
-                                    return;
-                                    //END
                                 }
+                                //INSERT TEMP TABLE REPORTS1
+                                var listEmployeeInsert = "";
+                                var listTimeInsert = "";
+                                for (var i = 0; i < resultDept.length; i++) {
+                                    for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
+
+                                        // VALUE EMP
+                                        listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
+                                            resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "'), ";
+                                        //EMP
+                                        // VALUE TIME CHARGE
+                                        listTimeInsert += "(" + USER_ID + "," +
+                                            resultDept[i].listEmployee[j].employee_id + ",'" +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1])) + "','" +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2])) + "','" +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3])) + "','" +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4])) + "','" +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5])) + "','" +
+                                            (resultDept[i].listEmployee[j].time_charge === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].time_charge)) + "', " +
+                                            convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
+                                        //TIME CHARGE
+
+                                        // VALUE TIME IN LIEU
+                                        listTimeInsert += "(" + USER_ID + "," +
+                                            resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
+                                            convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
+                                            getFortMatTimeCharge(resultDept[i].listEmployee[j].time_in_lieu) + "', null, 2), ";
+                                        //END
+
+                                        // VALUE OVERTIME
+                                        listTimeInsert += "(" + USER_ID + "," +
+                                            resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
+                                            convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
+                                            getFortMatTimeCharge(resultDept[i].listEmployee[j].over_time) + "', 3), ";
+                                        // END
+                                    }
+                                }
+                                if (listEmployeeInsert !== "") {
+                                    listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
+                                }
+                                if (listTimeInsert !== "") {
+                                    listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
+                                }
+                                var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date) VALUES " + listEmployeeInsert;
+                                var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
+                                var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
+                                var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
+                                db.sequelize.query(queryDelEmployee)
+                                    .success(function(delSuccessEmp) {
+                                        db.sequelize.query(queryDelTime)
+                                            .success(function(delSuccessTime) {
+                                                db.sequelize.query(queryInsertEmployee)
+                                                    .success(function(insertSuccessEmp) {
+                                                        db.sequelize.query(queryInsertTimeInSert)
+                                                            .success(function(insertSuccessTime) {
+                                                                //RES.JSON
+                                                                res.json({
+                                                                    status: "success",
+                                                                    result: resultDept
+                                                                });
+                                                                return;
+                                                                //END
+                                                            })
+                                                            .error(function(err) {
+                                                                console.log("*****ERROR:" + err + "*****");
+                                                                res.json({
+                                                                    status: "error",
+                                                                    result: []
+                                                                });
+                                                                return;
+                                                            });
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "error",
+                                                            result: []
+                                                        });
+                                                        return;
+                                                    });
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error",
+                                                    result: []
+                                                });
+                                                return;
+                                            });
+                                    })
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error",
+                                            result: []
+                                        });
+                                        return;
+                                    });
+                                //END INSERT
                             })
                             .error(function(err) {
                                 console.log("*****ERROR:" + err + "*****");
@@ -1783,3 +1870,45 @@ var TracKerTimeSheet = function(info) {
         });
 };
 //END
+
+
+//FUNCTION GET FORMAT TIME_CHARGE
+var getFortMatTimeCharge = function(time_charge) {
+    if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
+        var hours = parseInt(time_charge / 60);
+        var minutes = parseInt(time_charge % 60);
+        if (hours < 10) {
+            hours = '0' + hours;
+        }
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }
+        return hours + ':' + minutes;
+    } else {
+        return "-";
+    }
+
+};
+//END
+
+// FUNCTION CONVERT
+var convertTime = function(time) {
+    if (time === undefined || time === null || isNaN(time)) {
+        return 0;
+    } else {
+        var tempTime = (time * 37.25) / 2235;
+        var tempTimeInt = parseInt(tempTime);
+        var tempDecimal = (tempTime - tempTimeInt).toFixed(3) * 100;
+        if (tempDecimal >= 87.5) {
+            tempTimeInt += 1;
+        } else if (tempDecimal >= 62.5) {
+            tempTimeInt += 0.75;
+        } else if (tempDecimal >= 37.5) {
+            tempTimeInt += 0.5;
+        } else if (tempDecimal >= 12.5) {
+            tempTimeInt += 0.25;
+        }
+        return tempTimeInt;
+    }
+};
+//END CONVERT
