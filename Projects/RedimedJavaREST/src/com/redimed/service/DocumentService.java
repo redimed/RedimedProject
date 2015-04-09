@@ -58,9 +58,9 @@ public class DocumentService {
         	if(report.equalsIgnoreCase("timesheet"))
         	{
         		params.put("id", id);
-        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		params.put("realPath", "/reports/TIMESHEET/ReportActuaHours/");
         		
-        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportActualHours.jasper", params, "ReportActualHours.pdf");
+        		return downloadReport("/reports/TIMESHEET/ReportActuaHours/ReportActuaHours.jasper", params, "ReportActualHours.pdf");
         	}
         	
         	//Gorgon MH
@@ -430,6 +430,7 @@ public class DocumentService {
 	            statement = connection.createStatement();
 	            
 	            InputStream fs = DocumentService.class.getResourceAsStream(reportPath);
+	            System.out.println(fs);
 	            JasperReport template = (JasperReport) JRLoader.loadObject(fs);
 	            template.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
 	            JasperPrint print = JasperFillManager.fillReport(template, params, connection);

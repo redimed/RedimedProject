@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="30"/>
+	<property name="ireport.y" value="30"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
 			<![CDATA[SELECT
@@ -59,7 +59,7 @@ INNER JOIN departments ON departments.departmentid = time_employee_reports1.depa
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="realPatch" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 time_employee_reports1.employee,
@@ -178,7 +178,7 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="802" height="75" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
-				<imageExpression><![CDATA[$P{realPatch}+"/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+"/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="90" width="802" height="36" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
