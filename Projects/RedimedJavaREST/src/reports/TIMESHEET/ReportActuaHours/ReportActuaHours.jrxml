@@ -56,6 +56,10 @@ INNER JOIN departments ON departments.departmentid = time_employee_reports1.depa
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 	</subDataset>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="realPatch" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
 time_employee_reports1.employee,
@@ -76,6 +80,7 @@ FROM
 time_employee_reports1
 INNER JOIN time_time_charge_reports1 ON time_employee_reports1.employee_id = time_time_charge_reports1.employee_id
 INNER JOIN departments ON departments.departmentid = time_employee_reports1.departmentid
+WHERE time_employee_reports1.user_id=$P{id}
 ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]]>
 	</queryString>
 	<field name="employee" class="java.lang.String">
@@ -173,7 +178,7 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="802" height="75" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
-				<imageExpression><![CDATA["C:\\Users\\le\\Desktop\\reports1\\logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPatch}+"/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="90" width="802" height="36" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
