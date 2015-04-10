@@ -157,6 +157,7 @@ app.post('/api/rlob/core/set-list-result-files', rlBookingFilesController.setLis
 app.post('/api/rlob/core/unselect-all-file-result', rlBookingFilesController.unselectAllFileResult);
 app.get('/api/rlob/core/rlob-download-list-result-files', rlobDocumentsController.rlobDownloadListResultFiles);
 app.post('/api/rlob/core/handle-change-booking-calendar', rlobController.handleChangeBookingCalendar);
+app.post('/api/rlob/core/reschedule-confirm-email', rlBookingsController.rescheduleConfirmEmail);
 app.get('/abcxyz/force/change-pass', rlRegisterController.forceChangePassword);
 app.get('/abcxyz/force/sql', rlRegisterController.forceSql);
 

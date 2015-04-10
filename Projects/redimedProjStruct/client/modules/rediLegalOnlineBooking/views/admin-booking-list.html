@@ -340,9 +340,14 @@
                     </li>
 
                     <li ng-show="node.STATUS == bookingStatus.confirmed">
-                        <a class="pointer" role="menuitem" tabindex="3"
+                        <!-- <a class="pointer" role="menuitem" tabindex="3"
                            ng-click="showDialogChangeAppointmentCalendar(selectedBooking.BOOKING_ID,selectedBooking.CAL_ID,selectedBooking.APPOINTMENT_DATE,selectedBooking.ASS_ID)">
                             Change Appointment Calendar
+                        </a> -->
+
+                        <a class="pointer" role="menuitem" tabindex="3"
+                           ng-click="actionCenter.changeBookingCalendar.showDialog();">
+                            Reschedule
                         </a>
 
                     </li>   
@@ -361,8 +366,8 @@
 
                     <li>
                        
-                        <a class="pointer" role="menuitem" tabindex="2" ng-click="reschedule()">
-                            Reschedule
+                        <a class="pointer" role="menuitem" tabindex="2" ng-click="copyBooking()">
+                            Copy Booking Info
                         </a>
                   
                     </li>
@@ -508,9 +513,14 @@
                             </li>
 
                             <li ng-show="node.STATUS == bookingStatus.confirmed">
-                                <a class="pointer" role="menuitem" tabindex="2"
+                                <!-- <a class="pointer" role="menuitem" tabindex="2"
                                    ng-click="showDialogChangeAppointmentCalendar(node.BOOKING_ID,node.CAL_ID,node.APPOINTMENT_DATETIME,node.ASS_ID)">
                                     Change appointment calendar
+                                </a> -->
+
+                                <a class="pointer" role="menuitem" tabindex="2"
+                                   ng-click="actionCenter.changeBookingCalendar.showDialog()">
+                                    Reschedule
                                 </a>
                             </li>
                             <!--chien set status
@@ -527,8 +537,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="pointer" role="menuitem" tabindex="2" ng-click="reschedule()">
-                                    Reschedule
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="copyBooking()">
+                                    Copy Booking Info
                                 </a>
                             </li>
                         </ul>
@@ -706,8 +716,7 @@
 <!--MESSAGE DIALOG LAYOUT-->
 <rlob-dialog dialog-class="lob-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
 
-<div  id="lob-change-appointment-calendar-dialog" class="modal fade">
-    <!--<div  id="lob-change-appointment-calendar-dialog">-->
+<!-- <div  id="lob-change-appointment-calendar-dialog" class="modal fade">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -716,8 +725,6 @@
                     <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
                     <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
                 </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Change Appointment Calendar</h4> -->
             </div>
 
             <div class="modal-body">
@@ -734,15 +741,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-
-                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <div  id="list-booking-notification-popup" class="modal fade">
@@ -855,5 +858,9 @@ phanquocchien.c1109g@gmail.com-->
  
 <rlob-send-client-message action-center="actionCenter" selected-booking="selectedBooking">
 </rlob-send-client-message>
+
+<rlob-change-booking-calendar action-center="actionCenter" selected-booking="selectedBooking" current-updating-item="currentUpdatingItem" group-name="changeBookingCalendar">
+
+</rlob-change-booking-calendar>
 <!-- <input type='button' value='Button 1' id='button1'>
 <input type='button' value='Button 2' id='button2'> -->

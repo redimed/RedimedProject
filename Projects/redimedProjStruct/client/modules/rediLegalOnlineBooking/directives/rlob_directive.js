@@ -1676,20 +1676,161 @@ angular.module("app.loggedIn.rlob.directive", [])
         };
     })
 
+    /**
+     * Chuyen booking calendar
+     * tannv.dts@gmail.com
+     * @param  {String} rlobService) {                                                                                                       return {              restrict: 'E',                                           transclude:true,            required:['^ngModel'],            scope: {                actionCenter:' [description]
+     * @param  {[type]} templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html' [description]
+     * @param  {[type]} controller:  function                                                                      ($scope,rlobService)                    {                             $scope.bookingType [description]
+     * @return {[type]}              [description]
+     */
     .directive('rlobChangeBookingCalendar', function(rlobService) {
         return {
             restrict: 'E',
             transclude:true,
             required:['^ngModel'],
             scope: {
-                actionCenter:'=',
-                selectedBooking:'='
+                actionCenter:'=',//changeBookingCalendar.runWhenSuccess();changeBookingCalendar.showDialog();
+                groupName:'@',//Ten cua group action
+                selectedBooking:'=',
+                currentUpdatingItem:"=",
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html',
             controller: function ($scope,rlobService)
             {
+                //set booking type la redilegal
+                $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
 
+                //Khoi tao cac gia tri cua currentUpdatingItem
+                $scope.currentUpdatingItem.bookingId=null;
+                $scope.currentUpdatingItem.calId=null;
+                $scope.currentUpdatingItem.appointmentDateTime=null;
+                $scope.currentUpdatingItem.newAppoimentDateTime=null;
+                $scope.currentUpdatingItem.bookingIdChangeSuccess=null;
+                $scope.currentUpdatingItem.assId=null;
+                $scope.currentUpdatingItem.newCalId=null;
+                //-------------------------------------------------------
+
+                //Dung de cap nhat lai bang chon appointment calendar
+                $('#rlob_change_booking_calendar_dialog').on('shown.bs.modal', function (e) {
+                    if(!$scope.usingForDialogFlag)
+                        $scope.usingForDialogFlag=0;
+                    $scope.usingForDialogFlag=$scope.usingForDialogFlag+1;
+                });
+
+                //Show dialog choose appointment calendar
+                $scope.actionCenter[$scope.groupName].showDialog=function()
+                {
+                    $("#rlob_change_booking_calendar_dialog").modal({
+                        show:true,
+                        backdrop:'static'
+                    });
+                    $scope.currentUpdatingItem.bookingId=$scope.selectedBooking.BOOKING_ID;
+                    $scope.currentUpdatingItem.calId=$scope.selectedBooking.CAL_ID;
+                    $scope.currentUpdatingItem.appointmentDateTime=$scope.selectedBooking.APPOINTMENT_DATE;
+                    $scope.currentUpdatingItem.assId=$scope.selectedBooking.ASS_ID;
+                }
+
+                //Kiem tra khi chon appointment calendar
+                $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
+                    if($scope.selectedAppointmentCalendar)
+                    {
+                        var handlePeriodInfo={
+                            doctorId:$scope.selectedAppointmentCalendar.DOCTOR_ID,
+                            siteId:$scope.selectedAppointmentCalendar.SITE_ID,
+                            selectedAppFromTime:$scope.selectedAppointmentCalendar.FROM_TIME,
+                            rlTypeId:$scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                            oldCalId:$scope.currentUpdatingItem.calId
+                        };
+
+                        rlobService.core.checkPeriodTimeToBooking(handlePeriodInfo)
+                        .then(function(data){
+                            if(data.status=='success'){
+                                $scope.changeAppointmentCalendar(
+                                $scope.selectedAppointmentCalendar.CAL_ID,
+                                $scope.selectedAppointmentCalendar.FROM_TIME,
+                                $scope.selectedAppointmentCalendar.DOCTOR_ID,
+                                $scope.selectedAppointmentCalendar.SITE_ID,
+                                $scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                                $scope.selectedAppointmentCalendar.Specialties_id);
+                            }
+                            else
+                            {
+                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Not enough time.");
+                            }
+                        },function(err){
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Check fail.");
+                        });
+                    }
+
+                });
                 
+                //Xu ly thay doi lich
+                $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId,rlTypeId,specialityId)
+                {
+                    var actionInfo=
+                    {
+                        oldCalId:$scope.selectedBooking.CAL_ID,
+                        newCalId:newCalId,
+                        patientId:$scope.selectedBooking.PATIENT_ID,
+                        doctorId:doctorId,
+                        siteId:siteId,
+                        appointmentDate:newAppointmentDateTime,
+                        rlTypeId:rlTypeId,
+                        specialtyId:specialityId,
+                        bookingId:$scope.currentUpdatingItem.bookingId
+                    }
+                    rlobService.core.changeBookingCalendar(actionInfo)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            $("#rlob_change_booking_calendar_dialog").modal('hide');
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Change appointment calendar success.");
+                            $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
+                            $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
+                            $scope.currentUpdatingItem.newCalId=newCalId;
+                            //---------------------------------------------------
+                            var mapUrl=null;
+                            var siteAddress=$scope.selectedBooking.Site_addr;
+                            var bookingId=$scope.selectedBooking.BOOKING_ID;
+                            GMaps.geocode({
+                                address: siteAddress,
+                                callback: function (results, status) {
+                                    if (status == 'OK') 
+                                    {
+                                        latlng1 = results[0].geometry.location;
+                                        mapUrl = GMaps.staticMapURL({
+                                          lat: latlng1.lat(),
+                                          lng: latlng1.lng(),
+                                          markers: [
+                                            {lat: latlng1.lat(), lng: latlng1.lng()}
+                                          ]
+                                        });
+                                        handle();
+                                    }
+                                    else
+                                    {
+                                        handle();
+                                    }
+                                }
+                            });
+
+                            var handle=function()
+                            {
+                                //alert(mapUrl)
+                                rlobService.core.rescheduleConfirmEmail(bookingId,siteAddress,mapUrl);
+                            }
+                            //------------------------------------------------------
+                            $scope.actionCenter[$scope.groupName].runWhenSuccess();
+                        }
+                        else
+                        {
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change fail.");
+                        }
+                    },function(err){
+                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change fail.");
+                    });
+                }
             }
         };
     })

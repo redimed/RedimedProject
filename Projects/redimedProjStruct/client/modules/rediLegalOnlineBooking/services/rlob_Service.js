@@ -586,6 +586,12 @@ angular.module('app.loggedIn.rlob.services',[])
             {
                 var result=api.all('rlob/core/handle-change-booking-calendar');
                 return result.post({actionInfo:actionInfo});
+            },
+
+            rescheduleConfirmEmail:function(bookingId,siteAddress,mapUrl)
+            {
+                var result=api.all('rlob/core/reschedule-confirm-email');
+                return result.post({bookingId:bookingId,siteAddress:siteAddress,mapUrl:mapUrl});
             }
         }
 

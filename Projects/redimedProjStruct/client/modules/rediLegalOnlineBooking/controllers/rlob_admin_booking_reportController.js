@@ -5,10 +5,18 @@
 angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
     .controller("rlob_admin_bookingReportController", function($scope,$http,$cookieStore,$q,$state,rlobService,bookingService) {
         // chien status
-        $scope.report = 'report1';
+        $scope.currentReport={};
+        
         $scope.status = "Confirmed";
         $scope.loginInfo=$cookieStore.get('userInfo');
 
+        /**
+         * Khoi tao action center
+         * tannv.dts@gmail.com
+         */
+        $scope.actionCenter={};
+        $scope.actionCenter.changeBookingCalendar={};
+        $scope.actionCenter.adminReport={};
         $scope.reportType={
             report1:'report1',
             report2:'report2',
@@ -59,15 +67,15 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
                     rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Cannot get booking info!");
                 });
         }
-        $state.go("loggedIn.rlob.rlob_booking_report.type1");
+        // $state.go("loggedIn.rlob.rlob_booking_report.type1");
 
 
 	    $scope.documentStatusChangedFlag=0;
     	$scope.bookingStatusChangedFlag=0;
 
-        //Reschedule booking
+        //copy booking
         //tannv.dts@gmail.com
-        $scope.reschedule=function()
+        $scope.copyBooking=function()
         {
             var bookingBehalfInfo={
                 ASS_SURNAME:$scope.selectedBooking.ASS_SURNAME,
@@ -83,5 +91,34 @@ angular.module('app.loggedIn.rlob.adminBookingReport.controller',[])
             $state.go("loggedIn.rlob.rlob_booking");
         }
 
-        $scope.actionCenter={};
+        /**
+         * Change Appointment calendar
+         * tannv.dts@gmail.com
+         */
+        $scope.currentUpdatingItem={
+            bookingId:null,
+            calId:null,
+            appointmentDateTime:null,
+            newAppoimentDateTime:null,
+            bookingIdChangeSuccess:null,
+            assId:null,
+            newCalId:null
+        };
+
+        $scope.actionCenter.changeBookingCalendar.runWhenSuccess=function()
+        {
+            switch($scope.currentReport.name)
+            {
+                case $scope.reportType.report1:
+                    $scope.actionCenter.adminReport.reloadReport1();                    
+                    break;
+                case $scope.reportType.report2:
+                    $scope.actionCenter.adminReport.reloadReport2();
+                    break;
+                case $scope.reportType.report3:
+                    $scope.actionCenter.adminReport.reloadReport3();
+                    break;
+            }
+
+        }
     });

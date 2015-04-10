@@ -10,13 +10,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         $scope.accordionStatus={status1:true};
         $scope.documentStatus=rlobConstant.documentStatus;
         $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
-
-        /**
-         * Khoi tao action center
-         * tannv.dts@gmail.com
-         */
-        $scope.actionCenter={};
-        $scope.actionCenter.changeBookingCalendar={};
         //-----------------------------------------------------------
 
         $scope.newAppointmentPositionFlag=false;
@@ -40,9 +33,34 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
 
         $scope.status=false;
         $scope.sourceName=$scope.bookingType;
+//        $scope.notificationType={
+//            bell:   'bell',
+//            letter: 'letter'
+//        }
         $scope.notificationType=rlobConstant.notificationType;
+//        $scope.bellType={
+//            'changeStatus':"Change Booking Status",
+//            'result': 'Result',
+//            'message': 'Message',
+//            'changeCalendar':'Change Appointment Calendar'
+//        }
 
         $scope.bellType=rlobConstant.bellType;
+
+        //--------------------------------------------------
+        // var initPickers = function () {
+
+        //     //init date pickers
+        //     $('.date-picker').rlobdatepicker({
+        //         rtl: Metronic.isRTL(),
+        //         autoclose: true
+        //     }).on('changeDate',function(evn){
+
+        //     });
+
+        // }
+        // initPickers();
+        //--------------------------------------------------
 
         /**
          * Chuyen danh sach booking thanh JSON array
@@ -319,6 +337,66 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         {
             $window.location.href = "/api/download/lob/document/"+fileId;
         }
+        /*
+        //---------------------------------------------------------------
+        //HANDLE UPLOAD FILES
+        //Upload File
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/api/rlob/rl_booking_files/upload'
+        });
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            var fileInfo=response.fileInfo;
+            var refId=angular.copy(fileInfo.BOOKING_ID);
+
+            fileInfo.DISPLAY=fileInfo.FILE_NAME;
+            fileInfo.style_class='lob_admin_booking_file_node';
+            fileInfo.PARENT_ID=angular.copy(fileInfo.BOOKING_ID);
+            fileInfo.BOOKING_ID=null;
+            fileInfo.ASS_ID=$scope.currentNode.ASS_ID;
+            if($scope.haveNodeFile)
+                $scope.currentNode.nodes.push(fileInfo);
+            console.info('onSuccessItem', fileItem, response, status, headers);
+            //Put notification
+            if(fileInfo.isClientDownLoad==1)
+            {
+                $scope.rlob_add_notification(fileInfo.ASS_ID,refId,$scope.sourceName,$scope.bellType.result,$scope.notificationType.letter,'');
+            }
+        };
+        console.info('uploader', uploader);
+        */
+        /*
+        $scope.show_lob_upload_file_dialog=function(bookingId,scope)
+        {
+            uploader.clearQueue();
+            $http({
+                method:"POST",
+                url:"/api/rlob/rl_bookings/get-booking-by-id",
+                data:{bookingId:bookingId}
+            })
+                .success(function(data) {
+                    if(data.status=='success')
+                    {
+
+                        $scope.selectedBooking=data.data;
+                        uploader.formData[0]={};
+                        uploader.formData[0].booking_id=$scope.selectedBooking.BOOKING_ID;
+                        uploader.formData[0].company_id=$scope.userInfo.company_id;
+                        uploader.formData[0].worker_name=$scope.selectedBooking.WRK_SURNAME;
+                        $("#lob-upload-file-dialog").modal({show:true,backdrop:'static'});
+                        $scope.currentNode=scope.$modelValue;
+                    }
+                    else
+                    {
+                        alert("data not exist!");
+                    }
+                })
+                .error(function (data) {
+                    console.log("error");
+                })
+                .finally(function() {
+                });
+        }
+        */
 
         $scope.show_lob_upload_file_dialog=function(bookingId,scope)
         {
@@ -373,6 +451,12 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
          * tannv.dts@gmail.com
          */
         $scope.rlob_add_notification=$scope.add_notification;
+
+        /**
+         * Gui loi nhan tu client
+         */
+
+        
 
 
         /**
@@ -549,8 +633,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         //------------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------
-        //------------------------------------------------------------------------------------------------
-        //------------------------------------------------------------------------------------------------
         /***
          * Change Appointment Calendar
          * tannv.dts@gmail.com
@@ -563,185 +645,146 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             appointmentDateTime:null,
             newAppoimentDateTime:null,
             bookingIdChangeSuccess:null,
-            assId:null,
-            newCalId:null
+            assId:null
         };
-
-        $scope.actionCenter.changeBookingCalendar.runWhenSuccess=function()
-        {
-            if($scope.currentUpdatingItem.newAppoimentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)
-            {
-                $scope.lobAdminSearch.fromDateKey=moment(new Date($scope.currentUpdatingItem.appointmentDateTime));
-                $scope.lobAdminSearch.toDateKey=moment(new Date($scope.currentUpdatingItem.newAppoimentDateTime));
-            }
-            else
-            {
-                $scope.lobAdminSearch.fromDateKey=moment(new Date($scope.currentUpdatingItem.newAppoimentDateTime));
-                $scope.lobAdminSearch.toDateKey=moment(new Date($scope.currentUpdatingItem.appointmentDateTime));
-            }
-
-            $http({
-                method:"GET",
-                url:"/api/rlob/appointment-calendar/check-same-doctor",
-                params:{calId1:$scope.currentUpdatingItem.calId,calId2:$scope.currentUpdatingItem.newCalId}
-            })
-            .success(function(data) {
-                if(data.status=='success')
-                {
-                    if(data.data>1)
-                    {
-                        $scope.lobAdminSearch.doctorKey=null;
-                    }
-                    //$scope.rlob_add_notification = function(assId,refId,sourceName,rlobType,type,content)
-                    $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
-                }
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-                $scope.newAppointmentPositionFlag=true;
-                $scope.filterBooking();
-            });
-        }
 
         /**
          * Lang nghe selectedAppointmentCalendar tu directive rlob_choose_appointment_calendara
          * tannv.dts@gmail.com
          */
-        // $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
+        $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
 
-        //     if($scope.selectedAppointmentCalendar)
-        //     {
-        //         var handlePeriodInfo={
-        //             doctorId:$scope.selectedAppointmentCalendar.DOCTOR_ID,
-        //             siteId:$scope.selectedAppointmentCalendar.SITE_ID,
-        //             selectedAppFromTime:$scope.selectedAppointmentCalendar.FROM_TIME,
-        //             rlTypeId:$scope.selectedAppointmentCalendar.RL_TYPE_ID,
-        //             oldCalId:$scope.currentUpdatingItem.calId
-        //         };
+            if($scope.selectedAppointmentCalendar)
+            {
+                var handlePeriodInfo={
+                    doctorId:$scope.selectedAppointmentCalendar.DOCTOR_ID,
+                    siteId:$scope.selectedAppointmentCalendar.SITE_ID,
+                    selectedAppFromTime:$scope.selectedAppointmentCalendar.FROM_TIME,
+                    rlTypeId:$scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                    oldCalId:$scope.currentUpdatingItem.calId
+                };
 
-        //         rlobService.core.checkPeriodTimeToBooking(handlePeriodInfo)
-        //         .then(function(data){
-        //             if(data.status=='success'){
-        //                 $scope.changeAppointmentCalendar(
-        //                 $scope.selectedAppointmentCalendar.CAL_ID,
-        //                 $scope.selectedAppointmentCalendar.FROM_TIME,
-        //                 $scope.selectedAppointmentCalendar.DOCTOR_ID,
-        //                 $scope.selectedAppointmentCalendar.SITE_ID,
-        //                 $scope.selectedAppointmentCalendar.RL_TYPE_ID,
-        //                 $scope.selectedAppointmentCalendar.Specialties_id);
-        //             }
-        //             else
-        //             {
-        //                 $scope.showMsgDialog('.lob-msg-dialog','Medico-Legal','fail','Not enough time!');
-        //             }
-        //         },function(err){
-        //             $scope.showMsgDialog('.lob-msg-dialog','Medico-Legal','fail','Error!');
-        //         });
+                rlobService.core.checkPeriodTimeToBooking(handlePeriodInfo)
+                .then(function(data){
+                    if(data.status=='success'){
+                        $scope.changeAppointmentCalendar(
+                        $scope.selectedAppointmentCalendar.CAL_ID,
+                        $scope.selectedAppointmentCalendar.FROM_TIME,
+                        $scope.selectedAppointmentCalendar.DOCTOR_ID,
+                        $scope.selectedAppointmentCalendar.SITE_ID,
+                        $scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                        $scope.selectedAppointmentCalendar.Specialties_id);
+                    }
+                    else
+                    {
+                        $scope.showMsgDialog('.lob-msg-dialog','Medico-Legal','fail','Not enough time!');
+                    }
+                },function(err){
+                    $scope.showMsgDialog('.lob-msg-dialog','Medico-Legal','fail','Error!');
+                });
 
                 
-        //     }
+            }
 
-        // });
+        });
 
 
-        // /***
-        //  * tannv.dts@gmail.com
-        //  * Su dung khi muon su dung rlob-choose-appointment-calendar-dialog
-        //  */
-        // $('#lob-change-appointment-calendar-dialog').on('shown.bs.modal', function (e) {
-        //     if(!$scope.usingForDialogFlag)
-        //         $scope.usingForDialogFlag=0;
-        //     $scope.usingForDialogFlag=$scope.usingForDialogFlag+1;
-        // });
+        /***
+         * tannv.dts@gmail.com
+         * Su dung khi muon su dung rlob-choose-appointment-calendar-dialog
+         */
+        $('#lob-change-appointment-calendar-dialog').on('shown.bs.modal', function (e) {
+            if(!$scope.usingForDialogFlag)
+                $scope.usingForDialogFlag=0;
+            $scope.usingForDialogFlag=$scope.usingForDialogFlag+1;
+        });
 
-        // /**
-        //  * Show dialog chon appointment calendar
-        //  * tannv.dts@gmail.com
-        //  */
-        // $scope.showDialogChangeAppointmentCalendar=function(bookingId,calId,appointmentDateTime,assId)
-        // {
-        //     //alert(JSON.stringify([bookingId,calId,appointmentDateTime,assId]));
-        //     $("#lob-change-appointment-calendar-dialog").modal({
-        //         show:true,
-        //         backdrop:'static'
-        //     });
-        //     $scope.currentUpdatingItem.bookingId=bookingId;
-        //     $scope.currentUpdatingItem.calId=calId;
-        //     $scope.currentUpdatingItem.appointmentDateTime=appointmentDateTime;
-        //     $scope.currentUpdatingItem.assId=assId;
-        // }
+        /**
+         * Show dialog chon appointment calendar
+         * tannv.dts@gmail.com
+         */
+        $scope.showDialogChangeAppointmentCalendar=function(bookingId,calId,appointmentDateTime,assId)
+        {
+            //alert(JSON.stringify([bookingId,calId,appointmentDateTime,assId]));
+            $("#lob-change-appointment-calendar-dialog").modal({
+                show:true,
+                backdrop:'static'
+            });
+            $scope.currentUpdatingItem.bookingId=bookingId;
+            $scope.currentUpdatingItem.calId=calId;
+            $scope.currentUpdatingItem.appointmentDateTime=appointmentDateTime;
+            $scope.currentUpdatingItem.assId=assId;
+        }
 
-        // /**
-        //  * Thay doi lich hen cua mot boooking
-        //  * tannv.dts@gmail.com
-        //  */
-        // $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId,rlTypeId,specialityId)
-        // {
-        //     var actionInfo=
-        //     {
-        //         oldCalId:$scope.selectedBooking.CAL_ID,
-        //         newCalId:newCalId,
-        //         patientId:$scope.selectedBooking.PATIENT_ID,
-        //         doctorId:doctorId,
-        //         siteId:siteId,
-        //         appointmentDate:newAppointmentDateTime,
-        //         rlTypeId:rlTypeId,
-        //         specialtyId:specialityId,
-        //         bookingId:$scope.currentUpdatingItem.bookingId
-        //     }
-        //     rlobService.core.changeBookingCalendar(actionInfo)
-        //     .then(function(data){
-        //         if(data.status=='success')
-        //         {
-        //             $("#lob-change-appointment-calendar-dialog").modal('hide');
-        //             $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','success','Change appointment calendar success!');
-        //             if(newAppointmentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)
-        //             {
-        //                 $scope.lobAdminSearch.fromDateKey=moment(new Date($scope.currentUpdatingItem.appointmentDateTime));
-        //                 $scope.lobAdminSearch.toDateKey=moment(new Date(newAppointmentDateTime));
-        //             }
-        //             else
-        //             {
-        //                 $scope.lobAdminSearch.fromDateKey=moment(new Date(newAppointmentDateTime));
-        //                 $scope.lobAdminSearch.toDateKey=moment(new Date($scope.currentUpdatingItem.appointmentDateTime));
-        //             }
+        /**
+         * Thay doi lich hen cua mot boooking
+         * tannv.dts@gmail.com
+         */
+        $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId,rlTypeId,specialityId)
+        {
+            var actionInfo=
+            {
+                oldCalId:$scope.selectedBooking.CAL_ID,
+                newCalId:newCalId,
+                patientId:$scope.selectedBooking.PATIENT_ID,
+                doctorId:doctorId,
+                siteId:siteId,
+                appointmentDate:newAppointmentDateTime,
+                rlTypeId:rlTypeId,
+                specialtyId:specialityId,
+                bookingId:$scope.currentUpdatingItem.bookingId
+            }
+            rlobService.core.changeBookingCalendar(actionInfo)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    $("#lob-change-appointment-calendar-dialog").modal('hide');
+                    $scope.showMsgDialog(".lob-msg-dialog",'Change appointment calendar','success','Change appointment calendar success!');
+                    if(newAppointmentDateTime>=$scope.currentUpdatingItem.appointmentDateTime)
+                    {
+                        $scope.lobAdminSearch.fromDateKey=moment(new Date($scope.currentUpdatingItem.appointmentDateTime));
+                        $scope.lobAdminSearch.toDateKey=moment(new Date(newAppointmentDateTime));
+                    }
+                    else
+                    {
+                        $scope.lobAdminSearch.fromDateKey=moment(new Date(newAppointmentDateTime));
+                        $scope.lobAdminSearch.toDateKey=moment(new Date($scope.currentUpdatingItem.appointmentDateTime));
+                    }
 
-        //             $http({
-        //                 method:"GET",
-        //                 url:"/api/rlob/appointment-calendar/check-same-doctor",
-        //                 params:{calId1:$scope.currentUpdatingItem.calId,calId2:newCalId}
-        //             })
-        //             .success(function(data) {
-        //                 if(data.status=='success')
-        //                 {
-        //                     if(data.data>1)
-        //                     {
-        //                         $scope.lobAdminSearch.doctorKey=null;
-        //                     }
-        //                     //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
-        //                     $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
-        //                 }
-        //             })
-        //             .error(function (data) {
-        //                 console.log("error");
-        //             })
-        //             .finally(function() {
-        //                 $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
-        //                 $scope.newAppointmentPositionFlag=true;
-        //                 $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
-        //                 $scope.filterBooking();
-        //             });
-        //         }
-        //         else
-        //         {
+                    $http({
+                        method:"GET",
+                        url:"/api/rlob/appointment-calendar/check-same-doctor",
+                        params:{calId1:$scope.currentUpdatingItem.calId,calId2:newCalId}
+                    })
+                    .success(function(data) {
+                        if(data.status=='success')
+                        {
+                            if(data.data>1)
+                            {
+                                $scope.lobAdminSearch.doctorKey=null;
+                            }
+                            //$scope.rlob_add_notification=function(assId,refId,sourceName,rlobType,type,content)
+                            $scope.rlob_add_notification($scope.currentUpdatingItem.assId,$scope.currentUpdatingItem.bookingId,$scope.sourceName,$scope.bellType.changeCalendar,$scope.notificationType.bell,'');
+                        }
+                    })
+                    .error(function (data) {
+                        console.log("error");
+                    })
+                    .finally(function() {
+                        $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
+                        $scope.newAppointmentPositionFlag=true;
+                        $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
+                        $scope.filterBooking();
+                    });
+                }
+                else
+                {
                     
-        //         }
-        //     },function(err){
+                }
+            },function(err){
 
-        //     });
-        // }
+            });
+        }
 
         //Nhay toi booking vua doi calendar
         $scope.goToNewAppoinmentPosition=function()
@@ -1108,11 +1151,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             })
         }
 
-        /**
-         * Copy booking 
-         * tannv.dts@gmail.com
-         */
-        $scope.copyBooking=function()
+        $scope.reschedule=function()
         {
             var bookingBehalfInfo={
                 ASS_SURNAME:$scope.selectedBooking.ASS_SURNAME,
@@ -1129,7 +1168,15 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
         }
 
 
-        
+        /**
+         * Khoi tao action center
+         * tannv.dts@gmail.com
+         */
+        $scope.actionCenter={};
+        $scope.actionCenter.runWhenSuccess=function()
+        {
+
+        }
 
         //Khoi tao cay, khoi  tao notification
         //Cot loi cua page

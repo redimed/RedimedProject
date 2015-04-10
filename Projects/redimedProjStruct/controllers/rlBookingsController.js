@@ -567,7 +567,6 @@ module.exports =
         var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'' ;
         var siteAddress=kiss.checkData(req.body.siteAddress)?req.body.siteAddress:'';
         var mapUrl=kiss.checkData(req.body.mapUrl)?req.body.mapUrl:'';
-        var isReschedule=kiss.checkData(req.body.isReschedule)?req.body.isReschedule:0;
         if(!kiss.checkListData(bookingId))
         {
             kiss.exlog("sendConfirmEmail","Loi data truyen den");
@@ -608,10 +607,8 @@ module.exports =
                             htmlBody:'',
                             textBody:''
                         };
-                        if(isReschedule!=1)
-                            emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
-                        else
-                            emailInfo.subject='Reschedule: Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        emailInfo.subject='RE: Confirmation of Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        
                         emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
                         //emailInfo.senders="tannv.solution@gmail.com";
                         emailInfo.recipients=row.Contact_email;
@@ -619,10 +616,7 @@ module.exports =
                         //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
                         var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
                         kiss.exlog(redimed_logo_1);
-                        var template='';
-                        if(isReschedule!=1)
-                        {
-                            template=
+                        var template=
                             " <div style='font:11pt Calibri'>                                                                                                                "+      
                             "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                     "+      
                             "   <p>                                                                                                                                          "+      
@@ -672,61 +666,7 @@ module.exports =
                             "   </table>                                                                                                                                     "+      
                             "                                                                                                                                                "+      
                             " </div>                                                                                                                                         "; 
-                        }
-                        else
-                        {
-                            template=
-                            " <div style='font:11pt Calibri'>                                                                                                            "+         
-                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                 "+         
-                            "   <p>                                                                                                                                      "+         
-                            "    Thank you for your booking request with Redimed.                                                                                        "+         
-                            "    The new appointment details for                                                                                                         "+  
-                            "    <span style='font-weight: bold'>{{WRK_OTHERNAMES}} {{WRK_SURNAME}} {{CLAIM_NO}}</span>                                                  "+
-                            "   are below:                                                                                                                               "+
-                            "   </p>                                                                                                                                     "+         
-                            "   <p>                                                                                                                                      "+         
-                            "    <table>                                                                                                                                 "+         
-                            "         <tr><td style='font-weight:bold'>Date:</td><td>{{DATE}}</td></tr>                                                                  "+    
-                            "         <tr><td style='font-weight:bold'>Time:</td><td>{{TIME}}</td></tr>                                                                  "+    
-                            "         <tr><td style='font-weight:bold'>Address:</td><td>{{Site_addr}}</td></tr>                                                          "+     
-                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>{{DOCTOR_NAME}}</td></tr>                                                         "+            
-                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>{{Rl_TYPE_NAME}}</td></tr>                                           "+     
-                            "    </table>                                                                                                                                "+         
-                            "   </p>                                                                                                                                     "+         
-                            "   <p>                                                                                                                                      "+         
-                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                            "+         
-                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                  "+         
-                            "   </p>                                                                                                                                     "+         
-                            "   <p>                                                                                                                                      "+         
-                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                   "+         
-                            "    on (08) 9230 0900 or medicolegal@redimed.com.au                                                                                         "+        
-                            "   </p>                                                                                                                                     "+         
-                            "                                                                                                                                            "+         
-                            "   <div style='width:400px;height:300px'>                                                                                                   "+         
-                            "     <img src='{{mapUrl}}'/>                                                                                                                "+         
-                            "     <div> Site address: {{siteAddress}} </div>                                                                                             "+         
-                            "   </div>                                                                                                                                   "+         
-                            "   <br/>                                                                                                                                    "+         
-                            "   <p>Kind Regards,</p>                                                                                                                     "+         
-                            "   <p>Redimed Medico-Legal</p>                                                                                                              "+         
-                            "   <hr/>                                                                                                                                    "+         
-                            "   <table>                                                                                                                                  "+         
-                            "   <tr>                                                                                                                                     "+         
-                            "       <td>                                                                                                                                 "+         
-                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                        "+         
-                            "       </td>                                                                                                                                "+         
-                            "       <td>                                                                                                                                 "+         
-                            "           <p><span style='font-weight: bold'>A&nbsp;</span>{{Site_addr}}</p>                                                               "+     
-                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                               "+         
-                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>      "+         
-                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                  "+         
-                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                          "+         
-                            "       </td>                                                                                                                                "+         
-                            "   </tr>                                                                                                                                    "+         
-                            "   </table>                                                                                                                                 "+         
-                            "                                                                                                                                            "+         
-                            " </div>                                                                                                                                     "; 
-                        }
+                        
          
                         var emailData={
                             FIRST_NAME:row.FIRST_NAME,
@@ -1909,6 +1849,142 @@ module.exports =
                     }
                 }
             });
+        });
+    },
+
+    rescheduleConfirmEmail:function(req,res){
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>.rescheduleConfirmEmail")
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>.rescheduleConfirmEmail")
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>.rescheduleConfirmEmail")
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>.rescheduleConfirmEmail")
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>.rescheduleConfirmEmail")
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>.rescheduleConfirmEmail")
+        var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'' ;
+        var siteAddress=kiss.checkData(req.body.siteAddress)?req.body.siteAddress:'';
+        var mapUrl=kiss.checkData(req.body.mapUrl)?req.body.mapUrl:'';
+        if(!kiss.checkListData(bookingId))
+        {
+            kiss.exlog("sendConfirmEmail","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT    u.`user_name`,u.FIRST_NAME,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
+            "   booking.`WRK_SURNAME`,booking.WRK_OTHERNAMES,booking.`CLAIM_NO`,                                                     "+
+            "   booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
+            " FROM  `rl_bookings` booking                                                                     "+
+            "   INNER JOIN `users` u ON booking.`ASS_ID`=u.`id`                                               "+
+            "   INNER JOIN `rl_types` rlType ON booking.`RL_TYPE_ID`=rlType.`RL_TYPE_ID`                      "+
+            "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                         "+
+            "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=redi.`id`                                 "+
+            " WHERE     booking.`BOOKING_ID`=?                                                                ";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql ,[bookingId],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    if(rows.length<=0)
+                    {
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        var row=rows[0];
+                        var emailInfo={
+                            subject:'',
+                            senders:'',
+                            recipients:'',
+                            htmlBody:'',
+                            textBody:''
+                        };
+                        emailInfo.subject='Reschedule: Medico-Legal booking '+row.WRK_OTHERNAMES+' '+row.WRK_SURNAME;
+                        emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
+                        //emailInfo.senders="tannv.solution@gmail.com";
+                        emailInfo.recipients=row.Contact_email;
+                        emailInfo.cc=rlobUtil.getMedicoLegalCC();
+                        //var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+                        var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
+                        kiss.exlog(redimed_logo_1);
+                        var template=
+                            " <div style='font:11pt Calibri'>                                                                                                            "+         
+                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                 "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    Thank you for your booking request with Redimed.                                                                                        "+         
+                            "    The new appointment details for                                                                                                         "+  
+                            "    <span style='font-weight: bold'>{{WRK_OTHERNAMES}} {{WRK_SURNAME}} {{CLAIM_NO}}</span>                                                  "+
+                            "   are below:                                                                                                                               "+
+                            "   </p>                                                                                                                                     "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    <table>                                                                                                                                 "+         
+                            "         <tr><td style='font-weight:bold'>Date:</td><td>{{DATE}}</td></tr>                                                                  "+    
+                            "         <tr><td style='font-weight:bold'>Time:</td><td>{{TIME}}</td></tr>                                                                  "+    
+                            "         <tr><td style='font-weight:bold'>Address:</td><td>{{Site_addr}}</td></tr>                                                          "+     
+                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>{{DOCTOR_NAME}}</td></tr>                                                         "+            
+                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>{{Rl_TYPE_NAME}}</td></tr>                                           "+     
+                            "    </table>                                                                                                                                "+         
+                            "   </p>                                                                                                                                     "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                            "+         
+                            "    uploaded to the online booking system at least one week prior to the appointment date.                                                  "+         
+                            "   </p>                                                                                                                                     "+         
+                            "   <p>                                                                                                                                      "+         
+                            "    Should you have any questions please do not hesitate to contact the Medico-Legal team                                                   "+         
+                            "    on (08) 9230 0900 or medicolegal@redimed.com.au                                                                                         "+        
+                            "   </p>                                                                                                                                     "+         
+                            "                                                                                                                                            "+         
+                            "   <div style='width:400px;height:300px'>                                                                                                   "+         
+                            "     <img src='{{mapUrl}}'/>                                                                                                                "+         
+                            "     <div> Site address: {{siteAddress}} </div>                                                                                             "+         
+                            "   </div>                                                                                                                                   "+         
+                            "   <br/>                                                                                                                                    "+         
+                            "   <p>Kind Regards,</p>                                                                                                                     "+         
+                            "   <p>Redimed Medico-Legal</p>                                                                                                              "+         
+                            "   <hr/>                                                                                                                                    "+         
+                            "   <table>                                                                                                                                  "+         
+                            "   <tr>                                                                                                                                     "+         
+                            "       <td>                                                                                                                                 "+         
+                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                        "+         
+                            "       </td>                                                                                                                                "+         
+                            "       <td>                                                                                                                                 "+         
+                            "           <p><span style='font-weight: bold'>A&nbsp;</span>{{Site_addr}}</p>                                                               "+     
+                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                               "+         
+                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>      "+         
+                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                  "+         
+                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                          "+         
+                            "       </td>                                                                                                                                "+         
+                            "   </tr>                                                                                                                                    "+         
+                            "   </table>                                                                                                                                 "+         
+                            "                                                                                                                                            "+         
+                            " </div>                                                                                                                                     "; 
+                        
+         
+                        var emailData={
+                            FIRST_NAME:row.FIRST_NAME,
+                            WRK_OTHERNAMES:row.WRK_OTHERNAMES,
+                            WRK_SURNAME:row.WRK_SURNAME,
+                            CLAIM_NO:row.CLAIM_NO,
+                            DATE:moment(row.APPOINTMENT_DATE).format("DD/MM/YYYY"),
+                            TIME:moment(row.APPOINTMENT_DATE).format("HH:mm"),
+                            Site_addr:row.Site_addr,
+                            DOCTOR_NAME:row.NAME,
+                            Rl_TYPE_NAME:row.Rl_TYPE_NAME,
+                            mapUrl:mapUrl,
+                            siteAddress:siteAddress
+                        }
+                        template=kiss.tokenBinding(template,emailData);
+                        emailInfo.htmlBody=template;
+                        rlobEmailController.sendEmail(req,res,emailInfo);
+                    }
+
+
+                }
+            });
+
         });
     }
 }
