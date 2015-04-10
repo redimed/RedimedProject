@@ -1,5 +1,6 @@
 angular.module("app.directive.common", [
     "app.directive.mydatatable.common",
+    "app.directive.smartfloat.common"
 ])
 .filter('offset', function () {
     return function (input, start) {
