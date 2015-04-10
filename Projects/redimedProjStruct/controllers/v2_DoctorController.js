@@ -24,7 +24,7 @@ module.exports = {
 			res.json({list: data, status: 'success'})
 		}).error(function(err) {
 			console.log(err);
-			res.json(500, {"status": "error", "error": error});
+			res.json(500, {"status": "error", "error": err});
 		})
 
 	},

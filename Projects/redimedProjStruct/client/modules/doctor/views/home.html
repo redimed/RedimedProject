@@ -13,32 +13,38 @@
 <div class="row">
     <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <!-- YEAR -->
-        <span class="field show-label">
+        <!-- <span class="field show-label">
             <label>Year</label>
             <input ng-model="selectDate.year" type="number" min="1990" max="2020" ng-change="loadCalendar()" />
-        </span>
+        </span> -->
         <!-- END YEAR -->
-    </div>
+    <!-- </div> -->
 
-    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+    <!-- <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12"> -->
         <!-- MONTH -->
-        <span class="field show-label">
+        <!-- <span class="field show-label">
             <label>Month</label>
             <select ng-options="month.code as month.title for month in options.month_in_year" ng-model="selectDate.month" ng-change="loadCalendar()">
                 <option value="">-- All Month --</option>
             </select>
-        </span>
+        </span> -->
         <!-- END MONTH -->
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+    <!-- </div> -->
+    <!-- <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12"> -->
          <!-- DAY -->
-        <span class="field show-label">
+        <!-- <span class="field show-label">
             <label>Date</label>
               <select ng-options="item.code as item.title for item in options.date_in_month" ng-model="selectDate.date" ng-change="loadCalendar()">
                 <option value="">-- All Date --</option>
             </select>
-        </span>
+        </span> -->
         <!-- END DAY -->
+
+        <span class="field">
+            <label for="date_selected">Date</label>
+            <input ui-date="{dateFormat: 'dd/mm/yy'}" readonly="readonly" placeholder="Date" name="date_selected" ng-model="selectDate" class="form-control" id="date_selected" float-label ng-change="loadCalendar()">
+        </span>
+
     </div>
 </div>
 
