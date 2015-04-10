@@ -5,7 +5,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/add.html',
 		scope: {
-			options: '='
+			options: '=',
+			onRowClick: '&'
 		},
 		link: function(scope, elem, attrs)
 		{
@@ -44,7 +45,18 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        listInsurerid :[],
 		        patient_id :$stateParams.patientId
 			}
-
+			scope.onRowClick = function(row){
+				 scope.company.InsurerTemp = row.id;
+				 scope.company.checkColor = row.id;
+			}
+			scope.clickDisable = function(row){
+				for (var i = 0; i <= scope.company.listTemp.length; i++) {
+						if (scope.company.listTemp[i] == row.id) {
+							scope.company.listTemp.splice(i,1);
+							scope.company.listInsurer.splice(i,1);
+						} 
+					}
+			}
 			var remove = function(row){
 				$modal.open({
 					templateUrl:  'modules/company/dialogs/templates/remove.html',
@@ -67,7 +79,12 @@ angular.module('app.loggedIn.company.directives.add', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addParent.html',
 			      controller: 'CompanyAddParentDialgosController',
-			      size :''
+			      size :'',
+			      resolve: {
+			      		companyId: function(){
+			      			return -1;
+			      		}
+			      }
 			    })
 			    .result.then(function(row){
 			    	scope.company.Company_name_Parent = row.Company_name;
@@ -80,7 +97,12 @@ angular.module('app.loggedIn.company.directives.add', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addInsurer.html',
 			      controller: 'CompanyInsurerDialgosController',
-			      size :''
+			      size :'',
+			      resolve: {
+			      		insurerArray: function(){
+			      			return scope.company.listTemp;
+			      		}
+			      }
 			    })
 			    .result.then(function(row){
 					var flag = 0
@@ -100,8 +122,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
 		    	var postData = angular.copy(scope.company.form);
+		    	postData.Insurer = scope.company.InsurerTemp;
 		    	postData.listInsurerid = scope.company.listTemp;
-		    	console.log(postData);
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
@@ -117,6 +139,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		    	listTemp:[],
 		    	errors:[],
 		    	Company_name_Parent:'',
+		    	InsurerTemp:'',
+		    	checkColor:'',
 		    	save: function(){ save(); },
 		    	addCompany :function(){addCompany();},
 		    	addInsurer :function(){addInsurer();},

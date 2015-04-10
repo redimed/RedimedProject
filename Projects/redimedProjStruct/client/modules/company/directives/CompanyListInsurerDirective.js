@@ -7,7 +7,8 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 		scope: {
 			options: '=',
 			limit: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			insurerArray:'='
 		},
 	link: function(scope, elem, attrs){
 			scope.setPage = function(page){
@@ -20,6 +21,7 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 				limit: 7,
 				max_size: 5,
 				Company_name: '',
+				insurerArray :scope.insurerArray,
 				Industry:'',
 				address:''
 			}

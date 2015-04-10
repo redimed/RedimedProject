@@ -11,3 +11,5 @@ app.post(url +'byCompanyId',CompanyController.postbyCompanyId);
 app.post(url + 'edit',CompanyController.postEdit);
 app.post(url + 'remove',CompanyController.postRemove);
 app.post(url + 'removeInsurer',CompanyController.postRemoveInsurer);
+app.post(url + 'upCompanyPatient',CompanyController.postUpCompanyPatient);
+app.post(url + 'disableInsurer',CompanyController.postDisableInsurer);
