@@ -20,5 +20,25 @@ angular.module('app.loggedIn.mdtspecialty.services', [])
 		var funcApi = mdtApi.all('search');
 		return funcApi.post(option);
 	}
+
+	mdtService.loadWithoutDoctor = function(data){
+		var funcApi = mdtApi.all('loadWithoutDoctor');
+		return funcApi.post({data: data});
+	}
+
+	mdtService.selectServiceDoctor = function(data){
+		var funcApi = mdtApi.all('selectServiceDoctor');
+		return funcApi.post({data: data});
+	}
+
+	mdtService.listByServiceDoctor = function(data){
+		var funcApi = mdtApi.all('listByServiceDoctor');
+		return funcApi.post({data: data});
+	}
+
+	mdtService.active = function(data){
+		var funcApi = mdtApi.all('active');
+		return funcApi.post({data: data});
+	}
 	return mdtService;
 })

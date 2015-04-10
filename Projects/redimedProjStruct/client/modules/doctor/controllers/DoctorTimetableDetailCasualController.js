@@ -5,11 +5,11 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 
 	var doctor_id = $stateParams.doctorId;
 	var from_time = null;
-	var today = new Date();
+	var today = moment().format('YYYY-MM-DD');
 
 	$scope.objectMap = {};
 	$scope.objectMap.from_time = ConfigService.convertToDate(today);
-	today.setDate(today.getDate() + 30);
+	today = moment().add(30, 'days').format('YYYY-MM-DD');
 	$scope.objectMap.to_time = ConfigService.convertToDate(today);
 
 

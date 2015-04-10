@@ -20,6 +20,8 @@ angular.module('app.loggedIn.timetable.dialogs.editDay', [])
 		postData.Last_update_date = moment().format('YYYY-MM-DD');
 		postData.Created_by = postData.Last_updated_by = user_id;
 		postData.isenable = 1;
+		postData.from_time = ConfigService.convertToHHMM(postData.from_time);
+		postData.to_time = ConfigService.convertToHHMM(postData.to_time);
 		postData.from_date = ConfigService.convertToDB(postData.from_date);
 		postData.to_date = ConfigService.convertToDB(postData.to_date);
 		postData.doctor_id = $stateParams.doctorId;
@@ -41,6 +43,9 @@ angular.module('app.loggedIn.timetable.dialogs.editDay', [])
 
 			$scope.timetable.form.from_date = ConfigService.convertToDate($scope.timetable.form.from_date);
 			$scope.timetable.form.to_date = ConfigService.convertToDate($scope.timetable.form.to_date);
+
+			$scope.timetable.form.from_time = ConfigService.convertHHMMToInt($scope.timetable.form.from_time);
+			$scope.timetable.form.to_time = ConfigService.convertHHMMToInt($scope.timetable.form.to_time);
 
 			delete $scope.timetable.form.Creation_date;
 		}, function(error){})
