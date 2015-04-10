@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GorgonFCAReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1453719-11ad-40a0-b0d5-bfa64cf77775">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1009"/>
+	<property name="ireport.y" value="4018"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -1111,87 +1111,87 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Ankles ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="62" y="244" width="481" height="1" uuid="9f16f06e-8307-4e4f-aa40-e6170b33587e"/>
+				<reportElement x="63" y="243" width="481" height="1" uuid="9f16f06e-8307-4e4f-aa40-e6170b33587e"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="10" y="233" width="52" height="14" uuid="60ea4253-3a84-4b6e-bf04-767eb2bf2e1a"/>
+				<reportElement x="11" y="232" width="52" height="14" uuid="60ea4253-3a84-4b6e-bf04-767eb2bf2e1a"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Comments]]></text>
 			</staticText>
 			<line>
-				<reportElement x="62" y="257" width="481" height="1" uuid="68b85d6f-5550-4625-adeb-7818ac305542"/>
+				<reportElement x="63" y="256" width="481" height="1" uuid="68b85d6f-5550-4625-adeb-7818ac305542"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="283" width="481" height="1" uuid="24c1c8dc-5372-4a14-9767-fba9cee8698b"/>
+				<reportElement x="63" y="282" width="481" height="1" uuid="24c1c8dc-5372-4a14-9767-fba9cee8698b"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="270" width="481" height="1" uuid="027469c4-c7c9-44aa-b38a-336f2d53381e"/>
+				<reportElement x="63" y="269" width="481" height="1" uuid="027469c4-c7c9-44aa-b38a-336f2d53381e"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="296" width="481" height="1" uuid="b2ab1043-16bd-40c9-8d0b-adadd54ad189"/>
+				<reportElement x="63" y="295" width="481" height="1" uuid="b2ab1043-16bd-40c9-8d0b-adadd54ad189"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="309" width="481" height="1" uuid="5e766dd5-a350-4852-8191-5557e36fd9b0"/>
+				<reportElement x="63" y="308" width="481" height="1" uuid="5e766dd5-a350-4852-8191-5557e36fd9b0"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="322" width="481" height="1" uuid="ba6e24f4-48ae-4901-9d98-9602b1da30a8"/>
+				<reportElement x="63" y="321" width="481" height="1" uuid="ba6e24f4-48ae-4901-9d98-9602b1da30a8"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="425" y="335" width="120" height="1" uuid="2646fd00-a041-4631-a641-601622c1f3b7"/>
+				<reportElement x="425" y="338" width="120" height="1" uuid="2646fd00-a041-4631-a641-601622c1f3b7"/>
 			</line>
 			<line>
-				<reportElement x="425" y="365" width="120" height="1" uuid="db223c70-60c7-4529-9c6f-2023d7ad24f6"/>
+				<reportElement x="425" y="368" width="120" height="1" uuid="db223c70-60c7-4529-9c6f-2023d7ad24f6"/>
 			</line>
 			<line>
-				<reportElement x="424" y="335" width="1" height="30" uuid="2ab51cb7-64da-43c2-a424-fca9e5fb0c5b"/>
+				<reportElement x="424" y="338" width="1" height="30" uuid="2ab51cb7-64da-43c2-a424-fca9e5fb0c5b"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="544" y="335" width="1" height="30" uuid="28e03e97-db16-4c1f-958c-8ff16587f610"/>
+				<reportElement x="544" y="338" width="1" height="30" uuid="28e03e97-db16-4c1f-958c-8ff16587f610"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="484" y="336" width="1" height="30" uuid="96fe2a36-cc5f-4e95-bc65-6845c364892c"/>
+				<reportElement x="484" y="339" width="1" height="30" uuid="96fe2a36-cc5f-4e95-bc65-6845c364892c"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="425" y="336" width="60" height="30" uuid="dc2f36a7-6758-46f9-ac0a-f61bb57d23c7"/>
+				<reportElement x="425" y="339" width="60" height="30" uuid="dc2f36a7-6758-46f9-ac0a-f61bb57d23c7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="518" y="336" width="15" height="29" uuid="e078d2a8-52a0-4a44-b18a-f6bdb8617473"/>
+				<reportElement x="518" y="339" width="15" height="29" uuid="e078d2a8-52a0-4a44-b18a-f6bdb8617473"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/20]]></text>
 			</staticText>
@@ -1445,87 +1445,87 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[Yes]]></text>
 			</staticText>
 			<line>
-				<reportElement x="424" y="682" width="1" height="30" uuid="b35b926c-249b-4d25-8618-a365099edd06"/>
+				<reportElement x="424" y="664" width="1" height="30" uuid="b35b926c-249b-4d25-8618-a365099edd06"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="10" y="580" width="52" height="14" uuid="b23efdc9-363f-47cf-9aaf-c6b2890089ca"/>
+				<reportElement x="10" y="562" width="52" height="14" uuid="b23efdc9-363f-47cf-9aaf-c6b2890089ca"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Comments]]></text>
 			</staticText>
 			<line>
-				<reportElement x="62" y="643" width="481" height="1" uuid="8d57251c-f4e7-40be-b294-94e4cd7fcdb4"/>
+				<reportElement x="62" y="625" width="481" height="1" uuid="8d57251c-f4e7-40be-b294-94e4cd7fcdb4"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="425" y="683" width="60" height="30" uuid="2b4331d5-866d-46ac-a3ea-3f4805dae80b"/>
+				<reportElement x="425" y="665" width="60" height="30" uuid="2b4331d5-866d-46ac-a3ea-3f4805dae80b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<line>
-				<reportElement x="62" y="669" width="481" height="1" uuid="90743a57-f6b8-4f98-91d3-699f8a80a08d"/>
+				<reportElement x="62" y="651" width="481" height="1" uuid="90743a57-f6b8-4f98-91d3-699f8a80a08d"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="425" y="682" width="120" height="1" uuid="d225c962-7e32-4b6e-b90b-f66b3f52d738"/>
+				<reportElement x="425" y="664" width="120" height="1" uuid="d225c962-7e32-4b6e-b90b-f66b3f52d738"/>
 			</line>
 			<line>
-				<reportElement x="544" y="682" width="1" height="30" uuid="579ceebb-b846-464d-b888-13f2b3590f2a"/>
+				<reportElement x="544" y="664" width="1" height="30" uuid="579ceebb-b846-464d-b888-13f2b3590f2a"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="630" width="481" height="1" uuid="57024975-2211-4292-bef5-1210a4809ec3"/>
+				<reportElement x="62" y="612" width="481" height="1" uuid="57024975-2211-4292-bef5-1210a4809ec3"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="591" width="481" height="1" uuid="313b1073-3f68-4846-9c06-b8543d25a19f"/>
+				<reportElement x="62" y="573" width="481" height="1" uuid="313b1073-3f68-4846-9c06-b8543d25a19f"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="617" width="481" height="1" uuid="d16aac8c-2a4d-4940-889e-5b60fbb6d21e"/>
+				<reportElement x="62" y="599" width="481" height="1" uuid="d16aac8c-2a4d-4940-889e-5b60fbb6d21e"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="604" width="481" height="1" uuid="beaa79c0-ec2c-4567-8dcc-06f81943eb40"/>
+				<reportElement x="62" y="586" width="481" height="1" uuid="beaa79c0-ec2c-4567-8dcc-06f81943eb40"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="62" y="656" width="481" height="1" uuid="02bab866-2d03-4b0c-b0fe-ca06c52def9a"/>
+				<reportElement x="62" y="638" width="481" height="1" uuid="02bab866-2d03-4b0c-b0fe-ca06c52def9a"/>
 				<graphicElement>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="425" y="712" width="120" height="1" uuid="21c6dea9-cbdd-4388-8e96-483f103da3c1"/>
+				<reportElement x="425" y="694" width="120" height="1" uuid="21c6dea9-cbdd-4388-8e96-483f103da3c1"/>
 			</line>
 			<line>
-				<reportElement x="484" y="683" width="1" height="30" uuid="45c707d3-d14b-48e9-afb6-a2bb462ecf54"/>
+				<reportElement x="484" y="665" width="1" height="30" uuid="45c707d3-d14b-48e9-afb6-a2bb462ecf54"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="518" y="683" width="15" height="29" uuid="8a557e87-1c38-47af-8eb8-2a76075c4e57"/>
+				<reportElement x="518" y="665" width="15" height="29" uuid="8a557e87-1c38-47af-8eb8-2a76075c4e57"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[/5]]></text>
 			</staticText>
@@ -1680,11 +1680,11 @@ Barrow Island LNG Plant ]]></text>
 				<text><![CDATA[0]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="67" y="232" width="476" height="94" uuid="8bae46bf-817f-4056-b1ca-b3a0cacd1a2a"/>
+				<reportElement x="68" y="231" width="476" height="94" uuid="8bae46bf-817f-4056-b1ca-b3a0cacd1a2a"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_1Rom_Comments} != null ? $F{gorgon_doc_fca_1Rom_Comments} : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="486" y="336" width="33" height="29" uuid="10b4e0d9-02d1-4f45-8b44-757373760654"/>
+				<reportElement x="486" y="339" width="33" height="29" uuid="10b4e0d9-02d1-4f45-8b44-757373760654"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_1Rom_Total} != null ? $F{gorgon_doc_fca_1Rom_Total} : ""]]></textFieldExpression>
 			</textField>
@@ -1748,12 +1748,12 @@ Barrow Island LNG Plant ]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Excellent]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="67" y="579" width="477" height="92" uuid="dfd0f5ba-b486-42bf-830e-a912dc5fe94f"/>
-				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_2Comments} != null ? $F{gorgon_doc_fca_2Comments} : ""]]></textFieldExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="67" y="561" width="477" height="92" uuid="dfd0f5ba-b486-42bf-830e-a912dc5fe94f"/>
+				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_Chest}.intValue() == 1 ? "Chester step test performed as per company request \n" + $F{gorgon_doc_fca_2Comments} : $F{gorgon_doc_fca_2Comments}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="487" y="683" width="33" height="29" uuid="a219abbf-32d7-46e9-b973-84c201abc293"/>
+				<reportElement x="487" y="665" width="33" height="29" uuid="a219abbf-32d7-46e9-b973-84c201abc293"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_2Total} != null ? $F{gorgon_doc_fca_2Total} : ""]]></textFieldExpression>
 			</textField>
@@ -1932,14 +1932,6 @@ Barrow Island LNG Plant ]]></text>
 					<printWhenExpression><![CDATA[$F{gorgon_doc_fca_1Rom_Ankles} != null && $F{gorgon_doc_fca_1Rom_Ankles}.intValue() == 1 ? true : false]]></printWhenExpression>
 				</reportElement>
 			</ellipse>
-			<staticText>
-				<reportElement x="10" y="555" width="253" height="14" uuid="050718ec-3913-4f6f-b4fc-292cde8c8053"/>
-				<text><![CDATA[Chester step test performed as per company request]]></text>
-			</staticText>
-			<image>
-				<reportElement mode="Transparent" x="260" y="555" width="14" height="14" uuid="df8c7626-875a-42a0-81f2-7e85e932407d"/>
-				<imageExpression><![CDATA[$P{realPath}+($F{gorgon_doc_fca_Chest} != null && $F{gorgon_doc_fca_Chest}.intValue() == 1 ? "checked.png" : "uncheck.png")]]></imageExpression>
-			</image>
 		</band>
 		<band height="724">
 			<image hAlign="Center" vAlign="Middle">
@@ -6603,9 +6595,9 @@ Barrow Island LNG Plant ]]></text>
 				</textElement>
 				<text><![CDATA[90 - 100]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="15" y="460" width="523" height="133" uuid="557a19ef-8a91-4a0c-9cf3-23127340f493"/>
-				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_LComment} != null ? $F{gorgon_doc_fca_LComment} : ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{gorgon_doc_fca_Chest}.intValue() == 1 ? "Chester step test performed as per company request \n" + $F{gorgon_doc_fca_LComment} : $F{gorgon_doc_fca_LComment}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="54" y="699" width="227" height="15" uuid="4cbeeafa-97b5-4159-9591-df212f2ea314"/>
