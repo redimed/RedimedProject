@@ -617,8 +617,7 @@ module.exports =
                         var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
                         kiss.exlog(redimed_logo_1);
                         var template=
-                            " <div style='font:11pt Calibri'>                                                                                                                "+      
-                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                     "+      
+                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                    "+      
                             "   <p>                                                                                                                                          "+      
                             "    Thank you for your booking request with Redimed.                                                                                            "+      
                             "    The appointment has been confirmed for                                                                                                      "+      
@@ -647,25 +646,7 @@ module.exports =
                             "     <div> Site address: {{siteAddress}} </div>                                                                                                 "+      
                             "   </div>                                                                                                                                       "+      
                             "   <br/>                                                                                                                                        "+      
-                            "   <p>Kind Regards,</p>                                                                                                                         "+      
-                            "   <p>Redimed Medico-Legal</p>                                                                                                                  "+      
-                            "   <hr/>                                                                                                                                        "+      
-                            "   <table>                                                                                                                                      "+      
-                            "   <tr>                                                                                                                                         "+      
-                            "       <td>                                                                                                                                     "+      
-                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                            "+      
-                            "       </td>                                                                                                                                    "+      
-                            "       <td>                                                                                                                                     "+      
-                            "           <p><span style='font-weight: bold'>A&nbsp;</span>{{Site_addr}}</p>                                                                   "+  
-                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                   "+      
-                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>          "+      
-                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                      "+      
-                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                              "+      
-                            "       </td>                                                                                                                                    "+      
-                            "   </tr>                                                                                                                                        "+      
-                            "   </table>                                                                                                                                     "+      
-                            "                                                                                                                                                "+      
-                            " </div>                                                                                                                                         "; 
+                            "   <p>Kind Regards,</p>                                                                                                                         ";
                         
          
                         var emailData={
@@ -721,18 +702,16 @@ module.exports =
         var sql=
             " SELECT COUNT( booking.`BOOKING_ID`) AS count_upcomming_bookings                                             "+
             " FROM `rl_bookings` booking                                                                                  "+
-            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)    "+
-            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                       "+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                  "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                            "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                           "+
             " WHERE booking.`APPOINTMENT_DATE` > CURRENT_TIMESTAMP                                                        "+
             " AND booking.`BOOKING_TYPE`= ?                                                                               "+                                                
-            " AND booking.`STATUS` NOT IN ('Completed','Cancel','Late Cancellation')                                      "+                                
+            " AND booking.`STATUS` NOT IN ('Completed','Cancel')                                                          "+                                
             " AND booking.DOCTOR_ID LIKE ?                                                                                "+
             " AND  dt.`NAME` LIKE ?                                                                                       "+
             " AND stite.`Site_name` LIKE ?                                                                                "+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                          "+
+            " AND CONCAT(booking.`WRK_SURNAME`,' ',booking.`WRK_OTHERNAMES`) LIKE ?                                       "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   ";
         var params=[];
@@ -790,20 +769,19 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                                          "+
+            " SELECT booking.*,dt.`NAME`,stite.`Site_name`,rltype.`Rl_TYPE_NAME`,                                         "+
+            " CONCAT(booking.`WRK_SURNAME`,' ',booking.`WRK_OTHERNAMES`) AS FULL_NAME                                     "+
             " FROM `rl_bookings` booking                                                                                  "+
-            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)    "+
-            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                       "+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                  "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                            "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                           "+
             " WHERE booking.`BOOKING_TYPE`= ?                                                                             "+
             " AND booking.`APPOINTMENT_DATE` > CURRENT_TIMESTAMP                                                          "+
-            " AND booking.`STATUS` NOT IN ('Completed','Cancel','Late Cancellation')                                      "+                               
+            " AND booking.`STATUS` NOT IN ('Completed','Cancel')                                                          "+                               
             " AND booking.DOCTOR_ID LIKE ?                                                                                "+
             " AND  dt.`NAME` LIKE ?                                                                                       "+
             " AND stite.`Site_name` LIKE ?                                                                                "+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                          "+
+            " AND CONCAT(booking.`WRK_SURNAME`,' ',booking.`WRK_OTHERNAMES`) LIKE ?                                       "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                          ";
@@ -869,14 +847,14 @@ module.exports =
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                          "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                    "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                   "+
-            " WHERE rlfile.`BOOKING_ID` IS NULL                                                                                   "+
-            // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                  "+
+            //" WHERE rlfile.`BOOKING_ID` IS NULL                                                                                   "+
+            " WHERE booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                "+
             " AND booking.`BOOKING_TYPE`= ?                                                                                       "+                                                    
-            " AND booking.`STATUS` = 'Completed'                                                                                  "+
+            " AND booking.`STATUS` NOT IN ('Cancel','Completed','Not Arrived','Late Cancellation')                                "+
             " AND booking.DOCTOR_ID LIKE ?                                                                                        "+
             " AND  dt.`NAME` LIKE ?                                                                                               "+
             " AND stite.`Site_name` LIKE ?                                                                                        "+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                  "+
+            " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                               "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                  "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
@@ -935,21 +913,22 @@ module.exports =
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                                                            "+
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`,                                                           "+
+            " CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) AS FULL_NAME                                                       "+
             " FROM `rl_bookings` booking                                                                                                    "+
             " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)                      "+
             " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                                         "+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                                    "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                              "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                             "+
-            " WHERE rlfile.`BOOKING_ID` IS NULL                                                                                             "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                                                 "+
-            // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
-            " AND booking.`STATUS` = 'Completed'                                                                                            "+
+            //" WHERE rlfile.`BOOKING_ID` IS NULL                                                                                             "+
+            " WHERE booking.`BOOKING_TYPE`= ?                                                                                               "+
+            " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
+            " AND booking.`STATUS` NOT IN ('Cancel','Completed','Not Arrived','Late Cancellation')                                          "+
             " AND booking.DOCTOR_ID LIKE ?                                                                                                  "+
             " AND  dt.`NAME` LIKE ?                                                                                                         "+
             " AND stite.`Site_name` LIKE ?                                                                                                  "+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                            "+
+            " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                                         "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                            "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
             " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                                           ";
@@ -1017,14 +996,14 @@ module.exports =
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                          "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                    "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                   "+
-            " WHERE rlfile.`BOOKING_ID` IS NOT NULL                                                                               "+
+            // " WHERE rlfile.`BOOKING_ID` IS NOT NULL                                                                               "+
             // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                  "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                                       "+                                                    
-            " AND booking.`STATUS` = 'Completed'                                                                                  "+
+            " WHERE booking.`BOOKING_TYPE`= ?                                                                                     "+                                                    
+            " AND booking.`STATUS` IN ('Not Arrived','Completed','Cancel','Late Cancellation')                                    "+
             " AND booking.DOCTOR_ID LIKE ?                                                                                        "+
             " AND  dt.`NAME` LIKE ?                                                                                               "+
             " AND stite.`Site_name` LIKE ?                                                                                        "+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                  "+
+            " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                               "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                  "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
@@ -1083,21 +1062,22 @@ module.exports =
         var pageIndex= parseInt((req.body.pageIndex-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`                                                            "+
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`,                                                            "+
+            " CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) AS FULL_NAME                                                       "+
             " FROM `rl_bookings` booking                                                                                                    "+
             " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)                      "+
             " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                                         "+
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                                    "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                              "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                             "+
-            " WHERE rlfile.`BOOKING_ID` IS NOT NULL                                                                                         "+
+            //" WHERE rlfile.`BOOKING_ID` IS NOT NULL                                                                                         "+
             // " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
-            " AND booking.`BOOKING_TYPE`= ?                                                                                                 "+
-            " AND booking.`STATUS` = 'Completed'                                                                                            "+
+            " WHERE booking.`BOOKING_TYPE`= ?                                                                                               "+
+            " AND booking.`STATUS` IN ('Not Arrived','Completed','Cancel','Late Cancellation')                                              "+
             " AND booking.DOCTOR_ID LIKE ?                                                                                                  "+
             " AND  dt.`NAME` LIKE ?                                                                                                         "+
             " AND stite.`Site_name` LIKE ?                                                                                                  "+
-            " AND `booking`.`WRK_SURNAME` LIKE ?                                                                                            "+
+            " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                                         "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                            "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                                           ";

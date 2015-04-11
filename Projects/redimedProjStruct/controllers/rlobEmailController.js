@@ -11,8 +11,30 @@ var smtpPool = require('nodemailer-smtp-pool');
 var rlobUtil=require('./rlobUtilsController');
 module.exports =
 {
-    sendEmail: function (req,res,emailInfo) {
-
+    sendEmail: function (req,res,emailInfo) {      
+      /*
+        phanquocchien.c1109g@gmail.com
+        chen thong tin vao noi dung email
+       */
+        emailInfo.htmlBody = " <div style='font:11pt Calibri'> "+ emailInfo.htmlBody +  
+        "   <hr/>                                                                                                                                        "+      
+        "   <table>                                                                                                                                      "+      
+        "   <tr>                                                                                                                                         "+      
+        "       <td>                                                                                                                                     "+      
+        "     <img src='http://s17.postimg.org/dqbicb0zj/Medico_Legal.png'/>                                                                             "+      
+        "       </td>                                                                                                                                    "+      
+        "       <td>                                                                                                                                     "+      
+        "           <p style='font-weight: bold'>Redimed Medico-Legal</p>                                                                                "+      
+        "           <p><span style='font-weight: bold'>A&nbsp;</span>1 Frederick street, Belmont, Westem Australia 6140</p>                              "+  
+        "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                   "+      
+        "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900 <span style='font-weight: bold'>F</span> +61 8 9230 0999</p>        "+      
+        "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                      "+      
+        "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                              "+      
+        "       </td>                                                                                                                                    "+      
+        "   </tr>                                                                                                                                        "+      
+        "   </table>                                                                                                                                     "+      
+        "                                                                                                                                                "+      
+        " </div>                                                                                                                                         "; 
         if(rlobUtil.isTestSendMail)
         {
            var transport = nodemailer.createTransport({

@@ -30,8 +30,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                     // " <p>Password: {{password}}</p>                                                           "+
                     " <p>Website: {{linkWebsite}}</p>                         "+
                     " <p>Thank you</p>                                                                       "+
-                    " <p>Kind Regards,</p>                                                                   "+
-                    " <p>Medico-Legal Department</p>                                                         ";
+                    " <p>Kind Regards,</p>                                                                   ";
                 emailData={
                     firstName:userInfo.FIRST_NAME,
                     userName:userInfo.user_name,
@@ -67,8 +66,7 @@ var emailConfirm=function(req,res,redilegalUserName,status)
                     "   Please contact the Medico-Legal Department on {{departmentPhone}} for further information       "+
                     " </p>                                                                                              "+
                     " <p>Thank you</p>                                                                                  "+
-                    " <p>Kind Regards,</p>                                                                              "+
-                    " <p>Medico-Legal Department</p>                                                                    ";
+                    " <p>Kind Regards,</p>                                                                              ";
                 emailData={
                     firstName:userInfo.FIRST_NAME,
                     departmentPhone:'(08) 9230 0900'
@@ -179,8 +177,7 @@ module.exports =
                                     " </p>                                                                                      "+
                                     " <p>Your application will be reviewed. </p>                                                "+                                                                                                                                  
                                     " <p>Thank you</p>                                                                          "+
-                                    " <p>Kind Regards,</p>                                                                      "+
-                                    " <p>Medico-Legal Department</p>                                                            ";
+                                    " <p>Kind Regards,</p>                                                                      ";
                                 emailData={
                                     firstName:userInfo.fname,
                                     userName:userInfo.userName,

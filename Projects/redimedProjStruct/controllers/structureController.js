@@ -16,19 +16,20 @@ module.exports =
             return;
         }
         var sql=
-            " SELECT 	booking.`BOOKING_ID` AS ID,                                             "+
-            " 	booking.BOOKING_TYPE AS SOURCE_NAME,                                            "+
-            " 	booking.`APPOINTMENT_DATE` AS DATE_UPCOMING,                                    "+
-            " 	CONCAT(booking.`WRK_SURNAME`,' - ',`rltype`.`Rl_TYPE_NAME`) AS NOTIFICATION,    "+
-            " 	`booking`.`WRK_SURNAME` AS PERSON_INFO,                                         "+
-            " 	CONCAT('at ',redi.`Site_name`,' by ',doctor.NAME)AS MESSAGE ,                   "+
-            " 	CONCAT('address: ',redi.`Site_addr`) AS DETAIL                                  "+
-            " FROM 	`rl_bookings` booking                                                       "+
-            " 	INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=redi.`id`                   "+
-            " 	INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`           "+
-            " 	INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`        "+
-            " WHERE 	booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP AND booking.`ASS_ID`=?     "+
-            " ORDER BY DATE_UPCOMING                                                            ";
+                " SELECT    booking.`BOOKING_ID` AS ID,                                             "+
+                "   booking.BOOKING_TYPE AS SOURCE_NAME,                                            "+
+                "   booking.`APPOINTMENT_DATE` AS DATE_UPCOMING,rltype.`Rl_TYPE_NAME` AS TYPENAME,  "+
+                "   booking.`CLAIM_NO` AS CLAIM_NO,booking.`WRK_OTHERNAMES` AS FIRSTNAME,           "+
+                "   CONCAT(booking.`WRK_SURNAME`,' - ',`rltype`.`Rl_TYPE_NAME`) AS NOTIFICATION,    "+
+                "   `booking`.`WRK_SURNAME` AS PERSON_INFO,                                         "+
+                "   CONCAT('at ',redi.`Site_name`,' by ',doctor.NAME)AS MESSAGE ,                   "+
+                "   CONCAT('address: ',redi.`Site_addr`) AS DETAIL                                  "+
+                " FROM  `rl_bookings` booking                                                       "+
+                "   INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=redi.`id`                   "+
+                "   INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`           "+
+                "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`        "+
+                " WHERE     booking.`APPOINTMENT_DATE`>CURRENT_TIMESTAMP AND booking.`ASS_ID`=?     "+
+                " ORDER BY DATE_UPCOMING                                                            ";
         req.getConnection(function (err, connection)
         {
             var query = connection.query(sql, userId, function (err, rows)
