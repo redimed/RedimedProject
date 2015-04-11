@@ -4,6 +4,7 @@
 var db = require('../models');
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
+var FunctionSendMail = require("../controllers/TimeSheetController/timeSheetEmailController.js");
 module.exports = {
     addAllTask: function(req, res) {
         var allTask = req.body.allTask;
@@ -71,18 +72,24 @@ module.exports = {
                         chainer.runSerially().success(function(result) {
                             if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
                                 //TRACKER
-                                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
                                 var idTaskWeek = result[0].dataValues.tasks_week_id;
                                 var tracKer = {
                                     statusID: info.statusID,
                                     USER_ID: info.userID,
                                     idTaskWeek: idTaskWeek,
-                                    date: date
+                                    date: info.date
                                 };
                                 //CALL FUNCTION TRACKER
                                 TracKerTimeSheet(tracKer);
                                 //END
                                 //END TRACKER
+
+                                //FUNCTION SEND MAIL
+                                if (info.statusID === 2) {
+                                    SendMailSubmit(req, res, info);
+                                }
+                                //END SEND MAIL
                             }
                             res.json({
                                 status: 'success'
@@ -857,3 +864,104 @@ var TracKerTimeSheet = function(info) {
         });
 };
 //END
+
+//FUNCTION SEND MAIL
+var SendMailSubmit = function(req, res, info) {
+    var USER_ID_SUBMIT = info.userID;
+    var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var DATE_OF_WEEK = arrayWeek[moment(info.date).format('e') - 1];
+    var DATE_SUBMIT = moment(info.date).format('DD/MM/YYYY - HH:mm:ss');
+    var idTaskWeek = info.idTaskWeek;
+    var queryNodeChildren = "SELECT DISTINCT sys_hierarchies_users.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users " +
+        "INNER JOIN hr_employee ON hr_employee.Dept_ID = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
+        "WHERE sys_hierarchies_users.USER_ID = " + USER_ID_SUBMIT;
+    db.sequelize.query(queryNodeChildren)
+        .success(function(result) {
+            if (result[0] !== undefined && result[0] !== null && result[0].NODE_ID !== undefined && result[0].NODE_ID !== null && result[0].DEPARTMENT_CODE_ID !== undefined && result[0].DEPARTMENT_CODE_ID !== null) {
+                var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = " + result[0].NODE_ID;
+                db.sequelize.query(queryParentNodeId)
+                    .success(function(result2) {
+                        if (result2[0] !== undefined && result2[0] !== null && result2[0].TO_NODE_ID !== undefined && result2[0].TO_NODE_ID !== null) {
+                            var queryGetUser = "SELECT sys_hierarchies_users.USER_ID FROM sys_hierarchies_users " +
+                                "WHERE sys_hierarchies_users.NODE_ID = " + result2[0].TO_NODE_ID +
+                                " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = " + result[0].DEPARTMENT_CODE_ID;
+                            db.sequelize.query(queryGetUser)
+                                .success(function(result3) {
+                                    if (result3[0] !== undefined && result3[0] !== null && result3[0].USER_ID !== undefined && result3[0].USER_ID !== null) {
+                                        var queryManage = "SELECT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
+                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + result3[0].USER_ID;
+                                        db.sequelize.query(queryManage)
+                                            .success(function(resultManage) {
+                                                var queryEmp = "SELECT hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
+                                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + USER_ID_SUBMIT;
+                                                db.sequelize.query(queryEmp)
+                                                    .success(function(resultEmp) {
+                                                        if (resultManage[0] !== undefined && resultManage[0] !== null && resultEmp[0] !== undefined && resultEmp[0] !== null) {
+                                                            //SEND MAIL
+                                                            mailOptions = {
+                                                                senders: 'TimeSheet',
+                                                                recipients: resultManage[0].Email,
+                                                                subject: 'Notification of Submitted Timesheet(s)',
+                                                                htmlBody: '<i>"Dear <b>' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + '</b><br/>' +
+                                                                    'This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on ' + DATE_OF_WEEK + ', ' +
+                                                                    DATE_SUBMIT + '. ' +
+                                                                    'Please log into the Timesheet System to review and approve/reject the timesheet.<br/>' +
+                                                                    'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
+                                                                    'Regards,<br/>' +
+                                                                    'Timesheet Reporting System<br><br>' +
+                                                                    'This e-mail was auto generated. Please do not respond"</i>'
+                                                            };
+                                                            console.log(mailOptions);
+                                                            // END APPROVE
+                                                            //CALL SEND MAIL
+                                                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                                                            // END CALL
+                                                            // END SEND
+                                                        }
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "success"
+                                                        });
+                                                        return;
+                                                    });
+
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            });
+                                    }
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+
+                                });
+                        }
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    });
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "success"
+            });
+            return;
+        });
+};
+//END SEND MAIL

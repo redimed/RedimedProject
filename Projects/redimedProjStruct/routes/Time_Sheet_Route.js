@@ -58,5 +58,4 @@ app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
 //END REPORT
 
 //SEND MAIL
-app.post("/api/TimeSheet/post-send-mail", TimeSheet.SendMailTimeSheet);
 // END SEND MAIL

@@ -1,29 +1,24 @@
-/**
- * Created by tannv.dts@gmail.com on 9/26/2014.
- */
-
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
-var isTestEmail = true;
+var isTest = false;
 module.exports = {
     sendEmail: function(req, res, emailInfo) {
-        if (isTestEmail) {
+
+        if (isTest) {
             var transport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
-                    user: 'timesheetnotification@gmail.com', //test
-                    pass: 'timesheet1234' //test
+                    user: 'vnlegal123@gmail.com', //test
+                    pass: 'redimed123' //test
                 }
             });
 
             var mailOptions = {
                 from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
                 to: emailInfo.recipients, // receiver
-                cc: emailInfo.cc ? emailInfo.cc : [],
                 subject: emailInfo.subject, // Subject line
-                html: emailInfo.htmlBody,
-                attachments: emailInfo.attachments ? emailInfo.attachments : []
+                html: emailInfo.htmlBody
             }
         } else {
             var transport = nodemailer.createTransport(smtpTransport({
@@ -33,8 +28,6 @@ module.exports = {
                 auth: {
                     user: "programmer2",
                     pass: "Hello8080"
-                        // user: "redicolegal",
-                        // pass: "L3g@lSyst3m!"
                 },
                 tls: {
                     rejectUnauthorized: false
@@ -45,10 +38,8 @@ module.exports = {
             var mailOptions = {
                 from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
                 to: emailInfo.recipients, // receiver
-                cc: emailInfo.cc ? emailInfo.cc : [],
                 subject: emailInfo.subject, // Subject line
-                html: emailInfo.htmlBody,
-                attachments: emailInfo.attachments ? emailInfo.attachments : []
+                html: emailInfo.htmlBody
 
             }
         }

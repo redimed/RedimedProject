@@ -8,6 +8,8 @@ var UserType = db.UserType;
 var Company = db.Company;
 var Departments = db.Departments;
 var Location = db.timeLocation;
+var moment = require('moment');
+var CronJob = require('cron').CronJob;
 module.exports = {
     //MODULE TREE
     LoadTreeTimeSheet: function(req, res) {
@@ -1303,8 +1305,9 @@ module.exports = {
 
     RejectTaskWeek: function(req, res) {
         var info = req.body.info;
-        var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, approved_date ='" + date + "', comments ='" +
+        info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        info.status = 4;
+        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, approved_date ='" + info.date + "', comments ='" +
             info.comments + "' WHERE task_week_id = " + info.idTaskWeek;
         db.sequelize.query(query)
             .success(function(result) {
@@ -1313,11 +1316,15 @@ module.exports = {
                     statusID: 4,
                     USER_ID: info.USER_ID,
                     idTaskWeek: info.idTaskWeek,
-                    date: date
+                    date: info.date
                 };
                 //CALL FUNCTION TRACKER
                 TracKerTimeSheet(tracKer);
                 //END
+                // SEND MAIL
+                SendMailTimeSheet(req, res, info);
+                // END MAIL
+
                 //END TRACKER
                 res.json({
                     status: "success"
@@ -1422,7 +1429,8 @@ module.exports = {
                     console.log("*****Not found time in lieu choose of this week *****");
                 }
                 //SET APPROVE
-                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                info.status = 3;
                 var timeType = "";
                 if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
                     if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
@@ -1432,7 +1440,7 @@ module.exports = {
                         timeType += ", over_time = " + info.over_timeFull;
                     }
                 }
-                var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
+                var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + info.date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
                 db.sequelize.query(query)
                     .success(function(result) {
                         //TRACKER
@@ -1440,11 +1448,16 @@ module.exports = {
                             statusID: 3,
                             USER_ID: info.USER_ID,
                             idTaskWeek: info.idTaskWeek,
-                            date: date
+                            date: info.date
                         };
                         //CALL FUNCTION TRACKER
                         TracKerTimeSheet(tracKer);
                         //END
+
+                        // SEND MAIL
+                        SendMailTimeSheet(req, res, info);
+                        // ENE MAIL
+
                         //END TRACKER
                         res.json({
                             status: "success"
@@ -1838,15 +1851,98 @@ module.exports = {
             });
     },
 
-    SendMailTimeSheet: function(req, res) {
-        var mailOptions = {
-            senders: '<timesheetnotification@gmail.com>', // sender address
-            recipients: 'tamran1101681@gmail.com', // list of receivers
-            subject: 'Hello THANH TIME SHEET NE ?', // Subject line
-            htmlBody: 'Hello world THANH ?' // html body
-        };
-        FunctionSendMail.sendEmail(req, res, mailOptions);
+    SendMailNotification: function(req, res) {
+        //SEND MAIL
+        var queryNode = "SELECT sys_hierarchy_nodes.NODE_ID FROM sys_hierarchy_nodes " +
+            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+            "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND (sys_hierarchy_nodes.NODE_CODE = 'Staff' OR sys_hierarchy_nodes.NODE_CODE = 'Head of Dept.')";
+        db.sequelize.query(queryNode)
+            .success(function(resultNode) {
+                var strNode = "";
+                if (resultNode !== undefined && resultNode !== null) {
+                    for (var i = 0; i < resultNode.length; i++) {
+                        if (resultNode[i] !== undefined && resultNode[i] !== null) {
+                            strNode += resultNode[i].NODE_ID + ", ";
+                        }
+                    }
+                }
+                if (strNode === "" || strNode.length === 0) {
+                    strNode = "(NULL)";
+                } else {
+                    strNode = "(" + strNode.substring(0, strNode.length - 2) + ")";
+                }
+                var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = " + getWeekNo();
+                db.sequelize.query(queryHasTimeSheet)
+                    .success(function(resultHasTimeSheet) {
+                        var strHasTimeSheet = "";
+                        if (resultHasTimeSheet !== undefined && resultHasTimeSheet !== null) {
+                            for (var i = 0; i < resultHasTimeSheet.length; i++) {
+                                if (resultHasTimeSheet[i] !== undefined && resultHasTimeSheet[i] !== null) {
+                                    strHasTimeSheet += resultHasTimeSheet[i].user_id + ", ";
+                                }
+                            }
+                        }
+                        if (strHasTimeSheet === "" || strHasTimeSheet.length === 0) {
+                            strHasTimeSheet = "(NULL)";
+                        } else {
+                            strHasTimeSheet = "(" + strHasTimeSheet.substring(0, strHasTimeSheet.length - 2) + ")";
+                        }
+
+                        var queryListEmp = "SELECT DISTINCT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM users " +
+                            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+                            "INNER JOIN sys_hierarchies_users ON users.id = sys_hierarchies_users.USER_ID " +
+                            "WHERE (hr_employee.TITLE = 'Staff' OR hr_employee.TITLE = 'Head of Dept.') " +
+                            "AND sys_hierarchies_users.NODE_ID IN " + strNode + " AND sys_hierarchies_users.USER_ID NOT IN " + strHasTimeSheet;
+                        db.sequelize.query(queryListEmp)
+                            .success(function(resultListEmp) {
+                                // var FRIDAY = moment(moment().day(5)).format("DD/MM/YYYY");
+                                for (var lM = 0; lM < resultListEmp.length; lM++) {
+                                    var mailOptions = {
+                                        senders: 'TimeSheet',
+                                        recipients: resultListEmp[lM].Email,
+                                        subject: 'Notification of Late Timesheet(s) Due',
+                                        htmlBody: '<i>"Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</b>,<br/>' +
+                                            'This is a reminder that your timesheet was due<b> FRIDAY, ' + 'FRIDAY' + '12:00pm.</b>' +
+                                            'Please log into the Timesheet System to complete and submit your timesheet. ' +
+                                            'Failure to submit your timesheets may result in not being paid or loss of accrued leave.<br/>' +
+                                            'If you have any questions regarding your timesheet in general then please contact your Team Leader.<br/>' +
+                                            'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
+                                            'Regards,<br/>' +
+                                            'Timesheet Reporting System<br><br>' +
+                                            'This e-mail was auto generated. Please do not respond"</i>'
+                                    };
+                                    //CALL SEND MAIL
+                                    FunctionSendMail.sendEmail(req, res, mailOptions);
+                                    // END CALL
+                                }
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "success"
+                                });
+                                return;
+                            });
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+        //END
+
     }
+
 };
 
 //FUNCTION GET WEEKNO
@@ -1923,3 +2019,83 @@ var convertTime = function(time) {
     }
 };
 //END CONVERT
+
+// FUNCTION SEND MAIL
+var SendMailTimeSheet = function(req, res, info) {
+    var mailOptions = {};
+    var query = "SELECT hr_employee.FirstName, hr_employee.Email, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date " +
+        "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
+        "WHERE time_tasks_week.task_week_id = " + info.idTaskWeek;
+    db.sequelize.query(query)
+        .success(function(result) {
+            var start_date = "";
+            var end_date = "";
+            if (result[0] !== undefined && result[0] !== null) {
+                start_date = moment(result[0].start_date).format('DD/MM/YYYY');
+                end_date = moment(result[0].end_date).format('DD/MM/YYYY');
+            }
+            if (info.status === 4) {
+                mailOptions = {
+                    senders: 'TimeSheet',
+                    recipients: result[0].Email,
+                    subject: 'Notification of Rejected Timesheet(s)',
+                    htmlBody: '<i>"Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + '</b><br/>' +
+                        'Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected. Please log into the Timesheet System to correct and re-submit your timesheet. ' +
+                        'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.<br/>' +
+                        'If you have any questions regarding your timesheet in general then please contact your Team Leader.<br/>' +
+                        'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
+                        'Regards,<br/>' +
+                        'Timesheet Reporting System<br><br>' +
+                        'This e-mail was auto generated. Please do not respond"</i>'
+                };
+                // END APPROVE
+                //CALL SEND MAIL
+                FunctionSendMail.sendEmail(req, res, mailOptions);
+                // END CALL
+
+            } else if (info.status === 3) {
+                //IS APPROVE
+                mailOptions = {
+                    senders: 'TimeSheet',
+                    recipients: result[0].Email,
+                    subject: 'Notification of Approved Timesheet(s)',
+                    htmlBody: '<i>"Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + '</b><br/>' +
+                        'Your timesheet for the period (' + start_date + '–' + end_date + ') has been approved.<br/>' +
+                        'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
+                        'Regards,<br/>' +
+                        'Timesheet Reporting System<br><br>' +
+                        'This e-mail was auto generated. Please do not respond"</i>'
+                };
+                // END APPROVE
+
+                //CALL SEND MAIL
+                FunctionSendMail.sendEmail(req, res, mailOptions);
+                // END CALL
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.josn({
+                status: "error"
+            });
+            return;
+
+        });
+
+};
+// END MAIL
+
+
+// FUNCTION SEND MAIL NOTIFICATION
+var job = new CronJob({
+    cronTime: '00 17 14 * * 0-6',
+    onTick: function(req, res) {
+        module.exports.SendMailNotification(req, res);
+    },
+    start: false,
+    timeZone: 'Asia/Bangkok'
+        // Australia/Canberra SET TO RUN ON SERVER
+});
+job.start();
+//END NOTIFICATION
