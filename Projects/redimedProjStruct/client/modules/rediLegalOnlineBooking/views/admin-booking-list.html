@@ -4,7 +4,6 @@
 
     .lob_admin_date_node{
         background-color: rgba(67, 140, 202, 0.16);
-        /*background-color:red!important;*/
     }
 
     .lob_admin_date_node:hover{
@@ -12,24 +11,19 @@
     }
 
     .lob_admin_doctor_node{
-        /*background-color: #5bc0de;*/
         background-color: rgba(70, 182, 176, 0.18);
     }
 
     .lob_admin_doctor_node:hover{
-        /*background-color: #5bc0de;*/
         background-color: rgba(210, 230, 229, 0.31);
     }
 
-
     .lob_admin_booking_node{
         background-color: rgba(223, 186, 74, 0.12);
-        /*background-color:blue!important;*/
     }
 
     .lob_admin_booking_node:hover{
         background-color: rgba(238, 234, 221, 0.40);
-        /*background-color:blue!important;*/
     }
 
     .lob_admin_booking_node .lob_booking_status{
@@ -37,7 +31,6 @@
     }
 
     .lob_admin_booking_file_node{
-        /*background-color:gray!important;*/
     }
 
     .lob_status{
@@ -106,13 +99,6 @@
         overflow: overlay;
     }
 
-    .admin-notification-box{
-        font-size: 10pt;
-        font-weight: bold;
-        border-right: 2px solid rgba(117, 117, 117, 0.21);
-        padding-left: 5px;
-        padding-right: 5px;
-    }
     /*chien document status
     phanquocchien.c1109g@gmail.com
     */
@@ -190,45 +176,11 @@
 
 
 <div class="actions">
-
-    <div class="row">
-
-        <div class="col-md-12 ">
-            <span style="color:#428bca;font-weight:bold">
-                <i class="fa fa-exclamation-triangle" style="color: #f3575e"></i>
-                Notification:
-            </span>
-            <!--label label-warning-->
-
-             <span class=" admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type2.alias);">
-                    {{listUpcommingBookingWaitingPaperwork.length}} {{localNotificationType.type2.header}} 
-                </a>
-            </span>
-            
-            <span class="  admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type3.alias);">
-                    {{listBookingOutstandingNotification.length}} {{localNotificationType.type3.header}}
-                </a>
-            </span>
-           
-            <span class="   admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type1.alias);">
-                    {{listPassBookingNotChangeStatus.length}} {{localNotificationType.type1.header}}
-                </a>
-            </span>
-            <span class="pull-right">
-                <a style="color: #4db3a2 !important;font-size: 17px;" ng-click="openOutlook()">
-                    Newsletter
-                </a>
-            </span>
-        </div>
-
-    </div>
-    <hr>
-
-
-
+    <!-- 
+    LOCAL ADMIN NOTIFICATION
+    TANNV.DTS@GMAIL.COM
+     -->
+    <rlob-admin-local-notification action-center="actionCenter" group-name="adminLocalNotification"></rlob-admin-local-notification>
 
     <div class="row" style="margin-top:20px;margin-bottom: 10px">
         <div class="col-md-2">
@@ -715,62 +667,6 @@
 
 <!--MESSAGE DIALOG LAYOUT-->
 <rlob-dialog dialog-class="lob-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
-
-<!-- <div  id="lob-change-appointment-calendar-dialog" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
-                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                </div>
-            </div>
-
-            <div class="modal-body">
-                <div class="portlet light">
-                    <rlob-choose-appointment-calendar-dialog
-                            selected-appointment-calendar="selectedAppointmentCalendar"
-                            using-for-dialog-flag="usingForDialogFlag"
-                            booking-type="bookingType">
-
-                    </rlob-choose-appointment-calendar-dialog>
-
-
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-<div  id="list-booking-notification-popup" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">{{listBookingNotificationHeader}}</h4>
-                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-                <!-- <h4 class="modal-title">{{listBookingNotificationHeader}}</h4> -->
-            </div>
-
-            <div class="modal-body">
-                <rlob-admin-local-notification list-booking-notification="listBookingNotification" booking-type="bookingType"></rlob-admin-local-notification>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class='notifications top-right rlob_admin_local_notification_popup'></div>
         <!--chien teamplate booking status

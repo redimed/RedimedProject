@@ -70,7 +70,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <p>
-                                    You have {{numbersLetterUnread}} new letters
+                                    You have {{numbersLetterUnread}} new reports
                                 </p>
                                 <a ng-click="updateNotificationManual();">
                             Refresh
@@ -145,7 +145,7 @@
                             <li ng-show="userInfo.HAVE_CALENDAR==1">
                                 <a ng-click="showMyCalendar();">
                                     <i class="icon-calendar"></i> My Calendar
-                                    <span class="badge badge-danger">
+                                    <span class="badge badge-success">
                                 {{numberAppointmentCalendarUpcoming}}
                             </span>
                                 </a>
@@ -153,7 +153,7 @@
                             <li ng-show="userInfo.HAVE_LETTER==1">
                                 <a ng-click="getListNotification('letter');">
                                     <i class="icon-envelope-open"></i> My Inbox
-                                    <span class="badge badge-danger">
+                                    <span class="badge badge-primary">
                                 {{numbersLetterUnread}}
                             </span>
                                 </a>
@@ -161,7 +161,7 @@
                             <li ng-show="userInfo.HAVE_BELL==1">
                                 <a ng-click="getListNotification('bell');">
                                     <i class="icon-bell"></i> My notifications
-                                    <span class="badge badge-success">
+                                    <span class="badge badge-danger">
                                 {{numbersBellUnread}}
                             </span>
                                 </a>
@@ -221,7 +221,8 @@
             </ul>
             <!-- END SIDEBAR MENU -->
             <div ng-show="have_redilegal_components.value==1" style="border-top: 1px solid #43525c;color: #dce2e6;">
-                <div style="margin-top: 20px;margin-left: 5px" >
+                <div style="margin-top: 20px;text-align: center;" >
+                    <img style="width: 149px;" src="modules/rediLegalOnlineBooking/images/Medico-Legal.png">
                     <div ng-repeat="item in contactDetails">
                         <label>{{item.label}}</label><br/>
                         <label>{{item.content}}</label>
@@ -259,7 +260,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">My Inbox</h4>
+                <h4 ng-show="typeName=='letter'" class="modal-title">My Inbox</h4>
+                <h4 ng-show="typeName=='bell'" class="modal-title">My Notifications</h4>
             </div>
             <div class="modal-body">
                 <div class="notification-list" style="height: 350px;">
@@ -318,16 +320,19 @@
                             <!--SOURCE_TYPE-->
                             <th>Type</th>
                             <th>Surname</th>
-                            <th></th>
+                            <th>Firstname</th>
+                            <th>Claim No</th>
                             <th></th>
                             <!--<th>Read</th>-->
                         </tr>
                         <tbody>
                             <tr ng-repeat="appointmentUpcoming in listAppointmentCalendarUpcoming">
                                 <td>{{appointmentUpcoming.DATE_UPCOMING |date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                                <td>{{appointmentUpcoming.SOURCE_TYPE}}</td>
+                                <td>{{appointmentUpcoming.TYPENAME}}</td>
                                 <td>{{appointmentUpcoming.PERSON_INFO}}</td>
-                                <td>
+                                <td>{{appointmentUpcoming.FIRSTNAME}}</td>
+                                <td>{{appointmentUpcoming.CLAIM_NO}}</td>
+                                <!-- <td>
                                     <p data-toggle="collapse" ng-click="myExpand($index)" style="cursor: pointer">
                                         {{appointmentUpcoming.MESSAGE}}
                                     </p>
@@ -336,7 +341,7 @@
                                             {{appointmentUpcoming.DETAIL}}
                                         </div>
                                     </div>
-                                </td>
+                                </td> -->
                                 <td>
                                     <a class="btn btn-sm yellow filter-submit margin-bottom" style="margin-left: 10px;margin-bottom: 10px;" ng-click="closeMyCalendarPopup()" ui-sref="{{appointmentUpcoming.link}}">
                                     View details

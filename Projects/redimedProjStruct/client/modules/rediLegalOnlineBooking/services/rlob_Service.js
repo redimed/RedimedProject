@@ -433,14 +433,12 @@ angular.module('app.loggedIn.rlob.services',[])
                 }
                 else if(notificationType==rlobConstant.notificationType.bell)
                 {
-                    msg="["+rlobConstant.bookingType[sourceName].display+"] - "
-                        +data.WRK_SURNAME+ " - "
-                        +(sourceName==rlobConstant.bookingType.REDiLEGAL.name?data.CLAIM_NO:"")+
-                        +(sourceName==rlobConstant.bookingType.Vaccination.name?data.EMPLOYEE_NUMBER:"")
-                        +" - "
-                        +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'')
-                        +" - "
-                        +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
+                     msg=moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY")+" - "
+                        +data.Rl_TYPE_NAME+ " - "
+                        +data.WRK_SURNAME + " - "
+                        +data.WRK_OTHERNAMES + " - "
+                        +data.CLAIM_NO + " - "
+                        +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'');
                 }
                 $http({
                     method:"POST",
