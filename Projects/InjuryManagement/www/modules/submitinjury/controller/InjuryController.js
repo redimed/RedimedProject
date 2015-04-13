@@ -256,10 +256,10 @@ angular.module('starter.injury.controller', ['ngCordova'])
             options.params = params;
 
             var ft = new FileTransfer();
-            ft.upload(img, server, function(r) {
-                console.log("Upload success " + r);
+            ft.upload(img, server, function(success) {
+                console.log("Upload success " + JSON.stringify(success));
             }, function(error) {
-                console.log("Upload Failed " + error);
+                console.log("Upload Failed " + JSON.stringify(error));
             }, options);
         }
 

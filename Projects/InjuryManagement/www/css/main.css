@@ -1187,7 +1187,7 @@ form i.icon.error {
 .cus-selfVideo {
     position:absolute;
     top: 0;
-    left: 0;
+    right: 0;
     margin-top: 10px;
     margin-left: 15px;
     z-index: 99999;
@@ -1197,11 +1197,11 @@ form i.icon.error {
 }
 
 .cus-callerVideo {
-    height: 80%;
+    height: 30%;
     position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
+    /*bottom: 0;*/
+    /*left: 0;*/
     right: 0;
     z-index: -1 !important;
 }
@@ -1209,6 +1209,21 @@ form i.icon.error {
 .cus-callerVideo * {
     z-index: -1 !important;
 }
+
+.cus_callerVideo2 {
+    height: 30%;
+    position: absolute;
+    /*top: 0;*/
+    bottom: 0;
+    /*left: 0;*/
+    right: 0;
+    z-index: -1 !important;
+}
+
+.cus_callerVideo2  * {
+    z-index: -1 !important;
+}
+
 
 .wrapper-funCall {
     width: 100%;
