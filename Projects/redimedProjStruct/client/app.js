@@ -315,7 +315,6 @@ angular.module("app", [
                                 "reload": true
                             });
                             toastr.error("You not permission!", "Error");
-                            e.preventDefault();
                         }
                     }
                     //END ROLE

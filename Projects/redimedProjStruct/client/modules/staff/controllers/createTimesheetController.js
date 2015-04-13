@@ -150,7 +150,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         } else if (response.status === "success") {
             var timeInLieu = 0;
             angular.forEach(response.result, function(data, index) {
-                timeInLieu += StaffService.fortMatFullTime(data.time_in_lieu);
+                timeInLieu += data.time_in_lieu;
             });
             $scope.info.time_in_lieuHas = timeInLieu;
 
