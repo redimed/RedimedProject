@@ -1,10 +1,9 @@
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
-var isTest = false;
+var isTest = true;
 module.exports = {
     sendEmail: function(req, res, emailInfo) {
-
         if (isTest) {
             var transport = nodemailer.createTransport({
                 service: 'Gmail',
@@ -13,12 +12,16 @@ module.exports = {
                     pass: 'redimed123' //test
                 }
             });
-
             var mailOptions = {
                 from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
                 to: emailInfo.recipients, // receiver
                 subject: emailInfo.subject, // Subject line
-                html: emailInfo.htmlBody
+                html: emailInfo.htmlBody,
+                attachments: [{
+                    filename: 'logo.png',
+                    path: __dirname.substr(0, __dirname.search("controllers")) + "client\\" + "img\\" + "TimeSheet\\" + "logo.png",
+                    cid: 'logoRedimed' //same cid value as in the html img src
+                }]
             }
         } else {
             var transport = nodemailer.createTransport(smtpTransport({
@@ -43,19 +46,17 @@ module.exports = {
 
             }
         }
-
-
         transport.sendMail(mailOptions, function(error, response) { //callback
             if (error) {
                 console.log(error);
-                res.json({
-                    status: "fail"
-                });
+                // res.json({
+                //     status: "fail"
+                // });
             } else {
                 console.log("Message sent: " + response.message);
-                res.json({
-                    status: "success"
-                });
+                // res.json({
+                //     status: "success"
+                // });
             }
             transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
         });

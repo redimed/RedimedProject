@@ -274,6 +274,13 @@ module.exports = {
             TracKerTimeSheet(tracKer);
             //END
             //END TRACKER
+
+            //FUNCTION SEND MAIL
+            if (info.statusID === 5) {
+                SendMailSubmit(req, res, info);
+            }
+            //END SEND MAIL
+
             res.json({
                 status: 'success'
             });
@@ -902,16 +909,16 @@ var SendMailSubmit = function(req, res, info) {
                                                                 senders: 'TimeSheet',
                                                                 recipients: resultManage[0].Email,
                                                                 subject: 'Notification of Submitted Timesheet(s)',
-                                                                htmlBody: '<i>"Dear <b>' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + '</b><br/>' +
-                                                                    'This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on ' + DATE_OF_WEEK + ', ' +
-                                                                    DATE_SUBMIT + '. ' +
-                                                                    'Please log into the Timesheet System to review and approve/reject the timesheet.<br/>' +
-                                                                    'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
-                                                                    'Regards,<br/>' +
-                                                                    'Timesheet Reporting System<br><br>' +
-                                                                    'This e-mail was auto generated. Please do not respond"</i>'
+                                                                htmlBody: '<label class="control-label">Dear </label><b><label class="control-label">' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + ',</label></b><br/><br/>' +
+                                                                    '<label class="control-label">This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on ' + DATE_OF_WEEK + ', ' +
+                                                                    DATE_SUBMIT + '.' +
+                                                                    'Please log into the Timesheet System to review and approve/reject the timesheet.<br/><br/>' +
+                                                                    'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/>' +
+                                                                    '<label class="control-label">Regards,</label><br/><br/>' +
+                                                                    '<label class="control-label">Timesheet Reporting System<br></label><br/><br/>' +
+                                                                    '<label class="control-label">This e-mail was auto generated. Please do not respond.</label>' +
+                                                                    '<hr/><img src="cid:logoRedimed"></label><br/><br/><b><span>Phone:</b>&nbsp;(08) 9230 0900</span><br/><span><b>Fax:&nbsp;</b>(08) 9230 0999</span><br/><span><b>Address:&nbsp;</b>1 Frederick Street Belmont WA 6104</span>'
                                                             };
-                                                            console.log(mailOptions);
                                                             // END APPROVE
                                                             //CALL SEND MAIL
                                                             FunctionSendMail.sendEmail(req, res, mailOptions);

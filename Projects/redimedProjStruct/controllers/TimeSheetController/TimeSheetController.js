@@ -1643,8 +1643,8 @@ module.exports = {
         var weekNoTo = info.weekNoTo - 1;
         var listEMP = info.listEMP;
         var USER_ID = info.USER_ID;
-        var weekFrom = info.weekFrom;
-        var weekTo = info.weekTo;
+        var weekFrom = moment(info.weekFrom).format("YYYY-MM-DD");
+        var weekTo = moment(info.weekTo).format("YYYY-MM-DD");
         //STR EMP
         var strListEmp = "";
         for (var i = 0; i < listEMP.length; i++) {
@@ -1773,35 +1773,41 @@ module.exports = {
                                     .success(function(delSuccessEmp) {
                                         db.sequelize.query(queryDelTime)
                                             .success(function(delSuccessTime) {
-                                                db.sequelize.query(queryInsertEmployee)
-                                                    .success(function(insertSuccessEmp) {
-                                                        db.sequelize.query(queryInsertTimeInSert)
-                                                            .success(function(insertSuccessTime) {
-                                                                //RES.JSON
-                                                                res.json({
-                                                                    status: "success",
-                                                                    result: resultDept
-                                                                });
-                                                                return;
-                                                                //END
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR:" + err + "*****");
-                                                                res.json({
-                                                                    status: "error",
-                                                                    result: []
-                                                                });
-                                                                return;
+                                                //INSERT EMP
+                                                if (listEmployeeInsert !== "") {
+                                                    db.sequelize.query(queryInsertEmployee)
+                                                        .success(function(insertSuccessEmp) {
+                                                            // INSERT TIME
+                                                            if (queryInsertTimeInSert !== "") {
+                                                                db.sequelize.query(queryInsertTimeInSert)
+                                                                    .success(function(insertSuccessTime) {
+                                                                        //RES.JSON
+                                                                        res.json({
+                                                                            status: "success",
+                                                                            result: resultDept
+                                                                        });
+                                                                        return;
+                                                                        //END
+                                                                    })
+                                                                    .error(function(err) {
+                                                                        console.log("*****ERROR:" + err + "*****");
+                                                                        res.json({
+                                                                            status: "error",
+                                                                            result: []
+                                                                        });
+                                                                        return;
+                                                                    });
+                                                            }
+                                                        })
+                                                        .error(function(err) {
+                                                            console.log("*****ERROR:" + err + "*****");
+                                                            res.json({
+                                                                status: "error",
+                                                                result: []
                                                             });
-                                                    })
-                                                    .error(function(err) {
-                                                        console.log("*****ERROR:" + err + "*****");
-                                                        res.json({
-                                                            status: "error",
-                                                            result: []
+                                                            return;
                                                         });
-                                                        return;
-                                                    });
+                                                }
                                             })
                                             .error(function(err) {
                                                 console.log("*****ERROR:" + err + "*****");
@@ -1867,7 +1873,7 @@ module.exports = {
                     }
                 }
                 if (strNode === "" || strNode.length === 0) {
-                    strNode = "(NULL)";
+                    strNode = "(-1)";
                 } else {
                     strNode = "(" + strNode.substring(0, strNode.length - 2) + ")";
                 }
@@ -1883,7 +1889,7 @@ module.exports = {
                             }
                         }
                         if (strHasTimeSheet === "" || strHasTimeSheet.length === 0) {
-                            strHasTimeSheet = "(NULL)";
+                            strHasTimeSheet = "(-1)";
                         } else {
                             strHasTimeSheet = "(" + strHasTimeSheet.substring(0, strHasTimeSheet.length - 2) + ")";
                         }
@@ -1895,21 +1901,22 @@ module.exports = {
                             "AND sys_hierarchies_users.NODE_ID IN " + strNode + " AND sys_hierarchies_users.USER_ID NOT IN " + strHasTimeSheet;
                         db.sequelize.query(queryListEmp)
                             .success(function(resultListEmp) {
-                                // var FRIDAY = moment(moment().day(5)).format("DD/MM/YYYY");
+                                var FRIDAY = moment(moment().day(5)).format("DD/MM/YYYY");
                                 for (var lM = 0; lM < resultListEmp.length; lM++) {
                                     var mailOptions = {
                                         senders: 'TimeSheet',
                                         recipients: resultListEmp[lM].Email,
                                         subject: 'Notification of Late Timesheet(s) Due',
-                                        htmlBody: '<i>"Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</b>,<br/>' +
-                                            'This is a reminder that your timesheet was due<b> FRIDAY, ' + 'FRIDAY' + '12:00pm.</b>' +
-                                            'Please log into the Timesheet System to complete and submit your timesheet. ' +
-                                            'Failure to submit your timesheets may result in not being paid or loss of accrued leave.<br/>' +
-                                            'If you have any questions regarding your timesheet in general then please contact your Team Leader.<br/>' +
-                                            'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
-                                            'Regards,<br/>' +
-                                            'Timesheet Reporting System<br><br>' +
-                                            'This e-mail was auto generated. Please do not respond"</i>'
+                                        htmlBody: '<label class="control-label">Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</label></b>,<br/><br/>' +
+                                            '<label class="control-label">This is a reminder that your timesheet was due</label><b> FRIDAY, ' + FRIDAY + ' - 12:00pm.&nbsp;</b>' +
+                                            '<label class="control-label">Please log into the Timesheet System to complete and submit your timesheet. ' +
+                                            'Failure to submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/>' +
+                                            '<label class="control-label">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/>' +
+                                            '<label class="control-label">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/>' +
+                                            '<label class="control-label">Regards,</label><br/><br/>' +
+                                            '<label class="control-label">Timesheet Reporting System</label><br/><br/>' +
+                                            '<label class="control-label">This e-mail was auto generated. Please do not respond.</label>' +
+                                            '<hr/><img src="cid:logoRedimed"></label><br/><br/><b><span>Phone:</b>&nbsp;(08) 9230 0900</span><br/><span><b>Fax:&nbsp;</b>(08) 9230 0999</span><br/><span><b>Address:&nbsp;</b>1 Frederick Street Belmont WA 6104</span>'
                                     };
                                     //CALL SEND MAIL
                                     FunctionSendMail.sendEmail(req, res, mailOptions);
@@ -2040,14 +2047,15 @@ var SendMailTimeSheet = function(req, res, info) {
                     senders: 'TimeSheet',
                     recipients: result[0].Email,
                     subject: 'Notification of Rejected Timesheet(s)',
-                    htmlBody: '<i>"Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + '</b><br/>' +
-                        'Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected. Please log into the Timesheet System to correct and re-submit your timesheet. ' +
-                        'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.<br/>' +
-                        'If you have any questions regarding your timesheet in general then please contact your Team Leader.<br/>' +
-                        'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
-                        'Regards,<br/>' +
-                        'Timesheet Reporting System<br><br>' +
-                        'This e-mail was auto generated. Please do not respond"</i>'
+                    htmlBody: '<label class="control-label">Attention: </label><b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b><br/><br/>' +
+                        '<label class="control-label">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected. Please log into the Timesheet System to correct and re-submit your timesheet. ' +
+                        'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/>' +
+                        '<label class="control-label">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/>' +
+                        '<label class="control-label">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<label><br/>' +
+                        '<label class="control-label">Regards,</label><br/><br/>' +
+                        '<label class="control-label">Timesheet Reporting System<br></label><br><br/>' +
+                        '<label class="control-label">This e-mail was auto generated. Please do not respond.' +
+                        '<hr/><img src="cid:logoRedimed"></label><br/><br/><b><span>Phone:</b>&nbsp;(08) 9230 0900</span><br/><span><b>Fax:&nbsp;</b>(08) 9230 0999</span><br/><span><b>Address:&nbsp;</b>1 Frederick Street Belmont WA 6104</span>'
                 };
                 // END APPROVE
                 //CALL SEND MAIL
@@ -2060,12 +2068,14 @@ var SendMailTimeSheet = function(req, res, info) {
                     senders: 'TimeSheet',
                     recipients: result[0].Email,
                     subject: 'Notification of Approved Timesheet(s)',
-                    htmlBody: '<i>"Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + '</b><br/>' +
-                        'Your timesheet for the period (' + start_date + '–' + end_date + ') has been approved.<br/>' +
-                        'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<br/>' +
-                        'Regards,<br/>' +
-                        'Timesheet Reporting System<br><br>' +
-                        'This e-mail was auto generated. Please do not respond"</i>'
+                    htmlBody: '<label class="control-label">Attention: </label><b><label class="control-label">' + result[0].FirstName + ' ' + result[0].LastName + '</b></label><br/><br/>' +
+                        '<label class="control-label">Your timesheet for the period (' + start_date + '–' + end_date + ') has been approved.</label><br/><br/>' +
+                        '<label class="control-label">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/>' +
+                        '<label class="control-label">Regards,</label><br/><br/>' +
+                        '<label class="control-label">Timesheet Reporting System<label><br><br/><br/>' +
+                        '<label class="control-label">This e-mail was auto generated. Please do not respond.</label</i>' +
+                        '<hr/><img src="cid:logoRedimed"></label><br/><br/><b><span>Phone:</b>&nbsp;(08) 9230 0900</span><br/><span><b>Fax:&nbsp;</b>(08) 9230 0999</span><br/><span><b>Address:&nbsp;</b>1 Frederick Street Belmont WA 6104</span>'
+
                 };
                 // END APPROVE
 
@@ -2089,13 +2099,14 @@ var SendMailTimeSheet = function(req, res, info) {
 
 // FUNCTION SEND MAIL NOTIFICATION
 var job = new CronJob({
-    cronTime: '00 17 14 * * 0-6',
+    cronTime: '00 00 07 * * 5',
     onTick: function(req, res) {
         module.exports.SendMailNotification(req, res);
     },
     start: false,
-    timeZone: 'Asia/Bangkok'
-        // Australia/Canberra SET TO RUN ON SERVER
+    timeZone: 'Australia/Canberra'
+        //Australia/Canberra
+        //Asia/Bangkok
 });
 job.start();
 //END NOTIFICATION

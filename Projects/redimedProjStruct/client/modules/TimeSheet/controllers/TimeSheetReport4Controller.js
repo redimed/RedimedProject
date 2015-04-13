@@ -1,14 +1,15 @@
 angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
     .controller("Report4Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
 
+        // POPUP Date
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+        // END
         //LOAD POSITION
         $scope.position = localStorageService.get('position');
         //END
-
-        //SHOW WEEK
-        StaffService.showWeek();
-        //END SHOW WEEK
-
         $scope.listDepartmentChoose = [];
         $scope.listEmployeeChoose = [];
         $scope.listDept = [];
@@ -58,14 +59,14 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                 $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
                 $scope.listEmployeeChoose.length !== 0) {
                 var info = {};
-                var weekNoFrom = new Date($scope.dateWeekFrom.substr(6, 4), $scope.dateWeekFrom.substr(3, 2) - 1, $scope.dateWeekFrom.substr(0, 2));
-                var weekNoTo = new Date($scope.dateWeekTo.substr(6, 4), $scope.dateWeekTo.substr(3, 2) - 1, $scope.dateWeekTo.substr(0, 2));
+                var weekNoFrom = $scope.dateWeekFrom;
+                var weekNoTo = $scope.dateWeekTo;
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
                 info.weekNoTo = $scope.getWeekNumber(weekNoTo);
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
-                info.weekFrom = $scope.dateWeekFrom.substr(6, 4) + '-' + $scope.dateWeekFrom.substr(3, 2) + '-' + $scope.dateWeekFrom.substr(0, 2);
-                info.weekTo = $scope.dateWeekTo.substr(6, 4) + '-' + $scope.dateWeekTo.substr(3, 2) + '-' + $scope.dateWeekTo.substr(0, 2);
+                info.weekFrom = $scope.dateWeekFrom;
+                info.weekTo = $scope.dateWeekTo;
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
                 TimeSheetService.LoadReports1(info).then(function(response) {
                     if (response.status === "success") {
