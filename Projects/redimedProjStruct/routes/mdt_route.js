@@ -136,6 +136,7 @@ app.post('/api/meditek/v1/mdtspecialty/byId', mdtSpecialtyController.postById);
 app.post('/api/meditek/v1/mdtspecialty/loadWithoutDoctor', mdtSpecialtyController.postLoadWithoutDoctor);
 app.post('/api/meditek/v1/mdtspecialty/selectServiceDoctor', mdtSpecialtyController.postSelectServiceDoctor);
 app.post('/api/meditek/v1/mdtspecialty/listByServiceDoctor', mdtSpecialtyController.postListByServiceDoctor);
+app.post('/api/meditek/v1/mdtspecialty/removeServiceDoctor', mdtSpecialtyController.postRemoveServiceDoctor);
 
 var sysQualificationController = require('./controllers/sysQualificationController');
 

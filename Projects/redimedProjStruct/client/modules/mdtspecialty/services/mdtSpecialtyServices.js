@@ -40,5 +40,10 @@ angular.module('app.loggedIn.mdtspecialty.services', [])
 		var funcApi = mdtApi.all('active');
 		return funcApi.post({data: data});
 	}
+
+	mdtService.removeServiceDoctor = function(data){
+		var funcApi = mdtApi.all('removeServiceDoctor');
+		return funcApi.post({data: data});	
+	}
 	return mdtService;
 })
