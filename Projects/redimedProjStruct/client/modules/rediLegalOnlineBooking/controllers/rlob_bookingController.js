@@ -22,12 +22,13 @@ angular.module('app.loggedIn.rlob.booking.controller',[])
             if($scope.selectedAppointmentCalendar && $scope.selectedAppointmentCalendar.CAL_ID)
             {
                 // doctorId,siteId,selectedAppFromTime,rlTypeId
-                rlobService.core.checkPeriodTimeToBooking(
-                    $scope.selectedAppointmentCalendar.DOCTOR_ID,
-                    $scope.selectedAppointmentCalendar.SITE_ID,
-                    $scope.selectedAppointmentCalendar.FROM_TIME,
-                    $scope.selectedAppointmentCalendar.RL_TYPE_ID
-                )
+                var handlePeriodInfo={
+                    doctorId:$scope.selectedAppointmentCalendar.DOCTOR_ID,
+                    siteId:$scope.selectedAppointmentCalendar.SITE_ID,
+                    selectedAppFromTime:$scope.selectedAppointmentCalendar.FROM_TIME,
+                    rlTypeId:$scope.selectedAppointmentCalendar.RL_TYPE_ID
+                };
+                rlobService.core.checkPeriodTimeToBooking(handlePeriodInfo)
                 .then(function(data){
                     if(data.status=='success'){
                         angular.copy($scope.selectedAppointmentCalendar,$scope.selectedAppointmentCalendarStorage);

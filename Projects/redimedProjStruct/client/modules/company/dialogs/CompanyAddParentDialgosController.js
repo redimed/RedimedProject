@@ -1,7 +1,9 @@
 angular.module('app.loggedIn.company.dialog.addParent', [])
 
-.controller('CompanyAddParentDialgosController', function($scope, CompanyModel,$modalInstance){
+.controller('CompanyAddParentDialgosController', function($scope, CompanyModel,$modalInstance, companyId){
 	
+	$scope.companyId = companyId;
+
 	$scope.clickRow = function(row){
 		 $modalInstance.close(row);
 	}

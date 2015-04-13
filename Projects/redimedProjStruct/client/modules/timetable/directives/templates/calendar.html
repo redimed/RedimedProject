@@ -18,6 +18,10 @@
             <div class="content">{{row.from_date | filterdate: 'DD/MM/YYYY'}}</div>
             <div class="content">{{row.to_date | filterdate: 'DD/MM/YYYY'}}</div>
             <div class="content">
+                <a ng-click="timetable.dialog.editTimetable(row)">
+                    <i class="fa fa-pencil"></i>
+                </a>
+                &nbsp
                 <a ng-click="timetable.dialog.removeDay(row)">
                     <i class="fa fa-remove"></i>
                 </a>
@@ -77,9 +81,9 @@
         <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
     </div>
- </script>
+</script>
 
- <script type="text/ng-template" id="notifyToRemoveDay">
+<script type="text/ng-template" id="notifyToRemoveDay">
     <div class="modal-body">
         <p>Do you want to remove this day of week ?</p>
     </div>
@@ -87,4 +91,4 @@
         <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
     </div>
- </script>
+</script>

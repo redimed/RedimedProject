@@ -12,7 +12,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
-			var avt_path = '';
+			scope.avt_path = '';
 
 			var uploader = scope.uploader = new FileUploader({
 				url: '/api/erm/v2/patient/upload_avt',
@@ -33,8 +33,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		        },
 		        onCompleteItem: function(item, response, status, headers){
 		        	if(response.status==="success" && response.isEditMode===true){
-		        		avt_path = response.img_path;
-		        		console.log('replace success');
+		        		scope.avt_path = response.img_path;
+		        		console.log('replace success', scope.avt_path);
 		        		clickAction();
 		        	}
 		        }
@@ -48,20 +48,12 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			if(!!$stateParams.patient_id){
 				uploader.formData[0] = {patient_id: $stateParams.patient_id, file_name:(new Date()).getTime(), editMode:true};
 			}
-			
-
-
-			
 
 			scope.openUploader = function(){
 	             $timeout(function () {
 	                $('#patient_photo_upload').click();
 	            }, 100);
         	};
-
-        	scope.displaylog = function(){
-        		console.log('this is uploader', scope.uploader);
-        	}
 
 			if(scope.isClose){
 				var idClose = "#"+scope.isClose;
@@ -142,7 +134,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 					PatientService.mdtById(scope.params.id).then(function(response){
 						if(response.status === 'success'){
 							angular.extend(scope.modelObjectMap, response.data);
-
+							console.log('this is modelObjectMap', scope.modelObjectMap);
 							for(var key in scope.modelObjectMap){
 								if(scope.modelObjectMap[key]){
 									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1 || key.indexOf("No_") != -1 || key.indexOf('Diabetic') != -1 || key.indexOf('Inactive') != -1 || key.indexOf('Deceased') != -1 || key.indexOf('Gradudate_') != -1)
@@ -152,14 +144,19 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 								}
 								if(!scope.modelObjectMap.avatar || scope.modelObjectMap.avatar === ""){
 									if(!scope.modelObjectMap.Sex || scope.modelObjectMap.Sex === ""){
-										scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
+										scope.avt_path = "img/patient/avt/male_default.png";
 									}
 									else{
-										if(scope.modelObjectMap.Sex === "Male") scope.modelObjectMap.avatar = "img/patient/avt/male_default.png";
-										else scope.modelObjectMap.avatar = "img/patient/avt/female_default.png"
+										if(scope.modelObjectMap.Sex === "0") scope.avt_path = "img/patient/avt/male_default.png";
+										if(scope.modelObjectMap.Sex === "1") scope.avt_path = "img/patient/avt/female_default.png"
 									}
 								}
+								else{
+									scope.avt_path=scope.modelObjectMap.avatar;
+								}
 							}
+
+							console.log('this is init avt_path', scope.avt_path);
 
 							scope.verifiedMedicare();
 							scope.loadState();
@@ -212,8 +209,13 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							postData[key] = ConfigService.getCommonDate(postData[key]);
 						}
 					}
+					console.log('this is avt_path before edit', scope.avt_path);
 					// END DATE
-					postData.avatar = avt_path;
+					if(scope.avt_path!=="img/patient/avt/male_default.png" && scope.avt_path !== "img/patient/avt/female_default.png"){
+						console.log('run here', scope.avt_path);
+						postData.avatar = scope.avt_path;
+					}
+					else postData.avatar = "";
 					if(scope.params.permission.edit === true){
 						PatientService.mdtEdit(postData).then(function(response){
 							 if (response.status != 'success') {
@@ -222,7 +224,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                        }
 	                        toastr.success('Updated Patient Successfully !!!', "Success");
 
-	                        //initObject();
+	                        initObject();
 
 	                        if(scope.isClose){
 	                        	scope.closePopup();

@@ -5,8 +5,15 @@
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<span class="field">
-				<label for="medicine_name">Allergy name</label>
-	           	<input placeholder="Allergy name" name="allergy_name" ng-model="modelObjectMap.allergy_name" class="form-control" id="allergy_name" float-label>
+				<label for="allergy_name">Allergy name</label>
+	           	<input placeholder="Allergy name" name="allergy_name" ng-model="modelObjectMap.allergy_name" class="form-control" id="allergy_name" float-label required>
+		        <!-- ERROR -->
+	            <span ng-show="mainForm.allergy_name.$invalid && isSubmit">
+	                <span class="mdt-popover above" ng-show="mainForm.allergy_name.$error.required">
+	                    Allergy name is required
+	                </span>
+	            </span>
+	            <!-- ERROR -->
 			</span>
 		</div>
 	</div>

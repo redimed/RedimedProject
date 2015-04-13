@@ -23,6 +23,11 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
             'state': 'loggedIn.consult.patient({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
+        {'name':'Problem List', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
+            'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patient_id+'})'},
+        {'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
+            'state':'loggedIn.patient.allergy.list({patient_id:'+$stateParams.patient_id+'})'},
+
     ];
 
     $scope.patient_apt_modules = [
@@ -46,13 +51,6 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},
 	   {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
             'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patient_id + '})'},
-        {'name':'Problem list', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
-            'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patient_id+'})'},
-        {'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
-            'state':'loggedIn.patient.allergy.list({patient_id:'+$stateParams.patient_id+'})'},
-
-
-
     ];
     //End detail appt modules
 

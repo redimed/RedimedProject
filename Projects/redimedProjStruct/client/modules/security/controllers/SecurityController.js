@@ -3,6 +3,7 @@ angular.module("app.security.controller",[
     "app.security.forgot.controller",
     "app.security.register.controller",
     "app.security.redirect.controller",
+    "app.security.terms.controller"
 ])
 
 .controller("SecurityController", function($scope){

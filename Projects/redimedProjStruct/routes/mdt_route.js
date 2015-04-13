@@ -117,6 +117,7 @@ app.post('/api/meditek/v1/sysservice/edit', sysServiceController.postEdit);
 app.post('/api/meditek/v1/sysservice/byId', sysServiceController.postById);
 app.post('/api/meditek/v1/sysservice/byClinicalDepartment', sysServiceController.postByClinicalDepartment);
 
+
 var sysrlTypesController = require('./controllers/sysrlTypesController');
 
 app.get('/api/meditek/v1/sysrltypes/list', sysrlTypesController.getList);
@@ -128,9 +129,13 @@ app.post('/api/meditek/v1/sysrltypes/byId', sysrlTypesController.postById);
 var mdtSpecialtyController = require('./controllers/mdtSpecialtyController');
 
 app.post('/api/meditek/v1/mdtspecialty/search', mdtSpecialtyController.postSearch);
+app.post('/api/meditek/v1/mdtspecialty/active', mdtSpecialtyController.postActive);
 app.post('/api/meditek/v1/mdtspecialty/add', mdtSpecialtyController.postAdd);
 app.post('/api/meditek/v1/mdtspecialty/edit', mdtSpecialtyController.postEdit);
 app.post('/api/meditek/v1/mdtspecialty/byId', mdtSpecialtyController.postById);
+app.post('/api/meditek/v1/mdtspecialty/loadWithoutDoctor', mdtSpecialtyController.postLoadWithoutDoctor);
+app.post('/api/meditek/v1/mdtspecialty/selectServiceDoctor', mdtSpecialtyController.postSelectServiceDoctor);
+app.post('/api/meditek/v1/mdtspecialty/listByServiceDoctor', mdtSpecialtyController.postListByServiceDoctor);
 
 var sysQualificationController = require('./controllers/sysQualificationController');
 

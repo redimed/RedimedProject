@@ -10,3 +10,28 @@ app.post('/api/phUser/changePass',ph_userController.changePass);
 
 //company controller
 app.post('/api/phCompany/getCompany',ph_companyController.getCompany);
+app.post('/api/phCompany/updateCompanyInfo',ph_companyController.updateCompanyInfo);
+//pharmacis controller
+app.post('/api/phPharmacist/getPharmacist',ph_companyController.getPharmacist);
+app.post('/api/phPharmacist/updatePharmasictInfo',ph_companyController.updatePharmasictInfo);
+app.post('/api/phPharmacist/addNewQualification',ph_companyController.addNewQualification);
+app.post('/api/phPharmacist/getAllPharmacisQualification',ph_companyController.getAllPharmacisQualification);
+app.post('/api/phPharmacist/deletePharmacistQualification',ph_companyController.deletePharmacistQualification);
+app.post('/api/phPharmacist/addNewExp',ph_companyController.addNewExp);
+app.get('/api/phPharmacist/getExp',ph_companyController.getExp);
+app.post('/api/phPharmacist/deleteExp',ph_companyController.deleteExp);
+//shop controller
+app.post('/api/phShops/insertCompanyShop',ph_companyController.insertCompanyShop);
+app.get('/api/phShops/getCompanyShopById',ph_companyController.getCompanyShopById);
+
+
+
+
+
+
+
+
+
+
+
+

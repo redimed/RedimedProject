@@ -1,0 +1,35 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Specialty Name</th>
+			<th>Type Name</th>
+			<th>
+				Creation Date&nbsp
+				<a ng-if="speciality.search.Creation_date === 'asc'" ng-click="speciality.onOrderBy({field: 'Creation_date', order: 'desc'})">
+					<i class="fa fa-caret-up"></i>
+				</a>
+				<a ng-if="speciality.search.Creation_date === 'desc'" ng-click="speciality.onOrderBy({field: 'Creation_date', order: 'asc'})">
+					<i class="fa fa-caret-down"></i>
+				</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<input class="form-control input-sm" ng-model="speciality.search.Specialties_name" ng-enter="speciality.onSearch()">
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr ng-repeat="l in speciality.list" ng-click="onRowClick({row: l})">
+			<td>{{l.Specialties_name}}</td>
+			<td>{{l.Rl_TYPE_NAME}}</td>
+			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
+		</tr>
+	</tbody>
+</table>
+<pagination boundary-links="true" total-items="speciality.count" ng-model="speciality.search.page" 
+    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+    items-per-page="speciality.search.limit" max-size="speciality.search.max_size" ng-change="speciality.onPage(speciality.search.page)">
+</pagination>

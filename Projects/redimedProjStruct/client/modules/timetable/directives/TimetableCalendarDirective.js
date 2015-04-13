@@ -41,6 +41,9 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 					resolve: {
 						services: function(){
 							return scope.service.list;
+						},
+						doctor: function(){
+							return scope.doctor.item;
 						}
 					}
 				});
@@ -116,7 +119,7 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 				}
 
 				postData.clinical_dept_id = scope.doctor.item.CLINICAL_DEPT_ID;
-				postData.Appt_interval = scope.doctor.item.Appt_interval;
+				postData.appt_interval = row.appt_interval;
 
 				TimetableModel.createTimetable(postData)
 				.then(function(response){
@@ -125,6 +128,29 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 					
 				})
 			}//end create Timetable
+
+			var editTimetable = function(row){
+				$modal.open({
+					templateUrl: 'modules/timetable/dialogs/templates/editDay.html',
+					controller: 'TimetableCalendarEditDayDialog',
+					size: 'lg',
+					resolve: {
+						row: function(){
+							return row;
+						},
+						services: function(){
+							return scope.service.list;
+						},
+						doctor: function(){
+							return scope.doctor.item;
+						}
+					}
+				})
+				.result.then(function(response){
+					if(response === 'success')
+						scope.timetable.load();
+				})
+			}
 
 			var openTimetable = function(row){
 				row.clinical_dept_id = scope.doctor.item.CLINICAL_DEPT_ID;
@@ -226,6 +252,7 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 				dialog: {
 					removeDay: function(row){removeDay(row);},
 					openTimetable: function(row){ openTimetable(row); },
+					editTimetable: function(row){ editTimetable(row); },
 					addDay: function() { addDay(); }
 				},
 				list: [],

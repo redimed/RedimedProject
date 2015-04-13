@@ -28,7 +28,7 @@
                 APPOINTMENT DATE
             </th>
             <th>
-                SURNAME
+                FULLNAME
             </th>
             <th>
                 LOCATION
@@ -80,7 +80,7 @@
         <tbody ng-repeat="upcomming in listUpcommingBookings">
         <tr ng-class='upcomming.style_class' ng-click="setSelectedBooking(upcomming.BOOKING_ID)">
             <td><label>{{upcomming.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
-            <td><label>{{upcomming.WRK_SURNAME}}</label></td>
+            <td><label>{{upcomming.FULL_NAME}}</label></td>
             <td><label>{{upcomming.Site_name}}</label></td>
             <td><label>{{upcomming.Rl_TYPE_NAME}}</label></td>
             <td><label>{{upcomming.NAME}}</label></td>

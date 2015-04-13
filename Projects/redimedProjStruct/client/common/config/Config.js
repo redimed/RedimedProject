@@ -884,6 +884,9 @@ angular.module('app.config', [])
     }
 
     configService.convertToDate = function(string){
+        if(typeof string === 'undefined' || !string)
+            return null;
+        
         var date = string.substring(0, 10);
 
         var split = date.split('-');
@@ -912,6 +915,14 @@ angular.module('app.config', [])
                 angular.element('#'+error.field).parent().append(html);
             })
         }
+    }
+
+    configService.convertHHMMToInt = function(string){
+        if(typeof string === 'undefined' || !string)
+            return '';
+
+        var split = string.split(':');
+        return split[0]+split[1];
     }
 
     /*

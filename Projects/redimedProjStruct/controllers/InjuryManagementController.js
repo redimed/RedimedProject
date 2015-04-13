@@ -155,10 +155,13 @@ module.exports = {
 
       },
     uploadInjuryPic: function(req,res){
+        var injury_id = req.body.injury_id;
+        var injury_part = req.body.injury_part;
+        var description = req.body.description;
 
         var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+req.body.injury_id;
-        var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+req.body.injury_id;
+        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
+        var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
 
         mkdirp(targetFolder, function(err) {
             var tmp_path = req.files.file.path;
@@ -173,9 +176,10 @@ module.exports = {
             });
 
             db.IMInjuryImage.create({
-                injury_id: req.body.injury_id,
-                image: target_path_for_save,
-                description: req.body.description
+                injury_id: injury_id,
+                injury_part: injury_part,
+                img_url: target_path_for_save,
+                description: description
             })
                 .success(function(data){
                     res.json({status:'success'});

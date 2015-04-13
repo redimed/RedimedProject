@@ -46,7 +46,7 @@ angular.module("app.security",[
         views: {
             "main-content": {
                 templateUrl: "modules/security/views/terms.html",
-                controller: "SecurityLoginController"
+                controller: "SecurityTermsController"
             }
         }
     })

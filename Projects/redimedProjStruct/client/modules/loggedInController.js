@@ -780,6 +780,7 @@ angular.module("app.loggedIn.controller",[
         $scope.currentNotificationType='';
         $scope.getListNotification=function(type)
         {
+            $scope.typeName = type;
             initNotificationPaging(type)
             .then(getItemsOfPaging)
             .then(function()
@@ -918,15 +919,12 @@ angular.module("app.loggedIn.controller",[
                 }
                 else if(notificationType==rlobConstant.notificationType.bell)
                 {
-                    msg="["+rlobConstant.bookingType[sourceName].display+"] - "
-                        +data.WRK_SURNAME+ " - "
-                        +claimNo
-                        +employeeNumber
-                        +" - "
-                        +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'')
-                        +" - "
-                        +moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY");
-
+                    msg=moment(data.APPOINTMENT_DATE).format("HH:mm DD/MM/YYYY")+" - "
+                        +data.Rl_TYPE_NAME+ " - "
+                        +data.WRK_SURNAME + " - "
+                        +data.WRK_OTHERNAMES + " - "
+                        +data.CLAIM_NO + " - "
+                        +bellType+(content!=undefined &&content!=null && content!=""?(":"+content):'');
                 }
 
                 $http({

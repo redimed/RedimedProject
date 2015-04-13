@@ -162,3 +162,19 @@ tannv.dts@gmail.com*/
         display: block;
         overflow: overlay !important;
 }
+
+.rlob_report_action_button{
+      font-size: 20px;
+      border-right: 2px solid rgb(66, 139, 202);
+      margin: 5px;
+      padding-right: 5px;
+      text-decoration: underline;
+}
+
+.admin-notification-box{
+    font-size: 10pt;
+    font-weight: bold;
+    border-right: 2px solid rgba(117, 117, 117, 0.21);
+    padding-left: 5px;
+    padding-right: 5px;
+}

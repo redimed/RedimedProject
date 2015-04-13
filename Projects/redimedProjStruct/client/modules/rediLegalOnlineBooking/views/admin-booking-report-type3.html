@@ -14,33 +14,37 @@
     <table class="table table-responsive table-hover">
         <thead>
         <tr>
-            <th class="col-md-2 col-sm-2">
+            <th >
                 APPOINTMENT DATE
             </th>
-            <th class="col-md-2 col-sm-2">
-                SURNAME
-            </th>
-            <th class="col-md-2 col-sm-2">
+
+            <th >
                 LOCATION
             </th>
-            <th class="col-md-2 col-sm-2">
+
+            <th >
+                FULL NAME
+            </th>
+            
+            <th >
                 TYPE
             </th>
-            <th class="col-md-2 col-sm-2">
+            <th >
                 DOCTOR
             </th>
-            <th class="col-md-2 col-sm-2">
-                COMPLETED
+            <th >
+                BOOKING STATUS
+            </th>
+            <th >
+                DOCUMENT STATUS
             </th>
         </tr>
         <tr>
-            <td class="col-md-2 col-sm-2">
+            <td >
                 <rlob-choose-period from-date="searchKeys.fromAppointmentDate" to-date="searchKeys.toAppointmentDate"></rlob-choose-period>
             </td>
-            <td class="col-md-2 col-sm-2">
-                <input class="form-control input-sm" type="text" ng-model="searchKeys.surname" ng-change="initPagingReportArchiveBooking(doctorId)">
-            </td>
-            <td class="col-md-2 col-sm-2">
+
+            <td >
                 <!-- <input class="form-control input-sm" type="text" ng-model="searchKeys.location" ng-change="initPagingReportArchiveBooking(doctorId)"> -->
                 <select class="form-control input-sm"
                         ng-model="locationSelected"
@@ -49,7 +53,12 @@
                     <option  value="">ALL</option>
                 </select>
             </td>
-            <td class="col-md-2 col-sm-2">
+
+            <td >
+                <input class="form-control input-sm" type="text" ng-model="searchKeys.surname" ng-change="initPagingReportArchiveBooking(doctorId)">
+            </td>
+            
+            <td >
                 <select class="form-control input-sm"
                         ng-model="rlTypeSelected"
                         ng-options="rltype.Rl_TYPE_NAME for rltype in rlTypeList"
@@ -57,7 +66,7 @@
                     <option  value="">ALL</option>
                 </select>
             </td>
-            <td class="col-md-2 col-sm-2">
+            <td >
                 <!-- <input class="form-control input-sm" type="text" ng-model="searchKeys.doctor" ng-change="initPagingReportArchiveBooking(doctorId)"> -->
                 <select class="form-control input-sm"
                         ng-model="doctorSelected"
@@ -66,20 +75,24 @@
                     <option  value="">ALL</option>
                 </select>
             </td>
-            <td class="col-md-2 col-sm-2">
+            <td >
                 <!-- <input class="form-control input-sm" type="text" ng-model="searchKeys.complete" ng-change="initPagingReportArchiveBooking(doctorId)"> -->
+            </td>
+            <td >
+                <!-- DOCUMENT STATUS -->
             </td>
         </tr>
 
         </thead>
         <tbody>
         <tr ng-repeat="archive in listArchiveBookings"  style="cursor: pointer;" ng-click="setSelectedBooking(archive.BOOKING_ID)">
-            <td class="col-md-2 col-sm-2">{{archive.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</td>
-            <td class="col-md-2 col-sm-2">{{archive.WRK_SURNAME}}</td>
-            <td class="col-md-2 col-sm-2">{{archive.Site_name}}</td>
-            <td class="col-md-2 col-sm-2">{{archive.Rl_TYPE_NAME}}</td>
-            <td class="col-md-2 col-sm-2">{{archive.NAME}}</td>
-            <td class="col-md-2 col-sm-2">{{archive.STATUS}}</td>
+            <td >{{archive.APPOINTMENT_DATE | date:'HH:mm dd/MM/yyyy'}}</td>
+            <td >{{archive.Site_name}}</td>
+            <td >{{archive.FULL_NAME}}</td>
+            <td >{{archive.Rl_TYPE_NAME}}</td>
+            <td >{{archive.NAME}}</td>
+            <td >{{archive.STATUS}}</td>
+            <td >{{documentStatusDisplay[archive.DOCUMENT_STATUS]}}</td>
         </tr>
         </tbody>
     </table>

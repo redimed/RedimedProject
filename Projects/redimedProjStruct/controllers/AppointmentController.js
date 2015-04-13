@@ -52,7 +52,7 @@ module.exports = {
 		knex
 		.column('FROM_TIME', 'TO_TIME')
 		.select()
-		.from('cln_appointment_calendar_backup')
+		.from('cln_appointment_calendar')
 		.where({
 			DOCTOR_ID: postData.doctor_id
 		})
@@ -76,8 +76,8 @@ module.exports = {
 	postAdd: function(req, res){
 		var postData = req.body.data;
 
-		var sql = knex('cln_appointment_calendar_backup')
-			.where('cln_appointment_calendar_backup.CAL_ID', postData.form.CAL_ID)
+		var sql = knex('cln_appointment_calendar')
+			.where('cln_appointment_calendar.CAL_ID', postData.form.CAL_ID)
 			.update(postData.form)
 			.toString();
 
@@ -109,47 +109,47 @@ module.exports = {
 
 		var main_sql = knex
 		.column(
-			'cln_appointment_calendar_backup.FROM_TIME',
-			'cln_appointment_calendar_backup.TO_TIME',
-			'cln_appointment_calendar_backup.SERVICE_ID',
-			'cln_appointment_calendar_backup.DOCTOR_ID',
-			'cln_appointment_calendar_backup.CAL_ID',
-			'cln_appointment_calendar_backup.CLINICAL_DEPT_ID',
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.TO_TIME, '%H:%i') AS TO_TIME"),
+			'cln_appointment_calendar.SERVICE_ID',
+			'cln_appointment_calendar.DOCTOR_ID',
+			'cln_appointment_calendar.CAL_ID',
+			'cln_appointment_calendar.CLINICAL_DEPT_ID',
 			'cln_appt_patients.Patient_id',
 			'cln_patients.First_name',
 			'cln_patients.Sur_name'
 		)
-		.leftOuterJoin('cln_appt_patients', 'cln_appointment_calendar_backup.CAL_ID', 'cln_appt_patients.CAL_ID')
+		.leftOuterJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.leftOuterJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
-		.from('cln_appointment_calendar_backup')
+		.from('cln_appointment_calendar')
 		.where({
-			'cln_appointment_calendar_backup.CURRENT_DATE': postData.datepicker,
-			'cln_appointment_calendar_backup.SITE_ID': postData.site_id
+			'cln_appointment_calendar.SITE_ID': postData.site_id
 		})
-		.where('cln_appointment_calendar_backup.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
-		.orderBy('cln_appointment_calendar_backup.FROM_TIME', 'asc')
+		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.where('cln_appointment_calendar.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
+		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
 		.toString();
 
 		var sub_sql = knex
 		.distinct(
-			'cln_appointment_calendar_backup.DOCTOR_ID',
+			'cln_appointment_calendar.DOCTOR_ID',
 			'doctors.NAME'
 		)
 		.select()
-		.from('cln_appointment_calendar_backup')
-		.innerJoin('doctors', 'cln_appointment_calendar_backup.DOCTOR_ID', 'doctors.doctor_id')
+		.from('cln_appointment_calendar')
+		.innerJoin('doctors', 'cln_appointment_calendar.DOCTOR_ID', 'doctors.doctor_id')
 		.where({
-			'cln_appointment_calendar_backup.CURRENT_DATE': postData.datepicker,
-			'cln_appointment_calendar_backup.SITE_ID': postData.site_id
+			'cln_appointment_calendar.SITE_ID': postData.site_id
 		})
-		.orderBy('cln_appointment_calendar_backup.DOCTOR_ID', 'asc')
+		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.orderBy('cln_appointment_calendar.DOCTOR_ID', 'asc')
 		.toString();
 
 		db.sequelize.query(main_sql)
 		.success(function(rows){
 			db.sequelize.query(sub_sql)
 			.success(function(doctors){
-				res.json({data: rows, doctors: doctors});
+				res.json({data: rows, doctors: doctors, sql: main_sql});
 			})
 			.error(function(error){
 				res.status(500).json({error: error, sql: sub_sql});	

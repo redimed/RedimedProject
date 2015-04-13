@@ -2,6 +2,27 @@
     .consult-modal-window .modal-dialog {
       width: 900px;
     }
+    
+    a {
+        text-decoration: inherit;
+    }
+
+     .prog-wrapper{
+        position: relative !important;
+        margin:20px auto !important;
+        font-size: 40px !important;
+    }
+
+    .prog{
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        line-height: 6em !important;
+        font-size:33px !important;
+        text-align: center !important;
+        color: #bbb !important;
+        font-weight: 100 !important;
+    }
 </style>
 <h3 class="page-title">Consultation</h3>
 <div class="page-bar">
@@ -196,7 +217,7 @@
             </li>
             <li>
                 <a href="index.html#tab_1_4" data-toggle="tab">
-                    Drawings
+                    Drawings / Sharing
                 </a>
             </li>
             <li>
@@ -214,9 +235,14 @@
                         <div class="form-group" >
                             <label class="control-label bold col-md-2 col-sm-2">Problems</label>
                             <div class="col-md-4 col-sm-4">
-                                <select ng-model="consultInfo.problem_id" ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.problem_id as p.problem_id for p in problemList" class="form-control">
+                                <select ng-model="consultInfo.problem_id" ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList" class="form-control">
                                     <option value="">--Select A Problem--</option>
                                 </select>
+                            </div>
+                            <div class="col-md-3 col-md-3">
+                                <a href="javascript:;" ui-sref="loggedIn.patient.problem.list({patient_id: patient_id})" class="btn green-jungle btn-circle btn-sm">
+                                    <i class="fa fa-plus"></i> Add New Problem
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -243,11 +269,21 @@
                                                 <span style="color: white;">ICPC Code</span>
                                             </div>
                                         </th>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">From</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">To</span>
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-if="problemArr.length <= 0">
-                                        <td colspan="3">
+                                        <td colspan="5">
                                             <div style="text-align: center;">
                                                 <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
                                                 </span>
@@ -263,6 +299,12 @@
                                         </td>
                                         <td style="vertical-align: middle">
                                             {{p.ICPC_code}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{p.From_date | date:'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{p.To_date | date:'dd/MM/yyyy'}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -315,13 +357,6 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_1_2">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <a href="javascript:;" ng-click="measureAction('new',null)" class="btn green-jungle btn-circle btn-sm">
-                        <i class="fa fa-plus"></i> Add New Measure</a>
-                    </div>
-                </div>
-                <br/>
                 <div class="table-dynamic">
                     <table class="responsive table table-bordered">
                         <thead>
@@ -364,10 +399,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-if="consultInfo.measurements.length <= 0">
+                            <tr>
                                 <td colspan="7">
                                     <div style="text-align: center;">
-                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                         <a href="javascript:;" ng-click="measureAction('new',null)" class="btn green-jungle btn-block">
+                                        <i class="fa fa-plus"></i> Add New Measure</a>
+                                        <span ng-if="consultInfo.measurements.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                            Empty Data
                                         </span>
                                     </div>
                                 </td>
@@ -405,13 +443,6 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_1_3">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <a href="javascript:;" ng-click="scriptAction('new',null)" class="btn green-jungle btn-circle btn-sm">
-                        <i class="fa fa-plus"></i> Add New Script</a>
-                    </div>
-                </div>
-                <br/>
                 <div class="table-dynamic">
                     <table class="responsive table table-bordered">
                         <thead>
@@ -459,10 +490,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-if="consultInfo.scripts.length <= 0">
+                            <tr>
                                 <td colspan="8">
                                     <div style="text-align: center;">
-                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                         <a href="javascript:;" ng-click="scriptAction('new',null)" class="btn green-jungle btn-block">
+                                        <i class="fa fa-plus"></i> Add New Script</a>
+                                        <span ng-if="consultInfo.scripts.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                            Empty Data
                                         </span>
                                     </div>
                                 </td>
@@ -512,8 +546,8 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <consult-drawing 
-                            width="700" 
-                            height="600"
+                            width="750" 
+                            height="700"
                             lineWidth="4"
                             images= "consultInfo.images"
                             patient= "consultInfo.patient_id"
@@ -552,8 +586,7 @@
                                     </a>
                                 </div>
                             </div>
-
-                            <div ng-if="haveData" class="portlet blue-chambray box">
+                            <div ng-if="currDevice"  class="portlet blue-chambray box">
                                 <div class="portlet-title">
                                     <div class="caption ">
                                         <i class="icon-list"></i>
@@ -561,7 +594,7 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <div class="row" style="text-align: center;">
+                                    <div ng-if="haveData" class="row" style="text-align: center;">
                                         <span>
                                             <label style="font-weight: bold;">Measure data from</label>
                                             &nbsp;&nbsp;
@@ -572,9 +605,14 @@
                                             </a>
                                         </span>
                                     </div>
-                                    <flot dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
-                                    <br/>
-                                    <div class="table-scrollable" id="content">
+                                    <flot ng-if="haveData" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
+                                    <br ng-if="haveData"/>
+                                    <div ng-if="!haveData" class="row" style="text-align: center;">
+                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;"> 
+                                            Empty Data
+                                        </span>
+                                    </div>
+                                    <div ng-if="haveData" class="table-scrollable" id="content">
                                         <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
                                             <tr ng-repeat="f in $data track by $index ">
                                                 <td style="text-align:center" width="30%;" data-title="'Patient Name'">

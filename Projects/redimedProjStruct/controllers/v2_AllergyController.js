@@ -131,6 +131,41 @@ module.exports = {
 
     },
 
+    postSearchRemainAllergy: function(req,res){
+        console.log('this is req body',req.body);
+        var limit = (req.body.limit) ? req.body.limit : 10;
+        var offset = (req.body.offset) ? req.body.offset : 0;
+        var patient_id = req.body.search.Patient_id;
+        var sql = "SELECT * FROM `cln_allergies` WHERE `cln_allergies`.`allergy_id` NOT IN "
+                  +"(SELECT `allergy_id` FROM `cln_patient_allergies` WHERE `cln_patient_allergies`.`patient_id` = "+patient_id+")";
+        if(req.body.search.allergy_name){
+             sql += (" AND `cln_allergies`.`allergy_name` LIKE '%"+req.body.search.allergy_name+"%' ");
+        }
+           
+        sql+=(" ORDER BY `cln_allergies`.`allergy_id` DESC"
+             +" LIMIT " + offset + ", "+limit);
+        db.sequelize.query(sql)
+        .success(function(result){
+            var sql2 = "SELECT COUNT(*) AS `count` FROM `cln_allergies` WHERE `cln_allergies`.`allergy_id` NOT IN "
+                  +"(SELECT `allergy_id` FROM `cln_patient_allergies` WHERE `cln_patient_allergies`.`patient_id` ="+patient_id+")";
+            if(req.body.search.allergy_name)
+                sql2 += (" AND `cln_allergies`.`allergy_name` LIKE '%"+req.body.search.allergy_name+"%' ");
+            db.sequelize.query(sql2)
+            .success(function(result2){
+                res.json({"status": "success", "list": result, "count": result2[0].count});
+            })
+            .error(function(error){
+                res.json(500, {"status": "error", "message": error});
+            });
+
+            // re
+        })
+        .error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
+
+    },
+
     postInsertPatientAllergy: function(req,res){
         var postData = req.body;
         var sql = "INSERT INTO `cln_patient_allergies` (`allergy_id`,`patient_id`) "
