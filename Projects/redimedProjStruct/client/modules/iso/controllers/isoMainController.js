@@ -1256,6 +1256,27 @@ angular.module('app.loggedIn.iso.main.controller',[])
             }
             
         }
+
+        $scope.deleteNodeForever=function()
+        {
+            isoService.treeDir.deleteNodeForever($scope.selectedTreeNode.NODE_ID)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.success,'Delete node forever success.');
+                    $scope.getTreeDir();
+                }
+                else
+                {
+                    msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Delete node forever fail.');
+                }
+            },function(err){
+                msgPopup(isoLang.isoHeader,isoConst.msgPopupType.error,'Delete node forever fail.');
+            })
+            .then(function(){
+                $("#iso-tree-actions-menu-popup").modal('hide');
+            })
+        }
     })
 
 

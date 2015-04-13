@@ -1292,9 +1292,9 @@ module.exports =
      * function xoa node khoi o dia vat ly
      * tannv.dts@gmail.com
      */
-    deleteNodeForever:function()
+    deleteNodeForever:function(req,res)
     {
-        var nodeId=kiss.checkData(res.body.nodeId)?res.body.nodeId:'';
+        var nodeId=kiss.checkData(req.body.nodeId)?req.body.nodeId:'';
         if(!kiss.checkListData(nodeId)){
             kiss.exlog("deleteNodeForever","Loi data truyen den");
             res.json({status:'fail'});
@@ -1327,7 +1327,7 @@ module.exports =
                             listIdDelete.push(nodeId);
                             for (var i=0;i<rows.length;i++)
                             {
-                                listDelete.push(rows[i].NODE_ID);
+                                listIdDelete.push(rows[i].NODE_ID);
                             }
 
                             //Xoa cac node can xoa (bao gom ancestor)

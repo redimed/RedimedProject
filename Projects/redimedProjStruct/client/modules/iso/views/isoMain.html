@@ -291,12 +291,15 @@
                         </button>
 
                         <button 
-                            ng-show="isoAdminFunction.restoreDocument && isIsoAdminSystem==1 && selectedTreeNode.ISENABLE==0 && selectedTreeNode.NODE_TYPE==nodeType.document"
+                            ng-show="isoAdminFunction.deleteNodeForever && isIsoAdminSystem==1"
                             type="button" 
                             class="btn btn-default iso_action_button "
-                            ng-click="restoreNode();">
-                            Restore Document
+                            ng-click="deleteNodeForever();">
+                            Delete Node Forever
                         </button>
+                            
+
+
                     </div>
                 </div>
 
