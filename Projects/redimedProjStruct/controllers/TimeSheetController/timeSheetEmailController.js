@@ -49,14 +49,8 @@ module.exports = {
         transport.sendMail(mailOptions, function(error, response) { //callback
             if (error) {
                 console.log(error);
-                // res.json({
-                //     status: "fail"
-                // });
             } else {
                 console.log("Message sent: " + response.message);
-                // res.json({
-                //     status: "success"
-                // });
             }
             transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
         });
