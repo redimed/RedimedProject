@@ -1087,7 +1087,9 @@ module.exports = {
             .success(function(result) {
                 if (result === undefined || result === null || result.length === 0) {
                     res.json({
-                        status: "error"
+                        status: "success",
+                        count: 0,
+                        result: null
                     });
                     return;
                 } else {
@@ -1114,7 +1116,9 @@ module.exports = {
                             var Depts = "";
                             if (resultDept === undefined || resultDept === null || resultDept.length === 0) {
                                 res.json({
-                                    status: "error"
+                                    status: "success",
+                                    count: 0,
+                                    result: []
                                 });
                                 return;
                             } else {
@@ -1134,7 +1138,9 @@ module.exports = {
                                     .success(function(staffNode) {
                                         if (staffNode === undefined || staffNode === null || staffNode.length === 0) {
                                             res.json({
-                                                status: "error"
+                                                status: "success",
+                                                count: 0,
+                                                result: []
                                             });
                                             return;
                                         } else {
@@ -1162,7 +1168,9 @@ module.exports = {
                                                 .success(function(resultListUser) {
                                                     if (resultListUser === undefined || resultListUser === null || resultListUser.length === 0) {
                                                         res.json({
-                                                            status: "error"
+                                                            status: "success",
+                                                            count: 0,
+                                                            result: []
                                                         });
                                                         return;
                                                     } else {
