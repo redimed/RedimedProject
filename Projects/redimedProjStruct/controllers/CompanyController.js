@@ -5,6 +5,36 @@ var S = require('string');
 var db = require('../models');
 
 module.exports = {
+    postDisableInsurer :function(req,res){
+        var postData = req.body.data;
+        var sql = 
+                knex('company_insurers')
+                .update('isEnable', 0)
+                .where('insurer_id',postData.id)
+                .toString()
+                db.sequelize.query(sql)
+                .success(function(data){
+                    res.json({data: data,sql:sql});
+                })
+                .error(function(error){
+                    res.json(500, {error: error,sql:sql});
+                })
+    },
+    postUpCompanyPatient : function(req,res){
+        var postData = req.body.data;
+        var sql = 
+                knex('cln_patients')
+                .update('company_id', postData.id)
+                .where('Patient_id',postData.patient_id)
+                .toString()
+                db.sequelize.query(sql)
+                .success(function(data){
+                    res.json({data: data});
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+    },
     postRemoveInsurer : function(req,res){
        var postData = req.body.data;
         var sql = knex('company_insurers')
@@ -100,7 +130,7 @@ module.exports = {
                               .success(function(data1){
                                     var company_insurers_array = [];
                                     _.forEach(postData.listInsurerid, function(id){
-                                        company_insurers_array.push({insurer_id: id.id, company_id: postData.id});
+                                        company_insurers_array.push({insurer_id: id.id, company_id: postData.id,isEnable:1});
                                     })  
                                    
                                     if(company_insurers_array.length > 0){
@@ -130,7 +160,7 @@ module.exports = {
 		var postData = req.body.data;
         var pagination = req.body.pagination;
 		var sql = knex
-		.select('*')
+		.select('companies.*')
 		.from('companies')
         .limit(postData.limit)
         .offset(postData.offset)
@@ -146,7 +176,18 @@ module.exports = {
         .success(function(detail){
             db.sequelize.query(sql_count)
             .success(function(count){
-                res.json({data: detail, count: count[0].a});
+                    var sql1 = knex
+                             .select('*')
+                             .from('cln_patients')
+                             .where('cln_patients.Patient_id', postData.patient_id)
+                             .toString()
+                             db.sequelize.query(sql1)
+                             .success(function(data1){
+                                res.json({data: detail, count: count[0].a,data1:data1});
+                             })
+                             .error(function(error){
+                                res.json(500, {'status': 'error', 'message': error});
+                            })
             })
             .error(function(error){
                 res.json(500, {'status': 'error', 'message': error});
@@ -162,6 +203,19 @@ module.exports = {
             var required = [
                 {field: 'Company_name', message: 'Company Name required'}
             ]
+
+            if(postData.PO_number % 1 !== 0){
+                errors.push({field: 'PO_number', message: 'PO_number must be number'});
+            }
+            if(postData.postcode % 1 !== 0){
+                errors.push({field: 'postcode', message: 'Post code must be number'});
+            }
+             if(postData.latitude % 1 !== 0){
+                errors.push({field: 'latitude', message: 'Latitude must be number'});
+            }
+            if(postData.longitude % 1 !== 0){
+                errors.push({field: 'longitude', message: 'Longitude code must be number'});
+            }
 
             _.forIn(postData, function(value, field){
                 _.forEach(required, function(field_error){
@@ -224,7 +278,7 @@ module.exports = {
                     .success(function(data){
                                var company_insurers_array = [];
                                 _.forEach(postData.listInsurerid, function(insurer_id){
-                                    company_insurers_array.push({insurer_id: insurer_id, company_id: data[0].id});
+                                    company_insurers_array.push({insurer_id: insurer_id, company_id: data[0].id,isEnable:1});
                                 })
 
                                 if(company_insurers_array.length > 0){
@@ -271,6 +325,7 @@ module.exports = {
         var sql = knex
         .select('*')
         .from('cln_insurers')
+        .whereNotIn('cln_insurers.id', postData.insurerArray)
         .limit(postData.limit)
         .offset(postData.offset)
         .toString();
@@ -293,13 +348,13 @@ module.exports = {
     },
     postListParent: function(req, res){
         var postData = req.body.data;
-        var sql = knex
-        .select('*')
-        .from('companies')
+        console.log("------------->",postData.data);
+        var sql = 
+         knex('companies')
+        .whereRaw('companies.id <> '+postData.Company_id)
         .limit(postData.limit)
         .offset(postData.offset)
         .toString();
-
         var sql_count = knex('companies')
             .count('id as a')
             .toString();
@@ -333,6 +388,7 @@ module.exports = {
                             .select('cln_insurers.*')
                             .from('company_insurers')
                             .where({company_id:postData.id})
+                            .where('company_insurers.isEnable',1)
                             .innerJoin('cln_insurers','company_insurers.insurer_id','=', 'cln_insurers.id')
                             .toString()
                             db.sequelize.query(sql1)
@@ -356,7 +412,7 @@ module.exports = {
                                 
                             })
                             .error(function(error){
-                                res.json(500, {'status': 'error', 'message': 'error'});
+                                res.json(500, {'status': 'error', 'message': 'error',sql:sql1});
                             })
                     })
                     .error(function(error){

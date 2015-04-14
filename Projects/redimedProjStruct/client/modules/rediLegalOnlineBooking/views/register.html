@@ -216,7 +216,7 @@ input:focus ~ .highlight {
             <div class="row">
                 <div class="col-md-12">
                     <div class="group">      
-                        <input ng-model="user.phone" id="phone" name="phone" class="confix-input" type="text" ng-pattern="/^[0-9-]{9,15}$/" required>
+                        <input ng-model="user.phone" id="phone" name="phone" class="confix-input" type="text" ng-pattern="/^([0-9]*)$/" required>
                         <span class="highlight"></span>
                         <span class="bar"></span>
                         <label class="confix-label">Phone <span style="color: red;">*</span></label>

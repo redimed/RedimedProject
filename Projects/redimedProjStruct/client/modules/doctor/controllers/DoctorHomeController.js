@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor.home.controller",[])
 
-.controller("DoctorHomeController", function($scope, $state, $cookieStore, DoctorService, ConfigService, localStorageService){
+.controller("DoctorHomeController", function($scope, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment){
 
 	var nowtime = moment();
 	var doctorInfo = $cookieStore.get('doctorInfo');
@@ -9,23 +9,17 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		alert('Not Doctor Information !!!')
 	}
 
-	$scope.selectDate = {
-		year: nowtime.year(),
-		month: nowtime.month() + 1,
-		date: nowtime.date(),
-	}
-
 	$scope.loadCalendar = function(){
-		console.log($scope.selectDate)
+		var query_date = moment($scope.selectDate).format("YYYY-MM-DD");
 		var doctor_id = doctorInfo.doctor_id;
 
-		DoctorService.doctor_calendar_by_date(doctor_id, $scope.selectDate).then(function(data){
+		DoctorService.doctor_calendar_by_date(doctor_id, query_date).then(function(data){
 			$scope.list_appts = data.list;
 
 
 			angular.forEach($scope.list_appts, function(value, key) {
-				value.FROM_TIME =  ConfigService.convertToDatetime(value.FROM_TIME);
-				value.TO_TIME =  ConfigService.convertToDatetime(value.TO_TIME);
+				value.FROM_TIME =  moment(value.FROM_TIME).format("hh:mm");
+				value.TO_TIME =  moment(value.TO_TIME).format("hh:mm");
 				
 				value.PATIENTS = JSON.parse(value.PATIENTS);
 			})
@@ -36,12 +30,13 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		});
 	}
 
-	$scope.goToApptDetail = function (patient, appt) {
-		if(!patient.Patient_id || !appt.CAL_ID) {
-			alert('Patient or appointment');
+	$scope.goToApptDetail = function (item) {
+		console.log('this is item',item);
+		if(!item.CAL_ID || !item.Patient_id) {
+			toastr.error('Unexpected error!','Error!')
 			return;
 		}
-  		$state.go("loggedIn.patient.appointment", {patient_id: patient.Patient_id, cal_id: appt.CAL_ID});
+  		$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
     }
 
 	

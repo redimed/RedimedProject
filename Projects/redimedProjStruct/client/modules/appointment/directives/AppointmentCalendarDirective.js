@@ -41,9 +41,10 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 					//RECEIVE FIRST
 
-					//END RECEIVE FIRST				
-
+					//END RECEIVE FIRST
 					_.forEach(response.data, function(data){
+
+						console.log(data);
 
 						var flagTheme = false;
 						var flagPatient = -1;
@@ -127,7 +128,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 							})
 
-							var object = {FROM_TIME: data.FROM_TIME, TO_TIME: data.TO_TIME, CAL_ID: data.CAL_ID, doctors: doctors};
+							var object = {FROM_TIME: data.FROM_TIME, TO_TIME: data.TO_TIME, CAL_ID: data.CAL_ID, SERVICE_ID: data.SERVICE_ID, CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID, doctors: doctors};
 							scope.appointment.list.push(object);
 						}
 					}) // end forEach
@@ -135,13 +136,19 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				}, function(error){})
 			}
 
+			var dialogRightAdd = function(app, col){
+				angular.element("#popupMenu").css({'display':'none'});
+
+				dialogAdd(app, col);
+			}
+
 			var dialogAdd = function(app, col){
 				var modalInstance = $modal.open({
 					templateUrl: 'appointmentAdd',
-					controller: function($scope, $modalInstance, app, col){
+					controller: function($scope, $modalInstance, app){
 						$scope.appointment = {
-							col: col,
-							app: app
+							app: app,
+							col: col
 						}
 
 						$scope.patient = null;
@@ -306,8 +313,27 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				})
 			}
 
+			var onRightClick = function($event, app, col){
+				angular.element("#popupMenu").css({
+					'display': 'block',
+					'top': $event.pageY-68,
+					'left': $event.pageX-20
+				});
+
+				scope.appointment.selectedAppointment = angular.copy(app);
+				scope.appointment.selectedCol = angular.copy(col);
+			}
+
+			angular.element("#appointment").on("click", function(){
+				angular.element("#popupMenu").css({'display':'none'});
+			})
+
 			scope.appointment = {
+				selectedAppointment: {},
+				selectedCol: {},
+				onRightClick: function($event, app, col){ onRightClick($event, app, col) },
 				dialog: {
+					rightAdd: function(app, col){ dialogRightAdd(app, col) },
 					add: function(app, col){ dialogAdd(app, col) }
 				},
 				list: [],

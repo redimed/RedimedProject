@@ -11,6 +11,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
         $scope.spiroSignal = {};
         $scope.copydataReceive = {};
         $scope.copydataDevice = {};
+        localStorageService.get('callUser');
         var stmtNo = 1;
 
         $scope.$on('$stateChangeSuccess', function() {
@@ -173,6 +174,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                     title: 'Connection Error',
                     template: 'Please Check Devices!'
                 });
+                $scope.isLoad = false;
             }
             console.log('Connection Error ', result);
         }
@@ -193,7 +195,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                 $scope.dataReceive = message;
                 $scope.disableList = false;
                 delete $scope.dataReceive['rawData'];
-                signaling.emit('onlineMeasureData', {info:$scope.dataReceive});
+                signaling.emit('onlineMeasureData', localStorageService.get('callUser'), {info:$scope.dataReceive});
             });
 
             if ($scope.deviceType == 'Spirometer' || $scope.deviceType == 'Blood Pressure' || $scope.deviceType == 'Scale') {
@@ -317,12 +319,12 @@ angular.module('starter.bluetooth.mainBlueController',[])
                         delete $scope.spiroSignal['deviceType'];
 
                         if($scope.copydataDevice !== null) {
-                        $scope.dataPushDB = {
-                            patient_id: localStorageService.get('patientID_select'),
-                            measure_date: new Date(),
-                            device_id: $scope.device_id,
-                            measureData: JSON.stringify($scope.copydataDevice)
-                        }
+                            $scope.dataPushDB = {
+                                patient_id: localStorageService.get('patientID_select'),
+                                measure_date: new Date(),
+                                device_id: $scope.device_id,
+                                measureData: JSON.stringify($scope.copydataDevice)
+                            }
 
 
                             BluetoothServices.insertData($scope.dataPushDB).then(function (data){

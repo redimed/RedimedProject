@@ -51,7 +51,11 @@ function checkListData()
     for (var i = 0; i < arguments.length; i++) 
     {
         if(arguments[i]===undefined || arguments[i]===null || arguments[i]==='' ||arguments[i]=={})
+        {
+            exlog(">>>>>>>> Vi tri data truyen den bi loi:",i);
             return false;
+        }
+            
     }
     return true;
 }

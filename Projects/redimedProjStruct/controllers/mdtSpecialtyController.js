@@ -1,7 +1,140 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
+var S = require('string');
+var _ = require('lodash');
+
 module.exports = {
+	postActive: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('doctors')
+				.where('doctor_id', postData.doctor_id)
+				.update({Specialty_id: postData.Specialty_id})
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(active){
+			res.json({data: active});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
+	postSelectServiceDoctor: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('doctor_specialities')
+				.insert(postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: created});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
+	postRemoveServiceDoctor: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('doctor_specialities')
+					.where({
+						'doctor_specialities.doctor_id': postData.doctor_id,
+						'doctor_specialities.Specialties_id': postData.Specialties_id
+					})
+					.update({'doctor_specialities.Isenable': 0})
+					.toString();
+
+		db.sequelize.query(sql)
+		.success(function(deleted){
+			res.json({data: deleted});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
+	postListByServiceDoctor: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('doctor_specialities')
+				.column(
+					'cln_specialties.Specialties_id',
+					'cln_specialties.Specialties_name',
+					'rl_types.Rl_TYPE_NAME'
+				)
+				.innerJoin('cln_specialties', 'doctor_specialities.Specialties_id', 'cln_specialties.Specialties_id')
+				.innerJoin('rl_types', 'cln_specialties.RL_TYPE_ID', 'rl_types.RL_TYPE_ID')
+				.where('doctor_specialities.Isenable', 1)
+				.where('doctor_specialities.doctor_id', postData.doctor_id)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
+	postLoadWithoutDoctor: function(req, res){
+		var postData = req.body.data;
+
+		var sql_check = knex('doctor_specialities')
+						.select('Specialties_id')
+						.where('doctor_id', postData.doctor_id)
+						.where('Isenable', 1)
+						.map(function(row){
+							return row.Specialties_id;
+						})
+		.then(function(ids){
+			var sql = knex
+				.column(
+					'Specialties_id',
+					knex.raw('IFNULL(Specialties_name,\'\') AS Specialties_name'),
+					'rl_types.Rl_TYPE_NAME',
+					'cln_specialties.Creation_date'
+				)
+				.from('cln_specialties')
+				.innerJoin('rl_types', 'cln_specialties.RL_TYPE_ID', 'rl_types.RL_TYPE_ID')
+				.where('cln_specialties.Isenable', 1)
+				.where('rl_types.ISENABLE', 1)
+				.whereNotIn('cln_specialties.Specialties_id', ids)
+				.where(knex.raw('IFNULL(Specialties_name,\'\') LIKE \'%'+postData.Specialties_name+'%\''))
+				.orderBy('cln_specialties.Creation_date', postData.Creation_date)
+				.limit(postData.limit)
+				.offset(postData.offset)
+				.toString();
+					
+			var count_sql = knex('cln_specialties')
+				.count('cln_specialties.Specialties_id as a')
+				.where('cln_specialties.Isenable', 1)
+				.whereNotIn('cln_specialties.Specialties_id', ids)
+				.where(knex.raw('IFNULL(Specialties_name,\'\') LIKE \'%'+postData.Specialties_name+'%\''))
+				.toString();
+			db.sequelize.query(sql)
+			.success(function(rows){
+				db.sequelize.query(count_sql)
+				.success(function(count){
+					res.json({data: rows, count: count[0].a, sql: sql});
+				})
+				.error(function(error){
+					res.json(500, {error: error});	
+				})
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})
+		})
+	},
+
 	postAdd: function(req, res){
 		var postData = req.body.add_data;
 

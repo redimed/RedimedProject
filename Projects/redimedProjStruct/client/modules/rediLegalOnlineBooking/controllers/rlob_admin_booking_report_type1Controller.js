@@ -5,7 +5,7 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
     .controller("rlob_admin_bookingReport_type1Controller", function($scope,$http,$cookieStore,$q,rlobService) {
         $scope.removeSelectedBooking();
         // chien status
-        $scope.report = 'report1';
+        $scope.currentReport.name = 'report1';
         $scope.status = "Confirmed";
         
         //list type
@@ -205,6 +205,11 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
         .then(function(){
             $scope.initPagingReportUpcommingBooking();
         });
+
+        $scope.actionCenter.adminReport.reloadReport1=function()
+        {
+            $scope.initPagingReportUpcommingBooking();
+        }
         //-------------------------------------------------------------------
         //-------------------------------------------------------------------
         //-------------------------------------------------------------------

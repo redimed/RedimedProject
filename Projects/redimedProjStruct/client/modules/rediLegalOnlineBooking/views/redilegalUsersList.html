@@ -179,7 +179,7 @@
                         <label class="control-label">Phone</label>
                         <div class="input-icon">
                             <i class="fa fa-phone"></i>
-                            <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone" ng-model="editItem.Contact_number" ng-pattern="/^[0-9-]{9,15}$/" required/>
+                            <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone" ng-model="editItem.Contact_number" ng-pattern="/^([0-9]*)$/" required/>
                         </div>
                         <span ng-show="editForm.phone.$error.required && showClickedValidation" class="has-error">
                             <span for="phone" class="help-block">Phone is required.</span>

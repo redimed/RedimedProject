@@ -17,10 +17,10 @@
                 APPOINTMENT DATE
             </th>
             <th>
-                SURNAME
+                LOCATION
             </th>
             <th>
-                LOCATION
+                FULL NAME
             </th>
             <th>
                 TYPE
@@ -28,14 +28,18 @@
             <th>
                 DOCTOR
             </th>
+            <th>
+                BOOKING STATUS
+            </th>
+            <th>
+                DOCUMENT STATUS
+            </th>
         </tr>
         <tr>
             <td>
                 <rlob-choose-period from-date="filterInfo1.FromAppointmentDate" to-date="filterInfo1.ToAppointmentDate"></rlob-choose-period>
             </td>
-            <td>
-                <input class="form-control input-sm" type="text" ng-model="filterInfo1.Surname" ng-change="initPagingReportOutstandingBooking()">
-            </td>
+
             <td>
                 <!-- <input class="form-control input-sm" type="text" ng-model="filterInfo1.Location" ng-change="initPagingReportOutstandingBooking()"> -->
                 <select class="form-control input-sm"
@@ -45,6 +49,11 @@
                     <option  value="">ALL</option>
                 </select>
             </td>
+
+            <td>
+                <input class="form-control input-sm" type="text" ng-model="filterInfo1.Surname" ng-change="initPagingReportOutstandingBooking()">
+            </td>
+            
             <td>
                 <select class="form-control input-sm"
                         ng-model="rlTypeSelected"
@@ -62,17 +71,25 @@
                     <option  value="">ALL</option>
                 </select>
             </td>
+            <td>
+                <!-- BOOKING STATUS -->
+            </td>
+            <td>
+                <!-- DOCUMENT STATUS -->
+            </td>
             
             <!-- END SEARCH -->
         </tr>
         </thead>
         <tbody ng-repeat="outstanding in listOutstandingBookings">
         <tr ng-class='outstanding.style_class' ng-click="setSelectedBooking(outstanding.BOOKING_ID)">
-            <td><label>{{outstanding.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
-            <td><label>{{outstanding.WRK_SURNAME}}</label></td>
+            <td><label>{{outstanding.APPOINTMENT_DATE | date:'HH:mm dd/MM/yyyy'}}</label></td>
             <td><label>{{outstanding.Site_name}}</label></td>
+            <td><label>{{outstanding.FULL_NAME}}</label></td>
             <td><label>{{outstanding.Rl_TYPE_NAME}}</label></td>
             <td><label>{{outstanding.NAME}}</label></td>
+            <td><label>{{outstanding.STATUS}}</label></td>
+            <td><label>{{documentStatusDisplay[outstanding.DOCUMENT_STATUS]}}</label></td>
         </tr>
         </tbody>
     </table>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FirstWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1bde60-6e00-4470-a6cb-d8f3a613e87f">
 	<property name="ireport.zoom" value="1.2722928551174548"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="546"/>
+	<property name="ireport.y" value="143"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -13,17 +13,26 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-f.`examDate`, f.`AssessmentName`,f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
+f.`examDate`,f.`injuryDate`, f.`injuryReason`, f.`workerSymptoms`, f.`AssessmentName`,f.`Creation_date` , f.`clinicFind` , f.`diagnosis` , f.`isConsistent` , f.`isCondition` , f.`usualDuties` , f.`isFullCapacity` , f.`fullCapaFrom` , f.`isRequireTreat` ,
 f.`isSomeCapacity` , f.`someCapaFrom` , f.`someCapaTo` , f.`isPreDuties`, f.`isModiDuties` , f.`isWorkModifi` , f.`isPreHours` , f.`isModiHours` , f.`modiHrs` , f.`modiDays`, f.`isNoCapacity` ,
 f.`noCapaFrom` , f.`noCapaTo` , f.`isLiftUp` , f.`liftUpKg` , f.`isSitUp` , f.`sitUpMins` , f.`isStandUp`, f.`standUpMins` , f.`sitUpMins` , f.`isWalkUp` , f.`walkUpMeter`, f.`isWorkBelow`, f.`capaCmt` , f.`activities_1` , f.`activities_2`, f.`activities_3` , f.`activities_4` , f.`activities_5` , f.`activities_6` , f.`goal_1`, f.`goal_2` , f.`goal_3` , f.`goal_4` , f.`goal_5` , f.`goal_6` ,
 f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , SUBSTRING_INDEX(f.`signature`, ',', -1) AS signature,
 p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS patientAddress,
 c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
-d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName
+d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone` AS docPhone, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName
 FROM `th_first_assessment` f INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID` INNER JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` INNER JOIN `companies` c ON p.`company_id` = c.`id` INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
 WHERE f.`Ass_id` = $P{id}]]>
 	</queryString>
 	<field name="examDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="injuryDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="injuryReason" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="workerSymptoms" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="AssessmentName" class="java.lang.String">
@@ -219,10 +228,8 @@ WHERE f.`Ass_id` = $P{id}]]>
 	</field>
 	<field name="docAddress" class="java.lang.String"/>
 	<field name="docEmail" class="java.lang.String"/>
-	<field name="Phone" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="docSign" class="java.lang.String"/>
+	<field name="docPhone" class="java.lang.String"/>
+	<field name="docSign" class="java.lang.Object"/>
 	<field name="FullName" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -346,6 +353,18 @@ WHERE f.`Ass_id` = $P{id}]]>
 				<reportElement x="330" y="194" width="190" height="18" uuid="4534b5dc-b383-4809-abc5-fbe6f7b74838"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{Email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="519" width="138" height="20" uuid="f155e196-1266-4849-b0e9-dfdeb4e35389"/>
+				<textFieldExpression><![CDATA[$F{injuryDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="539" width="391" height="20" uuid="9c5fb023-9418-4afa-ac49-efe2f68f9c07"/>
+				<textFieldExpression><![CDATA[$F{injuryReason}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="559" width="391" height="20" uuid="d133b803-a1e2-4a88-8f84-948ff9b5d576"/>
+				<textFieldExpression><![CDATA[$F{workerSymptoms}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="802" splitType="Stretch">
@@ -611,7 +630,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="732" width="198" height="20" uuid="2673e543-f68b-4fbd-8818-8de1f7ec8f0a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Phone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docPhone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="756" width="198" height="17" uuid="8b91f1b3-cda7-4b17-be9c-fa8c743f8be9"/>

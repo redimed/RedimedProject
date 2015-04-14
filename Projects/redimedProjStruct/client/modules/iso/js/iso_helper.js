@@ -62,7 +62,8 @@ var isoConst={
         restoreDocument:true,
         forceCheckInDocument:true,
         forceReleaseDocumentOneClick:true,
-        createNewCheckInDocument:true
+        createNewCheckInDocument:true,
+        deleteNodeForever:true
     },
 
     userFunction:{

@@ -24,14 +24,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="row in company.list" >
-							<td>{{row.Company_name}}</td>
+						<tr ng-repeat="row in company.list" ng-style="row.id === company.company_idActive && {'background-color':'#F5F5F5'}" ng-dblclick="onRowClick(row)">
+							<td >{{row.Company_name}}</td>
 							<td>{{row.Industry}}</td>
 							<td>{{row.Addr}}</td>
 							<td>{{row.country}}</td>
 							<td align="center">
 								<a><i class="fa fa-pencil-square-o" ng-click="clickEdit(row)"></i></a>
-								<a><i class="fa fa-times" ng-click="company.remove(row)"></i></a>
 							</td> 
 						</tr>
 					</tbody>
@@ -40,13 +39,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- // <script type="text/ng-template" id="dialogCompanyRemove">
-//     <div class="modal-body">
-//         <p>Do you want to remove this ?</p>
-//     </div>
-//     <div class="modal-footer">
-//         <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
-//         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
-//     </div>
-//  </script> -->

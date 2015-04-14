@@ -51,17 +51,37 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					scope.company.error = '';
 					scope.company.form = response.data[0];
 					scope.company.form.User_id = $cookieStore.get('userInfo').id;
-					console.log(response.data[0]);
 					scope.company.listInsurer = response.data1;
+					scope.company.listInsurerTemp = response.data1;
+					scope.company.test = scope.company.test+1;
                     _.forEach(scope.company.listInsurer, function(id){
                         scope.company.listTemp.push(id.id);
                     })
 					scope.company.Company_name_Parent = response.data2[0].Company_name;
-					console.log(response);
+					
+
 				}, function(error){
 					scope.company.loading = false;
 					scope.company.error = $filter('translate')(error.data.code);
 				})
+			}
+			scope.onRowClick = function(row){
+				 scope.company.InsurerTemp = row.id;
+				 scope.company.checkColor = row.id;
+			}
+			scope.disableInsurer = function(row){
+				CompanyModel.disableInsurer(row)
+						.then(function(response){
+							toastr.success('Disable Successfully');
+						}, function(error){	
+						})
+					for (var i = 0; i <= scope.company.listTemp.length; i++) {
+							if (scope.company.listTemp[i] == row.id) {
+								scope.company.listTemp.splice(i,1);
+								scope.company.listInsurer.splice(i,1);
+							} 
+					}
+				
 			}
 			var remove = function(row){
 				$modal.open({
@@ -95,7 +115,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				CompanyModel.edit(postData)
 				.then(function(response){
 					toastr.success('Edit Company Successfully');
-		  					$state.go('loggedIn.company');
+		  			$state.go('loggedIn.company');
 				}, function(error){
 					scope.company.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.company.errors);
@@ -105,7 +125,12 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addParent.html',
 			      controller: 'CompanyAddParentDialgosController',
-			      size :''
+			      size :'',
+			      resolve: {
+			      		companyId: function(){
+			      			return $stateParams.companyId;
+			      		}
+			      }
 			    })
 			    .result.then(function(row){
 			    	scope.company.Company_name_Parent = row.Company_name;
@@ -118,7 +143,12 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addInsurer.html',
 			      controller: 'CompanyInsurerDialgosController',
-			      size :''
+			      size :'',
+			      resolve: {
+			      		insurerArray: function(){
+			      			return scope.company.listTemp;
+			      		}
+			      }
 			    })
 			    .result.then(function(row){
 					var flag = 0
@@ -139,10 +169,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				form: form,
 				error: '',
 				loading: false,
-				// form: '',
 				load:function(){load();},
 				save:function(){save();},
 				listInsurer:[],
+				listInsurerTemp:'',
+				test:1,
 		    	listTemp:[],
 		    	Company_name_Parent:'',
 		    	save :function(){save();},

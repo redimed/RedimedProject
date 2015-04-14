@@ -32,6 +32,7 @@ app.post('/api/iso/iso-tree-dir/getFullVersionDoccument',isoController.getUserPe
 app.post('/api/iso/iso-tree-dir/getFullCheckinDoccument',isoController.getUserPermission,isoTreeDirController.getFullCheckinDoccument);
 app.get('/api/iso/iso-tree-dir/handlingDownloadVersionDocument',isoController.getUserPermission,isoTreeDirController.handlingDownloadVersionDocument);
 app.post('/api/iso/iso-tree-dir/select-document-info',isoTreeDirController.selectDocumentInfo);
+app.post('/api/iso/iso-tree-dir/delete-node-forever',isoController.checkAdminIsoSystem,isoTreeDirController.deleteNodeForever);
 
 
 
