@@ -8,7 +8,8 @@ angular.module('app.loggedIn.outreferral', [
 
 	.state('loggedIn.patient.outreferral', {
 		abstract: true,
-		url: '/:patientId/outreferral'
+		url: '/:patientId/cal/:calId/outreferral'
+		 //'/:patientId/cal/:calId/claim'
 	})
 
 	.state('loggedIn.patient.outreferral.list', {

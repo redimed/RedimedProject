@@ -24,13 +24,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="row in company.list" ng-style="row.id === company.company_idActive && {'background-color':'#F5F5F5'}" ng-dblclick="onRowClick(row)">
+						<tr ng-repeat="row in company.list" ng-style="row.id === company.company_idActive && {'background-color':'#1E90FF'}" ng-dblclick="onRowClick(row)">
 							<td >{{row.Company_name}}</td>
 							<td>{{row.Industry}}</td>
 							<td>{{row.Addr}}</td>
 							<td>{{row.country}}</td>
 							<td align="center">
 								<a><i class="fa fa-pencil-square-o" ng-click="clickEdit(row)"></i></a>
+								<a>
+								   	<span  ng-if="row.checkisEnable"  ng-click="disableCompany(row)">Enable{{row.isEnable}}</span>
+									<span  ng-if="!row.checkisEnable"  ng-click="disableCompany(row)">Disable {{row.isEnable}}</span>
+								</a>
 							</td> 
 						</tr>
 					</tbody>

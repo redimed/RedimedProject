@@ -134,25 +134,25 @@
 		        <div class="col-md-3">
 				  	<div class="form-group">
 					    <label for="company.form.invoice_email">Invoice Email</label>
-					    <input type="text" class="form-control" ng-model="company.form.invoice_email">
+					    <input type="email" class="form-control" ng-model="company.form.invoice_email" name="invoice_email" id="invoice_email">
 					</div>
 				</div>
 				 <div class="col-md-3">
 				  	<div class="form-group">
 					    <label for="company.form.report_to_email">Report to email</label>
-					    <input type="text" class="form-control" ng-model="company.form.report_to_email" >
+					    <input type="email" class="form-control" ng-model="company.form.report_to_email" id="report_to_email" name="report_to_email">
 					 </div>
 				  </div>
 				<div class="col-md-3">
 				  	<div class="form-group">
 					    <label for="company.form.Email">Email</label>
-					    <input type="text" class="form-control" ng-model="company.form.Email" >
+					    <input type="email" class="form-control" ng-model="company.form.Email" name="Email" id="Email" >
 					 </div>
 				  </div>
 			    <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.result_emaiil">Result Email</label>
-				    <input type="text" class="form-control" ng-model="company.form.result_email">
+				    <label for="company.form.result_email">Result Email</label>
+				    <input type="email" class="form-control" ng-model="company.form.result_email" name="result_email" id="result_email">
 				 </div>
 			    </div>
 			</div>
@@ -240,10 +240,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in company.listInsurer track by $index" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor && {'background-color':'#F5F5F5'}">
+							<tr ng-repeat="row in company.listInsurer track by $index" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor  &&  {'background-color':'#1E90FF'}">
 								<td>{{row.insurer_name}}</td>
 								<td>{{row.address}}</td>
-								<td align="center"><a><i class="fa fa-times" ng-click="disableInsurer(row)"></i></a></td>
+								<td align="center">
+								<a>
+								   	<span  ng-if="row.checkisEnable"  ng-click="disableInsurer(row)">Enable{{row.isEnable}}</span>
+									<span  ng-if="!row.checkisEnable"  ng-click="disableInsurer(row)">Disable {{row.isEnable}}</span>
+								</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>

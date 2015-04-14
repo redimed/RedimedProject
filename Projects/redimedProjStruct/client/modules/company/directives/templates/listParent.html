@@ -15,6 +15,17 @@
 				</tr>
 			</thead>
 			<tbody>
+				<tr>
+					<td>
+						<input class="form-control input-sm" ng-model="company.search.Company_name" ng-enter="company.onSearch({field: 'Company_name', value: company.search.Company_name})">
+					</td>
+					<td>
+						<input class="form-control input-sm" ng-model="company.search.Industry" ng-enter="company.onSearch()">
+					</td>
+					<td>
+						<input class="form-control input-sm" ng-model="company.search.Addr" ng-enter="company.onSearch()">
+					</td>
+				</tr>
 				<tr ng-repeat="row in company.list" ng-click="onRowClick({row: row})">
 					<td>{{row.Company_name}}</td>
 					<td>{{row.Industry}}</td>

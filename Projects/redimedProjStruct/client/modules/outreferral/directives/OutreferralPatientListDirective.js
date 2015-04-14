@@ -31,6 +31,7 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 			reload: '=',
 			limit: '=',
 			patientId: '=',
+			calId: '=',
 			withoutPatient: '@',
 			permission: '@',
 			onRowClick: '&'
@@ -71,7 +72,36 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 					}, function(error){})
 				}
 			}
-
+			var clickEnable = function(row){
+				
+				var postData = {
+					CAL_ID:$stateParams.calId,
+					patient_id:row.patient_id,
+					outreferral_id:row.id,
+					isEnable:row.isEnable
+				}
+				console.log(postData);
+				OutreferralModel.updateEnable(postData)
+					.then(function(response){
+						console.log(response);
+						scope.outreferral.load();
+					}, function(error){})
+			}
+			var clickDisale = function(row){
+				console.log($stateParams.calId);
+				var postData = {
+					CAL_ID:$stateParams.calId,
+					patient_id:row.patient_id,
+					outreferral_id:row.id,
+					isEnable:row.isEnable
+				}
+				console.log(postData);
+				OutreferralModel.updateEnable(postData)
+					.then(function(response){
+						console.log(response);
+						scope.outreferral.load();
+					}, function(error){})
+			}
 			var onPage = function(page){
 				scope.outreferral.search.offset = (page-1)*scope.outreferral.search.limit;
 				scope.outreferral.load();
@@ -149,7 +179,9 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 				search: angular.copy(search),
 				onPage: function(page){ onPage(page); },
 				onSearch: function(){ onSearch(); },
-				onOrderBy: function(option){ onOrderBy(option); }
+				onOrderBy: function(option){ onOrderBy(option); },
+				clickEnable : function(row){clickEnable(row);},
+				clickDisale : function(row){clickDisale(row);}
 			}
 
 			//INIT

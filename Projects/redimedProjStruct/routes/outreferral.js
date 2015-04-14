@@ -10,3 +10,4 @@ app.post(url+'listFollowPatient', OutreferralController.postListFollowPatient);
 app.post(url+'addPatient', OutreferralController.postAddPatient);
 app.post(url+'edit', OutreferralController.postEdit);
 app.post(url+'remove', OutreferralController.postRemove);
+app.post(url + 'updateEnable',OutreferralController.postUpdateEnable)
