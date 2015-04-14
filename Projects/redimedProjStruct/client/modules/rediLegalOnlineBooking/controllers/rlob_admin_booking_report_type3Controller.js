@@ -7,6 +7,8 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
         // chien status
         $scope.currentReport.name = 'report3';
         $scope.status = "Confirmed";
+        $scope.bookingStatus=rlobConstant.bookingStatus;
+        $scope.documentStatus=rlobConstant.documentStatusFilter;
         
 
         /**
@@ -62,7 +64,9 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type3.controller',[])
             surname:'',
             rltype:'',
             fromAppointmentDate:'',
-            toAppointmentDate:''
+            toAppointmentDate:'',
+            bookingStatus:'',
+            documentStatus:''
         }
 
 

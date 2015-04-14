@@ -646,8 +646,8 @@ module.exports =
                             "     <div> Site address: {{siteAddress}} </div>                                                                                                 "+      
                             "   </div>                                                                                                                                       "+      
                             "   <br/>                                                                                                                                        "+      
-                            "   <p>Kind Regards,</p>                                                                                                                         ";
-                        
+                            "   <p>Kind Regards,</p>                                                                                                                         "+
+                            "   <p>Redimed Medico-Legal</p>                                                                                                              ";
          
                         var emailData={
                             FIRST_NAME:row.FIRST_NAME,
@@ -687,6 +687,8 @@ module.exports =
         var Location='%';
         var Surname = '%';
         var Type = '%';
+        var bookingStatus = '%';
+        var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
         if(req.body.filterInfo){
@@ -696,6 +698,8 @@ module.exports =
             Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
+            bookingStatus=filterInfo.bookingStatus?rlobUtil.fulltext(filterInfo.bookingStatus):'%';
+            documentStatus=filterInfo.documentStatus?rlobUtil.fulltext(filterInfo.documentStatus):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
@@ -713,6 +717,8 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                "+
             " AND CONCAT(booking.`WRK_SURNAME`,' ',booking.`WRK_OTHERNAMES`) LIKE ?                                       "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
+            " AND `booking`.`STATUS` LIKE ?                                                                               "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                      "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   ";
         var params=[];
         params.push(bookingType);
@@ -721,6 +727,8 @@ module.exports =
         params.push(Location);
         params.push(Surname);
         params.push(Type);
+        params.push(bookingStatus);
+        params.push(documentStatus);
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         console.log(params);
@@ -754,6 +762,8 @@ module.exports =
         var Location='%';
         var Surname = '%';
         var Type = '%';
+        var bookingStatus = '%';
+        var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
         if(req.body.filterInfo){
@@ -763,6 +773,8 @@ module.exports =
             Location=filterInfo.Location?rlobUtil.fulltext(filterInfo.Location):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
+            bookingStatus=filterInfo.bookingStatus?rlobUtil.fulltext(filterInfo.bookingStatus):'%';
+            documentStatus=filterInfo.documentStatus?rlobUtil.fulltext(filterInfo.documentStatus):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
@@ -783,6 +795,8 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                "+
             " AND CONCAT(booking.`WRK_SURNAME`,' ',booking.`WRK_OTHERNAMES`) LIKE ?                                       "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
+            " AND `booking`.`STATUS` LIKE ?                                                                          "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                          "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                          ";
         var params=[];
@@ -792,6 +806,8 @@ module.exports =
         params.push(Location);
         params.push(Surname);
         params.push(Type);
+        params.push(bookingStatus);
+        params.push(documentStatus);
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         params.push(pageIndex);
@@ -827,6 +843,8 @@ module.exports =
         var Doctor='%';
         var Surname = '%';
         var Type = '%';
+        var bookingStatus = '%';
+        var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
         if(req.body.filterInfo){
@@ -836,6 +854,8 @@ module.exports =
             Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
+            bookingStatus=filterInfo.bookingStatus?rlobUtil.fulltext(filterInfo.bookingStatus):'%';
+            documentStatus=filterInfo.documentStatus?rlobUtil.fulltext(filterInfo.documentStatus):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
@@ -856,6 +876,8 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                        "+
             " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                               "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                  "+
+            " AND `booking`.`STATUS` LIKE ?                                                                                       "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                              "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
         var params=[];
@@ -865,6 +887,8 @@ module.exports =
         params.push(Location);
         params.push(Surname);
         params.push(Type);
+        params.push(bookingStatus);
+        params.push(documentStatus);
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         console.log(params);
@@ -897,6 +921,8 @@ module.exports =
         var Location = '%';
         var Surname = '%';
         var Type = '%';
+        var bookingStatus = '%';
+        var documentStatus = '%';
         var Doctor = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
@@ -907,6 +933,8 @@ module.exports =
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
+            bookingStatus=filterInfo.bookingStatus?rlobUtil.fulltext(filterInfo.bookingStatus):'%';
+            documentStatus=filterInfo.documentStatus?rlobUtil.fulltext(filterInfo.documentStatus):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
@@ -930,6 +958,8 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                                  "+
             " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                                         "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                            "+
+            " AND `booking`.`STATUS` LIKE ?                                                                                            "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                                            "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
             " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                                           ";
         console.log(sql);
@@ -940,6 +970,8 @@ module.exports =
         params.push(Location);
         params.push(Surname);
         params.push(Type);
+        params.push(bookingStatus);
+        params.push(documentStatus);
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         params.push(pageIndex);
@@ -976,6 +1008,8 @@ module.exports =
         var Doctor='%';
         var Surname = '%';
         var Type = '%';
+        var bookingStatus = '%';
+        var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
         if(req.body.filterInfo){
@@ -985,6 +1019,8 @@ module.exports =
             Doctor=filterInfo.Doctor?rlobUtil.fulltext(filterInfo.Doctor):'%';
             Surname=filterInfo.Surname?rlobUtil.fulltext(filterInfo.Surname):'%';
             Type=filterInfo.Type?rlobUtil.fulltext(filterInfo.Type):'%';
+            bookingStatus=filterInfo.bookingStatus?rlobUtil.fulltext(filterInfo.bookingStatus):'%';
+            documentStatus=filterInfo.documentStatus?rlobUtil.fulltext(filterInfo.documentStatus):'%';
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
@@ -1005,6 +1041,8 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                        "+
             " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                               "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                  "+
+            " AND `booking`.`STATUS` LIKE ?                                                                                  "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                                  "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
         var params=[];
@@ -1014,6 +1052,8 @@ module.exports =
         params.push(Location);
         params.push(Surname);
         params.push(Type);
+        params.push(bookingStatus);
+        params.push(documentStatus);
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         console.log(params);
@@ -1046,6 +1086,8 @@ module.exports =
         var Location = '%';
         var Surname = '%';
         var Type = '%';
+        var bookingStatus = '%';
+        var documentStatus = '%';
         var Doctor = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
@@ -1056,6 +1098,8 @@ module.exports =
             Surname=searchKeys.surname?rlobUtil.fulltext(searchKeys.surname):'%';
             Doctor=searchKeys.doctor?rlobUtil.fulltext(searchKeys.doctor):'%';
             Type=searchKeys.rltype?rlobUtil.fulltext(searchKeys.rltype):'%';
+            bookingStatus=searchKeys.bookingStatus?rlobUtil.fulltext(searchKeys.bookingStatus):'%';
+            documentStatus=searchKeys.documentStatus?rlobUtil.fulltext(searchKeys.documentStatus):'%';
             FromAppointmentDate=searchKeys.fromAppointmentDate?searchKeys.fromAppointmentDate:'1900-1-1';
             ToAppointmentDate=searchKeys.toAppointmentDate?searchKeys.toAppointmentDate:'2500-1-1';
         }
@@ -1079,6 +1123,8 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                                  "+
             " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE ?                                                         "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                                            "+
+            " AND `booking`.`STATUS` LIKE ?                                                                                            "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                                            "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                                           ";
         console.log(sql);
@@ -1089,6 +1135,8 @@ module.exports =
         params.push(Location);
         params.push(Surname);
         params.push(Type);
+        params.push(bookingStatus);
+        params.push(documentStatus);
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         params.push(pageIndex);
@@ -1286,21 +1334,27 @@ module.exports =
             return;
         }
         var sql=
-            " SELECT DISTINCT booking.*,rltype.`Rl_TYPE_NAME`,spec.`Specialties_name`,company.`Company_name`,                            "+            
-            "   files.`FILE_NAME`                                                                                                        "+       
-            " FROM  `rl_bookings` booking                                                                                                "+          
-            "   INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                                 "+          
-            "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`                                      "+          
-            "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                      "+          
-            "   LEFT JOIN (SELECT f.`BOOKING_ID`,f.`FILE_NAME`,COUNT(f.`BOOKING_ID`) AS NUMBER_OF_RESULT FROM `rl_booking_files` f      "+
-            "           WHERE f.`isClientDownLoad`=1                                                                                     "+
-            "           GROUP BY f.`BOOKING_ID`,f.`FILE_NAME`) files                                                                     "+
-            "   ON booking.`BOOKING_ID`=files.`BOOKING_ID`                                                                               "+
-            " WHERE     files.`NUMBER_OF_RESULT` IS NULL                                                                                 "+                       
-            "   AND booking.`STATUS`='Completed'                                                                                         "+          
-            //"   AND booking.`APPOINTMENT_DATE`<CURRENT_TIMESTAMP                                                                         "+          
-            "   AND booking.`BOOKING_TYPE`=?  AND booking.DOCTOR_ID LIKE ?                                                               "+          
-            " ORDER BY booking.`APPOINTMENT_DATE` ASC;                                                                                   ";
+            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,dt.`NAME`,stite.`Site_name`,                                                           "+
+            " CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) AS FULL_NAME                                                       "+
+            " FROM `rl_bookings` booking                                                                                                    "+
+            " LEFT JOIN (SELECT `BOOKING_ID` FROM `rl_booking_files` WHERE `isClientDownLoad`=1 GROUP BY `BOOKING_ID`)                      "+
+            " rlfile ON rlfile.`BOOKING_ID`  = booking.`BOOKING_ID`                                                                         "+
+            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                                    "+
+            " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                              "+
+            " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                             "+
+            //" WHERE rlfile.`BOOKING_ID` IS NULL                                                                                           "+
+            " WHERE booking.`BOOKING_TYPE`= ?                                                                                               "+
+            " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
+            " AND booking.`STATUS` NOT IN ('Cancel','Completed','Not Arrived','Late Cancellation')                                          "+
+            " AND booking.DOCTOR_ID LIKE ?                                                                                                  "+
+            " AND  dt.`NAME` LIKE '%'                                                                                                       "+
+            " AND stite.`Site_name` LIKE '%'                                                                                                "+
+            " AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE '%'                                                       "+
+            " AND `rltype`.`Rl_TYPE_NAME` LIKE '%'                                                                                          "+
+            " AND `booking`.`STATUS` LIKE '%'                                                                                               "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE '%'                                                                                      "+
+            " AND `booking`.`APPOINTMENT_DATE` BETWEEN '1900-1-1' AND DATE_ADD('2500-1-1',INTERVAL 1 DAY)                                   "+
+            " ORDER BY booking.`APPOINTMENT_DATE` DESC                                                                                      ";          
 
 
         req.getConnection(function(err,connection)
@@ -1523,7 +1577,7 @@ module.exports =
                     "     Kind Regards                                                                                                              "+
                     " </p>                                                                                                                          "+
                     " <p>                                                                                                                           "+
-                    "     Redimed Medico-Legal                                                                                                   "+
+                    "     Redimed Medico-Legal                                                                                                      "+
                     " </p>                                                                                                                          ";
 
                 emailInfo.htmlBody=
@@ -1924,22 +1978,6 @@ module.exports =
                             "   <br/>                                                                                                                                    "+         
                             "   <p>Kind Regards,</p>                                                                                                                     "+         
                             "   <p>Redimed Medico-Legal</p>                                                                                                              "+         
-                            "   <hr/>                                                                                                                                    "+         
-                            "   <table>                                                                                                                                  "+         
-                            "   <tr>                                                                                                                                     "+         
-                            "       <td>                                                                                                                                 "+         
-                            "     <img src='http://s3.postimg.org/a2ieklcv7/redimed_logo_1.jpg'/>                                                                        "+         
-                            "       </td>                                                                                                                                "+         
-                            "       <td>                                                                                                                                 "+         
-                            "           <p><span style='font-weight: bold'>A&nbsp;</span>{{Site_addr}}</p>                                                               "+     
-                            "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                               "+         
-                            "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900<span style='font-weight: bold'>F</span>+61 8 9230 0999</p>      "+         
-                            "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                  "+         
-                            "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                          "+         
-                            "       </td>                                                                                                                                "+         
-                            "   </tr>                                                                                                                                    "+         
-                            "   </table>                                                                                                                                 "+         
-                            "                                                                                                                                            "+         
                             " </div>                                                                                                                                     "; 
                         
          

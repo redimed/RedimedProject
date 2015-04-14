@@ -86,17 +86,12 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                     //chien set style class node
                     //phanquocchien.c1109g@gmail.com
                     var styleClass = '';
-                    if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
-                        styleClass = 'rlob_document_status_not_confirmed'
+                    if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
+                        styleClass = 'rlob_document_status_checked'
                     }
                     else{
-                        if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
-                            styleClass = 'rlob_document_status_checked'
-                        }
-                        else{
-                            if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
-                                styleClass = 'rlob_document_status_no_document'
-                            }
+                        if(item.DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
+                            styleClass = 'rlob_document_status_no_document'
                         }
                     }
                     dateMaker[item.APPOINTMENT_DATE][item.DOCTOR_ID].BOOKING_ITEMS.push({

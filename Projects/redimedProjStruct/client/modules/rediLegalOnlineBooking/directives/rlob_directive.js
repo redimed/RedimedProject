@@ -1648,13 +1648,14 @@ angular.module("app.loggedIn.rlob.directive", [])
                         "Contact Medico-Legal Department at Redimed on (08) 9230 0900 or log to the online booking system link\n";
                     rlobService.listMailUserOnlineBooking().then(function(data){
                         if (data.status == 'success') {
-                            var recepient = '"'+data.data+'"';
+                            var recepient = data.data;
                             var options = {
                                 subject: ("Medico-Legal Newsletter"),
-                                body: $scope.emailContent
+                                body: $scope.emailContent,
+                                bcc:recepient
                             };
                             console.log(recepient);
-                            $scope.mailtoLink = Mailto.url(recepient, options);
+                            $scope.mailtoLink = Mailto.url('', options);
                             $window.location.href = $scope.mailtoLink;
                         };
                     })
