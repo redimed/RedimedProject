@@ -1,5 +1,15 @@
 angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 
+.controller('SpecialtyRemoveDialog', function($scope, $modalInstance, list){
+	$scope.cancel = function(){
+		$modalInstance.dismiss('cancel');
+	}
+
+	$scope.ok = function(){
+		$modalInstance.close(list);
+	}
+})
+
 .directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, mdtSpecialtyService, UserService, toastr, $cookieStore, $modal, $stateParams){
 	return {
 		restrict: 'EA',
@@ -147,12 +157,35 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 				}, function(error){})
 			}
 
+			var removeDialog = function(list){
+				$modal.open({
+					templateUrl: 'dialogSpecialtyRemove',
+					controller: 'SpecialtyRemoveDialog',
+					size: 'sm',
+					resolve: {
+						list: function(){
+							return list;
+						}
+					}
+				})
+				.result.then(function(list){
+					var postData = {doctor_id: $stateParams.doctorId, Specialties_id: list.Specialties_id};
+
+					mdtSpecialtyService.removeServiceDoctor(postData)
+					.then(function(response){
+						toastr.success('Delete Successfully');
+						scope.speciality.load();
+					}, function(error){})
+				})
+			}
+
 			scope.speciality = {
 				list: [],
 				onActiveList: function(list){ onActiveList(list) },
 				load: function(){ load(); },
 				dialog: {
-					add: function() {addDialog();}
+					add: function() {addDialog();},
+					remove: function(list) {removeDialog(list);}
 				},
 				active: 0
 			}

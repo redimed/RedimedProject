@@ -126,6 +126,12 @@ angular.module('app.loggedIn.iso.service',[])
             {
                 var result = api.all("iso/iso-tree-dir/delete-node-forever");
                 return result.post({nodeId:nodeId});
+            },
+
+            deleteNodeForever:function(nodeId)
+            {
+                var result = api.all("iso/iso-tree-dir/delete-node-forever");
+                return result.post({nodeId:nodeId});
             }
 
         };

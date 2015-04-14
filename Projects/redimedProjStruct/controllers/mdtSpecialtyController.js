@@ -40,6 +40,26 @@ module.exports = {
 		})
 	},
 
+	postRemoveServiceDoctor: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('doctor_specialities')
+					.where({
+						'doctor_specialities.doctor_id': postData.doctor_id,
+						'doctor_specialities.Specialties_id': postData.Specialties_id
+					})
+					.update({'doctor_specialities.Isenable': 0})
+					.toString();
+
+		db.sequelize.query(sql)
+		.success(function(deleted){
+			res.json({data: deleted});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
 	postListByServiceDoctor: function(req, res){
 		var postData = req.body.data;
 
@@ -70,6 +90,7 @@ module.exports = {
 		var sql_check = knex('doctor_specialities')
 						.select('Specialties_id')
 						.where('doctor_id', postData.doctor_id)
+						.where('Isenable', 1)
 						.map(function(row){
 							return row.Specialties_id;
 						})

@@ -4,8 +4,6 @@
 angular.module("app.call.controller",[
 ])
     .controller("callController", function($scope,callModal,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, callUserInfo, callUser, isCaller, opentokInfo){
-        socket.removeAllListeners();
-
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
 
@@ -80,12 +78,6 @@ angular.module("app.call.controller",[
                 $scope.showWhiteboard = false;
             }
         };
-
-        $scope.closeWindow = function(){
-            audio.pause();
-            socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
-            disconnect();
-        }
 
         if($scope.isCaller)
         {   
@@ -183,15 +175,26 @@ angular.module("app.call.controller",[
             }
             if(message.type === 'ignore')
             {
-                audio.pause();
-                toastr.error("Call Have Been Rejected!");
-                disconnect();
+                if($scope.streams.length == 1)
+                    toastr.error("Call Have Been Rejected!");
+                else
+                {
+                    audio.pause();
+                    toastr.error("Call Have Been Rejected!");
+                    disconnect();
+                }
             }
             if(message.type === 'cancel')
             {
-                audio.pause();
-                toastr.error("Call Have Been Cancelled!");
-                disconnect();
+
+                if($scope.streams.length == 1)
+                    toastr.error("Someone Has Left The Call!");
+                else
+                {
+                    audio.pause();
+                    toastr.error("Call Have Been Cancelled!");
+                    disconnect();
+                }
             }
 
         })
@@ -218,6 +221,7 @@ angular.module("app.call.controller",[
             if(typeof $cookieStore.get("callInfo") !== undefined)
                 $cookieStore.remove("callInfo");
 
+            socket.removeAllListeners();
             $state.transitionTo(toSt.toState.name,toSt.toParams,{reload: true});
         }
 
@@ -272,6 +276,58 @@ angular.module("app.call.controller",[
             }
         };
 
+        $scope.isCallGroup = false;
+
+        $scope.addPeople = function(){
+            if($scope.streams.length < 2)
+            {
+                var modalInstance = $modal.open({
+                    templateUrl: 'common/views/dialog/invitePeople.html',
+                    size: 'sm',
+                    backdrop: 'static',
+                    keyboard: false,
+                    controller: function($scope,UserService,$modalInstance,toastr,socket){
+                        UserService.getOnlineUsers().then(function(rs){
+                            $scope.onlineUsers = rs.data;
+                        })
+
+                        $scope.callUser = function(u){
+                            $modalInstance.close({type:'call',data:u});
+                        }
+
+                        $scope.cancelClick = function(){
+                            $modalInstance.close({type:'cancel'});
+                        }
+                    }
+                })
+
+                modalInstance.result.then(function(rs){
+                    if(rs.type == 'call')
+                    {
+                        socket.emit("sendMessage",$scope.userInfo.id,rs.data.id,{type:'call',sessionId: sessionId});
+                        OTSession.session.signal({
+                            type: 'callGroup',
+                            data: {groupCall: true, name:rs.data.fullName}
+                        });
+
+                    }
+                })
+            }
+            else
+                toastr.warning('Can Only Make A Group Call With 3 People!');
+            
+        }
+
+        if (OTSession.session) {
+            OTSession.session.on({
+                'signal:callGroup': function (event) {
+                    if (event.from.connectionId !== OTSession.session.connection.connectionId) {
+                        if(groupCall)
+                            $scope.isCallGroup = true;
+                    }
+                }
+            });
+        }
         
          $scope.$on("changeSize", function (event) {
             if (event.targetScope.stream.oth_large === undefined) {

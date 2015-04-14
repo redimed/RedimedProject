@@ -925,6 +925,12 @@ angular.module('app.config', [])
         return split[0]+split[1];
     }
 
+    configService.convertToDateMoment = function(string){
+        if(typeof string === 'undefined' || !string)
+            return null;
+        return moment(string).format("DD/MM/YYYY");
+    }
+
     /*
      *  END DATE TIME FUNCTION 
      */
