@@ -1,4 +1,9 @@
- <link href="common/views/call.css" rel="stylesheet" type="text/css" />
+<link href="common/views/call.css" rel="stylesheet" type="text/css" />
+<style>
+    .invite-modal-window .modal{
+      z-index: 99999 !important;
+    }
+</style>
 <div draggable drag="isDrag" ng-class="{'btf-modal-big' : !isMinimize , 'btf-modal-small':isMinimize}">
   <div class="modal-content">
     <div style="background-color:#16181A; border-bottom: 1px solid #16181A !important;" class="modal-header">
@@ -8,12 +13,9 @@
                 <a id="btnMinimize" ng-class="{disabled : isCaller && !isAccept}" href="javascript:;" ng-click="maximizeWindow()" class="btn btn-icon-only btn-circle blue-steel">
                   <i class="fa fa-minus"></i>
                 </a>
-                <a href="javascript:;" ng-click="closeWindow()" class="btn btn-icon-only btn-circle red-flamingo">
-                  <i class="fa fa-times"></i>
-                </a>
               </div>
               <div style="text-align: center;">
-                  
+                  <!-- <div class="calling-title" style="font-size: 25px !important;">{{callTime}}</div> -->
               </div>
           </div>
         </div>
@@ -39,9 +41,11 @@
             </div>
           </div>
 
+          
+
           <div id='session' ng-class="{'session-connected': connected}">
               <ot-layout props="{animate:true,bigFixedRatio:true}">
-                  <ot-subscriber id="myDiv" ng-repeat="stream in streams" 
+                  <ot-subscriber ng-hide="isMinimize && stream.oth_large" id="myDiv" ng-repeat="stream in streams" 
                       stream="stream" 
                       ng-hide="stream.name == 'screen' && isMinimize"
                       props="{style: {nameDisplayMode: 'off'}, width:'100%', height:'100%'}" 
@@ -69,8 +73,7 @@
               
               <div id="facePublisher"
                   ng-hide="isMinimize"
-                  ng-if="publishing"
-                  draggable="true">
+                  ng-if="publishing">
                   <ot-publisher id="facePublisher"
                       props="facePublisherProps"
                       mute-video="isVideoMuted"
@@ -89,37 +92,39 @@
       </div>
       <br/>
       <br/>
+      
     </div>
+    <div ng-hide="isMinimize" style="background-color:#16181A; border-top: 1px solid #16181A !important; z-index: 999999 !important" class="modal-footer">
+          <div class="button-group-navigation" target="_blank" style="text-align: center;">
+              <li>
+                <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" class="btn-bottom-menu" ng-class="{active : sharingMyScreen}" ng-click="toggleShareScreen()" href="javascript:;">
+                  <i class="icon ion-android-laptop"></i>
+                </a>
+              </li>
+              <li>
+                <a class="btn-bottom-menu" ng-class="{active : !isVideoMuted}" href="javascript:;" ng-click="muteVideo()">
+                  <i class="icon ion-android-camera"></i>
+                </a>
+              </li>
+              <li>
+                <a class="btn-bottom-menu" href="javascript:;" ng-click="cancelCall()">
+                  <i class="icon ion-power"></i>
+                </a>
+              </li>
+              <li>
+                <a class="btn-bottom-menu" ng-class="{active : !isAudioMuted}" ng-click="muteAudio()" href="javascript:;">
+                  <i class="icon ion-android-microphone"></i>
+                </a>
+              </li>
+              <li>
+                <a ng-click="addPeople()" class="btn-bottom-menu" href="javascript:;">
+                  <i class="icon ion-person-add"></i>
+                </a>
+              </li>
+            </div>
+      </div>
 
-    <div ng-hide="isMinimize" style="background-color:#16181A; border-top: 1px solid #16181A !important;" class="modal-footer">
-        <div class="button-group-navigation" target="_blank" style="text-align: center;">
-            <li>
-              <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" class="btn-bottom-menu" ng-class="{active : sharingMyScreen}" ng-click="toggleShareScreen()" href="javascript:;">
-                <i class="icon ion-android-laptop"></i>
-              </a>
-            </li>
-            <li>
-              <a class="btn-bottom-menu" ng-class="{active : !isVideoMuted}" href="javascript:;" ng-click="muteVideo()">
-                <i class="icon ion-android-camera"></i>
-              </a>
-            </li>
-            <li>
-              <a class="btn-bottom-menu" href="javascript:;" ng-click="cancelCall()">
-                <i class="icon ion-power"></i>
-              </a>
-            </li>
-            <li>
-              <a class="btn-bottom-menu" ng-class="{active : !isAudioMuted}" ng-click="muteAudio()" href="javascript:;">
-                <i class="icon ion-android-microphone"></i>
-              </a>
-            </li>
-            <li>
-              <a ng-click="toggleWhiteboard()" ng-class="{active: showWhiteboard}" class="btn-bottom-menu" href="javascript:;">
-                <i class="icon ion-android-color-palette"></i>
-              </a>
-            </li>
-          </div>
-    </div>
+    
   </div>
 </div>
 <script>

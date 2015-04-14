@@ -68,7 +68,7 @@ angular.module("app", [
             'reconnect': true,
             'reconnection delay': 2000,
             'max reconnection attempts': 10000,
-            'force new connection': true,
+            'force new connection': false,
             'secure': true
         });
 

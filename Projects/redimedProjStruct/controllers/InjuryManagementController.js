@@ -155,41 +155,55 @@ module.exports = {
 
       },
     uploadInjuryPic: function(req,res){
+
         var injury_id = req.body.injury_id;
         var injury_part = req.body.injury_part;
         var description = req.body.description;
 
-        var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-        var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
-        var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
+         console.log("=========================Injury ID:",injury_id);
+          console.log("=========================injury_part:",injury_part);
+          console.log("=========================description:",description);
 
-        mkdirp(targetFolder, function(err) {
-            var tmp_path = req.files.file.path;
+        if(typeof injury_id !== 'undefined')
+        {
+              var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+              var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
+              var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
 
-            var target_path =targetFolder+ "\\" + req.files.file.name;
-            var target_path_for_save=targetFolderForSave+ "\\" + req.files.file.name
-            fs.rename(tmp_path, target_path, function(err) {
-                if (err) throw err;
-                fs.unlink(tmp_path, function() {
-                    if (err) throw err;
-                });
-            });
+              mkdirp(targetFolder, function(err) {
+                  if(req.files)
+                  {
+                    var tmp_path = req.files.file.path;
 
-            db.IMInjuryImage.create({
-                injury_id: injury_id,
-                injury_part: injury_part,
-                img_url: target_path_for_save,
-                description: description
-            })
-                .success(function(data){
-                    res.json({status:'success'});
-                })
-                .error(function(err){
-                    res.json({status:'error'});
-                    console.log(err);
-                })
+                    console.log(req.files.file.name);
 
-        });
+                    var target_path =targetFolder+ "\\" + req.files.file.name;
+                    var target_path_for_save=targetFolderForSave+ "\\" + req.files.file.name
+                    fs.rename(tmp_path, target_path, function(err) {
+                        if (err) throw err;
+                        fs.unlink(tmp_path, function() {
+                            if (err) throw err;
+                        });
+                    });
+
+                    db.IMInjuryImage.create({
+                        injury_id: injury_id,
+                        injury_part: injury_part,
+                        img_url: target_path_for_save,
+                        description: description
+                    })
+                        .success(function(data){
+                            res.json({status:'success'});
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                  }
+              });
+        }
+
+        
     },
     injuryList: function(req,res){
         db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
@@ -257,21 +271,25 @@ module.exports = {
 
         db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
             .success(function(data){
-
-                db.IMInjuryImage.findAll({where:{injury_id: injury_id}},{raw:true})
-                  .success(function(rs){
-                      if(rs.length > 0)
-                      {
-                          var imgArr = [];
-                          for(var i=0; i<rs.length ; i++)
-                          {
-                            if(rs[i].image!=null || rs[i].image!='')
-                                imgArr.push(rs[i].injury_image_id);
-                          }
-                          data[0].injuryImg = imgArr;
-                      }
-                      res.json({status:'success',data:data})
-                  })
+                if(data.length > 0)
+                {
+                  db.IMInjuryImage.findAll({where:{injury_id: injury_id}},{raw:true})
+                    .success(function(rs){
+                        if(rs.length > 0)
+                        {
+                            var imgArr = [];
+                            for(var i=0; i<rs.length ; i++)
+                            {
+                              if(rs[i].image!=null || rs[i].image!='')
+                                  imgArr.push(rs[i].injury_image_id);
+                            }
+                            if(imgArr.length > 0)
+                              data[0].injuryImg = imgArr;
+                        }
+                        res.json({status:'success',data:data})
+                    })
+                }
+                
             })
             .error(function(err){
                 res.json({status:'error',error:err})
@@ -552,7 +570,7 @@ module.exports = {
                             id: data[i].id,
                             username: data[i].user_name,
                             socket: data[i].socket,
-                            img: data[i].img
+                            fullName: data[i].Booking_Person
                         });
                     }
                     res.json({data:userList});
