@@ -288,7 +288,8 @@ angular.module("app", [
     });
     $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
         //LOAD ROLE ON TREEAPPROVE
-        if ($cookieStore.get("userInfo") && $cookieStore.get("userInfo").id && toState.position !== undefined && toState.position !== null) {
+        if ($cookieStore.get("userInfo") &&
+            $cookieStore.get("userInfo").id) {
             TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
                 if (response.status === "error") {
                     $state.go("loggedIn.home", null, {
@@ -296,10 +297,7 @@ angular.module("app", [
                     });
                     toastr.error("Loading fail!", "Error");
                 } else if (response.status === "fail") {
-                    $state.go("loggedIn.home", null, {
-                        "reload": true
-                    });
-                    toastr.error("You not permission on Timesheet system!", "Fail");
+                    //USERS NOT POSITION 
                 } else if (response.status === "success") {
                     localStorageService.set("position", response.position[0].TITLE);
                     //ROLE
@@ -323,7 +321,7 @@ angular.module("app", [
                     $state.go("loggedIn.home", null, {
                         "reload": true
                     });
-                    toastr.error("Server respose error!", "Error");
+                    toastr.error("Server response error!", "Error");
                 }
                 e.preventDefault();
             });

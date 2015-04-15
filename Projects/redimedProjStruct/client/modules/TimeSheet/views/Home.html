@@ -6,19 +6,19 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="position==='Admin' || position==='Director'">
+                <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="(position!=='Staff' && position!=='Head of Dept.')">
                     <img src="/img/TimeSheet/history.png" alt="View History Timesheet">
                     <label class="control-label bold" style="font-size:14px;">View Timesheets History</label>
                 </a>
             </div>
             <div class="col-md-12">
-                <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="position==='Admin' || position==='Director'">
+                <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="(position!=='Staff' && position!=='Director' && position!=='Head of Dept.')">
                     <img src="/img/TimeSheet/create.png" alt="Create New Timesheet">
                     <label class="control-label bold" style="font-size:14px;">Create New Timesheet</label>
                 </a>
             </div>
             <div class="col-md-12">
-                <a ui-sref="loggedIn.ApproveTask" class="btn" ng-disabled="position==='Staff' || position==='Admin'">
+                <a ui-sref="loggedIn.ApproveTask" class="btn" ng-disabled="(position!=='Head of Dept.' && position!=='Director')">
                     <img src="/img/TimeSheet/approve.png" alt="Management And Approve Timesheet">
                     <label class="control-label bold" style="font-size:14px;">Approve and Manage Timesheets</label>
                 </a>
@@ -30,7 +30,7 @@
                         <img src="/img/TimeSheet/reports.png" alt="Time Reporting System">
                         <span class="bold" style="font-size:14px;">Utilization Time Reporting System</span></a>
                     <ul class="dropdown-menu dropup" role="menu" aria-labelledby="dLabel">
-                        <li role="presentation" ng-if="position!=='Staff' && position!=='Admin'">
+                        <li role="presentation" ng-if="position!='Staff' && position!='Admin'">
                             <a role="menuitem" ui-sref="loggedIn.Report1TimeSheet">
                                 <span class="bold text-info" style="font-size:14px;">Report on Time In Lieu</span></a>
                         </li>
@@ -46,7 +46,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li role="presentation">
+                        <li role="presentation" ng-if="!(position!=='Head of Dept.' && position!=='Director')">
                             <a role="menuitem" ui-sref="loggedIn.Report4TimeSheet">
                                 <span class="bold text-info" style="font-size:14px;">Report on Actual Working Hours</span>
                             </a>
@@ -61,7 +61,7 @@
                 <!-- END DROPDOWN ACTION -->
             </div>
             <div class="col-md-12">
-                <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-disabled="position!=='Admin'">
+                <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-disabled="position!='Admin'">
                     <img src="/img/TimeSheet/admin.png" alt="Administrator">
                     <span class="bold">Administrator</span>
                 </a>
