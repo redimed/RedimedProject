@@ -52,7 +52,6 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					scope.company.form = response.data[0];
 					scope.company.form.User_id = $cookieStore.get('userInfo').id;
 					scope.company.listInsurer = response.data1;
-					console.log(scope.company.listInsurer);
 					scope.company.checkColor = scope.company.form.Insurer;
                     _.forEach(scope.company.listInsurer, function(id){
                         scope.company.listTemp.push(id.id);
@@ -85,7 +84,6 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					insurer_id:row.id,
 					isEnable :row.checkisEnable
 				}
-				console.log(postData);
 				CompanyModel.disableInsurer(postData)
 						.then(function(response){
 						}, function(error){				
@@ -98,9 +96,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 								scope.company.listInsurer[i].checkisEnable = 0;
 							};
 						} 
-				}
-				console.log("----///// ",scope.company.listInsurer);	
-				
+				}	
 			}
 			var remove = function(row){
 				$modal.open({
@@ -118,7 +114,6 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					.then(function(response){
 						for (var i = 0; i <= scope.company.listTemp.length; i++) {
 							if (scope.company.listTemp[i] == row.id) {
-								console.log(scope.company.listTemp);
 								scope.company.listTemp.splice(i,1);
 								scope.company.listInsurer.splice(i,1);
 							} 
@@ -131,7 +126,6 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				ConfigService.beforeSave(scope.company.errors);
 				var postData = angular.copy(scope.company.form);
 				postData.listInsurerid = scope.company.listInsurer;
-				console.log("-----------------",postData);
 				CompanyModel.edit(postData)
 				.then(function(response){
 					toastr.success('Edit Company Successfully');

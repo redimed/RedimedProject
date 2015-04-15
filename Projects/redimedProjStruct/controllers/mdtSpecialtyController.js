@@ -42,13 +42,18 @@ module.exports = {
 
 	postRemoveServiceDoctor: function(req, res){
 		var postData = req.body.data;
-
+		 var postData = req.body.data;
+        if (postData.Isenable == 1) {
+            postData.Isenable = 0;
+        } else{
+            postData.Isenable = 1;
+        };
 		var sql = knex('doctor_specialities')
 					.where({
 						'doctor_specialities.doctor_id': postData.doctor_id,
 						'doctor_specialities.Specialties_id': postData.Specialties_id
 					})
-					.update({'doctor_specialities.Isenable': 0})
+					.update({'doctor_specialities.Isenable':  postData.Isenable})
 					.toString();
 
 		db.sequelize.query(sql)
@@ -67,11 +72,12 @@ module.exports = {
 				.column(
 					'cln_specialties.Specialties_id',
 					'cln_specialties.Specialties_name',
-					'rl_types.Rl_TYPE_NAME'
+					'rl_types.Rl_TYPE_NAME',
+					'doctor_specialities.Isenable'
 				)
 				.innerJoin('cln_specialties', 'doctor_specialities.Specialties_id', 'cln_specialties.Specialties_id')
 				.innerJoin('rl_types', 'cln_specialties.RL_TYPE_ID', 'rl_types.RL_TYPE_ID')
-				.where('doctor_specialities.Isenable', 1)
+				//.where('doctor_specialities.Isenable', 1)
 				.where('doctor_specialities.doctor_id', postData.doctor_id)
 				.toString();
 

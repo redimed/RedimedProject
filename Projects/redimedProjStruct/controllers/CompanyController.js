@@ -222,7 +222,7 @@ module.exports = {
                                           .success(function(data1){
                                                 var company_insurers_array = [];
                                                 _.forEach(postData.listInsurerid, function(id){
-                                                    company_insurers_array.push({insurer_id: id.id, company_id: postData.id,isEnable:1});
+                                                    company_insurers_array.push({insurer_id: id.id, company_id: postData.id,isEnable:id.checkisEnable});
                                                 })  
                                                
                                                 if(company_insurers_array.length > 0){
