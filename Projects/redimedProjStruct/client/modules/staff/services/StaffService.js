@@ -107,9 +107,16 @@ angular.module("app.loggedIn.staff.service", [])
     //thanh
     service.convertShowToFull = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null) {
-            var hours = parseInt(time_charge.toString().substring(0, 2));
-            var minutes = parseInt(time_charge.toString().substring(2, 4));
-            return (hours * 60 + minutes);
+            var hours = 0;
+            var minutes = 0;
+            if (time_charge.length < 5) {
+                minutes = parseInt(time_charge.toString().substr(2, 2));
+                hours = parseInt(time_charge.toString().substr(0, 2));
+            } else {
+                minutes = parseInt(time_charge.toString().substr(3, 2));
+                hours = parseInt(time_charge.toString().substr(0, 3));
+            }
+            return (parseInt(hours * 60) + parseInt(minutes));
         } else {
             return 0;
         }

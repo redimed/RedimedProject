@@ -257,7 +257,7 @@ angular.module("app", [
                 socket.emit("reconnected", $cookieStore.get("userInfo").id);
             }
         }
-    })
+    });
 
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
@@ -288,7 +288,7 @@ angular.module("app", [
     });
     $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
         //LOAD ROLE ON TREEAPPROVE
-        if ($cookieStore.get("userInfo") && $cookieStore.get("userInfo").id) {
+        if ($cookieStore.get("userInfo") && $cookieStore.get("userInfo").id && toState.position !== undefined && toState.position !== null) {
             TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
                 if (response.status === "error") {
                     $state.go("loggedIn.home", null, {
@@ -303,7 +303,7 @@ angular.module("app", [
                 } else if (response.status === "success") {
                     localStorageService.set("position", response.position[0].TITLE);
                     //ROLE
-                    if (toState.position !== undefined) {
+                    if (toState.position !== undefined && toState.position !== null) {
                         var status = false;
                         angular.forEach(toState.position, function(postt, index) {
                             if (postt === localStorageService.get("position")) {
@@ -311,7 +311,7 @@ angular.module("app", [
                             }
                         });
                         if (status === false) {
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("You not permission!", "Error");
@@ -330,4 +330,4 @@ angular.module("app", [
         }
         //END LOAD ROLE ON TREEAPPROVE
     });
-})
+});

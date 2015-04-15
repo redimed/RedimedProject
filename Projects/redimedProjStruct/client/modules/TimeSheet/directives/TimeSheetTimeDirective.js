@@ -10,9 +10,10 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                 scope.$watch("ngModel", function(newModel, oldModel) {
                     if (newModel !== undefined &&
                         newModel !== null &&
-                        newModel !== ""
+                        newModel !== "" &&
+                        parseInt(newModel.toString().substr(newModel.toString().length - 2, 2)) > 59
                     ) {
-                        scope.ngModel = StaffService.convertFromFullToShow(StaffService.convertShowToFull(newModel));
+                        scope.ngModel = StaffService.convertFromFullToShow(StaffService.convertShowToFull(newModel)).toString();
                     }
                 });
             },
