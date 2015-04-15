@@ -320,9 +320,10 @@ angular.module("app", [
                         "reload": true
                     });
                     toastr.error("Server response error!", "Error");
+                    e.preventDefault();
                 }
-                e.preventDefault();
             });
+
         }
         //END LOAD ROLE ON TREEAPPROVE
     });
