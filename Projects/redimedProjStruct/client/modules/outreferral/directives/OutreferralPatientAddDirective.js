@@ -13,7 +13,7 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			var user_id = $cookieStore.get('userInfo').id;
 
 			var form = {
-				CAL_ID:$stateParams.calId,
+				CAL_ID: scope.calId,
 				patient_id: scope.patientId,
 				date_issued: null,
 				date_started: null,

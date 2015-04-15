@@ -80,7 +80,6 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 					outreferral_id:row.id,
 					isEnable:row.isEnable
 				}
-				console.log(postData);
 				OutreferralModel.updateEnable(postData)
 					.then(function(response){
 						console.log(response);

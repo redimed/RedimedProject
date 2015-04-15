@@ -145,11 +145,35 @@ module.exports = {
 		.orderBy('cln_appointment_calendar.DOCTOR_ID', 'asc')
 		.toString();
 
+		var main_sub_sql = knex
+		.column(
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.TO_TIME, '%H:%i') AS TO_TIME"),
+			'cln_appointment_calendar.SERVICE_ID',
+			'cln_appointment_calendar.DOCTOR_ID',
+			'cln_appointment_calendar.CAL_ID',
+			'cln_appointment_calendar.CLINICAL_DEPT_ID'
+		)
+		.from('cln_appointment_calendar')
+		.where({
+			'cln_appointment_calendar.SITE_ID': postData.site_id
+		})
+		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.where('cln_appointment_calendar.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
+		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
+		.toString();
+
 		db.sequelize.query(main_sql)
 		.success(function(rows){
 			db.sequelize.query(sub_sql)
 			.success(function(doctors){
-				res.json({data: rows, doctors: doctors, sql: main_sql});
+				db.sequelize.query(main_sub_sql)
+				.success(function(subdata){
+					res.json({data: rows, doctors: doctors, subdata: subdata});
+				})
+				.error(function(error){
+					res.status(500).json({error: error, sql: main_sub_sql});
+				})
 			})
 			.error(function(error){
 				res.status(500).json({error: error, sql: sub_sql});	

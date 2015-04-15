@@ -55,7 +55,10 @@
 				<span ng-if="col.PATIENTS === 'ok'">
 					<span ng-repeat="patient in col.patients">
 						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)">
-							{{patient.First_name}} {{patient.Sur_name}}
+							{{patient.First_name}} {{patient.Sur_name}}&nbsp;
+							<a ng-click="showDropdown(patient)">
+								<i class="fa fa-caret-right"></i>
+							</a>
 						</a>
 						<br>
 					</span>
@@ -72,10 +75,10 @@
 			Make new Booking
 		</a>
 	</li>
-	<li><a ng-click="addWaitingList()">Add Waiting List</a></li>
+	<!--<li><a ng-click="addWaitingList()">Add Waiting List</a></li>
 	<li><a ng-click="openWaitingList()">Select Waiting List</a></li>
 	<li><a ng-click="cancelStatus(rightSelectedBooking.data, rightSelectedBooking.overId, rightSelectedBooking.docId)">
-		Cancel Status</a></li>
+		Cancel Status</a></li>-->
 </ul>
 <!-- END RIGHT CLICK DROPDOWN MENU -->
 
@@ -114,13 +117,26 @@
     <div class="modal-body">
         <p>
         	Do you want to&nbsp;
-        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button> Referral ?
+        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button>
+        	or <button class="btn btn-primary btn-xs" ng-click="selectReferral()">Select</button> referral ?
         </p>
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
     </div>
  </script>
+
+<script type="text/ng-template" id="notifyAppointment">
+	<div class="modal-body">
+	    <p>
+	    	Do you want to really choose this patient ???
+	    </p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary btn-xs" ng-click="clickYes()">I am sure</button>
+	    <button class="btn btn-warning btn-xs" ng-click="clickNo()">Cancel</button>
+	</div>
+</script>
 
 <script type="text/ng-template" id="claimAdd">
 	<div class="modal-body">	
@@ -139,6 +155,23 @@
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<outreferral-patient-add patient-id="patientId" success="success"></outreferral-patient-add>
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success"></outreferral-patient-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="referralSelect">
+	<div class="modal-body">	
+		<outreferral-patient-list reload="reload" limit="limit" 
+			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)">
+		</outreferral-patient-list>
+	</div>
+</script>
+
+<script type="text/ng-template" id="notifyAlert">
+	<div class="modal-body">
+		<h4>Alert List</h4>
+		<ul>
+			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>
+		</ul>
 	</div>
 </script>
