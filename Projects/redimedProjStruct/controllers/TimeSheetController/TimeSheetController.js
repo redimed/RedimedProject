@@ -1506,8 +1506,10 @@ module.exports = {
             .success(function(result) {
                 if (result === undefined || result === null || result.length === 0) {
                     res.json({
-                        status: "fail",
-                        position: []
+                        status: "success",
+                        position: [{
+                            TITLE: "NOTROLE"
+                        }]
                     });
                     return;
                 } else {

@@ -296,8 +296,6 @@ angular.module("app", [
                         "reload": true
                     });
                     toastr.error("Loading fail!", "Error");
-                } else if (response.status === "fail") {
-                    //USERS NOT POSITION 
                 } else if (response.status === "success") {
                     localStorageService.set("position", response.position[0].TITLE);
                     //ROLE
