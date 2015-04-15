@@ -3,6 +3,14 @@
 		width: 400px;
 		padding: 35px;
 	}
+	.btn-register{
+		background: rgba(36, 55, 77, 0.9);
+  		color: white;
+	}
+	.btn-register:hover{
+		background: rgba(36, 55, 77, 1);
+  		color: white;
+	}
 </style>
 <div class="content" style="font-size: 14px !important;  font-family: calibri !important;">
 	<form class="login-form" novalidate name="loginForm" ng-submit="login()">
@@ -43,6 +51,12 @@
 			<!-- END PASSWORD -->
 		</div>
 
+
+
+
+
+
+
 		<div class="form-actions">
 			<label class="checkbox">
 				<input type="checkbox" checkbox ng-model="modelUser.isRemember" 
@@ -55,8 +69,8 @@
 			<br/>
 			<br/>
 			<label style="position: relative;top: 8px;">Register for a Medico-Legal Account</label>
-			<a ng-class="{disabled : isLogging}" ui-sref="security.rlobRegister" class="btn green pull-right">
-				Register <i class="m-icon-swapright m-icon-white"></i>
+			<a ng-class="{disabled : isLogging}" ui-sref="security.rlobRegister" class="btn btn-register pull-right">
+				Register <i class="fa fa-pencil-square-o"></i>
 			</a>
 			<!-- <a ui-sref="security.rlobRegister">Sign up Medico-Legal</a> -->
 		</div>
