@@ -178,3 +178,9 @@ tannv.dts@gmail.com*/
     padding-left: 5px;
     padding-right: 5px;
 }
+
+.rl_specialty_profile_item{
+    border-left: 2px solid rgb(221, 221, 221);
+    padding-left: 5px;
+    margin-bottom: 20px;
+}

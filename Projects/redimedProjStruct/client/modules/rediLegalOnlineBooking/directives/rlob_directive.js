@@ -394,7 +394,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 selectedBooking:  '=',
                 isAdminGetFiles:'=',
                 filesUpdateFlag:'=',
-                numberOfDocs:'='
+                numberOfDocs:'=',
+                dialogStyleClass:'@'
                 //la so, de danh dau co file moi upload hay khong
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
@@ -518,7 +519,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.showDialogSetResult=function()
                 {
                     $scope.filesClone=angular.copy($scope.files);
-                    $("#rlob-dialog-set-result").modal({show:true,backdrop:'static'});
+                    $("."+$scope.dialogStyleClass).modal({show:true,backdrop:'static'});
                 }
 
                 /**
@@ -556,7 +557,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                             rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Set list result files fail.");
                         })
                         .then(function(){
-                            $("#rlob-dialog-set-result").modal('hide');
+                            $("."+$scope.dialogStyleClass).modal('hide');
                         })
                     }
                     else
@@ -582,7 +583,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                         rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Unselect all result files fail.");
                     })
                     .then(function(){
-                        $("#rlob-dialog-set-result").modal('hide');
+                        $("."+$scope.dialogStyleClass).modal('hide');
                     })
                 }
 
