@@ -59,7 +59,9 @@ INNER JOIN departments ON departments.departmentid = time_employee_reports1.depa
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="realPatch" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 time_employee_reports1.employee,
@@ -240,7 +242,7 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 		<band height="114" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="802" height="61" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
-				<imageExpression><![CDATA[$P{realPatch}+"/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{realPath}+"logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="228" y="13" width="356" height="33" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
