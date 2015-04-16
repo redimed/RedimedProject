@@ -35,7 +35,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		        Medic_contact_no:'',
 		        Email:'',
 		        CODE:'',
-		        Insurer:'',
+		        Insurer:null,
 		        Phone:'',
 		        Site_medic:'',
 		        User_id:'',
