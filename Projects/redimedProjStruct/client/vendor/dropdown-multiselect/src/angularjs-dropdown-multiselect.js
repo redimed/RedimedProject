@@ -170,11 +170,11 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                             target = target.parentElement;
                         }
 
-                        // if (!parentFound) {
-                        //     $scope.$apply(function() {
-                        //         $scope.open = false;
-                        //     });
-                        // }
+                        if (!parentFound) {
+                            $scope.$apply(function() {
+                                $scope.open = false;
+                            });
+                        }
                     });
                 }
 

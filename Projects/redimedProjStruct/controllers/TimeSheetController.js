@@ -813,6 +813,11 @@ module.exports = {
                 TracKerTimeSheet(tracKer);
                 //END
                 //END TRACKER
+                info.statusID = info.status;
+                info.userID = info.USER_ID;
+                // SEND MAIL
+                SendMailSubmit(req, res, info);
+                //END
                 res.json({
                     status: 'success'
                 });
@@ -911,7 +916,7 @@ var SendMailSubmit = function(req, res, info) {
                                                                 subject: 'Notification of Submitted Timesheet(s)',
                                                                 htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + ',</label></b><br/><br/><br/>' +
                                                                     '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on ' + DATE_OF_WEEK + ', ' +
-                                                                    DATE_SUBMIT + '.&nbsp;&nbsp;' +
+                                                                    DATE_SUBMIT + '.<br/><br/><br/>' +
                                                                     '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to review and approve/reject the timesheet.<br/><br/><br/>' +
                                                                     'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
                                                                     '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
