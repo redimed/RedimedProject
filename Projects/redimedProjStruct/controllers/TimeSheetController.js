@@ -909,19 +909,19 @@ var SendMailSubmit = function(req, res, info) {
                                                                 senders: 'TimeSheet',
                                                                 recipients: resultManage[0].Email,
                                                                 subject: 'Notification of Submitted Timesheet(s)',
-                                                                htmlBody: '<label class="control-label">Dear </label><b><label class="control-label">' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + ',</label></b><br/><br/><br/>' +
-                                                                    '<label class="control-label">This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on ' + DATE_OF_WEEK + ', ' +
+                                                                htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + ',</label></b><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on ' + DATE_OF_WEEK + ', ' +
                                                                     DATE_SUBMIT + '.&nbsp;&nbsp;' +
-                                                                    'Please log into the Timesheet System to review and approve/reject the timesheet.<br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to review and approve/reject the timesheet.<br/><br/><br/>' +
                                                                     'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
-                                                                    '<label class="control-label">Regards,</label><br/><br/><br/>' +
-                                                                    '<label class="control-label">Timesheet Reporting System.<br></label><br/><br/><br/>' +
-                                                                    '<label class="control-label">This e-mail was auto generated. Please do not respond.</label>' +
-                                                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span>A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                                                                    '<br/><span><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                                                                    '<td colspan="2"><span>This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System.<br></label><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond.</label>' +
+                                                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                                                    '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
                                                                     'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                                                                    '<br/><br/><tr><td>Please consider our environment before printing this e-mail.</td></tr></tbody></table>'
+                                                                    '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                                                             };
                                                             // END APPROVE
                                                             //CALL SEND MAIL

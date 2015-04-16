@@ -67,6 +67,7 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                 info.USER_ID = $cookieStore.get('userInfo').id;
                 info.weekFrom = $scope.dateWeekFrom;
                 info.weekTo = $scope.dateWeekTo;
+                info.listDept = $scope.listDepartmentChoose;
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
                 TimeSheetService.LoadReports1(info).then(function(response) {
                     if (response.status === "success") {

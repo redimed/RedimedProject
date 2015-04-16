@@ -63,6 +63,8 @@ INNER JOIN departments ON departments.departmentid = time_employee_reports1.depa
 	<queryString>
 		<![CDATA[SELECT
 time_employee_reports1.employee,
+time_employee_reports1.deptList,
+time_employee_reports1.deptCount,
 time_employee_reports1.from_date,
 time_employee_reports1.to_date,
 time_time_charge_reports1.time_ac1,
@@ -84,6 +86,12 @@ WHERE time_employee_reports1.user_id=$P{id}
 ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]]>
 	</queryString>
 	<field name="employee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="deptList" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="deptCount" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="from_date" class="java.sql.Timestamp">
@@ -128,158 +136,225 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 	<group name="DeptGroup">
 		<groupExpression><![CDATA[$F{departmentName}]]></groupExpression>
 		<groupHeader>
-			<band height="19">
+			<band height="42">
 				<textField>
-					<reportElement x="13" y="0" width="101" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
-					<textElement verticalAlignment="Middle"/>
+					<reportElement x="21" y="0" width="296" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="21" y="22" width="93" height="20" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Employee]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="114" y="22" width="82" height="20" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Billable Time]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="196" y="22" width="121" height="20" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Administration Time]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="317" y="22" width="82" height="20" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Training Time]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="399" y="22" width="111" height="20" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Development Time]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="510" y="22" width="89" height="20" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Non-charged]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="599" y="22" width="127" height="20" uuid="6556b995-151e-420f-b133-b377ad1a84be"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Worked Hours]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="726" y="22" width="56" height="20" uuid="04cbcf14-3f06-4977-9389-4df23f7dab98"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Convert]]></text>
+				</staticText>
+				<line>
+					<reportElement x="10" y="0" width="780" height="1" uuid="e884db4e-4763-4140-914e-d1121abc5485"/>
+				</line>
+				<line>
+					<reportElement x="9" y="0" width="1" height="42" uuid="7b02b603-7d78-4481-96d2-db2c2daa02ec"/>
+				</line>
+				<line>
+					<reportElement x="789" y="0" width="1" height="42" uuid="65352432-3cdf-455f-ac77-1d2e339dac83"/>
+				</line>
 			</band>
 		</groupHeader>
-	</group>
-	<group name="Header">
-		<groupExpression><![CDATA[$F{from_date}]]></groupExpression>
-		<groupHeader>
-			<band height="77"/>
-		</groupHeader>
+		<groupFooter>
+			<band height="23">
+				<line>
+					<reportElement x="9" y="0" width="1" height="23" uuid="ed2a43b0-df98-4549-a624-eefdaeea4661"/>
+				</line>
+				<line>
+					<reportElement x="789" y="0" width="1" height="23" uuid="24d577dd-567f-4dcc-a7cb-0aeddcb34c4b"/>
+				</line>
+				<staticText>
+					<reportElement x="21" y="3" width="100" height="20" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
+					<text><![CDATA[Total of Department: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="121" y="3" width="52" height="20" uuid="b9a9623d-a157-4b00-832a-49131affaeaa"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{deptCount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="96" splitType="Stretch">
+		<band height="114" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="802" height="75" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
+				<reportElement x="0" y="0" width="802" height="61" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
 				<imageExpression><![CDATA[$P{realPatch}+"/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="228" y="16" width="356" height="33" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
+				<reportElement x="228" y="13" width="356" height="33" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
 				<textElement textAlignment="Center">
 					<font size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Report on Actual Working Hours ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="76" width="221" height="20" uuid="ed42b3bd-ff99-4107-a6e7-f495fe1f4ff8"/>
+				<reportElement x="9" y="65" width="92" height="20" uuid="ed42b3bd-ff99-4107-a6e7-f495fe1f4ff8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[For the period from]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="102" y="65" width="52" height="20" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{from_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="154" y="65" width="13" height="19" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[to]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="166" y="65" width="56" height="19" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{to_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="94" width="63" height="20" uuid="6316404b-b256-4cef-bf92-8f03a220e0a9"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Department:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="73" y="94" width="717" height="20" uuid="6848601b-2e45-4f27-a771-0fdcfebba77e"/>
+				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[For the period from 11/11/2015 to 12/11/2015]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{deptList}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<detail>
-		<band height="69" splitType="Stretch">
-			<staticText>
-				<reportElement x="13" y="-19" width="101" height="20" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Employee]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="114" y="-19" width="82" height="20" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Billable Time]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="196" y="-19" width="110" height="20" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Administration Time]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="306" y="-19" width="69" height="20" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Training Time]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="375" y="-19" width="93" height="20" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Development Time]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="468" y="-19" width="73" height="20" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Non-charged]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="541" y="-19" width="99" height="20" uuid="6556b995-151e-420f-b133-b377ad1a84be"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total Worked Hours]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="640" y="-19" width="52" height="20" uuid="04cbcf14-3f06-4977-9389-4df23f7dab98"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Convert]]></text>
-			</staticText>
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="114" y="0" width="82" height="20" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac1}==null || $F{time_ac1}=='')?'':$F{time_ac1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="196" y="0" width="110" height="20" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e"/>
+				<reportElement x="196" y="0" width="121" height="20" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac2}==null || $F{time_ac2}=='')?'':$F{time_ac2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="306" y="0" width="68" height="20" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080"/>
+				<reportElement x="317" y="0" width="82" height="20" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac3}==null || $F{time_ac3}=='')?'':$F{time_ac3}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="468" y="0" width="73" height="20" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
+				<reportElement x="510" y="0" width="89" height="20" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac5}==null || $F{time_ac5}=='')?'':$F{time_ac5}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="541" y="0" width="99" height="20" uuid="9675eb1e-b0e9-42ae-a21a-507cec41bb7c"/>
+				<reportElement x="599" y="0" width="127" height="20" uuid="9675eb1e-b0e9-42ae-a21a-507cec41bb7c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[(($F{time_charge_sum}==null || $F{time_charge_sum}=='') && $F{order}==2)?('Time In Lieu: '+$F{time_in_lieu}):((($F{time_charge_sum}==null || $F{time_charge_sum}=='') && $F{order}==3)?('OverTime: '+$F{time_over}):$F{time_charge_sum})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(($F{time_charge_sum}==null || $F{time_charge_sum}=='') && $F{order}==2)?($F{time_in_lieu}):((($F{time_charge_sum}==null || $F{time_charge_sum}=='') && $F{order}==3)?($F{time_over}):$F{time_charge_sum})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="640" y="0" width="52" height="20" uuid="6d9f661a-633f-415a-9538-0c6ff57f045a"/>
+				<reportElement x="726" y="0" width="56" height="20" uuid="6d9f661a-633f-415a-9538-0c6ff57f045a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_convert} ==null || $F{time_convert}=='')?'':$F{time_convert}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="375" y="0" width="92" height="20" uuid="d82776bc-2481-4103-9991-27ec97ce6d92"/>
+				<reportElement x="399" y="0" width="111" height="20" uuid="d82776bc-2481-4103-9991-27ec97ce6d92"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac4}==null || $F{time_ac4}=='')?'':$F{time_ac4}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="13" y="0" width="101" height="20" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
-				<textFieldExpression><![CDATA[$F{employee}]]></textFieldExpression>
+				<reportElement x="21" y="0" width="93" height="20" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($F{order}==1?$F{employee}:($F{order}==2?"Time In Lieu":"OverTime"))]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="9" y="0" width="1" height="20" uuid="68e1ef27-6ba8-4577-8311-216f8cafb65f"/>
+			</line>
+			<line>
+				<reportElement x="789" y="0" width="1" height="20" uuid="13adfde6-e684-426c-94ee-ddc6139c6f32"/>
+			</line>
 		</band>
 	</detail>
 	<pageFooter>
 		<band splitType="Stretch"/>
 	</pageFooter>
-	<summary>
-		<band height="72" splitType="Stretch">
+	<lastPageFooter>
+		<band height="50">
 			<textField>
-				<reportElement x="782" y="52" width="19" height="20" uuid="89ca6416-7124-46cd-b370-e3360b040536"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<reportElement x="765" y="29" width="36" height="20" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="10" y="-1" width="779" height="1" uuid="bb0bcca8-b970-4a73-a4f7-b79c5a392933"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>

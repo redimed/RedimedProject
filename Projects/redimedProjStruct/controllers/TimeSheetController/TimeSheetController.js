@@ -1653,6 +1653,7 @@ module.exports = {
         var weekNoTo = info.weekNoTo - 1;
         var listEMP = info.listEMP;
         var USER_ID = info.USER_ID;
+        var listDept = info.listDept;
         var weekFrom = moment(info.weekFrom).format("YYYY-MM-DD");
         var weekTo = moment(info.weekTo).format("YYYY-MM-DD");
         //STR EMP
@@ -1666,14 +1667,21 @@ module.exports = {
             strListEmp = null;
         }
         //END
-
+        var strListDept = "";
+        var strListDeptID = "";
+        for (var d = 0; d < listDept.length; d++) {
+            strListDeptID += listDept[d].id + ", ";
+        }
+        if (strListDeptID !== "") {
+            strListDeptID = strListDeptID.substring(0, strListDeptID.length - 2);
+        } else strListDeptID = -1;
         // SELECT DEPT
-        var queryDept = "SELECT DISTINCT departments.departmentName, departments.departmentid FROM departments " +
+        var queryDept = "SELECT DISTINCT COUNT(hr_employee.Employee_ID) AS CountEmp, departments.departmentName, departments.departmentid FROM departments " +
             "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
             "INNER JOIN time_tasks_week ON time_tasks_week.user_id  = users.id " +
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
-            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " ORDER BY departments.departmentName ASC";
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " GROUP BY departments.departmentName ORDER BY departments.departmentName ASC";
         // END DEPT
 
         // SELECT TIMECHARGE ACTIVITY
@@ -1703,121 +1711,142 @@ module.exports = {
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
         // END ALL
-        db.sequelize.query(queryDept)
-            .success(function(resultDept) {
-                db.sequelize.query(querySumTimeCharge)
-                    .success(function(resultTimeCharge) {
-                        db.sequelize.query(queryActivity)
-                            .success(function(resultActivity) {
-                                for (var i = 0; i < resultDept.length; i++) {
-                                    resultDept[i].listEmployee = [];
-                                    for (var j = 0; j < resultTimeCharge.length; j++) {
-                                        if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
-                                            //PUSH DATA
-                                            resultDept[i].listEmployee.push({
-                                                employee_id: resultTimeCharge[j].Employee_ID,
-                                                name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
-                                                time_charge: resultTimeCharge[j].SUM_CHARGE,
-                                                time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
-                                                over_time: resultTimeCharge[j].SUM_OVER_TIME,
-                                                SUM_CHARGE_ACTIVITY: [],
-                                                activity_id: resultTimeCharge[j].activity_id
-                                            });
-                                            //END
-                                            for (var k = 0; k < resultActivity.length; k++) {
-                                                if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
-                                                    resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
+
+        var queryGetListDept = "SELECT departments.departmentName FROM departments WHERE departments.departmentid IN (" + strListDeptID + ")";
+        db.sequelize.query(queryGetListDept)
+            .success(function(resultDeptName) {
+                if (listDept.length !== 11) {
+                    for (var m = 0; m < resultDeptName.length; m++) {
+                        strListDept += resultDeptName[m].departmentName + ", ";
+                    }
+                    strListDept = strListDept.substring(0, strListDept.length - 2);
+                } else if (listDept.length === 11) {
+                    strListDept = "All";
+                }
+                db.sequelize.query(queryDept)
+                    .success(function(resultDept) {
+                        db.sequelize.query(querySumTimeCharge)
+                            .success(function(resultTimeCharge) {
+                                db.sequelize.query(queryActivity)
+                                    .success(function(resultActivity) {
+                                        for (var i = 0; i < resultDept.length; i++) {
+                                            resultDept[i].listEmployee = [];
+                                            for (var j = 0; j < resultTimeCharge.length; j++) {
+                                                if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
+                                                    //PUSH DATA
+                                                    resultDept[i].listEmployee.push({
+                                                        employee_id: resultTimeCharge[j].Employee_ID,
+                                                        name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
+                                                        time_charge: resultTimeCharge[j].SUM_CHARGE,
+                                                        time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
+                                                        over_time: resultTimeCharge[j].SUM_OVER_TIME,
+                                                        SUM_CHARGE_ACTIVITY: [],
+                                                        activity_id: resultTimeCharge[j].activity_id
+                                                    });
+                                                    //END
+                                                    for (var k = 0; k < resultActivity.length; k++) {
+                                                        if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
+                                                            resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }
-                                //INSERT TEMP TABLE REPORTS1
-                                var listEmployeeInsert = "";
-                                var listTimeInsert = "";
-                                for (var i = 0; i < resultDept.length; i++) {
-                                    for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
+                                        //INSERT TEMP TABLE REPORTS1
+                                        var listEmployeeInsert = "";
+                                        var listTimeInsert = "";
+                                        for (var i = 0; i < resultDept.length; i++) {
+                                            for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
 
-                                        // VALUE EMP
-                                        listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
-                                            resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "'), ";
-                                        //EMP
-                                        // VALUE TIME CHARGE
-                                        listTimeInsert += "(" + USER_ID + "," +
-                                            resultDept[i].listEmployee[j].employee_id + ",'" +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1])) + "','" +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2])) + "','" +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3])) + "','" +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4])) + "','" +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5])) + "','" +
-                                            (resultDept[i].listEmployee[j].time_charge === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].time_charge)) + "', " +
-                                            convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
-                                        //TIME CHARGE
+                                                // VALUE EMP
+                                                listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
+                                                    resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "','" + strListDept + "'," + resultDept[i].CountEmp + "), ";
+                                                //EMP
+                                                // VALUE TIME CHARGE
+                                                listTimeInsert += "(" + USER_ID + "," +
+                                                    resultDept[i].listEmployee[j].employee_id + ",'" +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1])) + "','" +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2])) + "','" +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3])) + "','" +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4])) + "','" +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5])) + "','" +
+                                                    (resultDept[i].listEmployee[j].time_charge === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].time_charge)) + "', " +
+                                                    convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
+                                                //TIME CHARGE
 
-                                        // VALUE TIME IN LIEU
-                                        listTimeInsert += "(" + USER_ID + "," +
-                                            resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
-                                            convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
-                                            getFortMatTimeCharge(resultDept[i].listEmployee[j].time_in_lieu) + "', null, 2), ";
-                                        //END
+                                                // VALUE TIME IN LIEU
+                                                listTimeInsert += "(" + USER_ID + "," +
+                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
+                                                    convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
+                                                    getFortMatTimeCharge(resultDept[i].listEmployee[j].time_in_lieu) + "', null, 2), ";
+                                                //END
 
-                                        // VALUE OVERTIME
-                                        listTimeInsert += "(" + USER_ID + "," +
-                                            resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
-                                            convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
-                                            getFortMatTimeCharge(resultDept[i].listEmployee[j].over_time) + "', 3), ";
-                                        // END
-                                    }
-                                }
-                                if (listEmployeeInsert !== "") {
-                                    listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
-                                }
-                                if (listTimeInsert !== "") {
-                                    listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
-                                }
-                                var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date) VALUES " + listEmployeeInsert;
-                                var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
-                                var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
-                                var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
-                                db.sequelize.query(queryDelEmployee)
-                                    .success(function(delSuccessEmp) {
-                                        db.sequelize.query(queryDelTime)
-                                            .success(function(delSuccessTime) {
-                                                //INSERT EMP
-                                                if (listEmployeeInsert !== "") {
-                                                    db.sequelize.query(queryInsertEmployee)
-                                                        .success(function(insertSuccessEmp) {
-                                                            // INSERT TIME
-                                                            if (queryInsertTimeInSert !== "") {
-                                                                db.sequelize.query(queryInsertTimeInSert)
-                                                                    .success(function(insertSuccessTime) {
-                                                                        //RES.JSON
-                                                                        res.json({
-                                                                            status: "success",
-                                                                            result: resultDept
-                                                                        });
-                                                                        return;
-                                                                        //END
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR:" + err + "*****");
-                                                                        res.json({
-                                                                            status: "error",
-                                                                            result: []
-                                                                        });
-                                                                        return;
+                                                // VALUE OVERTIME
+                                                listTimeInsert += "(" + USER_ID + "," +
+                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
+                                                    convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
+                                                    getFortMatTimeCharge(resultDept[i].listEmployee[j].over_time) + "', 3), ";
+                                                // END
+                                            }
+                                        }
+                                        if (listEmployeeInsert !== "") {
+                                            listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
+                                        }
+                                        if (listTimeInsert !== "") {
+                                            listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
+                                        }
+                                        var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, deptList, deptCount) VALUES " + listEmployeeInsert;
+                                        var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
+                                        var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
+                                        var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
+                                        db.sequelize.query(queryDelEmployee)
+                                            .success(function(delSuccessEmp) {
+                                                db.sequelize.query(queryDelTime)
+                                                    .success(function(delSuccessTime) {
+                                                        //INSERT EMP
+                                                        if (listEmployeeInsert !== "") {
+                                                            db.sequelize.query(queryInsertEmployee)
+                                                                .success(function(insertSuccessEmp) {
+                                                                    // INSERT TIME
+                                                                    if (queryInsertTimeInSert !== "") {
+                                                                        db.sequelize.query(queryInsertTimeInSert)
+                                                                            .success(function(insertSuccessTime) {
+                                                                                //RES.JSON
+                                                                                res.json({
+                                                                                    status: "success",
+                                                                                    result: resultDept
+                                                                                });
+                                                                                return;
+                                                                                //END
+                                                                            })
+                                                                            .error(function(err) {
+                                                                                console.log("*****ERROR:" + err + "*****");
+                                                                                res.json({
+                                                                                    status: "error",
+                                                                                    result: []
+                                                                                });
+                                                                                return;
+                                                                            });
+                                                                    }
+                                                                })
+                                                                .error(function(err) {
+                                                                    console.log("*****ERROR:" + err + "*****");
+                                                                    res.json({
+                                                                        status: "error",
+                                                                        result: []
                                                                     });
-                                                            }
-                                                        })
-                                                        .error(function(err) {
-                                                            console.log("*****ERROR:" + err + "*****");
-                                                            res.json({
-                                                                status: "error",
-                                                                result: []
-                                                            });
-                                                            return;
+                                                                    return;
+                                                                });
+                                                        }
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "error",
+                                                            result: []
                                                         });
-                                                }
+                                                        return;
+                                                    });
                                             })
                                             .error(function(err) {
                                                 console.log("*****ERROR:" + err + "*****");
@@ -1827,6 +1856,7 @@ module.exports = {
                                                 });
                                                 return;
                                             });
+                                        //END INSERT
                                     })
                                     .error(function(err) {
                                         console.log("*****ERROR:" + err + "*****");
@@ -1836,7 +1866,6 @@ module.exports = {
                                         });
                                         return;
                                     });
-                                //END INSERT
                             })
                             .error(function(err) {
                                 console.log("*****ERROR:" + err + "*****");
@@ -1846,6 +1875,7 @@ module.exports = {
                                 });
                                 return;
                             });
+
                     })
                     .error(function(err) {
                         console.log("*****ERROR:" + err + "*****");
@@ -1855,7 +1885,6 @@ module.exports = {
                         });
                         return;
                     });
-
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -1916,21 +1945,21 @@ module.exports = {
                                     var mailOptions = {
                                         senders: 'TimeSheet',
                                         recipients: resultListEmp[lM].Email,
-                                        subject: 'Notification of Late Timesheet(s) Due',
-                                        htmlBody: '<label class="control-label">Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</label></b>,<br/><br/><br/>' +
-                                            '<label class="control-label">This is a reminder that your timesheet was due</label><b> FRIDAY, ' + FRIDAY + ' - 12:00pm.&nbsp;</b>' +
-                                            '<label class="control-label">Please log into the Timesheet System to complete and submit your timesheet. ' +
+                                        subject: '<span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Notification of Late Timesheet(s) Due</span>',
+                                        htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</label></b>,<br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a reminder that your timesheet was due</label><b> FRIDAY, ' + FRIDAY + ' - 12:00pm.&nbsp;</b>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to complete and submit your timesheet. ' +
                                             'Failure to submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
-                                            '<label class="control-label">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                                            '<label class="control-label">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
-                                            '<label class="control-label">Regards,</label><br/><br/><br/>' +
-                                            '<label class="control-label">Timesheet Reporting System</label><br/><br/><br/>' +
-                                            '<label class="control-label">This e-mail was auto generated. Please do not respond.</label>' +
-                                            '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span>A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                                            '<br/><span><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                                            '<td colspan="2"><span>This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond.</label>' +
+                                            '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                            '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                            '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
                                             'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                                            '<br/><br/><tr><td>Please consider our environment before printing this e-mail.</td></tr></tbody></table>'
+                                            '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                                     };
                                     //CALL SEND MAIL
                                     FunctionSendMail.sendEmail(req, res, mailOptions);
@@ -2061,19 +2090,19 @@ var SendMailTimeSheet = function(req, res, info) {
                     senders: 'TimeSheet',
                     recipients: result[0].Email,
                     subject: 'Notification of Rejected Timesheet(s)',
-                    htmlBody: '<label class="control-label">Attention: </label><b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b><br/><br/><br/>' +
-                        '<label class="control-label">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected. Please log into the Timesheet System to correct and re-submit your timesheet. ' +
+                    htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected. Please log into the Timesheet System to correct and re-submit your timesheet. ' +
                         'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
-                        '<label class="control-label">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                        '<label class="control-label">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<label><br/><br/><br/>' +
-                        '<label class="control-label">Regards,</label><br/><br/><br/>' +
-                        '<label class="control-label">Timesheet Reporting System.<br></label><br/><br/><br/>' +
-                        '<label class="control-label">This e-mail was auto generated. Please do not respond.' +
-                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span>A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                        '<br/><span><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                        '<td colspan="2"><span>This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System.<br></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond.' +
+                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                        '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                        '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
                         'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                        '<br/><br/><tr><td>Please consider our environment before printing this e-mail.</td></tr></tbody></table>'
+                        '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                 };
                 // END APPROVE
                 //CALL SEND MAIL
@@ -2086,17 +2115,20 @@ var SendMailTimeSheet = function(req, res, info) {
                     senders: 'TimeSheet',
                     recipients: result[0].Email,
                     subject: 'Notification of Approved Timesheet(s)',
-                    htmlBody: '<label class="control-label">Attention: </label><b><label class="control-label">' + result[0].FirstName + ' ' + result[0].LastName + '</b></label><br/><br/><br/>' +
-                        '<label class="control-label">Your timesheet for the period (' + start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
-                        '<label class="control-label">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
-                        '<label class="control-label">Regards,</label><br/><br/><br/>' +
-                        '<label class="control-label">Timesheet Reporting System.<label><br/><br/><br/>' +
-                        '<label class="control-label">This e-mail was auto generated. Please do not respond.</label</i>' +
-                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span>A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                        '<br/><span><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                        '<td colspan="2"><span>This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                    htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: ' +
+                        result[0].FirstName + ' ' + result[0].LastName +
+                        '</b></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' +
+                        start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System.<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond.</label</i>' +
+                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                        '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                        '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
                         'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                        '<br/><br/><tr><td>Please consider our environment before printing this e-mail.</td></tr></tbody></table>'
+                        '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                 };
                 // END APPROVE
 

@@ -24,7 +24,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 var template = '<div class="multiselect-parent input-group dropdown-multiselect" style="text-align:center; font-size:14px;font-weight:bold;">';
                 template += '<span class="input-group-addon">{{texts.nameAddon}}</span><button type="button" class="dropdown-toggle input-sm form-control" ng-class="settings.buttonClasses" style="text-align:center; font-size:14px;font-weight:bold;color:blue;" ng-click="toggleDropdown()">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
                 template += '<ul class="dropdown-menu dropdown-menu-form dropdown-menu-right" ng-style="{display: open ? \'block\' : \'none\', height : settings.scrollable ? settings.scrollableHeight : \'auto\' }" style="overflow: scroll" >';
-                template += '<li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0"><a data-ng-click="selectAll()"><input type="checkbox" class="checkboxInput" ng-checked="checkAll"/>  {{texts.checkAll}}</a></li>';
+                template += '<li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0"><input type="checkbox" class="checkboxInput" data-ng-click="selectAll()" ng-model="checkAll" ng-true-value="1" id="checkboxID" ng-false-value="0" ng-checked="checkAll==1"/><label for="checkboxID">{{texts.checkAll}}</label></li>';
                 template += '<li ng-hide="(!settings.showCheckAll || settings.selectionLimit > 0) && !settings.showUncheckAll" class="divider"></li>';
                 template += '<li ng-show="settings.enableSearch"><div class="dropdown-header"><input type="text" class="form-control input-sm" style="width: 100%; font-size:14px;" data-ng-model="searchFilter" placeholder="{{texts.searchPlaceholder}}" /></li>';
 
@@ -55,8 +55,8 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
             },
             link: function($scope, $element, $attrs) {
                 //CHANGE CHECK ALL AND UN CHECK ALL
-                $scope.checkAll = false;
-                $scope.unCheckAll = false;
+                $scope.checkAll = 0;
+                $scope.unCheckAll = 0;
                 //END ALL
                 var $dropdownTrigger = $element.children()[0];
 
@@ -170,11 +170,11 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                             target = target.parentElement;
                         }
 
-                        if (!parentFound) {
-                            $scope.$apply(function() {
-                                $scope.open = false;
-                            });
-                        }
+                        // if (!parentFound) {
+                        //     $scope.$apply(function() {
+                        //         $scope.open = false;
+                        //     });
+                        // }
                     });
                 }
 
@@ -236,7 +236,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
 
                 $scope.selectAll = function() {
                     // SELECT ALL AND UN SELECT ALL
-                    if ($scope.checkAll === true) {
+                    if ($scope.checkAll === 1) {
                         //CALL UN SELECT ALL
                         $scope.deselectAll();
                         //END CALL
@@ -252,7 +252,7 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                         });
                         // END SET
                     }
-                    $scope.checkAll = !$scope.checkAll;
+                    $scope.checkAll = ($scope.checkAll === 1 ? 0 : 1);
                     //END
                 };
 

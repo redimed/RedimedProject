@@ -54,5 +54,5 @@ module.exports = {
             }
             transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
         });
-    }
+    },
 }
