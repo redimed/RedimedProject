@@ -202,13 +202,6 @@
 				 </div>
 			  </div>
 			 <!-- parent_id -->
-			 <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.father_id">Father Id</label>
-				    <input type="text" class="form-control" ng-model="company.form.father_id" disabled="true">
-				 </div>
-			  </div>
-			</div>
 			<div class="row">
 			  <div class="col-md-4">
 			  </div>
@@ -236,19 +229,18 @@
 							<tr>
 								<th>Insurer Name</th>
 								<th>Address</th>
-								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in company.listInsurer track by $index" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor  &&  {'background-color':'#1E90FF'}">
+							<tr ng-repeat="row in company.listInsurer track by $index" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor  &&  {'background-color':'green'}">
 								<td>{{row.insurer_name}}</td>
 								<td>{{row.address}}</td>
-								<td align="center">
+								<!--<td align="center">
 								<a>
 								   	<span  ng-if="row.checkisEnable"  ng-click="disableInsurer(row)">Enable{{row.isEnable}}</span>
 									<span  ng-if="!row.checkisEnable"  ng-click="disableInsurer(row)">Disable {{row.isEnable}}</span>
 								</a>
-								</td>
+								</td>-->
 							</tr>
 						</tbody>
 					</table>

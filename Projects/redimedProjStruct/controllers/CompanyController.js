@@ -252,18 +252,18 @@ module.exports = {
                 res.json(500, {error: error});
             })
     },
-	postList: function(req, res){
-		var postData = req.body.data;
+    postList: function(req, res){
+        var postData = req.body.data;
         var pagination = req.body.pagination;
-		var sql = knex
-		.select('companies.*','patient_companies.isEnable As checkisEnable')
-		.from('companies')
+        var sql = knex
+        .select('companies.*','patient_companies.isEnable As checkisEnable')
+        .from('companies')
         .limit(postData.limit)
         .offset(postData.offset)
-		.innerJoin('patient_companies', 'companies.id', '=', 'patient_companies.company_id')
-		.where(
-			'patient_companies.patient_id', postData.patient_id
-		)
+        .innerJoin('patient_companies', 'companies.id', '=', 'patient_companies.company_id')
+        .where(
+            'patient_companies.patient_id', postData.patient_id
+        )
         .toString();
         var sql_count = knex('cln_insurers')
             .count('id as a')
@@ -292,7 +292,7 @@ module.exports = {
         .error(function(error){
             res.json(500, {'status': 'error', 'message': error});
         })
-	},
+    },
     postAdd : function(req,res){
             var postData = req.body.data;
            var errors = [];
@@ -488,7 +488,8 @@ module.exports = {
          .column(
             knex.raw('IFNULL(Company_name,\'\') AS Company_name'),
             knex.raw('IFNULL(Industry,\'\') AS Industry'),
-            knex.raw('IFNULL(Addr,\'\') AS Addr')
+            knex.raw('IFNULL(Addr,\'\') AS Addr'),
+            'id'
             )
         .where(knex.raw('IFNULL(Company_name,\'\') LIKE \'%'+postData.Company_name+'%\''))
         .where(knex.raw('IFNULL(Industry,\'\') LIKE \'%'+postData.Industry+'%\''))
@@ -533,7 +534,8 @@ module.exports = {
                             .where({company_id:postData.id})
                             //.where('company_insurers.isEnable',1)
                             .innerJoin('cln_insurers','company_insurers.insurer_id','=', 'cln_insurers.id')
-                            .toString()
+                            .toString();
+                            
                             db.sequelize.query(sql1)
                             .success(function(data1){
                                 var sql2 = knex

@@ -274,6 +274,8 @@ module.exports = {
 				.from('outside_referrals')
 				.innerJoin('outside_doctors', 'outside_referrals.doctor_id', 'outside_doctors.doctor_id')
 				.innerJoin('doctors', 'outside_referrals.referred_to_doctor', 'doctors.doctor_id')
+				.innerJoin('cln_patient_outreferral','cln_patient_outreferral.outreferral_id','outside_referrals.id')
+				.where('outside_referrals.patient_id', postData.patient_id)
 				.limit(postData.limit)
 				.offset(postData.offset)
 				.orderBy('outside_referrals.expire_date', 'desc')
@@ -282,6 +284,8 @@ module.exports = {
 		var count_sql = knex('outside_referrals')
 				.innerJoin('outside_doctors', 'outside_referrals.doctor_id', 'outside_doctors.doctor_id')
 				.innerJoin('doctors', 'outside_referrals.referred_to_doctor', 'doctors.doctor_id')
+				.innerJoin('cln_patient_outreferral','cln_patient_outreferral.outreferral_id','outside_referrals.id')
+				.where('outside_referrals.patient_id', postData.patient_id)
 				.count('outside_referrals.id as a')
 				.toString();
 
@@ -347,8 +351,25 @@ module.exports = {
 			res.json(500, {error: error});
 		})
 	},
+
+	postCheckReferral: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('cln_patient_outreferral')
+					.where('CAL_ID', postData.CAL_ID)
+					.toString();
+
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
 	postUpdateEnable : function(req,res){
-		var postData = req.body.data
+		var postData = req.body.data;
 		if (postData.isEnable == 0){
 			postData.isEnable = 1;
 		}

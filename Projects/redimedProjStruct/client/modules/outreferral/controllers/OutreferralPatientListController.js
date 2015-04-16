@@ -33,8 +33,9 @@ angular.module('app.loggedIn.outreferral.controllers.patientList', [])
 	}//end claim
 })
 
-.controller('OutreferralPatientAddDialog', function($scope, $modalInstance, patientId){
+.controller('OutreferralPatientAddDialog', function($scope, $modalInstance, $stateParams, patientId){
 	$scope.patientId = patientId;
+	$scope.calId = $stateParams.calId;
 
 	$scope.success = false;
 

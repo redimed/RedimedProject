@@ -122,10 +122,10 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         .then(function(response){
             $scope.list_appt = response.data.appointments;
 
-            if($scope.list_appt.length == 0) {
+            /*if($scope.list_appt.length == 0) {
                 toastr.error('Patient has no Appointments', 'Error')
                 return;
-            }
+            }*/
 
             var current_appt = null;
             angular.forEach($scope.list_appt, function(item) {

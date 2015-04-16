@@ -13,6 +13,11 @@ angular.module("app.loggedIn.outreferral.model", [])
         var detailApi = appApi.all("listNoFollowPatient");
         return detailApi.post({data: data});
     }
+
+    instanceService.checkReferral = function(data){
+        var detailApi = appApi.all("checkReferral");
+        return detailApi.post({data: data});
+    }
   
     instanceService.add = function(data){
     	var detailApi = appApi.all('add');

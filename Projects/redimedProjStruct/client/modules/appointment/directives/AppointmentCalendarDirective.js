@@ -5,15 +5,27 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
 		link: function(scope, elem, attrs){
-			scope.showDropdown = function(patient){
+			scope.showDropdown = function(patient, col){
 				$modal.open({
 					templateUrl: 'notifyAlert',
-					controller: function($scope, patient, AlertModel){
+					controller: function($scope, patient, AlertModel, OutreferralModel){
 						var postData = {Patient_id: patient.Patient_id, limit: 10, offset: 0, Creation_date: 'desc', name: '', description: ''};
 
 						$scope.alert = {
 							list: []
 						}
+
+						$scope.outreferral = {
+							name: 'There is no referral'
+						}
+
+						var refPostData = {CAL_ID: col.CAL_ID};
+						OutreferralModel.checkReferral(refPostData)
+						.then(function(response){
+							if(response.data && typeof response.data.length !== 'undefined')
+								if(response.data.length > 0)
+									$scope.outreferral.name = 'It exists referral';
+						}, function(error){})
 
 						AlertModel.listFollowPatient(postData)
 						.then(function(response){

@@ -56,7 +56,7 @@
 					<span ng-repeat="patient in col.patients">
 						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)">
 							{{patient.First_name}} {{patient.Sur_name}}&nbsp;
-							<a ng-click="showDropdown(patient)">
+							<a ng-click="showDropdown(patient, col)">
 								<i class="fa fa-caret-right"></i>
 							</a>
 						</a>
@@ -155,7 +155,8 @@
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success"></outreferral-patient-add>
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success">
+		</outreferral-patient-add>
 	</div>
 </script>
 
@@ -169,6 +170,8 @@
 
 <script type="text/ng-template" id="notifyAlert">
 	<div class="modal-body">
+		<h4>Outside Referral</h4>
+		{{outreferral.name}}
 		<h4>Alert List</h4>
 		<ul>
 			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>
