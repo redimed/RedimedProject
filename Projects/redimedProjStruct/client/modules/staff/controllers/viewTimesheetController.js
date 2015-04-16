@@ -199,7 +199,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         } else if (response.status === "success") {
             var timeInLieu = 0;
             angular.forEach(response.result, function(data, index) {
-                timeInLieu += StaffService.fortMatFullTime(data.time_in_lieu);
+                timeInLieu += data.time_in_lieu;
             });
             $scope.time_in_lieuHas = timeInLieu;
 
@@ -351,7 +351,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         } else if (response.status === "success") {
             var timeInLieu = 0;
             angular.forEach(response.result, function(data, index) {
-                timeInLieu += StaffService.fortMatFullTime(data.time_in_lieu);
+                timeInLieu += data.time_in_lieu;
             });
             $scope.time_in_lieuHas = timeInLieu;
 
