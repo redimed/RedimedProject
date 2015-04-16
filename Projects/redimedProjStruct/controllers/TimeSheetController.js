@@ -276,7 +276,7 @@ module.exports = {
             //END TRACKER
 
             //FUNCTION SEND MAIL
-            if (info.statusID === 5) {
+            if (info.statusID === 5 || info.statusID === 2) {
                 SendMailSubmit(req, res, info);
             }
             //END SEND MAIL
