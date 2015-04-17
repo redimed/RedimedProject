@@ -1753,6 +1753,23 @@ module.exports = {
                                             }
                                         }
                                         //INSERT TEMP TABLE REPORTS1
+
+                                        //SUM TIME ON DEPT
+                                        for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
+                                            resultDept[deptIndex].sum_ac1_dept = 0;
+                                            resultDept[deptIndex].sum_ac2_dept = 0;
+                                            resultDept[deptIndex].sum_ac3_dept = 0;
+                                            resultDept[deptIndex].sum_ac4_dept = 0;
+                                            resultDept[deptIndex].sum_ac5_dept = 0;
+                                            for (var empIndex = 0; empIndex < resultDept[deptIndex].listEmployee.length; empIndex++) {
+                                                resultDept[deptIndex].sum_ac1_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1]);
+                                                resultDept[deptIndex].sum_ac2_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2]);
+                                                resultDept[deptIndex].sum_ac3_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3]);
+                                                resultDept[deptIndex].sum_ac4_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4]);
+                                                resultDept[deptIndex].sum_ac5_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5]);
+                                            }
+                                        }
+                                        //END
                                         var listEmployeeInsert = "";
                                         var listTimeInsert = "";
                                         for (var i = 0; i < resultDept.length; i++) {
@@ -1760,17 +1777,21 @@ module.exports = {
 
                                                 // VALUE EMP
                                                 listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
-                                                    resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "','" + strListDept + "'," + resultDept[i].CountEmp + "), ";
+                                                    resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "','" + strListDept +
+                                                    "'," + resultDept[i].sum_ac1_dept +
+                                                    "," + resultDept[i].sum_ac2_dept + "," +
+                                                    resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
+                                                    resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept + resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," + convertTime(resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept + resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "), ";
                                                 //EMP
                                                 // VALUE TIME CHARGE
                                                 listTimeInsert += "(" + USER_ID + "," +
-                                                    resultDept[i].listEmployee[j].employee_id + ",'" +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1])) + "','" +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2])) + "','" +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3])) + "','" +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4])) + "','" +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5])) + "','" +
-                                                    (resultDept[i].listEmployee[j].time_charge === undefined ? '-' : getFortMatTimeCharge(resultDept[i].listEmployee[j].time_charge)) + "', " +
+                                                    resultDept[i].listEmployee[j].employee_id + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
+                                                    (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + ", " +
                                                     convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
                                                 //TIME CHARGE
 
@@ -1778,14 +1799,14 @@ module.exports = {
                                                 listTimeInsert += "(" + USER_ID + "," +
                                                     resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
                                                     convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
-                                                    getFortMatTimeCharge(resultDept[i].listEmployee[j].time_in_lieu) + "', null, 2), ";
+                                                    resultDept[i].listEmployee[j].time_in_lieu + "', null, 2), ";
                                                 //END
 
                                                 // VALUE OVERTIME
                                                 listTimeInsert += "(" + USER_ID + "," +
                                                     resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
                                                     convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
-                                                    getFortMatTimeCharge(resultDept[i].listEmployee[j].over_time) + "', 3), ";
+                                                    resultDept[i].listEmployee[j].over_time + "', 3), ";
                                                 // END
                                             }
                                         }
@@ -1795,7 +1816,7 @@ module.exports = {
                                         if (listTimeInsert !== "") {
                                             listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
                                         }
-                                        var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, deptList, deptCount) VALUES " + listEmployeeInsert;
+                                        var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, deptList, time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, convert_dept) VALUES " + listEmployeeInsert;
                                         var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
                                         var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
                                         var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
@@ -1811,6 +1832,7 @@ module.exports = {
                                                                     if (queryInsertTimeInSert !== "") {
                                                                         db.sequelize.query(queryInsertTimeInSert)
                                                                             .success(function(insertSuccessTime) {
+
                                                                                 //RES.JSON
                                                                                 res.json({
                                                                                     status: "success",
