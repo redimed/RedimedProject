@@ -16,6 +16,16 @@ module.exports =
         phanquocchien.c1109g@gmail.com
         chen thong tin vao noi dung email
        */
+        var linkWebsite = req.protocol + '://' + req.get('host');
+        var imgUrl=null;
+        if(rlobUtil.isTestSendMail)
+        {
+          imgUrl="http://s17.postimg.org/dqbicb0zj/Medico_Legal.png";
+        }
+        else
+        {
+          imgUrl=linkWebsite+"/modules/rediLegalOnlineBooking/images/Medico-Legal.png";
+        }
         emailInfo.htmlBody =
         " <div style='margin: 0in 0in 0.0001pt !important;font-size: 11pt !important;font-family: Calibri,sans-serif !important;'>                       "+ 
         emailInfo.htmlBody +  
@@ -23,14 +33,14 @@ module.exports =
         "   <table>                                                                                                                                      "+      
         "   <tr>                                                                                                                                         "+      
         "       <td>                                                                                                                                     "+      
-        "     <img src='http://s17.postimg.org/dqbicb0zj/Medico_Legal.png'/>                                                                             "+      
+        "     <img src='"+imgUrl+"'/>                                                                             "+      
         "       </td>                                                                                                                                    "+      
         "       <td style='margin: 0in 0in 0.0001pt !important;font-size: 11pt !important;font-family: Calibri,sans-serif !important;'>                  "+      
-        "           <p><span style='font-weight: bold'>A&nbsp;</span>1 Frederick street, Belmont, Westem Australia 6140</p>                              "+  
-        "           <p><span style='font-weight: bold'>T&nbsp;</span>1300 881 301 (REDiMED Emergency Service 24/7)</p>                                   "+      
+        "           <p><span style='font-weight: bold'>A&nbsp;</span>1 Frederick Street, Belmont, Western Australia 6104</p>                             "+  
+       // "           <p>Take away emergency number</p>                                                                                                    "+      
         "           <p><span style='font-weight: bold'>P&nbsp;</span>+61 8 9230 0900 <span style='font-weight: bold'>F</span> +61 8 9230 0999</p>        "+      
         "           <p><span style='font-weight: bold'>E&nbsp;</span>medicolegal@redimed.com.au</p>                                                      "+      
-        "           <p><span style='font-weight: bold'>W&nbsp;</span>www.redimed.com.au</p>                                                              "+      
+        "           <p><span style='font-weight: bold'>W&nbsp;</span>"+linkWebsite+"</p>                                                                 "+      
         "       </td>                                                                                                                                    "+      
         "   </tr>                                                                                                                                        "+      
         "   </table>                                                                                                                                     "+      
