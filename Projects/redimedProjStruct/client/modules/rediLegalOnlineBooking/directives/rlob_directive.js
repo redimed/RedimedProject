@@ -1471,6 +1471,22 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                         });
                 }
+                $scope.updatePassBookingNotChangeStatus=function(doctorId)
+                {
+                    rlobService.getPassBookingNotChangeStatus($scope.bookingType,doctorId)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                $scope.listPassBookingNotChangeStatus=data.data;
+                                $scope.listBookingNotification=$scope.listPassBookingNotChangeStatus;
+                            }
+                        },
+                        function(error)
+                        {
+
+                        });
+                }
+
 
                 /***
                  * Danh sach cac booking sap toi va client chua upload document
@@ -1480,16 +1496,34 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.getListUpcommingBookingWaitingPaperwork=function(doctorId)
                 {
                     rlobService.getListUpcommingBookingWaitingPaperwork($scope.bookingType,doctorId)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.listUpcommingBookingWaitingPaperwork=data.data;
-                            }
-                        },
-                        function(error)
+                    .then(function(data){
+                        console.log(data);
+                        if(data.status=='success')
                         {
 
-                        });
+                            $scope.listUpcommingBookingWaitingPaperwork=data.data;
+                        }
+                    },
+                    function(error)
+                    {
+
+                    });
+                }
+                $scope.updateListUpcommingBookingWaitingPaperwork=function(doctorId)
+                {
+                    rlobService.getListUpcommingBookingWaitingPaperwork($scope.bookingType,doctorId)
+                    .then(function(data){
+                        console.log(data);
+                        if(data.status=='success')
+                        {
+                            $scope.listUpcommingBookingWaitingPaperwork=data.data;
+                            $scope.listBookingNotification=$scope.listUpcommingBookingWaitingPaperwork;
+                        }
+                    },
+                    function(error)
+                    {
+
+                    });
                 }
 
                 /***
@@ -1500,24 +1534,41 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.getListBookingOutstandingNotification=function(doctorId)
                 {
                     rlobService.getListBookingOutstandingNotification($scope.bookingType,doctorId)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.listBookingOutstandingNotification=data.data;
-                            }
-                        },
-                        function(error)
+                    .then(function(data){
+                        if(data.status=='success')
                         {
+                            $scope.listBookingOutstandingNotification=data.data;
+                        }
+                    },
+                    function(error)
+                    {
 
-                        });
+                    });
+                }
+                $scope.updateListBookingOutstandingNotification=function(doctorId)
+                {
+                    rlobService.getListBookingOutstandingNotification($scope.bookingType,doctorId)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            $scope.listBookingOutstandingNotification=data.data;
+                            $scope.listBookingNotification=$scope.listBookingOutstandingNotification;
+                        }
+                    },
+                    function(error)
+                    {
+
+                    });
                 }
 
                 /**
                  * Xu ly show list booking notificaion (local of admin)
                  * tannv.dts@gmail.com
                  */
+                $scope.currentNotificationType=null;
                 $scope.showListBookingNotification=function(notificationType)
                 {
+                    $scope.currentNotificationType=notificationType;
                     switch(notificationType)
                     {
                         case $scope.localNotificationType.type1.alias:
@@ -1534,10 +1585,14 @@ angular.module("app.loggedIn.rlob.directive", [])
                             break;
                     }
                     $("#list_booking_admin_local_notification").modal({show:true,backdrop:'static'});
-
-        //            $scope.filterBooking
-
                 }
+                $scope.documentStatusChangedFlag=0;
+                $scope.$watch("documentStatusChangedFlag",function(newValue,oldValue){
+                    if($scope.documentStatusChangedFlag)
+                    {
+                        $scope.updateListUpcommingBookingWaitingPaperwork();
+                    }
+                });
 
                 /**
                  * Khi tat danh sach xem cac booking local notification thi chay lai tree booking

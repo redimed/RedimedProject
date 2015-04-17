@@ -80,7 +80,9 @@
 
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
-                            <rlob-change-document-status selected-document="selectedBooking" ></rlob-change-document-status>
+                            <rlob-change-document-status selected-document="selectedBooking" 
+                             document-status-changed-flag="documentStatusChangedFlag">
+                            </rlob-change-document-status>
                             <accordion >
                                 <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
                                     <accordion-heading>

@@ -624,13 +624,28 @@ module.exports =
                             "    <span style='font-weight: bold'>{{WRK_OTHERNAMES}} {{WRK_SURNAME}} {{CLAIM_NO}}</span>                                                      "+
                             "   </p>                                                                                                                                         "+      
                             "   <p>                                                                                                                                          "+      
-                            "    <table>                                                                                                                                     "+      
-                            "         <tr><td style='font-weight:bold'>Date:</td><td>{{DATE}}</td></tr>                                                                      "+
-                            "         <tr><td style='font-weight:bold'>Time:</td><td>{{TIME}}</td></tr>                                                                      "+
-                            "         <tr><td style='font-weight:bold'>Address:</td><td>{{Site_addr}}</td></tr>                                                              "+  
-                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>{{DOCTOR_NAME}}</td></tr>                                                             "+         
-                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>{{Rl_TYPE_NAME}}</td></tr>                                               "+  
-                            "    </table>                                                                                                                                    "+      
+                            "    <table >                                                                                                                                    "+         
+                            "         <tr>                                                                                                                                   "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Date:</td>                                "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri  !important;'>{{DATE}}</td>                                             "+
+                            "         </tr>                                                                                                                                  "+    
+                            "         <tr>                                                                                                                                   "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri  !important;'>Time:</td>                               "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{TIME}}</td>                                              "+
+                            "         </tr>                                                                                                                                  "+    
+                            "         <tr>                                                                                                                                   "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Address:</td>                             "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{Site_addr}}</td>                                         "+
+                            "         </tr>                                                                                                                                  "+     
+                            "         <tr>                                                                                                                                   "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Doctor:</td>                              "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOCTOR_NAME}}</td>                                       "+
+                            "         </tr>                                                                                                                                  "+            
+                            "         <tr>                                                                                                                                   "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Type of Appointment:</td>                 "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{Rl_TYPE_NAME}}</td>                                      "+
+                            "         </tr>                                                                                                                                  "+     
+                            "    </table>                                                                                                                                    "+         
                             "   </p>                                                                                                                                         "+      
                             "   <p>                                                                                                                                          "+      
                             "    Please ensure the paperwork is sent through to medicolegal@redimed.com.au or                                                                "+      
@@ -1237,33 +1252,18 @@ module.exports =
             "   INNER JOIN `cln_specialties` spec ON booking.`SPECIALITY_ID`= spec.`Specialties_id`             "+
             "   INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                             "+
             "   LEFT JOIN `rl_booking_files` files ON booking.`BOOKING_ID`=files.`BOOKING_ID`                   "+
-            " WHERE     files.`FILE_ID` IS NULL                                                                 "+
+            //" WHERE    booking.`DOCUMENT_STATUS`=? files.`FILE_ID` IS NULL                                      "+                           
+            " WHERE    booking.`DOCUMENT_STATUS`=?                                                              "+                           
             "   AND CURRENT_TIMESTAMP<booking.`APPOINTMENT_DATE`                                                "+
             "   AND CURRENT_TIMESTAMP>=DATE_SUB(booking.`APPOINTMENT_DATE`, INTERVAL 7 DAY)                     "+
-            "   AND booking.`BOOKING_TYPE`=? and booking.DOCTOR_ID like ? and booking.STATUS=?                  "+
+            "   AND booking.`BOOKING_TYPE`=? AND booking.DOCTOR_ID LIKE ? AND booking.STATUS=?                  "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC                                                           ";
 
-
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(sql,[bookingType,doctorId,rlobUtil.bookingStatus.confirmed],function(err,rows)
-            {
-                if(err)
-                {
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                    {
-                        res.json({status:'success',data:rows})
-                    }
-                    else
-                    {
-                        res.json({status:'fail'});
-                    }
-                }
-            });
+        kiss.executeQuery(req,sql,[rlobUtil.documentStatus.noDocuments,bookingType,doctorId,rlobUtil.bookingStatus.confirmed],function(rows){
+            res.json({status:'success',data:rows})
+        },function(err){
+            kiss.exlog("getListUpcommingBookingWaitingPaperwork","Loi truy van",err);
+            res.json({status:'fail'});
         });
     },
 
@@ -1356,27 +1356,11 @@ module.exports =
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN '1900-1-1' AND DATE_ADD('2500-1-1',INTERVAL 1 DAY)                                   "+
             " ORDER BY booking.`APPOINTMENT_DATE` DESC                                                                                      ";          
 
-
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(sql,[bookingType,doctorId],function(err,rows)
-            {
-                if(err)
-                {
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                    {
-                        res.json({status:'success',data:rows})
-                    }
-                    else
-                    {
-                        res.json({status:'fail'});
-                    }
-                }
-            });
+        kiss.executeQuery(req,sql,[bookingType,doctorId],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            kiss.exlog("getListBookingOutstandingNotification","Loi truy van",err);
+            res.json({status:'fail'});
         });
     },
 
@@ -1524,7 +1508,7 @@ module.exports =
         var siteAddress=req.body.siteAddress?req.body.siteAddress:'';
         var mapUrl=req.body.mapUrl?req.body.mapUrl:'';
         var sql=
-            " SELECT    u.`user_name`,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
+            " SELECT    u.`user_name`,u.FIRST_NAME,u.`Contact_email`,u.`invoiceemail`,u.`result_email`,u.`result_email`,   "+
             "   booking.`WRK_SURNAME`,booking.WRK_OTHERNAMES,booking.`CLAIM_NO`,                                                     "+
             "   booking.`APPOINTMENT_DATE`,rlType.`Rl_TYPE_NAME`,doctor.`NAME`,redi.`Site_addr`               "+
             " FROM  `rl_bookings` booking                                                                     "+
@@ -1558,7 +1542,7 @@ module.exports =
                 emailInfo.cc=rlobUtil.getMedicoLegalCC();
                 var emailTemplate=
                     " <p>                                                                                                                           "+
-                    "   Hi {{user_name}},                                                                    "+
+                    "   Hi {{FIRST_NAME}},                                                                    "+
                     " </p>                                                                                                                          "+
                     " <p>                                                                                                                           "+
                     "     The {{Rl_TYPE_NAME}} completed for {{WRK_OTHERNAMES}} {{WRK_SURNAME}} by {{NAME}} on the {{APPOINTMENT_DATE}} has been uploaded to your Medico-Legal login.      "+
@@ -1582,7 +1566,7 @@ module.exports =
 
                 emailInfo.htmlBody=
                     kiss.tokenBinding(emailTemplate,{
-                        user_name:row.user_name,
+                        FIRST_NAME:row.FIRST_NAME,
                         WRK_OTHERNAMES:row.WRK_OTHERNAMES,
                         WRK_SURNAME:row.WRK_SURNAME,
                         Rl_TYPE_NAME:row.Rl_TYPE_NAME,
@@ -1945,8 +1929,7 @@ module.exports =
                         var redimed_logo_1='.\\controllers\\rlController\\data\\images\\redimed-logo-1.jpg';
                         kiss.exlog(redimed_logo_1);
                         var template=
-                            " <div style='font:11pt Calibri'>                                                                                                            "+         
-                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                 "+         
+                            "   <p>Hi {{FIRST_NAME}},</p>                                                                                                                "+         
                             "   <p>                                                                                                                                      "+         
                             "    Thank you for your booking request with Redimed.                                                                                        "+         
                             "    The new appointment details for                                                                                                         "+  
@@ -1954,12 +1937,27 @@ module.exports =
                             "   are below:                                                                                                                               "+
                             "   </p>                                                                                                                                     "+         
                             "   <p>                                                                                                                                      "+         
-                            "    <table>                                                                                                                                 "+         
-                            "         <tr><td style='font-weight:bold'>Date:</td><td>{{DATE}}</td></tr>                                                                  "+    
-                            "         <tr><td style='font-weight:bold'>Time:</td><td>{{TIME}}</td></tr>                                                                  "+    
-                            "         <tr><td style='font-weight:bold'>Address:</td><td>{{Site_addr}}</td></tr>                                                          "+     
-                            "         <tr><td style='font-weight:bold'>Doctor:</td><td>{{DOCTOR_NAME}}</td></tr>                                                         "+            
-                            "         <tr><td style='font-weight:bold'>Type of Appointment:</td><td>{{Rl_TYPE_NAME}}</td></tr>                                           "+     
+                            "    <table >                                                                                                                                "+         
+                            "         <tr>                                                                                                                               "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Date:</td>                            "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri  !important;'>{{DATE}}</td>                                         "+
+                            "         </tr>                                                                                                                              "+    
+                            "         <tr>                                                                                                                               "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri  !important;'>Time:</td>                           "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{TIME}}</td>                                          "+
+                            "         </tr>                                                                                                                              "+    
+                            "         <tr>                                                                                                                               "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Address:</td>                         "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{Site_addr}}</td>                                     "+
+                            "         </tr>                                                                                                                              "+     
+                            "         <tr>                                                                                                                               "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Doctor:</td>                          "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOCTOR_NAME}}</td>                                   "+
+                            "         </tr>                                                                                                                              "+            
+                            "         <tr>                                                                                                                               "+
+                            "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Type of Appointment:</td>             "+
+                            "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{Rl_TYPE_NAME}}</td>                                  "+
+                            "         </tr>                                                                                                                              "+     
                             "    </table>                                                                                                                                "+         
                             "   </p>                                                                                                                                     "+         
                             "   <p>                                                                                                                                      "+         
@@ -1977,8 +1975,7 @@ module.exports =
                             "   </div>                                                                                                                                   "+         
                             "   <br/>                                                                                                                                    "+         
                             "   <p>Kind Regards,</p>                                                                                                                     "+         
-                            "   <p>Redimed Medico-Legal</p>                                                                                                              "+         
-                            " </div>                                                                                                                                     "; 
+                            "   <p>Redimed Medico-Legal</p>                                                                                                              "; 
                         
          
                         var emailData={
