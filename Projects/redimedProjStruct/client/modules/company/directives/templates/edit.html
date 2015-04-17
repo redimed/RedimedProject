@@ -134,25 +134,25 @@
 		        <div class="col-md-3">
 				  	<div class="form-group">
 					    <label for="company.form.invoice_email">Invoice Email</label>
-					    <input type="email" class="form-control" ng-model="company.form.invoice_email" name="invoice_email" id="invoice_email">
+					    <input type="text" class="form-control" ng-model="company.form.invoice_email" name="invoice_email" id="invoice_email">
 					</div>
 				</div>
 				 <div class="col-md-3">
 				  	<div class="form-group">
 					    <label for="company.form.report_to_email">Report to email</label>
-					    <input type="email" class="form-control" ng-model="company.form.report_to_email" id="report_to_email" name="report_to_email">
+					    <input type="text" class="form-control" ng-model="company.form.report_to_email" id="report_to_email" name="report_to_email">
 					 </div>
 				  </div>
 				<div class="col-md-3">
 				  	<div class="form-group">
 					    <label for="company.form.Email">Email</label>
-					    <input type="email" class="form-control" ng-model="company.form.Email" name="Email" id="Email" >
+					    <input type="text" class="form-control" ng-model="company.form.Email" name="Email" id="Email" >
 					 </div>
 				  </div>
 			    <div class="col-md-3">
 			  	<div class="form-group">
 				    <label for="company.form.result_email">Result Email</label>
-				    <input type="email" class="form-control" ng-model="company.form.result_email" name="result_email" id="result_email">
+				    <input type="text" class="form-control" ng-model="company.form.result_email" name="result_email" id="result_email">
 				 </div>
 			    </div>
 			</div>
@@ -184,29 +184,27 @@
 			</div>
 
 			<div class="row">
-			<div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.default_status">Default Status</label>
-				    <input type="text" class="form-control" ng-model="company.form.default_status">
-				 </div>
-			  </div>
+				<div class="col-md-3">
+				  	<div class="form-group">
+					    <label for="company.form.default_status">Default Status</label>
+					    <input type="text" class="form-control" ng-model="company.form.default_status">
+					 </div>
+				  </div>
 			  <!-- parent_id -->
+				  <div class="col-md-3">
+				  	<div class="form-group">
+					    <label for="company.form.parent_id">Parent Company</label>
+					   <!--  <input type="text" class="form-control" ng-model="company.form.parent_id" placeholder="parent_id"> -->
+					   <button class="form-control btn btn-default green" ng-model="company.form.parent_id" ng-click="company.addCompany()">
+					   	<span  ng-if="company.Company_name_Parent">{{company.Company_name_Parent}}</span>
+						<span  ng-if="!company.Company_name_Parent">Select Parent Company</span>
+					   </button>
+					 </div>
+				  </div>
+			 <!-- parent_id -->
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.parent_id">Parent Company</label>
-				   <!--  <input type="text" class="form-control" ng-model="company.form.parent_id" placeholder="parent_id"> -->
-				   <button class="form-control btn btn-default green" ng-model="company.form.parent_id" ng-click="company.addCompany()">
-				   	<span  ng-if="company.Company_name_Parent">{{company.Company_name_Parent}}</span>
-					<span  ng-if="!company.Company_name_Parent">Select Parent Company</span>
-				   </button>
-				 </div>
-			  </div>
-			 <!-- parent_id -->
-			<div class="row">
-			  <div class="col-md-4">
-			  </div>
-			  <div class="col-md-4">
-			  	<div class="form-group">
+			  	   <label>Select Insurer</label>
 				   <button class="form-control btn btn-default green" ng-model="company.form.Insurer" ng-click="company.addInsurer()">Select Insurer</button>
 				 </div>
 			  </div>

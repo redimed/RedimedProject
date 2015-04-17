@@ -119,24 +119,24 @@ module.exports = {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
                 return re.test(email);
             }
-            if (postData.invoice_email == null) {
+            if (postData.invoice_email !=null) {
                     if(validateEmail(postData.invoice_email)==false){
-                     errors.push({field: 'invoice_email', message: 'invoice_email not sadas'});
+                     errors.push({field: 'invoice_email', message: 'Email wrong format'});
                 }
             }
-            if (postData.report_to_email == null) {
+            if (postData.report_to_email !=null) {
                     if(validateEmail(postData.report_to_email)==false){
-                     errors.push({field: 'report_to_email', message: 'report_to_email not sadas'});
+                     errors.push({field: 'report_to_email', message: 'Email wrong format'});
                 }
             }
-            if (postData.Email == null) {
+            if (postData.Email !=null) {
                     if(validateEmail(postData.Email)==false){
-                     errors.push({field: 'Email', message: 'Email not sadas'});
+                     errors.push({field: 'Email', message: 'Email wrong format'});
                 }
             }
-            if (postData.result_email == null) {
+            if (postData.result_email !=null) {
                     if(validateEmail(postData.result_email)==false){
-                     errors.push({field: 'result_email', message: 'result_email not sadas'});
+                     errors.push({field: 'result_email', message: 'Email wrong format'});
                 }
             }
             
@@ -303,24 +303,24 @@ module.exports = {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
                 return re.test(email);
             }
-            if (postData.invoice_email == null) {
+            if (postData.invoice_email != null) {
                     if(validateEmail(postData.invoice_email)==false){
-                     errors.push({field: 'invoice_email', message: 'invoice_email not sadas'});
+                     errors.push({field: 'invoice_email', message: 'Email wrong format'});
                 }
             }
-            if (postData.report_to_email == null) {
+            if (postData.report_to_email != null) {
                     if(validateEmail(postData.report_to_email)==false){
-                     errors.push({field: 'report_to_email', message: 'report_to_email not sadas'});
+                     errors.push({field: 'report_to_email', message: 'Email wrong format'});
                 }
             }
-            if (postData.Email == null) {
+            if (postData.Email != null) {
                     if(validateEmail(postData.Email)==false){
-                     errors.push({field: 'Email', message: 'Email not sadas'});
+                     errors.push({field: 'Email', message: 'Email wrong format'});
                 }
             }
-            if (postData.result_email == null) {
+            if (postData.result_email != null) {
                     if(validateEmail(postData.result_email)==false){
-                     errors.push({field: 'result_email', message: 'result_email not sadas'});
+                     errors.push({field: 'result_email', message: 'Email wrong format'});
                 }
             }
             
