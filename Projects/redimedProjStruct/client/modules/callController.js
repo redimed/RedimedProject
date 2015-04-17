@@ -3,7 +3,7 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($scope,callModal,$document,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, callUserInfo, callUser, isCaller, opentokInfo){
+    .controller("callController", function($timeout,$scope,callModal,$document,$modalStack,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, callUserInfo, callUser, isCaller, opentokInfo){
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
 
@@ -25,12 +25,10 @@ angular.module("app.call.controller",[
 
         $scope.isMinimize = false;
 
-        $scope.streams = OTSession.streams;
         $scope.sharingMyScreen = false;
         $scope.publishing = false;
         $scope.screenBig = true;
         $scope.screenShareSupported = false;
-        $scope.isAndroid = /Android/g.test(navigator.userAgent);
         $scope.connected = false;
         $scope.screenShareFailed = null;
         $scope.mouseMove = false;
@@ -38,6 +36,11 @@ angular.module("app.call.controller",[
         $scope.promptToInstall = false;
         $scope.showWhiteboard = false;
         $scope.whiteboardUnread = false;
+
+        $scope.streams = OTSession.streams;
+        $scope.connections = OTSession.connections;
+
+        console.log("Connections: ",$scope.connections);
 
         OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
         OT.checkScreenSharingCapability(function(response) {
@@ -62,6 +65,10 @@ angular.module("app.call.controller",[
             },
             resolution: '1280x720',
             frameRate: 30
+        };
+
+        $scope.notMine = function(stream) {
+            return stream.connection.connectionId !== $scope.session.connection.connectionId;
         };
 
         if($cookieStore.get('userInfo') == null || typeof $cookieStore.get('userInfo') == 'undefined')
@@ -117,7 +124,7 @@ angular.module("app.call.controller",[
                     $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
                     socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'call',sessionId: sessionId});
                 });
-
+                
                 $scope.publishing = true;
                                
             })
@@ -147,6 +154,7 @@ angular.module("app.call.controller",[
                     if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
                     $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
                     $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+                    
                     var whiteboardUpdated = function() {
                         if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
                           $scope.$apply(function() {
@@ -156,13 +164,16 @@ angular.module("app.call.controller",[
                         }
                     };
                     $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
+                    
                     socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'answer'});
                 });
-
                 $scope.publishing = true;
                 
             }
         }
+
+        
+        
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
@@ -172,29 +183,32 @@ angular.module("app.call.controller",[
 
                 if($scope.isCaller)
                     $cookieStore.put('callInfo',{isCalling: true, callUser: fromId})
+
+                $modalStack.dismissAll();
             }
             if(message.type === 'ignore')
             {
-                if($scope.streams.length == 1)
-                    toastr.error("Call Have Been Rejected!");
-                else
-                {
-                    audio.pause();
-                    toastr.error("Call Have Been Rejected!");
-                    disconnect();
-                }
+                audio.pause();
+                toastr.info(fromUser + " Has Ignored The Call!");
+                $modalStack.dismissAll();
+
+                 $timeout(function(){
+                    if($scope.connections.length == 1)
+                        disconnect();
+                }, 1 * 1000);
             }
             if(message.type === 'cancel')
             {
+                audio.pause();
+                toastr.info(fromUser + " Has Left The Call!");
+                $modalStack.dismissAll();
 
-                if($scope.streams.length == 1)
-                    toastr.error("Someone Has Left The Call!");
-                else
-                {
-                    audio.pause();
-                    toastr.error("Call Have Been Cancelled!");
-                    disconnect();
-                }
+                $timeout(function(){
+                    if($scope.connections.length == 1)
+                        disconnect();
+                }, 1 * 1000);
+
+                
             }
 
         })
@@ -222,7 +236,7 @@ angular.module("app.call.controller",[
                 $cookieStore.remove("callInfo");
 
             socket.removeAllListeners();
-            $state.transitionTo(toSt.toState.name,toSt.toParams,{reload: true});
+            $state.go(toSt.toState.name,toSt.toParams,{reload: true});
         }
 
         $scope.cancelCall = function(){
@@ -279,55 +293,64 @@ angular.module("app.call.controller",[
         $scope.isCallGroup = false;
 
         $scope.addPeople = function(){
-            if($scope.streams.length < 2)
-            {
-                var modalInstance = $modal.open({
-                    templateUrl: 'common/views/dialog/invitePeople.html',
-                    size: 'sm',
-                    backdrop: 'static',
-                    keyboard: false,
-                    controller: function($scope,UserService,$modalInstance,toastr,socket){
-                        UserService.getOnlineUsers().then(function(rs){
-                            $scope.onlineUsers = rs.data;
-                        })
-
-                        $scope.callUser = function(u){
-                            $modalInstance.close({type:'call',data:u});
-                        }
-
-                        $scope.cancelClick = function(){
-                            $modalInstance.close({type:'cancel'});
-                        }
-                    }
-                })
-
-                modalInstance.result.then(function(rs){
-                    if(rs.type == 'call')
-                    {
-                        socket.emit("sendMessage",$scope.userInfo.id,rs.data.id,{type:'call',sessionId: sessionId});
-                        OTSession.session.signal({
-                            type: 'callGroup',
-                            data: {groupCall: true, name:rs.data.fullName}
-                        });
-
-                    }
-                })
-            }
+            if($scope.isCaller && !$scope.isAccept)
+                toastr.warning("Please Wait For Calling Person First!")
             else
-                toastr.warning('Can Only Make A Group Call With 3 People!');
-            
+            {
+                console.log($scope.connections);
+                if($scope.connections.length < 3)
+                {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'common/views/dialog/invitePeople.html',
+                        size: 'sm',
+                        backdrop: 'static',
+                        keyboard: false,
+                        resolve: {
+                            userInfo: function(){
+                                return $scope.userInfo;
+                            },
+                            sessionId: function(){
+                                return sessionId;
+                            },
+                            OTSession: function(){
+                                return OTSession;
+                            }
+                        },
+                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession){
+
+                            console.log(OTSession);
+
+                            $scope.isMakeCall = false;
+                            $scope.callUser = null;
+                            $scope.userInfo = userInfo;
+                            UserService.getOnlineUsers().then(function(rs){
+                                $scope.onlineUsers = rs.data;
+                            })
+
+                            $scope.cancelCall = function(){
+                                socket.emit("sendMessage",userInfo.id,$scope.callUser.id,{type:'cancel'});
+                                $modalInstance.close({type:'cancel'});
+                            }
+
+                            $scope.callUser = function(u){
+                                $scope.isMakeCall = true;
+                                $scope.callUser = u;
+                                socket.emit("sendMessage",userInfo.id,u.id,{type:'call',sessionId: sessionId});
+                            }
+
+                            $scope.cancelClick = function(){
+                                $modalInstance.close({type:'cancel'});
+                            }
+                        }
+                    })
+
+                }
+                else
+                    toastr.warning('Can Only Make A Group Call With 3 People!');
+            }
+
         }
 
-        if (OTSession.session) {
-            OTSession.session.on({
-                'signal:callGroup': function (event) {
-                    if (event.from.connectionId !== OTSession.session.connection.connectionId) {
-                        if(groupCall)
-                            $scope.isCallGroup = true;
-                    }
-                }
-            });
-        }
         
          $scope.$on("changeSize", function (event) {
             if (event.targetScope.stream.oth_large === undefined) {

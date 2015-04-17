@@ -26,8 +26,11 @@ var ssl_options = {
 };
 var app = express();
 
-var server = require('https').createServer(ssl_options,app);
-var io = require('socket.io')(server,{key:fs.readFileSync('key/key.pem'),cert:fs.readFileSync('key/cert.pem')});
+// var server = require('https').createServer(ssl_options,app);
+// var io = require('socket.io')(server,{key:fs.readFileSync('key/key.pem'),cert:fs.readFileSync('key/cert.pem')});
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 require('./socket')(io,cookie,cookieParser);
 

@@ -17,18 +17,13 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.on('connection', function (socket) {
 
-        // console.log("IP: ",socket.request.connection.remoteAddress);
-
         var header = socket.request.headers;
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
-        // console.log(ua);
-
         socket.on("shareImage",function(id,callUser){
             db.User.find({where:{id: callUser}},{raw:true})
                 .success(function(user){
-                    console.log("===Send To: ",user.user_name);
                     io.to(user.socket)
                         .emit('receiveImage',id);
                 })
@@ -37,14 +32,13 @@ module.exports = function(io,cookie,cookieParser) {
         socket.on("shareFile",function(id,fileName,callUser){
             db.User.find({where:{id: callUser}},{raw:true})
                 .success(function(user){
-                    console.log("===Send To: ",user.user_name);
                     io.to(user.socket)
                         .emit('receiveFile',id,fileName);
                 })
         })
 
         socket.on("generateSession",function(id){
-            opentok.createSession(function(err, ses) {
+            opentok.createSession({mediaMode:"routed"},function(err, ses) {
                 if (err) 
                     return console.log(err);
 
@@ -109,7 +103,6 @@ module.exports = function(io,cookie,cookieParser) {
 
 
         socket.on('reconnected',function(id){
-            console.log("============================================reconnected");
             db.User.update({
                 socket: socket.id
             },{id:id})
@@ -122,7 +115,6 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on('checkApp',function(id){
-            console.log("============================================checkApp",id);
             if(id){
                 db.User.find({where:{id:id}},{raw:true})
                     .success(function(user){
@@ -206,7 +198,6 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('updateSocketLogin',function(username){
-            console.log("============================================update login");
             db.User.update({
                 socket: socket.id
             },{user_name: username})

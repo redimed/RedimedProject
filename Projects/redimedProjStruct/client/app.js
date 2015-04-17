@@ -63,7 +63,7 @@ angular.module("app", [
         var host = location.hostname;
         var port = location.port;
 
-        var socket = io.connect('https://' + host + '/', {
+        var socket = io.connect('http://' + host + '/', {
             'port': port,
             'reconnect': true,
             'reconnection delay': 2000,

@@ -240,7 +240,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 				if(!data.img)
 	                data.img = "theme/assets/icon.png"
 
-	            callModal.activate({callUserInfo: data, callUser: user.id, isCaller: true, opentokInfo: null});
+	            callModal.activate({callUserInfo: data, callUser: user.id, isCaller: true, opentokInfo: null, streams: null});
 			})
 	    }
 
