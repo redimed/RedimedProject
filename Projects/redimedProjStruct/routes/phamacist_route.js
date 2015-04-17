@@ -11,6 +11,10 @@ app.post('/api/phUser/changePass',ph_userController.changePass);
 //company controller
 app.post('/api/phCompany/getCompany',ph_companyController.getCompany);
 app.post('/api/phCompany/updateCompanyInfo',ph_companyController.updateCompanyInfo);
+app.post('/api/phCompany/delelteShopCompany',ph_companyController.delelteShopCompany);
+app.post('/api/phCompany/updateShopCompany',ph_companyController.updateShopCompany);
+app.post('/api/phCompany/insertNewPost',ph_companyController.insertNewPost);
+
 //pharmacis controller
 app.post('/api/phPharmacist/getPharmacist',ph_companyController.getPharmacist);
 app.post('/api/phPharmacist/updatePharmasictInfo',ph_companyController.updatePharmasictInfo);
