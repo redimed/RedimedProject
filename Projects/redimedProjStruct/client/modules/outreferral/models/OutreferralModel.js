@@ -13,10 +13,20 @@ angular.module("app.loggedIn.outreferral.model", [])
         var detailApi = appApi.all("listNoFollowPatient");
         return detailApi.post({data: data});
     }
+
+    instanceService.checkReferral = function(data){
+        var detailApi = appApi.all("checkReferral");
+        return detailApi.post({data: data});
+    }
   
     instanceService.add = function(data){
     	var detailApi = appApi.all('add');
     	return detailApi.post({data: data});
+    }
+
+    instanceService.select = function(data){
+        var detailApi = appApi.all('selectPatient');
+        return detailApi.post({data: data});
     }
 
     instanceService.addPatient = function(data){
@@ -36,6 +46,10 @@ angular.module("app.loggedIn.outreferral.model", [])
 
     instanceService.one = function(data){
         var detailApi = appApi.all('one');
+        return detailApi.post({data: data});   
+    }
+    instanceService.updateEnable = function(data){
+        var detailApi = appApi.all('updateEnable');
         return detailApi.post({data: data});   
     }
 

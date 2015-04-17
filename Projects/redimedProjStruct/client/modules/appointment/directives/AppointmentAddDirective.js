@@ -70,22 +70,40 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 				});
 
 				modalInstance.result.then(function(row){
-					if(row){
-						var postData = {
-							form: {},
-							Patient_id: null
-						}
-						postData.form = angular.copy(scope.appointment.form);
-						postData.form.ARR_TIME = ConfigService.convertToDB(postData.ARR_TIME);
-						postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.ATTEND_TIME);
-						postData.form.CAL_ID = scope.params.col.CAL_ID;
-						postData.Patient_id = row.Patient_id;
 
-						AppointmentModel.add(postData)
-						.then(function(response){
-							scope.patient = row;
-						}, function(error){})						
-					}
+					$modal.open({
+						templateUrl: 'notifyAppointment',
+						controller: function($scope, $modalInstance){
+							$scope.clickYes = function(){
+								$modalInstance.close('success');
+							}
+
+							$scope.clickNo = function(){
+								$modalInstance.dismiss('cancel');
+							}
+						}
+					})
+					.result.then(function(success){
+						if(success === 'success'){
+							if(row){
+								var postData = {
+									form: {},
+									Patient_id: null
+								}
+								postData.form = angular.copy(scope.appointment.form);
+								postData.form.ARR_TIME = ConfigService.convertToDB(postData.ARR_TIME);
+								postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.ATTEND_TIME);
+								postData.form.CAL_ID = scope.params.col.CAL_ID;
+								postData.Patient_id = row.Patient_id;
+
+								AppointmentModel.add(postData)
+								.then(function(response){
+									scope.patient = row;
+								}, function(error){})						
+							}
+						}
+
+					})// end result then
 				})	
 			}
 

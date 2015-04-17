@@ -5,11 +5,11 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 
 	var doctor_id = $stateParams.doctorId;
 	var from_time = null;
-	var today = new Date();
+	var today = moment().format('YYYY-MM-DD');
 
 	$scope.objectMap = {};
 	$scope.objectMap.from_time = ConfigService.convertToDate(today);
-	today.setDate(today.getDate() + 30);
+	today = moment().add(30, 'days').format('YYYY-MM-DD');
 	$scope.objectMap.to_time = ConfigService.convertToDate(today);
 
 
@@ -112,7 +112,7 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 		for(var i = 0; cal_list.length < num_date; ++i) {
 			var run_date = new Date(get_date);
 			run_date.setDate(get_date.getDate() + i);
-			var str_date = ConfigService.convertToDate(run_date);
+			var str_date = ConfigService.convertToDateMoment(run_date);
 			cal_list.push({DATE: str_date, list: []});
 		}
 		$scope.data = cal_list;

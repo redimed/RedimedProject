@@ -10,7 +10,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		link: function(scope, elem, attrs){
 			var form = {
 				id:$stateParams.companyId,
-				parent_id :$stateParams.patientid,
+				patient_id :$stateParams.patientid,
 				Company_name:'',
 		        Industry:'',
 		        Addr:'',
@@ -35,7 +35,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		        Medic_contact_no:'',
 		        Email:'',
 		        CODE:'',
-		        Insurer:'',
+		        Insurer:null,
 		        Phone:'',
 		        Site_medic:'',
 		        User_id:'',
@@ -51,17 +51,52 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					scope.company.error = '';
 					scope.company.form = response.data[0];
 					scope.company.form.User_id = $cookieStore.get('userInfo').id;
-					console.log(response.data[0]);
 					scope.company.listInsurer = response.data1;
+					scope.company.checkColor = scope.company.form.Insurer;
                     _.forEach(scope.company.listInsurer, function(id){
                         scope.company.listTemp.push(id.id);
                     })
 					scope.company.Company_name_Parent = response.data2[0].Company_name;
-					console.log(response);
+					
+
 				}, function(error){
 					scope.company.loading = false;
 					scope.company.error = $filter('translate')(error.data.code);
 				})
+			}
+			scope.onRowClick = function(row){
+				var postData = { 
+					Insurer:row.id,
+					id:$stateParams.companyId
+				}
+				 scope.company.InsurerTemp = row.id;
+				 scope.company.checkColor = row.id;
+				CompanyModel.updateInsurer(postData)
+						.then(function(response){
+							toastr.success('Active Insurer Successfully');
+						}, function(error){	
+						})
+				
+			}
+			scope.disableInsurer = function(row){
+				var postData ={
+					company_id:$stateParams.companyId,
+					insurer_id:row.id,
+					isEnable :row.checkisEnable
+				}
+				CompanyModel.disableInsurer(postData)
+						.then(function(response){
+						}, function(error){				
+						})
+				for (var i = 0; i <= scope.company.listTemp.length; i++) {
+						if (scope.company.listTemp[i] == row.id) {
+							if (scope.company.listInsurer[i].checkisEnable == 0) {
+								scope.company.listInsurer[i].checkisEnable = 1;
+							} else{
+								scope.company.listInsurer[i].checkisEnable = 0;
+							};
+						} 
+				}	
 			}
 			var remove = function(row){
 				$modal.open({
@@ -79,7 +114,6 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					.then(function(response){
 						for (var i = 0; i <= scope.company.listTemp.length; i++) {
 							if (scope.company.listTemp[i] == row.id) {
-								console.log(scope.company.listTemp);
 								scope.company.listTemp.splice(i,1);
 								scope.company.listInsurer.splice(i,1);
 							} 
@@ -95,7 +129,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				CompanyModel.edit(postData)
 				.then(function(response){
 					toastr.success('Edit Company Successfully');
-		  					$state.go('loggedIn.company');
+		  			$state.go('loggedIn.company');
 				}, function(error){
 					scope.company.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.company.errors);
@@ -105,7 +139,12 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addParent.html',
 			      controller: 'CompanyAddParentDialgosController',
-			      size :''
+			      size :'',
+			      resolve: {
+			      		companyId: function(){
+			      			return $stateParams.companyId;
+			      		}
+			      }
 			    })
 			    .result.then(function(row){
 			    	scope.company.Company_name_Parent = row.Company_name;
@@ -118,7 +157,12 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addInsurer.html',
 			      controller: 'CompanyInsurerDialgosController',
-			      size :''
+			      size :'',
+			      resolve: {
+			      		insurerArray: function(){
+			      			return scope.company.listTemp;
+			      		}
+			      }
 			    })
 			    .result.then(function(row){
 					var flag = 0
@@ -139,10 +183,10 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				form: form,
 				error: '',
 				loading: false,
-				// form: '',
 				load:function(){load();},
 				save:function(){save();},
 				listInsurer:[],
+				checkColor:'',
 		    	listTemp:[],
 		    	Company_name_Parent:'',
 		    	save :function(){save();},

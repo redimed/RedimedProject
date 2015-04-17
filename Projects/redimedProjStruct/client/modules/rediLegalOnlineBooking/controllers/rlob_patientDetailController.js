@@ -16,10 +16,10 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             return;
         };
         var bookingInfoReuse=bookingService.getBookingInfoResuse();
-        $scope.isReschedule=0;
+        $scope.isCopyBooking=0;
         if(bookingInfoReuse)
         {
-            $scope.isReschedule=1;
+            $scope.isCopyBooking=1;
             $scope.newBooking={
                 CLAIM_NO:bookingInfoReuse.CLAIM_NO,
                 WRK_SURNAME:bookingInfoReuse.WRK_SURNAME,
@@ -70,7 +70,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.ASS_EMAIL=$scope.loginInfo.Contact_email;
         } 
         //Lay thong tin company info
-        //Neu booking la reschedule thi lay thong tin company id cua booking cu
+        //Neu booking la copyBooking thi lay thong tin company id cua booking cu
         //Neu booking la booking moi thi lay thong tin tu userlogin
         //tannv.dts@gmail.com
         $scope.companyId=null;
@@ -402,7 +402,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 $http({
                 method:"POST",
                 url:"/api/rlob/rl_bookings/admin/send-comfirm-email",
-                data:{bookingId:$scope.newBooking.BOOKING_ID,siteAddress:siteAddress,mapUrl:mapUrl,isReschedule:$scope.isReschedule}
+                data:{bookingId:$scope.newBooking.BOOKING_ID,siteAddress:siteAddress,mapUrl:mapUrl,isCopyBooking:$scope.isCopyBooking}
                 })
                 .success(function(data) {
                     if(data.status=='success')
@@ -464,7 +464,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             }
 
             $scope.mailBodyData={
-                requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
+                requestBy:$scope.loginInfo.FIRST_NAME?$scope.loginInfo.FIRST_NAME:'',
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
                 time:$scope.from_time.format("HH:mm"),
                 date:$scope.from_time.format("DD/MM/YYYY"),

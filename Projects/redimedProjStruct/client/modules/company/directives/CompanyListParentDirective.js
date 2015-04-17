@@ -7,10 +7,11 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 		scope: {
 			options: '=',
 			limit: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			companyId: '='
 		},
 		link: function(scope, elem, attrs){
-			scope.setPage = function(page){
+			 var setPage = function(page){
 				scope.company.search.offset = (page-1)*scope.company.search.limit;
 				scope.company.load();
 			}
@@ -20,6 +21,7 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 				limit: 7,
 				max_size: 5,
 				Company_name: '',
+				Company_id :scope.companyId,
 				Industry:'',
 				Addr:'',
 				country:''
@@ -50,15 +52,10 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 					case 'Addr':
 						scope.company.search.Addr = option.value;
 						break;
-					case 'country':
-						scope.company.search.country = option.value;
-						break;
 				}//end switch
 				scope.company.load();
-				loadPage(1);
+				setPage(1);
 			}
-		
-			
 			scope.company = {
 				search: search,
 				error: '',
@@ -66,7 +63,7 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 				loading: false,
 				list: [],
 				load: function(){ load(); },
-				loadPage: function(page){ loadPage(page); },
+				setPage: function(page){ setPage(page); },
 				onSearch: function(option){ onSearch(option)}
 			}
 

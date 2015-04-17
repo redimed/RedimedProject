@@ -1,0 +1,23 @@
+<div style="height: 35px !important; " class="modal-header">
+	<div class="pull-left" class="col-md-6 col-sm-6">
+		Onine Users (Click To Call) 
+	</div>
+	<div class="pull-right" class="col-md-6 col-sm-6">
+		<a href="javascript:;" ng-click="cancelClick()" class="btn btn-icon-only btn-circle blue-steel">
+          <i class="fa fa-times"></i>
+        </a>
+	</div>
+</div>
+<div style="padding: 10px;" class="modal-body">
+	<div style="cursor: pointer;" ng-repeat="u in onlineUsers">
+		<a href="javascript:;" ng-click="callUser(u)" class="list-group-item list-group-item-info">
+		{{u.fullName}} ( {{u.username}} ) 
+		<span class="badge badge-info">Online</span>
+		</a>
+	</div>
+</div>
+
+	
+
+
+

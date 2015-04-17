@@ -4,7 +4,6 @@
 
     .lob_admin_date_node{
         background-color: rgba(67, 140, 202, 0.16);
-        /*background-color:red!important;*/
     }
 
     .lob_admin_date_node:hover{
@@ -12,24 +11,19 @@
     }
 
     .lob_admin_doctor_node{
-        /*background-color: #5bc0de;*/
         background-color: rgba(70, 182, 176, 0.18);
     }
 
     .lob_admin_doctor_node:hover{
-        /*background-color: #5bc0de;*/
         background-color: rgba(210, 230, 229, 0.31);
     }
 
-
     .lob_admin_booking_node{
         background-color: rgba(223, 186, 74, 0.12);
-        /*background-color:blue!important;*/
     }
 
     .lob_admin_booking_node:hover{
         background-color: rgba(238, 234, 221, 0.40);
-        /*background-color:blue!important;*/
     }
 
     .lob_admin_booking_node .lob_booking_status{
@@ -37,7 +31,6 @@
     }
 
     .lob_admin_booking_file_node{
-        /*background-color:gray!important;*/
     }
 
     .lob_status{
@@ -106,13 +99,6 @@
         overflow: overlay;
     }
 
-    .admin-notification-box{
-        font-size: 10pt;
-        font-weight: bold;
-        border-right: 2px solid rgba(117, 117, 117, 0.21);
-        padding-left: 5px;
-        padding-right: 5px;
-    }
     /*chien document status
     phanquocchien.c1109g@gmail.com
     */
@@ -143,27 +129,7 @@
         background-color: rgba(150, 164, 166, 0.862745);
         display: table;
     }
-    /*chien style class
-    phanquocchien.c1109g@gmail.com
-    */
-    .rlob_document_status_not_confirmed{
-        background-color: rgba(255, 255, 141, 0.55);
-    }
-    .rlob_document_status_checked{
-        background-color: rgba(128, 216, 255, 0.65);
-    }
-    .rlob_document_status_no_document{
-        background-color: rgba(255, 138, 128, 0.44);
-    }
-    .rlob_document_status_not_confirmed:hover{
-        background-color: rgba(255, 255, 141, 0.45);
-    }
-    .rlob_document_status_checked:hover{
-         background-color: rgba(128, 216, 255, 0.55);
-     }
-    .rlob_document_status_no_document:hover{
-        background-color: rgba(255, 138, 128, 0.35);
-    }
+    
     /*chien message*/
     .message:hover{
         color: #01b070;
@@ -190,45 +156,11 @@
 
 
 <div class="actions">
-
-    <div class="row">
-
-        <div class="col-md-12 ">
-            <span style="color:#428bca;font-weight:bold">
-                <i class="fa fa-exclamation-triangle" style="color: #f3575e"></i>
-                Notification:
-            </span>
-            <!--label label-warning-->
-
-             <span class=" admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type2.alias);">
-                    {{listUpcommingBookingWaitingPaperwork.length}} {{localNotificationType.type2.header}} 
-                </a>
-            </span>
-            
-            <span class="  admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type3.alias);">
-                    {{listBookingOutstandingNotification.length}} {{localNotificationType.type3.header}}
-                </a>
-            </span>
-           
-            <span class="   admin-notification-box">
-                <a ng-click="showListBookingNotification(localNotificationType.type1.alias);">
-                    {{listPassBookingNotChangeStatus.length}} {{localNotificationType.type1.header}}
-                </a>
-            </span>
-            <span class="pull-right">
-                <a style="color: #4db3a2 !important;font-size: 17px;" ng-click="openOutlook()">
-                    Newsletter
-                </a>
-            </span>
-        </div>
-
-    </div>
-    <hr>
-
-
-
+    <!-- 
+    LOCAL ADMIN NOTIFICATION
+    TANNV.DTS@GMAIL.COM
+     -->
+    <rlob-admin-local-notification action-center="actionCenter" group-name="adminLocalNotification"></rlob-admin-local-notification>
 
     <div class="row" style="margin-top:20px;margin-bottom: 10px">
         <div class="col-md-2">
@@ -333,16 +265,21 @@
 
                     <li>
                         <a class="pointer" role="menuitem" tabindex="2"
-                           ng-click="showDialogSendBookingMessage(selectedBooking.ASS_ID,selectedBooking.BOOKING_ID)">
+                           ng-click="actionCenter.sendClientMessage();">
                             <!--Item 0- {{node.BOOKING_ID}}-->
                             Send Message
                         </a>
                     </li>
 
                     <li ng-show="node.STATUS == bookingStatus.confirmed">
-                        <a class="pointer" role="menuitem" tabindex="3"
+                        <!-- <a class="pointer" role="menuitem" tabindex="3"
                            ng-click="showDialogChangeAppointmentCalendar(selectedBooking.BOOKING_ID,selectedBooking.CAL_ID,selectedBooking.APPOINTMENT_DATE,selectedBooking.ASS_ID)">
                             Change Appointment Calendar
+                        </a> -->
+
+                        <a class="pointer" role="menuitem" tabindex="3"
+                           ng-click="actionCenter.changeBookingCalendar.showDialog();">
+                            Reschedule
                         </a>
 
                     </li>   
@@ -361,8 +298,8 @@
 
                     <li>
                        
-                        <a class="pointer" role="menuitem" tabindex="2" ng-click="reschedule()">
-                            Reschedule
+                        <a class="pointer" role="menuitem" tabindex="2" ng-click="copyBooking()">
+                            Copy Booking Info
                         </a>
                   
                     </li>
@@ -495,7 +432,7 @@
                             </li>
                             <li>
                                 <a class="pointer" role="menuitem" tabindex="1"
-                                   ng-click="showDialogSendBookingMessage(node.ASS_ID,node.BOOKING_ID)">
+                                   ng-click="actionCenter.sendClientMessage();">
                                     <!--Item 0- {{node.BOOKING_ID}}-->
                                     Send Message
                                 </a>
@@ -508,9 +445,14 @@
                             </li>
 
                             <li ng-show="node.STATUS == bookingStatus.confirmed">
-                                <a class="pointer" role="menuitem" tabindex="2"
+                                <!-- <a class="pointer" role="menuitem" tabindex="2"
                                    ng-click="showDialogChangeAppointmentCalendar(node.BOOKING_ID,node.CAL_ID,node.APPOINTMENT_DATETIME,node.ASS_ID)">
                                     Change appointment calendar
+                                </a> -->
+
+                                <a class="pointer" role="menuitem" tabindex="2"
+                                   ng-click="actionCenter.changeBookingCalendar.showDialog()">
+                                    Reschedule
                                 </a>
                             </li>
                             <!--chien set status
@@ -527,8 +469,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="pointer" role="menuitem" tabindex="2" ng-click="reschedule()">
-                                    Reschedule
+                                <a class="pointer" role="menuitem" tabindex="2" ng-click="copyBooking()">
+                                    Copy Booking Info
                                 </a>
                             </li>
                         </ul>
@@ -617,7 +559,8 @@
                                 booking-type="bookingType"
                                 is-admin-get-files="isAdminGetFiles"
                                 files-update-flag="filesUpdateFlag"
-                                number-of-docs="numberOfDocs">
+                                number-of-docs="numberOfDocs"
+                                dialog-style-class="rlob-dialog-set-result-admin-booking-list">
 
                         </rlob-file-download>
                     </div>
@@ -703,133 +646,8 @@
     </div>
 </div>
 
-<div  id="lob-send-booking-message" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row" style="margin-right: 0;margin-left: 0;margin-bottom: -5px;"> 
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <div style="color: #44b6ae" class="caption">
-                        <i class="fa fa-plus-square"></i>
-                        <span class="caption-subject bold uppercase">Enter</span>
-                        <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
-                    </div>
-                    <img class="col-md-5 col-sm-5 col-xs-5 img-confix" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-                <!--<h4 class="modal-title">Enter message</h4>-->
-               <!--  <div class="caption">
-                    <i class="fa fa-plus-square font-red-sunglo"></i>
-                    <span class="caption-subject font-red-sunglo bold uppercase">Enter</span>
-                    <span style="padding: 0;margin: 0;line-height: 13px;color: #9eacb4;font-size: 13px;font-weight: 400;">Message</span>
-                </div> -->
-            </div>
-
-            <div class="modal-body">
-            <textarea style="margin-bottom: 20px;width: 100%;" placeholder="Enter message" class="form-control" rows="2" ng-model="bookingMessage.message"/>
-            <!--<div ng-repeat="item in ListBookingMessages">-->
-                <!--&lt;!&ndash;<input type="radio" name="bookingMessage.message" ng-model="color" name="milestone" ng-value="item.CONTENTS" ng-click="check(color)" ng-model="color" ng-change="check(color)"> &nbsp; {{item.CONTENTS}}&ndash;&gt;-->
-                <!--<label style="margin-left: 15px;margin-top: 3px color:red" ng-click="check(item.CONTENTS)"><i class="fa fa-bars"></i> &nbsp; {{item.CONTENTS}}</label>-->
-            <!--</div>-->
-            <div  style="width: 98%;margin-left: 10px;overflow-y: scroll;min-height: 300px;max-height: 310px;}" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2" data-initialized="1">
-            <ul class="feeds">
-            <li ng-repeat="item in ListBookingMessages" class="message" ng-click="check(item.CONTENTS)">
-                <div class="col1">
-                    <div class="cont">
-                        <div class="cont-col1">
-							<div style="background-color: #44b6ae;" class="label label-sm">
-								<i class="fa fa-envelope-o"></i>
-							</div>
-						</div>
-                        <div class="cont-col2">
-                            <div class="desc" style="min-height: 25px">
-                                {{item.CONTENTS}}.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            </ul>
-            </div>
-            </div>
-            <div class="modal-footer">
-                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                <button type="submit" style="background-color: #44b6ae;color: white;" class="btn" ng-click="sendBookingMessage()">OK</button>
-                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
-
-                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!--MESSAGE DIALOG LAYOUT-->
 <rlob-dialog dialog-class="lob-msg-dialog" status="msgStatus" header="msgHeader" msg="msgContent"></rlob-dialog>
-
-<div  id="lob-change-appointment-calendar-dialog" class="modal fade">
-    <!--<div  id="lob-change-appointment-calendar-dialog">-->
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
-                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Change Appointment Calendar</h4> -->
-            </div>
-
-            <div class="modal-body">
-                <div class="portlet light">
-                    <rlob-choose-appointment-calendar-dialog
-                            selected-appointment-calendar="selectedAppointmentCalendar"
-                            using-for-dialog-flag="usingForDialogFlag"
-                            booking-type="bookingType">
-
-                    </rlob-choose-appointment-calendar-dialog>
-
-
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-
-                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div  id="list-booking-notification-popup" class="modal fade">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">{{listBookingNotificationHeader}}</h4>
-                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
-                </div>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-                <!-- <h4 class="modal-title">{{listBookingNotificationHeader}}</h4> -->
-            </div>
-
-            <div class="modal-body">
-                <rlob-admin-local-notification list-booking-notification="listBookingNotification" booking-type="bookingType"></rlob-admin-local-notification>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class='notifications top-right rlob_admin_local_notification_popup'></div>
         <!--chien teamplate booking status
@@ -915,6 +733,11 @@ phanquocchien.c1109g@gmail.com-->
     </div>
 </div>
  
+<rlob-send-client-message action-center="actionCenter" selected-booking="selectedBooking">
+</rlob-send-client-message>
 
+<rlob-change-booking-calendar action-center="actionCenter" selected-booking="selectedBooking" current-updating-item="currentUpdatingItem" group-name="changeBookingCalendar">
+
+</rlob-change-booking-calendar>
 <!-- <input type='button' value='Button 1' id='button1'>
 <input type='button' value='Button 2' id='button2'> -->

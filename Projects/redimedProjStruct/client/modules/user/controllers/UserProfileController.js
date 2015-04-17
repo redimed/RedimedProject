@@ -26,7 +26,9 @@ angular.module('app.loggedIn.user.profile.controller',[])
 				Contact_number: userInfo.Contact_number,
 				Contact_email: userInfo.Contact_email,
 				result_email: userInfo.result_email,
-				invoiceemail: userInfo.invoiceemail
+			        invoiceemail: userInfo.invoiceemail,
+			        userLegal: userInfo.MEDICO_LEGAL_REGISTER_STATUS,
+				isAccessReportOnline: userInfo.IS_ACCESS_REPORTS_ONLINE
 			}
 		}
 		else

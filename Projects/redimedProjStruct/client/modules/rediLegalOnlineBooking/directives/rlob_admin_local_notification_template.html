@@ -1,65 +1,126 @@
-<div class="rlob-admin-local-notification-list" style="max-height: 300px;overflow: auto;">
+<div class="row">
+    <div class="col-md-12 ">
+        <span style="color:#428bca;font-weight:bold">
+            <i class="fa fa-exclamation-triangle" style="color: #f3575e"></i>
+            Notification:
+        </span>
+        <!--label label-warning-->
 
-    <table class="table table-hover">
-        <tr>
-            <th>Time</th>
-            <th>Surname</th>
-            <th>Company</th>
-            <th>Type</th>
-        </tr>
-
-        <tbody>
-        <tr ng-repeat="booking in listBookingNotification" ng-click="setSelectedBooking(booking.BOOKING_ID)">
-            <td>{{booking.APPOINTMENT_DATE |date:'HH:mm dd-MM-yyyy'}}</td>
-            <td>{{booking.WRK_SURNAME}}</td>
-            <td>{{booking.Company_name}}</td>
-            <td>{{booking.Rl_TYPE_NAME}}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div ng-show="selectedBooking" class="action">
-    <h2 style="margin:10px;">Selected Booking Info:</h2>
-
-    <div class="row">
-        <div class="col-md-6 col-sm-6">
-            <rlob-change-document-status selected-document="selectedBooking" ></rlob-change-document-status>
-            <accordion >
-                <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
-                    <accordion-heading>
-                        <h3 class="panel-title">Documents</h3>
-                    </accordion-heading>
-                    <div style="overflow: overlay;">
-                        <!--files-update-flag
-                        tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
-                        -->
-                        <rlob-file-download selected-booking="selectedBooking"
-                                            booking-type="bookingType"
-                                            is-admin-get-files="isAdminGetFiles"
-                                            files-update-flag="filesUpdateFlag"
-                                            number-of-docs="numberOfDocs"
-                                >
-                        </rlob-file-download>
-
-                        <rlob-upload
-                                selected-booking="selectedBooking"
-                                files-update-flag="filesUpdateFlag"
-                                is-admin-upload="isAdminUpload">
-                        </rlob-upload>
-
-                    </div>
-                </accordion-group>
-            </accordion>
-        </div>
-        <div class="col-md-6 col-sm-6">
-            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
-            <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
-        </div>
+         <span class=" admin-notification-box">
+            <a ng-click="showListBookingNotification(localNotificationType.type2.alias);">
+                {{listUpcommingBookingWaitingPaperwork.length}} {{localNotificationType.type2.header}} 
+            </a>
+        </span>
+        
+        <span class="  admin-notification-box">
+            <a ng-click="showListBookingNotification(localNotificationType.type3.alias);">
+                {{listBookingOutstandingNotification.length}} {{localNotificationType.type3.header}}
+            </a>
+        </span>
+       
+        <span class="   admin-notification-box">
+            <a ng-click="showListBookingNotification(localNotificationType.type1.alias);">
+                {{listPassBookingNotChangeStatus.length}} {{localNotificationType.type1.header}}
+            </a>
+        </span>
+        <span class="pull-right">
+            <a style="color: #4db3a2 !important;font-size: 17px;" ng-click="newsletter()">
+                Newsletter
+            </a>
+        </span>
     </div>
 
+</div>
+<hr>
 
 
+<div  id="list_booking_admin_local_notification" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">{{listBookingNotificationHeader}}</h4>
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <!-- <h4 class="modal-title">{{listBookingNotificationHeader}}</h4> -->
+            </div>
+            
+            <div class="modal-body">
+                <div class="rlob-admin-local-notification-list" style="max-height: 300px;overflow: auto;">
 
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>First name</th>
+                            <th>Surname</th>
+                            <th>Company</th>
+                            <th>Type</th>
+                            <th>Booking status</th>
+                            <th>Document status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="booking in listBookingNotification" ng-click="setSelectedBooking(booking.BOOKING_ID)">
+                            <td>{{booking.APPOINTMENT_DATE |date:'HH:mm dd-MM-yyyy'}}</td>
+                            <td>{{booking.WRK_OTHERNAMES}}</td>
+                            <td>{{booking.WRK_SURNAME}}</td>
+                            <td>{{booking.Company_name}}</td>
+                            <td>{{booking.Rl_TYPE_NAME}}</td>
+                            <td>{{booking.STATUS}}</td>
+                            <td>{{documentStatusDisplay[booking.DOCUMENT_STATUS]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-show="selectedBooking" class="action">
+                    <h2 style="margin:10px;">Selected Booking Info:</h2>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <rlob-change-document-status selected-document="selectedBooking" ></rlob-change-document-status>
+                            <accordion >
+                                <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
+                                    <accordion-heading>
+                                        <h3 class="panel-title">Documents</h3>
+                                    </accordion-heading>
+                                    <div style="overflow: overlay;">
+                                        <!--files-update-flag
+                                        tham chieu toi cung mot bien se giup dong bo hoa giua upload va download
+                                        -->
+                                        <rlob-file-download selected-booking="selectedBooking"
+                                                            booking-type="bookingType"
+                                                            is-admin-get-files="isAdminGetFiles"
+                                                            files-update-flag="filesUpdateFlag"
+                                                            number-of-docs="numberOfDocs"
+                                                            dialog-style-class="rlob-dialog-set-result-admin-notification"
+                                                >
+                                        </rlob-file-download>
+
+                                        <rlob-upload
+                                                selected-booking="selectedBooking"
+                                                files-update-flag="filesUpdateFlag"
+                                                is-admin-upload="isAdminUpload">
+                                        </rlob-upload>
+
+                                    </div>
+                                </accordion-group>
+                            </accordion>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <rlob-change-booking-status selected-booking="selectedBooking"></rlob-change-booking-status>
+                            <rlob-booking-detail-compact selected-booking="selectedBooking" booking-type="bookingType"></rlob-booking-detail-compact>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 

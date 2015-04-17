@@ -394,7 +394,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 selectedBooking:  '=',
                 isAdminGetFiles:'=',
                 filesUpdateFlag:'=',
-                numberOfDocs:'='
+                numberOfDocs:'=',
+                dialogStyleClass:'@'
                 //la so, de danh dau co file moi upload hay khong
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
@@ -518,7 +519,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.showDialogSetResult=function()
                 {
                     $scope.filesClone=angular.copy($scope.files);
-                    $("#rlob-dialog-set-result").modal({show:true,backdrop:'static'});
+                    $("."+$scope.dialogStyleClass).modal({show:true,backdrop:'static'});
                 }
 
                 /**
@@ -556,7 +557,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                             rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Set list result files fail.");
                         })
                         .then(function(){
-                            $("#rlob-dialog-set-result").modal('hide');
+                            $("."+$scope.dialogStyleClass).modal('hide');
                         })
                     }
                     else
@@ -582,7 +583,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                         rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Unselect all result files fail.");
                     })
                     .then(function(){
-                        $("#rlob-dialog-set-result").modal('hide');
+                        $("."+$scope.dialogStyleClass).modal('hide');
                     })
                 }
 
@@ -610,7 +611,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 selectedAppointmentCalendar:'='
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_choose_appointment_calendar_template.html',
-            controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout) {
+            controller: function ($scope,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,bookingService) {
+                //Lay thong tin user login
                 $scope.loginInfo = $cookieStore.get('userInfo');
 
                 //Config Send mail template
@@ -998,6 +1000,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                                     CAL_ID:data[i].CAL_ID,
                                     APPOINTMENT_TIME:data[i].appointment_time,
                                     FROM_TIME:data[i].FROM_TIME,
+                                    TO_TIME:data[i].TO_TIME,
                                     DOCTOR_ID:data[i].DOCTOR_ID,
                                     SITE_ID:data[i].SITE_ID
                                 });
@@ -1423,12 +1426,187 @@ angular.module("app.loggedIn.rlob.directive", [])
             transclude:true,
             required:['^ngModel'],
             scope: {
-                listBookingNotification:  '=',
-                bookingType:'='
+                actionCenter:'=',//[groupname]runWhenChanged();
+                groupName:'@'
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_admin_local_notification_template.html',
-            controller: function ($scope)
+            controller: function ($scope,rlobService,$cookieStore,$window,Mailto)
             {
+                $scope.listBookingNotification=[];
+                $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
+                $scope.localNotificationType={
+                    type1:{
+                        header:'Need To Change Status',
+                        alias:'passBookingNotChangeStatus'
+                    },
+                    type2:{
+                        header:'Waiting On Paperwork',
+                        alias:'upcommingBookingHaveNotDucment'
+                    },
+                    type3:{
+                        header:'Outstanding',
+                        alias:'passBookingHaveNotResult'
+                    }
+
+                }
+
+                $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
+
+                /***
+                 * Danh sach cac booking da qua chua doi status
+                 * tannv.dts@gmail.com
+                 */
+                $scope.listPassBookingNotChangeStatus=[];
+                $scope.getPassBookingNotChangeStatus=function(doctorId)
+                {
+                    rlobService.getPassBookingNotChangeStatus($scope.bookingType,doctorId)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                $scope.listPassBookingNotChangeStatus=data.data;
+                            }
+                        },
+                        function(error)
+                        {
+
+                        });
+                }
+
+                /***
+                 * Danh sach cac booking sap toi va client chua upload document
+                 * tannv.dts@gmail.com
+                 */
+                $scope.listUpcommingBookingWaitingPaperwork=[];
+                $scope.getListUpcommingBookingWaitingPaperwork=function(doctorId)
+                {
+                    rlobService.getListUpcommingBookingWaitingPaperwork($scope.bookingType,doctorId)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                $scope.listUpcommingBookingWaitingPaperwork=data.data;
+                            }
+                        },
+                        function(error)
+                        {
+
+                        });
+                }
+
+                /***
+                 * Danh sach cac booking da complete nhung chua co result
+                 * tannv.dts@gmail.com
+                 */
+                $scope.listBookingOutstandingNotification=[];
+                $scope.getListBookingOutstandingNotification=function(doctorId)
+                {
+                    rlobService.getListBookingOutstandingNotification($scope.bookingType,doctorId)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                $scope.listBookingOutstandingNotification=data.data;
+                            }
+                        },
+                        function(error)
+                        {
+
+                        });
+                }
+
+                /**
+                 * Xu ly show list booking notificaion (local of admin)
+                 * tannv.dts@gmail.com
+                 */
+                $scope.showListBookingNotification=function(notificationType)
+                {
+                    switch(notificationType)
+                    {
+                        case $scope.localNotificationType.type1.alias:
+                            $scope.listBookingNotification=$scope.listPassBookingNotChangeStatus;
+                            $scope.listBookingNotificationHeader=$scope.localNotificationType.type1.header;
+                            break;
+                        case $scope.localNotificationType.type2.alias:
+                            $scope.listBookingNotification=$scope.listUpcommingBookingWaitingPaperwork;
+                            $scope.listBookingNotificationHeader=$scope.localNotificationType.type2.header;
+                            break;
+                        case $scope.localNotificationType.type3.alias:
+                            $scope.listBookingNotification=$scope.listBookingOutstandingNotification;
+                            $scope.listBookingNotificationHeader=$scope.localNotificationType.type3.header;
+                            break;
+                    }
+                    $("#list_booking_admin_local_notification").modal({show:true,backdrop:'static'});
+
+        //            $scope.filterBooking
+
+                }
+
+                /**
+                 * Khi tat danh sach xem cac booking local notification thi chay lai tree booking
+                 * muc dich de dong nhat data
+                 * tannv.dts@gmail.com
+                 */
+                $('#list_booking_admin_local_notification').on('hidden.bs.modal', function (e) {
+                    //$scope.filterBooking();
+                    $scope.actionCenter[$scope.groupName].runWhenChanged();
+                });
+
+                /***
+                 * Cap nhat cac local admin notification
+                 * tannv.dts@gmail.com
+                 */
+                $scope.updateAdminLocalNotification=function()
+                {
+                    var doctorId=$scope.doctorInfo?$scope.doctorInfo.doctor_id:null;
+                    $scope.getPassBookingNotChangeStatus(doctorId);
+                    $scope.getListUpcommingBookingWaitingPaperwork(doctorId);
+                    $scope.getListBookingOutstandingNotification(doctorId);
+                }
+
+                //Khoi tao gia tri ban dau
+                //tannv.dts@gmail.com
+                $scope.userInfo=$cookieStore.get('userInfo');
+                $scope.doctorInfo=null;
+                $scope.getDoctorInfoByUserId=function()
+                {
+                    var deferred=$q.defer();
+                    rlobService.getDoctorInfoByUserId($scope.userInfo.id)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            $scope.doctorInfo=data.data;
+                        }
+                    },function(err){
+                        console.log("Khong the lay thong tin doctor");
+                    })
+                    .then(function(){
+                        deferred.resolve();
+                    });
+                    return deferred.promise;
+                }
+
+                if($scope.userInfo.user_type==rlobConstant.userType.doctor)
+                {
+                    $scope.getDoctorInfoByUserId()
+                        .then($scope.updateAdminLocalNotification)
+                }
+                else
+                {
+                    $scope.updateAdminLocalNotification();
+                }
+
+                //$scope.updateAdminLocalNotification();
+                /**
+                 * Thêm function cap nhat admin local notification vao schedule
+                 * tannv.dts@gmail.com
+                 */
+                $scope.actionCenter.scheduleList.rlobUpdateAdminLocalNotification=$scope.updateAdminLocalNotification;
+
+                //Ket thuc admin local notification
+                //---------------------------------------------------------------------------------------
+                //---------------------------------------------------------------------------------------
+                //---------------------------------------------------------------------------------------
+                //---------------------------------------------------------------------------------------
+                //---------------------------------------------------------------------------------------
+                
                 $scope.setSlimCroll=function(selector)
                 {
                     $(selector).slimscroll({});
@@ -1457,6 +1635,31 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.isAdminUpload=true;
                 $scope.accordionStatus={
                     status1:true
+                }
+
+                //Mo newleter
+                //phanquocchien
+                $scope.newsletter = function(){
+                    $scope.emailContent=
+                        "{Title} Redimed Medico-Legal Newsletter\n\n"+
+                        "{Title} News\n"+
+                        "Section for us to easily update\n"+
+                        "{Title} Appointment Availability\n"+
+                        "Section for us to easily update\n"+
+                        "Contact Medico-Legal Department at Redimed on (08) 9230 0900 or log to the online booking system link\n";
+                    rlobService.listMailUserOnlineBooking().then(function(data){
+                        if (data.status == 'success') {
+                            var recepient = data.data;
+                            var options = {
+                                subject: ("Medico-Legal Newsletter"),
+                                body: $scope.emailContent,
+                                bcc:recepient
+                            };
+                            console.log(recepient);
+                            $scope.mailtoLink = Mailto.url('', options);
+                            $window.location.href = $scope.mailtoLink;
+                        };
+                    })
                 }
             }
         };
@@ -1635,22 +1838,222 @@ angular.module("app.loggedIn.rlob.directive", [])
             transclude:true,
             required:['^ngModel'],
             scope: {
-                actionCenter:'='
+                actionCenter:'=',
+                selectedBooking:'='
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_send_client_message.html',
-            controller: function ($scope)
+            controller: function ($scope,rlobService)
             {
-                rlobService.getListBookingMessages().then(function(data){
-                    $scope.ListBookingMessages = data;
-                });
-                $scope.actionCenter.run=function()
+                $scope.showDialogSendBookingMessage=function()
                 {
-                    
+                    $scope.bookingMessage={};
+                    $scope.bookingMessage.assId=$scope.selectedBooking.ASS_ID;
+                    $scope.bookingMessage.bookingId=$scope.selectedBooking.BOOKING_ID;
+                    $('#rlob-send-client-message').modal({show:true,backdrop:'static'});
+                }
+
+
+                $scope.sendBookingMessage=function()
+                {
+                    rlobService.add_notification($scope.bookingMessage.assId,$scope.bookingMessage.bookingId,rlobConstant.bookingType.REDiLEGAL.name,rlobConstant.bellType.message,rlobConstant.notificationType.bell,$scope.bookingMessage.message);
+                    $("#rlob-send-client-message").modal('hide');
+                }
+
+                rlobService.getListBookingMessages().then(function(data){
+                    if (data.status == 'success') {
+                        $scope.ListBookingMessages = data.data;
+                    };
+                });
+                $scope.check = function(data){
+                    $scope.bookingMessage.message = data;
+                };
+
+                $scope.actionCenter.sendClientMessage=function(){
+                    // alert("vao roi ne");
+                    $scope.showDialogSendBookingMessage();
                 }
 
             }
         };
     })
+
+    /**
+     * Chuyen booking calendar
+     * tannv.dts@gmail.com
+     * @param  {String} rlobService) {                                                                                                       return {              restrict: 'E',                                           transclude:true,            required:['^ngModel'],            scope: {                actionCenter:' [description]
+     * @param  {[type]} templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html' [description]
+     * @param  {[type]} controller:  function                                                                      ($scope,rlobService)                    {                             $scope.bookingType [description]
+     * @return {[type]}              [description]
+     */
+    .directive('rlobChangeBookingCalendar', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                actionCenter:'=',//changeBookingCalendar.runWhenSuccess();changeBookingCalendar.showDialog();
+                groupName:'@',//Ten cua group action
+                selectedBooking:'=',
+                currentUpdatingItem:"=",
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html',
+            controller: function ($scope,rlobService)
+            {
+                //set booking type la redilegal
+                $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
+
+                //Khoi tao cac gia tri cua currentUpdatingItem
+                $scope.currentUpdatingItem.bookingId=null;
+                $scope.currentUpdatingItem.calId=null;
+                $scope.currentUpdatingItem.appointmentDateTime=null;
+                $scope.currentUpdatingItem.newAppoimentDateTime=null;
+                $scope.currentUpdatingItem.bookingIdChangeSuccess=null;
+                $scope.currentUpdatingItem.assId=null;
+                $scope.currentUpdatingItem.newCalId=null;
+                //-------------------------------------------------------
+
+                //Dung de cap nhat lai bang chon appointment calendar
+                $('#rlob_change_booking_calendar_dialog').on('shown.bs.modal', function (e) {
+                    if(!$scope.usingForDialogFlag)
+                        $scope.usingForDialogFlag=0;
+                    $scope.usingForDialogFlag=$scope.usingForDialogFlag+1;
+                });
+
+                //Show dialog choose appointment calendar
+                $scope.actionCenter[$scope.groupName].showDialog=function()
+                {
+                    $("#rlob_change_booking_calendar_dialog").modal({
+                        show:true,
+                        backdrop:'static'
+                    });
+                    $scope.currentUpdatingItem.bookingId=$scope.selectedBooking.BOOKING_ID;
+                    $scope.currentUpdatingItem.calId=$scope.selectedBooking.CAL_ID;
+                    $scope.currentUpdatingItem.appointmentDateTime=$scope.selectedBooking.APPOINTMENT_DATE;
+                    $scope.currentUpdatingItem.assId=$scope.selectedBooking.ASS_ID;
+                }
+
+                //Kiem tra khi chon appointment calendar
+                $scope.$watch('selectedAppointmentCalendar',function(oldValue,newValue){
+                    if($scope.selectedAppointmentCalendar)
+                    {
+                        var handlePeriodInfo={
+                            doctorId:$scope.selectedAppointmentCalendar.DOCTOR_ID,
+                            siteId:$scope.selectedAppointmentCalendar.SITE_ID,
+                            selectedAppFromTime:$scope.selectedAppointmentCalendar.FROM_TIME,
+                            rlTypeId:$scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                            oldCalId:$scope.currentUpdatingItem.calId
+                        };
+
+                        rlobService.core.checkPeriodTimeToBooking(handlePeriodInfo)
+                        .then(function(data){
+                            if(data.status=='success'){
+                                $scope.changeAppointmentCalendar(
+                                $scope.selectedAppointmentCalendar.CAL_ID,
+                                $scope.selectedAppointmentCalendar.FROM_TIME,
+                                $scope.selectedAppointmentCalendar.DOCTOR_ID,
+                                $scope.selectedAppointmentCalendar.SITE_ID,
+                                $scope.selectedAppointmentCalendar.RL_TYPE_ID,
+                                $scope.selectedAppointmentCalendar.Specialties_id);
+                            }
+                            else
+                            {
+                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Not enough time.");
+                            }
+                        },function(err){
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Check fail.");
+                        });
+                    }
+
+                });
+                
+                //Xu ly thay doi lich
+                $scope.changeAppointmentCalendar=function(newCalId,newAppointmentDateTime,doctorId,siteId,rlTypeId,specialityId)
+                {
+                    var actionInfo=
+                    {
+                        oldCalId:$scope.selectedBooking.CAL_ID,
+                        newCalId:newCalId,
+                        patientId:$scope.selectedBooking.PATIENT_ID,
+                        doctorId:doctorId,
+                        siteId:siteId,
+                        appointmentDate:newAppointmentDateTime,
+                        rlTypeId:rlTypeId,
+                        specialtyId:specialityId,
+                        bookingId:$scope.currentUpdatingItem.bookingId
+                    }
+                    rlobService.core.changeBookingCalendar(actionInfo)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            $("#rlob_change_booking_calendar_dialog").modal('hide');
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Change appointment calendar success.");
+                            $scope.currentUpdatingItem.newAppoimentDateTime=newAppointmentDateTime;
+                            $scope.currentUpdatingItem.bookingIdChangeSuccess=$scope.currentUpdatingItem.bookingId;
+                            $scope.currentUpdatingItem.newCalId=newCalId;
+                            //---------------------------------------------------
+                            var mapUrl=null;
+                            var siteAddress=$scope.selectedBooking.Site_addr;
+                            var bookingId=$scope.selectedBooking.BOOKING_ID;
+                            GMaps.geocode({
+                                address: siteAddress,
+                                callback: function (results, status) {
+                                    if (status == 'OK') 
+                                    {
+                                        latlng1 = results[0].geometry.location;
+                                        mapUrl = GMaps.staticMapURL({
+                                          lat: latlng1.lat(),
+                                          lng: latlng1.lng(),
+                                          markers: [
+                                            {lat: latlng1.lat(), lng: latlng1.lng()}
+                                          ]
+                                        });
+                                        handle();
+                                    }
+                                    else
+                                    {
+                                        handle();
+                                    }
+                                }
+                            });
+
+                            var handle=function()
+                            {
+                                //alert(mapUrl)
+                                rlobService.core.rescheduleConfirmEmail(bookingId,siteAddress,mapUrl);
+                            }
+                            //------------------------------------------------------
+                            $scope.actionCenter[$scope.groupName].runWhenSuccess();
+                        }
+                        else
+                        {
+                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change fail.");
+                        }
+                    },function(err){
+                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change fail.");
+                    });
+                }
+            }
+        };
+    })
+
+    /*.directive('rlobAdminLocalNotification', function(rlobService) {
+        return {
+            restrict: 'E',
+            transclude:true,
+            required:['^ngModel'],
+            scope: {
+                actionCenter:'=',//changeBookingCalendar.runWhenSuccess();changeBookingCalendar.showDialog();
+                groupName:'@',//Ten cua group action
+                selectedBooking:'=',
+                currentUpdatingItem:"=",
+            },
+            templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_change_booking_calendar.html',
+            controller: function ($scope,rlobService)
+            {
+                
+            }
+        };
+    })*/
 
     .directive('rlobInlineMessage', function(rlobService) {
         return {

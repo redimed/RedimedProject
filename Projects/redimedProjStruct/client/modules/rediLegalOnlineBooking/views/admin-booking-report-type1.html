@@ -28,7 +28,7 @@
                 APPOINTMENT DATE
             </th>
             <th>
-                SURNAME
+                FULLNAME
             </th>
             <th>
                 LOCATION
@@ -38,6 +38,12 @@
             </th>
             <th>
                 DOCTOR
+            </th>
+             <th>
+                BOOKING STATUS
+            </th>
+            <th>
+                DOCUMENT STATUS
             </th>
         </tr>
         <tr>
@@ -73,17 +79,32 @@
                     <option  value="">ALL</option>
                 </select>
             </td>
-            
+            <td>
+                <select ng-model="filterInfo.bookingStatus" class="form-control input-sm"
+                    ng-options="key as value for (key,value) in bookingStatus"
+                    ng-change="initPagingReportUpcommingBooking()">
+                    <option value="">--Select All--</option>
+                </select>
+            </td>
+            <td>
+                <select ng-model="filterInfo.documentStatus" class="form-control input-sm"
+                    ng-options="value.value as value.display for (key,value) in documentStatus"
+                    ng-change="initPagingReportUpcommingBooking()">
+                    <option value="">--Select All--</option>
+                </select>
+            </td>
             <!-- END SEARCH -->
         </tr>
         </thead>
         <tbody ng-repeat="upcomming in listUpcommingBookings">
         <tr ng-class='upcomming.style_class' ng-click="setSelectedBooking(upcomming.BOOKING_ID)">
             <td><label>{{upcomming.APPOINTMENT_DATE | date:'dd/MM/yyyy HH:mm'}}</label></td>
-            <td><label>{{upcomming.WRK_SURNAME}}</label></td>
+            <td><label>{{upcomming.FULL_NAME}}</label></td>
             <td><label>{{upcomming.Site_name}}</label></td>
             <td><label>{{upcomming.Rl_TYPE_NAME}}</label></td>
             <td><label>{{upcomming.NAME}}</label></td>
+            <td><label>{{upcomming.STATUS}}</label></td>
+            <td><label>{{documentStatusDisplay[upcomming.DOCUMENT_STATUS]}}</label></td>
         </tr>
         </tbody>
     </table>

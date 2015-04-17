@@ -1,67 +1,86 @@
-<div class="row">
-	<!-- DATEPICKER -->
-	<div class="col-md-4">
-		<div class="form-group">
-			<label>Datepicker</label>
-			<input custom-date ng-model="appointment.search.datepicker" ng-change="appointment.load()" class="form-control">
+<div id="appointment">
+	<div class="row">
+		<!-- DATEPICKER -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<label>Datepicker</label>
+				<input custom-date ng-model="appointment.search.datepicker" ng-change="appointment.load()" class="form-control">
+			</div>
 		</div>
-	</div>
-	<!-- END DATEPICKER -->
+		<!-- END DATEPICKER -->
 
-	<!-- REDIMEDSITE -->
-	<div class="col-md-4">
-		<div class="form-group">
-			<label>Redimed Site</label>
-			<select ng-options="s.id as s.Site_name for s in site.list" ng-model="appointment.search.site_id"
-				ng-change="appointment.load()" class="form-control">
-			</select>
+		<!-- REDIMEDSITE -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<label>Redimed Site</label>
+				<select ng-options="s.id as s.Site_name for s in site.list" ng-model="appointment.search.site_id"
+					ng-change="appointment.load()" class="form-control">
+				</select>
+			</div>
 		</div>
-	</div>
-	<!-- END REDIMEDSITE -->
+		<!-- END REDIMEDSITE -->
 
-	<!-- CLINICAL DEPT -->
-	<div class="col-md-4">
-		<div class="form-group">
-			<label>Clinical Dept</label>
-			<select ng-options="c.CLINICAL_DEPT_ID as c.CLINICAL_DEPT_NAME for c in clinicalDept.list" 
-				ng-model="appointment.search.clinical_dept_id"
-				class="form-control"
-				ng-change="appointment.load()">
-				<option value="">All</option>
-			</select>
+		<!-- CLINICAL DEPT -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<label>Clinical Dept</label>
+				<select ng-options="c.CLINICAL_DEPT_ID as c.CLINICAL_DEPT_NAME for c in clinicalDept.list" 
+					ng-model="appointment.search.clinical_dept_id"
+					class="form-control"
+					ng-change="appointment.load()">
+					<option value="">All</option>
+				</select>
+			</div>
 		</div>
+		<!-- END CLINICAL DEPT -->
 	</div>
-	<!-- END CLINICAL DEPT -->
+
+	<div class="appointment">
+		<div class="appointment-row" style="margin-bottom: 10px;">
+			<div class="appointment-block-time"></div>
+			<div class="appointment-block-header" ng-repeat="doctor in doctor.headers">
+				{{doctor.NAME}}
+			</div>
+		</div>
+		<div class="appointment-row" ng-repeat="app in appointment.list">
+			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
+			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
+				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)">
+				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
+					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
+				</span>
+				<span ng-if="col.PATIENTS === '###'">
+					{{col.PATIENTS}}
+				</span>
+				<span ng-if="col.PATIENTS === 'ok'">
+					<span ng-repeat="patient in col.patients">
+						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)">
+							{{patient.First_name}} {{patient.Sur_name}}&nbsp;
+							<a ng-click="showDropdown(patient, col)">
+								<i class="fa fa-caret-right"></i>
+							</a>
+						</a>
+						<br>
+					</span>
+				</span>
+			</div>
+		</div>
+	</div> <!-- END APPOINTMENT -->
 </div>
 
-<div class="appointment">
-	<div class="appointment-row" style="margin-bottom: 10px;">
-		<div class="appointment-block-time"></div>
-		<div class="appointment-block-header" ng-repeat="doctor in doctor.headers">
-			{{doctor.NAME}}
-		</div>
-	</div>
-	<div class="appointment-row" ng-repeat="app in appointment.list">
-		<div class="appointment-block-time">{{app.FROM_TIME}}</div>
-		<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
-			id="appointment-{{col.CAL_ID}}">
-			<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
-				<a ng-click="appointment.dialog.add(app, col)">No Patient</a>
-			</span>
-			<span ng-if="col.PATIENTS === '###'">
-				{{col.PATIENTS}}
-			</span>
-			<span ng-if="col.PATIENTS === 'ok'">
-				<span ng-repeat="patient in col.patients">
-					<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)">
-						{{patient.First_name}} {{patient.Sur_name}}
-					</a>
-					<br>
-				</span>
-			</span>
-		</div>
-	</div>
-</div> <!-- END APPOINTMENT -->
+<!-- RIGHT CLICK DROPDOWN MENU -->
+<ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">
+	<li>
+		<a ng-click="appointment.dialog.rightAdd(appointment.selectedAppointment, appointment.selectedCol)">
+			Make new Booking
+		</a>
+	</li>
+	<!--<li><a ng-click="addWaitingList()">Add Waiting List</a></li>
+	<li><a ng-click="openWaitingList()">Select Waiting List</a></li>
+	<li><a ng-click="cancelStatus(rightSelectedBooking.data, rightSelectedBooking.overId, rightSelectedBooking.docId)">
+		Cancel Status</a></li>-->
+</ul>
+<!-- END RIGHT CLICK DROPDOWN MENU -->
 
 <script type="text/ng-template" id="appointmentAdd">
 	<div class="modal-body">	
@@ -98,13 +117,26 @@
     <div class="modal-body">
         <p>
         	Do you want to&nbsp;
-        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button> Referral ?
+        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button>
+        	or <button class="btn btn-primary btn-xs" ng-click="selectReferral()">Select</button> referral ?
         </p>
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
     </div>
  </script>
+
+<script type="text/ng-template" id="notifyAppointment">
+	<div class="modal-body">
+	    <p>
+	    	Do you want to really choose this patient ???
+	    </p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary btn-xs" ng-click="clickYes()">I am sure</button>
+	    <button class="btn btn-warning btn-xs" ng-click="clickNo()">Cancel</button>
+	</div>
+</script>
 
 <script type="text/ng-template" id="claimAdd">
 	<div class="modal-body">	
@@ -123,6 +155,26 @@
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<outreferral-patient-add patient-id="patientId" success="success"></outreferral-patient-add>
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success">
+		</outreferral-patient-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="referralSelect">
+	<div class="modal-body">	
+		<outreferral-patient-list reload="reload" limit="limit" 
+			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)">
+		</outreferral-patient-list>
+	</div>
+</script>
+
+<script type="text/ng-template" id="notifyAlert">
+	<div class="modal-body">
+		<h4>Outside Referral</h4>
+		{{outreferral.name}}
+		<h4>Alert List</h4>
+		<ul>
+			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>
+		</ul>
 	</div>
 </script>

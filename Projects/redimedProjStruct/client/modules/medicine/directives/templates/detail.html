@@ -6,7 +6,14 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<span class="field">
 				<label for="medicine_name">Medicine name</label>
-	           	<input placeholder="Medicine name" name="medicine_name" ng-model="modelObjectMap.medicine_name" class="form-control" id="medicine_name" float-label>
+	           	<input placeholder="Medicine name" name="medicine_name" ng-model="modelObjectMap.medicine_name" class="form-control" id="medicine_name" float-label required>
+	           	<!-- ERROR -->
+	            <span ng-show="mainForm.medicine_name.$invalid && isSubmit">
+	                <span class="mdt-popover above" ng-show="mainForm.medicine_name.$error.required">
+	                    Medicine name is required
+	                </span>
+	            </span>
+	            <!-- ERROR -->
 			</span>
 		</div>
 	</div>
@@ -15,7 +22,17 @@
 		<div class="col-md-6 col-sm-6 col-xs-6">
 			<span class="field">
 				<label for="medicine_price">Medicine price</label>
-	           	<input type="number" placeholder="Medicine price" name="medicine_price" ng-model="modelObjectMap.medicine_price" class="form-control" id="medicine_price" float-label>
+	           	<input type="number" placeholder="Medicine price" name="medicine_price" ng-model="modelObjectMap.medicine_price" class="form-control" id="medicine_price" float-label required smart-float>
+	           	<!-- ERROR -->
+	            <span ng-show="mainForm.medicine_price.$invalid && isSubmit">
+	                <span class="mdt-popover above" ng-show="mainForm.medicine_price.$error.required">
+	                    Medicine price is required
+	                </span>
+	                <span class="mdt-popover above" ng-show="mainForm.medicine_price.$error.float">
+	                    Medicine price must be a valid float number
+	                </span>
+	            </span>
+	            <!-- ERROR -->
 			</span>
 		</div>
 		<div class="col-md-6 col-sm-6 col-xs-6">

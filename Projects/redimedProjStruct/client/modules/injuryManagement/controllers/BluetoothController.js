@@ -9,6 +9,7 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		$scope.chartData = [];
 
 		socket.on('getMeasureData',function(rs){
+			console.log("Online Data: ",rs);
 			if(rs.info){
 				var data = angular.copy(rs.info);
 			    delete data['deviceType'];
@@ -88,7 +89,7 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		$scope.changeHistory = function(dateRange){
 			if($scope.data != null && $scope.currDevice != null)
 			{
-				getHistory($scope.currDevice.toLowerCase() , $scope.data , moment(dateRange.start) , moment(dateRange.end));
+				getHistory($scope.currDevice.toLowerCase() , _.sortBy($scope.data, 'measure_date')  , moment(dateRange.start) , moment(dateRange.end));
 			}
 		}
 
@@ -116,7 +117,7 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 
 						$scope.historyDates = moment().range(moment().subtract(1, 'days'), moment());
 
-						getHistory(deviceType , $scope.data , moment().subtract(1, 'days') , moment());
+						getHistory(deviceType ,_.sortBy($scope.data, 'measure_date')  , moment().subtract(1, 'days') , moment());
 						
 						if($scope.data != null)
 						{

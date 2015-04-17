@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.timetable.dialogs.addDay', [])
 
-.controller('TimetableCalendarAddDayDialog', function($scope, $cookieStore, $stateParams, $modalInstance, services, TimetableModel, ConfigService, toastr){
+.controller('TimetableCalendarAddDayDialog', function($scope, $cookieStore, $stateParams, $modalInstance, services, doctor, TimetableModel, ConfigService, toastr){
 	var user_id = $cookieStore.get('userInfo').id;
 
 	var day_of_week = [
@@ -48,7 +48,8 @@ angular.module('app.loggedIn.timetable.dialogs.addDay', [])
 			to_time: '',
 			from_date: null,
 			to_date: null,
-			description: ''
+			description: '',
+			appt_interval: doctor.Appt_interval
 		},
 		errors: [],
 		save: function(){ save(); }

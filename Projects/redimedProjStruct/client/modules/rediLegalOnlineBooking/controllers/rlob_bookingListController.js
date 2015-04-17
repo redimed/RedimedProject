@@ -9,8 +9,15 @@ angular.module('app.loggedIn.rlob.list.controller',[])
         $scope.loginInfo = $cookieStore.get('userInfo');
         // console.log($scope.loginInfo.company_id);
         $scope.bookingStatus=rlobConstant.bookingStatus;
-        $scope.documentStatus=rlobConstant.documentStatus;
+        $scope.documentStatus=rlobConstant.documentStatusFilter;
         $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
+        /**
+         * Khoi tao action center
+         * tannv.dts@gmail.com
+         */
+        $scope.actionCenter={};
+        $scope.actionCenter.changeBookingCalendar={};
+
         $scope.sizePageList=[
             {value:10,display:'10 Rows'},
             {value:20,display:'20 Rows'},
@@ -300,6 +307,25 @@ angular.module('app.loggedIn.rlob.list.controller',[])
                     rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"You cannot cancel this booking!");
                 }
                 
+            }
+
+            /**
+             * Change Appointment calendar
+             * tannv.dts@gmail.com
+             */
+            $scope.currentUpdatingItem={
+                bookingId:null,
+                calId:null,
+                appointmentDateTime:null,
+                newAppoimentDateTime:null,
+                bookingIdChangeSuccess:null,
+                assId:null,
+                newCalId:null
+            };
+
+            $scope.actionCenter.changeBookingCalendar.runWhenSuccess=function()
+            {
+                $scope.searchHandle();
             }
 
         });

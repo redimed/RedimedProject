@@ -1,6 +1,16 @@
 angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 
-.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, UserService, toastr, $cookieStore){
+.controller('SpecialtyRemoveDialog', function($scope, $modalInstance, list){
+	$scope.cancel = function(){
+		$modalInstance.dismiss('cancel');
+	}
+
+	$scope.ok = function(){
+		$modalInstance.close(list);
+	}
+})
+
+.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, mdtSpecialtyService, UserService, toastr, $cookieStore, $modal, $stateParams){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -89,6 +99,121 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 				scope.mdtDoctorMap.Signature = "";
 			}
 			// END UPDATE SIGNATURE
+
+			var addDialog = function(){
+				$modal.open({
+					templateUrl: 'dialogSelectSpeciality',
+					controller: function($scope, $modalInstance, doctorId){
+						var clickRow = function(row){
+							$modalInstance.close(row);
+						}
+
+						$scope.speciality = {
+							limit: 10,
+							reload: false,
+							doctorId: doctorId,
+							clickRow: function(row){ clickRow(row); }
+						}
+					},
+					size: 'lg',
+					resolve: {
+						doctorId: function(){
+							return $stateParams.doctorId;
+						}
+					}
+				})
+				.result.then(function(row){
+					var postData = {
+						doctor_id: $stateParams.doctorId,
+						Specialties_id: row.Specialties_id,
+						Isenable: 1
+					}
+
+					mdtSpecialtyService.selectServiceDoctor(postData)
+					.then(function(response){
+						toastr.success('Select Successfully');
+						scope.speciality.load();
+					}, function(error){
+
+					})
+				})
+			}
+
+			var load = function(){
+				var postData = {doctor_id: $stateParams.doctorId};
+
+				mdtSpecialtyService.listByServiceDoctor(postData)
+				.then(function(response){
+					scope.speciality.list = response.data;
+				}, function(error){})
+			}
+
+			var onActiveList = function(list){
+				mdtSpecialtyService.active({doctor_id: $stateParams.doctorId, Specialty_id: list.Specialties_id})
+				.then(function(response){
+					toastr.success('Active Successfully');
+					scope.doctor.load();
+					scope.speciality.load();
+				}, function(error){})
+			}
+
+			var removeDialog = function(list){
+				$modal.open({
+					templateUrl: 'dialogSpecialtyRemove',
+					controller: 'SpecialtyRemoveDialog',
+					size: 'sm',
+					resolve: {
+						list: function(){
+							return list;
+						}
+					}
+				})
+				.result.then(function(list){
+					var postData = {doctor_id: $stateParams.doctorId, Specialties_id: list.Specialties_id};
+
+					mdtSpecialtyService.removeServiceDoctor(postData)
+					.then(function(response){
+						toastr.success('Delete Successfully');
+						scope.speciality.load();
+					}, function(error){})
+				})
+			}
+			scope.disable = function(list){
+				var postData = {doctor_id: $stateParams.doctorId, Specialties_id: list.Specialties_id,Isenable:list.Isenable};
+
+					mdtSpecialtyService.removeServiceDoctor(postData)
+					.then(function(response){
+						scope.speciality.load();
+					}, function(error){})
+			}
+			scope.speciality = {
+				list: [],
+				onActiveList: function(list){ onActiveList(list) },
+				load: function(){ load(); },
+				dialog: {
+					add: function() {addDialog();},
+					remove: function(list) {removeDialog(list);}
+				},
+				active: 0
+			}
+
+			//INIT
+			scope.speciality.load();
+
+
+			var doctorLoad = function(){
+				mdtDoctorService.byId($stateParams.doctorId)
+				.then(function(response){
+					scope.speciality.active = response.data.Specialty_id;
+				}, function(error){})
+			}
+
+			scope.doctor = {
+				item: {},
+				load: function(){ doctorLoad(); }
+			}
+
+			scope.doctor.load();
 		}//end link
 	}//end return
 })

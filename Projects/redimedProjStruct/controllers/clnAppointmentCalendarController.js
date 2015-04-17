@@ -5,6 +5,7 @@
 var db = require('../models');
 var common_functions = require("../functions");
 var rlobUtil=require('./rlobUtilsController');
+var kiss=require('./kissUtilsController');
 
 module.exports =
 {
@@ -287,12 +288,13 @@ module.exports =
             "   INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                            "+
             "   INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                  "+
             " WHERE     h.`NOTES` IS NULL                                                                                        "+
-            "   AND h.`PATIENTS` IS NULL                                                                                         "+
+            //"   AND h.`PATIENTS` IS NULL                                                                                         "+
             "   AND h.`SERVICE_ID` = ?                                                                                           "+
             "   AND                                                                                                              "+
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                     "+
             "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)       "+
             "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                              "+
+            "   AND d.Isenable=1 "+
             " ORDER BY APPOINTMENT_DATE ASC                                                                                      ";
             req.getConnection(function(err,connection)
             {
@@ -336,23 +338,20 @@ module.exports =
             "   INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                                  "+ 
             "   INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                        "+ 
             " WHERE     h.`NOTES` IS NULL                                                                                              "+ 
-            "   AND h.`PATIENTS` IS NULL                                                                                               "+ 
+            //"   AND h.`PATIENTS` IS NULL                                                                                               "+ 
             "   AND h.`SERVICE_ID` = ?                                                                                                 "+ 
             "   AND                                                                                                                    "+ 
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                           "+ 
             "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                                              "+
             "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                                    "+
+            "   AND d.Isenable=1 "+
             " ORDER BY `appointment_time` ASC                                                                                          ";
-        req.getConnection(function(err,connection)
-        {
-            var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,periodTimeDefault],function(err,rows)
-                {
-                    if(err)
-                    {
-                        console.log("Error Selecting : %s ",err );
-                    }
-                    res.json(rows);
-                });
+        kiss.executeQuery(req,sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,periodTimeDefault],function(rows){
+            res.json(rows);
+        },function(err){
+            kiss.exlog("getAppointmentCalendar","Loi truy van",err);
+            rows=[];
+            res.json(rows);
         });
     },
     

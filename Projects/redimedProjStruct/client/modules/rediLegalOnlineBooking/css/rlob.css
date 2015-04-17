@@ -162,3 +162,47 @@ tannv.dts@gmail.com*/
         display: block;
         overflow: overlay !important;
 }
+
+.rlob_report_action_button{
+      font-size: 20px;
+      border-right: 2px solid rgb(66, 139, 202);
+      margin: 5px;
+      padding-right: 5px;
+      text-decoration: underline;
+}
+
+.admin-notification-box{
+    font-size: 10pt;
+    font-weight: bold;
+    border-right: 2px solid rgba(117, 117, 117, 0.21);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.rl_specialty_profile_item{
+    border-left: 2px solid rgb(221, 221, 221);
+    padding-left: 5px;
+    margin-bottom: 20px;
+}
+
+/*chien style class
+phanquocchien.c1109g@gmail.com
+*/
+.rlob_document_status_not_confirmed{
+    background-color: rgba(255, 255, 141, 0.55);
+}
+.rlob_document_status_checked{
+    background-color: rgba(128, 216, 255, 0.65);
+}
+.rlob_document_status_no_document{
+    background-color: rgba(255, 138, 128, 0.44);
+}
+.rlob_document_status_not_confirmed:hover{
+    background-color: rgba(255, 255, 141, 0.45);
+}
+.rlob_document_status_checked:hover{
+     background-color: rgba(128, 216, 255, 0.55);
+ }
+.rlob_document_status_no_document:hover{
+    background-color: rgba(255, 138, 128, 0.35);
+}

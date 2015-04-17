@@ -9,29 +9,17 @@ module.exports = {
 	postRemove: function(req, res){
 		var postData = req.body.data;
 
-		var sql = knex('sys_cal_sites_df')
+		var sql = knex('sys_permernant_calendar_df')
 		.where({
-			cal_header_df_id: postData.cal_header_df_id,
-			doctor_id: postData.doctor_id
+			cal_header_df_id: postData.cal_header_df_id
 		})
-		.del()
-		.toString();
-
-		var sql_2 = knex('sys_permernant_calendar_df')
-		.where('cal_header_df_id', postData.cal_header_df_id)
-		.del()
+		.update({isenable: 0})
 		.toString();
 
 
 		db.sequelize.query(sql)
 		.success(function(deleted){
-			db.sequelize.query(sql_2)
-			.success(function(deleted){
-				res.json({data: deleted});
-			})
-			.error(function(error){
-				res.status(500).json({error: error, sql: sql});	
-			})
+			res.json({data: deleted});
 		})
 		.error(function(error){
 			res.status(500).json({error: error, sql: sql});
@@ -43,7 +31,7 @@ module.exports = {
 
 		var sql = knex('sys_cal_sites_df')
 		.where('id', postData.id)
-		.del()
+		.update({isenable: 0})
 		.toString();
 
 		db.sequelize.query(sql)
@@ -88,15 +76,16 @@ module.exports = {
 
 					while(from_time_seconds < to_time_seconds){
 						var from_time_hhmm = commonFunction.toHHMM(from_time_seconds);
-						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.Appt_interval);
-						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);					
+						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.appt_interval);
+						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);
 
-						var object = {CURRENT_DATE: current_date, DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
-									FROM_TIME: from_time_hhmm, TO_TIME: to_time_hhmm, SERVICE_ID: postData.service_id,
+						var object = {DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
+									FROM_TIME: current_date + ' ' + from_time_hhmm, 
+									TO_TIME: current_date + ' ' + to_time_hhmm, SERVICE_ID: postData.service_id,
 									CLINICAL_DEPT_ID: postData.clinical_dept_id};
 						dateArrayFromDayToDate.push(object);
 
-						from_time_seconds = from_time_seconds + postData.Appt_interval*60;
+						from_time_seconds = from_time_seconds + postData.appt_interval*60;
 					}
 				}//end if
 			}
@@ -131,15 +120,16 @@ module.exports = {
 
 					while(from_time_seconds < to_time_seconds){
 						var from_time_hhmm = commonFunction.toHHMM(from_time_seconds);
-						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.Appt_interval);
-						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);					
+						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.appt_interval);
+						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);
 
-						var object = {CURRENT_DATE: current_date, DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
-									FROM_TIME: from_time_hhmm, TO_TIME: to_time_hhmm, SERVICE_ID: postData.service_id,
+						var object = {DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
+									FROM_TIME: current_date + ' ' + from_time_hhmm, 
+									TO_TIME: current_date + ' ' + to_time_hhmm, SERVICE_ID: postData.service_id,
 									CLINICAL_DEPT_ID: postData.clinical_dept_id};
 						dateArrayFromDayToDate.push(object);
 
-						from_time_seconds = from_time_seconds + postData.Appt_interval*60;
+						from_time_seconds = from_time_seconds + postData.appt_interval*60;
 					}
 				}//end if
 
@@ -169,15 +159,16 @@ module.exports = {
 
 					while(from_time_seconds < to_time_seconds){
 						var from_time_hhmm = commonFunction.toHHMM(from_time_seconds);
-						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.Appt_interval);
+						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.appt_interval);
 						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);					
 
-						var object = {CURRENT_DATE: current_date, DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
-									FROM_TIME: from_time_hhmm, TO_TIME: to_time_hhmm, SERVICE_ID: postData.service_id,
+						var object = {DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
+									FROM_TIME: current_date + ' ' + from_time_hhmm, 
+									TO_TIME: current_date + ' ' + to_time_hhmm, SERVICE_ID: postData.service_id,
 									CLINICAL_DEPT_ID: postData.clinical_dept_id};
 						dateArrayFromDayToDate.push(object);
 
-						from_time_seconds = from_time_seconds + postData.Appt_interval*60;
+						from_time_seconds = from_time_seconds + postData.appt_interval*60;
 					}
 				}//end if
 			}
@@ -185,7 +176,7 @@ module.exports = {
 		//END GET FIRST WEEK
 
 		if(dateArrayFromDayToDate.length > 0){
-			var sql = knex('cln_appointment_calendar_backup')
+			var sql = knex('cln_appointment_calendar')
 			.insert(dateArrayFromDayToDate)
 			.toString();
 
@@ -285,7 +276,24 @@ module.exports = {
 		})
 	},
 
-	postAdd: function(req, res){
+	postOne: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('sys_permernant_calendar_df')
+					.column('*')
+					.where('cal_header_df_id', postData.cal_header_df_id)
+					.toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows[0]});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
+
+	postEdit: function(req, res){
 		var postData = req.body.data;
 
 		var errors = [];
@@ -295,7 +303,8 @@ module.exports = {
 			{field: 'from_time', message: 'From Time required'},
 			{field: 'to_time', message: 'To Time required'},
 			{field: 'from_date', message: 'From Date required'},
-			{field: 'to_date', message: 'To Date required'}
+			{field: 'to_date', message: 'To Date required'},
+			{field: 'appt_interval', message: 'Appt Interval required'}
 		]
 
 		var time_error = [
@@ -340,6 +349,93 @@ module.exports = {
 			}
 		}
 		/* END FROM DATE, TO DATE NOT LARGER, SMALLER */
+
+		/* APPT INTERVAL */
+		if(postData.appt_interval % 1 !== 0){
+			errors.push({field: 'appt_interval', message: 'Appt Interval must be integer'});
+		}
+		/* END APPT INTERVAL */
+
+		if(errors.length > 0){
+			res.status(500).json({errors: errors});
+			return;
+		}	
+
+		var sql = knex('sys_permernant_calendar_df')
+				.where('cal_header_df_id', postData.cal_header_df_id)
+				.update(postData).toString();
+
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: created});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
+
+	postAdd: function(req, res){
+		var postData = req.body.data;
+
+		var errors = [];
+		var required = [	
+			{field: 'SERVICE_ID', message: 'Service required'},
+			{field: 'day_of_Week', message: 'Day Of Week required'},
+			{field: 'from_time', message: 'From Time required'},
+			{field: 'to_time', message: 'To Time required'},
+			{field: 'from_date', message: 'From Date required'},
+			{field: 'to_date', message: 'To Date required'},
+			{field: 'appt_interval', message: 'Appt Interval required'}
+		]
+
+		var time_error = [
+			{field: 'from_time', message: 'From Time must be 00:00'},
+			{field: 'to_time', message: 'To Time must be 00:00'}
+		]
+
+
+
+		_.forIn(postData, function(value, field){
+			_.forEach(required, function(field_error){
+				if(field_error.field === field && S(value).isEmpty()){
+					errors.push(field_error);
+					return;
+				}
+			})
+			_.forEach(time_error, function(field_error){
+				if(field_error.field === field && !commonFunction.checkTime(value)){
+					errors.push(field_error);
+					return;
+				}
+			})
+		})
+
+		/* FROM TIME, TO TIME NOT LARGER, SMALLER */
+		if(postData.from_time && postData.to_time){
+			var postFromTime = commonFunction.convertToSeconds(postData.from_time);
+			var postToTime = commonFunction.convertToSeconds(postData.to_time);
+
+			if(postFromTime > postToTime){
+				errors.push({field: 'from_time', message: 'From Time must be smaller than To Time'});
+				errors.push({field: 'to_time', message: 'To Time must be larger than From Time'});
+			}
+		}
+		/* END FROM TIME, TO TIME NOT LARGER, SMALLER */
+
+		/* FROM DATE, TO DATE NOT LARGER, SMALLER */
+		if(postData.from_date && postData.to_date){
+			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
+				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
+			}
+		}
+		/* END FROM DATE, TO DATE NOT LARGER, SMALLER */
+
+		/* APPT INTERVAL */
+		if(postData.appt_interval % 1 !== 0){
+			errors.push({field: 'appt_interval', message: 'Appt Interval must be integer'});
+		}
+		/* END APPT INTERVAL */
 
 		if(errors.length > 0){
 			res.status(500).json({errors: errors});
@@ -401,6 +497,7 @@ module.exports = {
 			'to_time',
 			'from_date',
 			'to_date',
+			'sys_permernant_calendar_df.appt_interval',
 			'sys_permernant_calendar_df.isenable',
 			'sys_permernant_calendar_df.Creation_date',
 			'sys_services.SERVICE_NAME'

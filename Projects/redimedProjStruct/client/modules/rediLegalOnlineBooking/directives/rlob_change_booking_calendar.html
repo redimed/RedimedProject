@@ -1,0 +1,37 @@
+<div  id="rlob_change_booking_calendar_dialog" class="modal fade">
+    <!--<div  id="lob-change-appointment-calendar-dialog">-->
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row" style="margin-right: 0;margin-bottom: -5px;"> 
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title col-md-5 col-sm-4 col-xs-5">Change Appointment Calendar</h4>
+                    <img class="col-md-5 col-sm-5 col-xs-5" src="modules/rediLegalOnlineBooking/images/legal-logo.png">
+                </div>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Change Appointment Calendar</h4> -->
+            </div>
+
+            <div class="modal-body">
+                <div class="portlet light">
+                    <rlob-choose-appointment-calendar-dialog
+                            selected-appointment-calendar="selectedAppointmentCalendar"
+                            using-for-dialog-flag="usingForDialogFlag"
+                            booking-type="bookingType">
+
+                    </rlob-choose-appointment-calendar-dialog>
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-success" ng-click="sendBookingMessage()">OK</button>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+
+                <!--<a class="btn btn-primary" href="{{mailtoLink}}">Send Email</a>-->
+            </div>
+        </div>
+    </div>
+</div>

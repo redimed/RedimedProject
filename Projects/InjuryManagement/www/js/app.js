@@ -26,6 +26,7 @@ angular.module('starter', ['ionic',
     'ion-google-place',
     'ngAutocomplete',
     'starter.bluetooth',
+    'starter.model'
 ])
 
     .factory(("ionPlatform"), function( $q ){
@@ -41,7 +42,7 @@ angular.module('starter', ['ionic',
     })
 
     .factory('signaling', function (socketFactory, HOST_CONFIG) {
-        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true});
+        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true, 'force new connection': false});
 
         var socketFactory = socketFactory({
             ioSocket: socket

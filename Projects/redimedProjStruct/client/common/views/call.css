@@ -10,6 +10,8 @@
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
 }
+
+
 .skype {
   background: #fff;
   -webkit-backface-visibility: hidden;
@@ -354,10 +356,6 @@ h2 {
   font-family:'Lato',sans-serif;
   color:#fff;
 }
-a {
-  color:#fff;
-}
-
 
 .btn-bottom-menu {
   padding:40px 30px 30px 30px;

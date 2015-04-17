@@ -9,6 +9,14 @@
 		<table class="mdt-table table-hover">
 			<thead>
 				<tr>
+					<td>
+						<input class="form-control input-sm" ng-model="company.search.insurer_name" ng-enter="company.onSearch({field: 'insurer_name', value: company.search.insurer_name})">
+					</td>
+					<td>
+						<input class="form-control input-sm" ng-model="company.search.address" ng-enter="company.onSearch({field: 'insurer_name', value: company.search.insurer_name})">
+					</td>
+				</tr>
+				<tr>
 					<th>Insurer Name</th>
 					<th>Address</th>
 				</tr>

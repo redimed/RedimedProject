@@ -163,17 +163,25 @@
                                     </li> -->
                                     
 
-                                    <li>
-                                        <a class="pointer" role="menuitem" tabindex="1" ng-click="reuseBookingInfo()">
-                                            Reschelule
-                                        </a>
-                                    </li>
+                                    
 
                                     <li ng-show="selectedBooking.STATUS!=bookingStatus.cancel">
                                         <a class="pointer" role="menuitem" tabindex="1" ng-click="cancelBooking()">
                                             Cancel booking
+                                        </a>
                                     </li>
 
+                                    <li >
+                                        <a class="pointer" role="menuitem" tabindex="1" ng-click="actionCenter.changeBookingCalendar.showDialog()">
+                                            Reschedule
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a class="pointer" role="menuitem" tabindex="1" ng-click="reuseBookingInfo()">
+                                            Copy Booking Info
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -222,7 +230,8 @@
                                     <div class="row form-group" ng-hide="uploadPanel" id="file-download-panel">
                                         <rlob-file-download
                                                 selected-booking="selectedBooking"
-                                                booking-type="bookingType" number-of-docs="numberOfDocs">
+                                                booking-type="bookingType" number-of-docs="numberOfDocs"
+                                                dialog-style-class="rlob-dialog-set-result-booking-list">
                                         </rlob-file-download>
                                     </div>
                                     <div class="row form-group" ng-show="uploadPanel" id="file-upload-panel">
@@ -317,6 +326,11 @@
 
 <style>
     .file-control{ border-right: 1px solid white; padding: 0 10px;}
-    .file-control:hover{cursor: pointer}
+    .file-control:hover {cursor: pointer;}
 </style>
+
+<rlob-change-booking-calendar action-center="actionCenter" selected-booking="selectedBooking" current-updating-item="currentUpdatingItem" group-name="changeBookingCalendar">
+</rlob-change-booking-calendar>
+
+
 

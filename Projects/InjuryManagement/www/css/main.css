@@ -788,7 +788,7 @@ form i.icon.error {
 .div_controlButton {
     text-align: center;
     height: 100%;
-    width: 70%;
+    width:  60%;
     margin: auto;
     background-color: rgba(255,255,255,0.2);
 }
@@ -847,10 +847,9 @@ form i.icon.error {
     margin-left: 5px;
 }
 .buttonCall-control {
-    width: 19.25%;
+    width: 19.52%;
     height: 100%;
     padding-top: 20px;
-    border-right: 1px solid rgba(0, 0, 0, 0.2) ;
 }
 .active-buttonCall-control {
     border-bottom: 3px solid #019875;
@@ -1187,7 +1186,7 @@ form i.icon.error {
 .cus-selfVideo {
     position:absolute;
     top: 0;
-    left: 0;
+    right: 0;
     margin-top: 10px;
     margin-left: 15px;
     z-index: 99999;
@@ -1196,17 +1195,18 @@ form i.icon.error {
     z-index: 99999;
 }
 
-.cus-callerVideo {
+.wrap_callerVideo {
+    display: table-row !important;
     height: 80%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    width: 100%;
     z-index: -1 !important;
 }
 
-.cus-callerVideo * {
+.childCallerVideo {
+    display: table-cell !important;
+}
+
+.wrap_callerVideo * {
     z-index: -1 !important;
 }
 
@@ -1555,8 +1555,8 @@ ion-scroll[direction=y] {
 }
 
 /*.wrapper {*/
-    /*width: 0;*/
-    /*background: blue;*/
-    /**/
+/*width: 0;*/
+/*background: blue;*/
+/**/
 /*}*/
 

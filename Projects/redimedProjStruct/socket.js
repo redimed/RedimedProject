@@ -289,8 +289,23 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
-        socket.on("onlineMeasureData",function(info){
-            io.sockets.emit('getMeasureData',info);
+        socket.on("onlineMeasureData",function(id,info){
+            if(id)
+            {
+                db.User.find({where:{id:id}},{raw:true})
+                    .success(function(user){
+                        if(user)
+                        {
+                            if(user.socket != null)
+                                io.to(user.socket).emit('getMeasureData',info);
+                        }
+
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
+
         })
 
         socket.on('lostCookie',function(){

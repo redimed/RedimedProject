@@ -107,7 +107,7 @@
             </div>
             <div class="col-md-10 col-sm-10" >
                 <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
-                    <a ng-disabled="isCalling" ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
+                    <a ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
                         <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
                     </a>
                 </span>

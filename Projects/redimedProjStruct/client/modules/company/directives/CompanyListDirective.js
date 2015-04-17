@@ -21,7 +21,19 @@ angular.module('app.loggedIn.company.directives.list', [])
 				Addr:'',
 				country:''
 			}
+			scope.onRowClick = function(row){
+				scope.updateCompany.id = row.id;
+				scope.updateCompany.patient_id =$stateParams.patientId; 
+				var postData = angular.copy(scope.updateCompany);
+				 CompanyModel.upCompanyPatient(postData)
+		  			.then(function(response){
+		  				toastr.success('Change Active Company Successfully');
+		  				scope.company.load();
+		  			}, function(error){
+		  				scope.company.errors = angular.copy(error.data.errors);
+		  			})
 
+			}
 			var remove = function(row){
 				$modal.open({
 					templateUrl:  'modules/company/dialogs/templates/remove.html',
@@ -48,12 +60,12 @@ angular.module('app.loggedIn.company.directives.list', [])
 			var load = function(){
 				scope.company.loading = true;
 				CompanyModel.list(search).then(function(response){
-					console.log(response.data);
 					scope.company.loading = false;
 					scope.company.error = '';
 					scope.company.list = response.data;
 					scope.company.count = response.count;
 					scope.company.search.page = 1;
+					scope.company.company_idActive = response.data1[0].company_id;
 				}, function(error){
 					scope.company.loading = false;
 					scope.company.error = $filter('translate')(error.data.code);
@@ -85,17 +97,34 @@ angular.module('app.loggedIn.company.directives.list', [])
 				scope.company.search.offset = (page-1)*scope.company.search.limit;
 				scope.company.load();
 			}
+			scope.disableCompany = function(row){
+				var postData ={
+					patient_id :$stateParams.patientId,
+					company_id : row.id,
+					isEnable : row.checkisEnable
+				}
+				CompanyModel.disableCompany(postData)
+				.then(function(response){
+					scope.company.load();
+				},function(error){
 
+				})
+			}
 			scope.company = {
 				search: search,
 				error: '',
 				count: 0,
 				loading: false,
 				list: [],
+				company_idActive:'',
 				load: function(){ load(); },
 				loadPage: function(page){ loadPage(page); },
 				onSearch: function(option){ onSearch(option)},
 				remove : function(size){remove(size)}
+			}
+			scope.updateCompany ={
+				id:'',
+				patient_id:''
 			}
 
 			/* LOAD FIRST */

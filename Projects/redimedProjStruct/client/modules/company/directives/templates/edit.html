@@ -1,7 +1,7 @@
  <div class="portlet box blue ng-scope">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-medkit"></i> Add Company
+            <i class="fa fa-medkit"></i> Edit Company
         </div>
         <div class="pull-right navbar-right">
             <!-- Single button -->
@@ -14,12 +14,6 @@
 		 <!-- FORM --> 
 	   	<form name="FirstForm" novalidate>
 			<div class="row">
-			  <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.User_id">User id</label>
-				    <input type="text" class="form-control" ng-model="company.form.User_id" disabled="true">
-				 </div>
-			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
 				    <label for="company.form.Company_name"  >Company name</label>
@@ -38,19 +32,25 @@
 				    <input type="text" class="form-control" ng-model="company.form.Addr">
 				 </div>
 			  </div>
+			  <div class="col-md-3">
+			  	<div class="form-group">
+				    <label for="company.form.CODE">CODE</label>
+				    <input type="text" class="form-control" ng-model="company.form.CODE" >
+				 </div>
+			  </div>
 			</div>
 
 			<div class="row">
-			  <div class="col-md-3">
+			<div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.PO_number">PO Number</label>
-				    <input type="text" class="form-control" ng-model="company.form.PO_number">
+				    <label for="company.form.country">Country</label>
+				    <input type="text" class="form-control" ng-model="company.form.country">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.postcode">Postcode</label>
-				    <input type="text" class="form-control" ng-model="company.form.postcode">
+				    <label for="company.form.Phone">Phone</label>
+				    <input type="text" class="form-control" ng-model="company.form.Phone" >
 				 </div>
 			  </div>
 			  <div class="col-md-3">
@@ -70,25 +70,25 @@
 			  <div class="col-md-3">
 			  	<div class="form-group">
 				    <label for="company.form.latitude">Latitude</label>
-				    <input type="text" class="form-control" ng-model="company.form.latitude">
+				    <input type="text" class="form-control" ng-model="company.form.latitude" id="latitude" name="latitude">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
 				    <label for="company.form.longitude">Longitude</label>
-				    <input type="text" class="form-control" ng-model="company.form.longitude">
+				    <input type="text" class="form-control" ng-model="company.form.longitude" id="longitude" name="longitude">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.country">Country</label>
-				    <input type="text" class="form-control" ng-model="company.form.country">
+				    <label for="company.form.PO_number">PO Number</label>
+				    <input type="text" class="form-control" ng-model="company.form.PO_number" id="PO_number" name="PO_number">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.result_text">Result Text</label>
-				    <input type="text" class="form-control" ng-model="company.form.result_text">
+				    <label for="company.form.postcode">Postcode</label>
+				    <input type="text" class="form-control" ng-model="company.form.postcode" name="postcode" id="postcode">
 				 </div>
 			  </div>
 			</div>
@@ -133,34 +133,34 @@
 			<div class="row">
 		        <div class="col-md-3">
 				  	<div class="form-group">
-					    <label for="company.form.invoice_text">Invoice Text</label>
-					    <input type="text" class="form-control" ng-model="company.form.invoice_text">
+					    <label for="company.form.invoice_email">Invoice Email</label>
+					    <input type="email" class="form-control" ng-model="company.form.invoice_email" name="invoice_email" id="invoice_email">
+					</div>
+				</div>
+				 <div class="col-md-3">
+				  	<div class="form-group">
+					    <label for="company.form.report_to_email">Report to email</label>
+					    <input type="email" class="form-control" ng-model="company.form.report_to_email" id="report_to_email" name="report_to_email">
 					 </div>
 				  </div>
-			   <div class="col-md-3">
+				<div class="col-md-3">
+				  	<div class="form-group">
+					    <label for="company.form.Email">Email</label>
+					    <input type="email" class="form-control" ng-model="company.form.Email" name="Email" id="Email" >
+					 </div>
+				  </div>
+			    <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Site_medic">Site Medic</label>
-				    <input type="text" class="form-control" ng-model="company.form.Site_medic">
+				    <label for="company.form.result_email">Result Email</label>
+				    <input type="email" class="form-control" ng-model="company.form.result_email" name="result_email" id="result_email">
 				 </div>
-			  </div>
-			  <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.default_status">Default Status</label>
-				    <input type="text" class="form-control" ng-model="company.form.default_status">
-				 </div>
-			  </div>
-			   <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.Phone">Phone</label>
-				    <input type="text" class="form-control" ng-model="company.form.Phone" >
-				 </div>
-			  </div>
+			    </div>
 			</div>
 			<div class="row">
 			 <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.report_to_text">Report to text</label>
-				    <input type="text" class="form-control" ng-model="company.form.report_to_text" >
+				    <label for="company.form.Site_medic">Site Medic</label>
+				    <input type="text" class="form-control" ng-model="company.form.Site_medic">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
@@ -184,25 +184,12 @@
 			</div>
 
 			<div class="row">
-			  <div class="col-md-3">
+			<div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.text">Text</label>
-				    <input type="text" class="form-control" ng-model="company.form.text" >
+				    <label for="company.form.default_status">Default Status</label>
+				    <input type="text" class="form-control" ng-model="company.form.default_status">
 				 </div>
 			  </div>
-			  <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.CODE">CODE</label>
-				    <input type="text" class="form-control" ng-model="company.form.CODE" >
-				 </div>
-			  </div>
-			  <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.father_id">Father Id</label>
-				    <input type="text" class="form-control" ng-model="company.form.father_id" disabled="true">
-				 </div>
-			  </div>
-			 
 			  <!-- parent_id -->
 			  <div class="col-md-3">
 			  	<div class="form-group">
@@ -212,11 +199,9 @@
 				   	<span  ng-if="company.Company_name_Parent">{{company.Company_name_Parent}}</span>
 					<span  ng-if="!company.Company_name_Parent">Select Parent Company</span>
 				   </button>
-
 				 </div>
 			  </div>
 			 <!-- parent_id -->
-			</div>
 			<div class="row">
 			  <div class="col-md-4">
 			  </div>
@@ -229,20 +214,33 @@
 			</div>
 			<!-- -->
 			<div class="row">
+			<div class="col-md-12">
+			<div class="portlet box blue ng-scope">
+			   <div class="portlet-title">
+			        <div class="caption">
+			            List Insurer
+			        </div>
+		    	</div>
+		    </div>
+			<div class="row">
 				<div class="col-md-12">
-					<table class="mdt-table">
+					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>Insurer Name</th>
 								<th>Address</th>
-								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in company.listInsurer track by $index">
+							<tr ng-repeat="row in company.listInsurer track by $index" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor  &&  {'background-color':'green'}">
 								<td>{{row.insurer_name}}</td>
 								<td>{{row.address}}</td>
-								<td align="center"><a><i class="fa fa-times" ng-click="company.remove(row)"></i></a></td>
+								<!--<td align="center">
+								<a>
+								   	<span  ng-if="row.checkisEnable"  ng-click="disableInsurer(row)">Enable{{row.isEnable}}</span>
+									<span  ng-if="!row.checkisEnable"  ng-click="disableInsurer(row)">Disable {{row.isEnable}}</span>
+								</a>
+								</td>-->
 							</tr>
 						</tbody>
 					</table>

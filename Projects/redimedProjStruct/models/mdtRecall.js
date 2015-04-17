@@ -12,9 +12,11 @@ module.exports = function(sequelize, DataTypes){
 		recall_date: DataTypes.DATE,
 		remind_before: DataTypes.INTEGER(11),
 		created_by: DataTypes.INTEGER(11),
+		creation_date: DataTypes.DATE,
 		last_updated_by: DataTypes.INTEGER(11),
+		last_update_date: DataTypes.DATE
 	}, {
-		tableName: 'cln_recall',
+		tableName: 'cln_recalls',
 		createdAt: 'creation_date',
 		updatedAt: 'last_update_date'
 	});

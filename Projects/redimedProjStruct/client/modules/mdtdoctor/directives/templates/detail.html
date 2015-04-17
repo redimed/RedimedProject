@@ -292,3 +292,52 @@
 	<div class="break-row"></div>
 </div>
 </form>
+
+<div class="row">
+	<div class="col-md-12">
+		<button ng-click="speciality.dialog.add()" class="btn btn-primary">Add Specialty</button>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Specialty Name</th>
+					<th>Type Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="list in speciality.list"
+					ng-style="{ 'background-color': speciality.active == list.Specialties_id ? 'green' : 'none' }">
+					<td>{{list.Specialties_name}}</td>
+					<td>{{list.Rl_TYPE_NAME}}</td>
+					<td>
+						<a ng-click="speciality.onActiveList(list)">
+							<i class="fa fa-home"></i>
+						</a>
+						<a>
+						   	<span  ng-if="list.Isenable"  ng-click="disable(list)">Enable</span>
+							<span  ng-if="!list.Isenable"  ng-click="disable(list)">Disable</span>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/ng-template" id="dialogSelectSpeciality">
+	<div class="modal-body">
+		<mdtspecialty-listbydoctor limit="speciality.limit" reload="speciality.reload" doctor-id="speciality.doctorId"
+			on-row-click="speciality.clickRow(row)">
+		</mdtspecialty-listbydoctor>
+	</div>
+</script>
+
+<script type="text/ng-template" id="dialogSpecialtyRemove">
+    <div class="modal-body">
+        <p>Do you want to remove this specialty ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

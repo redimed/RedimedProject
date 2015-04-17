@@ -1,0 +1,88 @@
+<div class="modal-body">
+	<form>
+		<div class="row">
+			<!-- DAY OF WEEK -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="day_of_Week">Day Of Week</label>
+					<select id="day_of_Week" ng-model="timetable.form.day_of_Week" class="form-control"
+	                    	ng-options="d.value as d.value for d in timetable.options.DAY_OF_WEEK">
+	                    <option value="">Day of Week</option>
+	                </select>
+				</div>
+			</div>
+			<!-- END DAY OF WEEK -->
+			<!-- SERVICE -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="SERVICE_ID">Service</label>
+					<select id="SERVICE_ID" ng-model="timetable.form.service_id" class="form-control"
+	                    	ng-options="s.SERVICE_ID as s.SERVICE_NAME for s in timetable.options.services">
+	                    <option value="">Service</option>
+	                </select>
+				</div>
+			</div>
+			<!-- END SERVICE -->
+			<!-- FROM TIME -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="from_time">From time</label>
+            		<input type="text" ui-mask="99:99" ng-model="timetable.form.from_time" class="form-control"
+            			id="from_time">
+				</div>
+			</div>
+			<!-- END FROM TIME -->
+			<!-- TO TIME -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="to_time">To time</label>
+            		<input type="text" ui-mask="99:99" ng-model="timetable.form.to_time" class="form-control"
+            			id="to_time">
+				</div>
+			</div>
+			<!-- END TO TIME -->
+		</div>
+
+		<div class="row">
+			<!-- FROM DATE -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="from_date">From Date</label>
+					<input id="from_date" class="form-control" custom-date 
+						ng-model="timetable.form.from_date">
+				</div>
+			</div>
+			<!-- END FROM DATE -->
+			<!-- TO DATE -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="to_date">To Date</label>
+					<input id="to_date" class="form-control" custom-date 
+						ng-model="timetable.form.to_date">
+				</div>
+			</div>
+			<!-- END TO DATE -->
+			<!-- APPT_INTERVAL -->
+			<div class="col-md-2">
+				<div class="form-group">
+					<label for="appt_interval">Appt Interval</label>
+					<input id="appt_interval" class="form-control" 
+						ng-model="timetable.form.appt_interval">
+				</div>
+			</div>
+			<!-- END APPT_INTERVAL -->
+			<!-- DESCRIPTION -->
+			<div class="col-md-4">
+				<div class="form-group">
+					<label id="description">Description</label>
+                	<textarea ng-model="timetable.form.description" id="description" class="form-control"></textarea>
+				</div>
+			</div>
+			<!-- END DESCRIPTION -->
+		</div>
+
+		<div class="row">
+			<div class="btn btn-primary" style="margin-left: 20px;" ng-click="timetable.save()">Save</div>
+		</div>
+	</form>
+</div>	

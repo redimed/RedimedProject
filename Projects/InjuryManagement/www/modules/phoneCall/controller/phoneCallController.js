@@ -33,7 +33,8 @@ angular.module('starter.phoneCall.controller',[])
         $scope.blueTooth = null;
         var regex = "(.*/)*.+\\.(png|jpg|gif|bmp|jpeg|PNG|JPG|GIF|BMP)$";
         var patternFileType = new RegExp(regex);
-        $scope.isFileShare = false;
+        $scope.isFileShare = null;
+        $scope.streamsVideo = [];
 
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
         var src = "/android_asset/www/phone_calling.mp3";
@@ -119,6 +120,7 @@ angular.module('starter.phoneCall.controller',[])
             //});
         }
         else {
+            window.plugins.insomnia.keepAwake();
             if ($scope.apiKey != null || $scope.tokenID != null || $scope.sessionID != null) {
 
                 $scope.isAccept = true;
@@ -135,8 +137,16 @@ angular.module('starter.phoneCall.controller',[])
 
                 session = TB.initSession($scope.apiKey, $scope.sessionID);
                 session.on({
-                    'streamCreated': function (event) {
-                        $scope.subscriber = session.subscribe(event.stream, "callerVideo", {
+                    'streamCreated': function (e) {
+                        $scope.streamsVideo.push(e.stream);
+                        if(e.stream.connection.connectionId == session.connection.connectionId){
+                            return;
+                        }
+                        var divVideoCaller = document.createElement('div');
+                        divVideoCaller.setAttribute('id', 'stream' + e.stream.streamId);
+                        divVideoCaller.className = "childCallerVideo";
+                        document.getElementById("callerVideo").appendChild(divVideoCaller);
+                        $scope.subscriber = session.subscribe(e.stream, divVideoCaller.id, {
                             insertMode: "append",
                             resolution: "1280x720",
                             width: '100%',
@@ -151,9 +161,11 @@ angular.module('starter.phoneCall.controller',[])
                     else {
                         session.publish(publisher);
                         signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
+                        localStorageService.set('callUser', $stateParams.callUser);
                     }
                 });
 
+                //openTok angular
                 //OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
                 //    $scope.session = session;
                 //    var connectDisconnect = function (connected) {
@@ -170,28 +182,6 @@ angular.module('starter.phoneCall.controller',[])
                 //$scope.publishing = true;
                 //signaling.emit("sendMessage", $scope.userInfo.id, $stateParams.callUser, {type: 'answer'});
             }
-        }
-
-        $scope.facePublisherProps = {
-            name:'face',
-            width: window.outerWidth / 10,
-            height: window.outerHeight / 10,
-            style: {
-                nameDisplayMode: 'off'
-            },
-            resolution: '1280x720',
-            frameRate: 30
-        }
-
-        $scope.subscriberProps = {
-            name:'face',
-            width: window.outerWidth / 2,
-            height: window.outerHeight,
-            style: {
-                nameDisplayMode: 'off'
-            },
-            resolution: '1280x720',
-            frameRate: 30
         }
 
         $scope.micToggle = function() {
@@ -217,18 +207,19 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.imageShareToggle = function() {
-            console.log('clickImageToggle');
             $scope.isImage = !$scope.isImage;
             $scope.blueTooth = false;
             if($scope.isImage) {
                 $scope.imgCount = null;
-                $scope.controllerbtn = false;
+
                 $scope.subscriber.subscribeToVideo(false);
                 TB.updateViews();
+
                 $timeout(function(){
                     $scope.subscriber.subscribeToVideo(false);
                     TB.updateViews();
                 }, 0.5 * 1000);
+
             } else {
                 $scope.subscriber.subscribeToVideo(true);
                 TB.updateViews();
@@ -243,13 +234,15 @@ angular.module('starter.phoneCall.controller',[])
             $scope.blueTooth = !$scope.blueTooth;
             $scope.isImage= false;
             if($scope.blueTooth) {
-                $scope.controllerbtn = false;
+
                 $scope.subscriber.subscribeToVideo(false);
                 TB.updateViews();
+
                 $timeout(function(){
                     $scope.subscriber.subscribeToVideo(false);
                     TB.updateViews();
                 }, 0.5 * 1000);
+
             } else {
                 $scope.subscriber.subscribeToVideo(true);
                 TB.updateViews();
@@ -281,20 +274,14 @@ angular.module('starter.phoneCall.controller',[])
 
         $scope.cancelCall = function (offMedia) {
             screen.unlockOrientation();
-            //disconnect();
             publisher.destroy();
             signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
             $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
             if (offMedia) {
                 media.pause();
             }
-        }
-
-        var disconnect = function() {
-            $scope.session.disconnect();
-            $scope.session.on('sessionDisconnected', function () {
-                signaling.removeAllListeners();
-            });
+            localStorageService.remove('callUser');
+            window.plugins.insomnia.allowSleepAgain()
         }
 
         $scope.$on('$destroy', function() {
@@ -308,17 +295,17 @@ angular.module('starter.phoneCall.controller',[])
                     $scope.isAccept = true;
                     break;
                 case 'ignore':
-                    //disconnect();
                     media.pause();
                     publisher.destroy();
                     screen.unlockOrientation();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     break;
                 case 'cancel':
-                    //disconnect();
                     publisher.destroy();
                     screen.unlockOrientation();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
+                    localStorageService.remove('callUser');
+                    window.plugins.insomnia.allowSleepAgain()
                     break;
             }
         }
@@ -341,17 +328,22 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         function getFile(id, fileName) {
+            $scope.isFileShare = true;
+            $scope.fileImgSrc = null;
+            $scope.fileData = null;
+
             var url = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/download/" + id;
             $scope.filename = fileName;
             var targetPath = cordova.file.externalRootDirectory + 'InjuryManagement/' + $scope.filename;
-            var trustHosts = true
+            var trustHosts = true;
             var options = {};
             $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
                 .then(function (result) {
                     console.log('download success', result);
+                    $scope.btnShowlstImg = true;
                     if(patternFileType.test(result.name)) {
+                        $scope.fileImg = true;
                         console.log('true imgFile');
-                        $scope.isFileShare = true;
                         $cordovaFile.readAsText(cordova.file.externalRootDirectory + 'InjuryManagement/', $scope.filename)
                             .then(function (result) {
                                 convertImgToBase64URL(cordova.file.externalRootDirectory + 'InjuryManagement/' + $scope.filename, function(base64Img){
@@ -362,7 +354,7 @@ angular.module('starter.phoneCall.controller',[])
                                 console.log('error readAsText', error);
                             });
                     } else {
-                        $scope.isFileShare = false;
+                        $scope.fileImg = false;
                         console.log('false not imgFile');
                         $cordovaFile.readAsText(cordova.file.externalRootDirectory + 'InjuryManagement/', $scope.filename)
                             .then(function (result) {
@@ -383,6 +375,7 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.selectImg = function(imgSrc) {
+            $scope.isFileShare = null;
             $scope.imgDetail.src = imgSrc.src;
             $scope.imgDetail.id = imgSrc.id;
         }
@@ -393,7 +386,6 @@ angular.module('starter.phoneCall.controller',[])
 
         $scope.actionControlButton = function() {
             $scope.controllerbtn = !$scope.controllerbtn;
-            btnControlActionCall();
         }
 
         signaling.on('messageReceived', onMessageReceive);
@@ -427,13 +419,32 @@ angular.module('starter.phoneCall.controller',[])
             img.src = url;
         }
 
-        function btnControlActionCall() {
-            if($scope.isImage || $scope.blueTooth) {
-                if($scope.controllerbtn) {
-                    $timeout(function(){
-                        $scope.controllerbtn = false;
-                    }, 5 * 1000)
-                }
-            }
-        }
+        //option video self-caller openTok angular
+        //$scope.facePublisherProps = {
+        //    name:'face',
+        //    width: window.outerWidth / 10,
+        //    height: window.outerHeight / 10,
+        //    style: {
+        //        nameDisplayMode: 'off'
+        //    },
+        //    resolution: '1280x720',
+        //    frameRate: 30
+        //}
+        //
+        //$scope.subscriberProps = {
+        //    name:'face',
+        //    width: window.outerWidth / 2,
+        //    height: window.outerHeight,
+        //    style: {
+        //        nameDisplayMode: 'off'
+        //    },
+        //    resolution: '1280x720',
+        //    frameRate: 30
+        //}
+        //var disconnect = function() {
+        //    $scope.session.disconnect();
+        //    $scope.session.on('sessionDisconnected', function () {
+        //        signaling.removeAllListeners();
+        //    });
+        //}
     })

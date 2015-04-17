@@ -1,6 +1,7 @@
 angular.module('app.rlobRegister.controller',[])
-    .controller("rlobRegisterController", function($scope, $state, $cookieStore, SecurityService, rlobService,toastr) {
-        $scope.user={};
+    .controller("rlobRegisterController", function($scope, $state, $cookieStore, SecurityService, rlobService,toastr,bookingService) {
+        $scope.user=bookingService.getRegisterInfo();
+        $scope.user.isAccessReportOnline = 1;
         $scope.regexEmail=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         $scope.register = function(){
             $scope.$broadcast('show-errors-check-validity');
@@ -9,7 +10,6 @@ angular.module('app.rlobRegister.controller',[])
             $scope.showClickedValidation = true;
             if($scope.registerForm.$invalid){
                 toastr.error("Please check form.", "Error");
-                //console.log("1");
             }else{
 
                 SecurityService.checkUserName($scope.user.username).then(function(data){
@@ -17,7 +17,6 @@ angular.module('app.rlobRegister.controller',[])
 
                 }).then(function(){
                     if(checkuser.length >0){
-                        console.log(checkuser);
                         $scope.showClickedValidation = true;
                         toastr.error("Username da Ton Tai", "Error");
                     }else{
@@ -40,18 +39,15 @@ angular.module('app.rlobRegister.controller',[])
                         rlobService.insertNewUser(user).then(function(data){
                             if(data.status=='success')
                             {
-                                console.log(data);
                                 toastr.success("Register Success!","Success");
                                 angular.element('#form-data').css('display','none');
                                 angular.element('#data-success').css('display','block');
-                                console.log(user.companyState);
                                 for (var i = 0; i < $scope.stateList.length; i++) {
                                     if ( $scope.user.companyState == $scope.stateList[i].id  ) {
                                         $scope.companyStateName = $scope.stateList[i].State;
-                                        // console.log($scope.companyStateName)
                                     };                                
                                 };
-                                
+                                bookingService.setRegisterInfo({});
                             }else{
                                 toastr.error("Register Failed!","Error");
                             }
