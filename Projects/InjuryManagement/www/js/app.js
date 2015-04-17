@@ -26,6 +26,7 @@ angular.module('starter', ['ionic',
     'ion-google-place',
     'ngAutocomplete',
     'starter.bluetooth',
+    'starter.model'
 ])
 
     .factory(("ionPlatform"), function( $q ){

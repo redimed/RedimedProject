@@ -123,13 +123,33 @@ module.exports = {
 	deletePharmacistQualification:function(req,res){
 		var data = req.body;
 		var sql = "DELETE FROM ph_phamacist_qualifications WHERE qualification_id = ? ";
+		console.log(data);
 		req.getConnection(function(err,connection){
 			var query = connection.query(sql,data.pharmacist_id,function(err){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
 				}else{
-				
+					console.log("delete Success")
+					res.json({status:'success'});
+				}
+			})
+		})
+	},
+	//update qualification
+	updateQulification:function(req,res){
+		var data = req.body;
+		var sql = 
+			"UPDATE ph_phamacist_qualifications "+
+			"SET qualification = ? "+
+			"WHERE qualification_id = ? ";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,[data.qualification,data.qualification_id],function(err){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					
 					res.json({status:'success'});
 				}
 			})
@@ -139,8 +159,8 @@ module.exports = {
 	addNewExp:function(req,res){
 		var data = req.body;
 		console.log(data);
-		var fromdate =  moment(data.exp.fromdate).format("YYYY-MM-DD");
-		var todate =  moment(data.exp.todate).format("YYYY-MM-DD")
+		var fromdate =  moment(data.exp.from_date).format("YYYY-MM-DD");
+		var todate =  moment(data.exp.to_date).format("YYYY-MM-DD")
 		var pharmacist_id = data.pharmacist_id;
 
 
@@ -148,7 +168,7 @@ module.exports = {
 				" INSERT INTO ph_phamacist_experiences (phamacist_id,from_date,to_date,company,POSITION,reference_name,reference_contact,duty) "+
 				" VALUES (?,?,?,?,?,?,?,?) ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlInsertExp,[pharmacist_id,fromdate,todate,data.exp.company,data.exp.position,data.exp.referencename,data.exp.referencecontact,data.exp.duty],function(err){
+			var query = connection.query(sqlInsertExp,[pharmacist_id,fromdate,todate,data.exp.company,data.exp.POSITION,data.exp.reference_name,data.exp.reference_contact,data.exp.duty],function(err){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
@@ -193,10 +213,31 @@ module.exports = {
 			})
 		})
 	},
+	//update exp
+	updateExp :function(req,res){
+		var data = req.body.exp;
+		var from_date = moment(data.from_date).format("YYYY-MM-DD");
+		var to_date = moment(data.to_date).format("YYYY-MM-DD");
+		var sql = 
+			"UPDATE ph_phamacist_experiences  "+
+				"SET from_date = ?  , to_date = ? , company = ? , POSITION = ? , reference_name = ? , reference_contact = ?  , duty = ?  "+
+				"WHERE exp_id = ?";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,[from_date,to_date,data.company,data.POSITION,data.reference_name,data.reference_contact,data.duty,data.exp_id],function(err){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					
+					res.json({status:'success'});
+				}
+			})
+		})
+	},
 	//insert new shop company
 	insertCompanyShop:function(req,res){
 		var data = req.body;
-		console.log(data);
+		
 		var sqlInsertShop = 
 				" INSERT INTO ph_company_shops(company_id,shop_name,address,suburb,postcode,state,phone) "+
 				" VALUES (?,?,?,?,?,?,?) ";
@@ -225,6 +266,65 @@ module.exports = {
 				}else{
 					console.log("success");
 					res.json({status:'success',data:rows});
+				}
+			})
+		})
+	},
+	//delete shop company 
+	delelteShopCompany:function(req,res){
+		var data = req.body.shop_id;
+		var sql = " DELETE FROM ph_company_shops WHERE shop_id = ? ";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,data,function(err,rows){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					console.log("success");
+					res.json({status:'success'});
+				}
+			})
+		})
+	},
+	//update shop company
+	updateShopCompany:function(req,res){
+		var data = req.body;
+		console.log(data)
+		var sql = 
+				"UPDATE ph_company_shops SET shop_name= ?,address = ?,suburb = ? ,postcode = ?,state = ? ,phone = ? "+
+				"WHERE shop_id = ? ";
+		req.getConnection(function(err,connection){
+			var query = connection.query(sql,[data.shop_name,data.address,data.suburb,data.postcode,data.state,data.phone,data.shop_id],function(err,rows){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					console.log("success");
+					res.json({status:'success'});
+				}
+			})
+		})
+	},
+	//insert new post 
+	insertNewPost:function(req,res){
+		var data = req.body.post;
+		console.log(data);
+		var sqlInsertPost = 
+			"INSERT INTO ph_posts (company_id,required_date,time_od_shift,local_weekday_rate,nonelocal_weekday_rate,sat_rate,sun_rate,ph_rate,isTravel,isAccommodation,post_type,job_title,job_description,Start_date,Duration,job_type,Qualification,experiences_require,hours_per_week,days_per_week,isweekend_shift,CREATION_DATE) "+
+			"VALUES (?,?,'time_od_shift','local_weekday_rate','nonelocal','sat_rate','sun_rate','ph_rate',1,1,'post_type','job_title','job_description','2014-05-05','duration','job_type','qualification','exper','hpw',1,1,'2015-02-02') ";
+		var required_date = moment(data.required_date).format("YYYY-MM-DD");
+		var time_od_shift = moment(data.time_od_shift).format("h:mm:ss a");
+		var Start_date =  moment(data.Start_date).format("YYYY-MM-DD");
+		var CREATION_DATE = moment(new Date()).format("YYYY-MM-DD h:mm:ss");;
+		console.log(CREATION_DATE)
+		req.getConnection(function(err,connection){
+			var query = connection.query(sqlInsertPost,[data.company_id,required_date,time_od_shift,data.local_weekday_rate,data.nonelocal_weekday_rate,data.sat_rate,data.sun_rate,data.ph_rate,data.isTravel,data.isAccommodation,data.post_type,data.job_title,data.job_description,Start_date,data.Duration,data.job_type,data.Qualification,data.experiences_require,data.hours_per_week,data.days_per_week,data.isweekend_shift,CREATION_DATE],function(err,rows){
+				if(err){
+					console.log(err);
+					res.json({status:'fail'});
+				}else{
+					console.log("success");
+					res.json({status:'success'});
 				}
 			})
 		})

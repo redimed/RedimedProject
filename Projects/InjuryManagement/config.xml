@@ -30,4 +30,7 @@
   <feature name="Camera">
     <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
   </feature>
+  <feature name="Insomnia">
+    <param name="android-package" value="nl.xservices.plugins.Insomnia" />
+  </feature>
 </widget>

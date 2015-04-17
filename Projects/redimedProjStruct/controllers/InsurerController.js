@@ -15,7 +15,6 @@ module.exports = {
 			.innerJoin('companies', 'cln_patients.company_id', 'companies.id')
 			.innerJoin('cln_insurers', 'companies.Insurer', 'cln_insurers.id')
 			.where({
-				'cln_insurers.isenable': 1,
 				'cln_patients.Isenable': 1,
 				'cln_patients.Patient_id': postData.Patient_id
 			})
@@ -23,7 +22,7 @@ module.exports = {
 
 		db.sequelize.query(sql)
 		.success(function(rows){
-			res.json({data: rows[0]});
+			res.json({data: rows[0], sql: sql});
 		})
 		.error(function(error){
 			res.status(500).json({error: error, sql: sql});

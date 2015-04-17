@@ -116,11 +116,18 @@
                                                    data-toggle="dropdown" aria-expanded="false">
                                                     {{ appointment.APPOINTMENT_TIME}} <span class="caret"></span>
                                                 </a> -->
-                                                <a class="btn btn-sm ablue filter-submit margin-bottom dropdown-toggle"
+                                                <!-- <a class="btn btn-sm ablue filter-submit margin-bottom dropdown-toggle"
                                                    style="margin-left: 10px;margin-bottom: 10px; width: 100px"
                                                    data-toggle="dropdown" aria-expanded="false">
                                                     {{ appointment.FROM_TIME|date:'HH:mm'}} - {{appointment.TO_TIME|date:'HH:mm'}} <span class="caret"></span>
+                                                </a> -->
+
+                                                <a class="btn btn-sm ablue filter-submit margin-bottom dropdown-toggle"
+                                                   style="margin-left: 10px;margin-bottom: 10px; width: 70px"
+                                                   data-toggle="dropdown" aria-expanded="false">
+                                                    {{appointment.FROM_TIME|date:'HH:mm'}}<span class="caret"></span>
                                                 </a>
+
                                                 <ul class="dropdown-menu" role="menu">
                                                     <li>Choose Specialty:</li>
                                                     <li class="divider"></li>

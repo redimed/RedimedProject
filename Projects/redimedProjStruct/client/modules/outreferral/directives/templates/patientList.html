@@ -19,8 +19,9 @@
 					<i class="fa fa-pencil"></i>
 				</a>
 				&nbsp
-				<a ng-click="outreferral.dialog.remove(l)" ng-if="action.remove">
-					<i class="fa fa-remove"></i>
+				<a>
+				   	<span  ng-if="l.isEnable"  ng-click="outreferral.clickEnable(l)">Enable</span>
+					<span  ng-if="!l.isEnable"  ng-click="outreferral.clickDisale(l)">Disable</span>
 				</a>
 			</td>
 		</tr>

@@ -56,7 +56,8 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				Claim_date: 'desc',
 				Injury_name: '',
 				Injury_date: 'asc',
-				Patient_id: scope.patientId
+				Patient_id: scope.patientId,
+				isEnable:null
 			}
 
 			var load = function(){
@@ -138,7 +139,21 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 					}
 				})
 			}
+			var disable = function(row)
+			{
+				var postData ={
+					patient_id :$stateParams.patientId,
+					CAL_ID : $stateParams.calId,
+					isEnable : row.isEnable,
+					Claim_id : row.Claim_id
+				}
+				ClaimModel.disableClaim(postData)
+				.then(function(response){
+					scope.claim.load();
+				},function(error){
 
+				})
+			}
 			scope.claim = {
 				dialog: {
 					remove: function(list){
@@ -154,7 +169,8 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				search: angular.copy(search),
 				onPage: function(page){ onPage(page); },
 				onSearch: function(){ onSearch(); },
-				onOrderBy: function(option){ onOrderBy(option); }
+				onOrderBy: function(option){ onOrderBy(option); },
+				disable:function(row){disable(row)}
 			}
 
 			//INIT

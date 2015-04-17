@@ -18,9 +18,10 @@ module.exports = {
 			.whereNotExists(function(){
 				this.select('*').from('cln_patient_alerts')
 				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
-				.where('cln_patient_alerts.patient_id', postData.Patient_id);
+				.where('cln_patient_alerts.patient_id', postData.Patient_id)
+				//.where('cln_patient_alerts.isEnable', 1)
 			})
-			.where('cln_alerts.isenable', 1)
+			//.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
@@ -35,7 +36,7 @@ module.exports = {
 				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
 				.where('cln_patient_alerts.patient_id', postData.Patient_id);
 			})
-			.where('cln_alerts.isenable', 1)
+			//.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
@@ -63,11 +64,12 @@ module.exports = {
 				'cln_alerts.id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
-				'cln_alerts.Creation_date'
+				'cln_alerts.Creation_date',
+				'cln_patient_alerts.isEnable'
 			)
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
-			.where('cln_alerts.isenable', 1)
+			//.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
@@ -79,7 +81,7 @@ module.exports = {
 			.count('cln_alerts.id as a')
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
-			.where('cln_alerts.isenable', 1)
+			//.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
@@ -261,10 +263,11 @@ module.exports = {
 				'id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
-				'Creation_date'
+				'Creation_date',
+				'isenable'
 			)
 			.from('cln_alerts')
-			.where('isenable', 1)
+			//.where('isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.orderBy('Creation_date', postData.Creation_date)
@@ -274,7 +277,7 @@ module.exports = {
 				
 		var count_sql = knex('cln_alerts')
 			.count('id as a')
-			.where('isenable', 1)
+			//.where('isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
@@ -307,5 +310,51 @@ module.exports = {
 		}, function(error){
 			res.json(500, {error: error});
 		})
+	},
+	postUpdateEnable : function(req,res){
+		var postData = req.body.data;
+        if (postData.isenable == 1) {
+            postData.isenable = 0;
+        } else{
+            postData.isenable = 1;
+        };
+        var sql = 
+                knex('cln_alerts')
+                .update({
+                    'isenable': postData.isenable
+                })
+                .where('id',postData.id)
+                .toString()
+                db.sequelize.query(sql)
+                .success(function(data){
+                    res.json({data: data,sql:sql});
+                })
+                .error(function(error){
+                    res.json(500, {error: error,sql:sql});
+                }) 
+	},
+	postUpdateEnablePatient : function(req,res){
+		var postData = req.body.data;
+        if (postData.isEnable == 1) {
+            postData.isEnable = 0;
+        } else{
+            postData.isEnable = 1;
+        };
+        var sql = 
+                knex('cln_patient_alerts')
+                .update({
+                    'isEnable': postData.isEnable
+                })
+                .where('alert_id',postData.alert_id)
+                .where('patient_id',postData.patient_id)
+                .where('cal_id',postData.cal_id)
+                .toString()
+                db.sequelize.query(sql)
+                .success(function(data){
+                    res.json({data: data,sql:sql});
+                })
+                .error(function(error){
+                    res.json(500, {error: error,sql:sql});
+                })
 	}
 }

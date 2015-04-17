@@ -11,3 +11,5 @@ app.post(url+'list', AlertController.postList);
 app.post(url+'edit', AlertController.postEdit);
 app.post(url+'remove', AlertController.postRemove);
 app.post(url+'select', AlertController.postSelect);
+app.post(url+'disableAlert',AlertController.postUpdateEnable);
+app.post(url+'disablePatientAlert',AlertController.postUpdateEnablePatient);

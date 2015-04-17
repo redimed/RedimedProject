@@ -759,7 +759,8 @@ module.exports =
                     if(data.length>0)
                     {
                         var oldName=data[0].NODE_NAME;
-                        var newName=data[0].NODE_NAME+" --remove on "+moment().format("HH.mm.ss DD-MM-YYYY");
+                        var xname=data[0].NODE_NAME.substring(0,data[0].NODE_NAME.indexOf(' --remove on'));
+                        var newName=xname+" --remove on "+moment().format("HH.mm.ss DD-MM-YYYY");
                         req.body.oldName=oldName;
                         req.body.newName=newName;
                         renameNode(req,res);

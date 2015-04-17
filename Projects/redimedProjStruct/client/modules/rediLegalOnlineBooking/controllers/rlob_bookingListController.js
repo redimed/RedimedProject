@@ -8,9 +8,8 @@ angular.module('app.loggedIn.rlob.list.controller',[])
         $scope.isCanUpload=true;
         $scope.loginInfo = $cookieStore.get('userInfo');
         // console.log($scope.loginInfo.company_id);
-        delete rlobConstant.documentStatus.notConfirmed;
         $scope.bookingStatus=rlobConstant.bookingStatus;
-        $scope.documentStatus=rlobConstant.documentStatus;
+        $scope.documentStatus=rlobConstant.documentStatusFilter;
         $scope.documentStatusDisplay=rlobConstant.documentStatusDisplay;
         /**
          * Khoi tao action center

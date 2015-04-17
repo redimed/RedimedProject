@@ -10,38 +10,38 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		link: function(scope, elem, attrs){
 			var form = {
 				id:$stateParams.companyId,
-				parent_id :$stateParams.patientid,
-				Company_name:'',
-		        Industry:'',
-		        Addr:'',
-		        postcode:'',
-		        State:'',
-		        Description:'',
-		        latitude:'',
-		        longitude:'',
-		        country:'',
-		        result_email:'',
-		        invoice_email:'',
-		        PO_number:'',
-		        isProject:'',
-		        isCalendar:'',
-		        father_id:'',
-		        report_to_email:'',
-		        default_status:'',
-		        isInvoiceEmailToUser:'',
-		        isAddContactEmailToResult:'',
-		        IMA:'',
-		        Site_name:'',
-		        Medic_contact_no:'',
-		        Email:'',
-		        CODE:'',
-		        Insurer:'',
-		        Phone:'',
-		        Site_medic:'',
-		        User_id:'',
-		        isPO:'',
-		        isExtra:'',
-		        parent_id :'',
+				patient_id :$stateParams.patientid,
+				Company_name:null,
+		        Industry:null,
+		        Addr:null,
+		        postcode:null,
+		        State:null,
+		        Description:null,
+		        latitude:null,
+		        longitude:null,
+		        country:null,
+		        result_email:null,
+		        invoice_email:null,
+		        PO_number:null,
+		        isProject:null,
+		        isCalendar:null,
+		        father_id:null,
+		        report_to_email:null,
+		        default_status:null,
+		        isInvoiceEmailToUser:null,
+		        isAddContactEmailToResult:null,
+		        IMA:null,
+		        Site_name:null,
+		        Medic_contact_no:null,
+		        Email:null,
+		        CODE:null,
+		        Insurer:null,
+		        Phone:null,
+		        Site_medic:null,
+		        User_id:null,
+		        isPO:null,
+		        isExtra:null,
+		        parent_id :null,
 		        listInsurerid :[],
 			}
 			var load = function(row){
@@ -52,8 +52,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					scope.company.form = response.data[0];
 					scope.company.form.User_id = $cookieStore.get('userInfo').id;
 					scope.company.listInsurer = response.data1;
-					scope.company.listInsurerTemp = response.data1;
-					scope.company.test = scope.company.test+1;
+					scope.company.checkColor = scope.company.form.Insurer;
                     _.forEach(scope.company.listInsurer, function(id){
                         scope.company.listTemp.push(id.id);
                     })
@@ -66,22 +65,38 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				})
 			}
 			scope.onRowClick = function(row){
+				var postData = { 
+					Insurer:row.id,
+					id:$stateParams.companyId
+				}
 				 scope.company.InsurerTemp = row.id;
 				 scope.company.checkColor = row.id;
-			}
-			scope.disableInsurer = function(row){
-				CompanyModel.disableInsurer(row)
+				CompanyModel.updateInsurer(postData)
 						.then(function(response){
-							toastr.success('Disable Successfully');
+							toastr.success('Active Insurer Successfully');
 						}, function(error){	
 						})
-					for (var i = 0; i <= scope.company.listTemp.length; i++) {
-							if (scope.company.listTemp[i] == row.id) {
-								scope.company.listTemp.splice(i,1);
-								scope.company.listInsurer.splice(i,1);
-							} 
-					}
 				
+			}
+			scope.disableInsurer = function(row){
+				var postData ={
+					company_id:$stateParams.companyId,
+					insurer_id:row.id,
+					isEnable :row.checkisEnable
+				}
+				CompanyModel.disableInsurer(postData)
+						.then(function(response){
+						}, function(error){				
+						})
+				for (var i = 0; i <= scope.company.listTemp.length; i++) {
+						if (scope.company.listTemp[i] == row.id) {
+							if (scope.company.listInsurer[i].checkisEnable == 0) {
+								scope.company.listInsurer[i].checkisEnable = 1;
+							} else{
+								scope.company.listInsurer[i].checkisEnable = 0;
+							};
+						} 
+				}	
 			}
 			var remove = function(row){
 				$modal.open({
@@ -99,7 +114,6 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					.then(function(response){
 						for (var i = 0; i <= scope.company.listTemp.length; i++) {
 							if (scope.company.listTemp[i] == row.id) {
-								console.log(scope.company.listTemp);
 								scope.company.listTemp.splice(i,1);
 								scope.company.listInsurer.splice(i,1);
 							} 
@@ -172,8 +186,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				load:function(){load();},
 				save:function(){save();},
 				listInsurer:[],
-				listInsurerTemp:'',
-				test:1,
+				checkColor:'',
 		    	listTemp:[],
 		    	Company_name_Parent:'',
 		    	save :function(){save();},

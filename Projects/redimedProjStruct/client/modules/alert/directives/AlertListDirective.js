@@ -38,12 +38,19 @@ angular.module('app.loggedIn.alert.directives.list', [])
 				max_size: 5,
 				name: '',
 				description: '',
-				Creation_date: 'desc'
+				Creation_date: 'desc',
+				isenable:''
 			}
+			var disableAlert = function(l){
+				AlertModel.disableAlert(l)
+				.then(function(response){
+					scope.alert.load();
+				},function(error){
 
+				})
+			}
 			var load = function(){
 				var postData = angular.copy(scope.alert.search);
-
 				AlertModel.list(postData)
 				.then(function(response){
 					scope.alert.list = response.data;
@@ -125,7 +132,8 @@ angular.module('app.loggedIn.alert.directives.list', [])
 				list: [],
 				onSearch: function(){ onSearch(); },
 				onOrderBy: function(option){ onOrderBy(option); },
-				onPage: function(page){ onPage(page); }
+				onPage: function(page){ onPage(page); },
+				disableAlert : function(l){disableAlert(l);}
 			}
 
 			scope.alert.load();

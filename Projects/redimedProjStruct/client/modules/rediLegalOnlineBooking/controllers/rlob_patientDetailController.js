@@ -464,7 +464,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             }
 
             $scope.mailBodyData={
-                requestBy:$scope.loginInfo.user_name?$scope.loginInfo.user_name:'',
+                requestBy:$scope.loginInfo.FIRST_NAME?$scope.loginInfo.FIRST_NAME:'',
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
                 time:$scope.from_time.format("HH:mm"),
                 date:$scope.from_time.format("DD/MM/YYYY"),

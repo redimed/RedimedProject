@@ -35,8 +35,9 @@
 					<i class="fa fa-pencil"></i>
 				</a>
 				&nbsp
-				<a ng-click="alert.dialog.remove(l)">
-					<i class="fa fa-remove"></i>
+				<a>
+				   	<span  ng-if="l.isenable"  ng-click="alert.disableAlert(l)">Enable</span>
+					<span  ng-if="!l.isenable"  ng-click="alert.disableAlert(l)">Disable</span>
 				</a>
 			</td>
 		</tr>

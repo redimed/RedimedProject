@@ -80,7 +80,9 @@
 
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
-                            <rlob-change-document-status selected-document="selectedBooking" ></rlob-change-document-status>
+                            <rlob-change-document-status selected-document="selectedBooking" 
+                             document-status-changed-flag="documentStatusChangedFlag">
+                            </rlob-change-document-status>
                             <accordion >
                                 <accordion-group class="panel panel-success"  is-open="accordionStatus.status1">
                                     <accordion-heading>
@@ -95,6 +97,7 @@
                                                             is-admin-get-files="isAdminGetFiles"
                                                             files-update-flag="filesUpdateFlag"
                                                             number-of-docs="numberOfDocs"
+                                                            dialog-style-class="rlob-dialog-set-result-admin-notification"
                                                 >
                                         </rlob-file-download>
 

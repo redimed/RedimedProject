@@ -394,7 +394,8 @@ angular.module("app.loggedIn.rlob.directive", [])
                 selectedBooking:  '=',
                 isAdminGetFiles:'=',
                 filesUpdateFlag:'=',
-                numberOfDocs:'='
+                numberOfDocs:'=',
+                dialogStyleClass:'@'
                 //la so, de danh dau co file moi upload hay khong
                 //set cung bien voi rlobFileDownload directive sẽ tu dong dong bo hoa giup upload vao download
             },
@@ -518,7 +519,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.showDialogSetResult=function()
                 {
                     $scope.filesClone=angular.copy($scope.files);
-                    $("#rlob-dialog-set-result").modal({show:true,backdrop:'static'});
+                    $("."+$scope.dialogStyleClass).modal({show:true,backdrop:'static'});
                 }
 
                 /**
@@ -556,7 +557,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                             rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Set list result files fail.");
                         })
                         .then(function(){
-                            $("#rlob-dialog-set-result").modal('hide');
+                            $("."+$scope.dialogStyleClass).modal('hide');
                         })
                     }
                     else
@@ -582,7 +583,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                         rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Unselect all result files fail.");
                     })
                     .then(function(){
-                        $("#rlob-dialog-set-result").modal('hide');
+                        $("."+$scope.dialogStyleClass).modal('hide');
                     })
                 }
 
@@ -1470,6 +1471,22 @@ angular.module("app.loggedIn.rlob.directive", [])
 
                         });
                 }
+                $scope.updatePassBookingNotChangeStatus=function(doctorId)
+                {
+                    rlobService.getPassBookingNotChangeStatus($scope.bookingType,doctorId)
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                $scope.listPassBookingNotChangeStatus=data.data;
+                                $scope.listBookingNotification=$scope.listPassBookingNotChangeStatus;
+                            }
+                        },
+                        function(error)
+                        {
+
+                        });
+                }
+
 
                 /***
                  * Danh sach cac booking sap toi va client chua upload document
@@ -1479,16 +1496,34 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.getListUpcommingBookingWaitingPaperwork=function(doctorId)
                 {
                     rlobService.getListUpcommingBookingWaitingPaperwork($scope.bookingType,doctorId)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.listUpcommingBookingWaitingPaperwork=data.data;
-                            }
-                        },
-                        function(error)
+                    .then(function(data){
+                        console.log(data);
+                        if(data.status=='success')
                         {
 
-                        });
+                            $scope.listUpcommingBookingWaitingPaperwork=data.data;
+                        }
+                    },
+                    function(error)
+                    {
+
+                    });
+                }
+                $scope.updateListUpcommingBookingWaitingPaperwork=function(doctorId)
+                {
+                    rlobService.getListUpcommingBookingWaitingPaperwork($scope.bookingType,doctorId)
+                    .then(function(data){
+                        console.log(data);
+                        if(data.status=='success')
+                        {
+                            $scope.listUpcommingBookingWaitingPaperwork=data.data;
+                            $scope.listBookingNotification=$scope.listUpcommingBookingWaitingPaperwork;
+                        }
+                    },
+                    function(error)
+                    {
+
+                    });
                 }
 
                 /***
@@ -1499,24 +1534,41 @@ angular.module("app.loggedIn.rlob.directive", [])
                 $scope.getListBookingOutstandingNotification=function(doctorId)
                 {
                     rlobService.getListBookingOutstandingNotification($scope.bookingType,doctorId)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                $scope.listBookingOutstandingNotification=data.data;
-                            }
-                        },
-                        function(error)
+                    .then(function(data){
+                        if(data.status=='success')
                         {
+                            $scope.listBookingOutstandingNotification=data.data;
+                        }
+                    },
+                    function(error)
+                    {
 
-                        });
+                    });
+                }
+                $scope.updateListBookingOutstandingNotification=function(doctorId)
+                {
+                    rlobService.getListBookingOutstandingNotification($scope.bookingType,doctorId)
+                    .then(function(data){
+                        if(data.status=='success')
+                        {
+                            $scope.listBookingOutstandingNotification=data.data;
+                            $scope.listBookingNotification=$scope.listBookingOutstandingNotification;
+                        }
+                    },
+                    function(error)
+                    {
+
+                    });
                 }
 
                 /**
                  * Xu ly show list booking notificaion (local of admin)
                  * tannv.dts@gmail.com
                  */
+                $scope.currentNotificationType=null;
                 $scope.showListBookingNotification=function(notificationType)
                 {
+                    $scope.currentNotificationType=notificationType;
                     switch(notificationType)
                     {
                         case $scope.localNotificationType.type1.alias:
@@ -1533,10 +1585,14 @@ angular.module("app.loggedIn.rlob.directive", [])
                             break;
                     }
                     $("#list_booking_admin_local_notification").modal({show:true,backdrop:'static'});
-
-        //            $scope.filterBooking
-
                 }
+                $scope.documentStatusChangedFlag=0;
+                $scope.$watch("documentStatusChangedFlag",function(newValue,oldValue){
+                    if($scope.documentStatusChangedFlag)
+                    {
+                        $scope.updateListUpcommingBookingWaitingPaperwork();
+                    }
+                });
 
                 /**
                  * Khi tat danh sach xem cac booking local notification thi chay lai tree booking
@@ -1648,13 +1704,14 @@ angular.module("app.loggedIn.rlob.directive", [])
                         "Contact Medico-Legal Department at Redimed on (08) 9230 0900 or log to the online booking system link\n";
                     rlobService.listMailUserOnlineBooking().then(function(data){
                         if (data.status == 'success') {
-                            var recepient = '"'+data.data+'"';
+                            var recepient = data.data;
                             var options = {
                                 subject: ("Medico-Legal Newsletter"),
-                                body: $scope.emailContent
+                                body: $scope.emailContent,
+                                bcc:recepient
                             };
                             console.log(recepient);
-                            $scope.mailtoLink = Mailto.url(recepient, options);
+                            $scope.mailtoLink = Mailto.url('', options);
                             $window.location.href = $scope.mailtoLink;
                         };
                     })

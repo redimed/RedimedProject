@@ -5,6 +5,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 		restrict: 'EA',
 		scope: {
 			patientId: '=',
+			calId:'=',
 			limit: '=',
 			reload: '=',
 			permission: '@',
@@ -31,7 +32,8 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				name: '',
 				description: '',
 				Creation_date: 'desc',
-				Patient_id: scope.patientId
+				Patient_id: scope.patientId,
+				isEnable:''
 			}
 
 			var load = function(){
@@ -128,7 +130,20 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					})
 				}
 			}
+			var disablePatientAlert = function(l){
+				var postData = {
+					alert_id:l.id,
+					patient_id:$stateParams.patientId,
+					cal_id:$stateParams.calId,
+					isEnable:l.isEnable
+				}
+				AlertModel.disablePatientAlert(postData)
+				.then(function(response){
+					scope.alert.load();
+				},function(error){
 
+				})
+			}
 			scope.alert = {
 				dialog: {
 					remove: function(list){
@@ -145,7 +160,8 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				onSearch: function(){ onSearch(); },
 				onOrderBy: function(option){ onOrderBy(option); },
 				onPage: function(page){ onPage(page); },
-				onCheckbox: function(option){ onCheckbox(option); }
+				onCheckbox: function(option){ onCheckbox(option); },
+				disablePatientAlert : function(l){disablePatientAlert(l);}
 			}
 
 			scope.alert.load();
