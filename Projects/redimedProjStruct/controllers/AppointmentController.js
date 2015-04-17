@@ -37,8 +37,8 @@ module.exports = {
 		}	
         var sql = knex('cln_appointment_calendar')
             .where('doctor_id', postData.doctor_id)
-            .whereRaw('date(FROM_TIME) >= '+postData.from_date)
-            .whereRaw('date(TO_TIME) <= '+postData.to_date)
+            .whereRaw('date(FROM_TIME) >= '+'\''+postData.from_date+'\'')
+            .whereRaw('date(TO_TIME) <= '+'\''+postData.to_date+'\'')
             .del()
             .toString();
         db.sequelize.query(sql)
@@ -48,7 +48,7 @@ module.exports = {
         .error(function(error){
             res.json(500, {error: error});
         }) 
-    	},
+    },
 	/*postByDoctor: function(req, res){
 		var postData = req.body.data;
 
