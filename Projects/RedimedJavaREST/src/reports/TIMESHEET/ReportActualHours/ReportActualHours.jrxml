@@ -305,7 +305,7 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 			<staticText>
 				<reportElement x="228" y="19" width="356" height="33" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
 				<textElement textAlignment="Center">
-					<font size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<font size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Report on Actual Working Hours ]]></text>
 			</staticText>
