@@ -42,7 +42,7 @@ angular.module('starter', ['ionic',
     })
 
     .factory('signaling', function (socketFactory, HOST_CONFIG) {
-        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true, 'force new connection': false});
+        var socket = io.connect("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true, 'force new connection': false});
 
         var socketFactory = socketFactory({
             ioSocket: socket
@@ -53,7 +53,7 @@ angular.module('starter', ['ionic',
 
     .config(function($stateProvider, $urlRouterProvider, RestangularProvider, HOST_CONFIG) {
 
-        RestangularProvider.setBaseUrl("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
+        RestangularProvider.setBaseUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state("init", {
