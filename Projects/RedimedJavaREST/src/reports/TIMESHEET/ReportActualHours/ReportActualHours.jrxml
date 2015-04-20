@@ -246,42 +246,42 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{time_ac1_dept}!=null && $F{time_ac1_dept}!="")?(($F{time_ac1_dept}/60<10?"0"+$F{time_ac1_dept}/60:$F{time_ac1_dept}/60)+":"+($F{time_ac1_dept}%60<10?"0"+$F{time_ac1_dept}%60:$F{time_ac1_dept}%60)):"-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{time_ac1_dept}!=null && $F{time_ac1_dept}!="")?(($F{time_ac1_dept}/60<10?"0"+($F{time_ac1_dept}/60).intValue():($F{time_ac1_dept}/60).intValue())+":"+($F{time_ac1_dept}%60<10?"0"+$F{time_ac1_dept}%60:$F{time_ac1_dept}%60)):"-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="201" y="0" width="125" height="27" uuid="19a2dbd6-22a0-40f4-bd34-442040144528"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{time_ac2_dept}!=null && $F{time_ac2_dept}!="")?(($F{time_ac2_dept}/60<10?"0"+$F{time_ac2_dept}/60:$F{time_ac2_dept}/60)+":"+($F{time_ac2_dept}%60<10?"0"+$F{time_ac2_dept}%60:$F{time_ac2_dept}%60)):"-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{time_ac2_dept}!=null && $F{time_ac2_dept}!="")?(($F{time_ac2_dept}/60<10?"0"+($F{time_ac2_dept}/60).intValue():($F{time_ac2_dept}/60).intValue())+":"+($F{time_ac2_dept}%60<10?"0"+$F{time_ac2_dept}%60:$F{time_ac2_dept}%60)):"-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="326" y="0" width="85" height="27" uuid="94161239-6605-4b1a-a3d1-b76f84d7834d"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{time_ac3_dept}!=null && $F{time_ac3_dept}!="")?(($F{time_ac3_dept}/60<10?"0"+$F{time_ac3_dept}/60:$F{time_ac3_dept}/60)+":"+($F{time_ac3_dept}%60<10?"0"+$F{time_ac3_dept}%60:$F{time_ac3_dept}%60)):"-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{time_ac3_dept}!=null && $F{time_ac3_dept}!="")?(($F{time_ac3_dept}/60<10?"0"+($F{time_ac3_dept}/60).intValue():($F{time_ac3_dept}/60).intValue())+":"+($F{time_ac3_dept}%60<10?"0"+$F{time_ac3_dept}%60:$F{time_ac3_dept}%60)):"-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="411" y="0" width="115" height="27" uuid="c79a6ea4-42a0-46fa-83eb-4115b53c33e1"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{time_ac4_dept}!=null && $F{time_ac4_dept}!="")?(($F{time_ac4_dept}/60<10?"0"+$F{time_ac4_dept}/60:$F{time_ac4_dept}/60)+":"+($F{time_ac4_dept}%60<10?"0"+$F{time_ac4_dept}%60:$F{time_ac4_dept}%60)):"-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{time_ac4_dept}!=null && $F{time_ac4_dept}!="")?(($F{time_ac4_dept}/60<10?"0"+($F{time_ac4_dept}/60).intValue():($F{time_ac4_dept}/60).intValue())+":"+($F{time_ac4_dept}%60<10?"0"+$F{time_ac4_dept}%60:$F{time_ac4_dept}%60)):"-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="526" y="0" width="83" height="27" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{time_ac5_dept}!=null && $F{time_ac5_dept}!="")?(($F{time_ac5_dept}/60<10?"0"+$F{time_ac5_dept}/60:$F{time_ac5_dept}/60)+":"+($F{time_ac5_dept}%60<10?"0"+$F{time_ac5_dept}%60:$F{time_ac5_dept}%60)):"-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{time_ac5_dept}!=null && $F{time_ac5_dept}!="")?(($F{time_ac5_dept}/60<10?"0"+($F{time_ac5_dept}/60).intValue():($F{time_ac5_dept}/60).intValue())+":"+($F{time_ac5_dept}%60<10?"0"+$F{time_ac5_dept}%60:$F{time_ac5_dept}%60)):"-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="609" y="0" width="125" height="27" uuid="b1a3bd29-a331-4800-ba8d-49008bb960f1"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="true" isItalic="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{total_dept}!=null && $F{total_dept}!="")?(($F{total_dept}/60<10?"0"+$F{total_dept}/60:$F{total_dept}/60)+":"+($F{total_dept}%60<10?"0"+$F{total_dept}%60:$F{total_dept}%60)):"-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{total_dept}!=null && $F{total_dept}!="")?(($F{total_dept}/60<10?"0"+($F{total_dept}/60).intValue():($F{total_dept}/60).intValue())+":"+($F{total_dept}%60<10?"0"+$F{total_dept}%60:$F{total_dept}%60)):"-"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="733" y="0" width="53" height="27" uuid="dab20431-88c4-40ce-81b7-c8d14e27fddf"/>
@@ -347,29 +347,22 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 			<textField>
 				<reportElement x="119" y="0" width="82" height="20" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_ac1}==null || $F{time_ac1}=='')?'':(($F{time_ac1}/60<10?"0"+$F{time_ac1}/60:$F{time_ac1}/60))+":"+(($F{time_ac1}%60<10?"0"+$F{time_ac1}%60:$F{time_ac1}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_ac1}==null || $F{time_ac1}=='')?'':(($F{time_ac1}/60<10?"0"+($F{time_ac1}/60).intValue():($F{time_ac1}/60).intValue()))+":"+(($F{time_ac1}%60<10?"0"+$F{time_ac1}%60:$F{time_ac1}%60))]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="">
 				<reportElement x="201" y="0" width="125" height="20" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_ac2}==null || $F{time_ac2}=='')?'':(($F{time_ac2}/60<10?"0"+$F{time_ac2}/60:$F{time_ac2}/60))+":"+(($F{time_ac2}%60<10?"0"+$F{time_ac2}%60:$F{time_ac2}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_ac2}==null || $F{time_ac2}=='')?'':$F{time_ac2}/60<10?"0"+($F{time_ac2}/60).intValue():($F{time_ac2}/60).intValue()+":"+(($F{time_ac2}%60<10?"0"+$F{time_ac2}%60:$F{time_ac2}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="326" y="0" width="85" height="20" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_ac3}==null || $F{time_ac3}=='')?'':(($F{time_ac3}/60<10?"0"+$F{time_ac3}/60:$F{time_ac3}/60))+":"+(($F{time_ac3}%60<10?"0"+$F{time_ac3}%60:$F{time_ac3}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_ac3}==null || $F{time_ac3}=='')?'':(($F{time_ac3}/60<10?"0"+($F{time_ac3}/60).intValue():($F{time_ac3}/60).intValue()))+":"+(($F{time_ac3}%60<10?"0"+$F{time_ac3}%60:$F{time_ac3}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="526" y="0" width="83" height="20" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_ac5}==null || $F{time_ac5}=='')?'':(($F{time_ac5}/60<10?"0"+$F{time_ac5}/60:$F{time_ac5}/60))+":"+(($F{time_ac5}%60<10?"0"+$F{time_ac5}%60:$F{time_ac5}%60))]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="609" y="0" width="124" height="20" uuid="9675eb1e-b0e9-42ae-a21a-507cec41bb7c">
-					<printWhenExpression><![CDATA[$F{order}==1]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_charge_sum}!=null || $F{time_charge_sum}!="")?(($F{time_charge_sum}/60<10?"0"+$F{time_charge_sum}/60:$F{time_charge_sum}/60)+":"+($F{time_charge_sum}%60<10?"0"+$F{time_charge_sum}%60:$F{time_charge_sum}%60)):"00:00"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_ac5}==null || $F{time_ac5}=='')?'':(($F{time_ac5}/60<10?"0"+($F{time_ac5}/60).intValue():($F{time_ac5}/60).intValue()))+":"+(($F{time_ac5}%60<10?"0"+$F{time_ac5}%60:$F{time_ac5}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="734" y="0" width="52" height="20" uuid="6d9f661a-633f-415a-9538-0c6ff57f045a">
@@ -381,12 +374,37 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 			<textField>
 				<reportElement x="411" y="0" width="115" height="20" uuid="d82776bc-2481-4103-9991-27ec97ce6d92"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_ac4}==null || $F{time_ac4}=='')?'':(($F{time_ac4}/60<10?"0"+$F{time_ac4}/60:$F{time_ac4}/60))+":"+(($F{time_ac4}%60<10?"0"+$F{time_ac4}%60:$F{time_ac4}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_ac4}==null || $F{time_ac4}=='')?'':(($F{time_ac4}/60<10?"0"+($F{time_ac4}/60).intValue():($F{time_ac4}/60).intValue()))+":"+(($F{time_ac4}%60<10?"0"+$F{time_ac4}%60:$F{time_ac4}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="15" y="0" width="104" height="20" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{order}==1?$F{employee}:($F{order}==2?"":""))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="609" y="0" width="124" height="20" uuid="f19bd4c0-0187-42a0-9c75-99e3582e681b">
+					<printWhenExpression><![CDATA[$F{order}==2]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{time_in_lieu}!=null || $F{time_in_lieu}!="")?(($F{time_in_lieu}/60<10?"0"+($F{time_in_lieu}/60).intValue():($F{time_in_lieu}/60).intValue())+":"+($F{time_in_lieu}%60<10?"0"+$F{time_in_lieu}%60:$F{time_in_lieu}%60)):"00:00"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="608" y="0" width="125" height="20" uuid="1ddb9000-eaf3-4f76-a31b-b06ba2c1db4f">
+					<printWhenExpression><![CDATA[$F{order}==3]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{time_over}!=null || $F{time_over}!="")?(($F{time_over}/60<10?"0"+($F{time_over}/60).intValue():($F{time_over}/60).intValue())+":"+($F{time_over}%60<10?"0"+$F{time_over}%60:$F{time_over}%60)):"00:00"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="608" y="0" width="125" height="20" uuid="9675eb1e-b0e9-42ae-a21a-507cec41bb7c">
+					<printWhenExpression><![CDATA[$F{order}==1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_charge_sum}!=null || $F{time_charge_sum}!="")?(($F{time_charge_sum}/60<10?"0"+($F{time_charge_sum}/60).intValue():($F{time_charge_sum}/60).intValue())+":"+($F{time_charge_sum}%60<10?"0"+$F{time_charge_sum}%60:$F{time_charge_sum}%60)):"00:00"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="734" y="0" width="52" height="20" uuid="cf4b73f8-bca3-4b6c-8519-f7e94881df7f">
@@ -405,24 +423,6 @@ ORDER BY time_time_charge_reports1.employee_id, time_time_charge_reports1.order]
 					<font isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{time_convert}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="609" y="0" width="125" height="20" uuid="1ddb9000-eaf3-4f76-a31b-b06ba2c1db4f">
-					<printWhenExpression><![CDATA[$F{order}==3]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font isBold="false" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{time_over}!=null || $F{time_over}!="")?(($F{time_over}/60<10?"0"+$F{time_over}/60:$F{time_over}/60)+":"+($F{time_over}%60<10?"0"+$F{time_over}%60:$F{time_over}%60)):"00:00"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="609" y="0" width="124" height="20" uuid="f19bd4c0-0187-42a0-9c75-99e3582e681b">
-					<printWhenExpression><![CDATA[$F{order}==2]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font isBold="false" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{time_in_lieu}!=null || $F{time_in_lieu}!="")?(($F{time_in_lieu}/60<10?"0"+$F{time_in_lieu}/60:$F{time_in_lieu}/60)+":"+($F{time_in_lieu}%60<10?"0"+$F{time_in_lieu}%60:$F{time_in_lieu}%60)):"00:00"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
