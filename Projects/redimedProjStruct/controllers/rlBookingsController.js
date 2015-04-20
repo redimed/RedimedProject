@@ -1545,7 +1545,7 @@ module.exports =
                     "   Hi {{FIRST_NAME}},                                                                    "+
                     " </p>                                                                                                                          "+
                     " <p>                                                                                                                           "+
-                    "     The {{Rl_TYPE_NAME}} completed for {{WRK_OTHERNAMES}} {{WRK_SURNAME}} by {{NAME}} on the {{APPOINTMENT_DATE}} has been uploaded to your Medico-Legal login.      "+
+                    "     The {{Rl_TYPE_NAME}} completed for {{WRK_OTHERNAMES}} {{WRK_SURNAME}} by {{NAME}} at {{APPOINTMENT_DATE}}, has been uploaded to your Medico-Legal login.      "+
                     " </p>                                                                                                                          "+
                     " <p>                                                                                                                           "+
                     "     The original of the report will also be posted through to your office along with the invoice.                             "+
