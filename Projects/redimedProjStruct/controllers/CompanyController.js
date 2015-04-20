@@ -630,6 +630,7 @@ module.exports = {
             isProject:  info.isProject == '1' ? 1 : 0 ,
             isPO:  info.isPO == '1' ? 1 : 0,
             isExtra:  info.isExtra == '1' ? 1 : 0,
+            Phone: info.phone,
             father_id: fatherId
         },{raw:true})
             .success(function(data){
@@ -658,6 +659,7 @@ module.exports = {
             isAddContactEmailToResult:  info.isResult == '1' ? 1 : 0,
             result_email: info.resultEmail,
             report_to_email: info.reportEmail,
+            Phone: info.phone,
             default_status: info.status,
             isProject:  info.isProject == '1' ? 1 : 0 ,
             isExtra:  info.isExtra == '1' ? 1 : 0,
