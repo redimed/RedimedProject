@@ -229,5 +229,6 @@ app.post('/api/meditek/v1/script/list', ScriptController.postList);
 app.post('/api/meditek/v1/script/byid', ScriptController.postById);
 app.post('/api/meditek/v1/script/add', ScriptController.postAdd);
 app.post('/api/meditek/v1/script/edit', ScriptController.postEdit);
+app.post('/api/meditek/v1/script/disable', ScriptController.postDisable);
 app.post('/api/meditek/v1/script/remove', ScriptController.postRemove);
 /* END SCRIPT */
