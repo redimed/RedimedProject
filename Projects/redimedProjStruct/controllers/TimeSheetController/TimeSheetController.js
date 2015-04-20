@@ -1792,22 +1792,8 @@ module.exports = {
                                                     (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
                                                     (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
                                                     (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + ", " +
-                                                    convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
+                                                    convertTime(resultDept[i].listEmployee[j].time_charge) + "," + resultDept[i].listEmployee[j].time_in_lieu + ", " + resultDept[i].listEmployee[j].over_time + "), ";
                                                 //TIME CHARGE
-
-                                                // VALUE TIME IN LIEU
-                                                listTimeInsert += "(" + USER_ID + "," +
-                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
-                                                    convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
-                                                    resultDept[i].listEmployee[j].time_in_lieu + "', null, 2), ";
-                                                //END
-
-                                                // VALUE OVERTIME
-                                                listTimeInsert += "(" + USER_ID + "," +
-                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
-                                                    convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
-                                                    resultDept[i].listEmployee[j].over_time + "', 3), ";
-                                                // END
                                             }
                                         }
                                         if (listEmployeeInsert !== "") {
@@ -1817,7 +1803,7 @@ module.exports = {
                                             listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
                                         }
                                         var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, deptList, time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, convert_dept) VALUES " + listEmployeeInsert;
-                                        var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
+                                        var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over) VALUES " + listTimeInsert;
                                         var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
                                         var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
                                         db.sequelize.query(queryDelEmployee)
