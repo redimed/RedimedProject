@@ -45,7 +45,8 @@
 		<div class="appointment-row" ng-repeat="app in appointment.list">
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
-				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)">
+				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)"
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}'}">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>

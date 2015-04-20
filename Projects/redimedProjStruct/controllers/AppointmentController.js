@@ -48,7 +48,7 @@ module.exports = {
         .error(function(error){
             res.json(500, {error: error});
         }) 
-    },
+    	},
 	/*postByDoctor: function(req, res){
 		var postData = req.body.data;
 
@@ -115,6 +115,8 @@ module.exports = {
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.TO_TIME, '%H:%i') AS TO_TIME"),
 			'cln_appointment_calendar.SERVICE_ID',
+			'sys_services.SERVICE_NAME',
+			'sys_services.SERVICE_COLOR',
 			'cln_appointment_calendar.DOCTOR_ID',
 			'cln_appointment_calendar.CAL_ID',
 			'cln_appointment_calendar.CLINICAL_DEPT_ID',
@@ -124,6 +126,7 @@ module.exports = {
 		)
 		.leftOuterJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.leftOuterJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
+		.leftOuterJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
 		.from('cln_appointment_calendar')
 		.where({
 			'cln_appointment_calendar.SITE_ID': postData.site_id
