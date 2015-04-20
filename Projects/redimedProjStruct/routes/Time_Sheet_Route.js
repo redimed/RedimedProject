@@ -37,7 +37,6 @@ app.post("/api/TimeSheet/post-approve-taskweek", TimeSheet.ApproveTaskWeek);
 
 //VIEW DETAIL TIMESHEET
 app.post("/api/TimeSheet/post-detail-one", TimeSheet.ViewOnDate);
-app.post("/api/TimeSheet/post-detail-all", TimeSheet.ViewAllDate);
 //END VIEW DETAIL TIMESHEET
 
 //ROLE
@@ -47,3 +46,16 @@ app.post("/api/TimeSheet/post-role-one", TimeSheet.LoadRole);
 //ITEM CODE
 app.post("/api/TimeSheet/post-itemcode-list", TimeSheet.LoadItemCode);
 //END ITEM CODE
+
+//EMPLOYEE
+app.post("/api/TimeSheet/post-list-emp", TimeSheet.StepEmployee);
+//END
+
+// REPORT
+app.post("/api/TimeSheet/post-list-deptRP", TimeSheet.LoadDeptReport);
+app.post("/api/TimeSheet/post-list-empRP", TimeSheet.LoadEmpReport);
+app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
+//END REPORT
+
+//SEND MAIL
+// END SEND MAIL

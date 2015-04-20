@@ -75,6 +75,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
             //SEARCH FUNCTION
             $scope.searchObjectMapNode = angular.copy($scope.searchNodeObject);
             //END SEARCH FUNCTION
+            
             $scope.listNode = {};
             $scope.loadListNode();
         };

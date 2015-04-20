@@ -2,7 +2,7 @@
     <form method="POST" class="grid-form" name="addUser">
         <!-- MAIN INFO -->
         <fieldset>
-            <legend>Add User
+            <legend>Add User Step 1
                 <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
             </legend>
             <div data-row-span="12">
@@ -99,7 +99,6 @@
                             <div class="col-ms-6 page-num-info ">
                                 <div class="col-md-4 col-sm-5 ">
                                     <span class="bold custom-timesheet">Total: {{list.count}}</span>
-
                                     <span class="custom-timesheet">Show</span>
                                     <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
                                     </select>
@@ -116,8 +115,11 @@
             </div>
             <!-- END TABLE LIST USER IN GROUP -->
         </fieldset>
-        <a class="btn blue pull-right btn-xs" ng-click="onSave({return: checkList})" ng-disabled="addUser.NODE_ID.$error.required || addUser.departmentid.$error.required || isChecked==false">Add</a>
-        <a class="btn red pull-right btn-xs" ng-click="onCancel({return: true})">Close</a>
+        <a class="btn red pull-right btn-xs" style="width:50px;" ng-click="onCancel({return: true})">Cancel</a>
+        <a class="btn blue pull-right btn-xs" style="width:50px;" ng-click="stepEmployee(checkList)" ng-disabled="addUser.NODE_ID.$error.required || addUser.departmentid.$error.required || isChecked==false"><i class="glyphicon glyphicon-arrow-right"></i>&nbsp;Next</a>
         <!-- END MAIN INFO -->
     </form>
 </div>
+<script type="text/ng-template" id="StepEmployee">
+    <step-employee ng-model="listEmp" onCancel="({return})" onSave="({return})"></step-employee>
+</script>

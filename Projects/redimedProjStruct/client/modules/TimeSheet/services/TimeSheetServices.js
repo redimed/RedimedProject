@@ -196,6 +196,38 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 searchObj: searchObj
             });
         };
+        TimeSheetService.StepEmployee = function(info) {
+            var StepEmployee = api.all("TimeSheet/post-list-emp");
+            return StepEmployee.post({
+                info: info
+            });
+        };
 
+        TimeSheetService.LoadDeptReport = function(USER_ID) {
+            var LoadDeptReport = api.all("TimeSheet/post-list-deptRP");
+            return LoadDeptReport.post({
+                USER_ID: USER_ID
+            });
+        };
+
+        TimeSheetService.LoadEmpReport = function(listDept) {
+            var LoadEmpReport = api.all("TimeSheet/post-list-empRP");
+            return LoadEmpReport.post({
+                listDept: listDept
+            });
+        };
+        TimeSheetService.LoadReports1 = function(info) {
+            var LoadReports1 = api.all("TimeSheet/post-list-reports1");
+            return LoadReports1.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.sendMailTimeSheet = function(info) {
+            var sendMailTimeSheet = api.all('TimeSheet/post-send-mail');
+            return sendMailTimeSheet.post({
+                info: info
+            });
+        };
         return TimeSheetService;
     });

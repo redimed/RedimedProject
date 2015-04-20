@@ -1,4 +1,5 @@
 var db = require("../../models");
+var FunctionSendMail = require("../../controllers/TimeSheetController/timeSheetEmailController.js");
 var sys_hierarchy_group = db.sys_hierarchy_group;
 var sys_hierarchy_nodes = db.sys_hierarchy_nodes;
 var sys_hierarchies_users = db.sys_hierarchies_users;
@@ -7,6 +8,8 @@ var UserType = db.UserType;
 var Company = db.Company;
 var Departments = db.Departments;
 var Location = db.timeLocation;
+var moment = require('moment');
+var CronJob = require('cron').CronJob;
 module.exports = {
     //MODULE TREE
     LoadTreeTimeSheet: function(req, res) {
@@ -846,25 +849,23 @@ module.exports = {
         var strQuery = "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " +
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName, time_type_activity.type_activity_id " +
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
             "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN time_type_activity ON time_type_activity.type_activity_id = time_activity.type_activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
             "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date ORDER BY time_tasks.date";
         var strActivity = "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " +
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName, time_type_activity.type_activity_id " +
+            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
             "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN time_type_activity ON time_type_activity.type_activity_id = time_activity.type_activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_type_activity.type_activity_id ORDER BY time_tasks.date";
+            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_activity.activity_id ORDER BY time_tasks.date";
         db.sequelize.query(strQuery)
             .success(function(result) {
                 if (result === undefined || result === null || result.length === 0) {
@@ -908,8 +909,8 @@ module.exports = {
 
     ViewOnDate: function(req, res) {
         var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
-            "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.quantity, time_item_task.comment, " +
+        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task,time_item_task.units,time_item_code.ITEM_NAME, time_item_code.IS_BILLABLE, time_item_task.ratio, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
+            "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
             "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
             "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
             "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
@@ -920,6 +921,7 @@ module.exports = {
             "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
             "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " +
+            "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
             "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
             " AND time_tasks.deleted = 0" +
             " ORDER BY time_tasks.order ASC";
@@ -941,45 +943,18 @@ module.exports = {
             });
     },
 
-    ViewAllDate: function(req, res) {
-        var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date, time_tasks.task, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
-            "time_tasks.time_charge, time_item_task.item_id, time_item_task.quantity,time_item_task.time_charge as chargeItem, time_item_task.comment, " +
-            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, time_tasks_week.time_in_lieu, " +
-            "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
-            "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
-            "INNER JOIN users ON users.id=time_tasks_week.user_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
-            "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
-            "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " +
-            "WHERE time_tasks.tasks_week_id = " + info.ID +
-            " AND time_tasks.deleted = 0  AND (time_tasks.time_charge != 0 OR time_tasks.activity_id=18)" +
-            " ORDER BY time_tasks.date ASC";
-        db.sequelize.query(strQuery)
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-
     LoadItemCode: function(req, res) {
         var searchObj = req.body.searchObj;
-        var strSearch = " WHERE ";
+        var strSearch = " WHERE 1 = 1 AND ";
         var strOrder = " ORDER BY ";
+        var activity = "";
+        // CHECK ISBILLABLE OR NOT
+        if (searchObj.isBillable === false) {
+            activity = " AND time_item_code.ACTIVITY_ID = " + searchObj.activity_id + " ";
+        } else {
+            activity = " AND time_item_code.IS_BILLABLE = 1 ";
+        }
+        //END
         //get search
         for (var keySearch in searchObj.data) {
             if (searchObj.data[keySearch] !== undefined &&
@@ -989,11 +964,8 @@ module.exports = {
                     "%' AND ";
             }
         }
-        if (strSearch.length === 7) {
-            strSearch = "";
-        } else {
-            strSearch = strSearch.substring(0, strSearch.length - 5);
-        }
+
+        strSearch = strSearch.substring(0, strSearch.length - 5);
         //end get search
 
         //get ORDER
@@ -1010,8 +982,8 @@ module.exports = {
             strOrder = strOrder.substring(0, strOrder.length - 2);
         }
         //end get ORDER
-        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME FROM time_item_code " + strSearch + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
-        var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + strOrder;
+        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_item_code.ITEM_UNITS FROM time_item_code " + strSearch + activity + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
+        var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + activity + strOrder;
         db.sequelize.query(query)
             .success(function(result) {
                 if ((result === undefined || result === null || result.length === 0) && strSearch === "") {
@@ -1115,7 +1087,9 @@ module.exports = {
             .success(function(result) {
                 if (result === undefined || result === null || result.length === 0) {
                     res.json({
-                        status: "error"
+                        status: "success",
+                        count: 0,
+                        result: null
                     });
                     return;
                 } else {
@@ -1142,7 +1116,9 @@ module.exports = {
                             var Depts = "";
                             if (resultDept === undefined || resultDept === null || resultDept.length === 0) {
                                 res.json({
-                                    status: "error"
+                                    status: "success",
+                                    count: 0,
+                                    result: []
                                 });
                                 return;
                             } else {
@@ -1162,7 +1138,9 @@ module.exports = {
                                     .success(function(staffNode) {
                                         if (staffNode === undefined || staffNode === null || staffNode.length === 0) {
                                             res.json({
-                                                status: "error"
+                                                status: "success",
+                                                count: 0,
+                                                result: []
                                             });
                                             return;
                                         } else {
@@ -1190,7 +1168,9 @@ module.exports = {
                                                 .success(function(resultListUser) {
                                                     if (resultListUser === undefined || resultListUser === null || resultListUser.length === 0) {
                                                         res.json({
-                                                            status: "error"
+                                                            status: "success",
+                                                            count: 0,
+                                                            result: []
                                                         });
                                                         return;
                                                     } else {
@@ -1333,10 +1313,27 @@ module.exports = {
 
     RejectTaskWeek: function(req, res) {
         var info = req.body.info;
-        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, comments ='" +
+        info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+        info.status = 4;
+        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, approved_date ='" + info.date + "', comments ='" +
             info.comments + "' WHERE task_week_id = " + info.idTaskWeek;
         db.sequelize.query(query)
             .success(function(result) {
+                //TRACKER
+                var tracKer = {
+                    statusID: 4,
+                    USER_ID: info.USER_ID,
+                    idTaskWeek: info.idTaskWeek,
+                    date: info.date
+                };
+                //CALL FUNCTION TRACKER
+                TracKerTimeSheet(tracKer);
+                //END
+                // SEND MAIL
+                SendMailTimeSheet(req, res, info);
+                // END MAIL
+
+                //END TRACKER
                 res.json({
                     status: "success"
                 });
@@ -1440,7 +1437,8 @@ module.exports = {
                     console.log("*****Not found time in lieu choose of this week *****");
                 }
                 //SET APPROVE
-                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                info.status = 3;
                 var timeType = "";
                 if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
                     if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
@@ -1450,9 +1448,25 @@ module.exports = {
                         timeType += ", over_time = " + info.over_timeFull;
                     }
                 }
-                var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
+                var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + info.date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
                 db.sequelize.query(query)
                     .success(function(result) {
+                        //TRACKER
+                        var tracKer = {
+                            statusID: 3,
+                            USER_ID: info.USER_ID,
+                            idTaskWeek: info.idTaskWeek,
+                            date: info.date
+                        };
+                        //CALL FUNCTION TRACKER
+                        TracKerTimeSheet(tracKer);
+                        //END
+
+                        // SEND MAIL
+                        SendMailTimeSheet(req, res, info);
+                        // ENE MAIL
+
+                        //END TRACKER
                         res.json({
                             status: "success"
                         });
@@ -1479,38 +1493,528 @@ module.exports = {
     },
     //ROLE
     LoadRole: function(req, res) {
-            var USER_ID = req.body.USER_ID;
-            var query = "SELECT NODE_CODE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
-                "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
-                " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
-                "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
-                " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
-            db.sequelize.query(query)
-                .success(function(result) {
-                    if (result === undefined || result === null || result.length === 0) {
-                        res.json({
-                            status: "fail",
-                            position: []
-                        });
-                        return;
-                    } else {
-                        res.json({
-                            status: "success",
-                            position: result
-                        });
-                        return;
-                    }
-                })
-                .error(function(err) {
-                    console.log("*****ERROR:" + err + "*****");
+        var USER_ID = req.body.USER_ID;
+        var query = "SELECT hr_employee.TITLE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
+            "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
+            " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
+            "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+            "INNER JOIN users ON users.id = sys_hierarchies_users.USER_ID " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
+            " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
+        db.sequelize.query(query)
+            .success(function(result) {
+                if (result === undefined || result === null || result.length === 0) {
                     res.json({
-                        status: "error",
-                        position: [],
+                        status: "success",
+                        position: [{
+                            TITLE: "NOTROLE"
+                        }]
                     });
                     return;
+                } else {
+                    res.json({
+                        status: "success",
+                        position: result
+                    });
+                    return;
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    position: [],
                 });
+                return;
+            });
+    },
+    StepEmployee: function(req, res) {
+        var info = req.body.info;
+        var listUserID = "";
+        for (var i = 0; i < info.length; i++) {
+            listUserID += info[i] + ",";
         }
+        listUserID = listUserID.substring(0, listUserID.length - 1);
+        listUserID = "(" + listUserID + ")";
+        var queryEmp = "SELECT users.id, users.user_name, users.employee_id, hr_employee.Employee_Code, " +
+            "hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct FROM users " +
+            "LEFT JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id WHERE users.id IN " + listUserID;
+        db.sequelize.query(queryEmp)
+            .success(function(result) {
+                if (result === undefined || result === null || result.length === 0) {
+                    console.log("NOT FOUND USER IN LIST");
+                    res.json({
+                        status: "error"
+                    });
+                    return;
+                } else {
+                    res.json({
+                        status: "success",
+                        result: result
+                    });
+                    return;
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
         //END ROLE
+    },
+
+    LoadDeptReport: function(req, res) {
+        var USER_ID = req.body.USER_ID;
+        var query = "SELECT hr_employee.TITLE FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id  = hr_employee.Employee_ID " +
+            "WHERE users.id = " + USER_ID;
+        db.sequelize.query(query)
+            .success(function(result) {
+                if (result !== undefined && result !== null && result.length !== 0) {
+                    var TITLE = result[0].TITLE;
+                    var queryDept = "";
+                    if (TITLE === "Director") {
+                        //ALL DEPT
+                        queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
+                            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                            "WHERE departments.departmentType = 'Time Sheet'";
+                    } else if (TITLE === "Head of Dept.") {
+                        //ONE DEPT
+                        queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
+                            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                            "WHERE departments.departmentType = 'Time Sheet' AND users.id = " + USER_ID;
+                    }
+                    db.sequelize.query(queryDept)
+                        .success(function(resultDept) {
+                            res.json({
+                                status: "success",
+                                result: resultDept
+                            });
+                            return;
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                result: []
+                            });
+                            return;
+                        });
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+    LoadEmpReport: function(req, res) {
+        var listDept = req.body.listDept;
+        var strListDept = "";
+        for (var i = 0; i < listDept.length; i++) {
+            strListDept += listDept[i].id + ", ";
+        }
+        if (strListDept !== undefined && strListDept !== null && strListDept !== "" && strListDept.length !== 0) {
+            strListDept = strListDept.substring(0, strListDept.length - 2);
+        } else {
+            strListDept = null;
+        }
+        var query = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+            "WHERE departments.departmentid IN (" + strListDept + ")";
+        db.sequelize.query(query)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+    LoadReports1: function(req, res) {
+        var info = req.body.info;
+        var weekNoFrom = info.weekNoFrom;
+        var weekNoTo = info.weekNoTo - 1;
+        var listEMP = info.listEMP;
+        var USER_ID = info.USER_ID;
+        var listDept = info.listDept;
+        var weekFrom = moment(info.weekFrom).format("YYYY-MM-DD");
+        var weekTo = moment(info.weekTo).format("YYYY-MM-DD");
+        //STR EMP
+        var strListEmp = "";
+        for (var i = 0; i < listEMP.length; i++) {
+            strListEmp += listEMP[i].id + ", ";
+        }
+        if (strListEmp !== undefined && strListEmp !== null && strListEmp !== "" && strListEmp.length !== 0) {
+            strListEmp = strListEmp.substring(0, strListEmp.length - 2);
+        } else {
+            strListEmp = null;
+        }
+        //END
+        var strListDept = "";
+        var strListDeptID = "";
+        for (var d = 0; d < listDept.length; d++) {
+            strListDeptID += listDept[d].id + ", ";
+        }
+        if (strListDeptID !== "") {
+            strListDeptID = strListDeptID.substring(0, strListDeptID.length - 2);
+        } else strListDeptID = -1;
+        // SELECT DEPT
+        var queryDept = "SELECT DISTINCT COUNT(hr_employee.Employee_ID) AS CountEmp, departments.departmentName, departments.departmentid FROM departments " +
+            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN time_tasks_week ON time_tasks_week.user_id  = users.id " +
+            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " GROUP BY departments.departmentName ORDER BY departments.departmentName ASC";
+        // END DEPT
+
+        // SELECT TIMECHARGE ACTIVITY
+        var queryActivity = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
+            "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
+            "FROM time_tasks_week " +
+            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+            "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo +
+            " GROUP BY hr_employee.Employee_ID, time_tasks.activity_id ORDER BY departments.departmentid";
+        // END ACTIVITY
+
+        // SELECT TIMECHARGE ALL
+        var querySumTimeCharge = "SELECT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
+            "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
+            " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
+            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, " +
+            "hr_employee.FirstName, hr_employee.LastName, departments.departmentName, departments.departmentid " +
+            "FROM time_tasks_week " +
+            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+            "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
+        // END ALL
+
+        var queryGetListDept = "SELECT departments.departmentName FROM departments WHERE departments.departmentid IN (" + strListDeptID + ")";
+        db.sequelize.query(queryGetListDept)
+            .success(function(resultDeptName) {
+                if (listDept.length !== 11) {
+                    for (var m = 0; m < resultDeptName.length; m++) {
+                        strListDept += resultDeptName[m].departmentName + ", ";
+                    }
+                    strListDept = strListDept.substring(0, strListDept.length - 2);
+                } else if (listDept.length === 11) {
+                    strListDept = "All";
+                }
+                db.sequelize.query(queryDept)
+                    .success(function(resultDept) {
+                        db.sequelize.query(querySumTimeCharge)
+                            .success(function(resultTimeCharge) {
+                                db.sequelize.query(queryActivity)
+                                    .success(function(resultActivity) {
+                                        for (var i = 0; i < resultDept.length; i++) {
+                                            resultDept[i].listEmployee = [];
+                                            for (var j = 0; j < resultTimeCharge.length; j++) {
+                                                if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
+                                                    //PUSH DATA
+                                                    resultDept[i].listEmployee.push({
+                                                        employee_id: resultTimeCharge[j].Employee_ID,
+                                                        name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
+                                                        time_charge: resultTimeCharge[j].SUM_CHARGE,
+                                                        time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
+                                                        over_time: resultTimeCharge[j].SUM_OVER_TIME,
+                                                        SUM_CHARGE_ACTIVITY: [],
+                                                        activity_id: resultTimeCharge[j].activity_id
+                                                    });
+                                                    //END
+                                                    for (var k = 0; k < resultActivity.length; k++) {
+                                                        if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
+                                                            resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //INSERT TEMP TABLE REPORTS1
+
+                                        //SUM TIME ON DEPT
+                                        for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
+                                            resultDept[deptIndex].sum_ac1_dept = 0;
+                                            resultDept[deptIndex].sum_ac2_dept = 0;
+                                            resultDept[deptIndex].sum_ac3_dept = 0;
+                                            resultDept[deptIndex].sum_ac4_dept = 0;
+                                            resultDept[deptIndex].sum_ac5_dept = 0;
+                                            for (var empIndex = 0; empIndex < resultDept[deptIndex].listEmployee.length; empIndex++) {
+                                                resultDept[deptIndex].sum_ac1_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1]);
+                                                resultDept[deptIndex].sum_ac2_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2]);
+                                                resultDept[deptIndex].sum_ac3_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3]);
+                                                resultDept[deptIndex].sum_ac4_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4]);
+                                                resultDept[deptIndex].sum_ac5_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5]);
+                                            }
+                                        }
+                                        //END
+                                        var listEmployeeInsert = "";
+                                        var listTimeInsert = "";
+                                        for (var i = 0; i < resultDept.length; i++) {
+                                            for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
+
+                                                // VALUE EMP
+                                                listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
+                                                    resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "','" + strListDept +
+                                                    "'," + resultDept[i].sum_ac1_dept +
+                                                    "," + resultDept[i].sum_ac2_dept + "," +
+                                                    resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
+                                                    resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept + resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," + convertTime(resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept + resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "), ";
+                                                //EMP
+                                                // VALUE TIME CHARGE
+                                                listTimeInsert += "(" + USER_ID + "," +
+                                                    resultDept[i].listEmployee[j].employee_id + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
+                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
+                                                    (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + ", " +
+                                                    convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
+                                                //TIME CHARGE
+
+                                                // VALUE TIME IN LIEU
+                                                listTimeInsert += "(" + USER_ID + "," +
+                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
+                                                    convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
+                                                    resultDept[i].listEmployee[j].time_in_lieu + "', null, 2), ";
+                                                //END
+
+                                                // VALUE OVERTIME
+                                                listTimeInsert += "(" + USER_ID + "," +
+                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
+                                                    convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
+                                                    resultDept[i].listEmployee[j].over_time + "', 3), ";
+                                                // END
+                                            }
+                                        }
+                                        if (listEmployeeInsert !== "") {
+                                            listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
+                                        }
+                                        if (listTimeInsert !== "") {
+                                            listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
+                                        }
+                                        var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, deptList, time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, convert_dept) VALUES " + listEmployeeInsert;
+                                        var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
+                                        var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
+                                        var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
+                                        db.sequelize.query(queryDelEmployee)
+                                            .success(function(delSuccessEmp) {
+                                                db.sequelize.query(queryDelTime)
+                                                    .success(function(delSuccessTime) {
+                                                        //INSERT EMP
+                                                        if (listEmployeeInsert !== "") {
+                                                            db.sequelize.query(queryInsertEmployee)
+                                                                .success(function(insertSuccessEmp) {
+                                                                    // INSERT TIME
+                                                                    if (queryInsertTimeInSert !== "") {
+                                                                        db.sequelize.query(queryInsertTimeInSert)
+                                                                            .success(function(insertSuccessTime) {
+
+                                                                                //RES.JSON
+                                                                                res.json({
+                                                                                    status: "success",
+                                                                                    result: resultDept
+                                                                                });
+                                                                                return;
+                                                                                //END
+                                                                            })
+                                                                            .error(function(err) {
+                                                                                console.log("*****ERROR:" + err + "*****");
+                                                                                res.json({
+                                                                                    status: "error",
+                                                                                    result: []
+                                                                                });
+                                                                                return;
+                                                                            });
+                                                                    }
+                                                                })
+                                                                .error(function(err) {
+                                                                    console.log("*****ERROR:" + err + "*****");
+                                                                    res.json({
+                                                                        status: "error",
+                                                                        result: []
+                                                                    });
+                                                                    return;
+                                                                });
+                                                        }
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "error",
+                                                            result: []
+                                                        });
+                                                        return;
+                                                    });
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error",
+                                                    result: []
+                                                });
+                                                return;
+                                            });
+                                        //END INSERT
+                                    })
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error",
+                                            result: []
+                                        });
+                                        return;
+                                    });
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "error",
+                                    result: []
+                                });
+                                return;
+                            });
+
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: []
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+
+    SendMailNotification: function(req, res) {
+        //SEND MAIL
+        var queryNode = "SELECT sys_hierarchy_nodes.NODE_ID FROM sys_hierarchy_nodes " +
+            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+            "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND (sys_hierarchy_nodes.NODE_CODE = 'Staff' OR sys_hierarchy_nodes.NODE_CODE = 'Head of Dept.')";
+        db.sequelize.query(queryNode)
+            .success(function(resultNode) {
+                var strNode = "";
+                if (resultNode !== undefined && resultNode !== null) {
+                    for (var i = 0; i < resultNode.length; i++) {
+                        if (resultNode[i] !== undefined && resultNode[i] !== null) {
+                            strNode += resultNode[i].NODE_ID + ", ";
+                        }
+                    }
+                }
+                if (strNode === "" || strNode.length === 0) {
+                    strNode = "(-1)";
+                } else {
+                    strNode = "(" + strNode.substring(0, strNode.length - 2) + ")";
+                }
+                var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = " + getWeekNo();
+                db.sequelize.query(queryHasTimeSheet)
+                    .success(function(resultHasTimeSheet) {
+                        var strHasTimeSheet = "";
+                        if (resultHasTimeSheet !== undefined && resultHasTimeSheet !== null) {
+                            for (var i = 0; i < resultHasTimeSheet.length; i++) {
+                                if (resultHasTimeSheet[i] !== undefined && resultHasTimeSheet[i] !== null) {
+                                    strHasTimeSheet += resultHasTimeSheet[i].user_id + ", ";
+                                }
+                            }
+                        }
+                        if (strHasTimeSheet === "" || strHasTimeSheet.length === 0) {
+                            strHasTimeSheet = "(-1)";
+                        } else {
+                            strHasTimeSheet = "(" + strHasTimeSheet.substring(0, strHasTimeSheet.length - 2) + ")";
+                        }
+
+                        var queryListEmp = "SELECT DISTINCT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM users " +
+                            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+                            "INNER JOIN sys_hierarchies_users ON users.id = sys_hierarchies_users.USER_ID " +
+                            "WHERE (hr_employee.TITLE = 'Staff' OR hr_employee.TITLE = 'Head of Dept.') " +
+                            "AND sys_hierarchies_users.NODE_ID IN " + strNode + " AND sys_hierarchies_users.USER_ID NOT IN " + strHasTimeSheet;
+                        db.sequelize.query(queryListEmp)
+                            .success(function(resultListEmp) {
+                                var FRIDAY = moment(moment().day(5)).format("DD/MM/YYYY");
+                                for (var lM = 0; lM < resultListEmp.length; lM++) {
+                                    var mailOptions = {
+                                        senders: 'TimeSheet',
+                                        recipients: resultListEmp[lM].Email,
+                                        subject: '<span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Notification of Late Timesheet(s) Due</span>',
+                                        htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</label></b>,<br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a reminder that your timesheet was due</label><b> FRIDAY, ' + FRIDAY + ' - 12:00pm.&nbsp;</b><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to complete and submit your timesheet. ' +
+                                            'Failure to submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
+                                            '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                            '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                            '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                            'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                                            '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                    };
+                                    //CALL SEND MAIL
+                                    FunctionSendMail.sendEmail(req, res, mailOptions);
+                                    // END CALL
+                                }
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "success"
+                                });
+                                return;
+                            });
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+        //END
+
+    }
+
 };
 
 //FUNCTION GET WEEKNO
@@ -1523,3 +2027,160 @@ var getWeekNo = function() {
     return weekNo;
 };
 //END
+
+// FUNCTION TRACKER
+var TracKerTimeSheet = function(info) {
+    var arrayAction = {
+        1: "Save",
+        2: "Submit",
+        3: "Approve",
+        4: "Reject",
+        5: "Resubmit"
+    };
+    var nameAction = arrayAction[info.statusID];
+    var queryTracKer = "INSERT INTO time_tracker (name_action, user_id, creation_date,task_week_id) VALUES('" +
+        nameAction + "'," + info.USER_ID + ",'" + info.date + "'," + info.idTaskWeek + ")";
+    db.sequelize.query(queryTracKer)
+        .success(function(result) {
+            console.log("*****SAVE TRACKKER SUCCESS *****");
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+        });
+};
+//END
+
+
+//FUNCTION GET FORMAT TIME_CHARGE
+var getFortMatTimeCharge = function(time_charge) {
+    if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
+        var hours = parseInt(time_charge / 60);
+        var minutes = parseInt(time_charge % 60);
+        if (hours < 10) {
+            hours = '0' + hours;
+        }
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }
+        return hours + ':' + minutes;
+    } else {
+        return "-";
+    }
+
+};
+//END
+
+// FUNCTION CONVERT
+var convertTime = function(time) {
+    if (time === undefined || time === null || isNaN(time)) {
+        return 0;
+    } else {
+        var tempTime = (time * 37.25) / 2235;
+        var tempTimeInt = parseInt(tempTime);
+        var tempDecimal = (tempTime - tempTimeInt).toFixed(3) * 100;
+        if (tempDecimal >= 87.5) {
+            tempTimeInt += 1;
+        } else if (tempDecimal >= 62.5) {
+            tempTimeInt += 0.75;
+        } else if (tempDecimal >= 37.5) {
+            tempTimeInt += 0.5;
+        } else if (tempDecimal >= 12.5) {
+            tempTimeInt += 0.25;
+        }
+        return tempTimeInt;
+    }
+};
+//END CONVERT
+
+// FUNCTION SEND MAIL
+var SendMailTimeSheet = function(req, res, info) {
+    var mailOptions = {};
+    var query = "SELECT hr_employee.FirstName, hr_employee.Email, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date " +
+        "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
+        "WHERE time_tasks_week.task_week_id = " + info.idTaskWeek;
+    db.sequelize.query(query)
+        .success(function(result) {
+            var start_date = "";
+            var end_date = "";
+            if (result[0] !== undefined && result[0] !== null) {
+                start_date = moment(result[0].start_date).format('DD/MM/YYYY');
+                end_date = moment(result[0].end_date).format('DD/MM/YYYY');
+            }
+            if (info.status === 4) {
+                mailOptions = {
+                    senders: 'TimeSheet',
+                    recipients: result[0].Email,
+                    subject: 'Notification of Rejected Timesheet(s)',
+                    htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected.<br/><br/><br/> Please log into the Timesheet System to correct and re-submit your timesheet. ' +
+                        'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond' +
+                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                        '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                        '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                        'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                        '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                };
+                // END APPROVE
+                //CALL SEND MAIL
+                FunctionSendMail.sendEmail(req, res, mailOptions);
+                // END CALL
+
+            } else if (info.status === 3) {
+                //IS APPROVE
+                mailOptions = {
+                    senders: 'TimeSheet',
+                    recipients: result[0].Email,
+                    subject: 'Notification of Approved Timesheet(s)',
+                    htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' +
+                        result[0].FirstName + ' ' + result[0].LastName +
+                        '</b></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' +
+                        start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label</i>' +
+                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                        '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                        '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                        'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                        '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                };
+                // END APPROVE
+
+                //CALL SEND MAIL
+                FunctionSendMail.sendEmail(req, res, mailOptions);
+                // END CALL
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.josn({
+                status: "error"
+            });
+            return;
+
+        });
+
+};
+// END MAIL
+
+// FUNCTION SEND MAIL NOTIFICATION
+var job = new CronJob({
+    cronTime: '00 00 07 * * 5',
+    onTick: function(req, res) {
+        // module.exports.SendMailNotification(req, res);
+    },
+    start: false,
+    timeZone: 'Australia/Canberra'
+        //Australia/Canberra
+        //Asia/Bangkok
+});
+job.start();
+//END NOTIFICATION

@@ -55,6 +55,14 @@ public class DocumentService {
         try {
         	HashMap params = new HashMap();
         	
+        	if(report.equalsIgnoreCase("timesheet"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportActualHours.jasper", params, "ReportActualHours.pdf");
+        	}
+        	
         	//Gorgon MH
         	if(report.equalsIgnoreCase("gorgonMH"))
         	{
