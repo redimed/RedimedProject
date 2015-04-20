@@ -506,10 +506,34 @@ angular.module('app.config', [])
             {code:"tablet", label:"tablet"},
             {code:"bottle", label:"bottle"}
         ])
-.factory('ConfigService', function(TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
+    .constant("SCORE_TYPE", [
+            {id:3,label:'Average score'},
+            {id:4,label:'Rating & Heart Rate'},
+            {id:6,label:'Rating'},
+            {id:8,label:'Overall Rating'},
+            {id:7,label:'Capacity Rating'},
+            {id:9,label:'Weight Rating'},
+            {id:5,label:'Rating & Score'},
+        ])
+    .constant("COMMENT_TYPE", [
+            {id:1,label:'Checkbox'},
+            {id:3,label:'Yes/No'},
+            {id:4,label:'Good/Average/Poor'},
+            {id:5,label:'Minimal/Moderate/Maximal'},
+            {id:6,label:'Above/Within/Below Normal Range'},
+        ])
+.factory('ConfigService', function(SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
+
+    configService.score_type_option = function() {
+        return SCORE_TYPE;
+    }
+
+    configService.comment_type_option = function() {
+        return COMMENT_TYPE;
+    }
 
     configService.recall_period_option = function() {
         return RECALL_PERIOD;
