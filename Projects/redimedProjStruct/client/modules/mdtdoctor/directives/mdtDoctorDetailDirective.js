@@ -178,7 +178,14 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 					}, function(error){})
 				})
 			}
+			scope.disable = function(list){
+				var postData = {doctor_id: $stateParams.doctorId, Specialties_id: list.Specialties_id,Isenable:list.Isenable};
 
+					mdtSpecialtyService.removeServiceDoctor(postData)
+					.then(function(response){
+						scope.speciality.load();
+					}, function(error){})
+			}
 			scope.speciality = {
 				list: [],
 				onActiveList: function(list){ onActiveList(list) },

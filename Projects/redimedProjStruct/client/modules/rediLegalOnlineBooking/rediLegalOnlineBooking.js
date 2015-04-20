@@ -22,7 +22,8 @@ angular.module('app.loggedIn.rlob',
     ,'app.loggedIn.rlob.rltype.controller'
     ,'app.loggedIn.rlob.specialties.controller'
     ,'app.loggedIn.rlob.redilegalUsersListController.controller'
-    ,'app.loggedIn.rlob.bookingBehalf.controller'])
+    ,'app.loggedIn.rlob.bookingBehalf.controller'
+    ,'app.loggedIn.rlob.SpecialistsProfiles.controller'])
     .config(function($stateProvider){
         $stateProvider
 
@@ -132,6 +133,11 @@ angular.module('app.loggedIn.rlob',
                 url:'/booking-behalf',
                 templateUrl: '/modules/rediLegalOnlineBooking/views/bookingBehalf.html',
                 controller: 'rlob_admin_bookingBehalfController'
+            })
+            .state('loggedIn.rlob.rlob_specialists_profiles',{
+                url:'/specialists-profiles',
+                templateUrl: '/modules/rediLegalOnlineBooking/views/specialists-profiles.html',
+                controller: 'rlob_specialists_profilesController'
             })
 
 //            .state('loggedIn.rlob.rlob_booking_detail', {

@@ -76,10 +76,18 @@
                 </select>
             </td>
             <td >
-                <!-- <input class="form-control input-sm" type="text" ng-model="searchKeys.complete" ng-change="initPagingReportArchiveBooking(doctorId)"> -->
+                <select ng-model="searchKeys.bookingStatus" class="form-control input-sm"
+                    ng-options="key as value for (key,value) in bookingStatus"
+                    ng-change="initPagingReportArchiveBooking(doctorId)">
+                    <option value="">--Select All--</option>
+                </select>
             </td>
             <td >
-                <!-- DOCUMENT STATUS -->
+                <select ng-model="searchKeys.documentStatus" class="form-control input-sm"
+                    ng-options="value.value as value.display for (key,value) in documentStatus"
+                    ng-change="initPagingReportArchiveBooking(doctorId)">
+                    <option value="">--Select All--</option>
+                </select>
             </td>
         </tr>
 

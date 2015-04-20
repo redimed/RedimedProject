@@ -4,6 +4,7 @@
 var db = require('../models');
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
+var FunctionSendMail = require("../controllers/TimeSheetController/timeSheetEmailController.js");
 module.exports = {
     addAllTask: function(req, res) {
         var allTask = req.body.allTask;
@@ -49,7 +50,8 @@ module.exports = {
                                                 db.TimeItemTask.create({
                                                     task_id: tId,
                                                     item_id: a.ITEM_ID,
-                                                    quantity: a.quantity,
+                                                    units: a.totalUnits,
+                                                    ratio: a.ratio,
                                                     time_charge: a.time_temp,
                                                     comment: a.comment
                                                 })
@@ -67,7 +69,28 @@ module.exports = {
                                 console.log(err);
                             });
 
-                        chainer.runSerially().success(function() {
+                        chainer.runSerially().success(function(result) {
+                            if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
+                                //TRACKER
+                                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                var idTaskWeek = result[0].dataValues.tasks_week_id;
+                                var tracKer = {
+                                    statusID: info.statusID,
+                                    USER_ID: info.userID,
+                                    idTaskWeek: idTaskWeek,
+                                    date: info.date
+                                };
+                                //CALL FUNCTION TRACKER
+                                TracKerTimeSheet(tracKer);
+                                //END
+                                //END TRACKER
+
+                                //FUNCTION SEND MAIL
+                                if (info.statusID === 2) {
+                                    SendMailSubmit(req, res, info);
+                                }
+                                //END SEND MAIL
+                            }
                             res.json({
                                 status: 'success'
                             });
@@ -127,7 +150,8 @@ module.exports = {
                                         db.TimeItemTask.create({
                                             task_id: taskId,
                                             item_id: a.ITEM_ID,
-                                            quantity: a.quantity,
+                                            units: a.totalUnits,
+                                            ratio: a.ratio,
                                             time_charge: a.time_temp,
                                             comment: a.comment,
                                         })
@@ -135,7 +159,8 @@ module.exports = {
                                 } else if (a.isAction == 'update') {
                                     chainer.add(
                                         db.TimeItemTask.update({
-                                            quantity: a.quantity,
+                                            units: a.totalUnits,
+                                            ratio: a.ratio,
                                             time_charge: a.time_temp,
                                             comment: a.comment
                                         }, {
@@ -181,7 +206,8 @@ module.exports = {
                                     db.TimeItemTask.create({
                                         task_id: tId,
                                         item_id: a.ITEM_ID,
-                                        quantity: a.quantity,
+                                        units: a.totalUnits,
+                                        ratio: a.ratio,
                                         time_charge: a.time_temp,
                                         comment: a.comment
                                     })
@@ -234,7 +260,27 @@ module.exports = {
                 });
             })
 
-        chainer.runSerially().success(function() {
+        chainer.runSerially().success(function(result) {
+            //TRACKER
+            var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+            var idTaskWeek = info.idWeek;
+            var tracKer = {
+                statusID: info.statusID,
+                USER_ID: info.userID,
+                idTaskWeek: idTaskWeek,
+                date: date
+            };
+            //CALL FUNCTION TRACKER
+            TracKerTimeSheet(tracKer);
+            //END
+            //END TRACKER
+
+            //FUNCTION SEND MAIL
+            if (info.statusID === 5 || info.statusID === 2) {
+                SendMailSubmit(req, res, info);
+            }
+            //END SEND MAIL
+
             res.json({
                 status: 'success'
             });
@@ -309,7 +355,7 @@ module.exports = {
                                 });
                                 return false;
                             } else {
-                                db.sequelize.query("SELECT a.`activity_id`, a.`NAME`, t.`NAME` AS type_name FROM `time_activity` a" + " INNER JOIN `time_type_activity` t ON t.`type_activity_id` = a.`type_activity_id`", null, {
+                                db.sequelize.query("SELECT a.`activity_id`, a.`NAME` FROM `time_activity` a", null, {
                                         raw: true
                                     })
                                     .success(function(activity) {
@@ -407,7 +453,7 @@ module.exports = {
 
     showDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`, time_tasks_week.after_status_id, time_task_status.name as status,tasks_week_id, a.`type_activity_id` AS activity_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
+        db.sequelize.query("SELECT t.`date`,t.activity_id, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, time_task_status.name as status,tasks_week_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
                 " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
                 " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
                 " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
@@ -449,7 +495,7 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted,i.`quantity`,i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
                             " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
@@ -544,8 +590,8 @@ module.exports = {
 
     getTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_tasks_week.after_status_id, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
-                "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`quantity`,i.`COMMENT` AS comment " +
+        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_item_code.ITEM_NAME, time_item_code.IS_BILLABLE , i.units, i.ratio, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+                "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`units`,i.`COMMENT` AS comment " +
                 "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
                 "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
                 "INNER JOIN users ON users.id  = time_tasks_week.user_id " +
@@ -554,6 +600,7 @@ module.exports = {
                 "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
                 "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
                 "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
+                "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = i.item_id " +
                 "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (t.time_charge!=0 OR t.activity_id=18) ORDER BY t.`tasks_id`", null, {
                     raw: true
                 }, [idWeek])
@@ -750,11 +797,27 @@ module.exports = {
             });
     },
     SubmitOnView: function(req, res) {
-        var idWeek = req.body.idWeek;
-        var status = req.body.status;
-        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + status + " WHERE time_tasks_week.task_week_id = " + idWeek;
+        var info = req.body.info;
+        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + info.status + " WHERE time_tasks_week.task_week_id = " + info.ID_WEEK;
         db.sequelize.query(query)
             .success(function(result) {
+                //TRACKER
+                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                var tracKer = {
+                    statusID: info.status,
+                    USER_ID: info.USER_ID,
+                    idTaskWeek: info.ID_WEEK,
+                    date: date
+                };
+                //CALL FUNCTION TRACKER
+                TracKerTimeSheet(tracKer);
+                //END
+                //END TRACKER
+                info.statusID = info.status;
+                info.userID = info.USER_ID;
+                // SEND MAIL
+                SendMailSubmit(req, res, info);
+                //END
                 res.json({
                     status: 'success'
                 });
@@ -791,3 +854,130 @@ module.exports = {
             });
     }
 };
+
+// FUNCTION TRACKER
+var TracKerTimeSheet = function(info) {
+    var arrayAction = {
+        1: "Save",
+        2: "Submit",
+        3: "Approve",
+        4: "Reject",
+        5: "Resubmit"
+    };
+    var nameAction = arrayAction[info.statusID];
+    var queryTracKer = "INSERT INTO time_tracker (name_action, user_id, creation_date,task_week_id) VALUES('" +
+        nameAction + "'," + info.USER_ID + ",'" + info.date + "'," + info.idTaskWeek + ")";
+    db.sequelize.query(queryTracKer)
+        .success(function(result) {
+            console.log("*****SAVE TRACKKER SUCCESS *****");
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+        });
+};
+//END
+
+//FUNCTION SEND MAIL
+var SendMailSubmit = function(req, res, info) {
+    var USER_ID_SUBMIT = info.userID;
+    var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var DATE_OF_WEEK = arrayWeek[moment(info.date).format('e') - 1];
+    var DATE_SUBMIT = moment(info.date).format('DD/MM/YYYY - HH:mm:ss');
+    var idTaskWeek = info.idTaskWeek;
+    var queryNodeChildren = "SELECT DISTINCT sys_hierarchies_users.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users " +
+        "INNER JOIN hr_employee ON hr_employee.Dept_ID = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
+        "WHERE sys_hierarchies_users.USER_ID = " + USER_ID_SUBMIT;
+    db.sequelize.query(queryNodeChildren)
+        .success(function(result) {
+            if (result[0] !== undefined && result[0] !== null && result[0].NODE_ID !== undefined && result[0].NODE_ID !== null && result[0].DEPARTMENT_CODE_ID !== undefined && result[0].DEPARTMENT_CODE_ID !== null) {
+                var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = " + result[0].NODE_ID;
+                db.sequelize.query(queryParentNodeId)
+                    .success(function(result2) {
+                        if (result2[0] !== undefined && result2[0] !== null && result2[0].TO_NODE_ID !== undefined && result2[0].TO_NODE_ID !== null) {
+                            var queryGetUser = "SELECT sys_hierarchies_users.USER_ID FROM sys_hierarchies_users " +
+                                "WHERE sys_hierarchies_users.NODE_ID = " + result2[0].TO_NODE_ID +
+                                " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = " + result[0].DEPARTMENT_CODE_ID;
+                            db.sequelize.query(queryGetUser)
+                                .success(function(result3) {
+                                    if (result3[0] !== undefined && result3[0] !== null && result3[0].USER_ID !== undefined && result3[0].USER_ID !== null) {
+                                        var queryManage = "SELECT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
+                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + result3[0].USER_ID;
+                                        db.sequelize.query(queryManage)
+                                            .success(function(resultManage) {
+                                                var queryEmp = "SELECT hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
+                                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + USER_ID_SUBMIT;
+                                                db.sequelize.query(queryEmp)
+                                                    .success(function(resultEmp) {
+                                                        if (resultManage[0] !== undefined && resultManage[0] !== null && resultEmp[0] !== undefined && resultEmp[0] !== null) {
+                                                            //SEND MAIL
+                                                            mailOptions = {
+                                                                senders: 'TimeSheet',
+                                                                recipients: resultManage[0].Email,
+                                                                subject: 'Notification of Submitted Timesheet(s)',
+                                                                htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultManage[0].FirstName + ' ' + resultManage[0].LastName + ',</label></b><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a timesheet from <b>' + resultEmp[0].FirstName + ' ' + resultEmp[0].LastName + '</b> on <b>' + DATE_OF_WEEK + ', ' +
+                                                                    DATE_SUBMIT + '.</b><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to review and approve/reject the timesheet.<br/><br/><br/>' +
+                                                                    'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
+                                                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                                                    '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                                                    'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                                                                    '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                                            };
+                                                            // END APPROVE
+                                                            //CALL SEND MAIL
+                                                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                                                            // END CALL
+                                                            // END SEND
+                                                        }
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "success"
+                                                        });
+                                                        return;
+                                                    });
+
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            });
+                                    }
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+
+                                });
+                        }
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    });
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "success"
+            });
+            return;
+        });
+};
+//END SEND MAIL

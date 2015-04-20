@@ -46,6 +46,14 @@ angular.module("app.loggedIn.company.models", [])
         var instanceApi = mainApi.all('disableInsurer');
         return instanceApi.post({data: data});
     }
+     instanceService.disableCompany = function(data){
+        var instanceApi = mainApi.all('disableCompany');
+        return instanceApi.post({data: data});
+    }
+    instanceService.updateInsurer = function(data){
+        var instanceApi = mainApi.all('updateInsurer');
+        return instanceApi.post({data: data});
+    }
 
     return instanceService;
 })

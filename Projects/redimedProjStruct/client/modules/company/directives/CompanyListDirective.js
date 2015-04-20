@@ -22,7 +22,6 @@ angular.module('app.loggedIn.company.directives.list', [])
 				country:''
 			}
 			scope.onRowClick = function(row){
-				console.log(row);
 				scope.updateCompany.id = row.id;
 				scope.updateCompany.patient_id =$stateParams.patientId; 
 				var postData = angular.copy(scope.updateCompany);
@@ -67,7 +66,6 @@ angular.module('app.loggedIn.company.directives.list', [])
 					scope.company.count = response.count;
 					scope.company.search.page = 1;
 					scope.company.company_idActive = response.data1[0].company_id;
-					console.log(scope.company.company_idActive);
 				}, function(error){
 					scope.company.loading = false;
 					scope.company.error = $filter('translate')(error.data.code);
@@ -99,7 +97,19 @@ angular.module('app.loggedIn.company.directives.list', [])
 				scope.company.search.offset = (page-1)*scope.company.search.limit;
 				scope.company.load();
 			}
+			scope.disableCompany = function(row){
+				var postData ={
+					patient_id :$stateParams.patientId,
+					company_id : row.id,
+					isEnable : row.checkisEnable
+				}
+				CompanyModel.disableCompany(postData)
+				.then(function(response){
+					scope.company.load();
+				},function(error){
 
+				})
+			}
 			scope.company = {
 				search: search,
 				error: '',

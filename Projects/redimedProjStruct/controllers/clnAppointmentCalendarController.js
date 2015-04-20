@@ -294,6 +294,7 @@ module.exports =
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                     "+
             "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)       "+
             "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                              "+
+            "   AND d.Isenable=1 "+
             " ORDER BY APPOINTMENT_DATE ASC                                                                                      ";
             req.getConnection(function(err,connection)
             {
@@ -343,6 +344,7 @@ module.exports =
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                           "+ 
             "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                                              "+
             "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                                    "+
+            "   AND d.Isenable=1 "+
             " ORDER BY `appointment_time` ASC                                                                                          ";
         kiss.executeQuery(req,sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,periodTimeDefault],function(rows){
             res.json(rows);

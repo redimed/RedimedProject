@@ -6,11 +6,11 @@
             </legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
-                <div data-field-span="6">
-                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                <div data-field-span="6" style="font-size:14px;">
+                    Employee: &nbsp;<span class="text-info" style="font-size:14px;">{{employee_name}}</span>
                 </div>
-                <div data-field-span="6">
-                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{week.start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{week.end_date| date: "dd/MM/yyyy"}}</span>
+                <div data-field-span="6" style="font-size:14px;">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:14px;">{{week.start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:14px;">{{week.end_date| date: "dd/MM/yyyy"}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -29,32 +29,32 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Utilization Time
+                                        Billable Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Management Time
+                                        Administration Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Supervision Time
+                                        Training Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Self-Developed Time
+                                        Development Time
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Non-charged Time
+                                        Non-charged
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Total Hour
+                                        Total Worked Hours
                                     </div>
                                 </th>
                                 <th>
@@ -65,39 +65,38 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
-                                <td class="btn btn-xs" style="text-align:left;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
-                                <td class="btn btn-xs" ng-repeat="act in task.arrActivity track by $index">
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;" ng-repeat="act in task.arrActivity track by $index">
                                     {{act}}
                                 </td>
-                                <td class="btn btn-xs bold">{{task.total}}</td>
+                                <td class="btn btn-xs bold" style="font-size:14px;">{{task.total}}</td>
                                 <td class="btn btn-xs">
-                                    <a ng-click="viewDetailDate(week,task.date)" class="btn btn-xs">View Detail</a>
+                                    <a ng-click="viewDetailDate(week,task.date)" class="btn btn-xs" style="font-size:14px;">View Detail</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <a class="btn btn-xs pull-right" ng-click="viewDetailDate(week,'full')">View Full Timesheet</a>
                 </div>
             </div>
-            <div class="col-md-12" style="margin-top:5px; font-size:13px;">
-                <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>Status:&nbsp;
+            <div class="col-md-12" style="margin-top:5px; font-size:14px;">
+                <span>Total Worked Hours:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="font-size:14px;">Status:&nbsp;
                 <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaiting for Submit',
-                            're-submitted':STATUS==='Re-submitted'}">{{(STATUS==="Submitted")?"Awaiting for Approve":STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            're-submitted':STATUS==='Re-submitted'}">{{STATUS}}</span> </span>
             </div>
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()' style="width:70px;">Cancel</a>
-        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+        <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()' style="width:70px;font-size:14px;">Cancel</a>
+        <a style="width:70px; font-size:14px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
-        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && afterStatusID ===4)' ng-click="submitClick(ID_WEEK, STATUS)" class="btn btn-xs green pull-right">
+        <a style="width:70px;font-size:14px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && afterStatusID ===4)' ng-click="submitClick(submitOnView)" class="btn btn-xs green pull-right">
                Submit
             </a>
-        <a style="width:70px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        (STATUS==="Awaiting for Submit" && afterStatusID!==4)' ng-click="submitClick(ID_WEEK, STATUS)" class="btn purple pull-right btn-xs">
+        <a style="width:70px;font-size:14px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        (STATUS==="Awaiting for Submit" && afterStatusID!==4)' ng-click="submitClick(submitOnView)" class="btn purple pull-right btn-xs">
                Re-submit
             </a>
         <!-- END BUTTON -->

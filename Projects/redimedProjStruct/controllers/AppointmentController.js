@@ -21,21 +21,24 @@ module.exports = {
 				}
 			})
 		})
-
-		if(postData.from_date && postData.to_date){
-			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+		var from_date = new Date(postData.from_date);
+  		var to_date = new Date(postData.to_date);
+  		if(postData.from_date && postData.to_date){
+		   if(from_date > to_date)
+		   {
 				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
 				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
-			}
-		}
+		   }
+  		}
+
 		if(errors.length > 0){
 			res.status(500).json({errors: errors});
 			return;
 		}	
-        var sql = knex('cln_appointment_calendar_backup')
+        var sql = knex('cln_appointment_calendar')
             .where('doctor_id', postData.doctor_id)
-            .where('CURRENT_DATE','>=',postData.from_date)
-            .where('CURRENT_DATE','<=',postData.to_date)
+            .whereRaw('date(FROM_TIME) >= '+'\''+postData.from_date+'\'')
+            .whereRaw('date(TO_TIME) <= '+'\''+postData.to_date+'\'')
             .del()
             .toString();
         db.sequelize.query(sql)
@@ -45,7 +48,7 @@ module.exports = {
         .error(function(error){
             res.json(500, {error: error});
         }) 
-    	},
+    },
 	/*postByDoctor: function(req, res){
 		var postData = req.body.data;
 
@@ -145,11 +148,35 @@ module.exports = {
 		.orderBy('cln_appointment_calendar.DOCTOR_ID', 'asc')
 		.toString();
 
+		var main_sub_sql = knex
+		.column(
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.TO_TIME, '%H:%i') AS TO_TIME"),
+			'cln_appointment_calendar.SERVICE_ID',
+			'cln_appointment_calendar.DOCTOR_ID',
+			'cln_appointment_calendar.CAL_ID',
+			'cln_appointment_calendar.CLINICAL_DEPT_ID'
+		)
+		.from('cln_appointment_calendar')
+		.where({
+			'cln_appointment_calendar.SITE_ID': postData.site_id
+		})
+		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.where('cln_appointment_calendar.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
+		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
+		.toString();
+
 		db.sequelize.query(main_sql)
 		.success(function(rows){
 			db.sequelize.query(sub_sql)
 			.success(function(doctors){
-				res.json({data: rows, doctors: doctors, sql: main_sql});
+				db.sequelize.query(main_sub_sql)
+				.success(function(subdata){
+					res.json({data: rows, doctors: doctors, subdata: subdata});
+				})
+				.error(function(error){
+					res.status(500).json({error: error, sql: main_sub_sql});
+				})
 			})
 			.error(function(error){
 				res.status(500).json({error: error, sql: sub_sql});	

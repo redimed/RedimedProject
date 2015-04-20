@@ -182,12 +182,9 @@ module.exports = {
 					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)
 				.from('cln_claims')
-				.whereNotExists(function(){
-					this.select('*').from('cln_patient_claim')
-					.whereRaw('cln_claims.Claim_id = cln_patient_claim.Claim_id')
-					.where('cln_patient_claim.Patient_id', postData.Patient_id)
-				})
-				.where('cln_claims.Isenable', 1)
+				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
+				.where('cln_patient_claim.Patient_id', postData.Patient_id)
+				//.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
 				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.limit(postData.limit)
@@ -197,13 +194,10 @@ module.exports = {
 				.toString();
 
 		var count_sql = knex('cln_claims')
-				.whereNotExists(function(){
-					this.select('*').from('cln_patient_claim')
-					.whereRaw('cln_claims.Claim_id = cln_patient_claim.Claim_id')
-					.where('cln_patient_claim.Patient_id', postData.Patient_id)
-				})
+				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
+				.where('cln_patient_claim.Patient_id', postData.Patient_id)
 				.count('cln_claims.Claim_id as a')
-				.where('cln_claims.Isenable', 1)
+				//.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
 				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.toString();
@@ -232,12 +226,13 @@ module.exports = {
 					'cln_patient_claim.Patient_id',
 					'Claim_date',
 					'Injury_date',
+					'cln_patient_claim.isEnable',
 					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
 					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)
 				.from('cln_claims')
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
-				.where('cln_claims.Isenable', 1)
+				//.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
 				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
@@ -250,7 +245,7 @@ module.exports = {
 		var count_sql = knex('cln_claims')
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.count('cln_claims.Claim_id as a')
-				.where('cln_claims.Isenable', 1)
+				//.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
 				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
@@ -269,5 +264,30 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {error: error});
 		})
+	},
+
+	postDisableClaim : function(req,res){
+		var postData = req.body.data;
+        if (postData.isEnable == 1) {
+            postData.isEnable = 0;
+        } else{
+            postData.isEnable = 1;
+        };
+        var sql = 
+                knex('cln_patient_claim')
+                .update({
+                    'isEnable': postData.isEnable
+                })
+                .where('Claim_id',postData.Claim_id)
+                .where('patient_id',postData.patient_id)
+                .where('CAL_ID',postData.CAL_ID)
+                .toString()
+                db.sequelize.query(sql)
+                .success(function(data){
+                    res.json({data: data,sql:sql});
+                })
+                .error(function(error){
+                    res.json(500, {error: error,sql:sql});
+                })  
 	}
 }

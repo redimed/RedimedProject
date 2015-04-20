@@ -9,11 +9,11 @@
             </legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
-                <div data-field-span="6">
-                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                <div data-field-span="6" style="font-size:14px;">
+                    Employee: &nbsp;<span class="text-info" style="font-size:14px;">{{employee_name}}</span>
                 </div>
-                <div data-field-span="6">
-                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{week.start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{week.end_date| date: "dd/MM/yyyy"}}</span>
+                <div data-field-span="6" style="font-size:14px;">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:14px;">{{week.start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:14px;">{{week.end_date| date: "dd/MM/yyyy"}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -52,56 +52,62 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Item Number
+                                        Tasks / Items
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Quantity
+                                        Actual Unit
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Tasks/Comments
+                                        Standard Unit
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Comments
                                     </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="(key,task) in tasks track by $index" ng-class="{'same': one == false ? getDay(task.date)%2==0 : false}">
-                                <td class="btn btn-xs" style="text-align:left;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
-                                <td class="btn btn-xs">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.ITEM_ID===null||task.ITEM_ID==="" ||task.ITEM_ID ===undefined)?"N/A":task.ITEM_ID}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="" ||task.quantity===undefined)?"N/A":task.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(task.quantity===null||task.quantity==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.units===null||task.units==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-md-12" style="margin-top:5px; font-size:13px;" ng-hide='one'>
+            <div class="col-md-12" style="margin-top:5px; font-size:14px;" ng-hide='one'>
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;
                 <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaiting for Submit',
-                            're-submitted':STATUS==='Re-submitted'}">{{(STATUS==="Submitted")?"Awaiting for Approve":STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            're-submitted':STATUS==='Re-submitted'}">{{STATUS}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a href="javascript:;" ng-hide='one' ng-click="cancelClick()" class="btn pull-right btn-warning btn-xs" style="width:70px;">
+        <a href="javascript:;" ng-hide='one' ng-click="cancelClick()" class="btn pull-right btn-warning btn-xs" style="width:70px;font-size:14px;">
             Cancel </a>
-        <a style="width:70px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+        <a style="width:70px;font-size:14px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
-        <a style="width:70px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && after_status_id ===4)' ng-click="submitClick(ID_WEEK, STATUS)" class="btn pull-right green btn-xs">
+        <a style="width:70px;font-size:14px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && after_status_id ===4)' ng-click="submitClick(submitOnView)" class="btn pull-right green btn-xs">
                Submit
             </a>
-        <a style="width:70px;" ng-hide='one||STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        (STATUS==="Awaiting for Submit" && after_status_id!==4)' ng-click="submitClick(ID_WEEK, STATUS)" class="btn purple pull-right btn-xs">
+        <a style="width:70px;font-size:14px;" ng-hide='one||STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
+        (STATUS==="Awaiting for Submit" && after_status_id!==4)' ng-click="submitClick(submitOnView)" class="btn purple pull-right btn-xs">
                Re-submit
             </a>
         <!-- END BUTTON -->

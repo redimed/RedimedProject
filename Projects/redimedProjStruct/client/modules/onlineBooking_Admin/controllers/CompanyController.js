@@ -121,6 +121,7 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         isProject:null,
         isPO:null,
         isExtra:null,
+        phone: null,
         fatherId: comId
     };
 
@@ -164,7 +165,8 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         status:null,
         isProject:null,
         isPO:null,
-        isExtra:null
+        isExtra:null,
+        phone: null
     };
 
 
@@ -186,6 +188,7 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
             resultEmail:data.result_email,
             reportEmail:data.report_to_email,
             status:data.default_status,
+            phone: data.Phone,
             isProject:data.isProject != 1  ? '0' : '1',
             isPO:data.isPO != 1  ? '0' : '1',
             isExtra:data.isExtra != 1  ? '0' : '1'

@@ -73,9 +73,19 @@
             </td>
             <td>
                 <!-- BOOKING STATUS -->
+                <select ng-model="filterInfo1.bookingStatus" class="form-control input-sm"
+                    ng-options="key as value for (key,value) in bookingStatus"
+                    ng-change="initPagingReportOutstandingBooking()">
+                    <option value="">--Select All--</option>
+                </select>
             </td>
             <td>
                 <!-- DOCUMENT STATUS -->
+                <select ng-model="filterInfo1.documentStatus" class="form-control input-sm"
+                    ng-options="value.value as value.display for (key,value) in documentStatus"
+                    ng-change="initPagingReportOutstandingBooking()">
+                    <option value="">--Select All--</option>
+                </select>
             </td>
             
             <!-- END SEARCH -->

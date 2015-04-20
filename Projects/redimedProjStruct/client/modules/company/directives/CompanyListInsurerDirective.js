@@ -10,8 +10,8 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 			onRowClick: '&',
 			insurerArray:'='
 		},
-	link: function(scope, elem, attrs){
-			scope.setPage = function(page){
+	    link: function(scope, elem, attrs){
+			var setPage = function(page){
 				scope.company.search.offset = (page-1)*scope.company.search.limit;
 				scope.company.load();
 			}
@@ -37,6 +37,18 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 					scope.company.error = $filter('translate')(error.data.code);
 				})
 			}
+			var onSearch = function(option){
+				switch(option.field){
+					case 'insurer_name':
+						scope.company.search.insurer_name = option.value;
+						break;
+					case 'address':
+						scope.company.search.address = option.value;
+						break;
+				}//end switch
+				scope.company.load();
+				setPage(1);
+			}
 			scope.company = {
 				search: search,
 				error: '',
@@ -44,7 +56,7 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 				loading: false,
 				list: [],
 				load: function(){ load(); },
-				loadPage: function(page){ loadPage(page); },
+				setPage: function(page){ setPage(page); },
 				onSearch: function(option){ onSearch(option)}
 			}
 

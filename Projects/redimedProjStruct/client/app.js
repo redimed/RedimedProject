@@ -63,7 +63,7 @@ angular.module("app", [
         var host = location.hostname;
         var port = location.port;
 
-        var socket = io.connect('https://' + host + '/', {
+        var socket = io.connect('http://' + host + '/', {
             'port': port,
             'reconnect': true,
             'reconnection delay': 2000,
@@ -189,7 +189,7 @@ angular.module("app", [
     })
 
 //When update any route
-.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService) {
+.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService) {
 
 
 
@@ -309,22 +309,44 @@ angular.module("app", [
 
     });
     $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
-        //ROLE
-        if (toState.position !== undefined) {
-            var status = false;
-            angular.forEach(toState.position, function(postt, index) {
-                if (postt === localStorageService.get("position")) {
-                    status = true;
+        //LOAD ROLE ON TREEAPPROVE
+        if ($cookieStore.get("userInfo") &&
+            $cookieStore.get("userInfo").id) {
+            TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
+                if (response.status === "error") {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Loading fail!", "Error");
+                } else if (response.status === "success") {
+                    localStorageService.set("position", response.position[0].TITLE);
+                    //ROLE
+                    if (toState.position !== undefined && toState.position !== null) {
+                        var status = false;
+                        angular.forEach(toState.position, function(postt, index) {
+                            if (postt === localStorageService.get("position")) {
+                                status = true;
+                            }
+                        });
+                        if (status === false) {
+                            $state.go("loggedIn.home", null, {
+                                "reload": true
+                            });
+                            toastr.error("You not permission!", "Error");
+                        }
+                    }
+                    //END ROLE
+                } else {
+                    //catch exception
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Server response error!", "Error");
+                    e.preventDefault();
                 }
             });
-            if (status === false) {
-                $state.go("loggedIn.TimeSheetHome", null, {
-                    "reload": true
-                });
-                toastr.error("You not permission!", "Error");
-                e.preventDefault();
-            }
+
         }
-        //END ROLE
+        //END LOAD ROLE ON TREEAPPROVE
     });
-})
+});

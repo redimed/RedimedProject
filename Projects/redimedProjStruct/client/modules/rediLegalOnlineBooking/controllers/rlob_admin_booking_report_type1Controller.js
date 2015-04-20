@@ -7,7 +7,9 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
         // chien status
         $scope.currentReport.name = 'report1';
         $scope.status = "Confirmed";
-        
+        $scope.bookingStatus=rlobConstant.bookingStatus;
+        $scope.documentStatus=rlobConstant.documentStatusFilter;
+
         //list type
         $scope.rlTypeList=[];
         rlobService.getRlTypeList($scope.bookingType)
@@ -43,7 +45,9 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
             Type:'',
             Location:'',
             FromAppointmentDate:'',
-            ToAppointmentDate:''
+            ToAppointmentDate:'',
+            bookingStatus:'',
+            documentStatus:''
         };
 
         $scope.initPagingReportUpcommingBooking=function()
@@ -68,17 +72,12 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
-                                data.data[i].style_class = 'warning'
+                            if(data.data[i].DOCUMENT_STATUS == $scope.documentStatus.checked.value){
+                                data.data[i].style_class = 'info'
                             }
                             else{
-                                if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
-                                    data.data[i].style_class = 'info'
-                                }
-                                else{
-                                    if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
-                                        data.data[i].style_class = 'danger'
-                                    }
+                                if(data.data[i].DOCUMENT_STATUS == $scope.documentStatus.noDocuments.value){
+                                    data.data[i].style_class = 'danger'
                                 }
                             }
                         }
@@ -122,17 +121,12 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
                     if(data.status == 'success')
                     {
                         for (var i = 0; i < data.data.length; i++) {
-                            if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.notConfirmed.value){
-                                data.data[i].style_class = 'warning'
+                            if(data.data[i].DOCUMENT_STATUS == $scope.documentStatus.checked.value){
+                                data.data[i].style_class = 'info'
                             }
                             else{
-                                if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.checked.value){
-                                    data.data[i].style_class = 'info'
-                                }
-                                else{
-                                    if(data.data[i].DOCUMENT_STATUS == $scope.rlobDocumentStatus.noDocuments.value){
-                                        data.data[i].style_class = 'danger'
-                                    }
+                                if(data.data[i].DOCUMENT_STATUS == $scope.documentStatus.noDocuments.value){
+                                    data.data[i].style_class = 'danger'
                                 }
                             }
                         }
@@ -149,7 +143,6 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type1.controller',[])
         
         //chien set rlobhelper
         //phanquocchien.c1109g@gmail.com
-        $scope.rlobDocumentStatus=rlobConstant.documentStatus;
 
         // $scope.isChangingDocumentStatus=false;
         // $scope.$watch('documentStatusChangedFlag',function(newValue,oldValue){

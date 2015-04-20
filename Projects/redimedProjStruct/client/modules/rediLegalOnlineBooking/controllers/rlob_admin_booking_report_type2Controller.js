@@ -7,7 +7,8 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
         // chien status
         $scope.currentReport.name = 'report2';
         $scope.status = "Confirmed";
-        
+        $scope.bookingStatus=rlobConstant.bookingStatus;
+        $scope.documentStatus=rlobConstant.documentStatusFilter;
 
         //list type
         $scope.rlTypeList=[];
@@ -43,7 +44,9 @@ angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
             Doctor:'',
             employeeNumber:'',
             FromAppointmentDate:'',
-            ToAppointmentDate:''
+            ToAppointmentDate:'',
+            bookingStatus:'',
+            documentStatus:''
         };
 
         $scope.initPagingReportOutstandingBooking=function()

@@ -6,6 +6,7 @@ angular.module("app.loggedIn.TimeSheet", [
     .config(function($stateProvider) {
         $stateProvider
             .state("loggedIn.TimeSheetHome", {
+                position: ["Admin", "Staff", "Head of Dept.", "Director"],
                 url: "/TimeSheetHome",
                 templateUrl: "modules/TimeSheet/views/Home.html",
                 controller: "TimeSheetHomeController"

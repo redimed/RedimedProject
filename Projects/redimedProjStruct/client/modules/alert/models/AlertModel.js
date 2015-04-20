@@ -43,6 +43,14 @@ angular.module("app.loggedIn.alert.model", [])
         var detailApi = appApi.all('select');
         return detailApi.post({data: data});
     }
+    instanceService.disableAlert = function(data){
+        var detailApi = appApi.all('disableAlert');
+        return detailApi.post({data: data});
+    }
+    instanceService.disablePatientAlert = function(data){
+        var detailApi = appApi.all('disablePatientAlert');
+        return detailApi.post({data: data});
+    }
 
     return instanceService;
 })

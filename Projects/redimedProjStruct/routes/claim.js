@@ -10,3 +10,4 @@ app.post(url+'add', ClaimController.postAdd);
 app.post(url+'addPatient', ClaimController.postAddPatient);
 app.post(url+'edit', ClaimController.postEdit);
 app.post(url+'remove', ClaimController.postRemove);
+app.post(url+'disableClaim',ClaimController.postDisableClaim);
