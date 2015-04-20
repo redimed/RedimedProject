@@ -193,7 +193,7 @@ angular.module("app.call.controller",[
                 $modalStack.dismissAll();
 
                  $timeout(function(){
-                    if($scope.connections.length == 1)
+                    if($scope.streams.length == 0)
                         disconnect();
                 }, 1 * 1000);
             }
@@ -204,7 +204,7 @@ angular.module("app.call.controller",[
                 $modalStack.dismissAll();
 
                 $timeout(function(){
-                    if($scope.connections.length == 1)
+                    if($scope.streams.length == 0)
                         disconnect();
                 }, 1 * 1000);
 
@@ -298,7 +298,7 @@ angular.module("app.call.controller",[
             else
             {
                 console.log($scope.connections);
-                if($scope.connections.length < 3)
+                if($scope.streams.length < 2)
                 {
                     var modalInstance = $modal.open({
                         templateUrl: 'common/views/dialog/invitePeople.html',
