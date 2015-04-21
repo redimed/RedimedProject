@@ -55,13 +55,20 @@ public class DocumentService {
         try {
         	HashMap params = new HashMap();
         	
-        	if(report.equalsIgnoreCase("timesheet"))
+        	if(report.equalsIgnoreCase("timeSheetActualHours"))
         	{
         		params.put("id", id);
         		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
         		
         		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportActualHours.jasper", params, "ReportActualHours.pdf");
         	}
+        	
+        	if(report.equalsIgnoreCase("timeSheetActualWorking")){
+        		params.put("id",id);
+        		params.put("realPath","/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportActualWorking.jasper", params,"ReportActualWroking.pdf");     
+        		}
         	
         	//Gorgon MH
         	if(report.equalsIgnoreCase("gorgonMH"))
