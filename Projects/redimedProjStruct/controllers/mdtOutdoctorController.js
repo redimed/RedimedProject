@@ -12,7 +12,10 @@ module.exports = {
         var required = [
             {field: 'provider_no', message: 'Provider_no required'},
             {field: 'name', message: 'Name required'},
-            {field: 'address', message: 'Address required'}
+            {field: 'address', message: 'Address required'},
+            {field: 'suburb', message: 'Suburb required'},
+            {field: 'state', message: 'State required'},
+            {field: 'phone', message: 'phone required'}
 
         ]
 		_.forIn(postData, function(value, field){
