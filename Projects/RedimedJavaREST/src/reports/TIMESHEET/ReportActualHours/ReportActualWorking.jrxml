@@ -186,51 +186,51 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<group name="DeptGroup">
 		<groupExpression><![CDATA[$F{departmentName}]]></groupExpression>
 		<groupHeader>
-			<band height="18">
+			<band height="31">
 				<staticText>
-					<reportElement x="71" y="-21" width="87" height="20" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
+					<reportElement x="14" y="-20" width="115" height="20" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Employee]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="161" y="-20" width="49" height="20" forecolor="#6666FF" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9"/>
+					<reportElement x="138" y="-20" width="49" height="20" forecolor="#6666FF" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Billable]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="214" y="-20" width="86" height="20" forecolor="#6666FF" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219"/>
+					<reportElement x="196" y="-20" width="86" height="20" forecolor="#6666FF" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Administration]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="305" y="-20" width="52" height="20" forecolor="#6666FF" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0"/>
+					<reportElement x="289" y="-20" width="52" height="20" forecolor="#6666FF" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Training]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="448" y="-20" width="83" height="20" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46"/>
+					<reportElement x="439" y="-20" width="83" height="20" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
-					<text><![CDATA[Non-charged]]></text>
+					<text><![CDATA[Non-Charged]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="360" y="-20" width="85" height="20" forecolor="#6666FF" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5"/>
+					<reportElement x="348" y="-20" width="85" height="20" forecolor="#6666FF" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Development]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="533" y="-20" width="115" height="20" forecolor="#6666FF" uuid="6556b995-151e-420f-b133-b377ad1a84be"/>
+					<reportElement x="529" y="-20" width="115" height="20" forecolor="#6666FF" uuid="6556b995-151e-420f-b133-b377ad1a84be"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -251,23 +251,23 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<text><![CDATA[OverTime]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="15" y="0" width="778" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
+					<reportElement x="19" y="0" width="165" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
 					<textElement verticalAlignment="Bottom">
 						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="72" y="-1" width="83" height="1" forecolor="#6666FF" uuid="69cd0784-3ec2-452e-b893-a96ba792145b"/>
+					<reportElement x="19" y="-1" width="104" height="1" forecolor="#6666FF" uuid="69cd0784-3ec2-452e-b893-a96ba792145b"/>
 				</line>
 				<line>
-					<reportElement x="216" y="-1" width="81" height="1" forecolor="#6666FF" uuid="24ce9247-dd48-443f-8f64-c89fa922491d"/>
+					<reportElement x="198" y="-1" width="81" height="1" forecolor="#6666FF" uuid="24ce9247-dd48-443f-8f64-c89fa922491d"/>
 				</line>
 				<line>
-					<reportElement x="363" y="-1" width="78" height="1" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0"/>
+					<reportElement x="351" y="-1" width="78" height="1" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0"/>
 				</line>
 				<line>
-					<reportElement x="450" y="-1" width="76" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8"/>
+					<reportElement x="443" y="-1" width="76" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8"/>
 				</line>
 				<line>
 					<reportElement x="736" y="-1" width="55" height="1" forecolor="#6666FF" uuid="7247aa56-3d4c-4591-bd20-241580735672"/>
@@ -277,14 +277,14 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<groupFooter>
 			<band height="19">
 				<staticText>
-					<reportElement x="15" y="0" width="140" height="19" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
+					<reportElement x="19" y="0" width="104" height="19" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
 					<textElement verticalAlignment="Top">
 						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
-					<text><![CDATA[Sum of Department: ]]></text>
+					<text><![CDATA[Sub total:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="306" y="0" width="51" height="19" uuid="94161239-6605-4b1a-a3d1-b76f84d7834d"/>
+					<reportElement x="289" y="0" width="52" height="19" uuid="94161239-6605-4b1a-a3d1-b76f84d7834d"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -300,7 +300,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="363" y="0" width="78" height="19" uuid="c79a6ea4-42a0-46fa-83eb-4115b53c33e1"/>
+					<reportElement x="351" y="0" width="78" height="19" uuid="c79a6ea4-42a0-46fa-83eb-4115b53c33e1"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -316,7 +316,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="448" y="0" width="78" height="19" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e"/>
+					<reportElement x="441" y="0" width="76" height="19" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -332,7 +332,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="534" y="0" width="113" height="19" uuid="b1a3bd29-a331-4800-ba8d-49008bb960f1"/>
+					<reportElement x="531" y="0" width="112" height="19" uuid="b1a3bd29-a331-4800-ba8d-49008bb960f1"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -348,7 +348,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{total_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="161" y="0" width="46" height="19" uuid="2bb0023c-29d9-44e0-ad62-38053c9a4e1b"/>
+					<reportElement x="139" y="0" width="45" height="19" uuid="2bb0023c-29d9-44e0-ad62-38053c9a4e1b"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -364,7 +364,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="214" y="0" width="83" height="19" uuid="19a2dbd6-22a0-40f4-bd34-442040144528"/>
+					<reportElement x="198" y="0" width="81" height="19" uuid="19a2dbd6-22a0-40f4-bd34-442040144528"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -411,6 +411,30 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{overtime_dept}*37.25/2235).intValue()+0.25):
 (($F{overtime_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement x="139" y="1" width="45" height="1" uuid="d96e9c24-2de7-4bc4-b452-26549e2d0167"/>
+				</line>
+				<line>
+					<reportElement x="198" y="1" width="81" height="1" uuid="e54da4b4-4d52-480c-9131-caed26218dfe"/>
+				</line>
+				<line>
+					<reportElement x="289" y="1" width="52" height="1" uuid="4d166bde-ed97-4fda-b6db-bfe27b30f0f2"/>
+				</line>
+				<line>
+					<reportElement x="441" y="1" width="76" height="1" uuid="9518a247-ee73-400d-840d-c57cd7e8bcf7"/>
+				</line>
+				<line>
+					<reportElement x="351" y="1" width="78" height="1" uuid="f4623953-c4d4-43aa-bdfd-b36087e1a563"/>
+				</line>
+				<line>
+					<reportElement x="529" y="1" width="115" height="1" uuid="a02c8542-194d-4832-ab00-df411e51c614"/>
+				</line>
+				<line>
+					<reportElement x="653" y="1" width="74" height="1" uuid="5f89d98f-7d08-4197-abb8-a95e8821eba5"/>
+				</line>
+				<line>
+					<reportElement x="736" y="1" width="55" height="1" uuid="dc4137bc-9f16-4ad6-b9ed-8ac8fa353470"/>
+				</line>
 			</band>
 		</groupFooter>
 	</group>
@@ -420,27 +444,27 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<title>
 		<band height="169" splitType="Stretch">
 			<staticText>
-				<reportElement x="399" y="98" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
+				<reportElement x="402" y="98" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[To]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="418" y="98" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
+				<reportElement x="421" y="98" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{to_date}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="162" y="168" width="45" height="1" forecolor="#6666FF" uuid="f992a32d-05c8-4279-b9ec-26e4402b0f3c"/>
+				<reportElement x="139" y="168" width="45" height="1" forecolor="#6666FF" uuid="f992a32d-05c8-4279-b9ec-26e4402b0f3c"/>
 			</line>
 			<line>
-				<reportElement x="306" y="168" width="51" height="1" forecolor="#6666FF" uuid="5b0f031a-4815-4b82-b962-1e20e7cbf08b"/>
+				<reportElement x="290" y="168" width="51" height="1" forecolor="#6666FF" uuid="5b0f031a-4815-4b82-b962-1e20e7cbf08b"/>
 			</line>
 			<line>
-				<reportElement x="535" y="168" width="112" height="1" forecolor="#6666FF" uuid="702a12eb-7660-40f9-842e-97fb109ad212"/>
+				<reportElement x="531" y="168" width="112" height="1" forecolor="#6666FF" uuid="702a12eb-7660-40f9-842e-97fb109ad212"/>
 			</line>
 			<line>
 				<reportElement x="653" y="168" width="72" height="1" forecolor="#6666FF" uuid="6a7e4776-a56e-48fe-8b4c-7c580367ea24"/>
@@ -454,24 +478,31 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Report on Actual Working]]></text>
+				<text><![CDATA[Report on Actual Working Ratio]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="334" y="98" width="62" height="20" forecolor="#990000" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
+				<reportElement x="337" y="98" width="62" height="20" forecolor="#990000" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{from_date}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="672" y="118" width="119" height="20" uuid="4cd3e2c3-0864-4724-ac3a-b7f70e48e6b2"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="11" isItalic="true" pdfFontName="Times-Italic"/>
+				</textElement>
+				<text><![CDATA[Unit of Measure: Ratio]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="450" y="0" width="76" height="21" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
+				<reportElement x="441" y="0" width="76" height="17" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_ac5}==0 || $F{time_ac5}==null || $F{time_ac5}=="")?
 "-":
@@ -485,7 +516,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="363" y="0" width="78" height="21" uuid="d82776bc-2481-4103-9991-27ec97ce6d92"/>
+				<reportElement x="351" y="0" width="78" height="17" uuid="d82776bc-2481-4103-9991-27ec97ce6d92"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_ac4}==0 || $F{time_ac4}==null || $F{time_ac4}=="")?
 "-":
@@ -499,12 +530,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="71" y="0" width="84" height="21" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
-				<textElement verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{employee}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="161" y="0" width="46" height="21" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc"/>
+				<reportElement x="139" y="0" width="45" height="17" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_ac1}==0 || $F{time_ac1}==null || $F{time_ac1}=="")?
 "-":
@@ -518,7 +544,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="535" y="1" width="112" height="20" uuid="11f78650-6b2d-4b35-903a-154267b2067a"/>
+				<reportElement x="531" y="1" width="112" height="16" uuid="11f78650-6b2d-4b35-903a-154267b2067a"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_charge_sum}==0 || $F{time_charge_sum}==null || $F{time_charge_sum}=="")?
 "-":
@@ -532,7 +558,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_charge_sum}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="653" y="1" width="72" height="20" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60"/>
+				<reportElement x="653" y="1" width="72" height="16" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_in_lieu}==0 || $F{time_in_lieu}==null || $F{time_in_lieu}=="")?
 "-":
@@ -546,7 +572,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="736" y="1" width="55" height="20" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f"/>
+				<reportElement x="736" y="1" width="55" height="16" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_over}==0 || $F{time_over}==null || $F{time_over}=="")?
 "-":
@@ -560,7 +586,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_over}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="214" y="2" width="83" height="19" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e"/>
+				<reportElement x="198" y="0" width="81" height="17" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_ac2}==0 || $F{time_ac2}==null || $F{time_ac2}=="")?
 "-":
@@ -574,7 +600,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="306" y="1" width="51" height="20" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080"/>
+				<reportElement x="290" y="1" width="51" height="16" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080"/>
 				<textElement textAlignment="Right" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[($F{time_ac3}==0 || $F{time_ac3}==null || $F{time_ac3}=="")?
 "-":
@@ -587,6 +613,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3}*37.25/2235).intValue()+0.25):
 (($F{time_ac3}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="31" y="0" width="92" height="17" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{employee}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
@@ -595,7 +626,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<lastPageFooter>
 		<band height="52">
 			<textField>
-				<reportElement x="766" y="34" width="36" height="18" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f"/>
+				<reportElement x="765" y="29" width="36" height="20" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -604,50 +635,44 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<summary>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement x="15" y="1" width="140" height="20" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
+				<reportElement x="19" y="1" width="104" height="20" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
 				<textElement>
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="71" y="0" width="83" height="1" uuid="5293582b-c70e-4972-92de-92d85738dedb"/>
+				<reportElement x="139" y="0" width="45" height="1" uuid="a1372f17-2ba9-4a7c-9ff1-029621aaef45"/>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="162" y="0" width="45" height="1" uuid="a1372f17-2ba9-4a7c-9ff1-029621aaef45"/>
+				<reportElement x="198" y="0" width="81" height="1" uuid="c6407ee3-46b6-4765-90f1-f7db36ccf073"/>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="216" y="0" width="81" height="1" uuid="c6407ee3-46b6-4765-90f1-f7db36ccf073"/>
+				<reportElement x="290" y="0" width="51" height="1" uuid="4c1dc30e-14e2-4da0-892c-e6f4a87bbef6"/>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="306" y="0" width="51" height="1" uuid="4c1dc30e-14e2-4da0-892c-e6f4a87bbef6"/>
+				<reportElement x="351" y="0" width="78" height="1" uuid="b3fee585-1e38-4595-8667-bd8eb741dba5"/>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="363" y="0" width="78" height="1" uuid="b3fee585-1e38-4595-8667-bd8eb741dba5"/>
+				<reportElement x="439" y="0" width="76" height="1" uuid="546fd05e-c41a-4eb3-b214-302da57d9db2"/>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="450" y="0" width="76" height="1" uuid="546fd05e-c41a-4eb3-b214-302da57d9db2"/>
-				<graphicElement>
-					<pen lineWidth="2.25" lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="535" y="0" width="113" height="1" uuid="11621e5f-ca65-42e7-87d8-e82cb46e5c84"/>
+				<reportElement x="530" y="0" width="113" height="1" uuid="11621e5f-ca65-42e7-87d8-e82cb46e5c84"/>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
@@ -665,7 +690,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="162" y="1" width="45" height="20" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9"/>
+				<reportElement x="138" y="1" width="46" height="20" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -681,7 +706,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1_all}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="216" y="1" width="81" height="20" uuid="1cc5d38b-087a-467b-9063-fa4be97b6f0d"/>
+				<reportElement x="198" y="1" width="81" height="20" uuid="1cc5d38b-087a-467b-9063-fa4be97b6f0d"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -697,7 +722,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2_all}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="306" y="1" width="51" height="20" uuid="b907f3c5-c066-4817-84c2-832d36d1d30d"/>
+				<reportElement x="290" y="1" width="51" height="20" uuid="b907f3c5-c066-4817-84c2-832d36d1d30d"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -713,7 +738,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3_all}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="363" y="1" width="78" height="20" uuid="d03a9895-277c-4c10-8beb-95742d882836"/>
+				<reportElement x="351" y="1" width="78" height="20" uuid="d03a9895-277c-4c10-8beb-95742d882836"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -729,7 +754,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_all}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="1" width="76" height="20" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c"/>
+				<reportElement x="441" y="1" width="76" height="20" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -745,7 +770,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5_all}*37.25/2235).intValue()))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="535" y="1" width="112" height="20" uuid="3f24659e-6b72-4c42-96b1-3a6bb51058bf"/>
+				<reportElement x="531" y="1" width="113" height="20" uuid="3f24659e-6b72-4c42-96b1-3a6bb51058bf"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
