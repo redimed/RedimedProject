@@ -595,7 +595,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<lastPageFooter>
 		<band height="52">
 			<textField>
-				<reportElement x="765" y="29" width="36" height="20" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f"/>
+				<reportElement x="766" y="34" width="36" height="18" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
