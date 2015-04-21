@@ -1,28 +1,37 @@
 <h3 class="page-title">
     New Functional Assessment Definition</h3>
-
 <form name="wafirstform" novalidate>
+		<!-- This is for header -->
+		<div class="row" align="center">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<input type="text" style="font-size: 18pt; font-weight: bolder; text-align: center;" class="form-control" value="Untitled Functional Assessment Header"/>
+			</div>
+		</div>
+		
 	    <!-- This is for sections -->
-	    <div class="portlet box red">
+	    <div class="portlet box red" ng-repeat="section in header.sections">
 			<div class="portlet-title">
 				<div class="caption" style="width:50%;">
-					<input color="white" class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%">
+					<input color="white" class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%" ng-model="section.SECTION_NAME">
 				</div>
 				<div class="tools">
 					<a href="javascript:;" class="collapse" data-original-title="" title=""> 
+					</a>
+					<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeSection(section)"> 
 					</a>
 				</div>
 			</div>
 			<div class="portlet-body">
 				<!-- This is for lines -->
-				<div class="portlet box blue-hoki">
+				<div class="portlet box blue-hoki" ng-repeat="line in section.lines">
 					<div class="portlet-title">
 						<div class="caption" style="width:50%;">
-							<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%">
+							<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%" ng-model="line.QUESTION">
 						</div>
 						<div class="tools">
 							<a href="javascript:;" class="collapse" data-original-title="" title=""> 
 							</a>
+							<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeLine(section, line)"></a>
 						</div>
 					</div>
 					<div class="portlet-body">
@@ -31,24 +40,24 @@
 								<h3 class="form-section">Scoring/Rating 1 definition</h3>
 									<div class="row">
 										<div class="col-md-4 col-sm-4 col-xs-4">
-											<input type="text" class="form-control" placeholder="Name header" />
-											<input type="text" class="form-control" placeholder="Value header" />
+											<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL1_NAME_HEADER"/>
+											<input type="text" class="form-control" placeholder="Value header" ng-model="line.VAL1_VALUE_HEADER"/>
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-												<input type="checkbox" /> Is score?
+												<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1==='1'"/> Is score?
 											</label>
-											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="score_type">
+											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
 												
 											</select>
 											
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-												<input type="checkbox" /> Is rating?
+												<input type="checkbox" ng-model="line.ISRATING1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING1==='1'"/> Is rating?
 											</label>
 
-											<select class="form-control" ng-options="rt.id as rt.label for rt in rating_type_opt" ng-model="rating_type">
+											<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID1">
 												
 											</select>
 											
@@ -57,24 +66,24 @@
 								<h3 class="form-section">Rating 2 definition</h3>
 									<div class="row">
 										<div class="col-md-4 col-sm-4 col-xs-4">
-											<input type="text" class="form-control" placeholder="Name header" />
-											<input type="text" class="form-control" placeholder="Value header" />
+											<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL2_NAME_HEADER"/>
+											<input type="text" class="form-control" placeholder="Value header" ng-model="line.VAL2_VALUE_HEADER"/>
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-												<input type="checkbox" /> Is score?
+												<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2==='1'"/> Is score?
 											</label>
-											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="score_type">
+											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
 												
 											</select>
 											
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-												<input type="checkbox" /> Is rating?
+												<input type="checkbox" ng-model="line.ISRATING2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING2==='1'"/> Is rating?
 											</label>
 
-											<select class="form-control" ng-options="rt.id as rt.label for rt in rating_type_opt" ng-model="rating_type">
+											<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID2">
 												
 											</select>
 											
@@ -83,17 +92,17 @@
 								<h3 class="form-section">General definition</h3>
 									<div class="col-md-4 col-sm-4 col-xs-4">
 										<label>
-												<input type="checkbox" /> Is comment text?
+												<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText"/> Is comment text?
 										</label>
 									</div>
 									<div class="col-md-4 col-sm-4 col-xs-4">
 										<label>
-												<input type="checkbox" /> Is in summary line?
+												<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="LineType"/> Is in summary line?
 										</label>
 									</div>
 									<div class="col-md-4 col-sm-4 col-xs-4">
 										<label>
-												<input type="checkbox" /> Is showing ranking table?
+												<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE"/> Is showing ranking table?
 										</label>
 									</div>
 							</accordion-group>
@@ -113,137 +122,68 @@
 									</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td rowspan="3" width="20%">
-												<input type="text" class="form-control input-medium" value="Question 1"/>
+										<tr ng-repeat="detail in line.details">
+											<td width="20%">
+												<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
 											</td>
 											<td>
-												<div>
-													<input type="text" value="Untitled val 1" class="form-control input-small inline" />
-													<label>
-														<span><input type="checkbox"></span> Is checkbox? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Has comment? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Comment when checked? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Is numeric?
-													</label>
+												<div class="col-md-7 col-xs-7 col-sm-7">
+													<div>
+														<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME"/>
+														<label>
+															<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)">
+													
+															</select>
+														</label> &nbsp;
+														<label ng-show="detail.VAL1_ISVALUE===1">
+															<span><input type="checkbox"></span> Is numeric?
+														</label>
+													</div>
+													<div>
+														<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="line.VAL2_ISCHECKBOX"/>
+														<label>
+															<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)">
+													
+															</select>
+														</label> &nbsp;
+														<label ng-show="detail.VAL2_ISVALUE===1">
+															<span><input type="checkbox"></span> Is numeric?
+														</label>
+													</div>
 												</div>
-												<div>
-													<input type="text" value="Untitled val 2" class="form-control input-small inline" />
-													<label>
-														<span><input type="checkbox"></span> Is checkbox? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Has comment? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Comment when checked? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Is numeric?
-													</label>
+												<div class="col-md-5 col-xs-5 col-sm-5">
+													<div>
+														<label>
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText==='1'" ng-model="detail.IsCommentsText"></span> Comment
+														</label>
+														<label ng-show="detail.IsCommentsText==='1'">
+															required when
+														</label>
+													</div>
+													<div>
+														<label ng-show="detail.VAL1_ISCHECKBOX!==null && detail.VAL1_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox" ></span> Value 1 checked
+														</label> &nbsp;
+														<label ng-show="detail.VAL1_ISCHECKBOX!==null && detail.VAL1_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox"></span> Value 1 unchecked
+														</label> &nbsp;
+														<label ng-show="detail.VAL2_ISCHECKBOX!==null && detail.VAL2_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox"></span> Value 2 checked
+														</label> &nbsp;
+														<label ng-show="detail.VAL2_ISCHECKBOX!==null && detail.VAL2_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox"></span> Value 2 unchecked
+														</label>
+													</div>
 												</div>
+												
 											</td>
-											<td>
-												<i class="fa fa-times fa-2x"></i>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div>
-													<input type="text" value="Untitled val 1" class="form-control input-small inline" />
-													<label>
-														<span><input type="checkbox"></span> Is checkbox? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Has comment? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Comment when checked? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Is numeric?
-													</label>
-												</div>
-												<div>
-													<input type="text" value="Untitled val 2" class="form-control input-small inline" />
-													<label>
-														<span><input type="checkbox"></span> Is checkbox? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Has comment? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Comment when checked? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Is numeric?
-													</label>
-												</div>
-											</td>
-											<td>
-												<i class="fa fa-times fa-2x"></i>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add detail </a>
-											</td>
-										</tr>
-										<tr>
-											<td rowspan="2" width="20%">
-												<input type="text" class="form-control input-medium" value="Question 2" />
-											</td>
-											<td>
-												<div>
-													<input type="text" value="Untitled val 1" class="form-control input-small inline" />
-													<label>
-														<span><input type="checkbox"></span> Is checkbox? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Has comment? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Comment when checked? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Is numeric?
-													</label>
-												</div>
-												<div>
-													<input type="text" value="Untitled val 2" class="form-control input-small inline" />
-													<label>
-														<span><input type="checkbox"></span> Is checkbox? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Has comment? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Comment when checked? 
-													</label> &nbsp;
-													<label>
-														<span><input type="checkbox"></span> Is numeric?
-													</label>
-												</div>
-											</td>
-											<td>
-												<i class="fa fa-times fa-2x"></i>
-											</td>
-										</tr>
-										
-										<tr>
-											<td colspan="2">
-												<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add detail </a>
+											<td width="5%">
+												<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeDetail(detail, line)"></i>
 											</td>
 										</tr>
 									</tbody>
 								</table>
-								<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add question </a>
+								<a class="btn default btn-block" ng-click="addDetail(line)"> <i class="fa fa-plus"></i> Add question </a>
 					    	</accordion-group>
 
 					    	<accordion-group heading="Line comments">
@@ -256,7 +196,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr ng-repeat="comment in line.comments">
 											<td>
 												<input type="text" class="form-control" value="Comment name 1"/>
 											</td>
@@ -266,32 +206,19 @@
 												</select>
 											</td>
 											<td>
-												<i class="fa fa-times fa-2x"></i>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<input type="text" class="form-control" value="Comment name 2"/>
-											</td>
-											<td>
-												<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment_type">
-													
-												</select>
-											</td>
-											<td>
-												<i class="fa fa-times fa-2x"></i>
+												<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeComment(comment, line)"></i>
 											</td>
 										</tr>
 									</tbody>
 								</table>
-								<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add comment </a>
+								<a class="btn default btn-block" ng-click="addComment(line)"> <i class="fa fa-plus"></i> Add comment </a>
 					    	</accordion-group>
 						</accordion>
 						
 					</div>
 				</div>
-				<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add line </a>
+				<a class="btn default btn-block" ng-click="addLine(section)"> <i class="fa fa-plus"></i> Add line </a>
 			</div>
 		</div>
-		<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add section </a>
+		<a class="btn default btn-block" ng-click="addSection()"> <i class="fa fa-plus" ></i> Add section </a>
 </form>
