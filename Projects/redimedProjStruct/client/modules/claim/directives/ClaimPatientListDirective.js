@@ -48,6 +48,8 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 			}else{
 				scope.action = scope.$eval(scope.permission);
 			}
+			
+			console.log(scope.action);
 
 			var search = {
 				page: 1,

@@ -152,7 +152,7 @@
 	<div class="modal-body">	
 		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true" add-success="claim.addSuccess"
 			cal-id="claim.CAL_ID"
-			permission="{edit: false, remove: false}" on-row-click="claim.clickRow(row)">
+			permission="{edit: false, remove: false, add: true}" on-row-click="claim.clickRow(row)">
 		</claim-patient-list>
 	</div>
 </script>
@@ -167,7 +167,8 @@
 <script type="text/ng-template" id="referralSelect">
 	<div class="modal-body">	
 		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
-			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)">
+			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
+			permission="{edit: false, remove: false, add: true}">
 		</outreferral-patient-list>
 	</div>
 </script>
