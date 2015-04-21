@@ -348,14 +348,14 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<title>
 		<band height="169" splitType="Stretch">
 			<staticText>
-				<reportElement x="386" y="98" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
+				<reportElement x="389" y="98" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[To]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="401" y="98" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
+				<reportElement x="408" y="98" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
