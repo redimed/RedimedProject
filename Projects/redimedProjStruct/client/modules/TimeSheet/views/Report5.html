@@ -3,20 +3,44 @@
     <ul class="page-breadcrumb">
         <li>
             <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
+            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:14px; font-weight:bold;">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.Report5TimeSheet">Report on Item Numbers</a>
+            <a ui-sref="loggedIn.Report4TimeSheet" style="font-size:14px; font-weight:bold;">Report on Actual Working</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
+        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0" href="http://apps.redimed.com.au:4002/RedimedJavaREST/api/document/timesheet/{{USER_ID}}" target="_blank">Display</a>
+    </div>
+</div>
+&nbsp;
 <div class="panel panel-info">
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">From</span>
+                    <input ng-model="dateWeekFrom" ng-change="changeDate()" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" max-date="dateWeekTo" close-text="Close" style="text-align:center;font-size:14px;font-weight:bold;color:blue;">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <span class="input-group-addon">To</span>
+                    <input ng-model="dateWeekTo" ng-change="changeDate()" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" close-text="Close" style="text-align:center;font-size:14px;font-weight:bold;color:blue;" min-date="dateWeekFrom">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div ng-dropdown-multiselect="" extra-settings="searchDept" translation-texts="translationTextDept" options="listDept" selected-model="listDepartmentChoose" checkboxes="true" get-selected="ListNew(info)"></div>
+            </div>
+            <div class="col-md-3">
+                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="changeEmp(info)" checkboxes="true"></div>
             </div>
         </div>
     </div>
-    <!-- END INFO SYS -->
+</div>
+<!-- END INFO SYS -->

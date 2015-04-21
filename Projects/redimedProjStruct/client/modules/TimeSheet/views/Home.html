@@ -51,8 +51,13 @@
                                 <span class="bold text-info" style="font-size:14px;">Report on Actual Working Hours</span>
                             </a>
                         </li>
-                        <li role="presentation">
+                        <li role="presentation" ng-if="!(position!=='Head of Dept.' && position!=='Director')">
                             <a role="menuitem" ui-sref="loggedIn.Report5TimeSheet">
+                                <span class="bold text-info" style="font-size:14px;">Report on Actual Working</span>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" ui-sref="loggedIn.Report6TimeSheet">
                                 <span class="bold text-info" style="font-size:14px;">Report on Item Numbers</span>
                             </a>
                         </li>
