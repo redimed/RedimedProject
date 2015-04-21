@@ -1,3 +1,11 @@
+<button class="btn btn-primary" ng-click="claim.dialog.add()" ng-if="action.add">Add Claim</button>
+
+<script type="text/ng-template" id="claimAdd">
+	<div class="modal-body">	
+		<claim-patient-add patient-id="claim.Patient_id" cal-id="claim.CAL_ID" success="claim.success"></claim-patient-add>
+	</div>
+</script>
+
 <table class="table">
 	<thead>
 		<tr>
@@ -46,9 +54,8 @@
 					<i class="fa fa-pencil"></i>
 				</a>
 				&nbsp
-				<a>
-				   	<span  ng-if="l.isEnable"  ng-click="claim.disable(l)">Enable</span>
-					<span  ng-if="!l.isEnable"  ng-click="claim.disable(l)">Disable</span>
+				<a ng-click="claim.dialog.remove(l)" ng-if="action.remove">
+					<i class="fa fa-remove"></i>
 				</a>
 			</td>
 		</tr>

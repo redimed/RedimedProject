@@ -1,3 +1,12 @@
+<button class="btn btn-primary" ng-click="outreferral.dialog.add()" ng-if="action.add">Add</button>
+
+<script type="text/ng-template" id="referralAdd">
+	<div class="modal-body">	
+		<outreferral-patient-add patient-id="outreferral.Patient_id" cal-id="outreferral.CAL_ID" 
+			success="outreferral.success"></outreferral-patient-add>
+	</div>
+</script>
+
 <table class="table">
 	<thead>
 		<tr>

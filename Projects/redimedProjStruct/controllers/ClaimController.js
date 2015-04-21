@@ -174,7 +174,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-				.column(
+				.distinct(
 					'cln_claims.Claim_id',
 					'Claim_date',
 					'Injury_date',
@@ -221,12 +221,11 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-				.column(
+				.distinct(
 					'cln_claims.Claim_id',
 					'cln_patient_claim.Patient_id',
 					'Claim_date',
 					'Injury_date',
-					'cln_patient_claim.isEnable',
 					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
 					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)

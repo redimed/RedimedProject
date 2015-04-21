@@ -178,25 +178,14 @@ module.exports = {
 	postRemove: function(req, res){
 		var postData = req.body.data;
 
-		var sql = knex('cln_alerts')
-			.where('id', postData.id)
-			.del()
-			.toString();
-
 		var sub_sql = knex('cln_patient_alerts')
 			.where('alert_id', postData.id)
 			.del()
 			.toString();
 
-		db.sequelize.query(sql)
+		db.sequelize.query(sub_sql)
 		.success(function(del){
-			db.sequelize.query(sub_sql)
-			.success(function(del){
-				res.json({data: del});
-			})
-			.error(function(error){
-				res.json(500, {error: error});
-			})
+			res.json({data: del});
 		})
 		.error(function(error){
 			res.json(500, {error: error});

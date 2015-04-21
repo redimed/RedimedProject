@@ -34,14 +34,16 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 			calId: '=',
 			withoutPatient: '@',
 			permission: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			addSuccess: '='
 		},
 		templateUrl: 'modules/claim/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
 			if(typeof scope.permission === 'undefined'){
 				scope.action = {
 					edit: true,
-					remove: true
+					remove: true,
+					add: true
 				}
 			}else{
 				scope.action = scope.$eval(scope.permission);
@@ -56,8 +58,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				Claim_date: 'desc',
 				Injury_name: '',
 				Injury_date: 'asc',
-				Patient_id: scope.patientId,
-				isEnable:null
+				Patient_id: scope.patientId
 			}
 
 			var load = function(){
@@ -139,23 +140,45 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 					}
 				})
 			}
-			var disable = function(row)
-			{
-				var postData ={
-					patient_id :$stateParams.patientId,
-					CAL_ID : $stateParams.calId,
-					isEnable : row.isEnable,
-					Claim_id : row.Claim_id
-				}
-				ClaimModel.disableClaim(postData)
-				.then(function(response){
-					scope.claim.load();
-				},function(error){
 
+			var add = function(){
+				$modal.open({
+					templateUrl: 'claimAdd',
+					controller: function($scope, $modalInstance, patientId, calId){
+						$scope.claim = {
+							Patient_id: patientId,
+							CAL_ID: calId,
+							success: false
+						}
+
+						$scope.$watch('claim.success', function(success){
+							if(success)
+								$modalInstance.close('success');
+						})
+					},
+					size: 'lg',
+					resolve: {
+						patientId: function(){
+							return scope.patientId;
+						},
+						calId: function(){
+							return scope.calId;
+						}
+					}
+				})
+				.result.then(function(success){
+					if(success === 'success'){
+						toastr.success('Add Successfully');
+						scope.addSuccess = true;
+					}
 				})
 			}
+
 			scope.claim = {
 				dialog: {
+					add: function(){
+						add();
+					},
 					remove: function(list){
 						remove(list);
 					},
@@ -169,8 +192,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				search: angular.copy(search),
 				onPage: function(page){ onPage(page); },
 				onSearch: function(){ onSearch(); },
-				onOrderBy: function(option){ onOrderBy(option); },
-				disable:function(row){disable(row)}
+				onOrderBy: function(option){ onOrderBy(option); }
 			}
 
 			//INIT

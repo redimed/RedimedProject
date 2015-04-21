@@ -34,14 +34,16 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 			calId: '=',
 			withoutPatient: '@',
 			permission: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			addSuccess: '='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
 			if(typeof scope.permission === 'undefined'){
 				scope.action = {
 					edit: true,
-					remove: true
+					remove: true,
+					add: trues
 				}
 			}else{
 				scope.action = scope.$eval(scope.permission);
@@ -163,8 +165,44 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 				})
 			}
 
+			var add = function(){
+				$modal.open({
+					templateUrl: 'referralAdd',
+					controller: function($scope, $modalInstance, patientId, calId){
+						$scope.outreferral = {
+							Patient_id: patientId,
+							CAL_ID: calId,
+							success: false
+						}
+
+						$scope.$watch('outreferral.success', function(success){
+							if(success)
+								$modalInstance.close('success');
+						})
+					},
+					size: 'lg',
+					resolve: {
+						patientId: function(){
+							return scope.patientId;
+						},
+						calId: function(){
+							return scope.calId;
+						}
+					}
+				})
+				.result.then(function(success){
+					if(success === 'success'){
+						toastr.success('Add Successfully');
+						scope.addSuccess = true;
+					}
+				})
+			}
+
 			scope.outreferral = {
 				dialog: {
+					add: function(){
+						add();
+					},
 					remove: function(list){
 						remove(list);
 					},

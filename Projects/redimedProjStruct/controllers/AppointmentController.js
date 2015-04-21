@@ -111,22 +111,25 @@ module.exports = {
 		if(!postData.clinical_dept_id) postData.clinical_dept_id = '';
 
 		var main_sql = knex
-		.column(
+		.distinct(
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.TO_TIME, '%H:%i') AS TO_TIME"),
 			'cln_appointment_calendar.SERVICE_ID',
 			'sys_services.SERVICE_NAME',
+			'sys_services.IS_REFERRAL',
 			'sys_services.SERVICE_COLOR',
 			'cln_appointment_calendar.DOCTOR_ID',
 			'cln_appointment_calendar.CAL_ID',
 			'cln_appointment_calendar.CLINICAL_DEPT_ID',
 			'cln_appt_patients.Patient_id',
 			'cln_patients.First_name',
-			'cln_patients.Sur_name'
+			'cln_patients.Sur_name',
+			'cln_patient_outreferral.patient_id AS outreferral'
 		)
 		.leftOuterJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.leftOuterJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
 		.leftOuterJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+		.leftOuterJoin('cln_patient_outreferral', 'cln_appt_patients.Patient_id', 'cln_patient_outreferral.patient_id')
 		.from('cln_appointment_calendar')
 		.where({
 			'cln_appointment_calendar.SITE_ID': postData.site_id
