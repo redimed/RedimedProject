@@ -9,11 +9,11 @@
             </legend>
             <!-- INFORMATION -->
             <div data-row-span="12">
-                <div data-field-span="6">
-                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                <div data-field-span="6" style="font-size:14px;">
+                    Employee: &nbsp;<span class="text-info" style="font-size:14px;">{{employee_name}}</span>
                 </div>
-                <div data-field-span="6">
-                    For The Week: &nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{list.result[0].end_date| date: "dd/MM/yyyy"}}</span>
+                <div data-field-span="6" style="font-size:14px;">
+                    For The Week: &nbsp;<span class="text-info" style="font-size:14px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:14px;">{{list.result[0].end_date| date: "dd/MM/yyyy"}}</span>
                 </div>
             </div>
             <!-- END INFORMATION -->
@@ -52,37 +52,43 @@
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Item Number
+                                        Tasks/Items
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Quantity
+                                        Actual Unit
                                     </div>
                                 </th>
                                 <th>
                                     <div class="th">
-                                        Tasks/Comments
+                                        Standard Unit
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Comments
                                     </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="(index,l) in list.result " style="cursor: pointer; " ng-class="{'same':(l.date|getDate)%2===0 && Title === 'Full Timesheet'}">
-                                <td class="btn btn-xs" style="text-align:left;">{{l.date | date: 'EEE, dd MMMM yyyy'}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
-                                <td class="btn btn-xs">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?"N/A":l.item_id}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="" || l.quantity===undefined)?"N/A":l.quantity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;">{{(l.quantity===null||l.quantity==="" || l.quantity===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
+                                <td class="btn btn-xs" style="text-align:left; font-size:14px;">{{l.date | date: 'EEE, dd MMMM yyyy'}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.IS_BILLABLE===1?(l.item_id):(l.ITEM_NAME)}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(l.ratio===null||l.ratio==="" || l.ratio===undefined)?"N/A":l.ratio}}</td>
+                                <td class="btn btn-xs" style="font-size:14px;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
+                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.units===null||l.units==="" || l.units===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-md-12" style="margin-top:5px; font-size:13px;" ng-hide="Title === 'Timesheet Detail'">
+            <div class="col-md-12" style="margin-top:5px; font-size:14px;" ng-hide="Title === 'Timesheet Detail'">
                 <span>Total Time Charge:&nbsp;<span class="text-info bold">{{list.result[0].chargeWeek | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Time In Lieu:&nbsp;<span class="text-info bold">{{list.result[0].time_in_lieu | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span ng-show="list.result[0].status==='Approved'">Over Time:&nbsp;<span class="text-info bold">{{list.result[0].over_time | customHours}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

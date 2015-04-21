@@ -16,7 +16,7 @@
         closeOnCancel: true,
         confirmButtonText: 'OK',
         confirmButtonColor: '#AEDEF4',
-        cancelButtonText: 'Cancel',
+        cancelButtonText: 'No',
         imageUrl: null,
         imageSize: null,
         timer: null,

@@ -37,6 +37,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.reset = function() {
         $scope.searchObjectMap = angular.copy($scope.searchObject);
         $scope.loadList();
+        $scope.dateWeekFrom = null;
+
     };
     //END FUNCTION RESET
 
@@ -168,7 +170,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
 
     //CHECK MOTH AND WEEK
-    StaffService.showWeek($cookieStore.get('userInfo').id);
+    StaffService.showWeek(); //    VIEW NOT DISABLE
     //END
 })
 
@@ -176,6 +178,39 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     if (!$scope.tasks) {
         $scope.tasks = [];
     }
+
+    //FUNCTION GET WEEK NUMBER
+    $scope.getWeekNumber = function(d) {
+        d = new Date(+d);
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        var yearStart = new Date(d.getFullYear(), 0, 1);
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        return weekNo;
+    };
+    //FUNCTION GET WEEK NUMBER
+
+    // GET TIME IN LIEU TO CHECK SUBMIT
+    var toDate = new Date();
+    var weekNo = $scope.getWeekNumber(toDate);
+    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        if (response.status === "error") {
+            toastr.error("Check Time in Lieu fail!", "Fail");
+        } else if (response.status === "success") {
+            var timeInLieu = 0;
+            angular.forEach(response.result, function(data, index) {
+                timeInLieu += data.time_in_lieu;
+            });
+            $scope.time_in_lieuHas = timeInLieu;
+
+        } else {
+            $state.go("loggedIn.TimeSheetHome", null, {
+                "reload": true
+            });
+            toastr.error("Server not response!", "Error");
+        }
+    });
+    //END
 
     $scope.getDay = function(day) {
         var date = new Date(day);
@@ -199,17 +234,19 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
     //summit on date
-    $scope.submitClick = function(idWeek, STATUS) {
+    $scope.submitClick = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
+        } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
+            toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
-            var status = 0;
-            if (STATUS == 'Awaiting for Submit') {
-                status = 2;
-            } else if (STATUS == 'Rejected') {
-                status = 5;
+            value.status = 0;
+            if (value.STATUS == 'Awaiting for Submit') {
+                value.status = 2;
+            } else if (value.STATUS == 'Rejected') {
+                value.status = 5;
             }
-            StaffService.SubmitOnView(idWeek, status).then(function(response) {
+            StaffService.SubmitOnView(value).then(function(response) {
                 if (response.status === 'error') {
                     toastr.error("Submit fail!", "Error");
                     $modalInstance.close();
@@ -238,7 +275,15 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     result[0] !== undefined) {
                     $scope.ID_WEEK = result[0].tasks_week_id;
                     $scope.STATUS = result[0].STATUS;
+                    $scope.USER_ID = $cookieStore.get('userInfo').id;
                     $scope.after_status_id = result[0].after_status_id;
+                    $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
+                    //TRACKER
+                    $scope.submitOnView = {};
+                    $scope.submitOnView.STATUS = $scope.STATUS;
+                    $scope.submitOnView.ID_WEEK = $scope.ID_WEEK;
+                    $scope.submitOnView.USER_ID = $scope.USER_ID;
+                    //END
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }
                 //end get
@@ -287,6 +332,37 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     if (!$scope.info) {
         $scope.info = {};
     }
+    //FUNCTION GET WEEK NUMBER
+    $scope.getWeekNumber = function(d) {
+        d = new Date(+d);
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        var yearStart = new Date(d.getFullYear(), 0, 1);
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        return weekNo;
+    };
+    //FUNCTION GET WEEK NUMBER
+    // GET TIME IN LIEU TO CHECK SUBMIT
+    var toDate = new Date();
+    var weekNo = $scope.getWeekNumber(toDate);
+    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        if (response.status === "error") {
+            toastr.error("Check Time in Lieu fail!", "Fail");
+        } else if (response.status === "success") {
+            var timeInLieu = 0;
+            angular.forEach(response.result, function(data, index) {
+                timeInLieu += data.time_in_lieu;
+            });
+            $scope.time_in_lieuHas = timeInLieu;
+
+        } else {
+            $state.go("loggedIn.TimeSheetHome", null, {
+                "reload": true
+            });
+            toastr.error("Server not response!", "Error");
+        }
+    });
+    //END
 
     $scope.getFortMatTimeCharge = function(val) {
         return StaffService.getFortMatTimeCharge(val);
@@ -295,17 +371,19 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.cancelClick = function() {
         $modalInstance.close();
     };
-    $scope.submitClick = function(idWeek, STATUS) {
+    $scope.submitClick = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
+        } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
+            toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
-            var status = 0;
-            if (STATUS == 'Awaiting for Submit') {
-                status = 2;
-            } else if (STATUS == 'Rejected') {
-                status = 5;
+            value.status = 0;
+            if (value.STATUS == 'Awaiting for Submit') {
+                value.status = 2;
+            } else if (value.STATUS == 'Rejected') {
+                value.status = 5;
             }
-            StaffService.SubmitOnView(idWeek, status).then(function(response) {
+            StaffService.SubmitOnView(value).then(function(response) {
                 if (response.status === 'error') {
                     toastr.error("Submit fail!", "Error");
                     $modalInstance.close();
@@ -340,6 +418,14 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 if (result !== undefined && result[0] !== undefined) {
                     $scope.STATUS = result[0].status;
                     $scope.ID_WEEK = result[0].tasks_week_id;
+                    $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
+                    $scope.USER_ID = $cookieStore.get('userInfo').id;
+                    //TRACKER
+                    $scope.submitOnView = {};
+                    $scope.submitOnView.STATUS = $scope.STATUS;
+                    $scope.submitOnView.ID_WEEK = $scope.ID_WEEK;
+                    $scope.submitOnView.USER_ID = $scope.USER_ID;
+                    //END
                     $scope.afterStatusID = result[0].after_status_id;
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }

@@ -1,0 +1,297 @@
+<h3 class="page-title">
+    New Functional Assessment Definition</h3>
+
+<form name="wafirstform" novalidate>
+	    <!-- This is for sections -->
+	    <div class="portlet box red">
+			<div class="portlet-title">
+				<div class="caption" style="width:50%;">
+					<input color="white" class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%">
+				</div>
+				<div class="tools">
+					<a href="javascript:;" class="collapse" data-original-title="" title=""> 
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<!-- This is for lines -->
+				<div class="portlet box blue-hoki">
+					<div class="portlet-title">
+						<div class="caption" style="width:50%;">
+							<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%">
+						</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse" data-original-title="" title=""> 
+							</a>
+						</div>
+					</div>
+					<div class="portlet-body">
+						<accordion close-others="oneAtATime">
+							<accordion-group heading="General line definitions">
+								<h3 class="form-section">Scoring/Rating 1 definition</h3>
+									<div class="row">
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<input type="text" class="form-control" placeholder="Name header" />
+											<input type="text" class="form-control" placeholder="Value header" />
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+												<input type="checkbox" /> Is score?
+											</label>
+											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="score_type">
+												
+											</select>
+											
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+												<input type="checkbox" /> Is rating?
+											</label>
+
+											<select class="form-control" ng-options="rt.id as rt.label for rt in rating_type_opt" ng-model="rating_type">
+												
+											</select>
+											
+										</div>
+									</div>
+								<h3 class="form-section">Rating 2 definition</h3>
+									<div class="row">
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<input type="text" class="form-control" placeholder="Name header" />
+											<input type="text" class="form-control" placeholder="Value header" />
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+												<input type="checkbox" /> Is score?
+											</label>
+											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="score_type">
+												
+											</select>
+											
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+												<input type="checkbox" /> Is rating?
+											</label>
+
+											<select class="form-control" ng-options="rt.id as rt.label for rt in rating_type_opt" ng-model="rating_type">
+												
+											</select>
+											
+										</div>
+									</div>
+								<h3 class="form-section">General definition</h3>
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label>
+												<input type="checkbox" /> Is comment text?
+										</label>
+									</div>
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label>
+												<input type="checkbox" /> Is in summary line?
+										</label>
+									</div>
+									<div class="col-md-4 col-sm-4 col-xs-4">
+										<label>
+												<input type="checkbox" /> Is showing ranking table?
+										</label>
+									</div>
+							</accordion-group>
+							<accordion-group heading="Line detail questions">
+					    		<table class="table table-bordered table-hover">
+									<thead>
+									<tr>
+										<th>
+											 Detail questions
+										</th>
+										<th>
+											 Detail definitions
+										</th>
+										<th>
+											Action
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td rowspan="3" width="20%">
+												<input type="text" class="form-control input-medium" value="Question 1"/>
+											</td>
+											<td>
+												<div>
+													<input type="text" value="Untitled val 1" class="form-control input-small inline" />
+													<label>
+														<span><input type="checkbox"></span> Is checkbox? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Has comment? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Comment when checked? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Is numeric?
+													</label>
+												</div>
+												<div>
+													<input type="text" value="Untitled val 2" class="form-control input-small inline" />
+													<label>
+														<span><input type="checkbox"></span> Is checkbox? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Has comment? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Comment when checked? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Is numeric?
+													</label>
+												</div>
+											</td>
+											<td>
+												<i class="fa fa-times fa-2x"></i>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<input type="text" value="Untitled val 1" class="form-control input-small inline" />
+													<label>
+														<span><input type="checkbox"></span> Is checkbox? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Has comment? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Comment when checked? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Is numeric?
+													</label>
+												</div>
+												<div>
+													<input type="text" value="Untitled val 2" class="form-control input-small inline" />
+													<label>
+														<span><input type="checkbox"></span> Is checkbox? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Has comment? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Comment when checked? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Is numeric?
+													</label>
+												</div>
+											</td>
+											<td>
+												<i class="fa fa-times fa-2x"></i>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add detail </a>
+											</td>
+										</tr>
+										<tr>
+											<td rowspan="2" width="20%">
+												<input type="text" class="form-control input-medium" value="Question 2" />
+											</td>
+											<td>
+												<div>
+													<input type="text" value="Untitled val 1" class="form-control input-small inline" />
+													<label>
+														<span><input type="checkbox"></span> Is checkbox? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Has comment? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Comment when checked? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Is numeric?
+													</label>
+												</div>
+												<div>
+													<input type="text" value="Untitled val 2" class="form-control input-small inline" />
+													<label>
+														<span><input type="checkbox"></span> Is checkbox? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Has comment? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Comment when checked? 
+													</label> &nbsp;
+													<label>
+														<span><input type="checkbox"></span> Is numeric?
+													</label>
+												</div>
+											</td>
+											<td>
+												<i class="fa fa-times fa-2x"></i>
+											</td>
+										</tr>
+										
+										<tr>
+											<td colspan="2">
+												<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add detail </a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add question </a>
+					    	</accordion-group>
+
+					    	<accordion-group heading="Line comments">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>Comment name</th>
+											<th>Comment type</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<input type="text" class="form-control" value="Comment name 1"/>
+											</td>
+											<td>
+												<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment_type">
+													
+												</select>
+											</td>
+											<td>
+												<i class="fa fa-times fa-2x"></i>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<input type="text" class="form-control" value="Comment name 2"/>
+											</td>
+											<td>
+												<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment_type">
+													
+												</select>
+											</td>
+											<td>
+												<i class="fa fa-times fa-2x"></i>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add comment </a>
+					    	</accordion-group>
+						</accordion>
+						
+					</div>
+				</div>
+				<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add line </a>
+			</div>
+		</div>
+		<a class="btn default btn-block"> <i class="fa fa-plus"></i> Add section </a>
+</form>

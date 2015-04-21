@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
-    .directive("addUser", function(TimeSheetService, MODE_ROW, $state, toastr, localStorageService) {
+    .directive("addUser", function(TimeSheetService, MODE_ROW, $state, toastr, localStorageService, $modal) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -17,11 +17,12 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                     } else if (response.status === "success") {
                         scope.department = response.result;
                     } else {
-                        //try catch exception
+                        //catch exception
                         toastr.error("Server not reponse!", "Error");
                     }
                 });
 
+                //LOAD NOT SELECT
                 TimeSheetService.LoadNodeSelect(localStorageService.get("idTreeTimeSheet")).then(function(response) {
                     if (response.status === "error") {
                         toastr.error("Server response error!", "Error");
@@ -33,6 +34,9 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         toastr.error("Server not response!", "Error");
                     }
                 });
+                //END LOAD NODE
+
+                //LOAD USER SELECT
                 TimeSheetService.LoadSelectUser().then(function(response) {
                     if (response.status === "error") {
                         scope.company = response.company;
@@ -48,6 +52,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         toastr.error("Loading fail!", "Error");
                     }
                 });
+                //END
                 //END LOAD INIT SOME SELECT
 
                 //SOME FUNCTION IN PAGE
@@ -145,33 +150,43 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                 init(); //call init
                 //end init user
 
+                // FUNCTION ORDER USER NAMR]E ASC
                 scope.userNameASC = function() {
                     notReload = true;
                     scope.searchObjectMap.order['users.user_name'] = "ASC";
                     scope.searchObjectMap.order['users.Creation_date'] = null;
                     scope.loadList();
                 };
+                //END
 
+                //FUNCTION ORDER USER NAME DESC
                 scope.userNameDESC = function() {
                     notReload = true;
                     scope.searchObjectMap.order['users.user_name'] = "DESC";
                     scope.searchObjectMap.order['users.Creation_date'] = null;
                     scope.loadList();
                 };
+                //END
+
+                // FUNCTION ORDER USER NAME ASC
                 scope.creationDateASC = function() {
                     notReload = true;
                     scope.searchObjectMap.order['users.user_name'] = null;
                     scope.searchObjectMap.order['users.Creation_date'] = "ASC";
                     scope.loadList();
                 };
+                //END
+
+                // FUNCTION ORDER USER NAME DESC
                 scope.creationDateDESC = function() {
                     notReload = true;
                     scope.searchObjectMap.order['users.user_name'] = null;
                     scope.searchObjectMap.order['users.Creation_date'] = "DESC";
                     scope.loadList();
                 };
+                //END
 
-                //watch resultAll
+                //WATCH resultAll
                 scope.$watch('list.resultAll', function(newList, oldList) {
                     if (notReload === false) {
                         scope.checkList = {};
@@ -186,8 +201,11 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         });
                     }
                 });
-                //end watch resultAll
+                //END resultAll
+
                 scope.isChecked = false;
+
+                // FUNCTION CHECK CHANGE
                 scope.checkChange = function(id, status) {
                     if (status == -1) {
                         angular.forEach(scope.list.resultAll, function(user, index) {
@@ -215,6 +233,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         });
                     }
                 };
+                //END CHECK
                 //END SOME FUNCTION IN PAGE
 
                 //FUNCTION CLICKROW
@@ -226,7 +245,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                     }
                     scope.checkChange(USER_ID, scope.checkList[USER_ID].status); //cal checkchange
                 };
-                //END FUNCTION CLICKROW
+                //END CLICKROW
 
                 //WATCH addAgain
                 scope.$watch('ngModel', function(newModel, oldModel) {
@@ -234,7 +253,35 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                     scope.isChecked = false;
                     scope.loadList();
                 });
-                //END WATCH addAgain
+                //END addAgain
+
+                //STEP EMPLOYEE
+                scope.stepEmployee = function(listSelected) {
+                    //LOAD USER SELECTED
+                    scope.departmentid = listSelected.departmentid;
+                    scope.NODE_ID = listSelected.NODE_ID;
+                    var userList = [];
+                    angular.forEach(listSelected, function(user, index) {
+                        if (user !== undefined && user !== null && user.status === 1) {
+                            userList.push(
+                                user[0].id
+                            );
+                        }
+                    });
+                    //END
+                    dialogEmployee(userList);
+                };
+
+                var dialogEmployee = function(list) {
+                    var modalInstance = $modal.open({
+                        templateUrl: "StepEmployee",
+                        controller: function($scope) {
+                            $scope.listEmp = angular.copy(list);
+                        },
+                        size: "lg"
+                    });
+                };
+                //END STEP
             },
             templateUrl: "modules/TimeSheet/directives/templates/addUser.html"
         };

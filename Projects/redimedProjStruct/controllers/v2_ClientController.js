@@ -1,6 +1,10 @@
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 var PatientModel = require('../v1_models/Cln_patients');
 var db = require('../models');
-
+var S = require('string');
+var moment = require('moment');
+var _ = require('lodash');
 var mdtFunction = require('../functions');
 
 module.exports = {
@@ -237,15 +241,20 @@ module.exports = {
     },
 
 	getNumScripts : function(req, res) {
-    	var id = req.query.id;
-		if(!id) {
-			res.json(500, {status: 'error'});
-			return;
-		}
-		db.Script.count({
-			where: {patient_id: id}
-		}).success(function(data){
-			res.json({status: 'success', count: data});
+
+		var id = req.query.id;
+		console.log(id);
+		
+    	var sql = knex('cln_scripts')
+    	.where({
+    		'cln_scripts.Patient_id': id
+    	})
+    	.count('cln_scripts.ID as a')
+    	.toString();
+    	console.log(sql);
+		db.sequelize.query(sql)
+		.success(function(count){
+			res.json({status: 'success', count: count[0].a});
 		}) . error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
@@ -292,5 +301,5 @@ module.exports = {
 		}).error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
-    },
+    }
 }

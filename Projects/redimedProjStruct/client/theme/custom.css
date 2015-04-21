@@ -1020,7 +1020,7 @@ table.timetable-table td:last-child {
 /*css custom by thanh*/
 
 .custom-timesheet {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .submited {
@@ -1090,7 +1090,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .table-dynamic .table-bordered thead th {
@@ -1104,7 +1104,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered thead th>.th {
     position: relative;
     padding: 4px 4px 4px 4px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .table-dynamic .table-bordered tbody tr {
@@ -1190,6 +1190,7 @@ table.timetable-table td:last-child {
     line-height: 1.42857143;
     vertical-align: top;
     border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
 }
 
 .odd {
@@ -1229,12 +1230,12 @@ table.timetable-table td:last-child {
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up {
     top: -3px;
-    left: 1px;
+    right: -14px;
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-down {
     top: 7px;
-    left: -15px;
+    right: 1px;
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up:hover,

@@ -13,7 +13,10 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                 scope.info = {};
                 scope.$watch('ngModel', function(newModel, oldModel) {
                     if (!isNaN(newModel)) {
+                        //SET ID TASK WEEK AND USER ID
                         scope.info.idTaskWeek = newModel;
+                        scope.info.USER_ID = $cookieStore.get('userInfo').id;
+                        //END
                         TimeSheetService.ViewApproved(newModel).then(function(response) {
                             if (response.status === "error") {
                                 $state.go("loggedIn.ApproveTask", null, {
@@ -26,7 +29,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     scope.list.result[indexD].AC = [];
                                     angular.forEach(scope.list.resultActivity, function(timeAC, indexAC) {
                                         if (scope.list.resultActivity[indexAC].date === scope.list.result[indexD].date) {
-                                            scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].type_activity_id] = scope.list.resultActivity[indexAC].sumAC;
+                                            scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].activity_id] = scope.list.resultActivity[indexAC].sumAC;
                                         }
                                     });
                                 });

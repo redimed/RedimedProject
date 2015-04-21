@@ -3,23 +3,23 @@
     <ul class="page-breadcrumb">
         <li>
             <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome">e-TimeSheets</a>
+            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px; font-weight:bold;">e-TimeSheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.AdminTimeSheet">Administrator</a>
+            <a ui-sref="loggedIn.AdminTimeSheet" style="font-size:15px;font-weight:bold;">Administrator</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.TimeSheetGroupUser">Depts</a>
+            <a ui-sref="loggedIn.TimeSheetGroupUser" style="font-size:15px;font-weight:bold;">Depts</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn blue pull-right btn-xs" style="margin-top:10px;" ng-click="addDept()">New Dept</a>
-        <div class="caption" style="font-size:14px;">
+        <a class="btn blue pull-right btn-xs" style="margin-top:10px;font-size:14px;" ng-click="addDept()">New Dept</a>
+        <div class="caption" style="font-size:14px;font-weight:bold;">
             <i class="fa fa-cogs"></i>List of dept
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -55,32 +55,32 @@
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                         <!-- DEPT NAME -->
                         <td>
-                            <input type="text " id="GROUP_NAME" ng-model="searchObjectMap.data.GROUP_NAME " ng-change="loadList(GROUP_NAME) " class="form-control input-sm ">
+                            <input type="text " id="GROUP_NAME" ng-model="searchObjectMap.data.GROUP_NAME " ng-change="loadList(GROUP_NAME) " class="form-control input-sm " style="font-size:14px;">
                         </td>
                         <!-- END DEPT NAME -->
                         <td>
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()">
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_location.location_id']" ng-options="itemLocation.location_id as itemLocation.NAME for itemLocation in location" ng-change="loadList()" style="font-size:14px;">
                             </select>
                         </td>
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
-                        <td colspan="4 ">
+                        <td colspan="4 " style="font-size:14px;">
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-click="goToListNode(l.GROUP_ID)">
-                        <td class="btn btn-xs" style="text-align:left;">{{l.departmentName || " " }}</td>
-                        <td class="btn btn-xs" style="text-align:left;">{{l.name}}</td>
+                        <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.departmentName || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.name}}</td>
                         <td style="text-align:center;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a">More<span class="caret"></span>
+                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a" style="font-size:14px;">More<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a ng-click="editDept(l.departmentid)"><i class="fa fa-pencil"></i>Edit</a>
+                                    <li><a ng-click="editDept(l.departmentid)" style="font-size:14px;"><i class="fa fa-pencil"></i>Edit</a>
                                     </li>
-                                    <li><a ng-click="deleteDept(l.departmentid)"><i class="fa fa-times"></i>Delete</a>
+                                    <li><a ng-click="deleteDept(l.departmentid)" style="font-size:14px;"><i class="fa fa-times"></i>Delete</a>
                                     </li>
                                 </ul>
                             </li>
@@ -93,11 +93,11 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                            <span class="custom-timesheet">Total: {{list.count}}</span>
-                            <span class="custom-timesheet">Show</span>
-                            <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
+                            <span class="custom-timesheet" style="font-size:14px;">Total: {{list.count}}</span>
+                            <span class="custom-timesheet" style="font-size:14px;">Show</span>
+                            <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:14px;">
                             </select>
-                            <span class="custom-timesheet">entries per page</span>
+                            <span class="custom-timesheet" style="font-size:14px;">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
