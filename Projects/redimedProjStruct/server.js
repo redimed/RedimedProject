@@ -19,17 +19,15 @@ var _ = require('lodash-node');
 
 
 var ssl_options = {
-    key: fs.readFileSync('key/key.pem'),
-    cert: fs.readFileSync('key/cert.pem'),
-    requestCert: true,
-    rejectUnauthorized: false
+    pfx: fs.readFileSync('key/star_redimed_com_au.pfx'),
+    passphrase: '1234'
 };
 var app = express();
 
-// var server = require('https').createServer(ssl_options,app);
+var server = require('https').createServer(ssl_options,app);
 // var io = require('socket.io')(server,{key:fs.readFileSync('key/key.pem'),cert:fs.readFileSync('key/cert.pem')});
 
-var server = require('http').Server(app);
+// var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 require('./socket')(io,cookie,cookieParser);
