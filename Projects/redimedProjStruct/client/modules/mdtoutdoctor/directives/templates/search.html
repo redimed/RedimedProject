@@ -3,11 +3,9 @@
 		<pagination boundary-links='true' total-items='list.count' ng-model='params.pagination.current_page' class='pagination-sm' previous-text='&lsaquo;' next-text='&rsaquo;' first-text='&laquo;' last-text='&raquo;' items-per-page='params.pagination.limit' max-size='params.pagination.max_size' ng-change='setPage()'>
 		</pagination>
 	</div>
-	<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
-        <button class="btn btn-sm btn-block red" ng-click="closePopup()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
+	<div>
+		<button class="btn btn-primary" ng-click="addCompany()">Add</button>
+	</div>
 </div>
 <div class='row'>
 	<div class='col-md-12'>
