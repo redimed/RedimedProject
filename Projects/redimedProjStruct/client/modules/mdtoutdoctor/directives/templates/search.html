@@ -19,6 +19,10 @@
 				</tr>
 			</thead>
 			<tbody>
+				<tr>
+					<td><input type="text" class="form-control" ng-model="params.filters[0].value" ng-change="refresh()"></td>
+					<td><input type="text" class="form-control" ng-model="params.filters[1].value" ng-change="refresh()"></td>
+				</tr>
 				<tr ng-repeat='l in list.data' ng-click='clickRow({row: l})' style='cursor: pointer;'>
 					<td>{{l.provider_no}}</th>
 					<td>{{l.name}}</th>

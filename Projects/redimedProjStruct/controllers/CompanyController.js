@@ -455,6 +455,48 @@ module.exports = {
                 res.json(500, {error: error});
             })
     },//end postAdd
+    postAddlistNotFollow : function(req,res){
+        var postData = req.body.data;
+        var sql = knex('patient_companies')
+        .insert({
+            patient_id : postData.patient_id,
+            company_id :postData.company_id,
+            isEnable :1
+        })
+        .toString()
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        }) 
+    },
+    postListNotFollow :function(req,res){
+        var postData = req.body.data;
+        var sql = knex
+        .select('*')
+        .from('companies')
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .toString();
+        var sql_count = knex('companies')
+            .count('id as a')
+            .toString();
+        db.sequelize.query(sql)
+        .success(function(detail){
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: detail, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+    },
     postlistInsurer: function(req, res){
         var postData = req.body.data;
         var sql = knex

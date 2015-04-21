@@ -26,7 +26,7 @@
 				<input class="form-control input-sm" ng-model="alert.search.description" ng-enter="alert.onSearch()">
 			</td>
 			<td></td>
-			<!--<td></td>-->
+			<td></td>
 		</tr>
 		<tr ng-repeat="l in alert.list">
 			<td ng-if="action.checkbox">
@@ -36,8 +36,7 @@
 			<td>{{l.name}}</td>
 			<td>{{l.description}}</td>
 			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
-			<td><button class="btn btn-sm btn-secondary" ng-click="alert.dialog.remove(l)">Remove</button></td>
-			<!--<td>
+			<td>
 				<a ng-click="alert.dialog.edit(l)" ng-if="action.edit">
 					<i class="fa fa-pencil"></i>
 				</a>
@@ -46,7 +45,7 @@
 				   	<span  ng-if="l.isEnable"  ng-click="alert.disablePatientAlert(l)">Enable</span>
 					<span  ng-if="!l.isEnable"  ng-click="alert.disablePatientAlert(l)">Disable</span>
 				</a>
-			</td>-->
+			</td>
 		</tr>
 	</tbody>
 </table>

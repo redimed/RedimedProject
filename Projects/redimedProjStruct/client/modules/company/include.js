@@ -12,5 +12,8 @@ angular.module('app.loggedIn.company.include',[
 	'app.loggedIn.company.directives.listInsurer',
 	'app.loggedIn.company.dialog.addParent',
 	'app.loggedIn.company.dialog.addInusrer',
-	'app.loggedIn.company.dialog.remove'
+	'app.loggedIn.company.dialog.remove',
+	'app.loggedIn.company.directives.listNotFollow',
+	'app.loggedIn.company.controllers.listNotFollow',
+	'app.loggedIn.company.dialog.listNoFollow'
 ])

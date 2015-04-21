@@ -54,6 +54,14 @@ angular.module("app.loggedIn.company.models", [])
         var instanceApi = mainApi.all('updateInsurer');
         return instanceApi.post({data: data});
     }
+    instanceService.listNotFollow = function(data){
+        var instanceApi = mainApi.all('listNotFollow');
+        return instanceApi.post({data: data});
+    }
+    instanceService.AddlistNotFollow = function(data){
+        var instanceApi = mainApi.all('AddlistNotFollow');
+        return instanceApi.post({data: data});
+    }
 
     return instanceService;
 })

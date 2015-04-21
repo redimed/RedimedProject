@@ -1,10 +1,32 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
+var _ = require('lodash');
+var S = require('string');
 
 module.exports = {
 	postAdd: function(req, res){
 		var postData = req.body.add_data;
+		var errors = [];
+        var required = [
+            {field: 'provider_no', message: 'Provider_no required'},
+            {field: 'name', message: 'Name required'},
+            {field: 'address', message: 'Address required'}
 
+        ]
+		_.forIn(postData, function(value, field){
+                _.forEach(required, function(field_error){
+                    if(field_error.field === field && S(value).isEmpty()){
+                        errors.push(field_error);
+                        return;
+                    }
+                })
+            })
+        if(errors.length > 0){
+            res.status(500).json({errors: errors});
+            return;
+        }
 		db.mdtOutdoctor.create(postData)
 		.success(function(created){
 			if(!created) res.json(500, {'status': 'error', 'message': 'Cannot Insert'});

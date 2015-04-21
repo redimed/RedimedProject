@@ -227,18 +227,23 @@
 							<tr>
 								<th>Insurer Name</th>
 								<th>Address</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in company.listInsurer track by $index" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor  &&  {'background-color':'green'}">
+							<tr ng-repeat="row in company.listInsurer track by $index">
 								<td>{{row.insurer_name}}</td>
 								<td>{{row.address}}</td>
-								<!--<td align="center">
+								<td align="center">
 								<a>
-								   	<span  ng-if="row.checkisEnable"  ng-click="disableInsurer(row)">Enable{{row.isEnable}}</span>
-									<span  ng-if="!row.checkisEnable"  ng-click="disableInsurer(row)">Disable {{row.isEnable}}</span>
+								   	<button class="btn btn-primary"  ng-if="row.id === company.checkColor"  ng-click="onRowClick(row)">Active</button>
+									<button class="btn btn-secondary" ng-if="row.id !== company.checkColor"  ng-click="onRowClick(row)">Inactive</button>
 								</a>
-								</td>-->
+								<!-- <a>
+								   	<button class="btn btn-primary"  ng-if="row.checkisEnable"  ng-click="disableInsurer(row)">Enable{{row.isEnable}}</span>
+									<button class="btn btn-secondary" ng-if="!row.checkisEnable"  ng-click="disableInsurer(row)">Disable {{row.isEnable}}</button>
+								</a> -->
+								</td>
 							</tr>
 						</tbody>
 					</table>
