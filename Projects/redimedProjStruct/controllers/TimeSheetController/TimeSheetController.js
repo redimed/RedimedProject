@@ -1698,10 +1698,10 @@ module.exports = {
         // END ACTIVITY
 
         // SELECT TIMECHARGE ALL
-        var querySumTimeCharge = "SELECT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
+        var querySumTimeCharge = "SELECT DISTINCT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
             "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
             " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
-            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, " +
+            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, time_tasks_week.week_no, " +
             "hr_employee.FirstName, hr_employee.LastName, departments.departmentName, departments.departmentid " +
             "FROM time_tasks_week " +
             "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
@@ -1815,7 +1815,7 @@ module.exports = {
                                             (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
                                             (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
                                             (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + "," + resultDept[i].listEmployee[j].time_in_lieu + ", " + resultDept[i].listEmployee[j].over_time + "), ";
-                                        //TIME CHARGE
+                                        //TIME 3
                                     }
                                 }
                                 if (listEmployeeInsert !== "") {
@@ -1827,7 +1827,7 @@ module.exports = {
                                 var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, " +
                                     "time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, time_in_lieu_dept, overtime_dept, time_ac1_all, time_ac2_all, time_ac3_all, time_ac4_all, time_ac5_all, total_all, time_in_lieu_all, overtime_all)" +
                                     " VALUES " + listEmployeeInsert;
-                                var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_in_lieu, time_over) VALUES " + listTimeInsert;
+                                var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4, time_ac5, time_charge_sum, time_in_lieu, time_over) VALUES " + listTimeInsert;
                                 var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
                                 var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
                                 db.sequelize.query(queryDelEmployee)
