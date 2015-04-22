@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.fadefine.detail.controller',[])
+angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 .controller("FaDefineDetailController", function($scope, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel){
 
 	//init header definition
@@ -136,5 +136,22 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 		var index = line.comments.indexOf(comment);
 		line.comments.splice(index, 1);
 		line.comments.splice(index+1, 0, comment);
+	}
+
+	//DRAG AND DROP FUNCTIONS
+	$scope.onDropComplete = function(index, movedSection, event, replacedSection, header){
+		var movedSection = movedSection;
+		var replacedSection = replacedSection;
+		var oldIndex = header.sections.indexOf(movedSection);
+		var newIndex = index;
+		header.sections[oldIndex] = replacedSection;
+		header.sections[newIndex] = movedSection;
+
+	}
+
+
+	//INSERT DEFINITION
+	$scope.addFaDefinition = function(){
+		console.log($scope.header);
 	}
 });
