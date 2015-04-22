@@ -1,0 +1,237 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">
+                <span ng-hide='isEdit' style="font-size:15px;font-weight:bold;">Apply for Leave</span>
+                <span ng-hide='!isEdit' style="font-size:15px;font-weight:bold;">Edit for Leave</span>
+            </a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+</div>
+<!-- EMPLOYEE DETAIL -->
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption" style="font-size:15px; font-weight:bold;">
+            <i class="fa fa-pencil"></i>
+            <span ng-hide='isEdit'>Apply for Leave</span>
+            <span ng-hide='!isEdit'>Edit for Leave</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse">
+            </a>
+        </div>
+        <div class="pull-right">
+            <label class="btn bold">
+                <input type="radio" ng-model="info.standard" ng-change="changeRequest()"/>&nbsp;STANDARD LEAVE REQUEST
+            </label>
+            <label class="btn bold">
+                <input type="radio" ng-model="info.standard" />&nbsp;NON-STANDARD LEAVE REQUEST
+            </label>
+        </div>
+    </div>
+    <div class=" portlet-body ">
+        <div class="table-dynamic ">
+            <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
+            </center>
+            <table class="responsive table table-bordered " ng-show="!tasks.loading ">
+                <tbody>
+                    <tr>
+                        <td colspan="2 " style="background-color:#67809f; color:white; font-weight:bold; "><span>EMPLOYEE DETAIL</span></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%; font-size:14px; "><span>Leave Application Date:</span></td>
+                        <td style="width:80%;font-size:14px; "></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;font-size:14px; "><span>Employee Name:</span></td>
+                        <td style="width:80%;font-size:14px; "></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;font-size:14px; "><span>Department</span></td>
+                        <td style="width:80%;font-size:14px; "></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;font-size:14px; "><span>Employee Status (FT/PT)</span></td>
+                        <td style="width:80%;font-size:14px; "></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;font-size:14px; "><span>Leave Start Date:</span></td>
+                        <td style="width:80%;font-size:14px; "></td>
+                    </tr>
+                    <tr>
+                        <td style="width:20%;font-size:14px; "><span>Leave Finish Date:</span></td>
+                        <td style="width:80%;font-size:14px; "></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;font-size:14px; "><span>Return to Work Date:</span></td>
+                        <td style="width:70%;font-size:14px; "></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- STANDARD LEAVE REQUEST -->
+    <div class="portlet-body " ng-if="info.standard===1">
+        <div class="table-dynamic ">
+            <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
+            </center>
+            <table class="responsive table table-bordered " ng-show="!tasks.loading ">
+                <tbody>
+                    <tr>
+                        <td colspan="3 " style="background-color:#67809f; color:white; font-weight:bold; ">STANDARD LEAVE REQUEST – TEAM LEADER ONLY - APPROVAL REQUIRED </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3 " rowspan="1 "></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: lightgrey; font-weight:bold;width:40%; "><span>LEAVE TYPE</span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:40% "><span>REASON FOR LEAVE </span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:20% "><span>HOURS TAKEN</span></td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Annual Leave </span>(2 weeks or less)</span>
+                        </td>
+                        <td style="width:40% ">
+                        </td>
+                        <td style="width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Personal Leave - Sick Leave </span>(2 days or less)</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Personal Leave - Carers Leave </span>(2 days or less)</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Personal Leave - Pesonal Business </span>(2 days or less)</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span class="bold ">Total Number of Work Days Taken:</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <span style='font-size:14px;'><span class='bold'>Note:</span> When taking Personal Leave, for absences of 1 day or more, a medical certificate or statutory declaration is required. Please ensure this is submitted along with completed Leave Form.</span>
+    </div>
+    <!-- END STANDARD REQUEST -->
+    <!-- STANDARD LEAVE REQUEST -->
+    <div class="portlet-body " ng-if="info.standard===0">
+        <div class="table-dynamic ">
+            <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
+            </center>
+            <table class="responsive table table-bordered " ng-show="!tasks.loading ">
+                <tbody>
+                    <tr>
+                        <td colspan="3 " style="background-color:#67809f; color:white; font-weight:bold; ">NON-STANDARD LEAVE REQUEST – BOTH EXECUTIVE COMMITTEE AND TEAM LEADER APPROVAL REQUIRED </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3 " rowspan="1 "></td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: lightgrey; font-weight:bold;width:40%; "><span>LEAVE TYPE</span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:40% "><span>REASON FOR LEAVE </span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:20% "><span>WORK DAYS TAKEN</span></td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Annual Leave </span>(2 weeks or more)</span>
+                        </td>
+                        <td style="width:40% ">
+                        </td>
+                        <td style="width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Personal Leave - Sick Leave </span>(3 days or more)</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Personal Leave - Carers Leave </span>(3 days or more)</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span><span class="bold ">Personal Leave - Pesonal Business </span>(3 days or more)</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%; ">
+                            <span class="bold ">Total Number of Work Days Taken:</span>
+                        </td>
+                        <td style="font-weight:bold;width:40% ">
+                        </td>
+                        <td style="font-weight:bold;width:20% ">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <span style='font-size:14px;'><span class='bold'>Note:</span> When taking Personal Leave, for absences of 1 day or more, a medical certificate or statutory declaration is required. Please ensure this is submitted along with completed Leave Form.</span>
+    </div>
+    <!-- END STANDARD REQUEST -->
+    <!-- ACKNOWLEDGEMENT -->
+    <div class="portlet-body ">
+        <div class="table-dynamic ">
+            <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
+            </center>
+            <table class="responsive table table-bordered " ng-show="!tasks.loading ">
+                <tbody>
+                    <tr>
+                        <td colspan="2 " style="background-color:#67809f; color:white; font-weight:bold; "><span>ACKNOWLEDGEMENT</span></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%; font-size:14px; "><span>Employee Signature:</span></td>
+                        <td style="width:70%;font-size:14px; "></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END ACKNOWLEDGEMENT -->
+</div>
+<!-- END EMPLOYEE DETAIL -->
