@@ -216,7 +216,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<text><![CDATA[Training]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="439" y="-20" width="83" height="20" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46"/>
+					<reportElement x="439" y="-21" width="78" height="20" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -267,7 +267,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<reportElement x="351" y="-1" width="78" height="1" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0"/>
 				</line>
 				<line>
-					<reportElement x="443" y="-1" width="76" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8"/>
+					<reportElement x="440" y="-1" width="76" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8"/>
 				</line>
 				<line>
 					<reportElement x="736" y="-1" width="55" height="1" forecolor="#6666FF" uuid="7247aa56-3d4c-4591-bd20-241580735672"/>
@@ -277,16 +277,16 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<groupFooter>
 			<band height="19">
 				<staticText>
-					<reportElement x="19" y="0" width="104" height="19" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
-					<textElement verticalAlignment="Top">
-						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<reportElement x="19" y="0" width="110" height="19" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
-					<text><![CDATA[Sub total:]]></text>
+					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="289" y="0" width="52" height="19" uuid="94161239-6605-4b1a-a3d1-b76f84d7834d"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{time_ac3_dept}==0 || $F{time_ac3_dept}==null || $F{time_ac3_dept}=="")?
 "-":
@@ -297,12 +297,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3_dept}*37.25/2235).intValue()+0.5):
 (($F{time_ac3_dept}*37.25/2235-($F{time_ac3_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_ac3_dept}*37.25/2235).intValue()+0.25):
-(($F{time_ac3_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac3_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="351" y="0" width="78" height="19" uuid="c79a6ea4-42a0-46fa-83eb-4115b53c33e1"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{time_ac4_dept}==0 || $F{time_ac4_dept}==null || $F{time_ac4_dept}=="")?
 "-":
@@ -313,12 +313,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_dept}*37.25/2235).intValue()+0.5):
 (($F{time_ac4_dept}*37.25/2235-($F{time_ac4_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_ac4_dept}*37.25/2235).intValue()+0.25):
-(($F{time_ac4_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac4_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="441" y="0" width="76" height="19" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<reportElement x="441" y="0" width="74" height="19" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{time_ac5_dept}==0 || $F{time_ac5_dept}==null || $F{time_ac5_dept}=="")?
 "-":
@@ -329,12 +329,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5_dept}*37.25/2235).intValue()+0.5):
 (($F{time_ac5_dept}*37.25/2235-($F{time_ac5_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_ac5_dept}*37.25/2235).intValue()+0.25):
-(($F{time_ac5_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac5_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="531" y="0" width="112" height="19" uuid="b1a3bd29-a331-4800-ba8d-49008bb960f1"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{total_dept}==0 || $F{total_dept}==null || $F{total_dept}=="")?
 "-":
@@ -345,12 +345,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{total_dept}*37.25/2235).intValue()+0.5):
 (($F{total_dept}*37.25/2235-($F{total_dept}*37.25/2235).intValue())>=0.125?
 (($F{total_dept}*37.25/2235).intValue()+0.25):
-(($F{total_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{total_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="139" y="0" width="45" height="19" uuid="2bb0023c-29d9-44e0-ad62-38053c9a4e1b"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{time_ac1_dept}==0 || $F{time_ac1_dept}==null || $F{time_ac1_dept}=="")?
 "-":
@@ -361,12 +361,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1_dept}*37.25/2235).intValue()+0.5):
 (($F{time_ac1_dept}*37.25/2235-($F{time_ac1_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_ac1_dept}*37.25/2235).intValue()+0.25):
-(($F{time_ac1_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac1_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="198" y="0" width="81" height="19" uuid="19a2dbd6-22a0-40f4-bd34-442040144528"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{time_ac2_dept}==0 || $F{time_ac2_dept}==null || $F{time_ac2_dept}=="")?
 "-":
@@ -377,12 +377,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2_dept}*37.25/2235).intValue()+0.5):
 (($F{time_ac2_dept}*37.25/2235-($F{time_ac2_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_ac2_dept}*37.25/2235).intValue()+0.25):
-(($F{time_ac2_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac2_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="653" y="0" width="72" height="19" uuid="7bf1934c-3d2d-4b70-9a86-581d1f6248ad"/>
-					<textElement textAlignment="Right">
-						<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{time_in_lieu_dept}==0 || $F{time_in_lieu_dept}==null || $F{time_in_lieu_dept}=="")?
 "-":
@@ -393,12 +393,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu_dept}*37.25/2235).intValue()+0.5):
 (($F{time_in_lieu_dept}*37.25/2235-($F{time_in_lieu_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_in_lieu_dept}*37.25/2235).intValue()+0.25):
-(($F{time_in_lieu_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_in_lieu_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="736" y="0" width="55" height="19" uuid="7d0173e2-6d40-4787-aaa1-65fbe6972a78"/>
-					<textElement textAlignment="Right">
-						<font isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($F{overtime_dept}==0 || $F{overtime_dept}==null || $F{overtime_dept}=="")?
 "-":
@@ -409,7 +409,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{overtime_dept}*37.25/2235).intValue()+0.5):
 (($F{overtime_dept}*37.25/2235-($F{overtime_dept}*37.25/2235).intValue())>=0.125?
 (($F{overtime_dept}*37.25/2235).intValue()+0.25):
-(($F{overtime_dept}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{overtime_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="139" y="1" width="45" height="1" uuid="d96e9c24-2de7-4bc4-b452-26549e2d0167"/>
@@ -502,8 +502,8 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="441" y="0" width="76" height="17" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<reportElement x="441" y="0" width="74" height="17" uuid="8447bd73-23bd-4052-9b77-0b93ea486634"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac5}==0 || $F{time_ac5}==null || $F{time_ac5}=="")?
 "-":
 (($F{time_ac5}*37.25/2235-($F{time_ac5}*37.25/2235).intValue())>=0.875?
@@ -513,11 +513,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5}*37.25/2235).intValue()+0.5):
 (($F{time_ac5}*37.25/2235-($F{time_ac5}*37.25/2235).intValue())>=0.125?
 (($F{time_ac5}*37.25/2235).intValue()+0.25):
-(($F{time_ac5}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac5}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="351" y="0" width="78" height="17" uuid="d82776bc-2481-4103-9991-27ec97ce6d92"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac4}==0 || $F{time_ac4}==null || $F{time_ac4}=="")?
 "-":
 (($F{time_ac4}*37.25/2235-($F{time_ac4}*37.25/2235).intValue())>=0.875?
@@ -527,11 +527,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4}*37.25/2235).intValue()+0.5):
 (($F{time_ac4}*37.25/2235-($F{time_ac4}*37.25/2235).intValue())>=0.125?
 (($F{time_ac4}*37.25/2235).intValue()+0.25):
-(($F{time_ac4}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac4}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="139" y="0" width="45" height="17" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac1}==0 || $F{time_ac1}==null || $F{time_ac1}=="")?
 "-":
 (($F{time_ac1}*37.25/2235-($F{time_ac1}*37.25/2235).intValue())>=0.875?
@@ -541,11 +541,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1}*37.25/2235).intValue()+0.5):
 (($F{time_ac1}*37.25/2235-($F{time_ac1}*37.25/2235).intValue())>=0.125?
 (($F{time_ac1}*37.25/2235).intValue()+0.25):
-(($F{time_ac1}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac1}*37.25/2235).intValue()).toString()+".00")))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="531" y="1" width="112" height="16" uuid="11f78650-6b2d-4b35-903a-154267b2067a"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_charge_sum}==0 || $F{time_charge_sum}==null || $F{time_charge_sum}=="")?
 "-":
 (($F{time_charge_sum}*37.25/2235-($F{time_charge_sum}*37.25/2235).intValue())>=0.875?
@@ -555,11 +555,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_charge_sum}*37.25/2235).intValue()+0.5):
 (($F{time_charge_sum}*37.25/2235-($F{time_charge_sum}*37.25/2235).intValue())>=0.125?
 (($F{time_charge_sum}*37.25/2235).intValue()+0.25):
-(($F{time_charge_sum}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_charge_sum}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="653" y="1" width="72" height="16" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_in_lieu}==0 || $F{time_in_lieu}==null || $F{time_in_lieu}=="")?
 "-":
 (($F{time_in_lieu}*37.25/2235-($F{time_in_lieu}*37.25/2235).intValue())>=0.875?
@@ -569,11 +569,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu}*37.25/2235).intValue()+0.5):
 (($F{time_in_lieu}*37.25/2235-($F{time_in_lieu}*37.25/2235).intValue())>=0.125?
 (($F{time_in_lieu}*37.25/2235).intValue()+0.25):
-(($F{time_in_lieu}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_in_lieu}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="736" y="1" width="55" height="16" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_over}==0 || $F{time_over}==null || $F{time_over}=="")?
 "-":
 (($F{time_over}*37.25/2235-($F{time_over}*37.25/2235).intValue())>=0.875?
@@ -583,11 +583,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_over}*37.25/2235).intValue()+0.5):
 (($F{time_over}*37.25/2235-($F{time_over}*37.25/2235).intValue())>=0.125?
 (($F{time_over}*37.25/2235).intValue()+0.25):
-(($F{time_over}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_over}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement x="198" y="0" width="81" height="17" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac2}==0 || $F{time_ac2}==null || $F{time_ac2}=="")?
 "-":
 (($F{time_ac2}*37.25/2235-($F{time_ac2}*37.25/2235).intValue())>=0.875?
@@ -597,11 +597,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2}*37.25/2235).intValue()+0.5):
 (($F{time_ac2}*37.25/2235-($F{time_ac2}*37.25/2235).intValue())>=0.125?
 (($F{time_ac2}*37.25/2235).intValue()+0.25):
-(($F{time_ac2}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac2}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="290" y="1" width="51" height="16" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080"/>
-				<textElement textAlignment="Right" verticalAlignment="Top"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac3}==0 || $F{time_ac3}==null || $F{time_ac3}=="")?
 "-":
 (($F{time_ac3}*37.25/2235-($F{time_ac3}*37.25/2235).intValue())>=0.875?
@@ -611,11 +611,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3}*37.25/2235).intValue()+0.5):
 (($F{time_ac3}*37.25/2235-($F{time_ac3}*37.25/2235).intValue())>=0.125?
 (($F{time_ac3}*37.25/2235).intValue()+0.25):
-(($F{time_ac3}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac3}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="31" y="0" width="92" height="17" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
-				<textElement verticalAlignment="Top"/>
+				<reportElement x="29" y="0" width="94" height="17" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{employee}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -635,9 +635,9 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<summary>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement x="19" y="1" width="104" height="20" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
-				<textElement>
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="19" y="1" width="110" height="17" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
@@ -690,9 +690,9 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="138" y="1" width="46" height="20" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="138" y="-1" width="46" height="19" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{time_ac1_all}==0 || $F{time_ac1_all}==null || $F{time_ac1_all}=="")?
 "-":
@@ -703,12 +703,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1_all}*37.25/2235).intValue()+0.5):
 (($F{time_ac1_all}*37.25/2235-($F{time_ac1_all}*37.25/2235).intValue())>=0.125?
 (($F{time_ac1_all}*37.25/2235).intValue()+0.25):
-(($F{time_ac1_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac1_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="198" y="1" width="81" height="20" uuid="1cc5d38b-087a-467b-9063-fa4be97b6f0d"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="198" y="1" width="81" height="17" uuid="1cc5d38b-087a-467b-9063-fa4be97b6f0d"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{time_ac2_all}==0 || $F{time_ac2_all}==null || $F{time_ac2_all}=="")?
 "-":
@@ -719,12 +719,60 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2_all}*37.25/2235).intValue()+0.5):
 (($F{time_ac2_all}*37.25/2235-($F{time_ac2_all}*37.25/2235).intValue())>=0.125?
 (($F{time_ac2_all}*37.25/2235).intValue()+0.25):
-(($F{time_ac2_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac2_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="139" y="19" width="45" height="1" uuid="b26d33cd-8d6e-457e-a5ce-cdc2cfd8188e"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="198" y="19" width="81" height="1" uuid="5369c31b-9010-419a-b2e6-8dee532c2fb9"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="290" y="19" width="51" height="1" uuid="e7b8a427-8410-4d07-9f00-e18f6150c1f9"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="351" y="19" width="78" height="1" uuid="ebc67d63-d3cd-443e-acf4-e8e483659cda"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="439" y="19" width="76" height="1" uuid="f7ae98c6-92b9-4323-84d7-63c713719886"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="531" y="19" width="112" height="1" uuid="3e3187f5-e4f7-4ba5-a644-ef7d4c02367f"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="653" y="19" width="72" height="1" uuid="9ed56fb8-6399-4c3c-9ca1-f02c9817c8a4"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="736" y="19" width="55" height="1" uuid="5947f023-82cb-4b06-b4f0-67851893503e"/>
+				<graphicElement>
+					<pen lineWidth="3.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
 			<textField>
-				<reportElement x="290" y="1" width="51" height="20" uuid="b907f3c5-c066-4817-84c2-832d36d1d30d"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="289" y="0" width="51" height="18" uuid="b907f3c5-c066-4817-84c2-832d36d1d30d"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{time_ac3_all}==0 || $F{time_ac3_all}==null || $F{time_ac3_all}=="")?
 "-":
@@ -735,12 +783,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3_all}*37.25/2235).intValue()+0.5):
 (($F{time_ac3_all}*37.25/2235-($F{time_ac3_all}*37.25/2235).intValue())>=0.125?
 (($F{time_ac3_all}*37.25/2235).intValue()+0.25):
-(($F{time_ac3_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac3_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="1" width="78" height="20" uuid="d03a9895-277c-4c10-8beb-95742d882836"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="350" y="1" width="78" height="17" uuid="d03a9895-277c-4c10-8beb-95742d882836"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{time_ac4_all}==0 || $F{time_ac4_all}==null || $F{time_ac4_all}=="")?
 "-":
@@ -751,12 +799,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_all}*37.25/2235).intValue()+0.5):
 (($F{time_ac4_all}*37.25/2235-($F{time_ac4_all}*37.25/2235).intValue())>=0.125?
 (($F{time_ac4_all}*37.25/2235).intValue()+0.25):
-(($F{time_ac4_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac4_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="441" y="1" width="76" height="20" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="441" y="2" width="74" height="17" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{time_ac5_all}==0 || $F{time_ac5_all}==null || $F{time_ac5_all}=="")?
 "-":
@@ -767,12 +815,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5_all}*37.25/2235).intValue()+0.5):
 (($F{time_ac5_all}*37.25/2235-($F{time_ac5_all}*37.25/2235).intValue())>=0.125?
 (($F{time_ac5_all}*37.25/2235).intValue()+0.25):
-(($F{time_ac5_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_ac5_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="531" y="1" width="113" height="20" uuid="3f24659e-6b72-4c42-96b1-3a6bb51058bf"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="531" y="1" width="113" height="17" uuid="3f24659e-6b72-4c42-96b1-3a6bb51058bf"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{total_all}==0 || $F{total_all}==null || $F{total_all}=="")?
 "-":
@@ -783,12 +831,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{total_all}*37.25/2235).intValue()+0.5):
 (($F{total_all}*37.25/2235-($F{total_all}*37.25/2235).intValue())>=0.125?
 (($F{total_all}*37.25/2235).intValue()+0.25):
-(($F{total_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{total_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="653" y="1" width="72" height="20" uuid="0f5ee9a7-b364-44e3-bdf3-c415ec61440a"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="653" y="0" width="74" height="18" uuid="0f5ee9a7-b364-44e3-bdf3-c415ec61440a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{time_in_lieu_all}==0 || $F{time_in_lieu_all}==null || $F{time_in_lieu_all}=="")?
 "-":
@@ -799,12 +847,12 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu_all}*37.25/2235).intValue()+0.5):
 (($F{time_in_lieu_all}*37.25/2235-($F{time_in_lieu_all}*37.25/2235).intValue())>=0.125?
 (($F{time_in_lieu_all}*37.25/2235).intValue()+0.25):
-(($F{time_in_lieu_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{time_in_lieu_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="736" y="1" width="55" height="20" uuid="f5ee9d93-11c4-4177-b299-f596f6b12088"/>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				<reportElement x="736" y="0" width="55" height="18" uuid="f5ee9d93-11c4-4177-b299-f596f6b12088"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{overtime_all}==0 || $F{overtime_all}==null || $F{overtime_all}=="")?
 "-":
@@ -815,7 +863,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{overtime_all}*37.25/2235).intValue()+0.5):
 (($F{overtime_all}*37.25/2235-($F{overtime_all}*37.25/2235).intValue())>=0.125?
 (($F{overtime_all}*37.25/2235).intValue()+0.25):
-(($F{overtime_all}*37.25/2235).intValue()))))]]></textFieldExpression>
+(($F{overtime_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
