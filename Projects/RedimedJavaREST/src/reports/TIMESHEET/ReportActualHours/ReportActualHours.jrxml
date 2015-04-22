@@ -277,7 +277,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<groupFooter>
 			<band height="19">
 				<staticText>
-					<reportElement x="19" y="0" width="110" height="19" forecolor="#000000" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
+					<reportElement x="19" y="0" width="110" height="19" forecolor="#6666FF" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font size="10" isBold="false" isPdfEmbedded="false"/>
 					</textElement>
@@ -491,7 +491,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<summary>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement x="19" y="1" width="110" height="17" forecolor="#000000" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
+				<reportElement x="19" y="1" width="110" height="17" forecolor="#6666FF" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="10" isBold="false" isPdfEmbedded="false"/>
 				</textElement>
