@@ -358,7 +358,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
     ((($F{time_ac1_dept}*37.25/2235).intValue()+1).toString()+".00"):($F{time_ac1_dept}*37.25/2235-($F{time_ac1_dept}*37.25/2235).intValue())>=0.625?
 (($F{time_ac1_dept}*37.25/2235).intValue()+0.75):
 (($F{time_ac1_dept}*37.25/2235-($F{time_ac1_dept}*37.25/2235).intValue())>=0.375?
-(($F{time_ac1_dept}*37.25/2235).intValue()+0.5):
+((($F{time_ac1_dept}*37.25/2235).intValue()+0.5).toString()+"0"):
 (($F{time_ac1_dept}*37.25/2235-($F{time_ac1_dept}*37.25/2235).intValue())>=0.125?
 (($F{time_ac1_dept}*37.25/2235).intValue()+0.25):
 (($F{time_ac1_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
@@ -538,7 +538,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
     ((($F{time_ac1}*37.25/2235).intValue()+1).toString()+".00"):($F{time_ac1}*37.25/2235-($F{time_ac1}*37.25/2235).intValue())>=0.625?
 (($F{time_ac1}*37.25/2235).intValue()+0.75):
 (($F{time_ac1}*37.25/2235-($F{time_ac1}*37.25/2235).intValue())>=0.375?
-(($F{time_ac1}*37.25/2235).intValue()+0.5):
+((($F{time_ac1}*37.25/2235).intValue()+0.5).toString()+"0"):
 (($F{time_ac1}*37.25/2235-($F{time_ac1}*37.25/2235).intValue())>=0.125?
 (($F{time_ac1}*37.25/2235).intValue()+0.25):
 (($F{time_ac1}*37.25/2235).intValue()).toString()+".00")))]]></textFieldExpression>
@@ -700,7 +700,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
     ((($F{time_ac1_all}*37.25/2235).intValue()+1).toString()+".00"):($F{time_ac1_all}*37.25/2235-($F{time_ac1_all}*37.25/2235).intValue())>=0.625?
 (($F{time_ac1_all}*37.25/2235).intValue()+0.75):
 (($F{time_ac1_all}*37.25/2235-($F{time_ac1_all}*37.25/2235).intValue())>=0.375?
-(($F{time_ac1_all}*37.25/2235).intValue()+0.5):
+((($F{time_ac1_all}*37.25/2235).intValue()+0.5).toString()+"0"):
 (($F{time_ac1_all}*37.25/2235-($F{time_ac1_all}*37.25/2235).intValue())>=0.125?
 (($F{time_ac1_all}*37.25/2235).intValue()+0.25):
 (($F{time_ac1_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
