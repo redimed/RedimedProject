@@ -802,7 +802,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="441" y="2" width="74" height="17" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c"/>
+				<reportElement x="441" y="1" width="74" height="17" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="10" isBold="false" isPdfEmbedded="false"/>
 				</textElement>
