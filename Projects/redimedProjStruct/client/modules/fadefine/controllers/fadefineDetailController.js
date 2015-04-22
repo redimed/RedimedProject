@@ -28,6 +28,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 	//functions
 	$scope.addSection = function(){
 		var newSection = angular.copy(section_init);
+		newSection.SECTION_NAME = "Untitled Section";
 		$scope.header.sections.push(newSection);
 	}
 
@@ -38,6 +39,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 
 	$scope.addLine = function(section){
 		var newLine = angular.copy(line_init);
+		newLine.QUESTION = "Untitled line";
 		section.lines.push(newLine);
 	}
 
@@ -48,6 +50,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 
 	$scope.addDetail = function(line){
 		var newDetail = angular.copy(line_detail_init);
+		newDetail.QUESTION = "Untitled detail";
 		line.details.push(newDetail);
 	}
 
@@ -58,6 +61,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 
 	$scope.addComment = function(line){
 		var newComment = angular.copy(line_comment_init);
+		newComment.NAME = "Untitled comment"
 		line.comments.push(newComment);
 	}
 
@@ -67,7 +71,6 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 	}
 
 	$scope.value1TypeWatch = function(detail, val1_type){
-		console.log('run');
 		if(val1_type===0){
 			detail.VAL1_ISVALUE = 1;
 			detail.VAL1_ISCHECKBOX = null;
@@ -75,7 +78,13 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 		}
 		else{
 			detail.VAL1_ISVALUE = null;
-			detail.VAL1_ISCHECKBOX = $scope.val1_type;
+			detail.VAL1_VALUE_IS_NUMBER = null;
+			detail.VAL1_ISCHECKBOX = val1_type;
+		}
+
+		if(val1_type!==1){
+			detail.VAL1_ISCOMMENT_WHEN_YES = null;
+			detail.VAL1_ISCOMMENT_WHEN_NO = null;
 		}
 	}
 
@@ -87,7 +96,45 @@ angular.module('app.loggedIn.fadefine.detail.controller',[])
 		}
 		else{
 			detail.VAL2_ISVALUE = null;
-			detail.VAL2_ISCHECKBOX = $scope.val2_type;
+			detail.VAL2_VALUE_IS_NUMBER = null;
+			detail.VAL2_ISCHECKBOX = val2_type;
 		}
+
+		if(val2_type!==1){
+			detail.VAL2_ISCOMMENT_WHEN_YES = null;
+			detail.VAL2_ISCOMMENT_WHEN_NO = null;
+		}
+	}
+
+	$scope.IsCommentTextWatch = function(detail, IsCommentTextValue){
+		if(IsCommentTextValue === '0'){
+			detail.VAL1_ISCOMMENT_WHEN_YES = null;
+			detail.VAL1_ISCOMMENT_WHEN_NO = null;
+			detail.VAL2_ISCOMMENT_WHEN_YES = null;
+			detail.VAL2_ISCOMMENT_WHEN_NO = null;
+		}
+	}
+
+	$scope.moveDetailUp = function(detail, line){
+		var index = line.details.indexOf(detail);
+		line.details.splice(index, 1);
+		line.details.splice(index-1, 0, detail);
+	}
+
+	$scope.moveDetailDown = function(detail, line){
+		var index = line.details.indexOf(detail);
+		line.details.splice(index, 1);
+		line.details.splice(index+1, 0, detail);
+	}
+
+	$scope.moveCommentUp = function(comment, line){
+		var index = line.comments.indexOf(comment);
+		line.comments.splice(index, 1);
+		line.comments.splice(index-1, 0, comment);
+	}
+	$scope.moveCommentDown = function(comment, line){
+		var index = line.comments.indexOf(comment);
+		line.comments.splice(index, 1);
+		line.comments.splice(index+1, 0, comment);
 	}
 });

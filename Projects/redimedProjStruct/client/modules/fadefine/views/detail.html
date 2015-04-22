@@ -136,7 +136,7 @@
 															</select>
 														</label> &nbsp;
 														<label ng-show="detail.VAL1_ISVALUE===1">
-															<span><input type="checkbox"></span> Is numeric?
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
 														</label>
 													</div>
 													<div>
@@ -147,37 +147,41 @@
 															</select>
 														</label> &nbsp;
 														<label ng-show="detail.VAL2_ISVALUE===1">
-															<span><input type="checkbox"></span> Is numeric?
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
 														</label>
 													</div>
 												</div>
 												<div class="col-md-5 col-xs-5 col-sm-5">
 													<div>
 														<label>
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText==='1'" ng-model="detail.IsCommentsText"></span> Comment
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText==='1'" ng-model="detail.IsCommentsText" ng-change="IsCommentTextWatch(detail, detail.IsCommentsText)"></span> Comment
 														</label>
-														<label ng-show="detail.IsCommentsText==='1'">
+														<label ng-show="detail.IsCommentsText==='1' && (detail.VAL1_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX===1)">
 															required when
 														</label>
 													</div>
 													<div>
-														<label ng-show="detail.VAL1_ISCHECKBOX!==null && detail.VAL1_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox" ></span> Value 1 checked
+														<label ng-show="detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_YES"></span> Value 1 checked
 														</label> &nbsp;
-														<label ng-show="detail.VAL1_ISCHECKBOX!==null && detail.VAL1_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox"></span> Value 1 unchecked
+														<label ng-show=" detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_NO"></span> Value 1 unchecked
+														</label>
+														<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_YES"></span> Value 2 checked
 														</label> &nbsp;
-														<label ng-show="detail.VAL2_ISCHECKBOX!==null && detail.VAL2_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox"></span> Value 2 checked
-														</label> &nbsp;
-														<label ng-show="detail.VAL2_ISCHECKBOX!==null && detail.VAL2_ISCHECKBOX!==0 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox"></span> Value 2 unchecked
+														<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_NO"></span> Value 2 unchecked
 														</label>
 													</div>
 												</div>
 												
 											</td>
 											<td width="5%">
+												<i class="fa fa-chevron-up fa-lg" style="cursor: pointer;" ng-click="moveDetailUp(detail, line)" ng-hide="line.details.indexOf(detail)===0"></i>
+												<i class="fa fa-chevron-down fa-lg" style="cursor: pointer;" ng-click="moveDetailDown(detail, line)" ng-hide="line.details.indexOf(detail)===line.details.length - 1"></i>
+												<br />
+												<br />
 												<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeDetail(detail, line)"></i>
 											</td>
 										</tr>
@@ -198,14 +202,18 @@
 									<tbody>
 										<tr ng-repeat="comment in line.comments">
 											<td>
-												<input type="text" class="form-control" value="Comment name 1"/>
+												<input type="text" class="form-control" value="Comment name 1" ng-model="comment.NAME"/>
 											</td>
 											<td>
-												<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment_type">
+												<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment.Comment_Type">
 													
 												</select>
 											</td>
 											<td>
+												<i class="fa fa-chevron-up fa-lg" style="cursor: pointer;" ng-click="moveCommentUp(comment, line)" ng-hide="line.comments.indexOf(comment)===0"></i>
+												<i class="fa fa-chevron-down fa-lg" style="cursor: pointer;" ng-click="moveCommentDown(comment, line)" ng-hide="line.comments.indexOf(comment)===line.comments.length - 1"></i>
+												<br />
+												<br />
 												<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeComment(comment, line)"></i>
 											</td>
 										</tr>
