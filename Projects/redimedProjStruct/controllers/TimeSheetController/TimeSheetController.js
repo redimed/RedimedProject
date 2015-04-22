@@ -1765,27 +1765,27 @@ module.exports = {
 
                                 // SUM ALL
                                 var sum_all = 0;
+                                var sum_ac1_all = 0,
+                                    sum_ac2_all = 0,
+                                    sum_ac3_all = 0,
+                                    sum_ac4_all = 0,
+                                    sum_ac5_all = 0,
+                                    time_in_lieu_all = 0,
+                                    overtime_all = 0;
                                 for (var deptIndexAll = 0; deptIndexAll < resultDept.length; deptIndexAll++) {
-                                    resultDept[deptIndexAll].sum_ac1_all = 0;
-                                    resultDept[deptIndexAll].sum_ac1_all += resultDept[deptIndexAll].sum_ac1_dept;
-                                    resultDept[deptIndexAll].sum_ac2_all = 0;
-                                    resultDept[deptIndexAll].sum_ac2_all += resultDept[deptIndexAll].sum_ac2_dept;
-                                    resultDept[deptIndexAll].sum_ac3_all = 0;
-                                    resultDept[deptIndexAll].sum_ac3_dept_all += resultDept[deptIndexAll].sum_ac3_dept;
-                                    resultDept[deptIndexAll].sum_ac4_all = 0;
-                                    resultDept[deptIndexAll].sum_ac4_dept_all += resultDept[deptIndexAll].sum_ac4_dept;
-                                    resultDept[deptIndexAll].sum_ac5_all = 0;
-                                    resultDept[deptIndexAll].sum_ac5_all += resultDept[deptIndexAll].sum_ac5_dept;
-                                    resultDept[deptIndexAll].time_in_lieu_all = 0;
-                                    resultDept[deptIndexAll].time_in_lieu_all += resultDept[deptIndexAll].time_in_lieu_dept;
-                                    resultDept[deptIndexAll].overtime_all = 0;
-                                    resultDept[deptIndexAll].overtime_all += resultDept[deptIndexAll].overtime_dept;
+                                    sum_ac1_all += resultDept[deptIndexAll].sum_ac1_dept;
+                                    sum_ac2_all += resultDept[deptIndexAll].sum_ac2_dept;
+                                    sum_ac3_all += resultDept[deptIndexAll].sum_ac3_dept;
+                                    sum_ac4_all += resultDept[deptIndexAll].sum_ac4_dept;
+                                    sum_ac5_all += resultDept[deptIndexAll].sum_ac5_dept;
+                                    time_in_lieu_all += resultDept[deptIndexAll].time_in_lieu_dept;
+                                    overtime_all += resultDept[deptIndexAll].overtime_dept;
                                     sum_all +=
-                                        resultDept[deptIndexAll].sum_ac1_all +
-                                        resultDept[deptIndexAll].sum_ac2_all +
-                                        resultDept[deptIndexAll].sum_ac3_all +
-                                        resultDept[deptIndexAll].sum_ac4_all +
-                                        resultDept[deptIndexAll].sum_ac5_all;
+                                        sum_ac1_all +
+                                        sum_ac2_all +
+                                        sum_ac3_all +
+                                        sum_ac4_all +
+                                        sum_ac5_all;
                                 }
 
                                 //END
@@ -1801,9 +1801,9 @@ module.exports = {
                                             resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
                                             resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept +
                                                 resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," +
-                                            resultDept[i].time_in_lieu_dept + "," + resultDept[i].overtime_dept + ", " + resultDept[i].sum_ac1_all +
-                                            ", " + resultDept[i].sum_ac2_all + ", " + resultDept[i].sum_ac3_all + ", " + resultDept[i].sum_ac4_all + ", " +
-                                            resultDept[i].sum_ac5_all + ", " + sum_all + ", " + resultDept[i].time_in_lieu_all + ", " + resultDept[i].overtime_all +
+                                            resultDept[i].time_in_lieu_dept + "," + resultDept[i].overtime_dept + ", " + sum_ac1_all +
+                                            ", " + sum_ac2_all + ", " + sum_ac3_all + ", " + sum_ac4_all + ", " +
+                                            sum_ac5_all + ", " + sum_all + ", " + time_in_lieu_all + ", " + overtime_all +
                                             "), ";
                                         //EMP
                                         // VALUE TIME CHARGE
