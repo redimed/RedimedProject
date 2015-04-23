@@ -185,7 +185,7 @@ db.sequelize
         if (err) {
             throw err[0];
         } else {
-            server.listen(4000);
+            server.listen(3000);
             log.info('Connection has been established successfully!');
             log.info('App server listening on port ' + server.address().port);
         }
