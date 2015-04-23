@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="666"/>
+	<property name="ireport.y" value="591"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
@@ -328,7 +328,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<staticText>
 					<reportElement x="19" y="0" width="104" height="19" forecolor="#6666FF" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
 					<textElement verticalAlignment="Bottom">
-						<font size="10" isBold="true" isPdfEmbedded="false"/>
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
@@ -629,7 +629,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 			<staticText>
 				<reportElement x="19" y="1" width="104" height="17" forecolor="#6666FF" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
 				<textElement verticalAlignment="Bottom">
-					<font size="10" isBold="true" isPdfEmbedded="false"/>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
