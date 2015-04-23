@@ -9,7 +9,6 @@ angular.module("app.loggedIn.im.bluetooth.controller",[])
 		$scope.chartData = [];
 
 		socket.on('getMeasureData',function(rs){
-			console.log("Online Data: ",rs);
 			if(rs.info){
 				var data = angular.copy(rs.info);
 			    delete data['deviceType'];

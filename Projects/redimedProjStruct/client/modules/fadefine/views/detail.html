@@ -7,226 +7,244 @@
 				<input type="text" style="font-size: 18pt; font-weight: bolder; text-align: center;" class="form-control" value="Untitled Functional Assessment Header"/>
 			</div>
 		</div>
-		
+
 	    <!-- This is for sections -->
-	    <div class="portlet box red" ng-repeat="section in header.sections">
-			<div class="portlet-title">
-				<div class="caption" style="width:50%;">
-					<input color="white" class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%" ng-model="section.SECTION_NAME">
-				</div>
-				<div class="tools">
-					<a href="javascript:;" class="collapse" data-original-title="" title=""> 
-					</a>
-					<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeSection(section)"> 
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body">
-				<!-- This is for lines -->
-				<div class="portlet box blue-hoki" ng-repeat="line in section.lines">
-					<div class="portlet-title">
-						<div class="caption" style="width:50%;">
-							<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%" ng-model="line.QUESTION">
-						</div>
-						<div class="tools">
-							<a href="javascript:;" class="collapse" data-original-title="" title=""> 
-							</a>
-							<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeLine(section, line)"></a>
-						</div>
+	    <div ng-repeat="section in header.sections">
+	    	<!-- <div ng-drop="true"  class="seperate-section">
+		    	
+		    </div> -->
+		    <div ng-drop="true" ng-drop-success="onDropComplete($index, $data, $event, section, header)" class="portlet box red" ng-drag="true" ng-drag-data="section" draggable="true">
+				<div class="portlet-title">
+					<div class="caption" ng-drag-handle="true" style="cursor: move">
+						<i class="fa fa-align-justify fa-3x"></i>
 					</div>
-					<div class="portlet-body">
-						<accordion close-others="oneAtATime">
-							<accordion-group heading="General line definitions">
-								<h3 class="form-section">Scoring/Rating 1 definition</h3>
-									<div class="row">
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL1_NAME_HEADER"/>
-											<input type="text" class="form-control" placeholder="Value header" ng-model="line.VAL1_VALUE_HEADER"/>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-												<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1==='1'"/> Is score?
-											</label>
-											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
-												
-											</select>
-											
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-												<input type="checkbox" ng-model="line.ISRATING1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING1==='1'"/> Is rating?
-											</label>
-
-											<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID1">
-												
-											</select>
-											
-										</div>
-									</div>
-								<h3 class="form-section">Rating 2 definition</h3>
-									<div class="row">
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL2_NAME_HEADER"/>
-											<input type="text" class="form-control" placeholder="Value header" ng-model="line.VAL2_VALUE_HEADER"/>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-												<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2==='1'"/> Is score?
-											</label>
-											<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
-												
-											</select>
-											
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-												<input type="checkbox" ng-model="line.ISRATING2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING2==='1'"/> Is rating?
-											</label>
-
-											<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID2">
-												
-											</select>
-											
-										</div>
-									</div>
-								<h3 class="form-section">General definition</h3>
-									<div class="col-md-4 col-sm-4 col-xs-4">
-										<label>
-												<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText"/> Is comment text?
-										</label>
-									</div>
-									<div class="col-md-4 col-sm-4 col-xs-4">
-										<label>
-												<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="LineType"/> Is in summary line?
-										</label>
-									</div>
-									<div class="col-md-4 col-sm-4 col-xs-4">
-										<label>
-												<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE"/> Is showing ranking table?
-										</label>
-									</div>
-							</accordion-group>
-							<accordion-group heading="Line detail questions">
-					    		<table class="table table-bordered table-hover">
-									<thead>
-									<tr>
-										<th>
-											 Detail questions
-										</th>
-										<th>
-											 Detail definitions
-										</th>
-										<th>
-											Action
-										</th>
-									</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="detail in line.details">
-											<td width="20%">
-												<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
-											</td>
-											<td>
-												<div class="col-md-7 col-xs-7 col-sm-7">
-													<div>
-														<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME"/>
-														<label>
-															<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)">
-													
-															</select>
-														</label> &nbsp;
-														<label ng-show="detail.VAL1_ISVALUE===1">
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
-														</label>
-													</div>
-													<div>
-														<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="line.VAL2_ISCHECKBOX"/>
-														<label>
-															<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)">
-													
-															</select>
-														</label> &nbsp;
-														<label ng-show="detail.VAL2_ISVALUE===1">
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
-														</label>
-													</div>
-												</div>
-												<div class="col-md-5 col-xs-5 col-sm-5">
-													<div>
-														<label>
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText==='1'" ng-model="detail.IsCommentsText" ng-change="IsCommentTextWatch(detail, detail.IsCommentsText)"></span> Comment
-														</label>
-														<label ng-show="detail.IsCommentsText==='1' && (detail.VAL1_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX===1)">
-															required when
-														</label>
-													</div>
-													<div>
-														<label ng-show="detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_YES"></span> Value 1 checked
-														</label> &nbsp;
-														<label ng-show=" detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_NO"></span> Value 1 unchecked
-														</label>
-														<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_YES"></span> Value 2 checked
-														</label> &nbsp;
-														<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-															<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_NO"></span> Value 2 unchecked
-														</label>
-													</div>
-												</div>
-												
-											</td>
-											<td width="5%">
-												<i class="fa fa-chevron-up fa-lg" style="cursor: pointer;" ng-click="moveDetailUp(detail, line)" ng-hide="line.details.indexOf(detail)===0"></i>
-												<i class="fa fa-chevron-down fa-lg" style="cursor: pointer;" ng-click="moveDetailDown(detail, line)" ng-hide="line.details.indexOf(detail)===line.details.length - 1"></i>
-												<br />
-												<br />
-												<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeDetail(detail, line)"></i>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<a class="btn default btn-block" ng-click="addDetail(line)"> <i class="fa fa-plus"></i> Add question </a>
-					    	</accordion-group>
-
-					    	<accordion-group heading="Line comments">
-								<table class="table table-bordered table-hover">
-									<thead>
-										<tr>
-											<th>Comment name</th>
-											<th>Comment type</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="comment in line.comments">
-											<td>
-												<input type="text" class="form-control" value="Comment name 1" ng-model="comment.NAME"/>
-											</td>
-											<td>
-												<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment.Comment_Type">
+					<div class="caption" style="width:50%;">
+						<input color="white" class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%" ng-model="section.SECTION_NAME">
+					</div>
+					<div class="tools">
+						<a href="javascript:;" class="collapse" data-original-title="" title=""> 
+						</a>
+						<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeSection(section)"> 
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<!-- This is for lines -->
+					<div class="portlet box blue-hoki" ng-repeat="line in section.lines">
+						<div class="portlet-title">
+							<div class="caption" style="width:50%;">
+								<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%" ng-model="line.QUESTION">
+							</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse" data-original-title="" title=""> 
+								</a>
+								<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeLine(section, line)"></a>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<accordion close-others="oneAtATime">
+								<accordion-group heading="General line definitions">
+									<h3 class="form-section">Scoring/Rating 1 definition</h3>
+										<div class="row">
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL1_NAME_HEADER"/>
+												<input type="text" class="form-control" placeholder="Value header" ng-model="line.VAL1_VALUE_HEADER"/>
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+													<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1==='1'"/> Is score?
+												</label>
+												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
 													
 												</select>
-											</td>
-											<td>
-												<i class="fa fa-chevron-up fa-lg" style="cursor: pointer;" ng-click="moveCommentUp(comment, line)" ng-hide="line.comments.indexOf(comment)===0"></i>
-												<i class="fa fa-chevron-down fa-lg" style="cursor: pointer;" ng-click="moveCommentDown(comment, line)" ng-hide="line.comments.indexOf(comment)===line.comments.length - 1"></i>
-												<br />
-												<br />
-												<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeComment(comment, line)"></i>
-											</td>
+												
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+													<input type="checkbox" ng-model="line.ISRATING1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING1==='1'"/> Is rating?
+												</label>
+
+												<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID1">
+													
+												</select>
+												
+											</div>
+										</div>
+									<h3 class="form-section">Rating 2 definition</h3>
+										<div class="row">
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL2_NAME_HEADER"/>
+												<input type="text" class="form-control" placeholder="Value header" ng-model="line.VAL2_VALUE_HEADER"/>
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+													<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2==='1'"/> Is score?
+												</label>
+												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
+													
+												</select>
+												
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+													<input type="checkbox" ng-model="line.ISRATING2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING2==='1'"/> Is rating?
+												</label>
+
+												<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID2">
+													
+												</select>
+												
+											</div>
+										</div>
+									<h3 class="form-section">General definition</h3>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText"/> Is comment text?
+											</label>
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="LineType"/> Is in summary line?
+											</label>
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-4">
+											<label>
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE"/> Is showing ranking table?
+											</label>
+										</div>
+								</accordion-group>
+								<accordion-group heading="Line detail questions">
+						    		<table class="table table-bordered table-hover">
+										<thead>
+										<tr>
+											<th>
+												 Detail questions
+											</th>
+											<th>
+												 Detail definitions
+											</th>
+											<th>
+												Action
+											</th>
 										</tr>
-									</tbody>
-								</table>
-								<a class="btn default btn-block" ng-click="addComment(line)"> <i class="fa fa-plus"></i> Add comment </a>
-					    	</accordion-group>
-						</accordion>
-						
+										</thead>
+										<tbody>
+											<tr ng-repeat="detail in line.details">
+												<td width="20%">
+													<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
+												</td>
+												<td>
+													<div class="col-md-7 col-xs-7 col-sm-7">
+														<div>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME"/>
+															<label>
+																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)">
+														
+																</select>
+															</label> &nbsp;
+															<label ng-show="detail.VAL1_ISVALUE===1">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
+															</label>
+														</div>
+														<div>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="line.VAL2_ISCHECKBOX"/>
+															<label>
+																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)">
+														
+																</select>
+															</label> &nbsp;
+															<label ng-show="detail.VAL2_ISVALUE===1">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
+															</label>
+														</div>
+													</div>
+													<div class="col-md-5 col-xs-5 col-sm-5">
+														<div>
+															<label>
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText==='1'" ng-model="detail.IsCommentsText" ng-change="IsCommentTextWatch(detail, detail.IsCommentsText)"></span> Comment
+															</label>
+															<label ng-show="detail.IsCommentsText==='1' && (detail.VAL1_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX===1)">
+																required when
+															</label>
+														</div>
+														<div>
+															<label ng-show="detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_YES"></span> Value 1 checked
+															</label> &nbsp;
+															<label ng-show=" detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_NO"></span> Value 1 unchecked
+															</label>
+															<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_YES"></span> Value 2 checked
+															</label> &nbsp;
+															<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_NO"></span> Value 2 unchecked
+															</label>
+														</div>
+													</div>
+													
+												</td>
+												<td width="5%">
+													<i class="fa fa-chevron-up fa-lg" style="cursor: pointer;" ng-click="moveDetailUp(detail, line)" ng-hide="line.details.indexOf(detail)===0"></i>
+													<i class="fa fa-chevron-down fa-lg" style="cursor: pointer;" ng-click="moveDetailDown(detail, line)" ng-hide="line.details.indexOf(detail)===line.details.length - 1"></i>
+													<br />
+													<br />
+													<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeDetail(detail, line)"></i>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<a class="btn default btn-block" ng-click="addDetail(line)"> <i class="fa fa-plus"></i> Add question </a>
+						    	</accordion-group>
+
+						    	<accordion-group heading="Line comments">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>Comment name</th>
+												<th>Comment type</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="comment in line.comments">
+												<td>
+													<input type="text" class="form-control" value="Comment name 1" ng-model="comment.NAME"/>
+												</td>
+												<td>
+													<select class="form-control" ng-options="cmtt.id as cmtt.label for cmtt in comment_type_opt" ng-model="comment.Comment_Type">
+														
+													</select>
+												</td>
+												<td>
+													<i class="fa fa-chevron-up fa-lg" style="cursor: pointer;" ng-click="moveCommentUp(comment, line)" ng-hide="line.comments.indexOf(comment)===0"></i>
+													<i class="fa fa-chevron-down fa-lg" style="cursor: pointer;" ng-click="moveCommentDown(comment, line)" ng-hide="line.comments.indexOf(comment)===line.comments.length - 1"></i>
+													<br />
+													<br />
+													<i class="fa fa-times fa-2x" style="cursor: pointer;" ng-click="removeComment(comment, line)"></i>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<a class="btn default btn-block" ng-click="addComment(line)"> <i class="fa fa-plus"></i> Add comment </a>
+						    	</accordion-group>
+							</accordion>
+							
+						</div>
 					</div>
+					<a class="btn default btn-block" ng-click="addLine(section)"> <i class="fa fa-plus"></i> Add line </a>
 				</div>
-				<a class="btn default btn-block" ng-click="addLine(section)"> <i class="fa fa-plus"></i> Add line </a>
+			</div>
+	    </div>
+		    
+		<a class="btn default btn-block" ng-click="addSection()"> <i class="fa fa-plus" ></i> Add section </a>
+		<div class="row-break"></div>
+		<div class="row">
+			<div class="col-md-10 col-sm-10 col-xs-10">
+				
+			</div>
+			<div class="col-md-2 col-sm-2 col-xs-2">
+				<button type="button" class="btn green btn-lg" ng-click="addFaDefinition()"><i class="fa fa-plus"></i> Add definition</button>
 			</div>
 		</div>
-		<a class="btn default btn-block" ng-click="addSection()"> <i class="fa fa-plus" ></i> Add section </a>
 </form>

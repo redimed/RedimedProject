@@ -77,9 +77,17 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return sub.post({id:id});
         }
 
+        adminBooking.getCompanyPatients = function(id){
+            return api.all('company/patients').post({companyId:id});
+        }
+
         adminBooking.getCompanyInfo = function(id){
             var sub = api.all('company/info');
             return sub.post({comId:id});
+        }
+
+        adminBooking.checkCompanyName = function(name){
+            return api.all('company/checkName').post({name:name});
         }
 
         adminBooking.insertNewCompany = function(info){

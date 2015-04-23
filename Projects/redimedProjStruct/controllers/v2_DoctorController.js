@@ -5,24 +5,37 @@ module.exports = {
 	postCalendarByDate: function(req, res) {
 
 
-		var date = req.body.date;
+		// var date = req.body.date;
+		var fromDate = req.body.fromDate;
+		var toDate = req.body.toDate;
 		var doctor_id = req.body.doctor_id; 
-		if(!date) {
-			// current date;
-			date = mdt_functions.nowDateDatabase();
-		}
 
-		db.Appointment.findAll({
-			where: {
-				DOCTOR_ID: doctor_id,
-				Patient_id: {ne: null},
-				FROM_TIME: { rlike: date },
+		// if(!date) {
+		// 	// current date;
+		// 	date = mdt_functions.nowDateDatabase();
+		// }
 
-			}
-		}).success(function(data){
+		db.sequelize.query("SELECT c.*, p.* "+
+							"FROM cln_appointment_calendar c "+
+							"INNER JOIN cln_patients p "+
+							"ON c.`Patient_id` = p.Patient_id "+
+							"WHERE DOCTOR_ID = ? "+
+							"AND FROM_TIME >= ? AND TO_TIME <= ? ORDER BY FROM_TIME"
+			,null,{raw:true},[doctor_id,fromDate,toDate])
+		
+		// db.Appointment.findAll({
+		// 	where: {
+		// 		DOCTOR_ID: doctor_id,
+		// 		Patient_id: {ne: null},
+		// 		FROM_TIME: { rlike: date },
 
+		// 	}
+		// })
+
+		.success(function(data){
 			res.json({list: data, status: 'success'})
-		}).error(function(err) {
+		})
+		.error(function(err) {
 			console.log(err);
 			res.json(500, {"status": "error", "error": err});
 		})

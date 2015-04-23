@@ -16,10 +16,12 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
      * KHANK API
      */
 
-    doctorService.doctor_calendar_by_date = function(doctor_id, select_date) {
+    doctorService.doctor_calendar_by_date = function(doctor_id, from, to) {
 
         var instanceApi = doctorApi.all("v2/doctor/calendar_by_date");
-        return instanceApi.post({'doctor_id' : doctor_id, date: select_date});
+        // return instanceApi.post({'doctor_id' : doctor_id, date: select_date});
+
+        return instanceApi.post({'doctor_id' : doctor_id, fromDate: from, toDate: to})
     }
 
      doctorService.catItemDept = function(items) {
