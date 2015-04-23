@@ -22,7 +22,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     toastr("Load infomation employee fail!", "Error");
                 } else {
                     //catch exception
-                    te.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.TimeSheetHome", null, {
                         "reload": true
                     });
                     toastr("Server not response!", "Error");
@@ -36,37 +36,6 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
         }
         //END LOAD INFO
 
-        // //CHECK STANDARD OR NON-STANDARD
-        // $scope.info.standard = 1;
-        // $scope.info.non_standard = 1;
-        // $scope.changeRequest = function(value) {
-        //     $scope.info.standard = ($scope.info.standard === 1 ? 0 : 1);
-        //     if (value === 'standard' && $scope.info.standard === 0) {
-        //         swal({
-        //             title: "Do you want apply for leave standard?",
-        //             type: "warning",
-        //             showCancelButton: true,
-        //             confirmButtonColor: "#DD6B55",
-        //             confirmButtonText: "Yes",
-        //             closeOnConfirm: true
-        //         }, function() {
-        //             $scope.info.standard = 1;
-        //         });
-        //     } else if (value === 'non-standard' && $scope.info.non_standard === 1) {
-        //         swal({
-        //             title: "Do you want apply for leave non-standard?",
-        //             type: "warning",
-        //             showCancelButton: true,
-        //             confirmButtonColor: "#DD6B55",
-        //             confirmButtonText: "Yes",
-        //             closeOnConfirm: true
-        //         }, function() {
-        //             $scope.info.standard = 0;
-        //         });
-        //     }
-        // };
-        //END CHECK
-
         //CHECK MIN DATE FINISH
         $scope.changeDateFinish = function(dateFinish) {
             var m = moment(new Date(dateFinish));
@@ -74,15 +43,21 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
         };
         //END CHECK
 
-        //FUNCTION SIGNATURE
-        $scope.clickSignature = function() {
-            $modal.open({
-                "templateUrl": "SignatureID",
-                controller: function($scope) {
-
-                },
-                size: "md"
-            });
-        };
-        //END SIGNATURE
+        // LOAD TYPE LEAVE
+        TimeSheetService.LoadTypeLeave().then(function(response) {
+            if (response.status === "success") {
+                $scope.info.infoTypeLeave = angular.copy(response.result);
+            } else if (response.status === "error") {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Load type leave fail!", "Error");
+            } else {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
+            }
+        });
+        //END
     });

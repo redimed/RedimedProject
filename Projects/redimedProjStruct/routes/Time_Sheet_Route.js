@@ -62,4 +62,5 @@ app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
 
 // LEAVE FORM
 app.post("/api/TimeSheet/post-info-employee", TimeSheet.LoadInfoEmployee);
+app.get("/api/TimeSheet/get-type-leave", TimeSheet.LoadTypeLeave);
 //END lEAVE

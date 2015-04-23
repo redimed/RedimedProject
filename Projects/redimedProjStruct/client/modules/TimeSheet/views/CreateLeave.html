@@ -127,7 +127,8 @@
                     </tr>
                     <tr>
                         <td style="width:40%; ">
-                            <span></span>
+                            <select ng-model="info.leave_type" ng-options="l.leave_type_id as l.leave_name for l in info.infoTypeLeave">
+                            </select>
                         </td>
                         <td style="width:40% ">
                         </td>
@@ -136,6 +137,11 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="row" style="margin-right:-7px;">
+            <a class="btn btn-xs red pull-right" style="width:75px; font-size:14px;">Cancel</a>
+            <a class="btn btn-xs blue pull-right" style="width:75px; font-size:14px; ">Submit</a>
+            <a class="btn btn-xs green pull-right" style="width:75px; font-size:14px;">Save</a>
         </div>
     </div>
     <!-- END STANDARD REQUEST -->

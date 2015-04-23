@@ -16,13 +16,6 @@
         </li>
     </ul>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
-        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetActualWorking/{{USER_ID}}" target="_blank">Display</a>
-    </div>
-</div>
-&nbsp;
 <div class="panel panel-info">
     <div class="panel-body">
         <div class="row">
@@ -45,6 +38,12 @@
                 <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="changeEmp(info)" checkboxes="true"></div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
+        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetActualWorking/{{USER_ID}}" target="_blank">Display</a>
     </div>
 </div>
 <!-- END INFO SYS -->

@@ -239,6 +239,11 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 USER_ID: USER_ID
             });
         };
+
+        TimeSheetService.LoadTypeLeave = function() {
+            var LoadTypeLeave = api.one("TimeSheet/get-type-leave");
+            return LoadTypeLeave.get({});
+        };
         //END LEAVE FORM
 
         return TimeSheetService;
