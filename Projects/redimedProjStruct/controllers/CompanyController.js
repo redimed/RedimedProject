@@ -589,6 +589,17 @@ module.exports = {
             })
 
     },
+    checkName: function(req,res){
+        var name = req.body.name;
+
+        db.Company.find({where:{Company_name: name}},{raw:true})
+            .success(function(data){
+                if(data)
+                    res.json({status:'error'});
+                else
+                    res.json({status:'success'});
+            })
+    },
     subCompany: function(req,res)
     {
         var id = req.body.id;
@@ -667,6 +678,17 @@ module.exports = {
         },{id:comId})
             .success(function(data){
                 res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    getListPatient: function(req,res){
+        var comId = req.body.companyId;
+        db.Patient.findAll({where:{company_id:comId}},{raw:true})
+            .success(function(data){
+                res.json({status:'success',data:data});
             })
             .error(function(err){
                 res.json({status:'error'});

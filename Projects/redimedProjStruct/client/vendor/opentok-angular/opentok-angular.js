@@ -31,6 +31,7 @@ var OpenTokAngular = angular.module('opentok', [])
                 streamCreated: function(event) {
                     $rootScope.$apply(function() {
                         OTSession.streams.push(event.stream);
+                        console.log("Stream: ",event.stream);
                     });
                 },
                 streamDestroyed: function(event) {

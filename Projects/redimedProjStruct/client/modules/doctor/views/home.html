@@ -1,4 +1,4 @@
-<h3 class="page-title">Patient List</h3>
+<!-- <h3 class="page-title">Patient List</h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -11,7 +11,7 @@
 
 
 <div class="row">
-    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12"> -->
         <!-- YEAR -->
         <!-- <span class="field show-label">
             <label>Year</label>
@@ -40,48 +40,159 @@
         </span> -->
         <!-- END DAY -->
 
-        <span class="field">
-            <label for="date_selected">Date</label>
-            <input ui-date="{dateFormat: 'dd/mm/yy'}" readonly="readonly" placeholder="Date" name="date_selected" ng-model="selectDate" class="form-control" id="date_selected" float-label ng-change="loadCalendar()">
-        </span>
-
-    </div>
+        <!-- <span class="field"> -->
+            <!-- <label for="date_selected">Date</label> -->
+            <!-- <input ui-date="{dateFormat: 'dd/mm/yy'}" readonly="readonly" placeholder="Date" name="date_selected" ng-model="selectDate" class="form-control" id="date_selected" float-label ng-change="loadCalendar()"> -->
+    
+            
+        <!-- </span> -->
+        
+<!--     </div>
 </div>
-
+ -->
 <div class="clearfix"></div>
 
-
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
+<div class="portlet light ">
+    <div class="portlet-title tabbable-line">
         <div class="caption">
-            <i class="fa fa-cogs"></i>List of Patients
+            <i class="fa fa-user-md"></i>
+            <span class="caption-subject bold uppercase">
+                {{doctorInfo.NAME}}
+            </span>
         </div>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="index.html#tab_1_1" data-toggle="tab">
+                    Appointment List
+                </a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_2" data-toggle="tab">
+                    Patient List
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="portlet-body">
-        <table class="table table-responsive table-hover">
-            <thead>
-                <tr>
-					<th>#</th>
-                    <th>Patient</th>
-					<th>From time</th>
-					<th>To time</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)" style="cursor: pointer;">
-					<td>{{$index+1}}</td>
-					<td>
-                        <div ng-repeat="PATIENT in item.PATIENTS">
-                            <a ng-click="goToApptDetail(PATIENT, item)">{{PATIENT.Patient_name}}</a>
-                        </div>
-                    </td>
-                    <td>{{item.FROM_TIME}}</td>
-					<td>{{item.TO_TIME}}</td>
-                </tr>
-            </tbody>
-			<tfoot ng-show="list_appts.length == 0">
-				<tr><td colspan="5"><em>No Appointment !!!</em> <a ui-sref="loggedIn.doctor.patients"> <i class="fa fa-angle-double-right"></i> View All Patients </a></td></tr>
-			<tfoot>
-        </table>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1_1">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <span>
+                            <label style="font-weight: bold;">Appointments Between</label>
+                            &nbsp;&nbsp;
+                             <input style="cursor: pointer;" type="text" callback="loadCalendar()" date-range-picker ng-model="selectDate"/>
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <div class="table-dynamic">
+                    <table class="table table-responsive table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">#</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Patient</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">From Time</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">To Time</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="list_appts.length == 0">
+                                <td colspan="4">
+                                    <div style="text-align: center;">
+                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">
+                                            No Appointment!
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)" style="cursor: pointer;">
+                                <td>{{$index+1}}</td>
+                                <td ng-click="goToApptDetail(item)">
+                                   <!--  <div ng-repeat="PATIENT in item.PATIENTS">
+                                        <a ng-click="goToApptDetail(PATIENT, item)">{{PATIENT.Patient_name}}</a>
+                                    </div> -->
+                                    {{item.PATIENT_NAME}}
+                                </td>
+                                <td>{{item.FROM_TIME}}</td>
+                                <td>{{item.TO_TIME}}</td>
+                            </tr>
+                        </tbody>
+                        <!-- <tfoot ng-show="list_appts.length == 0">
+                            <tr><td colspan="5"><em>No Appointment !!!</em> <a ui-sref="loggedIn.doctor.patients"> <i class="fa fa-angle-double-right"></i> View All Patients </a></td></tr>
+                        <tfoot> -->
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_1_2" ng-controller="DoctorPatientsController">
+                <div style="float: left;">
+                    <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" 
+                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+                                items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
+                </div>
+                <div style="float: right; padding-top: 15px;">
+                    <button class="btn btn-sm" ng-click="reset()">Reset</button>
+                    <b>Total Patients:</b> {{list.count}}
+                    <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" 
+                            ng-change="loadList()">
+                    </select>
+                </div>
+                <!-- END PAGINATION -->
+                <table class="table table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Sur Name</th>
+                            <th>Postcode</th>
+                        </tr>
+                        <tr>
+                            <!-- SEARCH -->
+                            <td>
+                                <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.First_name" 
+                                       ng-change="loadList()">
+                            </td>
+                            <td>
+                                <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Middle_name" 
+                                       ng-change="loadList()">
+                            </td>
+                            <td>
+                                <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Sur_name" 
+                                       ng-change="loadList()">
+                            </td>
+                            <td>
+                                <input class="form-control input-sm" type="text" ng-model="searchObjectMap.data.Post_code" 
+                                       ng-change="loadList()">
+                            </td>
+                            <!-- END SEARCH -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="l in list.results" ng-click="goToTimetableDetail(l)"  style="cursor: pointer;">
+                            <td>{{l.First_name}}</td>
+                            <td>{{l.Middle_name| undefined}}</td>
+                            <td>{{l.Sur_name| undefined}}</td>
+                            <td>{{l.Post_code| undefined}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+</div>  

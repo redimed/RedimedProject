@@ -206,12 +206,12 @@
                 </a>
             </li>
             <li>
-                <a href="index.html#tab_1_2" ng-click="measureTabClick()" data-toggle="tab">
+                <a href="index.html#tab_1_2" data-toggle="tab">
                     Measurements
                 </a>
             </li>
             <li>
-                <a href="index.html#tab_1_3" ng-click="scriptTabClick()" data-toggle="tab">
+                <a href="index.html#tab_1_3"  data-toggle="tab">
                     Scripts
                 </a>
             </li>
@@ -598,11 +598,11 @@
                                         <span>
                                             <label style="font-weight: bold;">Measure data from</label>
                                             &nbsp;&nbsp;
-                                            <input style="cursor: pointer;" type="text" date-range-picker ng-model="historyDates"/>
-                                            &nbsp;&nbsp;
+                                            <input style="cursor: pointer;" type="text" callback="changeHistory(historyDates)" date-range-picker ng-model="historyDates"/>
+                                            <!-- &nbsp;&nbsp;
                                             <a href="javascript:;"  ng-click="changeHistory(historyDates)" class="btn btn-circle btn-icon-only blue">
                                                 <i class="fa fa-refresh"></i>
-                                            </a>
+                                            </a> -->
                                         </span>
                                     </div>
                                     <flot ng-if="haveData" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>

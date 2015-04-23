@@ -1,3 +1,13 @@
+<style>
+    .help-block{
+        color: red !important;
+    }
+
+    .required{
+        color: red !important;
+    }
+</style>
+
 <h3 ng-if="!isEdit" class="page-title">New Company</h3>
 <h3 ng-if="isEdit" class="page-title">Edit Company</h3>
 <div class="page-bar">
@@ -40,6 +50,7 @@
                     <input required ng-model="info.companyName" name="name" class="form-control"  />
                 </div>
                 <span ng-show="showClickedValidation && companyForm.name.$invalid" for="name" class="help-block">Company Name is required.</span>
+                <span ng-show="isExist" for="name" class="help-block">Company Name is already exists.</span>
             </div>
             <div class="col-md-6 col-sm-6">
                <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.industry.$invalid}">

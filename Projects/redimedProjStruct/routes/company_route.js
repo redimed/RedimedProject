@@ -8,3 +8,5 @@ app.post('/api/company/sub',CompanyController.subCompany);
 app.post('/api/company/info',CompanyController.companyInfo);
 app.post('/api/company/new',CompanyController.insert);
 app.post('/api/company/edit',CompanyController.edit);
+app.post('/api/company/checkName',CompanyController.checkName);
+app.post('/api/company/patients',CompanyController.getListPatient);

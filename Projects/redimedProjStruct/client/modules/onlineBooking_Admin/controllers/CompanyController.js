@@ -7,8 +7,8 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         var comArr = [];
         var subArr = [];
         $scope.data1 = [];
+        $scope.patientData = [];
         $scope.isSelected = false;
-        $scope.selectedComp = null;
 
         $scope.selectedId = null;
 
@@ -60,21 +60,63 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
                 }
             });
 
+            $scope.tableParams3 = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: $scope.patientData.length, // length of data
+                getData: function($defer, params) {
+                    var filteredData = params.filter() ?
+                        $filter('filter')($scope.patientData, params.filter()) :
+                        $scope.patientData;
+
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, params.orderBy()) :
+                        $scope.patientData;
+
+                    params.total(orderedData.length);
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+
 
         })
 
         $scope.showSubCompany = function(b){
             $scope.selectedId = b.id;
+            $scope.selectedComp = b.Company_name;
 
             $scope.data1 = [];
+            $scope.patientData = [];
+
             $scope.isSelected = true;
-            $scope.selectedComp = b.id;
             for(var i=0 ; i<comArr.length; i++){
                 if(comArr[i].father_id === b.id){
                     $scope.data1.push(comArr[i]);
                 }
-
             }
+
+            OnlineBookingAdminService.getCompanyPatients(b.id).then(function(rs){
+                if(rs.status == 'success')
+                {
+                    $scope.patientData = rs.data;
+                    for(var i=0; i<$scope.patientData.length; i++)
+                    {
+                        var nameArr = [];
+                        nameArr.push($scope.patientData[i].Title);
+                        nameArr.push($scope.patientData[i].First_name);
+                        nameArr.push($scope.patientData[i].Sur_name);
+                        nameArr.push($scope.patientData[i].Middle_name);
+
+                        $scope.patientData[i].fullName = nameArr.join(' ');
+
+
+                    }
+                    $scope.tableParams3.reload();
+                }
+
+            })
+
             $scope.tableParams2.reload();
         }
 
@@ -88,7 +130,7 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
 
         $scope.addSubCompany = function(){
 
-            $state.go('loggedIn.admin_subCompany_new',{id:$scope.selectedComp})
+            $state.go('loggedIn.admin_subCompany_new',{id:$scope.selectedId})
         }
 
         $scope.editSubCompany = function(a){
@@ -131,15 +173,27 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
             toastr.error("Please Input All Required Information!", "Error");
         }else
         {
-            OnlineBookingAdminService.insertNewCompany($scope.info).then(function(data){
-                if(data.status === 'success')
+            OnlineBookingAdminService.checkCompanyName($scope.info.companyName).then(function(data){
+                if(data.status == 'error')
                 {
-                    toastr.success("Submit New Company Successfully!","Success");
-                    $state.go('loggedIn.admin_company_new', null, {"reload":true});
+                    toastr.error("Company Name is already exists!");
+                    $scope.isExist = true;
                 }
-                else if(data.status === 'error')
-                    toastr.error("Submit New Company Failed!", "Error");
+                else
+                {
+                    $scope.isExist = false;
+                    OnlineBookingAdminService.insertNewCompany($scope.info).then(function(data){
+                        if(data.status === 'success')
+                        {
+                            toastr.success("Submit New Company Successfully!","Success");
+                            $state.go('loggedIn.admin_company', null, {"reload":true});
+                        }
+                        else if(data.status === 'error')
+                            toastr.error("Submit New Company Failed!", "Error");
+                    })
+                }
             })
+            
         }
     }
 })
@@ -201,13 +255,23 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
                 toastr.error("Please Input All Required Information!", "Error");
             }else
             {
-                OnlineBookingAdminService.editCompanyInfo($scope.info).then(function(data){
-                    if(data.status === 'success')
-                    {
-                        toastr.success("Edit Company Successfully!","Success");
+                OnlineBookingAdminService.checkCompanyName($scope.info.companyName).then(function(data){
+                    if(data.status == 'error'){
+                        $scope.isExist = true;
+                        toastr.error("Company Name is already exists!");
                     }
-                    else if(data.status === 'error')
-                        toastr.error("Edit Company Failed!", "Error");
+                    else
+                    {
+                        $scope.isExist =  false;
+                        OnlineBookingAdminService.editCompanyInfo($scope.info).then(function(data){
+                            if(data.status === 'success')
+                            {
+                                toastr.success("Edit Company Successfully!","Success");
+                            }
+                            else if(data.status === 'error')
+                                toastr.error("Edit Company Failed!", "Error");
+                        })
+                    }
                 })
             }
         }

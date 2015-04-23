@@ -15,6 +15,9 @@ angular.module("app.call.controller",[
 
         $scope.session = null;
 
+        $scope.streams = OTSession.streams;
+        $scope.connections = OTSession.connections;
+
         $scope.userInfo = null;
         $scope.callUserInfo = callUserInfo;
         $scope.isCaller = isCaller;
@@ -37,11 +40,7 @@ angular.module("app.call.controller",[
         $scope.showWhiteboard = false;
         $scope.whiteboardUnread = false;
 
-        $scope.streams = OTSession.streams;
-        $scope.connections = OTSession.connections;
-
-        console.log("Connections: ",$scope.connections);
-
+       
         OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
         OT.checkScreenSharingCapability(function(response) {
             $scope.screenShareSupported = response.supported && response.extensionRegistered !== false;
@@ -172,9 +171,6 @@ angular.module("app.call.controller",[
             }
         }
 
-        
-        
-
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
             {
@@ -192,7 +188,7 @@ angular.module("app.call.controller",[
                 toastr.info(fromUser + " Has Ignored The Call!");
                 $modalStack.dismissAll();
 
-                 $timeout(function(){
+                $timeout(function(){
                     if($scope.streams.length == 0)
                         disconnect();
                 }, 1 * 1000);
@@ -203,12 +199,22 @@ angular.module("app.call.controller",[
                 toastr.info(fromUser + " Has Left The Call!");
                 $modalStack.dismissAll();
 
+                // $scope.$watch('connections',function(val){
+                //     console.log(val);
+                //     if(val.length == 1)
+                //         disconnect();
+                // })
+
+                // $scope.$apply(function(){
+                //     if($scope.connections.length == 1)
+                //         disconnect();
+                // })
+
                 $timeout(function(){
                     if($scope.streams.length == 0)
                         disconnect();
                 }, 1 * 1000);
 
-                
             }
 
         })
@@ -254,14 +260,11 @@ angular.module("app.call.controller",[
         };
 
         $scope.toggleWhiteboard = function() {
-            if($scope.connected)
-            {
-                $scope.showWhiteboard = !$scope.showWhiteboard;
-                $scope.whiteboardUnread = false;
-                setTimeout(function() {
-                  $scope.$emit('otLayout');
-                }, 10);
-            }
+            $scope.showWhiteboard = !$scope.showWhiteboard;
+            $scope.whiteboardUnread = false;
+            setTimeout(function() {
+              $scope.$emit('otLayout');
+            }, 10);
         };
         
         $scope.toggleShareScreen = function() {
@@ -297,7 +300,6 @@ angular.module("app.call.controller",[
                 toastr.warning("Please Wait For Calling Person First!")
             else
             {
-                console.log($scope.connections);
                 if($scope.streams.length < 2)
                 {
                     var modalInstance = $modal.open({
@@ -317,8 +319,6 @@ angular.module("app.call.controller",[
                             }
                         },
                         controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession){
-
-                            console.log(OTSession);
 
                             $scope.isMakeCall = false;
                             $scope.callUser = null;
