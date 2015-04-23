@@ -105,7 +105,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 								_.forEach(response.doctors, function(doctor){
 									if(doctor.DOCTOR_ID === data.DOCTOR_ID){
-										scope.appointment.list[flagPatient].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name});
+										scope.appointment.list[flagPatient].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, outreferral: data.outreferral});
 										scope.appointment.list[flagPatient].doctors[doctor_row].PATIENTS = 'ok';
 										return;
 									}
@@ -129,8 +129,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 															scope.appointment.list[temp_index].doctors[doctor_row].CAL_ID = data.CAL_ID;
 															scope.appointment.list[temp_index].doctors[doctor_row].SERVICE_COLOR = data.SERVICE_COLOR;
 															scope.appointment.list[temp_index].doctors[doctor_row].patients = [];
-															scope.appointment.list[temp_index].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name});
+															scope.appointment.list[temp_index].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral});
 															scope.appointment.list[temp_index].doctors[doctor_row].PATIENTS = 'ok';
+															scope.appointment.list[temp_index].doctors[doctor_row].IS_REFERRAL = data.IS_REFERRAL;
 															return;
 														}
 														doctor_row++;
@@ -145,7 +146,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 													_.forEach(response.doctors, function(doctor){
 														if(doctor.DOCTOR_ID === data.DOCTOR_ID){
-															scope.appointment.list[temp_index].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name});
+															scope.appointment.list[temp_index].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral});
 															scope.appointment.list[temp_index].doctors[doctor_row].PATIENTS = 'ok';
 															return;
 														}
@@ -165,7 +166,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									var doctors = [];
 									_.forEach(response.doctors, function(doctor){
 										if(doctor.DOCTOR_ID === data.DOCTOR_ID)
-											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
+											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
 										else
 											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 									})
@@ -173,7 +174,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									var doctor_row = 0;
 									_.forEach(doctors, function(doctor){
 										if(doctor.DOCTOR_ID === data.DOCTOR_ID){
-											doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name});
+											doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral});
 											doctors[doctor_row].PATIENTS = 'ok';
 										}
 										doctor_row++;
@@ -196,12 +197,13 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									scope.appointment.list[flagTheme].cals.push(data.CAL_ID);
 
 									if(data.Patient_id !== null)
-										scope.appointment.list[flagTheme].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name});
+										scope.appointment.list[flagTheme].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral});
 
 									scope.appointment.list[flagTheme].doctors[doctor_row].PATIENTS = 'MESS_SYS_010';
 									scope.appointment.list[flagTheme].doctors[doctor_row].SERVICE_ID = data.SERVICE_ID;
 									scope.appointment.list[flagTheme].doctors[doctor_row].CAL_ID = data.CAL_ID;
 									scope.appointment.list[flagTheme].doctors[doctor_row].SERVICE_COLOR = data.SERVICE_COLOR;
+									scope.appointment.list[flagTheme].doctors[doctor_row].IS_REFERRAL = data.IS_REFERRAL;
 									scope.appointment.list[flagTheme].doctors[doctor_row].CLINICAL_DEPT_ID = data.CLINICAL_DEPT_ID;
 
 									if(scope.appointment.list[flagTheme].doctors[doctor_row].patients.length > 0){
@@ -215,7 +217,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var doctors = [];
 							_.forEach(response.doctors, function(doctor){
 								if(doctor.DOCTOR_ID === data.DOCTOR_ID)
-									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
+									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
 								else
 									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 							})
@@ -293,8 +295,15 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 												reload: false,
 												Patient_id: new_patient.Patient_id,
 												CAL_ID: col.CAL_ID,
+												addSuccess: false,
 												clickRow: function(row){ clickRow(row); }
 											}
+
+											$scope.$watch('claim.addSuccess', function(addSuccess){
+												if(addSuccess){
+													$modalInstance.close('success');
+												}
+											})
 										},
 										size: 'lg',
 										resolve: {
@@ -361,87 +370,106 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 						modalInstance.result.then(function(result){
 							if(result === 'cancel'){
-								//MODAL FOR REFERRAL
-								$modal.open({
-									templateUrl: 'notifyReferral',
-									controller: function($scope, $modalInstance, new_patient){
-										$scope.cancel = function(){
-											$modalInstance.dismiss('cancel');
-										}
 
-										$scope.selectReferral = function(){
-											$modal.open({
-												templateUrl: 'referralSelect',
-												controller: function($scope, $modalInstance, new_patient, col, OutreferralModel){
-													$scope.patientId = new_patient.Patient_id;
-													$scope.reload = false;
-													$scope.calId = col.CAL_ID;	
-													$scope.limit = 10;
+								if(col.IS_REFERRAL){
 
-													$scope.clickRow = function(row){
-														var postData = {
-															CAL_ID: $scope.calId,
-															outreferral_id: row.id,
-															patient_id: $scope.patientId,
-															isEnable: 1
+									//MODAL FOR REFERRAL
+									$modal.open({
+										templateUrl: 'notifyReferral',
+										controller: function($scope, $modalInstance, new_patient){
+											$scope.cancel = function(){
+												$modalInstance.dismiss('cancel');
+											}
+
+											$scope.selectReferral = function(){
+												$modal.open({
+													templateUrl: 'referralSelect',
+													controller: function($scope, $modalInstance, new_patient, col, OutreferralModel){
+														$scope.patientId = new_patient.Patient_id;
+														$scope.reload = false;
+														$scope.calId = col.CAL_ID;	
+														$scope.limit = 10;
+														$scope.addSuccess = false;
+
+														$scope.$watch('addSuccess', function(addSuccess){
+															if(addSuccess){
+																$modalInstance.close('success');
+															}
+														})
+
+														$scope.clickRow = function(row){
+															var postData = {
+																CAL_ID: $scope.calId,
+																outreferral_id: row.id,
+																patient_id: $scope.patientId,
+																isEnable: 1
+															}
+
+															OutreferralModel.select(postData)
+															.then(function(response){
+																toastr.success('You have choose Referral');
+																$modalInstance.close('success');
+															}, function(error){})
 														}
-
-														OutreferralModel.select(postData)
-														.then(function(response){
-															toastr.success('You have choose Referral');
-															$modalInstance.close('success');
-														}, function(error){})
-													}
-												},
-												size: 'lg',
-												resolve: {
-													new_patient: function(){
-														return new_patient;
 													},
-													col: function(){
-														return col;
-													}
-												}
-											})											
-										}
-
-										$scope.addReferral = function(){
-											$modal.open({
-												templateUrl: 'referralAdd',
-												controller: function($scope, $modalInstance, new_patient, col){
-													$scope.patientId = new_patient.Patient_id;
-													$scope.calId = col.CAL_ID;
-													$scope.success = false;
-
-													$scope.$watch('success', function(success){
-														if(success){
-															toastr.success('You have choose Referral');
-															$modalInstance.close('success');
+													size: 'lg',
+													resolve: {
+														new_patient: function(){
+															return new_patient;
+														},
+														col: function(){
+															return col;
 														}
-													})
-												},
-												size: 'lg',
-												resolve: {
-													new_patient: function(){
-														return new_patient;
-													},
-													col: function(){
-														return col;
 													}
-												}
-											});
-										}//end selectReferral
-									},
-									size: 'sm',
-									backdrop: 'static',
-									keyboard: false,
-									resolve: {
-										new_patient: function(){
-											return patient;
+												})
+												.result.then(function(result){
+													if(result === 'success')
+														$modalInstance.dismiss('cancel');
+												})								
+											}
+
+											$scope.addReferral = function(){
+												$modal.open({
+													templateUrl: 'referralAdd',
+													controller: function($scope, $modalInstance, new_patient, col){
+														$scope.patientId = new_patient.Patient_id;
+														$scope.calId = col.CAL_ID;
+														$scope.success = false;
+
+														$scope.$watch('success', function(success){
+															if(success){
+																toastr.success('You have choose Referral');
+																$modalInstance.close('success');
+															}
+														})
+													},
+													size: 'lg',
+													resolve: {
+														new_patient: function(){
+															return new_patient;
+														},
+														col: function(){
+															return col;
+														}
+													}
+												})
+												.result.then(function(result){
+													if(result === 'success')
+														$modalInstance.dismiss('cancel');
+												})
+											}//end selectReferral
+										},
+										size: 'sm',
+										backdrop: 'static',
+										keyboard: false,
+										resolve: {
+											new_patient: function(){
+												return patient;
+											}
 										}
-									}
-								})
-								//END MODAL FOR REFERRAL
+									})
+									//END MODAL FOR REFERRAL
+								}//end if
 							}
 						})//result for close
 					}

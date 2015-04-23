@@ -260,7 +260,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-				.column(
+				.distinct(
 					'outside_referrals.id',
 					'outside_referrals.date_issued',
 					'outside_referrals.date_started',
@@ -308,7 +308,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-				.column(
+				.distinct(
 					'outside_referrals.id',
 					'outside_referrals.date_issued',
 					'outside_referrals.date_started',

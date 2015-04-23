@@ -733,3 +733,135 @@ angular.module("app.model", [])
 	Last_update_date: null,
 })
 // END PROBLEM
+
+// FA HEADER
+.value("FaHeaderModel",{
+	FA_ID: null,
+	ENTITY_ID: null, 
+	TYPE:'',
+	FA_NAME:'',
+	ISENABLE: null,
+	ITEM_ID: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	Risk: '',
+	Comments: '',
+	Recommend: '',
+	Att_Flexibility: null,
+	Att_Core_Stability: null,
+	Att_Wirst_Elbow_func: null,
+	Att_Shoulder_func: null,
+	Att_Lower_Limb_func: null,
+	Att_Balance: null,
+	ASSESSED_ID: null,
+	ASSESSED_SIGN: '',
+	ASSESSED_DATE: null,
+	ASSESSED_NAME: ''
+})
+// END FA HEADER
+
+// FA SECTION
+.value('FaSectionModel', {
+	SECTION_ID: null,
+	FA_ID: null,
+	SECTION_NAME: '',
+	ISENABLE: null,
+	ORD: null, 
+	USER_TYPE:'',
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null, 
+	Last_update_date: null,
+	SECTION_TYPE: null
+})
+// END FA SECTION
+
+// FA LINE
+.value('FaLineModel', {
+	LINE_ID: null,
+	SECTION_ID: null,
+	FA_ID: null,
+	QUESTION: '',
+	PICTURE: '',
+	ISSCORE1: null,
+	SCORE_TYPE1: null,
+	SCORE1: null,
+	ISRATING1: null,
+	RATING_ID1: null,
+	RATING_VALUE1: null,
+	COMMENTS: '',
+	ORD: null,
+	ISSCORE2: null,
+	SCORE_TYPE2: null,
+	SCORE2: null,
+	ISRATING2: null,
+	RATING_ID2: null,
+	RATING_VALUE2: null,
+	ISENABLE: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	IsCommentsText: null,
+	LineType: null,
+	RATE1: '',
+	RATE2: '',
+	VAL1_NAME_HEADER: '',
+	VAL1_VALUE_HEADER: '',
+	VAL2_NAME_HEADER: '',
+	VAL2_VALUE_HEADER: '',
+	IS_SHOW_RANKING_TABLE: null
+})
+// END FA LINE
+
+// FA LINE DETAIL
+.value('FaLineDetailModel', {
+	DETAIL_ID: null,
+	LINE_ID: null,
+	QUESTION: '',
+	VAL1_NAME: '',
+	VAL1_ISVALUE: null,
+	VAL1_VALUE: '',
+	VAL1_ISCHECKBOX: null,
+	VAL1_CHECKBOX: '',
+	VAL2_NAME: '',
+	VAL2_ISVALUE: null,
+	VAL2_VALUE: '',
+	VAL2_ISCHECKBOX: null,
+	VAL2_CHECKBOX: '',
+	COMMENTS: '',
+	PICTURE: '',
+	ORD: null,
+	ISENABLE: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	VAL1_ISCOMMENT_WHEN_YES: null,
+	VAL1_ISCOMMENT_WHEN_NO: null,
+	VAL2_ISCOMMENT_WHEN_YES: null, 
+	VAL2_ISCOMMENT_WHEN_NO: null,
+	IsCommentText: null,
+	LineTestRefer: null,  
+	VAL1_VALUE_IS_NUMBER: null,
+	VAL2_VALUE_IS_NUMBER: null
+
+})
+// END FA LINE DETAIL
+
+//FA COMMENT
+.value('FaCommentModel', {
+	FA_COMMENT_ID: null,
+	LINE_ID: null,           
+	NAME: '',
+	VALUE: '',
+	ISENABLE: null,
+	Created_by: null,
+	Creation_date: null,
+	Last_updated_by: null,
+	Last_update_date: null,
+	Comment_Type: null
+})
+// END FA COMMENT

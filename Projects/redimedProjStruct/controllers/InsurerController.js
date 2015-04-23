@@ -15,7 +15,6 @@ module.exports = {
 			.innerJoin('companies', 'cln_patients.company_id', 'companies.id')
 			.innerJoin('cln_insurers', 'companies.Insurer', 'cln_insurers.id')
 			.where({
-				'cln_patients.Isenable': 1,
 				'cln_patients.Patient_id': postData.Patient_id
 			})
 			.toString();

@@ -1319,3 +1319,19 @@ table.timetable-table td:last-child {
 .block-active{
     background-color: #7FBFF3;
 }
+.seperate-section{
+    height:5px;
+}
+
+[ng-drag].drag-over{
+    opacity:0.5;
+}
+
+[ng-drag].dragging{
+    opacity:0.5;
+}
+
+[ng-drop].drag-enter{
+    border: dashed blue 20px;
+    opacity: 0.5;
+}

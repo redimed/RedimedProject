@@ -311,7 +311,7 @@ module.exports = {
 		console.log(data);
 		var sqlInsertPost = 
 			"INSERT INTO ph_posts (company_id,required_date,time_od_shift,local_weekday_rate,nonelocal_weekday_rate,sat_rate,sun_rate,ph_rate,isTravel,isAccommodation,post_type,job_title,job_description,Start_date,Duration,job_type,Qualification,experiences_require,hours_per_week,days_per_week,isweekend_shift,CREATION_DATE) "+
-			"VALUES (?,?,'time_od_shift','local_weekday_rate','nonelocal','sat_rate','sun_rate','ph_rate',1,1,'post_type','job_title','job_description','2014-05-05','duration','job_type','qualification','exper','hpw',1,1,'2015-02-02') ";
+			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		var required_date = moment(data.required_date).format("YYYY-MM-DD");
 		var time_od_shift = moment(data.time_od_shift).format("h:mm:ss a");
 		var Start_date =  moment(data.Start_date).format("YYYY-MM-DD");
