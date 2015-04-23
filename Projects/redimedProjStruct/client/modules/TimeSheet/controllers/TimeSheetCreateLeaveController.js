@@ -6,7 +6,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             formatYear: "yy",
             startingDate: 1
         };
-        //END
+        //END POPUP
 
         //LOAD INFO EMPLOYEE
         if ($cookieStore.get('userInfo') !== undefined && $cookieStore.get('userInfo') !== null &&
