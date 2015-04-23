@@ -59,3 +59,7 @@ app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
 
 //SEND MAIL
 // END SEND MAIL
+
+// LEAVE FORM
+app.post("/api/TimeSheet/post-info-employee", TimeSheet.LoadInfoEmployee);
+//END lEAVE

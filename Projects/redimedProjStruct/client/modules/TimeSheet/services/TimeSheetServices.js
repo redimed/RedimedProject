@@ -203,6 +203,7 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
+        //REPORTS SERVICE
         TimeSheetService.LoadDeptReport = function(USER_ID) {
             var LoadDeptReport = api.all("TimeSheet/post-list-deptRP");
             return LoadDeptReport.post({
@@ -229,5 +230,16 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 info: info
             });
         };
+        //END ERPORT SERVICE
+
+        //LEAVE FORM SERVICE
+        TimeSheetService.LoadInfoEmployee = function(USER_ID) {
+            var LoadInfoEmployee = api.all("TimeSheet/post-info-employee");
+            return LoadInfoEmployee.post({
+                USER_ID: USER_ID
+            });
+        };
+        //END LEAVE FORM
+
         return TimeSheetService;
     });

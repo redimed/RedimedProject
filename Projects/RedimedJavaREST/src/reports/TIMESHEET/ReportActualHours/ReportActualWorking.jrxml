@@ -63,7 +63,7 @@ INNER JOIN departments ON departments.departmentid = time_employee_reports1.depa
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
+		<![CDATA[SELECT DISTINCT
 time_employee_reports1.time_ac1_dept,
 time_employee_reports1.time_ac2_dept,
 time_employee_reports1.time_ac3_dept,
@@ -278,7 +278,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 			<band height="19">
 				<staticText>
 					<reportElement x="19" y="0" width="110" height="19" forecolor="#6666FF" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
-					<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<textElement verticalAlignment="Bottom">
 						<font size="10" isBold="false" isPdfEmbedded="false"/>
 					</textElement>
 					<text><![CDATA[Subtotal:]]></text>
@@ -636,7 +636,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<band height="21" splitType="Stretch">
 			<staticText>
 				<reportElement x="19" y="1" width="110" height="19" forecolor="#6666FF" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
+				<textElement verticalAlignment="Bottom">
 					<font size="10" isBold="false" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>

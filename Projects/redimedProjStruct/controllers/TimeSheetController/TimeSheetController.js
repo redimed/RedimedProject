@@ -2014,6 +2014,31 @@ module.exports = {
             });
         //END
 
+    },
+    LoadInfoEmployee: function(req, res) {
+        var USER_ID = req.body.USER_ID;
+        var queryGetInfoUser = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct, " +
+            "departments.departmentName FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+            "WHERE users.id = ?";
+        db.sequelize.query(queryGetInfoUser, null, {
+                raw: true
+            }, [USER_ID])
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
     }
 
 };
