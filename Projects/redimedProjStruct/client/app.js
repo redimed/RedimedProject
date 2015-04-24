@@ -47,17 +47,18 @@ angular.module("app", [
         'angucomplete',
         'ui.mask',
         'app.sponsor1.controller',
-    	'infinite-scroll',//tannv.dts@gmail.com	
-	   'app.sponsor1.emergency.controller',
-    	'app.sponsor1.nonemergency.controller'
-        // 'angular-underscore'
+        'infinite-scroll', //tannv.dts@gmail.com    
+        'app.sponsor1.emergency.controller',
+        'app.sponsor1.nonemergency.controller',
+        // 'angular-underscore',
+        'ui.bootstrap.datetimepicker'
     ])
-    .factory('callModal', function (btfModal) {
-      return btfModal({
-        controller: 'callController',
-        controllerAs: 'modal',
-        templateUrl: 'common/views/call.html'
-      });
+    .factory('callModal', function(btfModal) {
+        return btfModal({
+            controller: 'callController',
+            controllerAs: 'modal',
+            templateUrl: 'common/views/call.html'
+        });
     })
     .factory('socket', function(socketFactory) {
         var host = location.hostname;
@@ -189,7 +190,7 @@ angular.module("app", [
     })
 
 //When update any route
-.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService) {
+.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService, rlobService, TimeSheetService) {
 
 
 
@@ -282,23 +283,22 @@ angular.module("app", [
             e.preventDefault();
             return;
         }
-        if(fromState.name != '' || fromState.name != null)
-        {
-             $cookieStore.put("fromState", {
+        if (fromState.name != '' || fromState.name != null) {
+            $cookieStore.put("fromState", {
                 fromState: fromState,
                 fromParams: fromParams
             });
         }
 
-         $cookieStore.put("toState", {
+        $cookieStore.put("toState", {
             toState: toState,
             toParams: toParams
         });
-       
+
         if (!$cookieStore.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
-            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister" && toState.name!=='security.rlobSponsor' && toState.name!=='security.rlobSponsor.emergency' && toState.name!=='security.rlobSponsor.nonemergency') {
+            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !== "security.rlobRegister" && toState.name !== 'security.rlobSponsor' && toState.name !== 'security.rlobSponsor.emergency' && toState.name !== 'security.rlobSponsor.nonemergency') {
                 e.preventDefault();
                 $state.go("security.login", null, {
                     location: "replace",
