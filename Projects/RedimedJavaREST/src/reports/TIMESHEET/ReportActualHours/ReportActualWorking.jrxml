@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="682"/>
-	<property name="ireport.y" value="222"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
 			<![CDATA[SELECT
@@ -188,126 +189,100 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<groupHeader>
 			<band height="31">
 				<staticText>
-					<reportElement x="14" y="-20" width="115" height="20" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
+					<reportElement x="9" y="-20" width="117" height="20" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Employee]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="140" y="-20" width="45" height="20" forecolor="#6666FF" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9">
+					<reportElement x="141" y="-20" width="45" height="20" forecolor="#6666FF" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Billable]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="196" y="-20" width="81" height="20" forecolor="#6666FF" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Administration]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="287" y="-20" width="51" height="20" forecolor="#6666FF" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Training]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="446" y="-20" width="76" height="20" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Non-Charged]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="350" y="-20" width="85" height="20" forecolor="#6666FF" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5">
+					<reportElement x="201" y="-20" width="86" height="20" forecolor="#6666FF" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Administration]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="304" y="-20" width="52" height="20" forecolor="#6666FF" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0">
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Training]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="464" y="-19" width="78" height="19" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46">
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Non-Charged]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="371" y="-20" width="78" height="20" forecolor="#6666FF" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Development]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="532" y="-20" width="115" height="20" forecolor="#6666FF" uuid="6556b995-151e-420f-b133-b377ad1a84be">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Total Worked Hours]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="658" y="-20" width="74" height="20" forecolor="#6666FF" uuid="f88c977f-7268-48de-9276-943f0b504c30">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Time In Lieu]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="744" y="-20" width="55" height="20" forecolor="#6666FF" uuid="2775062c-4bda-4246-a8b6-8e72a81431df">
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[OverTime]]></text>
-				</staticText>
 				<textField>
-					<reportElement x="19" y="0" width="165" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
+					<reportElement x="9" y="0" width="117" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
 					<textElement verticalAlignment="Bottom">
 						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="19" y="-1" width="104" height="1" forecolor="#6666FF" uuid="69cd0784-3ec2-452e-b893-a96ba792145b"/>
+					<reportElement x="9" y="-1" width="117" height="1" forecolor="#6666FF" uuid="69cd0784-3ec2-452e-b893-a96ba792145b"/>
 				</line>
 				<line>
-					<reportElement x="196" y="-1" width="81" height="1" forecolor="#6666FF" uuid="24ce9247-dd48-443f-8f64-c89fa922491d">
+					<reportElement x="201" y="-1" width="86" height="1" forecolor="#6666FF" uuid="24ce9247-dd48-443f-8f64-c89fa922491d">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="350" y="-1" width="85" height="1" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0">
+					<reportElement x="371" y="-1" width="78" height="1" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="446" y="-1" width="76" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8">
+					<reportElement x="464" y="-1" width="78" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="744" y="-1" width="55" height="1" forecolor="#6666FF" uuid="7247aa56-3d4c-4591-bd20-241580735672">
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<reportElement x="735" y="-1" width="60" height="1" forecolor="#6666FF" uuid="7247aa56-3d4c-4591-bd20-241580735672">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 			</band>
@@ -315,14 +290,14 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<groupFooter>
 			<band height="19">
 				<staticText>
-					<reportElement x="19" y="0" width="104" height="19" forecolor="#6666FF" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
+					<reportElement x="9" y="0" width="117" height="19" forecolor="#6666FF" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
 					<textElement verticalAlignment="Bottom">
 						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="288" y="0" width="51" height="19" uuid="94161239-6605-4b1a-a3d1-b76f84d7834d">
+					<reportElement x="304" y="0" width="52" height="19" uuid="94161239-6605-4b1a-a3d1-b76f84d7834d">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -341,7 +316,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="350" y="0" width="85" height="19" uuid="c79a6ea4-42a0-46fa-83eb-4115b53c33e1">
+					<reportElement x="371" y="0" width="78" height="19" uuid="c79a6ea4-42a0-46fa-83eb-4115b53c33e1">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -360,7 +335,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="446" y="0" width="76" height="19" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e">
+					<reportElement x="464" y="0" width="78" height="19" uuid="1b96ff29-5f1a-464b-8513-1912a3f7a95e">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -379,7 +354,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="533" y="0" width="115" height="19" uuid="b1a3bd29-a331-4800-ba8d-49008bb960f1">
+					<reportElement x="557" y="0" width="71" height="19" uuid="b1a3bd29-a331-4800-ba8d-49008bb960f1">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -398,7 +373,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{total_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="140" y="0" width="45" height="19" uuid="2bb0023c-29d9-44e0-ad62-38053c9a4e1b">
+					<reportElement x="141" y="0" width="45" height="19" uuid="2bb0023c-29d9-44e0-ad62-38053c9a4e1b">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -417,7 +392,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="196" y="0" width="81" height="19" uuid="19a2dbd6-22a0-40f4-bd34-442040144528">
+					<reportElement x="201" y="0" width="86" height="19" uuid="19a2dbd6-22a0-40f4-bd34-442040144528">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -436,7 +411,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="659" y="0" width="74" height="19" uuid="7bf1934c-3d2d-4b70-9a86-581d1f6248ad">
+					<reportElement x="643" y="0" width="77" height="19" uuid="7bf1934c-3d2d-4b70-9a86-581d1f6248ad">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -455,9 +430,9 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="744" y="0" width="55" height="19" uuid="7d0173e2-6d40-4787-aaa1-65fbe6972a78">
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<reportElement x="735" y="0" width="60" height="19" uuid="7d0173e2-6d40-4787-aaa1-65fbe6972a78">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
 						<font isBold="false" isPdfEmbedded="false"/>
@@ -474,55 +449,53 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{overtime_dept}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="140" y="1" width="45" height="1" uuid="d96e9c24-2de7-4bc4-b452-26549e2d0167">
+					<reportElement x="141" y="1" width="45" height="1" uuid="d96e9c24-2de7-4bc4-b452-26549e2d0167">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="196" y="1" width="81" height="1" uuid="e54da4b4-4d52-480c-9131-caed26218dfe">
+					<reportElement x="201" y="1" width="86" height="1" uuid="e54da4b4-4d52-480c-9131-caed26218dfe">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="288" y="1" width="51" height="1" uuid="4d166bde-ed97-4fda-b6db-bfe27b30f0f2">
+					<reportElement x="304" y="1" width="52" height="1" uuid="4d166bde-ed97-4fda-b6db-bfe27b30f0f2">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="446" y="1" width="76" height="1" uuid="9518a247-ee73-400d-840d-c57cd7e8bcf7">
+					<reportElement x="464" y="1" width="78" height="1" uuid="9518a247-ee73-400d-840d-c57cd7e8bcf7">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-				</line>
-				<line>
-					<reportElement x="350" y="1" width="85" height="1" uuid="f4623953-c4d4-43aa-bdfd-b36087e1a563">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
-				</line>
-				<line>
-					<reportElement x="533" y="1" width="115" height="1" uuid="a02c8542-194d-4832-ab00-df411e51c614">
 						<property name="local_mesure_unitx" value="pixel"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="371" y="1" width="78" height="1" uuid="f4623953-c4d4-43aa-bdfd-b36087e1a563">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="659" y="1" width="74" height="1" uuid="5f89d98f-7d08-4197-abb8-a95e8821eba5">
+					<reportElement x="557" y="1" width="71" height="1" uuid="a02c8542-194d-4832-ab00-df411e51c614">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="643" y="1" width="77" height="1" uuid="5f89d98f-7d08-4197-abb8-a95e8821eba5">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="744" y="1" width="55" height="1" uuid="dc4137bc-9f16-4ad6-b9ed-8ac8fa353470">
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<reportElement x="735" y="1" width="60" height="1" uuid="dc4137bc-9f16-4ad6-b9ed-8ac8fa353470">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 			</band>
@@ -548,28 +521,27 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textFieldExpression><![CDATA[$F{to_date}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="140" y="168" width="45" height="1" forecolor="#6666FF" uuid="f992a32d-05c8-4279-b9ec-26e4402b0f3c">
+				<reportElement x="141" y="168" width="45" height="1" forecolor="#6666FF" uuid="f992a32d-05c8-4279-b9ec-26e4402b0f3c">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="288" y="168" width="51" height="1" forecolor="#6666FF" uuid="5b0f031a-4815-4b82-b962-1e20e7cbf08b">
+				<reportElement x="304" y="168" width="52" height="1" forecolor="#6666FF" uuid="5b0f031a-4815-4b82-b962-1e20e7cbf08b">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="533" y="168" width="115" height="1" forecolor="#6666FF" uuid="702a12eb-7660-40f9-842e-97fb109ad212">
+				<reportElement x="557" y="168" width="71" height="1" forecolor="#6666FF" uuid="702a12eb-7660-40f9-842e-97fb109ad212">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="659" y="168" width="74" height="1" forecolor="#6666FF" uuid="6a7e4776-a56e-48fe-8b4c-7c580367ea24">
+				<reportElement x="643" y="168" width="77" height="1" forecolor="#6666FF" uuid="6a7e4776-a56e-48fe-8b4c-7c580367ea24">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -593,11 +565,47 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textFieldExpression><![CDATA[$F{from_date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="672" y="118" width="127" height="20" uuid="4cd3e2c3-0864-4724-ac3a-b7f70e48e6b2"/>
+				<reportElement x="672" y="118" width="123" height="20" uuid="4cd3e2c3-0864-4724-ac3a-b7f70e48e6b2"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="11" isItalic="true" pdfFontName="Times-Italic"/>
 				</textElement>
 				<text><![CDATA[Unit of Measure: Ratio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="557" y="149" width="71" height="20" forecolor="#6666FF" uuid="6556b995-151e-420f-b133-b377ad1a84be">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Total Hours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="643" y="149" width="77" height="20" forecolor="#6666FF" uuid="f88c977f-7268-48de-9276-943f0b504c30">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Time In Lieu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="735" y="149" width="60" height="20" forecolor="#6666FF" uuid="2775062c-4bda-4246-a8b6-8e72a81431df">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[OverTime]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -607,7 +615,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="446" y="0" width="76" height="17" uuid="8447bd73-23bd-4052-9b77-0b93ea486634">
+				<reportElement x="464" y="0" width="78" height="17" uuid="8447bd73-23bd-4052-9b77-0b93ea486634">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -624,7 +632,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="85" height="17" uuid="d82776bc-2481-4103-9991-27ec97ce6d92">
+				<reportElement x="371" y="0" width="78" height="17" uuid="d82776bc-2481-4103-9991-27ec97ce6d92">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -641,7 +649,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="140" y="0" width="45" height="17" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc">
+				<reportElement x="141" y="0" width="45" height="17" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -658,7 +666,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1}*37.25/2235).intValue()).toString()+".00")))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="533" y="0" width="115" height="17" uuid="11f78650-6b2d-4b35-903a-154267b2067a">
+				<reportElement x="557" y="0" width="71" height="17" uuid="11f78650-6b2d-4b35-903a-154267b2067a">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -675,7 +683,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_charge_sum}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="659" y="0" width="74" height="17" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60">
+				<reportElement x="643" y="0" width="77" height="17" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -692,9 +700,9 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="744" y="0" width="55" height="17" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<reportElement x="735" y="0" width="60" height="17" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_over}==0 || $F{time_over}==null || $F{time_over}=="")?
@@ -709,7 +717,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_over}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="196" y="0" width="81" height="17" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e">
+				<reportElement x="201" y="0" width="86" height="17" uuid="ace0c61a-1f92-4f3e-8d62-3df8592a794e">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -726,9 +734,8 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="288" y="0" width="51" height="17" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080">
+				<reportElement x="304" y="0" width="52" height="17" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{time_ac3}==0 || $F{time_ac3}==null || $F{time_ac3}=="")?
@@ -743,7 +750,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="29" y="0" width="94" height="17" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
+				<reportElement x="19" y="0" width="107" height="17" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{employee}]]></textFieldExpression>
 			</textField>
@@ -755,9 +762,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<lastPageFooter>
 		<band height="52">
 			<textField>
-				<reportElement x="765" y="29" width="55" height="20" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
+				<reportElement x="767" y="29" width="35" height="23" uuid="1c59702d-967f-4f65-9d7f-3074e57c9d4f"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -766,14 +771,14 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 	<summary>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement x="19" y="1" width="104" height="19" forecolor="#6666FF" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
+				<reportElement x="9" y="0" width="117" height="21" forecolor="#6666FF" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="140" y="0" width="45" height="1" uuid="a1372f17-2ba9-4a7c-9ff1-029621aaef45">
+				<reportElement x="141" y="0" width="45" height="1" uuid="a1372f17-2ba9-4a7c-9ff1-029621aaef45">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -782,27 +787,53 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="196" y="0" width="81" height="1" uuid="c6407ee3-46b6-4765-90f1-f7db36ccf073">
+				<reportElement x="201" y="0" width="86" height="1" uuid="c6407ee3-46b6-4765-90f1-f7db36ccf073">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="304" y="0" width="52" height="1" uuid="4c1dc30e-14e2-4da0-892c-e6f4a87bbef6">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="371" y="0" width="78" height="1" uuid="b3fee585-1e38-4595-8667-bd8eb741dba5">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="464" y="0" width="78" height="1" uuid="546fd05e-c41a-4eb3-b214-302da57d9db2">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="557" y="0" width="71" height="1" uuid="11621e5f-ca65-42e7-87d8-e82cb46e5c84">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="288" y="0" width="51" height="1" uuid="4c1dc30e-14e2-4da0-892c-e6f4a87bbef6">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="2.25" lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="350" y="0" width="85" height="1" uuid="b3fee585-1e38-4595-8667-bd8eb741dba5">
+				<reportElement x="643" y="0" width="77" height="1" uuid="ac796dd7-4a45-4ce9-9d31-201160693d0a">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -811,47 +842,16 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="446" y="0" width="76" height="1" uuid="546fd05e-c41a-4eb3-b214-302da57d9db2">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="2.25" lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="533" y="0" width="115" height="1" uuid="11621e5f-ca65-42e7-87d8-e82cb46e5c84">
+				<reportElement x="735" y="0" width="60" height="1" uuid="652825af-2d04-4453-adfc-2096d6e15c33">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="2.25" lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="659" y="0" width="74" height="1" uuid="ac796dd7-4a45-4ce9-9d31-201160693d0a">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="2.25" lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="744" y="0" width="55" height="1" uuid="652825af-2d04-4453-adfc-2096d6e15c33">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<graphicElement>
 					<pen lineWidth="2.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="140" y="-1" width="45" height="19" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9">
+				<reportElement x="141" y="0" width="45" height="17" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -870,7 +870,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="196" y="1" width="81" height="17" uuid="1cc5d38b-087a-467b-9063-fa4be97b6f0d">
+				<reportElement x="201" y="0" width="86" height="17" uuid="1cc5d38b-087a-467b-9063-fa4be97b6f0d">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -889,7 +889,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="140" y="19" width="45" height="1" uuid="b26d33cd-8d6e-457e-a5ce-cdc2cfd8188e">
+				<reportElement x="141" y="18" width="45" height="1" uuid="b26d33cd-8d6e-457e-a5ce-cdc2cfd8188e">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -898,7 +898,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="196" y="19" width="81" height="1" uuid="5369c31b-9010-419a-b2e6-8dee532c2fb9">
+				<reportElement x="201" y="18" width="86" height="1" uuid="5369c31b-9010-419a-b2e6-8dee532c2fb9">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -907,18 +907,18 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="288" y="19" width="51" height="1" uuid="e7b8a427-8410-4d07-9f00-e18f6150c1f9">
-					<property name="local_mesure_unitx" value="pixel"/>
+				<reportElement x="304" y="18" width="52" height="1" uuid="e7b8a427-8410-4d07-9f00-e18f6150c1f9">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
 				</reportElement>
 				<graphicElement>
 					<pen lineWidth="3.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="350" y="19" width="85" height="1" uuid="ebc67d63-d3cd-443e-acf4-e8e483659cda">
+				<reportElement x="371" y="18" width="78" height="1" uuid="ebc67d63-d3cd-443e-acf4-e8e483659cda">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -927,7 +927,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="446" y="19" width="76" height="1" uuid="f7ae98c6-92b9-4323-84d7-63c713719886">
+				<reportElement x="464" y="18" width="78" height="1" uuid="f7ae98c6-92b9-4323-84d7-63c713719886">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -936,7 +936,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="533" y="19" width="115" height="1" uuid="3e3187f5-e4f7-4ba5-a644-ef7d4c02367f">
+				<reportElement x="557" y="18" width="71" height="1" uuid="3e3187f5-e4f7-4ba5-a644-ef7d4c02367f">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -945,7 +945,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="659" y="19" width="74" height="1" uuid="9ed56fb8-6399-4c3c-9ca1-f02c9817c8a4">
+				<reportElement x="643" y="18" width="77" height="1" uuid="9ed56fb8-6399-4c3c-9ca1-f02c9817c8a4">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -954,16 +954,16 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="744" y="19" width="55" height="1" uuid="5947f023-82cb-4b06-b4f0-67851893503e">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<reportElement x="735" y="18" width="60" height="1" uuid="5947f023-82cb-4b06-b4f0-67851893503e">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<graphicElement>
 					<pen lineWidth="3.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="288" y="0" width="51" height="18" uuid="b907f3c5-c066-4817-84c2-832d36d1d30d">
+				<reportElement x="304" y="0" width="52" height="17" uuid="b907f3c5-c066-4817-84c2-832d36d1d30d">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -982,8 +982,10 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac3_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="1" width="85" height="17" uuid="d03a9895-277c-4c10-8beb-95742d882836">
+				<reportElement x="371" y="0" width="78" height="17" uuid="d03a9895-277c-4c10-8beb-95742d882836">
+					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
@@ -1001,7 +1003,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac4_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="446" y="1" width="76" height="17" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c">
+				<reportElement x="464" y="0" width="78" height="17" uuid="2fdb56c8-08ca-41ee-ad92-dddad82a573c">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -1020,9 +1022,11 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac5_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="533" y="1" width="115" height="17" uuid="3f24659e-6b72-4c42-96b1-3a6bb51058bf">
+				<reportElement x="557" y="0" width="71" height="17" uuid="3f24659e-6b72-4c42-96b1-3a6bb51058bf">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="10" isBold="false" isPdfEmbedded="false"/>
@@ -1039,7 +1043,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{total_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="659" y="0" width="74" height="18" uuid="0f5ee9a7-b364-44e3-bdf3-c415ec61440a">
+				<reportElement x="643" y="0" width="77" height="17" uuid="0f5ee9a7-b364-44e3-bdf3-c415ec61440a">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -1058,9 +1062,9 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu_all}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="744" y="0" width="55" height="18" uuid="f5ee9d93-11c4-4177-b299-f596f6b12088">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<reportElement x="735" y="0" width="60" height="17" uuid="f5ee9d93-11c4-4177-b299-f596f6b12088">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font size="10" isBold="false" isPdfEmbedded="false"/>
