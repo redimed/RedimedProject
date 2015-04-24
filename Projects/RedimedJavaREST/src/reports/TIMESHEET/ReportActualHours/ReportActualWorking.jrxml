@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
-	<property name="ireport.zoom" value="1.1"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="703"/>
+	<property name="ireport.y" value="222"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
 			<![CDATA[SELECT
@@ -658,7 +658,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac1}*37.25/2235).intValue()).toString()+".00")))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="533" y="1" width="115" height="16" uuid="11f78650-6b2d-4b35-903a-154267b2067a">
+				<reportElement x="533" y="0" width="115" height="17" uuid="11f78650-6b2d-4b35-903a-154267b2067a">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -675,7 +675,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_charge_sum}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="659" y="1" width="74" height="16" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60">
+				<reportElement x="659" y="0" width="74" height="17" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -692,7 +692,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_in_lieu}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="744" y="1" width="55" height="16" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f">
+				<reportElement x="744" y="0" width="55" height="17" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -726,7 +726,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 (($F{time_ac2}*37.25/2235).intValue().toString()+".00"))))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="288" y="1" width="51" height="16" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080">
+				<reportElement x="288" y="0" width="51" height="17" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="222"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
@@ -567,7 +567,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textFieldExpression><![CDATA[($F{time_ac1}==null || $F{time_ac1}=="" || $F{time_ac1}==0)?"-":(($F{time_ac1}/60<10?"0"+($F{time_ac1}/60).intValue():($F{time_ac1}/60).intValue()))+":"+(($F{time_ac1}%60<10?"0"+$F{time_ac1}%60:$F{time_ac1}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="530" y="1" width="115" height="16" uuid="11f78650-6b2d-4b35-903a-154267b2067a">
+				<reportElement x="530" y="0" width="115" height="17" uuid="11f78650-6b2d-4b35-903a-154267b2067a">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -575,7 +575,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textFieldExpression><![CDATA[($F{time_charge_sum}==null || $F{time_charge_sum}=="" || $F{time_charge_sum}==0)?"-":(($F{time_charge_sum}/60<10?"0"+($F{time_charge_sum}/60).intValue():($F{time_charge_sum}/60).intValue()))+":"+(($F{time_charge_sum}%60<10?"0"+$F{time_charge_sum}%60:$F{time_charge_sum}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="657" y="1" width="77" height="16" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60">
+				<reportElement x="657" y="0" width="77" height="17" uuid="cb8da7ca-a477-4577-9716-7f4da0ba0a60">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -583,7 +583,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textFieldExpression><![CDATA[($F{time_in_lieu}==null || $F{time_in_lieu}=="" || $F{time_in_lieu}==0)?"-":(($F{time_in_lieu}/60<10?"0"+($F{time_in_lieu}/60).intValue():($F{time_in_lieu}/60).intValue()))+":"+(($F{time_in_lieu}%60<10?"0"+$F{time_in_lieu}%60:$F{time_in_lieu}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="745" y="1" width="60" height="16" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f">
+				<reportElement x="745" y="0" width="60" height="17" uuid="f731b5ec-cd2c-40f1-ae7f-cf5cdabc015f">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -599,7 +599,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 				<textFieldExpression><![CDATA[($F{time_ac2}==null || $F{time_ac2}=="" || $F{time_ac2}==0)?"-":$F{time_ac2}/60<10?"0"+($F{time_ac2}/60).intValue():($F{time_ac2}/60).intValue()+":"+(($F{time_ac2}%60<10?"0"+$F{time_ac2}%60:$F{time_ac2}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="292" y="1" width="52" height="16" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080">
+				<reportElement x="292" y="0" width="52" height="17" uuid="d4f401ab-1c0a-4533-aad5-800f9ffa8080">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
