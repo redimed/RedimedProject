@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
-    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal) {
+    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService) {
         $scope.info = {};
         $scope.info.standard = 1;
         // POPUP DATE
@@ -47,6 +47,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             //SAVE LEAVE FORM IN SERVER
             console.log($scope.info);
             // END SAVE SERVER
+            $scope.isRequired = 1;
         };
 
         // LOAD TYPE LEAVE
@@ -66,4 +67,12 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             }
         });
         //END
+
+        $scope.changeTime = function() {
+            var total_time = 0;
+            angular.forEach($scope.info.infoTypeLeave, function(time, index) {
+                total_time += StaffService.convertShowToFull($scope.info.infoTypeLeave[index].time_leave);
+            });
+            $scope.info.total_time = StaffService.convertFromFullToShow(total_time);
+        };
     });

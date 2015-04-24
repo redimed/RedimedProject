@@ -1,172 +1,180 @@
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a ui-sref="loggedIn.TimeSheetGroupUser">
-                <span ng-hide='isEdit' style="font-size:15px;font-weight:bold;">Apply for Leave</span>
-                <span ng-hide='!isEdit' style="font-size:15px;font-weight:bold;">Edit for Leave</span>
-            </a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-    </ul>
-</div>
-<!-- EMPLOYEE DETAIL -->
-<div class="portlet box blue-hoki">
-    <div class="portlet-title">
-        <div class="caption" style="font-size:15px; font-weight:bold;">
-            <i class="fa fa-pencil"></i>
-            <span ng-hide='isEdit'>Apply for Leave</span>
-            <span ng-hide='!isEdit'>Edit for Leave</span>
-        </div>
-        <div class="tools">
-            <a href="javascript:;" class="collapse">
-            </a>
-        </div>
+<form name="formLeave">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+                <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a ui-sref="loggedIn.TimeSheetGroupUser">
+                    <span style="font-size:15px;font-weight:bold;">Apply for Leave</span>
+                </a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+        </ul>
     </div>
-    <div class=" portlet-body ">
-        <h1 style="margin-top:0px;">Leave Application</h1>
-        <div class="table-dynamic ">
-            <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
-            </center>
-            <table class="responsive table table-bordered " ng-show="!tasks.loading ">
-                <tbody>
-                    <tr>
-                        <td colspan="2 " style="background-color:#67809f; color:white; font-weight:bold; "><span>EMPLOYEE DETAIL</span></td>
-                    </tr>
-                    <tr>
-                        <td style="width:20%; font-size:14px;">
-                            <label style="margin-top:3px;">Leave Application Date:</label>
-                        </td>
-                        <td style="width:80%;font-size:14px; ">
-                            <input ng-model="info.date_application" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" max-date="dateWeekTo" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:20%;font-size:14px; ">
-                            <span>Employee Name:</span>
-                        </td>
-                        <td style="width:80%;font-size:14px; ">
-                            <span class="text-info" style="margin-left:7px;">{{((info.infoEmployee[0].FirstName!==null && info.infoEmployee[0].Firstname!=="")?(info.infoEmployee[0].FirstName):"") +" "+((info.infoEmployee[0].LastName!==null && info.infoEmployee[0].LastName!=="")?(info.infoEmployee[0].LastName):"") }}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:20%;font-size:14px; ">
-                            <span>Department</span>
-                        </td>
-                        <td style="width:80%;font-size:14px; ">
-                            <span class=" text-info" style="margin-left:7px;">
+    <!-- EMPLOYEE DETAIL -->
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+            <div class="caption" style="font-size:15px; font-weight:bold;">
+                <i class="fa fa-pencil"></i>
+                <span>Apply for Leave</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse">
+                </a>
+            </div>
+        </div>
+        <div class=" portlet-body ">
+            <h1 style="margin-top:0px;">Leave Application</h1>
+            <div class="table-dynamic ">
+                <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
+                </center>
+                <table class="responsive table table-bordered " ng-show="!tasks.loading ">
+                    <tbody>
+                        <tr>
+                            <td colspan="2 " style="background-color:#67809f; color:white; font-weight:bold; "><span>EMPLOYEE DETAIL</span></td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%; font-size:14px;">
+                                <label style="margin-top:3px;">Leave Application Date:</label>
+                            </td>
+                            <td style="width:80%;font-size:14px; ">
+                                <div ng-class="{'has-error':isRequired===1">
+                                    <input ng-model="info.date_application" type="text" class="form-control input-sm" name="date_application" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" max-date="dateWeekTo" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="true" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%;font-size:14px; ">
+                                <span>Employee Name:</span>
+                            </td>
+                            <td style="width:80%;font-size:14px; ">
+                                <span class="text-info" style="margin-left:7px;">{{((info.infoEmployee[0].FirstName!==null && info.infoEmployee[0].Firstname!=="")?(info.infoEmployee[0].FirstName):"") +" "+((info.infoEmployee[0].LastName!==null && info.infoEmployee[0].LastName!=="")?(info.infoEmployee[0].LastName):"") }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%;font-size:14px; ">
+                                <span>Department</span>
+                            </td>
+                            <td style="width:80%;font-size:14px; ">
+                                <span class=" text-info" style="margin-left:7px;">
                                 {{(info.infoEmployee[0].departmentName!==null && info.infoEmployee[0].departmentName!=="")?info.infoEmployee[0].departmentName:""}}
                             </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:20%;font-size:14px; ">
-                            <span>Employee Status (FT/PT)</span>
-                        </td>
-                        <td style="width:80%;font-size:14px; ">
-                            <span class=" text-info" style="margin-left:7px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%;font-size:14px; ">
+                                <span>Employee Status (FT/PT)</span>
+                            </td>
+                            <td style="width:80%;font-size:14px; ">
+                                <span class=" text-info" style="margin-left:7px;">
                                 {{(info.infoEmployee[0].TypeOfContruct!==null && info.infoEmployee[0].TypeOfContruct!=="")?info.infoEmployee[0].TypeOfContruct:""}}
                             </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:20%;font-size:14px; ">
-                            <label style="margin-top:3px;">Leave Start Date:</label>
-                        </td>
-                        <td style="width:80%;font-size:14px; ">
-                            <input ng-model="info.date_start" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.date_finish" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:20%;font-size:14px; ">
-                            <label style="margin-top:3px;">Leave Finish Date:</label>
-                        </td>
-                        <td style="width:80%;font-size:14px; ">
-                            <input ng-model="info.date_finish" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.date_finish" min-date="info.date_start" close-text="Close" style="font-size:14px;width:200px; margin-bottom:0px; color:#31708f;" ng-change="changeDateFinish(info.date_finish)" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:30%;font-size:14px; ">
-                            <span>Return to Work Date:</span>
-                        </td>
-                        <td style="width:70%;font-size:14px; ">
-                            <input ng-model="info.date_work" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" min-date="minDateWork" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%;font-size:14px; ">
+                                <label style="margin-top:3px;">Leave Start Date:</label>
+                            </td>
+                            <td style="width:80%;font-size:14px; ">
+                                <div ng-class="{'has-error':1">
+                                    <input ng-model="info.date_start" type="text" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.date_finish" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="true" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%;font-size:14px; ">
+                                <label style="margin-top:3px;">Leave Finish Date:</label>
+                            </td>
+                            <td style="width:80%;font-size:14px; ">
+                                <div ng-class="{'has-error':1">
+                                    <input ng-model="info.date_finish" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.date_finish" min-date="info.date_start" close-text="Close" style="font-size:14px;width:200px; margin-bottom:0px; color:#31708f;" ng-change="changeDateFinish(info.date_finish)" ng-required="true" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%;font-size:14px; ">
+                                <label style="margin-top:3px;">Return to Work Date:</label>
+                            </td>
+                            <td style="width:70%;font-size:14px; ">
+                                <div ng-class="{'has-error':isRequired===true">
+                                    <input ng-model="info.date_work" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" min-date="minDateWork" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="true" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <label class="btn bold">
+                <input type="radio" ng-model="info.standard" ng-value="1" />&nbsp;STANDARD LEAVE REQUEST
+            </label>
+            <label class="btn bold">
+                <input type="radio" ng-model="info.standard" ng-value="0" />&nbsp;NON-STANDARD LEAVE REQUEST
+            </label>
         </div>
-        <label class="btn bold">
-            <input type="radio" ng-model="info.standard" ng-value="1" />&nbsp;STANDARD LEAVE REQUEST
-        </label>
-        <label class="btn bold">
-            <input type="radio" ng-model="info.standard" ng-value="0" />&nbsp;NON-STANDARD LEAVE REQUEST
-        </label>
+        <!-- STANDARD LEAVE REQUEST -->
+        <div class="portlet-body ">
+            <div class="table-dynamic ">
+                <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
+                </center>
+                <table class="responsive table table-bordered " ng-show="!tasks.loading ">
+                    <tbody>
+                        <tr>
+                            <td colspan="3 " style="background-color:#67809f; color:white; font-weight:bold; ">STANDARD LEAVE REQUEST – TEAM LEADER ONLY - APPROVAL REQUIRED </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3 " rowspan="1 "></td>
+                        </tr>
+                        <!-- TITLE -->
+                        <tr>
+                            <td style="background-color: lightgrey; font-weight:bold;width:50%; text-align:center;"><span>LEAVE TYPE</span></td>
+                            <td style="background-color: lightgrey; font-weight:bold;width:10% ;text-align:center;"><span>HOURS TAKEN</span></td>
+                            <td style="background-color: lightgrey; font-weight:bold;width:40% ;text-align:center;"><span>REASON FOR LEAVE </span></td>
+                        </tr>
+                        <!-- END TTILE -->
+                        <!-- BODY -->
+                        <tr ng-repeat="l in info.infoTypeLeave">
+                            <td style="width:50%; ">
+                                <label style="margin-top:3px;" ng-if="l.leave_type_id!==5">{{l.leave_name}}</label>
+                                <div class='col-md-3' style="width:auto;margin-left:-15px;" ng-if="l.leave_type_id===5">
+                                    <label style="margin-top:3px;">{{l.leave_name}}</label>
+                                </div>
+                                <div class="col-md-9" style="margin-bottom:0px;" ng-if="l.leave_type_id===5">
+                                    <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" ng-model="info.annual_leave_reason[$index]" />
+                                </div>
+                            </td>
+                            <td style="width:10%; text-align:center;">
+                                <input type="text" ui-mask="{{info.standard===1?'99:99':(l.leave_type_id===1?'999:99':'99:99')}}" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" />
+                            </td>
+                            <td style="width:40%; text-align:center; ">
+                                <input type="text" style="margin-bottom:0px;width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.annual_leave_reason[$index].time_leave" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:50%;">
+                                <label style="margin-top:3px;">Total Number of Days Taken:</label>
+                            </td>
+                            <td style="width:10%;">
+                                <input type="text" ng-if="info.standard===1" ng-model="info.total_time" ui-mask="99:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
+                                <input type="text" ng-if="info.standard===0" ui-mask="999:99" class='form-control input-sm' ng-model="info.total_time" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
+                            </td>
+                            <td style="width:40%;">
+                                <input type="text" style="margin-bottom:0px; width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.total_reason" ng-required="true" />
+                            </td>
+                        </tr>
+                        <!-- END BODY -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="margin-right:-7px;">
+                <a class="btn btn-xs red pull-right" ui-sref="loggedIn.TimeSheetHome" style="width:75px; font-size:14px;">Cancel</a>
+                <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(1)" style="width:75px; font-size:14px; ">Submit</button>
+                <button class="btn btn-xs green pull-right" ng-click="clickSendServer(2)" style="width:75px; font-size:14px;">Save</button>
+            </div>
+        </div>
+        <!-- END STANDARD REQUEST -->
     </div>
-    <!-- STANDARD LEAVE REQUEST -->
-    <div class="portlet-body ">
-        <div class="table-dynamic ">
-            <center ng-show="tasks.loading "><i class="fa fa-spinner fa-spin fa-3x "></i>
-            </center>
-            <table class="responsive table table-bordered " ng-show="!tasks.loading ">
-                <tbody>
-                    <tr>
-                        <td colspan="3 " style="background-color:#67809f; color:white; font-weight:bold; ">STANDARD LEAVE REQUEST – TEAM LEADER ONLY - APPROVAL REQUIRED </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3 " rowspan="1 "></td>
-                    </tr>
-                    <!-- TITLE -->
-                    <tr>
-                        <td style="background-color: lightgrey; font-weight:bold;width:50%; text-align:center;"><span>LEAVE TYPE</span></td>
-                        <td style="background-color: lightgrey; font-weight:bold;width:10% ;text-align:center;"><span>HOURS TAKEN</span></td>
-                        <td style="background-color: lightgrey; font-weight:bold;width:40% ;text-align:center;"><span>REASON FOR LEAVE </span></td>
-                    </tr>
-                    <!-- END TTILE -->
-                    <!-- BODY -->
-                    <tr ng-repeat="l in info.infoTypeLeave">
-                        <td style="width:50%; ">
-                            <label style="margin-top:3px;" ng-if="l.leave_type_id!==5">{{l.leave_name}}</label>
-                            <div class='col-md-3' style="width:auto;margin-left:-15px;" ng-if="l.leave_type_id===5">
-                                <label style="margin-top:3px;">{{l.leave_name}}</label>
-                            </div>
-                            <div class="col-md-9" style="margin-bottom:0px;" ng-if="l.leave_type_id===5">
-                                <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" />
-                            </div>
-                        </td>
-                        <td style="width:10%; text-align:center;">
-                            <input type="text" ui-mask="{{info.standard===1?'99:99':'999:99'}}" class='form-control input-sm' ng-model="info.annual_leave_hours[$index]" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" />
-                        </td>
-                        <td style="width:40%; text-align:center; ">
-                            <input type="text" style="margin-bottom:0px;width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.annual_leave_reason[$index]" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:50%;">
-                            <label style="margin-top:3px;">Total Number of Days Taken:</label>
-                        </td>
-                        <td style="width:10%;">
-                            <input type="text" ng-if="info.standard===1" ui-mask="99:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
-                            <input type="text" ng-if="info.standard===0" ui-mask="999:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
-                        </td>
-                        <td style="width:40%;">
-                            <input type="text" style="margin-bottom:0px; width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.other_leave_reason" />
-                        </td>
-                    </tr>
-                    <!-- END BODY -->
-                </tbody>
-            </table>
-        </div>
-        <div class="row" style="margin-right:-7px;">
-            <a class="btn btn-xs red pull-right" ui-sref="loggedIn.TimeSheetHome" style="width:75px; font-size:14px;">Cancel</a>
-            <a class="btn btn-xs blue pull-right" ng-click="clickSendServer(1)" style="width:75px; font-size:14px; ">Submit</a>
-            <a class="btn btn-xs green pull-right" ng-click="clickSendServer(2)" style="width:75px; font-size:14px;">Save</a>
-        </div>
-    </div>
-    <!-- END STANDARD REQUEST -->
-</div>
-<!-- END EMPLOYEE DETAIL -->
+    <!-- END EMPLOYEE DETAIL -->
+</form>
