@@ -13,7 +13,7 @@
 	    	<!-- <div ng-drop="true"  class="seperate-section">
 		    	
 		    </div> -->
-		    <div ng-drop="true" ng-drop-success="onDropComplete($index, $data, $event, section, header)" class="portlet box red" ng-drag="true" ng-drag-data="section" draggable="true">
+		    <div ng-drop="{{isSectionDropable}}" ng-drop-success="onSectionDropComplete($index, $data, $event, section, header)" class="portlet box red" ng-drag="true" ng-drag-data="section">
 				<div class="portlet-title">
 					<div class="caption" ng-drag-handle="true" style="cursor: move">
 						<i class="fa fa-align-justify fa-3x"></i>
@@ -24,21 +24,31 @@
 					<div class="tools">
 						<a href="javascript:;" class="collapse" data-original-title="" title=""> 
 						</a>
-						<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeSection(section)"> 
+						<a href="javascript:;" class="remove" data-original-title="" title="" style="color:white; background:none;" ng-click="removeSection(section)">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						</a>
 					</div>
 				</div>
 				<div class="portlet-body">
 					<!-- This is for lines -->
-					<div class="portlet box blue-hoki" ng-repeat="line in section.lines">
+					<div ng-drop="true" class="portlet box blue-hoki" ng-repeat="line in section.lines">
 						<div class="portlet-title">
 							<div class="caption" style="width:50%;">
 								<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%" ng-model="line.QUESTION">
 							</div>
 							<div class="tools">
-								<a href="javascript:;" class="collapse" data-original-title="" title=""> 
+								<a href="javascript:;" class="collapse" data-original-title="" title="" style="color:white;">
+								
 								</a>
-								<a href="javascript:;" class="remove" data-original-title="" title="" ng-click="removeLine(section, line)"></a>
+								<a href="javascript:;" class="remove" data-original-title="" title="" style="color:white; background:none;" ng-click="removeLine(section, line)">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</a>
+								<a href="javascript:;" class="" data-original-title="" title="" style="color:white; background:none;" ng-click="moveLineUp(line, section)" ng-hide="section.lines.indexOf(line)===0">
+									<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+								</a>
+								<a href="javascript:;" class="" data-original-title="" title="" style="color:white; background:none;" ng-click="moveLineDown(line, section)" ng-hide="section.lines.indexOf(line)===section.lines.length-1">
+									<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+								</a>
 							</div>
 						</div>
 						<div class="portlet-body">
@@ -99,7 +109,7 @@
 									<h3 class="form-section">General definition</h3>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText"/> Is comment text?
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText"/> Has comment text?
 											</label>
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
@@ -136,23 +146,25 @@
 												<td>
 													<div class="col-md-7 col-xs-7 col-sm-7">
 														<div>
-															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME"/>
 															<label>
-																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)">
+																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)" ng-init="val1_type=-1">
 														
 																</select>
-															</label> &nbsp;
+															</label> 
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME" ng-disabled="val1_type===-1" placeholder="Value 1 name"/>
+															&nbsp;
 															<label ng-show="detail.VAL1_ISVALUE===1">
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>
 														</div>
 														<div>
-															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="line.VAL2_ISCHECKBOX"/>
 															<label>
-																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)">
+																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)" ng-init="val2_type=-1">
 														
 																</select>
-															</label> &nbsp;
+															</label> 
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_NAME" ng-disabled="val2_type===-1" placeholder="Value 2 name"/>
+															&nbsp;
 															<label ng-show="detail.VAL2_ISVALUE===1">
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>

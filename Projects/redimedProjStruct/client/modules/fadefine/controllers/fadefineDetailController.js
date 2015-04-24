@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel){
+.controller("FaDefineDetailController", function($scope, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService){
 
 	//init header definition
 	$scope.header = angular.copy(FaHeaderModel);
@@ -24,6 +24,8 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	ConfigService.rank_type_option().then(function(result){
 		$scope.rating_type_opt = result.list;
 	});
+
+	$scope.isSectionDropable = true;
 
 	//functions
 	$scope.addSection = function(){
@@ -76,6 +78,16 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL1_ISCHECKBOX = null;
 			detail.VAL1_CHECKBOX = null;
 		}
+		else if(val1_type===-1){
+			detail.VAL1_NAME=null;
+			detail.VAL1_ISVALUE=null;
+			detail.VAL1_VALUE=null;
+			detail.VAL1_ISCHECKBOX=null;
+			detail.VAL1_CHECKBOX=null;
+			detail.VAL1_ISCOMMENT_WHEN_YES = null;
+			detail.VAL1_ISCOMMENT_WHEN_NO = null;
+			detail.VAL1_VALUE_IS_NUMBER = null;
+		}
 		else{
 			detail.VAL1_ISVALUE = null;
 			detail.VAL1_VALUE_IS_NUMBER = null;
@@ -86,6 +98,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL1_ISCOMMENT_WHEN_YES = null;
 			detail.VAL1_ISCOMMENT_WHEN_NO = null;
 		}
+		console.log($scope.header);
 	}
 
 	$scope.value2TypeWatch = function(detail, val2_type){
@@ -93,6 +106,16 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL2_ISVALUE = 1;
 			detail.VAL2_ISCHECKBOX = null;
 			detail.VAL2_CHECKBOX = null;
+		}
+		else if(val2_type===-1){
+			detail.VAL2_NAME=null;
+			detail.VAL2_ISVALUE=null;
+			detail.VAL2_VALUE=null;
+			detail.VAL2_ISCHECKBOX=null;
+			detail.VAL2_CHECKBOX=null;
+			detail.VAL2_ISCOMMENT_WHEN_YES = null;
+			detail.VAL2_ISCOMMENT_WHEN_NO = null;
+			detail.VAL2_VALUE_IS_NUMBER = null;
 		}
 		else{
 			detail.VAL2_ISVALUE = null;
@@ -137,9 +160,19 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		line.comments.splice(index, 1);
 		line.comments.splice(index+1, 0, comment);
 	}
+	$scope.moveLineUp = function(line, section){
+		var index = section.lines.indexOf(line);
+		section.lines.splice(index,1);
+		section.lines.splice(index-1, 0, line);
+	}
+	$scope.moveLineDown = function(line, section){
+		var index = section.lines.indexOf(line);
+		section.lines.splice(index,1);
+		section.lines.splice(index+1, 0, line);
+	}
 
 	//DRAG AND DROP FUNCTIONS
-	$scope.onDropComplete = function(index, movedSection, event, replacedSection, header){
+	$scope.onSectionDropComplete = function(index, movedSection, event, replacedSection, header){
 		var movedSection = movedSection;
 		var replacedSection = replacedSection;
 		var oldIndex = header.sections.indexOf(movedSection);
@@ -149,9 +182,31 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	}
 
-
 	//INSERT DEFINITION
 	$scope.addFaDefinition = function(){
-		console.log($scope.header);
+		addOrder($scope.header).then(function(result){
+			FaDefineService.insertHeader($scope.header);
+		}, function(error){
+			console.log(error);
+		});
 	}
+
+	//GENERAL DEFINITION FUNCTION
+	var addOrder = function(header){
+		return new Promise(function(resolve, reject){
+			header.sections.forEach(function(section){
+				section.ORD = header.sections.indexOf(section) + 1;
+				section.lines.forEach(function(line){
+					line.ORD = section.lines.indexOf(line) + 1;
+					line.details.forEach(function(detail){
+						detail.ORD = line.details.indexOf(detail) + 1;
+						if(detail.ORD === line.details.length){
+							resolve(header);
+						}
+					})
+				})
+			})
+		})
+	}
+
 });

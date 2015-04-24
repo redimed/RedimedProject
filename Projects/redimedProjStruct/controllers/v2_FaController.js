@@ -47,5 +47,37 @@ module.exports = {
 		.error(function(err){
 			res.json(500, {"status": "error", "message": err});
 		})
+	},
+
+	postInsertHeader: function(req,res){
+		knex.transaction(function(trx){
+			knex('sys_fa_df_headers')
+			.insert(
+				{FA_ID:27}
+			)
+			.transacting(trx)
+			.then(function(res1){
+				return knex('sys_fa_df_headers')
+				.insert([
+					{FA_ID:28},
+					{FA_ID:29},
+					{FA_ID:30}
+				])
+				.transacting(trx)
+				.then(function(res2){
+					console.log("this is res 2",res2);
+				})
+			})
+			.then(trx.commit)
+			.catch(trx.rollback);
+		})
+		.then(function(inserts){
+			console.log(inserts.length + ' new records saved.');
+			res.end();
+		})
+		.catch(function(error){
+			console.log("no record saved due to an unexpected error");
+			res.end();
+		})
 	}
 }
