@@ -127,95 +127,44 @@
                         <td style="background-color: lightgrey; font-weight:bold;width:40% ;text-align:center;"><span>REASON FOR LEAVE </span></td>
                     </tr>
                     <!-- END TTILE -->
-                    <!-- ANNUAL -->
-                    <tr>
+                    <!-- BODY -->
+                    <tr ng-repeat="l in info.infoTypeLeave">
                         <td style="width:50%; ">
-                            <label style="margin-top:3px;">Annual Leave</label>
-                        </td>
-                        <td style="width:10% ">
-                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.annual_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
-                        </td>
-                        <td style="width:40% ">
-                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.annual_leave_reason" ng-disabled="info.type_leave!==0" />
-                        </td>
-                    </tr>
-                    <!-- END ANNUAL -->
-                    <!-- SICK LEAVE -->
-                    <tr>
-                        <td style="width:50%; ">
-                            <label style="margin-top:3px;">Personal Leave – Sick Leave</label>
-                        </td>
-                        <td style="width:10% ">
-                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.sick_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
-                        </td>
-                        <td style="width:40% ">
-                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.sick_leave_reason" ng-disabled="info.type_leave!==1" />
-                        </td>
-                    </tr>
-                    <!-- END SICK -->
-                    <!-- CARERS LEAVE -->
-                    <tr>
-                        <td style="width:50%; ">
-                            <label style="margin-top:3px;">Personal Leave – Carers Leave</label>
-                        </td>
-                        <td style="width:10% ">
-                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.carers_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
-                        </td>
-                        <td style="width:40% ">
-                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.carers_leave_reason" ng-disabled="info.type_leave!==2" />
-                        </td>
-                    </tr>
-                    <!-- END CARERS LEAVE -->
-                    <!-- PERSONAL BUSINESS -->
-                    <tr>
-                        <td style="width:50%; ">
-                            <label style="margin-top:3px;">Personal Leave – Personal Business</label>
-                        </td>
-                        <td style="width:10% ">
-                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.personal_business_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
-                        </td>
-                        <td style="width:40% ">
-                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.personal_business_reason" ng-disabled="info.type_leave!==3" />
-                        </td>
-                    </tr>
-                    <!-- END PERSONAL BUSINESS -->
-                    <!-- OTHER LEAVE -->
-                    <tr>
-                        <td style="width:50%; ">
-                            <div class="col-md-3" style="width:auto;margin-left:-15px;">
-                                <label style="margin-top:3px;">Other Leave:
-                                </label>
+                            <label style="margin-top:3px;" ng-if="l.leave_type_id!==5">{{l.leave_name}}</label>
+                            <div class='col-md-3' style="width:auto;margin-left:-15px;" ng-if="l.leave_type_id===5">
+                                <label style="margin-top:3px;">{{l.leave_name}}</label>
                             </div>
-                            <div class="col-md-9">
-                                <input type="text" style="margin-bottom:0px;" class="form-control input-sm" ng-disabled="info.type_leave!==4" />
+                            <div class="col-md-9" style="margin-bottom:0px;" ng-if="l.leave_type_id===5">
+                                <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" />
                             </div>
                         </td>
-                        <td style="width:10% ">
-                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
+                        <td style="width:10%; text-align:center;">
+                            <input type="text" ui-mask="{{info.standard===1?'99:99':'999:99'}}" class='form-control input-sm' ng-model="info.annual_leave_hours[$index]" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" />
                         </td>
-                        <td style="width:40% ">
-                            <input type="text" style="margin-bottom:0px; width:100%;" class="form-control input-sm" ng-model="info.other_leave_reason" ng-disabled="info.type_leave!==4" />
+                        <td style="width:40%; text-align:center; ">
+                            <input type="text" style="margin-bottom:0px;width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.annual_leave_reason[$index]" />
                         </td>
                     </tr>
-                    <!-- END OTHER LEAVE -->
                     <tr>
                         <td style="width:50%;">
-                            <label style="margin-top:3px;" >Total Number of Days Taken:</label>
+                            <label style="margin-top:3px;">Total Number of Days Taken:</label>
                         </td>
                         <td style="width:10%;">
-                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
+                            <input type="text" ng-if="info.standard===1" ui-mask="99:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
+                            <input type="text" ng-if="info.standard===0" ui-mask="999:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
                         </td>
                         <td style="width:40%;">
-                            <input type="text" style="margin-bottom:0px; width:100%;" class="form-control input-sm" ng-model="info.other_leave_reason" ng-disabled="info.type_leave!==4" />
+                            <input type="text" style="margin-bottom:0px; width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.other_leave_reason" />
                         </td>
                     </tr>
+                    <!-- END BODY -->
                 </tbody>
             </table>
         </div>
         <div class="row" style="margin-right:-7px;">
-            <a class="btn btn-xs red pull-right" style="width:75px; font-size:14px;">Cancel</a>
-            <a class="btn btn-xs blue pull-right" style="width:75px; font-size:14px; ">Submit</a>
-            <a class="btn btn-xs green pull-right" style="width:75px; font-size:14px;">Save</a>
+            <a class="btn btn-xs red pull-right" ui-sref="loggedIn.TimeSheetHome" style="width:75px; font-size:14px;">Cancel</a>
+            <a class="btn btn-xs blue pull-right" ng-click="clickSendServer(1)" style="width:75px; font-size:14px; ">Submit</a>
+            <a class="btn btn-xs green pull-right" ng-click="clickSendServer(2)" style="width:75px; font-size:14px;">Save</a>
         </div>
     </div>
     <!-- END STANDARD REQUEST -->

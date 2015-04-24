@@ -2040,6 +2040,24 @@ module.exports = {
                 return;
             });
     },
+    LoadTypeLeave: function(req, res) {
+        var queryGetTypeLeave = "SELECT hr_leave_type.leave_name, hr_leave_type.leave_type_id FROM hr_leave_type";
+        db.sequelize.query(queryGetTypeLeave)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    }
 };
 
 //FUNCTION GET WEEKNO

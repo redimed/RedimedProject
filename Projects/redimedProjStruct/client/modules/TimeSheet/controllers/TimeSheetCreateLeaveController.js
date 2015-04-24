@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
     .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal) {
         $scope.info = {};
+        $scope.info.standard = 1;
         // POPUP DATE
         $scope.dateOptions = {
             formatYear: "yy",
@@ -42,4 +43,27 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             $scope.minDateWork = m.add(1, 'day');
         };
         //END CHECK
+        $scope.clickSendServer = function(statusID) {
+            //SAVE LEAVE FORM IN SERVER
+            console.log($scope.info);
+            // END SAVE SERVER
+        };
+
+        // LOAD TYPE LEAVE
+        TimeSheetService.LoadTypeLeave().then(function(response) {
+            if (response.status === "success") {
+                $scope.info.infoTypeLeave = angular.copy(response.result);
+            } else if (response.status === "error") {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Load type leave fail!", "Error");
+            } else {
+                $state.go("loggedIn.TimeSheetHome", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
+            }
+        });
+        //END
     });
