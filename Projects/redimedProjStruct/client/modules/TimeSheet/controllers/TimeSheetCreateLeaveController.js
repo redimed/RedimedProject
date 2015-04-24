@@ -42,22 +42,4 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             $scope.minDateWork = m.add(1, 'day');
         };
         //END CHECK
-
-        // LOAD TYPE LEAVE
-        TimeSheetService.LoadTypeLeave().then(function(response) {
-            if (response.status === "success") {
-                $scope.info.infoTypeLeave = angular.copy(response.result);
-            } else if (response.status === "error") {
-                $state.go("loggedIn.TimeSheetHome", null, {
-                    "reload": true
-                });
-                toastr.error("Load type leave fail!", "Error");
-            } else {
-                $state.go("loggedIn.TimeSheetHome", null, {
-                    "reload": true
-                });
-                toastr.error("Server not response!", "Error");
-            }
-        });
-        //END
     });

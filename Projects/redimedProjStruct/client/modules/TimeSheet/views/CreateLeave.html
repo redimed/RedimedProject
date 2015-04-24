@@ -120,21 +120,90 @@
                     <tr>
                         <td colspan="3 " rowspan="1 "></td>
                     </tr>
+                    <!-- TITLE -->
                     <tr>
-                        <td style="background-color: lightgrey; font-weight:bold;width:40%; "><span>LEAVE TYPE</span></td>
-                        <td style="background-color: lightgrey; font-weight:bold;width:40% "><span>REASON FOR LEAVE </span></td>
-                        <td style="background-color: lightgrey; font-weight:bold;width:20% "><span>HOURS TAKEN</span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:50%; text-align:center;"><span>LEAVE TYPE</span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:10% ;text-align:center;"><span>HOURS TAKEN</span></td>
+                        <td style="background-color: lightgrey; font-weight:bold;width:40% ;text-align:center;"><span>REASON FOR LEAVE </span></td>
                     </tr>
+                    <!-- END TTILE -->
+                    <!-- ANNUAL -->
                     <tr>
-                        <td style="width:40%; ">
-                            <select ng-model="info.leave_type" class="form-control input-sm" ng-options="l.leave_type_id as l.leave_name for l in info.infoTypeLeave">
-                            </select>
+                        <td style="width:50%; ">
+                            <label>
+                                <input type="radio" ng-model="info.type_leave" ng-value="0" /> Annual Leave
+                            </label>
+                        </td>
+                        <td style="width:10% ">
+                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.annual_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
                         </td>
                         <td style="width:40% ">
-                        </td>
-                        <td style="width:20% ">
+                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.annual_leave_reason" ng-disabled="info.type_leave!==0" />
                         </td>
                     </tr>
+                    <!-- END ANNUAL -->
+                    <!-- SICK LEAVE -->
+                    <tr>
+                        <td style="width:50%; ">
+                            <label>
+                                <input type="radio" ng-model="info.type_leave" ng-value="1" /> Personal Leave – Sick Leave</label>
+                        </td>
+                        <td style="width:10% ">
+                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.sick_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
+                        </td>
+                        <td style="width:40% ">
+                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.sick_leave_reason" ng-disabled="info.type_leave!==1" />
+                        </td>
+                    </tr>
+                    <!-- END SICK -->
+                    <!-- CARERS LEAVE -->
+                    <tr>
+                        <td style="width:50%; ">
+                            <label>
+                                <input type="radio" ng-model="info.type_leave" ng-value="2" /> Personal Leave – Carers Leave</label>
+                        </td>
+                        <td style="width:10% ">
+                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.carers_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
+                        </td>
+                        <td style="width:40% ">
+                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.carers_leave_reason" ng-disabled="info.type_leave!==2" />
+                        </td>
+                    </tr>
+                    <!-- END CARERS LEAVE -->
+                    <!-- PERSONAL BUSINESS -->
+                    <tr>
+                        <td style="width:50%; ">
+                            <label>
+                                <input type="radio" ng-model="info.type_leave" ng-value="3" /> Personal Leave – Personal Business</label>
+                        </td>
+                        <td style="width:10% ">
+                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.personal_business_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
+                        </td>
+                        <td style="width:40% ">
+                            <input type="text" style="margin-bottom:0px;width:100%;" class="form-control input-sm" ng-model="info.personal_business_reason" ng-disabled="info.type_leave!==3" />
+                        </td>
+                    </tr>
+                    <!-- END PERSONAL BUSINESS -->
+                    <!-- OTHER LEAVE -->
+                    <tr>
+                        <td style="width:50%; ">
+                            <div class="col-md-3" style="width:auto;margin-left:-15px;">
+                                <label>
+                                    <input type="radio" ng-model="info.type_leave" ng-value="4" /> Other Leave:
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" style="margin-bottom:0px;" class="form-control input-sm" ng-disabled="info.type_leave!==4" />
+                            </div>
+                        </td>
+                        <td style="width:10% ">
+                            <input type="text" ui-mask="99:99" class='form-control input-sm' ng-model="info.orther_leave_hours" style="text-align:center; margin-bottom:0px;" ng-disabled="true" />
+                        </td>
+                        <td style="width:40% ">
+                            <input type="text" style="margin-bottom:0px; width:100%;" class="form-control input-sm" ng-model="info.other_leave_reason" ng-disabled="info.type_leave!==4" />
+                        </td>
+                    </tr>
+                    <!-- END OTHER LEAVE -->
                 </tbody>
             </table>
         </div>
