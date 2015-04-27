@@ -40,7 +40,6 @@ angular.module("app.call.controller",[
         $scope.showWhiteboard = false;
         $scope.whiteboardUnread = false;
 
-       
         OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
         OT.checkScreenSharingCapability(function(response) {
             $scope.screenShareSupported = response.supported && response.extensionRegistered !== false;
@@ -75,14 +74,12 @@ angular.module("app.call.controller",[
         else
             $scope.userInfo = $cookieStore.get('userInfo');
 
-        $scope.isDrag = true;
+        $scope.isDrag = false;
         $scope.maximizeWindow = function(){
             $scope.isMinimize = !$scope.isMinimize;
-
+            $scope.isDrag = !$scope.isDrag;
             if($scope.isMinimize)
-            {
                 $scope.showWhiteboard = false;
-            }
         };
 
         if($scope.isCaller)
@@ -243,6 +240,7 @@ angular.module("app.call.controller",[
 
             socket.removeAllListeners();
             $state.go(toSt.toState.name,toSt.toParams,{reload: true});
+
         }
 
         $scope.cancelCall = function(){
@@ -261,6 +259,9 @@ angular.module("app.call.controller",[
 
         $scope.toggleWhiteboard = function() {
             $scope.showWhiteboard = !$scope.showWhiteboard;
+            if($scope.showWhiteboard)
+                $scope.isDrag = false;
+
             $scope.whiteboardUnread = false;
             setTimeout(function() {
               $scope.$emit('otLayout');
@@ -415,5 +416,6 @@ angular.module("app.call.controller",[
               $scope.connected = false;
           }
           $scope.session = null;
+          disconnect();
         });
     })

@@ -327,7 +327,7 @@ angular.module("app.directive.common", [
   };
 })
 
-.directive('draggable', function ($document) {
+.directive('draggable', function ($document,$timeout) {
     var getEventProp = function (event, prop) {
         return event[prop] || (event.touches && event.touches[0][prop]) ||
             (event.originalEvent && event.originalEvent.touches && event.originalEvent.touches[0][prop]);
@@ -335,12 +335,16 @@ angular.module("app.directive.common", [
 
     return {
         restrict: 'A',
-        scope: {drag: '=drag'},
+        scope: {drag: '='},
         link: function(scope, element, attr) {
-
             scope.$watch('drag',function(val){
-                if(typeof val !== 'undefined' && val)
+                if(val !== undefined && val == true)
                 {
+                    console.log("=========A============");
+                }
+                else
+                {
+                    console.log("=========B=============");
                      var mouseMoveHandler = function mouseMoveHandler(event) {
                         y = getEventProp(event, 'pageY') - startY;
                         x = getEventProp(event, 'pageX') - startX;
@@ -373,23 +377,18 @@ angular.module("app.directive.common", [
                         startX = pageX - element.context.offsetLeft;
                         startY = pageY - element.context.offsetTop;
 
-                        // switch (position) {
-                        //     case "relative":
-                        //         startX = pageX - x;
-                        //         startY = pageY - y;
-                        //         break;
-                        //     case "absolute":
-                        //         startX = pageX - element.context.offsetLeft;
-                        //         startY = pageY - element.context.offsetTop;
-                        //         break;
-
-                        // }
+                      
                         $document.on("mousemove touchmove", mouseMoveHandler);
                         $document.on("mouseup touchend", mouseUpHandler);
                         $($document[0].body).on("mouseleave", mouseUpHandler);
                     });
                 }
+               
+                
             })
+
+            
+            
         }
     } 
 })

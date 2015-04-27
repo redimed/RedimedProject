@@ -215,10 +215,11 @@ module.exports = function(io,cookie,cookieParser) {
         socket.on('logout', function (username,id,userType,info) {
            db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
                 .success(function(){
-                   if(info != null && typeof info !== 'undefined')
+                    
+                   if(info != null && typeof(info) != "undefined")
                    {
                        var data = info[0];
-                       if(typeof data.platform !== 'undefined' && data.platform != null && data.platform.toLowerCase() == 'android')
+                       if(data.platform !== undefined && data.platform != null && data.platform.toLowerCase() == 'android')
                        {
                            db.UserToken.update({
                                android_token: null
@@ -234,7 +235,7 @@ module.exports = function(io,cookie,cookieParser) {
                                    console.log(err);
                                })
                        }
-                       else if(typeof data.platform !== 'undefined' && data.platform != null && data.platform.toLowerCase() == 'ios')
+                       else if(data.platform !== undefined && data.platform != null && data.platform.toLowerCase() == 'ios')
                        {
                            db.UserToken.update({
                                ios_token: null
