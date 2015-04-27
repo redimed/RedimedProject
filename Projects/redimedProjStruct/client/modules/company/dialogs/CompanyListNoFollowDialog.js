@@ -1,6 +1,7 @@
 angular.module('app.loggedIn.company.dialog.listNoFollow', [])
 
-.controller('CompanyListNoFollowDialog', function($scope, CompanyModel,$modalInstance){
+.controller('CompanyListNoFollowDialog', function($scope, CompanyModel,$modalInstance ,listId){
+	$scope.listId = listId;
 	$scope.clickRow = function(row){
 		 $modalInstance.close(row);
 

@@ -114,10 +114,14 @@ angular.module('app.loggedIn.company.directives.list', [])
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
 			      controller: 'CompanyListNoFollowDialog',
-			      size :''
+			      size :'',
+			      resolve: {
+						listId: function(){
+							return scope.company.list;
+						}
+					}
 			    })
 			    .result.then(function(row){
-			    	console.log(row);
 			    	var postData = {
 			    		patient_id:$stateParams.patientId,
 			    		company_id:row.id

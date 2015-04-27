@@ -7,7 +7,8 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 		scope: {
 			options: '=',
 			limit: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			listId:'='
 		},
 	    link: function(scope, elem, attrs){
 			var setPage = function(page){
@@ -22,7 +23,8 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 				Company_name: '',
 				Industry :'',
 				Addr:'',
-				country:''
+				country:'',
+				//listId:scope.listId
 			}
 			var load = function(){
 				scope.company.loading = true;
