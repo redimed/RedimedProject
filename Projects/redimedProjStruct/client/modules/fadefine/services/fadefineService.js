@@ -5,29 +5,34 @@ angular.module('app.loggedIn.fadefine.service',[])
 
     var v2_api = Restangular.all("api/erm/v2");
 
-    instanceService.insertHeader = function(header){
-        var headerApi = v2_api.all('fa/insert_header');
-        return headerApi.post(header);
-    }
+    // instanceService.insertHeader = function(header){
+    //     var headerApi = v2_api.all('fa/insert_header');
+    //     return headerApi.post(header);
+    // }
 
-    instanceService.insertSections = function(sections){
-        var sectionsApi = v2_api.all('fa/insert_sections');
-        return sectionsApi.post(sections);
-    }
+    // instanceService.insertSections = function(sections){
+    //     var sectionsApi = v2_api.all('fa/insert_sections');
+    //     return sectionsApi.post(sections);
+    // }
 
-    instanceService.insertLines = function(lines){
-        var linesApi = v2_api.all('fa/insert_lines');
-        return linesApi.post(lines);
-    }
+    // instanceService.insertLines = function(lines){
+    //     var linesApi = v2_api.all('fa/insert_lines');
+    //     return linesApi.post(lines);
+    // }
 
-    instanceService.insertLineDetails = function(lineDetails){
-        var lineDetailsApi = v2_api.all('fa/insert_details');
-        return linesDetailsApi.post(lineDetails);
-    }
+    // instanceService.insertLineDetails = function(lineDetails){
+    //     var lineDetailsApi = v2_api.all('fa/insert_details');
+    //     return linesDetailsApi.post(lineDetails);
+    // }
 
-    instanceService.insertLineComments = function(lineComments){
-        var lineCommentsApi = v2_api.all('fa/insert_comments');
-        return lineCommentsApi.post(lineComments);
+    // instanceService.insertLineComments = function(lineComments){
+    //     var lineCommentsApi = v2_api.all('fa/insert_comments');
+    //     return lineCommentsApi.post(lineComments);
+    // }
+
+    instanceService.insertFa = function(postData){
+        var faApi = v2_api.all('fa/insert');
+        return faApi.post(postData);
     }
 
     return instanceService;

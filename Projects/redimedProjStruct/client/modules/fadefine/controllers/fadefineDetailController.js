@@ -3,18 +3,24 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	//init header definition
 	$scope.header = angular.copy(FaHeaderModel);
+	$scope.header.ISENABLE = 1;
+	$scope.header.FA_NAME = "Untitled Function Assessment Header";
 	$scope.header.sections = [];
 	//init section definition
 	var section_init = angular.copy(FaSectionModel);
+	section_init.ISENABLE=1;
 	section_init.lines = [];
 	//init line definition
 	var line_init = angular.copy(FaLineModel);
+	line_init.ISENABLE = 1;
 	line_init.details = [];
 	line_init.comments = [];
 	//init line detail
 	var line_detail_init = angular.copy(FaLineDetailModel);
+	line_detail_init.ISENABLE = 1;
 	//init line comment
 	var line_comment_init = angular.copy(FaCommentModel);
+	line_comment_init.ISENABLE = 1;
 
 	//form init
 	$scope.oneAtATime = false;
@@ -185,7 +191,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	//INSERT DEFINITION
 	$scope.addFaDefinition = function(){
 		addOrder($scope.header).then(function(result){
-			FaDefineService.insertHeader($scope.header);
+			FaDefineService.insertFa($scope.header);
 		}, function(error){
 			console.log(error);
 		});
