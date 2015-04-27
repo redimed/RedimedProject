@@ -97,22 +97,6 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					select: function(){ doctorSelect(); }
 				}
 			}
-			scope.onChange = function(){
-				if (scope.outreferral.form.date_started !=null ) {
-					if (scope.outreferral.form.duration == null) {
-					scope.outreferral.form.expire_date = scope.outreferral.form.date_started;
-					}
-					else{
-					var a = parseInt(scope.outreferral.form.duration);
-					var date_started = ConfigService.convertToDB(scope.outreferral.form.date_started)
-					date_started = moment(date_started).format();
-					var b = moment(date_started).add(a,'months').toString();
-					var date = moment(b).format('YYYY-MM-DD');
-					date = ConfigService.convertToDate(date);
-					scope.outreferral.form.expire_date = date;
-					}
-				};
-			}
 
 			//INIT
 		}

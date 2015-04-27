@@ -5,7 +5,8 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 		restrict: 'EA',
 		scope: {
 			params: '=',
-			patient: '='
+			patient: '=',
+			options: '='
 		},
 		templateUrl: 'modules/appointment/directives/templates/add.html',
 		link: function(scope, elem, attrs){
@@ -36,30 +37,62 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 			}
 
 			var patientAdd = function(){
-				var modalInstance = $modal.open({
+				$modal.open({
 					templateUrl: 'patientAdd',
-					controller: function($scope, $modalInstance){
-						
+					controller: function($scope, $modalInstance, options, cal_id){
+						$scope.options = options;
+
+						//PARAMS
+						$scope.params = {
+							permission: {
+								create: true,
+								edit: false,
+								calendar: true
+							},
+							CAL_ID: cal_id
+						}
+						//END PARAMS
+
+						$scope.onsuccess = '';
+
+						$scope.$watch('onsuccess', function(patient_id){
+							if(patient_id !== '')
+								$modalInstance.close(patient_id);
+						})
 					},
 					size: 'lg',
 					resolve: {
-						/*app: function(){
-							return app;
+						options: function(){
+							return scope.options;
 						},
-						col: function(){
-							return col;
-						}*/
+						cal_id: function(){
+							return scope.params.col.CAL_ID;
+						}
 					}
-				});
+				})
 
-				modalInstance.result.then(function(status){
-					if(status === 'add')
-						scope.timetable.load();
+				.result.then(function(status){
+					if(status !== ''){
+						var postData = {
+							form: {},
+							Patient_id: null
+						}
+						postData.form = angular.copy(scope.appointment.form);
+						postData.form.ARR_TIME = ConfigService.convertToDB(postData.ARR_TIME);
+						postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.ATTEND_TIME);
+						postData.form.CAL_ID = scope.params.col.CAL_ID;
+						postData.Patient_id = status.Patient_id;
+
+						AppointmentModel.add(postData)
+						.then(function(response){
+							scope.patient = status;
+						}, function(error){})
+					}
 				})
 			}
 
 			var patientSelect = function(){
-				var modalInstance = $modal.open({
+				$modal.open({
 					templateUrl: 'patientList',
 					controller: function($scope, $modalInstance){
 						$scope.clickRow = function(row){
@@ -67,9 +100,9 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 						}
 					},
 					size: 'lg'
-				});
+				})
 
-				modalInstance.result.then(function(row){
+				.result.then(function(row){
 
 					$modal.open({
 						templateUrl: 'notifyAppointment',

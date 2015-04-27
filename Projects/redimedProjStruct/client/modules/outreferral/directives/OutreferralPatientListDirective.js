@@ -24,6 +24,21 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 	})
 })
 
+.controller('OutreferralPatientShowDialog', function($scope, $modalInstance, $stateParams, list){
+	$scope.outreferral = {
+		id: list.id,
+		patient_id: list.patient_id,
+		success: false
+	}
+
+	$scope.$watch('outreferral.success', function(success){
+		if(success){
+			$modalInstance.close('success');
+		}
+	})
+})
+
+
 .directive('outreferralPatientList', function(OutreferralModel, $modal, toastr, $stateParams){
 	return {
 		restrict: 'EA',
@@ -198,6 +213,25 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 				})
 			}
 
+			var show = function(list){
+				$modal.open({
+					templateUrl: 'dialogOutreferralShow',
+					controller: 'OutreferralPatientShowDialog',
+					size: 'lg',
+					resolve: {
+						list: function(){
+							return list;
+						}
+					}
+				})
+				.result.then(function(response){
+					if(response === 'success'){
+						toastr.success('Edit Successfully');
+						scope.outreferral.load();
+					}
+				})
+			}
+
 			scope.outreferral = {
 				dialog: {
 					add: function(){
@@ -208,6 +242,9 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 					},
 					edit: function(list){
 						edit(list);
+					},
+					show: function(list){
+						show(list);
 					}
 				},
 				load: function(){ load(); },

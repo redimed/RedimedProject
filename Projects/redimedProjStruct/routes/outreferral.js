@@ -11,4 +11,5 @@ app.post(url+'addPatient', OutreferralController.postAddPatient);
 app.post(url+'selectPatient', OutreferralController.postSelectPatient);
 app.post(url+'edit', OutreferralController.postEdit);
 app.post(url+'remove', OutreferralController.postRemove);
-app.post(url + 'updateEnable',OutreferralController.postUpdateEnable)
+app.post(url + 'updateEnable',OutreferralController.postUpdateEnable);
+app.post(url+'checkPatientCalendar', OutreferralController.postCheckPatientCalendar);

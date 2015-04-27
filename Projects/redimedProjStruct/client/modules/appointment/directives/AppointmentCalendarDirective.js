@@ -4,6 +4,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
+		scope: {
+			options: '='
+		},
 		link: function(scope, elem, attrs){
 			scope.showDropdown = function(patient, col){
 				$modal.open({
@@ -16,16 +19,20 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						}
 
 						$scope.outreferral = {
-							name: 'There is no referral'
+							name: 'It has Referral'
 						}
 
-						var refPostData = {CAL_ID: col.CAL_ID};
-						OutreferralModel.checkReferral(refPostData)
+						var refPostData = {CAL_ID: col.CAL_ID, patient_id: patient.Patient_id};
+
+						OutreferralModel.checkPatientCalendar(refPostData)
 						.then(function(response){
-							if(response.data && typeof response.data.length !== 'undefined')
-								if(response.data.length > 0)
-									$scope.outreferral.name = 'It exists referral';
-						}, function(error){})
+							if(response.data === 0){
+					            if(response.service.IS_REFERRAL === 1)
+					                $scope.outreferral.name = 'There is no referral';
+					            else
+					            	$scope.outreferral.name = 'This slot does not need referral';
+					        }
+						})
 
 						AlertModel.listFollowPatient(postData)
 						.then(function(response){
@@ -242,11 +249,22 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			var dialogAdd = function(app, col){
 				var modalInstance = $modal.open({
 					templateUrl: 'appointmentAdd',
-					controller: function($scope, $modalInstance, app){
+					controller: function($scope, $modalInstance, app, options){
 						$scope.appointment = {
 							app: app,
 							col: col
 						}
+
+						$scope.options = options;
+
+						//PARAMS
+						$scope.params = {
+							permission: {
+								create: true,
+								edit: false
+							}
+						}
+						//END PARAMS
 
 						$scope.patient = null;
 
@@ -263,6 +281,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						},
 						col: function(){
 							return col;
+						},
+						options: function(){
+							return scope.options;
 						}
 					}
 				});

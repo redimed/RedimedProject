@@ -4,6 +4,11 @@ angular.module("app.loggedIn.outreferral.model", [])
     var instanceService = {};
     var appApi = Restangular.all("api/meditek/v1/outreferral");
 
+    instanceService.checkPatientCalendar = function(data){
+        var detailApi = appApi.all("checkPatientCalendar");
+        return detailApi.post({data: data});
+    }
+
     instanceService.listFollowPatient = function (data) {
         var detailApi = appApi.all("listFollowPatient");
         return detailApi.post({data: data});

@@ -5,6 +5,29 @@ var S = require('string');
 var db = require('../models');
 
 module.exports = {
+    postDetail: function(req, res){
+        var postData = req.body.data;
+
+        var sql = knex
+                .select(
+                    'companies.Company_name',
+                    'cln_insurers.insurer_name'
+                )
+                .from('cln_patients')
+                .innerJoin('companies', 'cln_patients.company_id', 'companies.id')
+                .leftOuterJoin('cln_insurers', 'companies.Insurer', 'cln_insurers.id')
+                .where('cln_patients.Patient_id', postData.Patient_id)
+                .toString();
+
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
+
     postDisableCompany : function(req,res){
        var postData = req.body.data;
         if (postData.isEnable == 1) {

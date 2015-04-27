@@ -17,3 +17,4 @@ app.post(url + 'updateInsurer',CompanyController.postupdateInsurer);
 app.post(url + 'disableCompany',CompanyController.postDisableCompany);
 app.post(url + 'listNotFollow',CompanyController.postListNotFollow);
 app.post(url + 'AddlistNotFollow',CompanyController.postAddlistNotFollow);
+app.post(url + 'detail',CompanyController.postDetail);

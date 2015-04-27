@@ -37,14 +37,8 @@
 			<td>{{l.description}}</td>
 			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
-				<a ng-click="alert.dialog.edit(l)" ng-if="action.edit">
-					<i class="fa fa-pencil"></i>
-				</a>
-				&nbsp
-				<a>
-				   	<span  ng-if="l.isEnable"  ng-click="alert.disablePatientAlert(l)">Enable</span>
-					<span  ng-if="!l.isEnable"  ng-click="alert.disablePatientAlert(l)">Disable</span>
-				</a>
+				<button class="btn btn-sm btn-primary" ng-click="alert.dialog.edit(l)" ng-if="action.edit">Edit</button>
+				<button class="btn btn-sm btn-primary" ng-click="alert.dialog.remove(l)" ng-if="action.remove">Remove</button>
 			</td>
 		</tr>
 	</tbody>

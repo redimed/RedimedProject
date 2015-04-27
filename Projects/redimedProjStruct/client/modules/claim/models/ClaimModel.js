@@ -36,6 +36,8 @@ angular.module("app.loggedIn.claim.model", [])
 
     instanceService.one = function(data){
         var detailApi = appApi.all('one');
+        console.log(data);
+
         return detailApi.post({data: data});   
     }
 

@@ -5,6 +5,11 @@ angular.module("app.loggedIn.company.models", [])
    var instanceService = {};
     var mainApi = Restangular.all('api/meditek/v1/company');
 
+    instanceService.detail = function(data){
+        var instanceApi = mainApi.all('detail');
+        return instanceApi.post({data: data});
+    }
+
    instanceService.list = function(data){
         var instanceApi = mainApi.all('list');
         return instanceApi.post({data: data});

@@ -1,6 +1,6 @@
-angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
+angular.module('app.loggedIn.outreferral.directives.patientShow', [])
 
-.directive('outreferralPatientEdit', function($cookieStore, $modal, OutreferralModel, ConfigService){
+.directive('outreferralPatientShow', function($cookieStore, $modal, OutreferralModel, ConfigService){
 	return {
 		restrict: 'EA',
 		scope:{
@@ -8,7 +8,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 			id: '=',
 			success: '='
 		},
-		templateUrl: 'modules/outreferral/directives/templates/patientEdit.html',
+		templateUrl: 'modules/outreferral/directives/templates/patientShow.html',
 		link: function(scope, elem, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
 

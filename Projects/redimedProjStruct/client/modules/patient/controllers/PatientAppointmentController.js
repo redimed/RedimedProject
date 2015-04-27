@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.appointment.controller", [])
 
-.controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService){
+.controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService, OutreferralModel){
 	//Detail appt modules
     var patient_id =  $scope.patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
@@ -54,7 +54,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
     ];
     //End detail appt modules
 
-    ReceptionistService.apptDetail($scope.cal_id).then(function(response){
+    /*ReceptionistService.apptDetail($scope.cal_id).then(function(response){
         $scope.appointment = response.data;
         if(!response.data || !response.data.service) {
             return;
@@ -72,7 +72,18 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         if(response.data.length == 0) {
             $scope.warning_refferal = true;
         }
-    });
+    });*/
+
+    //CHECK OUTSIDE REFERRAL
+    var outPostData = {patient_id: $scope.patient_id, CAL_ID: $scope.cal_id};
+
+    OutreferralModel.checkPatientCalendar(outPostData)
+    .then(function(response){
+        if(response.data === 0){
+            if(response.service.IS_REFERRAL === 1)
+                $scope.warning_refferal = true;
+        }
+    }, function(error){})
 
     $scope.changeAppt = function(item) {
         $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: item.CAL_ID});

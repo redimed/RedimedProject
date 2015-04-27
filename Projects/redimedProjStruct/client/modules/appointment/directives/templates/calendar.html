@@ -56,7 +56,7 @@
 				<span ng-if="col.PATIENTS === 'ok'">
 					<span ng-repeat="patient in col.patients">
 						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)">
-							<span ng-style="{'font-style': !patient.Outreferral ? 'italic': 'normal'}">
+							<span>
 								{{patient.First_name}} {{patient.Sur_name}}
 							</span>
 							&nbsp;
@@ -88,13 +88,13 @@
 
 <script type="text/ng-template" id="appointmentAdd">
 	<div class="modal-body">	
-		<appointment-add params="appointment" patient="patient"></appointment-add>
+		<appointment-add params="appointment" patient="patient" options="options"></appointment-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="patientAdd">
-	<div class="modal-body">	
-		<patient-detail options="options"></patient-detail>
+	<div class="modal-body">
+		<patient-detail options="options" params="params" onsuccess="onsuccess" patient="onsuccess"></patient-detail>
 	</div>
 </script>
 
@@ -175,6 +175,7 @@
 
 <script type="text/ng-template" id="notifyAlert">
 	<div class="modal-body">
+		<p>{{outreferral.name}}</p>
 		<h4>Alert List</h4>
 		<ul>
 			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>

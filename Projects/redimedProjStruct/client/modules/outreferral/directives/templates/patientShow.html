@@ -7,7 +7,7 @@
 				Date Issued&nbsp;
 				<span class="required" style="color: red;">*</span>
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.date_issued" id="date_issued">
+			<input class="form-control input-sm" custom-date ng-model="outreferral.form.date_issued" id="date_issued" disabled>
 		</div>
 	</div>
 	<!-- END DATE ISSUED -->
@@ -19,7 +19,7 @@
 				Date Started&nbsp;
 				<span class="required" style="color: red;">*</span>
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.date_started" id="date_started">
+			<input class="form-control input-sm" custom-date ng-model="outreferral.form.date_started" id="date_started" disabled>
 		</div>
 	</div>
 	<!-- END DATE STARTED -->
@@ -31,7 +31,7 @@
 				Expire Date&nbsp;
 				<span class="required" style="color: red;">*</span>
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.expire_date" id="expire_date">
+			<input class="form-control input-sm" custom-date ng-model="outreferral.form.expire_date" id="expire_date" disabled>
 		</div>
 	</div>
 	<!-- END EXPIRE DATE -->
@@ -45,7 +45,7 @@
 				<span class="required" style="color: red;">*</span>
 			</label>
 			<br>
-			<button id="doctor_id" class="btn btn-secondary" ng-click="outdoctor.dialog.select()">
+			<button id="doctor_id" class="btn btn-secondary">
 				{{outdoctor.name}}
 			</button>
 		</div>
@@ -60,7 +60,7 @@
 				<span class="required" style="color: red;">*</span>
 			</label>
 			<br>
-			<button id="referred_to_doctor" class="btn btn-secondary" ng-click="referdoctor.dialog.select()">
+			<button id="referred_to_doctor" class="btn btn-secondary">
 				{{referdoctor.name}}
 			</button>
 		</div>
@@ -74,17 +74,11 @@
 				Duration&nbsp;
 				<span class="required" style="color: red;">*</span>
 			</label>
-			<input class="form-control input-sm" ng-model="outreferral.form.duration" id="duration">
+			<input class="form-control input-sm" ng-model="outreferral.form.duration" id="duration" readonly>
 		</div>
 	</div>
 	<!-- END DURATION -->
 
-</div>
-
-<div class="row">
-	<div class="col-md-12">
-		<button class="btn btn-primary" ng-click="outreferral.save()">Save</button>
-	</div>
 </div>
 
 <script type="text/ng-template" id="selectOutdoctorDialog">
