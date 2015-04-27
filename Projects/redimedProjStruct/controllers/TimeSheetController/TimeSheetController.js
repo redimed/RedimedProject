@@ -10,6 +10,7 @@ var Departments = db.Departments;
 var Location = db.timeLocation;
 var moment = require('moment');
 var CronJob = require('cron').CronJob;
+var chainer = new db.Sequelize.Utils.QueryChainer();
 module.exports = {
     //MODULE TREE
     LoadTreeTimeSheet: function(req, res) {
@@ -2057,7 +2058,204 @@ module.exports = {
                 });
                 return;
             });
-    }
+    },
+    UpLeaveServer: function(req, res) {
+        var info = req.body.info;
+        db.HrLeave.create({
+                application_date: info.application_date,
+                start_date: info.start_date,
+                finish_date: info.finish_date,
+                work_date: info.work_date,
+                standard: info.standard,
+                time_leave: info.time_leave_real,
+                reason_leave: info.reason_leave,
+                user_id: info.USER_ID,
+                status_id: info.statusID,
+                created_by: info.USER_ID
+            })
+            .success(function(result) {
+                if (result !== undefined && result !== null &&
+                    result !== undefined && result !== null &&
+                    result.dataValues !== undefined && result.dataValues !== null &&
+                    result.dataValues.leave_id !== undefined && result.dataValues.leave_id !== null) {
+                    for (var i = 0; i < info.infoTypeLeave.length; i++) {
+                        chainer.add(db.HrLeaveDetail.create({
+                            leave_id: result.dataValues.leave_id,
+                            leave_type_id: info.infoTypeLeave[i].leave_type_id,
+                            time_leave: info.infoTypeLeave[i].time_leave_real,
+                            other: i === 4 ? info.infoTypeLeave[i].type_other : null,
+                            reason_leave: info.infoTypeLeave[i].reason_leave,
+                            created_by: info.USER_ID
+                        }));
+                    }
+                }
+                chainer.runSerially()
+                    .success(function(resultAll) {
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+
+    // HISTORY LEAVE
+    LoadHistoryLeave: function(req, res) {
+        var searchObj = req.body.searchObj;
+        //select
+        var paramSelect = " AND ";
+        for (var key in searchObj.select) {
+            if (searchObj.select[key] !== undefined && searchObj.select[key] !== null && searchObj.select[key] !== "") {
+                paramSelect += key + " = " + searchObj.select[key] + ", ";
+            }
+        }
+        if (paramSelect.length !== 5) {
+            paramSelect = paramSelect.substring(0, paramSelect.length - 2);
+        } else {
+            paramSelect = "";
+        }
+        //end select
+        var queryGetAllMyLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.start_date, time_task_status.name, " +
+            "hr_leave.finish_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.leave_id, hr_leave.application_date FROM hr_employee " +
+            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
+            "WHERE hr_leave.user_id = ? " + paramSelect + " LIMIT ? OFFSET ?";
+        var queryCountAllMyLeave = "SELECT COUNT(*) as COUNT FROM hr_employee " +
+            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
+            "WHERE hr_leave.user_id = ? " + paramSelect + " LIMIT ? OFFSET ?";
+        var queryStatus = "SELECT time_task_status.task_status_id, time_task_status.name FROM time_task_status";
+        db.sequelize.query(queryGetAllMyLeave, null, {
+                raw: true
+            }, [
+                searchObj.USER_ID,
+                searchObj.limit,
+                searchObj.offset
+            ])
+            .success(function(result) {
+                db.sequelize.query(queryStatus)
+                    .success(function(resultStatus) {
+                        db.sequelize.query(queryCountAllMyLeave, null, {
+                                raw: true
+                            }, [
+                                searchObj.USER_ID,
+                                searchObj.limit,
+                                searchObj.offset
+                            ])
+                            .success(function(resultCount) {
+                                if (result.length === 0 && paramSelect === "") {
+                                    res.json({
+                                        status: "success",
+                                        result: null,
+                                        count: 0,
+                                        resultStatus: resultStatus
+                                    });
+                                    return;
+                                } else if (result !== undefined &&
+                                    result !== null &&
+                                    result.length !== 0) {
+                                    res.json({
+                                        status: "success",
+                                        result: result,
+                                        count: resultCount[0].COUNT,
+                                        resultStatus: resultStatus
+                                    });
+                                    return;
+                                } else if (result.length === 0 && paramSelect !== "") {
+                                    res.json({
+                                        status: "success",
+                                        result: [],
+                                        count: 0,
+                                        resultStatus: resultStatus
+                                    });
+                                    return;
+                                }
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "error",
+                                    result: null,
+                                    count: 0,
+                                    resultStatus: resultStatus
+                                });
+                                return;
+                            });
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: null,
+                            count: 0,
+                            resultStatus: resultStatus
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    // END HISTORY
+
+    // VIEW LEAVE
+    ViewLeave: function(req, res) {
+        var leave_id = req.body.leave_id;
+        var queryView = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, " +
+            "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " +
+            "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.other, " +
+            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " +
+            "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status " +
+            "FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
+            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
+            "WHERE hr_leave.leave_id = :leave_id";
+        db.sequelize.query(queryView, null, {
+                raw: true
+            }, {
+                leave_id: leave_id
+            })
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+    //END LEAVE
 };
 
 //FUNCTION GET WEEKNO

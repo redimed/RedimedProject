@@ -1196,6 +1196,7 @@ table.timetable-table td:last-child {
     border-top: 1.5px solid #ddd;
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .odd {
@@ -1319,19 +1320,20 @@ table.timetable-table td:last-child {
 .block-active {
     background-color: #7FBFF3;
 }
-.seperate-section{
-    height:5px;
+
+.seperate-section {
+    height: 5px;
 }
 
-[ng-drag].drag-over{
-    opacity:0.5;
+[ng-drag].drag-over {
+    opacity: 0.5;
 }
 
-[ng-drag].dragging{
-    opacity:0.5;
+[ng-drag].dragging {
+    opacity: 0.5;
 }
 
-[ng-drop].drag-enter{
+[ng-drop].drag-enter {
     border: dashed blue 20px;
     opacity: 0.5;
 }

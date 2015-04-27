@@ -69,37 +69,38 @@ module.exports = {
                                 console.log(err);
                             });
 
-                        chainer.runSerially().success(function(result) {
-                            if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
-                                //TRACKER
-                                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                                var idTaskWeek = result[0].dataValues.tasks_week_id;
-                                var tracKer = {
-                                    statusID: info.statusID,
-                                    USER_ID: info.userID,
-                                    idTaskWeek: idTaskWeek,
-                                    date: info.date
-                                };
-                                //CALL FUNCTION TRACKER
-                                TracKerTimeSheet(tracKer);
-                                //END
-                                //END TRACKER
+                        chainer.runSerially()
+                            .success(function(result) {
+                                if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
+                                    //TRACKER
+                                    info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                    var idTaskWeek = result[0].dataValues.tasks_week_id;
+                                    var tracKer = {
+                                        statusID: info.statusID,
+                                        USER_ID: info.userID,
+                                        idTaskWeek: idTaskWeek,
+                                        date: info.date
+                                    };
+                                    //CALL FUNCTION TRACKER
+                                    TracKerTimeSheet(tracKer);
+                                    //END
+                                    //END TRACKER
 
-                                //FUNCTION SEND MAIL
-                                if (info.statusID === 2) {
-                                    SendMailSubmit(req, res, info);
+                                    //FUNCTION SEND MAIL
+                                    if (info.statusID === 2) {
+                                        SendMailSubmit(req, res, info);
+                                    }
+                                    //END SEND MAIL
                                 }
-                                //END SEND MAIL
-                            }
-                            res.json({
-                                status: 'success'
+                                res.json({
+                                    status: 'success'
+                                });
+                            }).error(function(err) {
+                                res.json({
+                                    status: 'error'
+                                });
+                                console.log(err);
                             });
-                        }).error(function(err) {
-                            res.json({
-                                status: 'error'
-                            });
-                            console.log(err);
-                        });
                     })
                     .error(function(err) {
                         res.json({

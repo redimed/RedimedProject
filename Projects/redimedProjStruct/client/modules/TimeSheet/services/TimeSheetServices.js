@@ -244,6 +244,27 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             var LoadTypeLeave = api.one("TimeSheet/get-type-leave");
             return LoadTypeLeave.get({});
         };
+
+        TimeSheetService.UpLeaveServer = function(info) {
+            var UpLeaveServer = api.all("TimeSheet/post-leave-form");
+            return UpLeaveServer.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadHistoryLeave = function(searchObj) {
+            var LoadHistoryLeave = api.all("TimeSheet/post-history-leave");
+            return LoadHistoryLeave.post({
+                searchObj: searchObj
+            });
+        };
+
+        TimeSheetService.ViewLeave = function(idLeave) {
+            var ViewLeave = api.all("TimeSheet/post-view-leave");
+            return ViewLeave.post({
+                leave_id: idLeave
+            });
+        };
         //END LEAVE FORM
 
         return TimeSheetService;

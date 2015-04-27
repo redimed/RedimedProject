@@ -15,7 +15,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             TimeSheetService.LoadInfoEmployee($cookieStore.get('userInfo').id).then(function(response) {
                 if (response.status === "success") {
                     $scope.info.infoEmployee = angular.copy(response.result);
-                    $scope.info.date_application = new Date();
+                    $scope.info.application_date = new Date();
                 } else if (response.status === "error" || response.result.length === 0) {
                     $state.go("loggedIn.TimeSheetHome", null, {
                         "reload": true
@@ -36,18 +36,34 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             toastr.error("You not section!", "Error");
         }
         //END LOAD INFO
-
-        //CHECK MIN DATE FINISH
-        $scope.changeDateFinish = function(dateFinish) {
-            var m = moment(new Date(dateFinish));
-            $scope.minDateWork = m.add(1, 'day');
-        };
-        //END CHECK
-        $scope.clickSendServer = function(statusID) {
-            //SAVE LEAVE FORM IN SERVER
-            console.log($scope.info);
-            // END SAVE SERVER
-            $scope.isRequired = 1;
+        $scope.clickSendServer = function(statusID, formLeave) {
+            if (formLeave.$invalid) {
+                toastr.error("Please Input All Required Information!", "Error");
+                $scope.isRequired = 1;
+            } else {
+                //SAVE LEAVE FORM IN SERVER
+                $scope.info.statusID = statusID;
+                $scope.info.USER_ID = $cookieStore.get('userInfo').id;
+                TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
+                    if (response.status === "success") {
+                        toastr.success("Apply for leave success!", "Success");
+                        $state.go("loggedIn.LeaveHistory", null, {
+                            "reload": true
+                        });
+                    } else if (response.status === "error") {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Apply for leave fail!", "Error");
+                    } else {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Server not response!", "Error");
+                    }
+                });
+                // END SAVE SERVER
+            }
         };
 
         // LOAD TYPE LEAVE
@@ -72,7 +88,31 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             var total_time = 0;
             angular.forEach($scope.info.infoTypeLeave, function(time, index) {
                 total_time += StaffService.convertShowToFull($scope.info.infoTypeLeave[index].time_leave);
+                $scope.info.infoTypeLeave[index].time_leave_real = StaffService.convertShowToFull($scope.info.infoTypeLeave[index].time_leave);
             });
-            $scope.info.total_time = StaffService.convertFromFullToShow(total_time);
+            $scope.info.time_leave = StaffService.convertFromFullToShow(total_time);
+            $scope.info.time_leave_real = StaffService.convertShowToFull($scope.info.time_leave);
+        };
+
+        $scope.clickStandardChange = function(standardID) {
+            if (standardID === 1) {
+                if ($scope.info.infoTypeLeave !== undefined && $scope.info.infoTypeLeave !== null &&
+                    $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
+                    $scope.info.infoTypeLeave[0].time_leave.length === 5) {
+                    $scope.info.infoTypeLeave[0].time_leave = $scope.info.infoTypeLeave[0].time_leave.substr(1, $scope.info.infoTypeLeave[0].time_leave.length - 1);
+                    //CALL CHANGETIME
+                    $scope.changeTime();
+                    //END CALL
+                }
+            } else if (standardID === 0) {
+                if ($scope.info.infoTypeLeave !== undefined && $scope.info.infoTypeLeave !== null &&
+                    $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
+                    $scope.info.infoTypeLeave[0].time_leave.length === 4) {
+                    $scope.info.infoTypeLeave[0].time_leave = '0' + $scope.info.infoTypeLeave[0].time_leave;
+                    //CALL CHANGETIME
+                    $scope.changeTime();
+                    //END CALL
+                }
+            }
         };
     });

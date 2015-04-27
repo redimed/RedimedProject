@@ -16909,3 +16909,57 @@ Error at Fri Apr 24 2015 09:02:34 GMT+0700 (SE Asia Standard Time) : {"code":"PR
 Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
 Error at Fri Apr 24 2015 09:02:34 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
 
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Sun Apr 26 2015 09:07:58 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Sun Apr 26 2015 09:07:59 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Sun Apr 26 2015 09:07:59 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Apr 27 2015 08:11:46 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Apr 27 2015 08:11:46 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Apr 27 2015 08:11:46 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Apr 27 2015 08:13:23 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Apr 27 2015 08:13:23 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Apr 27 2015 08:13:23 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Apr 27 2015 08:15:34 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Apr 27 2015 08:15:34 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Apr 27 2015 08:15:34 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Apr 27 2015 08:19:07 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Apr 27 2015 08:19:07 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Apr 27 2015 08:19:08 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT TAX_ID, TAX_NAME FROM sys_taxes WHERE (ISENABLE = 1)
+Error at Mon Apr 27 2015 08:19:45 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT PREFIX, PREFIX_NAME FROM sys_prefix_headers WHERE (ISENABLE = 1) AND (FORM_CODE = 'item' )
+Error at Mon Apr 27 2015 08:19:45 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
+Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
+Error at Mon Apr 27 2015 08:19:45 GMT+0700 (SE Asia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
+
