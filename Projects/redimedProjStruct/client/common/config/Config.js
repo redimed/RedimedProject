@@ -523,6 +523,7 @@ angular.module('app.config', [])
             {id:6,label:'Above/Within/Below Normal Range'},
         ])
     .constant('VALUE_TYPE', [
+            {id:-1,label:'(no value)'},
             {id:0,label:'Textbox'},
             {id:1,label:'Simple checkbox'},
             {id:2,label:'Unable/Partial/Able'},

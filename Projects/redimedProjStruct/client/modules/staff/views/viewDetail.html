@@ -74,15 +74,15 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="(key,task) in tasks track by $index" ng-class="{'same': one == false ? getDay(task.date)%2==0 : false}">
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
-                                <td class="btn btn-xs" style="font-size:14px;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
-                                <td class="btn btn-xs" style="font-size:14px;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
-                                <td class="btn btn-xs" style="font-size:14px;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(task.units===null||task.units==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
+                                <td style="text-align:left;font-size:14px;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
+                                <td style="text-align:left;font-size:14px;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
+                                <td style="text-align:left;font-size:14px;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
+                                <td style="text-align:left;font-size:14px;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
+                                <td style="font-size:14px;text-align:center;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
+                                <td style="text-align:left;font-size:14px;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
+                                <td style="font-size:14px;text-align:center;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
+                                <td style="font-size:14px;text-align:center;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
+                                <td style="text-align:left;font-size:14px;">{{(task.units===null||task.units==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
                             </tr>
                         </tbody>
                     </table>

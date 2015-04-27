@@ -5,7 +5,8 @@ angular.module('app.loggedIn.mdtoutdoctor.add.directive', [])
 		restrict: 'EA',
 		scope: {
 			options: '=',
-			params: '='
+			params: '=',
+			success: '='
 		},
 		templateUrl: 'modules/mdtoutdoctor/directives/templates/add.html',
 		link: function(scope, element, attrs){
@@ -24,17 +25,8 @@ angular.module('app.loggedIn.mdtoutdoctor.add.directive', [])
 				var postData = angular.copy(scope.mdtOutdoctorMap);
 				mdtOutdoctorService.add(postData)
 				.then(function(data){
-		  				toastr.success('Add Successfully !!!', 'Success');
-						scope.mdtOutdoctorMap = {
-							provider_no:null,
-							name:null,
-							address:null,
-							suburb:null,
-							state:null,
-							phone:null
-						}
+		  				scope.success = true;
 		  			}, function(error){
-		  				toastr.success('Add errors !!!');
 		  				scope.errors = angular.copy(error.data.errors);
 		  				ConfigService.beforeError(scope.errors);
 		  			})

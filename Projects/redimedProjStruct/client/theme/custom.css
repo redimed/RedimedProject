@@ -1088,8 +1088,8 @@ table.timetable-table td:last-child {
 }
 
 .table-dynamic .table-bordered {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 1.5px solid #ddd;
+    border-bottom: 1.5px solid #ddd;
     font-size: 14px;
 }
 
@@ -1180,6 +1180,10 @@ table.timetable-table td:last-child {
     padding: 8px 10px;
 }
 
+.table-dynamic .table-bordered {
+    border-collapse: inherit;
+}
+
 .table-dynamic .table-bordered>thead>tr>th,
 .table-dynamic .table-bordered>tbody>tr>th,
 .table-dynamic .table-bordered>tfoot>tr>th,
@@ -1189,8 +1193,9 @@ table.timetable-table td:last-child {
     padding: 2px 5px 2px 5px;
     line-height: 1.42857143;
     vertical-align: top;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    border-top: 1.5px solid #ddd;
+    border-right: 1.5px solid #ddd;
+    -moz-user-select: none;
 }
 
 .odd {
@@ -1251,50 +1256,45 @@ table.timetable-table td:last-child {
 /*end tr chevron*/
 /*end css custom by thanh*/
 
-.table-div{
+.table-div {
     width: 100%;
 }
 
-.table-div .header{
-    width: 14%; 
+.table-div .header {
+    width: 14%;
     display: inline-block;
     font-weight: bold;
 }
 
-.table-div .table-div-row{
+.table-div .table-div-row {
     width: 100%;
     padding: 5 5;
 }
 
-.table-div .table-div-row .content{
+.table-div .table-div-row .content {
     width: 14%;
     display: inline-block;
 }
 
-.table-div .active{
+.table-div .active {
     background-color: #2BEABB;
 }
 
-.appointment{
+.appointment {}
 
-}
-
-.appointment .appointment-row{
-
-}
+.appointment .appointment-row {}
 
 .appointment .appointment-block-time,
 .appointment .appointment-block,
-.appointment .appointment-block-header
-{
+.appointment .appointment-block-header {
     display: inline-block;
 }
 
-.appointment .appointment-block-time{
+.appointment .appointment-block-time {
     width: 100px;
 }
 
-.appointment .appointment-block{
+.appointment .appointment-block {
     width: 150px;
     font-size: 11px;
     height: 70px;
@@ -1303,20 +1303,20 @@ table.timetable-table td:last-child {
     color: white;
 }
 
-.appointment .appointment-block-header{
+.appointment .appointment-block-header {
     width: 150px;
     font-weight: bold;
 }
 
-.appointment .appointment-block a{
+.appointment .appointment-block a {
     color: white;
 }
 
-.block-transparent{
+.block-transparent {
     background-color: #F9F9F9;
 }
 
-.block-active{
+.block-active {
     background-color: #7FBFF3;
 }
 .seperate-section{

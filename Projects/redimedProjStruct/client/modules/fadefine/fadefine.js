@@ -1,5 +1,6 @@
 angular.module('app.loggedIn.fadefine',[
-	'app.loggedIn.fadefine.controller'
+	'app.loggedIn.fadefine.controller',
+	'app.loggedIn.fadefine.service'
 ])
 .config(function($stateProvider){
 	$stateProvider

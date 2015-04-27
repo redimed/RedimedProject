@@ -12,14 +12,17 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 				angular.element("#"+scope.isClose).fadeOut();
 			}
 			//END POPUP
-			scope.addCompany = function(size){
+			scope.OutSideDoctor = function(size){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/mdtoutdoctor/dialogs/templates/add.html',
 			      controller: 'MdtoutdoctorAdddialog',
 			      size :''
 			    })
-			    .result.then(function(row){
-			    	loadList();
+			    .result.then(function(response){
+			    	if(response === 'success'){
+						toastr.success('Add Successfully');
+						loadList();
+					}   	
 			    })
 			}
 			var init = function(){

@@ -65,11 +65,11 @@
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result track by $index" style="cursor: pointer;font-size:14px; " ng-dblclick="view(l)">
-                        <td class="btn btn-xs" style="text-align:left;font-size:14px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd-MM-yyyy"}}</span></td>
-                        <td class="btn btn-xs" style="font-size:14px;">{{getFortMatTimeCharge(l.time_charge)}}</td>
-                        <td class="btn btn-xs" style="text-align:left;font-size:14px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
+                        <td style="text-align:left;font-size:14px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd-MM-yyyy"}}</span></td>
+                        <td style="font-size:14px; text-align:center;">{{getFortMatTimeCharge(l.time_charge)}}</td>
+                        <td style="text-align:left;font-size:14px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{l.name}}</td>
-                        <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{(l.comments===null||l.comments==="")?"":l.comments}}</span></td>
+                        <td style="text-align:left;font-size:14px;">{{(l.comments===null||l.comments==="")?"":l.comments}}</span></td>
                     </tr>
                 </tbody>
             </table>
