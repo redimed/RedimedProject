@@ -24,7 +24,7 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 				Industry :'',
 				Addr:'',
 				country:'',
-				//listId:scope.listId
+				listId:scope.listId
 			}
 			var load = function(){
 				scope.company.loading = true;

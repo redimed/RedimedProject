@@ -497,9 +497,16 @@ module.exports = {
     },
     postListNotFollow :function(req,res){
         var postData = req.body.data;
+        var company_array = [];
+        if (postData.listId !=null) {
+             _.forEach(postData.listId, function(id){
+            company_array.push(id.id);
+            })
+        };
         var sql = knex
         .select('*')
         .from('companies')
+        .whereNotIn('companies.id',company_array)
         .limit(postData.limit)
         .offset(postData.offset)
         .toString();
