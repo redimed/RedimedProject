@@ -1,9 +1,14 @@
 angular.module("app.sponsor1.emergency.controller",[])
-.controller('rlobEmergencyController',function($scope,FileUploader,rlobService,toastr){
-	
+.controller('rlobEmergencyController',function($scope,FileUploader,rlobService,toastr,$http){
+	   // $scope.geoLocation();
        $scope.geoLocation = function(){
-            window.navigator.geolocation.getCurrentPosition(function(position) {
-                $scope.$apply(function() {
+            var map = new GMaps({
+                div:'#map',
+                lat:0,
+                lng:0
+            })
+            GMaps.geolocate({
+                success: function(position) {
                     $scope.Lng = position.coords.longitude;
                     $scope.Lat = position.coords.latitude;
                     // console.log(position.coords);
@@ -15,11 +20,21 @@ angular.module("app.sponsor1.emergency.controller",[])
                         lng: $scope.Lng,
                         icon: 'http://www.icon100.com/up/4144/32/102-map-marker.png'
                     });
+                    $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+$scope.Lat+','+ $scope.Lng+'&sensor=true').then(function(data){
+
+                        $scope.address = data.data.results[0].formatted_address;
+                        console.log(data.data);
+ 
+                    });
                     angular.element('#map').css('opacity','1');
                     angular.element('#dob-confix').css('margin-top','0px');
-                });
-            }, function(error) {
-                alert(error);
+                },
+                error: function(error) {
+                    alert('Geolocation failed: '+error.message);
+                },
+                not_supported: function() {
+                    alert("Your browser does not support geolocation");
+                }
             });
         }
        var uploader = $scope.uploader = new FileUploader();
@@ -135,21 +150,15 @@ angular.module("app.sponsor1.emergency.controller",[])
             };
             
         }
-        // $scope.geoLocation();
-        $scope.Lat = -12.043333;
-        $scope.Lng = -77.028333;
-        var map = new GMaps({
-            div:'#map',
-            lat: $scope.Lat,
-            lng: $scope.Lng
-        })
-        map.addMarker({
-            icon: 'http://www.icon100.com/up/4144/32/102-map-marker.png',
-            lat: $scope.Lat,
-            lng: $scope.Lng,
-        });
+        
         $scope.updateMap=function()
         {
+            var map = new GMaps({
+                div:'#map',
+                lat: 0,
+                lng: 0
+            })
+            map.removeMarker();
             GMaps.geocode({
             address: $scope.address,
                 callback: function(results, status) {
@@ -158,8 +167,6 @@ angular.module("app.sponsor1.emergency.controller",[])
                         map.setCenter(latlng.lat(), latlng.lng());
                         $scope.Lat = latlng.lat();
                         $scope.Lng = latlng.lng();
-                        console.log($scope.Lat);
-                        console.log($scope.Lng);
                         map.addMarker({
                             lat: $scope.Lat,
                             lng: $scope.Lng,
@@ -168,7 +175,6 @@ angular.module("app.sponsor1.emergency.controller",[])
                                 content: '<p>'+$scope.address+'</p>'
                             }
                         });
-                        // angular.element('#map1').css('opacity','1');
                         angular.element('#map').css('opacity','1');
                         angular.element('#dob-confix').css('margin-top','0px');
                     }

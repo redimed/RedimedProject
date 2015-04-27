@@ -55,5 +55,40 @@ angular.module("app.loggedIn.timetable.model", [])
         return detailApi.post({data: data});   
     }
 
+    //tan add
+    instanceService.beforeGenerateCalendar=function(data)
+    {
+        var detailApi = appApi.all("beforeGenerateCalendar");
+        return detailApi.post({data: data});   
+    }
+
+    //tan add
+    instanceService.deleteAllCalendarInDate=function(data)
+    {
+        var detailApi = appApi.all("deleteAllCalendarInDate");
+        return detailApi.post({data: data});   
+    }
+
+    //tan add
+    instanceService.beforeDeleteAllCalendarInDate=function(data)
+    {
+        var detailApi = appApi.all("beforeDeleteAllCalendarInDate");
+        return detailApi.post({data: data});   
+    }
+
+    //tan add
+    instanceService.deleteSelectedCalendar=function(calId)
+    {
+        var detailApi = appApi.all("deleteSelectedCalendar");
+        return detailApi.post({calId: calId});   
+    }
+
+    //tan add
+    instanceService.beforeDeleteSelectedCalendar=function(calId)
+    {
+        var detailApi = appApi.all("beforeDeleteSelectedCalendar");
+        return detailApi.post({calId: calId});   
+    }
+    
     return instanceService;
 })

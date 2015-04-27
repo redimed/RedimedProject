@@ -4,8 +4,75 @@ var db = require('../models');
 var S = require('string');
 var moment = require('moment');
 var _ = require('lodash');
+var kiss=require('./kissUtilsController');
 
 module.exports = {
+
+	/**
+	 * Kiem tra xem trong khoang fromDate den toDate co calendar nao da duoc booking hay chua
+	 * tannv.dts@gmail.com
+	 */
+	beforePostLeaveCal:function(req,res)
+	{
+		var postData = req.body.data;
+		var errors = [];
+		var required = [	
+			{field: 'from_date', message: 'From Date required'},
+			{field: 'to_date', message: 'To Date required'}
+		]
+		_.forIn(postData, function(value, field){
+			_.forEach(required, function(field_error){
+				if(field_error.field === field && S(value).isEmpty()){
+					errors.push(field_error);
+					return;
+				}
+			})
+		})
+
+		var from_date = new Date(postData.from_date);
+  		var to_date = new Date(postData.to_date);
+  		if(postData.from_date && postData.to_date){
+		   if(moment(to_date).diff(moment(from_date),'days')<0)
+		   {
+				errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
+				errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
+		   }
+  		}
+
+		if(errors.length > 0){
+			res.status(500).json({errors: errors});
+			return;
+		}	
+
+		//tan add and modify
+		if(!kiss.checkListData(postData.doctor_id))
+		{
+			kiss.exlog("postLeaveCal","Loi data truyen den");
+			res.status(500).json({status: kiss.status.fail});
+			return;
+		}
+		var sql=
+			" SELECT calendar.*,CONCAT(patient.`First_name`,' ',patient.`Sur_name`) AS PATIENT_FULL_NAME,   "+
+			" service.`SERVICE_NAME`                                                                        "+
+			" FROM `cln_appointment_calendar` calendar                                                      "+
+			" INNER JOIN `cln_appt_patients` appt ON calendar.`CAL_ID`=appt.`CAL_ID`                        "+
+			" INNER JOIN `cln_patients` patient ON appt.`Patient_id`=patient.`Patient_id`                   "+
+			" INNER JOIN `sys_services` service ON calendar.`SERVICE_ID`=service.`SERVICE_ID`               "+
+			" WHERE DATE(`FROM_TIME`)>=? AND DATE(`FROM_TIME`)<=?                                           "+
+			" AND `DOCTOR_ID`=?                                                                             ";
+
+		kiss.executeQuery(req,sql,[moment(from_date).format("YYYY/MM/DD"),moment(to_date).format("YYYY/MM/DD"),postData.doctor_id],function(rows){
+			res.json({status:kiss.status.success,data:rows});
+		},function(err){
+			kiss.exlog("postLeaveCal","Loi truy van xoa",err);
+			res.status(500).json({status:kiss.status.fail});
+		},true);
+	},
+
+	/**
+	 * Leave appointment calendar : xoa calendar tu ngay den ngay
+	 * modify by tannv.dts@gmail.com
+	 */
 	postLeaveCal:function(req,res){
         var postData = req.body.data;
 		var errors = [];
@@ -21,13 +88,14 @@ module.exports = {
 				}
 			})
 		})
+
 		var from_date = new Date(postData.from_date);
   		var to_date = new Date(postData.to_date);
   		if(postData.from_date && postData.to_date){
-		   if(from_date > to_date)
+		   if(moment(to_date).diff(moment(from_date),'days')<0)
 		   {
-				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
-				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
+				errors.push({field: 'from_date', message: 'From Date must be smaller than or equal To Date'});
+				errors.push({field: 'to_date', message: 'To Date must be larger than or equal From Date'});
 		   }
   		}
 
@@ -35,20 +103,27 @@ module.exports = {
 			res.status(500).json({errors: errors});
 			return;
 		}	
-        var sql = knex('cln_appointment_calendar')
-            .where('doctor_id', postData.doctor_id)
-            .whereRaw('date(FROM_TIME) >= '+'\''+postData.from_date+'\'')
-            .whereRaw('date(TO_TIME) <= '+'\''+postData.to_date+'\'')
-            .del()
-            .toString();
-        db.sequelize.query(sql)
-        .success(function(del){
-            res.json({data: del ,sql:sql});
-        })
-        .error(function(error){
-            res.json(500, {error: error});
-        }) 
-    	},
+
+		//tan add and modify
+		if(!kiss.checkListData(postData.doctor_id))
+		{
+			kiss.exlog("postLeaveCal","Loi data truyen den");
+			res.status(500).json({status: kiss.status.fail});
+			return;
+		}
+		var sql=
+			" DELETE FROM `cln_appointment_calendar`                  "+
+			" WHERE DATE(`FROM_TIME`)>=? AND DATE(`FROM_TIME`)<=?     "+
+			" AND `DOCTOR_ID`=?                                       ";
+
+		kiss.executeQuery(req,sql,[moment(from_date).format("YYYY/MM/DD"),moment(to_date).format("YYYY/MM/DD"),postData.doctor_id],function(result){
+			res.json({status:kiss.status.success});
+		},function(err){
+			kiss.exlog("postLeaveCal","Loi truy van xoa",err);
+			res.status(500).json({status:kiss.status.fail});
+		});
+    },
+
 	/*postByDoctor: function(req, res){
 		var postData = req.body.data;
 

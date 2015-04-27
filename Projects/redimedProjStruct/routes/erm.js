@@ -42,6 +42,13 @@ app.post('/api/erm/appointment/delete', AppointmentController.bookingDelete);
 app.post('/api/erm/appointment/overview', AppointmentController.overviewAppointmentCalendar);
 app.post('/api/erm/appointment/booking', AppointmentController.booking);
 app.post('/api/erm/appointment/getById', AppointmentController.getById);
+/*
+phanquocchien.c1109g@gmail.com
+insert casual calendar
+ */
+app.post('/api/erm/appointment/insert-casual-calendar', AppointmentController.insertCasualCalendar);
+//phan quoc chien
+app.post('/api/erm/appointment/edit-casual-calendar', AppointmentController.editCasualCalendar);
 
 
 //SYSTEM

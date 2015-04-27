@@ -8,8 +8,91 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 			var load = function(){
 				TimetableModel.list({doctor_id: $stateParams.doctorId}).then(function(response){
 					scope.timetable.list = response.data;
+					/**
+					 * Tao group data
+					 * tannv.dts@gmail.com
+					 */
+					scope.displayInRow={};
+					for(var i=0;i<scope.timetable.list.length;i++)
+					{
+						var item=scope.timetable.list[i];
+						if(!scope.displayInRow[item.day_of_week_value])
+						{
+							scope.displayInRow[item.day_of_week_value]={
+								value:item.cal_header_df_id,
+								services:{}
+							}
 
+						}
+						if(!scope.displayInRow[item.day_of_week_value].services[item.service_id])
+						{
+							scope.displayInRow[item.day_of_week_value].services[item.service_id]=item.cal_header_df_id;
+						}
+						
+					}
 
+					/*temp={DAYOFWEEK_ITEMS:[]};
+
+					for(var i=0;i<scope.timetable.list.length;i++)
+					{
+						var item=scope.timetable.list[i];
+						if(!temp[item.day_of_week_value])
+						{
+							temp[item.day_of_week_value]={SERVICE_ITEMS:[]};
+							temp.DAYOFWEEK_ITEMS.push({
+								day_of_week_value:item.day_of_week_value,
+								day_of_Week:item.day_of_Week
+							});
+						
+						}
+						if(!temp[item.day_of_week_value][item.service_id])
+						{
+							temp[item.day_of_week_value][item.service_id]={DEFINE_ITEMS:[]};
+							temp[item.day_of_week_value].SERVICE_ITEMS.push({
+								service_id:item.service_id,
+								SERVICE_NAME:item.SERVICE_NAME
+							});
+						}
+
+						if(!temp[item.day_of_week_value][item.service_id][item.cal_header_df_id])
+						{
+							temp[item.day_of_week_value][item.service_id][item.cal_header_df_id]={};
+							temp[item.day_of_week_value][item.service_id].DEFINE_ITEMS.push({
+								cal_header_df_id:item.cal_header_df_id,
+								doctor_id:item.doctor_id,
+								service_id:item.service_id,
+								day_of_Week:item.day_of_Week,
+								from_time:item.from_time,
+								to_time:item.to_time,
+								from_date:item.from_date,
+								to_date:item.to_date,
+								appt_interval:item.appt_interval,
+								isenable:item.isenable,
+								Creation_date:item.Creation_date,
+								SERVICE_NAME:item.SERVICE_NAME
+							});
+						}
+					}
+					var timeTableData=[]
+					for(var i=0;i<temp.DAYOFWEEK_ITEMS.length;i++)
+					{
+						var dayOfWeekItem=temp.DAYOFWEEK_ITEMS[i];
+						dayOfWeekItem.SERVICE_ITEMS=[];
+						for(var j=0;j<temp[dayOfWeekItem.day_of_week_value].SERVICE_ITEMS.length;j++)
+						{
+							var serviceItem=temp[dayOfWeekItem.day_of_week_value].SERVICE_ITEMS[j];
+							serviceItem.DEFINE_ITEMS=[];
+							dayOfWeekItem.SERVICE_ITEMS.push(serviceItem);
+							for(var k=0;k<temp[dayOfWeekItem.day_of_week_value][serviceItem.service_id].DEFINE_ITEMS.length;k++)
+							{
+								var defineItem=temp[dayOfWeekItem.day_of_week_value][serviceItem.service_id].DEFINE_ITEMS[k];
+								serviceItem.DEFINE_ITEMS.push(defineItem);
+							}
+						}
+						timeTableData.push(dayOfWeekItem);
+					}
+					scope.timeTableData=timeTableData;*/
+					//-----------------------------------------------
 					/* LOAD SITE */
 					scope.site.load();
 					/* END LOAD SITE */
@@ -123,9 +206,17 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 
 				TimetableModel.createTimetable(postData)
 				.then(function(response){
-					toastr.success('Timetable is created');
-				}, function(error){
+					if(response.status=="success")
+					{
+						toastr.success('Timetable is created');
+					}
+					else
+					{
+						toastr.success('Create timetable fail.');
+					}
 					
+				}, function(error){
+					toastr.error('Create timetable fail.');
 				})
 			}//end create Timetable
 
@@ -153,11 +244,31 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 			}
 
 			var openTimetable = function(row){
+				
 				row.clinical_dept_id = scope.doctor.item.CLINICAL_DEPT_ID;
-
 				var modalInstance = $modal.open({
 					templateUrl: 'notifyToSaveTimetable',
 					controller: function($scope, row, $modalInstance){
+						//tan add
+						//-----------------------------------------------------
+						$scope.bookedList=[];
+						TimetableModel.beforeGenerateCalendar(row)
+						.then(function(data){
+							
+							if(data.status=='success')
+							{
+
+								$scope.bookedList=data.data;
+							}
+							else
+							{
+								toastr.error('Error when check data.');
+							}
+						},function(err){
+							toastr.error('Error when check data.');
+						})
+						//------------------------------------------------------
+
 						$scope.ok = function(){
 							$modalInstance.close(row);
 						}
@@ -166,7 +277,7 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 							$modalInstance.dismiss('cancel');
 						}
 					},
-					size: 'sm',
+					// size: 'sm',
 					resolve: {
 						row: function(){
 							return row;
@@ -178,6 +289,8 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 					if(row)
 						scope.timetable.saveTimetable(row);
 				})
+				//---------------------------------------------------------------
+				
 
 			}
 
@@ -238,10 +351,17 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 					if(id){
 						TimetableModel.siteRemove({id: id})
 						.then(function(response){
-							toastr.success('Remove Successfully');
-							scope.timetable.load();
+							if(response.status=='success')
+							{
+								toastr.success('Remove Successfully.');
+								scope.timetable.load();
+							}
+							else
+							{
+								toastr.error("Remove fail.")
+							}
 						}, function(error){
-
+							toastr.error('Remove fail.');
 						})
 					}
 				})
@@ -292,3 +412,4 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 		}		
 	}//end return
 })
+

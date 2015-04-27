@@ -21,3 +21,41 @@
         </div>
     </div>
 </div>
+
+
+<!-- TANNV.DTS@GMAIL.COM ADD COMPONENT -->
+<script type="text/ng-template" id="notifyToLeaveCalendar">
+    <div class="modal-body">
+        <div ng-show="bookedList.length>0">
+            <p>
+                List appointment calendar have been booked:
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>CAL ID</th>
+                        <th>APPOINTMENT TIME</th>
+                        <th>SERVICE</th>
+                        <th>PATIENT NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="booked in bookedList">
+                        <td>{{booked.CAL_ID}}</td>
+                        <td>{{booked.FROM_TIME|date:'HH:mm dd-MM-yyyy'}}</td>
+                        <td>{{booked.SERVICE_NAME}}</td>
+                        <td>{{booked.PATIENT_FULL_NAME}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p ng-hide="bookedList.length>0">Do you want to delete all calendar from {{fromDateDisplay }} to {{toDateDisplay}}?</p>
+        <p ng-show="bookedList.length>0">Do you want to delete all booked appointments and delete all calendar from {{fromDateDisplay}} to {{toDateDisplay}}?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<!-- --------------------------------- -->

@@ -15,3 +15,15 @@ app.post(url+'siteRemove', TimetableController.postSiteRemove);
 app.post(url+'createTimetable', TimetableController.postCreateTimetable);
 
 app.post(site+'list', TimetableController.postRedimedsiteList);
+
+//tannv.dts@gmail.com
+app.post(url+'beforeGenerateCalendar', TimetableController.beforeGenerateCalendar);
+//tannv.dts@gmail.com
+app.post(url+'deleteAllCalendarInDate', TimetableController.deleteAllCalendarInDate);
+//tannv.dts@gmail.com
+app.post(url+'beforeDeleteAllCalendarInDate', TimetableController.beforeDeleteAllCalendarInDate);
+//tannv.dts@gmail.com
+app.post(url+'deleteSelectedCalendar', TimetableController.deleteSelectedCalendar);
+//tannv.dts@gmail.com
+app.post(url+'beforeDeleteSelectedCalendar', TimetableController.beforeDeleteSelectedCalendar);
+
