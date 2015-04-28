@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.list.controller', [])
-.controller('FaDefineListController', function($scope){
+.controller('FaDefineListController', function($scope, FaDefineService, toastr){
 	$scope.fa_panel={};
 
 	var selectedID = null;
@@ -32,6 +32,18 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
                             // $scope.medicineEditForm.open();
                     }
                 },
+                {
+                    class: 'fa fa-remove', title: 'Remove',
+                    callback: function(item){
+                        FaDefineService.deleteFa(item.FA_ID).then(function(result){
+                            if(result.status==='success'){
+                                toastr.success('Delete functional assessment definition successfully!','Delete successfully!');
+                                $scope.fa_panel.reload();
+                            }
+                            else toastr.error('Delete functional assessment definition failed','Delete failed!');
+                        })
+                    }
+                }
             ],
 		}
 	}

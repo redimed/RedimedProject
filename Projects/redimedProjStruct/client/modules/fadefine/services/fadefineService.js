@@ -35,6 +35,11 @@ angular.module('app.loggedIn.fadefine.service',[])
         return faApi.post(postData);
     }
 
+    instanceService.deleteFa = function(headerId){
+        var deleteFaApi = v2_api.all('fa/delete');
+        return deleteFaApi.post({id: headerId});
+    }
+
     return instanceService;
 });
 

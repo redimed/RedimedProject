@@ -171,5 +171,73 @@ module.exports = {
 			console.log("insert failed due to unexpected error", error);
 			res.json(500,{status:'error'});
 		})
+	},
+
+
+	postDelete: function(req,res){
+		var deleteHeaderId = req.body.id;
+		//remove header
+		knex('sys_fa_df_headers')
+		.where('FA_ID', deleteHeaderId)
+		.del()
+		.then(function(delHeaderRes){
+			//remove section
+			knex('sys_fa_df_sections')
+			.where('FA_ID', deleteHeaderId)
+			.del()
+			.then(function(delSectionRes){
+				//get list id of line
+				knex
+				.select('LINE_ID')
+				.from('sys_fa_df_lines')
+				.where('FA_ID', deleteHeaderId)
+				.then(function(selectLineRes){
+					var lineIDList = [];
+					selectLineRes.forEach(function(line){
+						lineIDList.push(line.LINE_ID);
+						if(selectLineRes.indexOf(line) === selectLineRes.length - 1){
+							//remove lines
+							knex('sys_fa_df_lines')
+							.where('FA_ID', deleteHeaderId)
+							.del()
+							.then(function(deleteLineRes){
+								//remove detail
+								knex('sys_fa_df_line_details')
+								.whereIn('LINE_ID', lineIDList)
+								.del()
+								.then(function(delDetailRes){
+									//remove comments
+									knex('sys_fa_df_comments')
+									.whereIn('LINE_ID', lineIDList)
+									.del()
+									.then(function(delCommentsRes){
+										res.json({status:'success'})
+									})
+									.catch(function(error){
+										res.json(500,{status:'error', message:error});
+									})
+								})
+								.catch(function(error){
+									res.json(500,{status:'error', message:error});
+								})
+							})
+							.catch(function(error){
+								res.json(500,{status:'error', message:error});
+							})
+						}
+					})
+							
+				})
+				.catch(function(error){
+					res.json(500,{status:'error', message:error});
+				})
+			})
+			.catch(function(error){
+				res.json(500,{status:'error', message:error});
+			})
+		})
+		.catch(function(error){
+			res.json(500,{status:'error', message:error});
+		})
 	}
 }
