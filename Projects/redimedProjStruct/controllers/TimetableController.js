@@ -360,7 +360,8 @@ module.exports = {
 
 		/* FROM DATE, TO DATE NOT LARGER, SMALLER */
 		if(postData.from_date && postData.to_date){
-			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			// if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			if(moment(postData.from_date).diff(moment(postData.to_date))<0){
 				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
 				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
 			}
@@ -441,7 +442,8 @@ module.exports = {
 
 		/* FROM DATE, TO DATE NOT LARGER, SMALLER */
 		if(postData.from_date && postData.to_date){
-			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			// if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			if(moment(postData.to_date).diff(moment(postData.from_date))<0){
 				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
 				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
 			}
