@@ -1,0 +1,74 @@
+[
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 08:00",
+    "TO_TIME": "2015/06/09 08:30",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 08:30",
+    "TO_TIME": "2015/06/09 09:00",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 09:00",
+    "TO_TIME": "2015/06/09 09:30",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 09:30",
+    "TO_TIME": "2015/06/09 10:00",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 10:00",
+    "TO_TIME": "2015/06/09 10:30",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 10:30",
+    "TO_TIME": "2015/06/09 11:00",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 11:00",
+    "TO_TIME": "2015/06/09 11:30",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 11:30",
+    "TO_TIME": "2015/06/09 12:00",
+    "SITE_ID": 4
+  },
+  {
+    "DOCTOR_ID": 19,
+    "SERVICE_ID": 7,
+    "CLINICAL_DEPT_ID": 2,
+    "FROM_TIME": "2015/06/09 12:00",
+    "TO_TIME": "2015/06/09 12:30",
+    "SITE_ID": 4
+  }
+]
