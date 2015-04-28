@@ -2298,12 +2298,14 @@ module.exports = {
             "INNER JOIN hr_employee ON hr_employee.employee_id " +
             "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
             "WHERE hr_leave.leave_id = :leaveID";
-        var queryLoadLeaveDetailEdit = "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, hr_leave_detail.reason_leave, " +
-            "hr_leave_detail.other " +
+        var queryLoadLeaveDetailEdit = "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " +
+            "hr_leave_detail.reason_leave, " +
+            "hr_leave_detail.other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " +
             "FROM hr_employee " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
             "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
             "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
+            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " +
             "WHERE hr_leave.leave_id = :leaveID";
         db.sequelize.query(queryLoadLeaveEdit, null, {
                 raw: true
@@ -2345,6 +2347,25 @@ module.exports = {
             });
     },
     //END LOAD EDIT
+
+    //UPDATE
+    UpdateLeave: function(req, res) {
+        var info = req.body.info;
+        db.HrLeave.update({
+
+            })
+            .success(function(result) {
+
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    //END UPDATE
 };
 
 //FUNCTION GET WEEKNO

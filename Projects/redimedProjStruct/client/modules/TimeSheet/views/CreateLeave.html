@@ -14,7 +14,8 @@
             </li>
             <li>
                 <a ui-sref="loggedIn.CreateLeave">
-                    <span style="font-size:15px;font-weight:bold;">Apply for Leave</span>
+                    <span ng-if="isEdit===false" style="font-size:15px;font-weight:bold;">Apply for Leave</span>
+                    <span ng-if="isEdit===true" style="font-size:15px;font-weight:bold;">Edit for Leave</span>
                 </a>
                 <i class="fa fa-angle-right"></i>
             </li>
@@ -25,7 +26,8 @@
         <div class="portlet-title">
             <div class="caption" style="font-size:15px; font-weight:bold;">
                 <i class="fa fa-pencil"></i>
-                <span>Apply for Leave</span>
+                <span ng-if="isEdit===false">Apply for Leave</span>
+                <span ng-if="isEdit===true">Edit for Leave</span>
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -86,7 +88,7 @@
                             </td>
                             <td style="width:80%;font-size:14px; ">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.start_date.$error.required}" style="width:202px;">
-                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="true" />
+                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="isRequired===1 && formLeave.start_date.$error.required" />
                                 </div>
                             </td>
                         </tr>
@@ -96,7 +98,7 @@
                             </td>
                             <td style="width:80%;font-size:14px; ">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.finish_date.$error.required}" style="width:202px;">
-                                    <input ng-model="info.finish_date" type="text" class="form-control input-sm" name="finish_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.finish_date" min-date="info.start_date" close-text="Close" style="font-size:14px;width:200px; margin-bottom:0px; color:#31708f;" ng-change="changeDateFinish(info.finish_date)" ng-required="true" />
+                                    <input ng-model="info.finish_date" type="text" class="form-control input-sm" name="finish_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.finish_date" min-date="info.start_date" close-text="Close" style="font-size:14px;width:200px; margin-bottom:0px; color:#31708f;" ng-change="changeDateFinish(info.finish_date)" ng-required="isRequired===1 && formLeave.finish_date.$error.required" />
                                 </div>
                             </td>
                         </tr>
@@ -106,7 +108,7 @@
                             </td>
                             <td style="width:70%;font-size:14px; ">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.work_date.$error.required}" style="width:202px;">
-                                    <input ng-model="info.work_date" type="text" class="form-control input-sm" name="work_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" min-date="info.finish_date" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="true" />
+                                    <input ng-model="info.work_date" type="text" class="form-control input-sm" name="work_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" min-date="info.finish_date" close-text="Close" style="font-size:14px; width:200px; margin-bottom:0px; color:#31708f;" ng-required="isRequired===1 && formLeave.work_date.$error.required" />
                                 </div>
                             </td>
                         </tr>
@@ -149,14 +151,14 @@
                                 </div>
                                 <div class="col-md-9" style="margin-bottom:0px;" ng-if="l.leave_type_id===5">
                                     <div ng-class="{'error-input': ((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='')) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')}" style="width:437px;">
-                                        <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" />
+                                        <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" ng-required="((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='')) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')" />
                                     </div>
                                 </div>
                             </td>
                             <td style="width:10%;">
                                 <div ng-class="{'error-input':(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')}">
                                     <input type="text" ui-mask="999:99" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!==''" />
-                                    <input type="text" ui-mask="99:99" ng-if="info.standard===1 || (info.standard===0 && l.leave_type_id!==1)" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!==''" />
+                                    <input type="text" ui-mask="99:99" ng-if="info.standard===1 || (info.standard===0 && l.leave_type_id!==1)" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')" />
                                 </div>
                             </td>
                             <td style="width:40%; text-align:center; ">
