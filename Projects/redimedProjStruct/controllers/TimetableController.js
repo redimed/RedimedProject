@@ -379,6 +379,8 @@ module.exports = {
 			return;
 		}	
 
+		postData.day_of_week_value=timeTableUtil.dayOfWeekValue[postData.day_of_Week];
+		
 		var sql = knex('sys_permernant_calendar_df')
 				.where('cal_header_df_id', postData.cal_header_df_id)
 				.update(postData).toString();
