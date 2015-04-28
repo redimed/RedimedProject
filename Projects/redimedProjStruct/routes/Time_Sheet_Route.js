@@ -66,4 +66,6 @@ app.get("/api/TimeSheet/get-type-leave", TimeSheet.LoadTypeLeave);
 app.post("/api/TimeSheet/post-leave-form", TimeSheet.UpLeaveServer);
 app.post("/api/TimeSheet/post-history-leave", TimeSheet.LoadHistoryLeave);
 app.post("/api/TimeSheet/post-view-leave", TimeSheet.ViewLeave);
+app.post("/api/TimeSheet/post-submit-view", TimeSheet.SubmitOnViewLeave);
+app.post("/api/TimeSheet/post-load-edit", TimeSheet.LoadLeaveEdit);
 //END lEAVE

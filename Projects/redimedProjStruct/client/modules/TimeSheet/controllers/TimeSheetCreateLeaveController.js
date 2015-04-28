@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
-    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService) {
+    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService, $stateParams) {
         $scope.info = {};
         $scope.info.standard = 1;
         // POPUP DATE
@@ -8,34 +8,41 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             startingDate: 1
         };
         //END POPUP
-
-        //LOAD INFO EMPLOYEE
-        if ($cookieStore.get('userInfo') !== undefined && $cookieStore.get('userInfo') !== null &&
-            $cookieStore.get("userInfo").id !== undefined && $cookieStore.get("userInfo").id !== null) {
-            TimeSheetService.LoadInfoEmployee($cookieStore.get('userInfo').id).then(function(response) {
-                if (response.status === "success") {
-                    $scope.info.infoEmployee = angular.copy(response.result);
-                    $scope.info.application_date = new Date();
-                } else if (response.status === "error" || response.result.length === 0) {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr("Load infomation employee fail!", "Error");
-                } else {
-                    //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr("Server not response!", "Error");
-                }
+        if ($stateParams.id) {
+            //EDIT
+            TimeSheetService.LoadLeaveEdit($stateParams.id).then(function(reponse) {
+                console.log(response);
             });
         } else {
-            $state.go('loggedIn.login', null, {
-                "reload": true
-            });
-            toastr.error("You not section!", "Error");
+            //ADD NEW
+            //LOAD INFO EMPLOYEE
+            if ($cookieStore.get('userInfo') !== undefined && $cookieStore.get('userInfo') !== null &&
+                $cookieStore.get("userInfo").id !== undefined && $cookieStore.get("userInfo").id !== null) {
+                TimeSheetService.LoadInfoEmployee($cookieStore.get('userInfo').id).then(function(response) {
+                    if (response.status === "success") {
+                        $scope.info.infoEmployee = angular.copy(response.result);
+                        $scope.info.application_date = new Date();
+                    } else if (response.status === "error" || response.result.length === 0) {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr("Load infomation employee fail!", "Error");
+                    } else {
+                        //catch exception
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr("Server not response!", "Error");
+                    }
+                });
+            } else {
+                $state.go('loggedIn.login', null, {
+                    "reload": true
+                });
+                toastr.error("You not section!", "Error");
+            }
+            //END LOAD INFO
         }
-        //END LOAD INFO
         $scope.clickSendServer = function(statusID, formLeave) {
             if (formLeave.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");

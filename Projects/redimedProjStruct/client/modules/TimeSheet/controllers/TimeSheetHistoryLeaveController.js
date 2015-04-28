@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
-    .controller("HistoryLeaveController", function($scope, TimeSheetService, $cookieStore, toastr, $state, MODE_ROW, $modal) {
+    .controller("HistoryLeaveController", function($scope, TimeSheetService, $cookieStore, toastr, $state, MODE_ROW, $modal, $stateParams) {
         // FUNCTION RESET
         $scope.reset = function() {
             $scope.searchObjectMap = angular.copy($scope.searchObject);
@@ -55,6 +55,44 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                     $scope.idView = id;
                     $scope.clickCancel = function(value) {
                         modalInstance.close();
+                    };
+                    $scope.clickSubmitAgain = function(status, leaveID) {
+                        //UPDATE STATUS
+                        var info = {
+                            status: status,
+                            leaveID: leaveID
+                        };
+                        TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
+                            if (response.status === "success") {
+                                modalInstance.close();
+                                $state.go("loggedIn.LeaveHistory",
+                                    null, {
+                                        "reload": true
+                                    });
+                                toastr.success("Submit success!", "Success");
+                            } else if (response.status === "error") {
+                                $state.go("loggedIn.TimeSheetHome", null, {
+                                    "reload": true
+                                });
+                                toastr.error("Submit fail!", "Error");
+                            } else {
+                                //catch exception
+                                $state.go("loggedIn.TimeSheetHome", null, {
+                                    "reload": true
+                                });
+                                toastr.error("Server not response!", "Error");
+                            }
+                        });
+                        //END UPDATE
+                    };
+
+                    $scope.clickEdit = function(leaveID) {
+                        modalInstance.close();
+                        $state.go("loggedIn.CreateLeave", {
+                            id: leaveID
+                        }, {
+                            "reload": true
+                        });
                     };
                 },
                 size: "lg"

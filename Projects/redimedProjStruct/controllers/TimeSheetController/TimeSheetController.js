@@ -2226,7 +2226,7 @@ module.exports = {
             "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " +
             "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.other, " +
             "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " +
-            "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status " +
+            "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, time_task_status.task_status_id " +
             "FROM hr_employee " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
             "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
@@ -2256,6 +2256,42 @@ module.exports = {
             });
     },
     //END LEAVE
+
+    // SUBMIT ON VIEW LEAVE
+    SubmitOnViewLeave: function(req, res) {
+        var statusID = req.body.info.status;
+        var leaveID = req.body.info.leaveID;
+        var dateUpdate = moment().format("YYYY-MM-DD hh:mm:ss");
+        var queryUpdateStatus = "UPDATE hr_leave SET hr_leave.status_id = :statusID, last_update_date = :dateUpdate " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        db.sequelize.query(queryUpdateStatus, null, {
+                raw: true
+            }, {
+                statusID: statusID,
+                dateUpdate: dateUpdate,
+                leaveID: leaveID
+            })
+            .success(function(result) {
+                res.json({
+                    status: "success"
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    //END SUBMIT ON VIEW
+
+    //LOAD LEAVE EDIT
+    LoadLeaveEdit: function(req, res) {
+        console.log(req.body.leaveID);
+    },
+    //END LOAD EDIT
 };
 
 //FUNCTION GET WEEKNO

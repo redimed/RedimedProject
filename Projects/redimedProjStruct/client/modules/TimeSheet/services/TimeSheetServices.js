@@ -265,6 +265,19 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 leave_id: idLeave
             });
         };
+
+        TimeSheetService.SubmitOnViewLeave = function(info) {
+            var SubmitOnViewLeave = api.all("TimeSheet/post-submit-view");
+            return SubmitOnViewLeave.post({
+                info: info
+            });
+        };
+        TimeSheetService.LoadLeaveEdit = function(leaveID) {
+            var LoadLeaveEdit = api.all("TimeSheet/post-load-edit");
+            return LoadLeaveEdit.post({
+                leaveID: leaveID
+            });
+        };
         //END LEAVE FORM
 
         return TimeSheetService;

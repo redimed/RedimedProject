@@ -63,7 +63,9 @@
         </fieldset>
         <!-- BUTTON -->
         <a style="width:70px; font-size:14px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
-        <a style="width:70px; font-size:14px;"></a>
+        <a style="width:70px; font-size:14px;" ng-if="statusID===1 || statusID===4" class="btn pull-right btn-xs blue-steel" ng-click="onEdit({leaveID: list.result[0].leave_id})">Edit</a>
+        <a style="width:70px; font-size:14px;" ng-if="statusID===1" class="btn pull-right btn-xs green" ng-click="onSubmitagain({status: 2, leaveID: list.result[0].leave_id})">Submit</a>
+        <a style="width:70px; font-size:14px;" ng-if="statusID===4" class="btn pull-right btn-xs purple" ng-click="onSubmitagain({status: 5, leaveID: list.result[0].leave_id})">Re-submit</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>

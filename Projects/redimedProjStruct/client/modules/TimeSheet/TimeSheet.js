@@ -74,7 +74,7 @@ angular.module("app.loggedIn.TimeSheet", [
             })
             //MODULE LEAVE FORM
             .state("loggedIn.CreateLeave", {
-                url: "/CreateLeave",
+                url: "/CreateLeave/:id",
                 templateUrl: "modules/TimeSheet/views/CreateLeave.html",
                 controller: "CreateLeaveController"
             })
