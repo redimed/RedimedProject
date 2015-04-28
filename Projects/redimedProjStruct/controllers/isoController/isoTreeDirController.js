@@ -418,7 +418,7 @@ module.exports =
                                         isoUtil.exlog("Insert hoac cap nhat lai quyen han cua user hien tai tren node");
                                         var query = connection.query(sql,params,function(err,result)
                                         {
-
+                                            isoUtil.exlog(query.sql);
                                             if(err)
                                             {
                                                 isoUtil.exlog('error',err);
@@ -759,7 +759,10 @@ module.exports =
                     if(data.length>0)
                     {
                         var oldName=data[0].NODE_NAME;
-                        var xname=data[0].NODE_NAME.substring(0,data[0].NODE_NAME.indexOf(' --remove on'));
+                        if(data[0].NODE_NAME.indexOf(' --remove on')>=0)
+                            var xname=data[0].NODE_NAME.substring(0,data[0].NODE_NAME.indexOf(' --remove on'));
+                        else
+                            var xname=data[0].NODE_NAME;
                         var newName=xname+" --remove on "+moment().format("HH.mm.ss DD-MM-YYYY");
                         req.body.oldName=oldName;
                         req.body.newName=newName;
