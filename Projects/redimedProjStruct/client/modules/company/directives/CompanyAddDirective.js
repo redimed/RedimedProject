@@ -46,8 +46,17 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        patient_id :$stateParams.patientId
 			}
 			scope.onRowClick = function(row){
+				 var postData = { 
+					Insurer:row.id,
+					id:$stateParams.companyId
+				}
 				 scope.company.InsurerTemp = row.id;
 				 scope.company.checkColor = row.id;
+				CompanyModel.updateInsurer(postData)
+						.then(function(response){
+							toastr.success('Active Insurer Successfully');
+						}, function(error){	
+						})
 			}
 			scope.clickDisable = function(row){
 				for (var i = 0; i <= scope.company.listTemp.length; i++) {
