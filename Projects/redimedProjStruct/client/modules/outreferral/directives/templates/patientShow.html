@@ -24,17 +24,18 @@
 	</div>
 	<!-- END DATE STARTED -->
 
-	<!-- EXPIRE DATE -->
+	<!-- DURATION -->
 	<div class="col-md-4">
 		<div class="form-group">
 			<label>
-				Expire Date&nbsp;
+				Duration&nbsp;
 				<span class="required" style="color: red;">*</span>
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.expire_date" id="expire_date" disabled>
+			<input class="form-control input-sm" ng-model="outreferral.form.duration" id="duration" readonly>
 		</div>
 	</div>
-	<!-- END EXPIRE DATE -->
+	<!-- END DURATION -->
+
 </div>
 <div class="row">
 	<!-- DOCTOR ID -->
@@ -67,17 +68,17 @@
 	</div>
 	<!-- END REFERRED TO DOCTOR -->
 
-	<!-- DURATION -->
+	<!-- EXPIRE DATE -->
 	<div class="col-md-4">
 		<div class="form-group">
 			<label>
-				Duration&nbsp;
+				Expire Date&nbsp;
 				<span class="required" style="color: red;">*</span>
 			</label>
-			<input class="form-control input-sm" ng-model="outreferral.form.duration" id="duration" readonly>
+			<input class="form-control input-sm" custom-date ng-model="outreferral.form.expire_date" id="expire_date" disabled>
 		</div>
 	</div>
-	<!-- END DURATION -->
+	<!-- END EXPIRE DATE -->
 
 </div>
 
