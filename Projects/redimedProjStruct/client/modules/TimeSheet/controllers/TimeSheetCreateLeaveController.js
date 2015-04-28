@@ -10,8 +10,18 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
         //END POPUP
         if ($stateParams.id) {
             //EDIT
-            TimeSheetService.LoadLeaveEdit($stateParams.id).then(function(reponse) {
-                console.log(response);
+            TimeSheetService.LoadLeaveEdit($stateParams.id).then(function(response) {
+                if (response !== undefined && response !== null &&
+                    response.resultLeave !== undefined &&
+                    response.resultLeave !== null &&
+                    response.resultLeave[0] !== undefined && response.resultLeave[0] !== null) {
+                    $scope.info = response.resultLeave[0];
+                    //convert time
+                    $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
+                    //end
+                }
+
+                $scope.info.infoTypeLeave = response.resultLeaveDetail;
             });
         } else {
             //ADD NEW
@@ -20,7 +30,13 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 $cookieStore.get("userInfo").id !== undefined && $cookieStore.get("userInfo").id !== null) {
                 TimeSheetService.LoadInfoEmployee($cookieStore.get('userInfo').id).then(function(response) {
                     if (response.status === "success") {
-                        $scope.info.infoEmployee = angular.copy(response.result);
+                        //load employee
+                        if (response !== undefined && response !== null &&
+                            response.result !== undefined && response.result !== null &&
+                            response.result[0] !== undefined && response.result[0] !== null) {
+                            $scope.info = response.result[0];
+                        }
+                        //employee
                         $scope.info.application_date = new Date();
                     } else if (response.status === "error" || response.result.length === 0) {
                         $state.go("loggedIn.TimeSheetHome", null, {

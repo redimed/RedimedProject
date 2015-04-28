@@ -2289,7 +2289,60 @@ module.exports = {
 
     //LOAD LEAVE EDIT
     LoadLeaveEdit: function(req, res) {
-        console.log(req.body.leaveID);
+        var leaveID = req.body.leaveID;
+        var queryLoadLeaveEdit = "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, " +
+            "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " +
+            "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " +
+            "FROM hr_leave " +
+            "INNER JOIN users ON users.id = hr_leave.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.employee_id " +
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        var queryLoadLeaveDetailEdit = "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, hr_leave_detail.reason_leave, " +
+            "hr_leave_detail.other " +
+            "FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        db.sequelize.query(queryLoadLeaveEdit, null, {
+                raw: true
+            }, {
+                leaveID: leaveID
+            })
+            .success(function(resultLeave) {
+                db.sequelize.query(queryLoadLeaveDetailEdit, null, {
+                        raw: true
+                    }, {
+                        leaveID: leaveID
+                    })
+                    .success(function(resultLeaveDetail) {
+                        res.json({
+                            status: "success",
+                            resultLeave: resultLeave,
+                            resultLeaveDetail: resultLeaveDetail
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            resultLeave: [],
+                            resultLeaveDetail: []
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    resultLeave: [],
+                    resultLeaveDetail: []
+                });
+                return;
+            });
     },
     //END LOAD EDIT
 };

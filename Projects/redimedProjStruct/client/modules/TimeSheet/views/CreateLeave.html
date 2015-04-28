@@ -57,7 +57,7 @@
                                 <span>Employee Name:</span>
                             </td>
                             <td style="width:80%;font-size:14px; ">
-                                <span class="text-info" style="margin-left:7px;">{{((info.infoEmployee[0].FirstName!==null && info.infoEmployee[0].Firstname!=="")?(info.infoEmployee[0].FirstName):"") +" "+((info.infoEmployee[0].LastName!==null && info.infoEmployee[0].LastName!=="")?(info.infoEmployee[0].LastName):"") }}</span>
+                                <span class="text-info" style="margin-left:7px;">{{((info.FirstName!==null && info.Firstname!=="")?(info.FirstName):"") +" "+((info.LastName!==null && info.LastName!=="")?(info.LastName):"") }}</span>
                             </td>
                         </tr>
                         <tr>
@@ -66,7 +66,7 @@
                             </td>
                             <td style="width:80%;font-size:14px; ">
                                 <span class=" text-info" style="margin-left:7px;">
-                                {{(info.infoEmployee[0].departmentName!==null && info.infoEmployee[0].departmentName!=="")?info.infoEmployee[0].departmentName:""}}
+                                {{(info.departmentName!==null && info.departmentName!=="")?info.departmentName:""}}
                             </span>
                             </td>
                         </tr>
@@ -76,7 +76,7 @@
                             </td>
                             <td style="width:80%;font-size:14px; ">
                                 <span class=" text-info" style="margin-left:7px;">
-                                {{(info.infoEmployee[0].TypeOfContruct!==null && info.infoEmployee[0].TypeOfContruct!=="")?info.infoEmployee[0].TypeOfContruct:""}}
+                                {{(info.TypeOfContruct!==null && info.TypeOfContruct!=="")?info.TypeOfContruct:""}}
                             </span>
                             </td>
                         </tr>
