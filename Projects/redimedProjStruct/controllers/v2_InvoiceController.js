@@ -271,8 +271,14 @@ module.exports = {
 		var inv_status = req.body.status;
 		var service_id = req.body.service_id;
 		var lines = req.body.lines;
-
-		console.log(' LINES ... ', lines)
+		var postData = req.body.postData;
+		var DOCTOR_ID = postData.DOCTOR_ID;
+		var claim_id = postData.claim_id;
+		var Patient_id = postData.Patient_id;
+		var Company_id = postData.Company_id;
+		var Insurer_id = postData.Insurer_id;
+		var SITE_ID = postData.SITE_ID;
+		var DEPT_ID = postData.DEPT_ID;
 
 		var header = null;
 		var err_handle = function(err){
@@ -329,7 +335,7 @@ module.exports = {
 			}
 			var amount = header.getAmount();
 			// UPDATE AMOUNT & STATUS
-	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status, SERVICE_ID:service_id}, {
+	 		return db.mdtInvoiceHeader.update({AMOUNT: amount, STATUS: inv_status, SERVICE_ID:service_id,claim_id:claim_id,Patient_id:Patient_id,Company_id:Company_id,Insurer_id:Insurer_id,SITE_ID:SITE_ID,DOCTOR_ID:DOCTOR_ID,DEPT_ID:DEPT_ID}, {
 	            header_id: header_id
 	        });
 		}).then(function(updated){

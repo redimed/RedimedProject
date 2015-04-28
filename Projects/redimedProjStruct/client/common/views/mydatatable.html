@@ -43,7 +43,7 @@
              <!-- END SEARCH -->
         </thead>
         <tbody>
-            <tr style="cursor: pointer;" ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)">             
+            <tr style="cursor: pointer;" ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)" >             
                 <td ng-repeat="col in options.columns" ng-if="!col.is_hide">
                     <!-- TYPE INPUT -->
                     <span ng-switch on="col.type">

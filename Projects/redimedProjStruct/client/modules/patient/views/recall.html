@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="portlet-body">
-    	<my-data-table numrows="20" options="recall_opt"></my-data-table>
+    	<my-data-table numrows="20" options="recall_opt" rowclick="rowClick"></my-data-table>
     </div>
 </div>
 
@@ -24,6 +24,19 @@
         </button>
     </div>
     <div class="break-row" style="margin-bottom: 15px;"></div>
-    <mdtrecall-detail  onsuccess="actionSuccess"  options="options" params="params_add"></mdtrecall-detail>
+    <!-- phanquocchien.c1109g@gmail.com -->
+    <mdtrecall-detail  onsuccess="actionSuccess"  options="options" params="params_add" action-center="actionCenter"></mdtrecall-detail>
 </div>
 <!-- END ADD FORM -->
+<!-- EDIT FORM -->
+<div class="mdt-search" style="display: block; width: 50%;" ng-if="editForm.is_show">
+    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="editForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="break-row" style="margin-bottom: 15px;"></div>
+    <!-- phanquocchien.c1109g@gmail.com -->
+    <mdtrecall-detail  onsuccess="actionSuccess"  options="options" params="params_edit" action-center="actionCenter"></mdtrecall-detail>
+</div>
+<!-- END EDIT FORM -->

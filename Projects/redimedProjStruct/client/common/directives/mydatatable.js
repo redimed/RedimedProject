@@ -7,7 +7,7 @@ angular.module("app.directive.mydatatable.common", [])
             options: '=options',
             row_click: '=rowclick',
             row_class: '=rowclass',
-            num_rows: '=numrows',
+            num_rows: '=numrows'
         },
         controller: function ($scope, $element, $attrs) {
             var options = $scope.options;
@@ -56,6 +56,8 @@ angular.module("app.directive.mydatatable.common", [])
                 $scope.data.items = data.list;
             }
 
+
+
             $scope.ajaxGetData = function () {
                 var limit = $scope.page_data.itemPerPage;
                 var offset = ($scope.page_data.currentPage - 1) * limit;
@@ -103,7 +105,6 @@ angular.module("app.directive.mydatatable.common", [])
                 if(!col.format) return data;
                 return col.format(data);
             }
-
             var init = function () {
                 $scope.data = {more_items: [], items: []};
                 $scope.search = {};

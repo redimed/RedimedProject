@@ -2,7 +2,7 @@
  * Created by Minh Hikari on 12/1/2014.
  */
 angular.module('app.loggedIn.waworkcover.progress.directive', [])
-    .directive('workCoverProgress', function (DoctorService, ReceptionistService, ConfigService, PatientService, toastr, WaWorkCoverService, $cookieStore, $state) {
+    .directive('workCoverProgress', function (DoctorService, ReceptionistService, ConfigService, PatientService, toastr, WaWorkCoverService, $cookieStore, $state,CompanyService) {
         return {
             restrict: 'EA',
             scope: {

@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state){
+.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -99,6 +99,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 				},
 				click: function(item) {
 					$scope.InvoiceMap.claim = item;
+					$scope.InvoiceMap.Insurer_id = item.insurer_site;
 					$scope.InvoiceMap.claim_id = item.Claim_id;
 					$scope.InvoiceMap.insurer = { insurer_name: item.Insurer };
 					$scope.patientClaim.close();

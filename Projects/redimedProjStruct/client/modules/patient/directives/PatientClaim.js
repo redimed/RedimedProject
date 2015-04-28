@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.claim.directive", [])
 
-.directive("patientClaim", function (PatientService, ClaimService, ClaimModel, ConfigService, toastr, Restangular, InsurerService, $cookieStore) {
+.directive("patientClaim", function (PatientService, ClaimService, ClaimModel, ConfigService, toastr, Restangular, InsurerService, $cookieStore,CompanyService) {
     return {
         restrict: "EA",
         scope: {

@@ -30,18 +30,7 @@ angular.module('app.loggedIn.patient.listall.controller',[])
                 	Sur_name: {type: 'text'},
                 	Address1: {type: 'text'},
                 	Post_code: {type: 'text'}
-                },
-                use_actions: true,
-                actions: [
-                	{
-                        class: 'fa fa-info', title: 'Edit',
-                        callback: function(item){
-                            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: 1});
-                            //console.log('this is selected item',item)
-                               // $scope.patientEditForm.open(item.Patient_id);
-                        }
-                    },
-                ]
+                 }
 			}
 		}
 
@@ -66,7 +55,9 @@ angular.module('app.loggedIn.patient.listall.controller',[])
                     $scope.patient_panel.reload();
             }
         }
-
+        $scope.rowClick = function(item){
+            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: 1});
+        }
         $scope.patientEditForm = {
 			params: {
 	            permission:{

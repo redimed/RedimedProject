@@ -91,22 +91,39 @@ module.exports = {
         var offset = (req.body.offset) ? req.body.offset : 0;
         var fields = req.body.fields;
 		var search_data = req.body.search;
-		var Patient_id = search_data.Patient_id;
+		var Patient_id = search_data.Patient_id!=null?search_data.Patient_id:null;
 
+		if (Patient_id!=null) {
+			db.Claim.findAndCountAll({
+				where: {
+					Patient_id:Patient_id
+				},
+				offset: offset,
+				limit: limit,
+				attributes: fields
+			}).success(function(result){
+				console.log(result);
 
-		db.Claim.findAndCountAll({
-			where: {
-				Patient_id: Patient_id
-			},
-			offset: offset,
-			limit: limit,
-			attributes: fields
-		}).success(function(result){
-			res.json({"status": "success", "list": result.rows, "count": result.count});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
+				res.json({"status": "success", "list": result.rows, "count": result.count});
+			})
+			.error(function(error){
+				res.json(500, {"status": "error", "message": error});
+			});
+		}else{
+			db.Claim.findAndCountAll({
+				offset: offset,
+				limit: limit,
+				attributes: fields
+			}).success(function(result){
+				console.log(result);
+
+				res.json({"status": "success", "list": result.rows, "count": result.count});
+			})
+			.error(function(error){
+				res.json(500, {"status": "error", "message": error});
+			});
+		};
+		
 	},
 
 	postCompanies: function(req, res){
