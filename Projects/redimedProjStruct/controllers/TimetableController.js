@@ -156,7 +156,7 @@ module.exports = {
 			});
 		});
 		
-		kiss.exFileJSON(dateArrayFromDayToDate,'dateArrayFromDayToDate.txt');
+		//kiss.exFileJSON(dateArrayFromDayToDate,'dateArrayFromDayToDate.txt');
 		
 		kiss.beginTransaction(req,function(){
 			//Xoa du lieu appointment cu
