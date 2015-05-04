@@ -86,6 +86,7 @@ angular.module("app.security.login.controller",[
 
                         if (response.userInfo.UserType.user_type == 'Doctor') {
                             DoctorService.getByUserId(response.userInfo.id).then(function (data) {
+                                console.log("Doctor Info: ",data);
                                 if (data) {
                                     $cookieStore.put('doctorInfo', {
                                         doctor_id: data.doctor_id,
