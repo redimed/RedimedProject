@@ -1335,3 +1335,26 @@ table.timetable-table td:last-child {
     border: dashed blue 20px;
     opacity: 0.5;
 }
+
+.bv-right-list{
+    position: absolute;
+    padding: 10px;
+    right: 0;
+    top: 0;
+    min-height: 100%;
+    width: 250px;
+    color: white;
+    background-color: #3D4A53;
+    z-index: 888;
+}
+.bv-arrow {
+    width: 0; 
+    height: 0; 
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent; 
+    
+    border-right:30px solid #1C2D5C;
+    position: absolute;
+    top: 5%;
+    right: 250px;
+}

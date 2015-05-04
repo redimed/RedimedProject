@@ -8,6 +8,57 @@ var kiss=require('./kissUtilsController');
 
 module.exports = {
 
+	alertCenter: function(req, res){
+		var postData = req.body.data;
+
+		var main_sql = knex
+		.distinct(
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
+			knex.raw("DATE_FORMAT(cln_appointment_calendar.TO_TIME, '%H:%i') AS TO_TIME"),
+			'cln_appointment_calendar.SERVICE_ID',
+			'sys_services.SERVICE_NAME',
+			'sys_services.IS_REFERRAL',
+			'sys_services.SERVICE_COLOR',
+			'cln_appointment_calendar.DOCTOR_ID',
+			'cln_appointment_calendar.CAL_ID',
+			'cln_appointment_calendar.CLINICAL_DEPT_ID',
+			'cln_appt_patients.Patient_id',
+			'cln_patients.First_name',
+			'cln_patients.Sur_name',
+			'cln_alerts.id AS ALERT_ID',
+			'cln_alerts.name AS ALERT_NAME',
+			'cln_patient_outreferral.outreferral_id'
+		)
+		.innerJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
+		.innerJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
+		.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+		.leftOuterJoin('cln_patient_alerts', function(){
+			this.on('cln_patient_alerts.cal_id', '=', 'cln_appointment_calendar.CAL_ID')
+			.andOn('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
+		})
+		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
+		.leftOuterJoin('cln_patient_outreferral', function(){
+			this.on('cln_patient_outreferral.CAL_ID', '=', 'cln_appointment_calendar.CAL_ID')
+			.andOn('cln_appt_patients.Patient_id', 'cln_patient_outreferral.patient_id')
+		})
+		.from('cln_appointment_calendar')
+		.where({
+			'cln_appointment_calendar.SITE_ID': postData.site_id
+		})
+		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.where('cln_appointment_calendar.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
+		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
+		.toString();
+
+		db.sequelize.query(main_sql)
+		.success(function(rows){
+			res.json({data: rows});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: main_sql});
+		})
+	},
+
 	/**
 	 * Kiem tra xem trong khoang fromDate den toDate co calendar nao da duoc booking hay chua
 	 * tannv.dts@gmail.com

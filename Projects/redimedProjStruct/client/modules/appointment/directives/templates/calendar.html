@@ -1,3 +1,24 @@
+<div id="alert-center" class="bv-right-list">
+	<span ng-repeat="list in alertCenter.list">
+		<h4>
+			{{list.First_name}} {{list.Sur_name}}
+			({{list.FROM_TIME}} - {{list.TO_TIME}})
+		</h4>
+		<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+			<li>{{alert.name}}</li>
+		</ul>
+		<ul ng-if="list.alert.length === 0">
+			<li>There is no alert</li>
+		</ul>
+		<p ng-if="list.IS_REFERRAL">
+			<b ng-if="list.outreferral_id === 'yes'">There is referral</b>
+			<b ng-if="list.outreferral_id === 'no'">There is no referral. Please make referral</b>
+		</p>
+	</span>
+</div>
+<div class="bv-arrow" ng-click="clickArrow()">
+</div>
+
 <div id="appointment">
 	<div class="row">
 		<!-- DATEPICKER -->

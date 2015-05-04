@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.appointment.directives.calendar', [])
 
-.directive('appointmentCalendar', function($modal, $state, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
+.directive('appointmentCalendar', function($modal, $state, $cookieStore, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
@@ -49,6 +49,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			scope.goToAppDetail = function(CAL_ID, Patient_id){
 				$state.go('loggedIn.patient.appointment', {cal_id: CAL_ID, patient_id: Patient_id});
+
+				$cookieStore.put('appointment', scope.appointment.search);
 			}
 
 			var search = {
@@ -291,6 +293,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				modalInstance.result.then(function(patient){
 					if(patient){
 						scope.appointment.load();
+						scope.alertCenter.load();
 						toastr.success('Added Successfully');
 
 						var modalInstance = $modal.open({
@@ -323,6 +326,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 											$scope.$watch('claim.addSuccess', function(addSuccess){
 												if(addSuccess){
 													$modalInstance.close('success');
+
 												}
 											})
 										},
@@ -444,8 +448,10 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 													}
 												})
 												.result.then(function(result){
-													if(result === 'success')
+													if(result === 'success'){
 														$modalInstance.dismiss('cancel');
+														scope.alertCenter.load();
+													}
 												})								
 											}
 
@@ -475,8 +481,10 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 													}
 												})
 												.result.then(function(result){
-													if(result === 'success')
+													if(result === 'success'){
 														$modalInstance.dismiss('cancel');
+														scope.alertCenter.load();
+													}
 												})
 											}//end selectReferral
 										},
@@ -521,8 +529,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					add: function(app, col){ dialogAdd(app, col) }
 				},
 				list: [],
-				search: search,
+				search: angular.copy(search),
 				load: function(){ load(); }
+			}
+
+			if($cookieStore.get('appointment')){
+				scope.appointment.search = $cookieStore.get('appointment');
 			}
 
 			scope.site = {
@@ -538,6 +550,68 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				list: [],
 				load: function(){ loadClinical(); }
 			}
+
+			var loadAlertCenter = function(){
+				var postData = angular.copy(scope.appointment.search);
+				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
+
+				scope.alertCenter.list = [];
+
+				AppointmentModel.alertCenter(postData)
+				.then(function(response){
+					_.forEach(response.data, function(row){
+						var flag = -1;
+						var i = 0;
+						_.forEach(scope.alertCenter.list, function(list){
+							if(list.CAL_ID === row.CAL_ID){
+								flag = i;
+								return;
+							}
+							i++;
+						})
+
+						if(flag !== -1){
+							if(row.ALERT_ID){
+								var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
+								scope.alertCenter.list[flag].alert.push(object);
+							}
+						}else{
+							var object = {Patient_id: row.Patient_id, IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], outreferral_id: 'no', FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME};
+
+							if(row.ALERT_ID){
+								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME});
+							}
+
+							if(row.outreferral_id)
+								object.outreferral_id = 'yes';
+
+							scope.alertCenter.list.push(object);
+						}
+
+					})
+				}, function(error){})
+			}
+
+			scope.clickArrow = function(){
+				scope.alertCenter.arrow = !scope.alertCenter.arrow;
+
+				if(scope.alertCenter.arrow){
+					angular.element('#alert-center').css({display: 'none'});
+					angular.element('.bv-arrow').css({right: 0});
+				}else{
+					angular.element('#alert-center').css({display: 'block'});
+					angular.element('.bv-arrow').css({right: '250px'});
+				}
+			}
+
+			scope.alertCenter = {
+				load: function(){ loadAlertCenter(); },
+				list: [],
+				arrow: false
+			}
+
+			//INIT LOAD ALERT CENTER
+			scope.alertCenter.load();
 
 			//INIT
 			scope.site.load();
