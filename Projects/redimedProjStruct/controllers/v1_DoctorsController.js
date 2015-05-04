@@ -58,7 +58,6 @@ module.exports = {
 
         var k_sql = res.locals.k_sql;
         k_sql.exec(model_sql.sql_by_user_id(user_id), function (data) {
-            console.log("==========Doctor Info============: ",data);
             res.json(data[0]);
         }, function (err) {
             res.json(err);
