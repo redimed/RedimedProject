@@ -48,7 +48,7 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 				})
 			}
 			var load = function(){
-				var postData = 10;
+				var postData = user_id;
 				if (user_type == 4) {
 					OutreferralModel.DotorFromUserId(postData)
 					.then(function(response){
