@@ -97,42 +97,32 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 				.then(function(data){
 					if(data.status=='success')
 					{
-						//neu calendar da duoc booking thi hoi xem co muon xoa calendar hien tai hay khong
-						//neu chua duoc booking thi xoa khong can hoi
-						//tannv.dts@gmail.com
-						if(data.data.length>0)
-						{
-							var bookedList=data.data;
-							var modalInstance = $modal.open({
-								templateUrl: 'notifyToDeleteSelectedCalendar',
-								controller: function($scope,bookedList, $modalInstance){
-									$scope.bookedList=bookedList;
-									$scope.ok = function(){
-										$modalInstance.close(bookedList);
-									}
-
-									$scope.cancel = function(){
-										$modalInstance.dismiss('cancel');
-									}
-								},
-								// size: 'sm',
-								resolve: {
-									bookedList: function(){
-										return bookedList;
-									}
+						var bookedList=data.data;
+						var modalInstance = $modal.open({
+							templateUrl: 'notifyToDeleteSelectedCalendar',
+							controller: function($scope,bookedList, $modalInstance){
+								$scope.bookedList=bookedList;
+								$scope.ok = function(){
+									$modalInstance.close(bookedList);
 								}
-							});
 
-							modalInstance.result.then(function(bookedList){
-								if(bookedList){
-									executeDelete();
+								$scope.cancel = function(){
+									$modalInstance.dismiss('cancel');
 								}
-							})
-						}
-						else
-						{
-							executeDelete();
-						}
+							},
+							// size: 'sm',
+							resolve: {
+								bookedList: function(){
+									return bookedList;
+								}
+							}
+						});
+
+						modalInstance.result.then(function(bookedList){
+							if(bookedList){
+								executeDelete();
+							}
+						})
 					}
 					else
 					{

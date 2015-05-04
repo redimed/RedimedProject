@@ -5,6 +5,7 @@ var S = require('string');
 var moment = require('moment');
 var _ = require('lodash');
 var kiss=require('./kissUtilsController');
+var timeTableUtil=require('./timeTableUtilController');
 
 module.exports = {
 
@@ -102,6 +103,9 @@ module.exports = {
 			res.status(500).json({status: kiss.status.fail});
 			return;
 		}
+
+		var day_of_Week=kiss.checkData(postData.day_of_Week)?
+			timeTableUtil.sqlDayOfWeek[timeTableUtil.dayOfWeekValue[postData.day_of_Week]]:'%';
 		var sql=
 			" SELECT calendar.*,CONCAT(patient.`First_name`,' ',patient.`Sur_name`) AS PATIENT_FULL_NAME,   "+
 			" service.`SERVICE_NAME`                                                                        "+
@@ -110,9 +114,10 @@ module.exports = {
 			" INNER JOIN `cln_patients` patient ON appt.`Patient_id`=patient.`Patient_id`                   "+
 			" INNER JOIN `sys_services` service ON calendar.`SERVICE_ID`=service.`SERVICE_ID`               "+
 			" WHERE DATE(`FROM_TIME`)>=? AND DATE(`FROM_TIME`)<=?                                           "+
+			" AND DAYOFWEEK(`FROM_TIME`) LIKE ?	                                                            "+
 			" AND `DOCTOR_ID`=?                                                                             ";
 
-		kiss.executeQuery(req,sql,[moment(from_date).format("YYYY/MM/DD"),moment(to_date).format("YYYY/MM/DD"),postData.doctor_id],function(rows){
+		kiss.executeQuery(req,sql,[moment(from_date).format("YYYY/MM/DD"),moment(to_date).format("YYYY/MM/DD"),day_of_Week,postData.doctor_id],function(rows){
 			res.json({status:kiss.status.success,data:rows});
 		},function(err){
 			kiss.exlog("postLeaveCal","Loi truy van xoa",err);
@@ -162,12 +167,16 @@ module.exports = {
 			res.status(500).json({status: kiss.status.fail});
 			return;
 		}
-		var sql=
-			" DELETE FROM `cln_appointment_calendar`                  "+
-			" WHERE DATE(`FROM_TIME`)>=? AND DATE(`FROM_TIME`)<=?     "+
-			" AND `DOCTOR_ID`=?                                       ";
 
-		kiss.executeQuery(req,sql,[moment(from_date).format("YYYY/MM/DD"),moment(to_date).format("YYYY/MM/DD"),postData.doctor_id],function(result){
+		var day_of_Week=kiss.checkData(postData.day_of_Week)?
+			timeTableUtil.sqlDayOfWeek[timeTableUtil.dayOfWeekValue[postData.day_of_Week]]:'%';
+		var sql=
+			" DELETE FROM `cln_appointment_calendar`                 "+
+			" WHERE DATE(`FROM_TIME`)>=? AND DATE(`FROM_TIME`)<=?    "+
+			" AND DAYOFWEEK(`FROM_TIME`) LIKE ?	                     "+
+			" AND `DOCTOR_ID`=?                                      ";                                                                     
+
+		kiss.executeQuery(req,sql,[moment(from_date).format("YYYY/MM/DD"),moment(to_date).format("YYYY/MM/DD"),day_of_Week,postData.doctor_id],function(result){
 			res.json({status:kiss.status.success});
 		},function(err){
 			kiss.exlog("postLeaveCal","Loi truy van xoa",err);

@@ -133,6 +133,17 @@
 </script>
 
 
+<script type="text/ng-template" id="notifyToDeleteOneCalendar">
+    <div class="modal-body">
+        <p>Do you want to delete this appointment calendar?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+
 <script type="text/ng-template" id="notifyToDeleteSelectedCalendar">
     <div class="modal-body">
         <div ng-show="bookedList.length>0">
@@ -159,6 +170,7 @@
             </table>
         </div>
         <p ng-show="bookedList.length>0">Do you want to delete this booked appointment calendar?</p>
+        <p ng-hide="bookedList.length>0">Do you want to delete this calendar?</p>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>

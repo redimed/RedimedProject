@@ -142,6 +142,7 @@ module.exports = {
 				listX.push(item);
 			}
 		}
+
 		var dateArrayFromDayToDate=[];
 		_.forEach(listX, function(dateItem) {
 			_.forEach(dateItem.listTime, function(timeItem) {
@@ -162,14 +163,15 @@ module.exports = {
 			//Xoa du lieu appointment cu
 			//tannv.dts@gmail.com
 			var sql=
-				" DELETE FROM `cln_appointment_calendar`                           "+
-				" WHERE `DOCTOR_ID`=?                                              "+
-				" AND (DATE(`FROM_TIME`)>=DATE(?) AND DATE(`FROM_TIME`)<=DATE(?))  "+
-				" AND (                                                            "+
-				" 	(TIME(`FROM_TIME`)>=TIME(?) AND TIME(`FROM_TIME`)<TIME(?))     "+
-				" 	OR (TIME(`TO_TIME`)>TIME(?) AND TIME(`TO_TIME`)<=TIME(?))      "+
-				" ) ;                                                              ";
-			kiss.executeQuery(req,sql,[doctorId,beginDateTime,endDateTime,beginDateTime,endDateTime,beginDateTime,endDateTime],function(result){
+				" DELETE FROM `cln_appointment_calendar`                            "+
+				" WHERE `DOCTOR_ID`=?                                               "+
+				" AND (DATE(`FROM_TIME`)>=DATE(?) AND DATE(`FROM_TIME`)<=DATE(?))   "+
+				" AND (                                                             "+
+				" 	(TIME(`FROM_TIME`)>=TIME(?) AND TIME(`FROM_TIME`)<TIME(?))      "+
+				" 	OR (TIME(`TO_TIME`)>TIME(?) AND TIME(`TO_TIME`)<=TIME(?))       "+
+				" )                                                                 "+
+				" AND DAYOFWEEK(`FROM_TIME`) =?                                     ";
+			kiss.executeQuery(req,sql,[doctorId,beginDateTime,endDateTime,beginDateTime,endDateTime,beginDateTime,endDateTime,timeTableUtil.sqlDayOfWeek[day_of_Week_code]],function(result){
 				
 				kiss.commit(req,function(){
 							res.json({status: 'success'});
