@@ -1352,7 +1352,7 @@ table.timetable-table td:last-child {
     height: 0; 
     border-top: 30px solid transparent;
     border-bottom: 30px solid transparent; 
-    
+    z-index: 888;
     border-right:30px solid #1C2D5C;
     position: absolute;
     top: 5%;
