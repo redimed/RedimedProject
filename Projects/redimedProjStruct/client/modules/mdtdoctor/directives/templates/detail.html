@@ -23,7 +23,7 @@
 	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="title">Title</label>
-			<select ng-options="title.id as title.name for title in options.titles" 
+			<select ng-options="title.id as title.name for title in option.titles" 
                 name="title" ng-model="mdtDoctorMap.Title" id="title" float-label>
                 <option value="" disabled selected>Title</option>
             </select>
@@ -141,7 +141,7 @@
 	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="provider_type">Provider type</label>
-			<select ng-options="row.Provider_types_id as row.Provider_types_name for row in options.providers" 
+			<select ng-options="row.Provider_types_id as row.Provider_types_name for row in option.providers" 
                 name="provider_type" ng-model="mdtDoctorMap.Provider_type" id="provider_type" float-label>
                 <option value="" disabled selected>Provider Type</option>
             </select>
@@ -153,7 +153,7 @@
 	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="clinical_dept_id">Clinical Department</label>
-			<select required ng-options="row.CLINICAL_DEPT_ID as row.CLINICAL_DEPT_NAME for row in options.departments" 
+			<select required ng-options="row.CLINICAL_DEPT_ID as row.CLINICAL_DEPT_NAME for row in option.departments" 
                 name="clinical_dept_id" ng-model="mdtDoctorMap.CLINICAL_DEPT_ID" id="clinical_dept_id" float-label>
                 <option value="" disabled selected>Clinical Department *</option>
             </select>
@@ -239,7 +239,7 @@
 	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="qualification_id">Qualification id</label>
-			<select ng-options="row.id as row.name for row in options.qualifications" 
+			<select ng-options="row.id as row.name for row in option.qualifications" 
                 name="qualification_id" ng-model="mdtDoctorMap.Qualification_id" id="qualification_id" float-label>
                 <option value="" disabled selected>Qualification</option>
             </select>

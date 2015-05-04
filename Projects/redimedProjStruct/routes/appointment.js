@@ -9,3 +9,6 @@ app.post(url+'add', AppointmentController.postAdd);
 app.post(url+'leaveCal',AppointmentController.postLeaveCal);
 //tannv.dts@gmail.com
 app.post(url+'beforePostLeaveCal',AppointmentController.beforePostLeaveCal);
+
+//Vuong get alert center
+app.post(url+'alertCenter', AppointmentController.alertCenter);
