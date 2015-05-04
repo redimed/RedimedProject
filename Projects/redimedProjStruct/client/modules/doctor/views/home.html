@@ -141,18 +141,21 @@
                 </div>
             </div>
             <div class="tab-pane" id="tab_1_2" ng-controller="DoctorPatientsController">
-                <div class="pull-left">
-                    <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" 
-                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
-                                items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
+                <div class="row">
+                    <div class="pull-left">
+                        <pagination boundary-links="true" total-items="list.count" ng-model="searchObjectMap.currentPage" 
+                                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" 
+                                    items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
+                    </div>
+                    <div class="pull-right" style="padding-top: 10px;">
+                        <button class="btn btn-sm" ng-click="reset()">Reset</button>
+                        <b>Total Patients:</b> {{list.count}}
+                        <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" 
+                                ng-change="loadList()">
+                        </select>
+                    </div>
                 </div>
-                <div class="pull-right" style="padding-top: 15px;">
-                    <button class="btn btn-sm" ng-click="reset()">Reset</button>
-                    <b>Total Patients:</b> {{list.count}}
-                    <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" 
-                            ng-change="loadList()">
-                    </select>
-                </div>
+                
                 <!-- END PAGINATION -->
                 <table class="table table-responsive table-hover">
                     <thead>
