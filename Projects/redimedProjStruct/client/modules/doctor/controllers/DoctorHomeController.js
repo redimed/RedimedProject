@@ -5,6 +5,8 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 	var nowtime = moment();
 	$scope.doctorInfo = $cookieStore.get('doctorInfo');
 
+	console.log($scope.doctorInfo);
+
 	if(!$scope.doctorInfo || !$scope.doctorInfo.doctor_id) {
 		alert('Not Doctor Information !!!')
 	}
