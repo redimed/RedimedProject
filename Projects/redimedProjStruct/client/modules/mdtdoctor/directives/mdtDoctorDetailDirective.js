@@ -196,7 +196,31 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 				},
 				active: 0
 			}
+			scope.option={
+				titles:null,
+				providers:null,
+				qualifications:null,
+				departments:null
+			}
+			ConfigService.title_option().then(function(response){
+            if(response.status === 'success')
+                scope.option.titles = response.data;
+	        })
 
+	        ConfigService.provider_option().then(function(response){
+	            if(response.status === 'success')
+	                scope.option.providers = response.data;
+	        })
+
+	        ConfigService.department_option().then(function(response){
+	            if(response.status === 'success')
+	                scope.option.departments = response.data;
+	        })
+
+	        ConfigService.qualification_option().then(function(response){
+	            if(response.status === 'success')
+	                scope.option.qualifications = response.data;
+	        })
 			//INIT
 			scope.speciality.load();
 

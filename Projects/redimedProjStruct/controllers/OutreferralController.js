@@ -426,5 +426,22 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {error: error});	
 		})
+	},
+
+	postDotorFromUserId : function(req,res){
+		var postData = req.body.data;
+		var sql = knex()
+				.select('*')
+				.from('doctors')
+				.where('User_id',postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,sql:sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error,sql: sql});
+		})
 	}
 }

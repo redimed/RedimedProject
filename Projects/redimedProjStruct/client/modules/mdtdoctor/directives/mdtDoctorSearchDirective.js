@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoctorSearch', function(mdtDoctorService, toastr){
+angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoctorSearch', function(mdtDoctorService, toastr,$modal){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -49,10 +49,32 @@ angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoct
 				scope.params.pagination.offset = (scope.params.pagination.current_page-1)*scope.params.pagination.limit;
 				loadList();
 			}
+			scope.addDoctor = function(){
+				var modalInstance = $modal.open({
+					templateUrl: 'AddDoctorDialog',
+					size: 'lg',
+					controller: function($scope, $modalInstance){
+						$scope.params_doctor = {
+		                    permission: {
+		                        create: true,
+		                        edit: false
+		                    }
+		                }
+		                $scope.itemUpdate = false;
 
+		                $scope.$watch('itemUpdate', function(item){
+		                	if(item === true)
+		                		$modalInstance.close('success');
+		                }) 
+					}
+				})
+				.result.then(function(response){  	
+			    })
+			}
 			scope.refresh = function(){
 				loadList();
 			}
+
 		}//end link
 	}//end return
 })
