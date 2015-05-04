@@ -245,7 +245,7 @@ input[class^="mdt-checkbox"] + label {
 /* MEDITEK INPUT AND SELECT */
 
 .field {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     display: block;
     position: relative;
     height: 36px;
