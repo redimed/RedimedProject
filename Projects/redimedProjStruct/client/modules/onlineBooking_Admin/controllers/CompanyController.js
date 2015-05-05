@@ -2,7 +2,7 @@
  * Created by meditech on 02/10/2014.
  */
 angular.module('app.loggedIn.booking.admin.company.controller',[])
-    .controller('AdminCompanyController',function($scope,$state,$modal,$filter,ngTableParams,FileUploader,OnlineBookingAdminService,toastr){
+    .controller('AdminCompanyController',function($scope,$state,$modal,$filter,ngTableParams,$cookieStore,FileUploader,OnlineBookingAdminService,toastr){
         $scope.data = [];
         var comArr = [];
         var subArr = [];
@@ -11,6 +11,9 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         $scope.isSelected = false;
 
         $scope.selectedId = null;
+
+        if($cookieStore.get('companyInfo') != undefined)
+            $scope.companyInfo = $cookieStore.get('companyInfo');
 
 
         OnlineBookingAdminService.getCompanyList().then(function(data){

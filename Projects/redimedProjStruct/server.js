@@ -16,6 +16,9 @@ var db = require('./models');
 var restful = require('sequelize-restful');
 var useragent = require('express-useragent');
 var _ = require('lodash-node');
+var http = require('http');
+var https = require('https');
+
 
 
 var ssl_options = {
@@ -23,30 +26,22 @@ var ssl_options = {
     passphrase: '1234'
 };
 var app = express();
+var httpApp = express();
 
-var server = require('https').createServer(ssl_options,app);
-// var io = require('socket.io')(server,{key:fs.readFileSync('key/key.pem'),cert:fs.readFileSync('key/cert.pem')});
+httpApp.set('port', process.env.PORT || 80);
+httpApp.get("*", function (req, res, next) {
+    res.redirect("https://" + req.headers.host + req.path);
+});
 
-// var server = require('http').Server(app);
-var io = require('socket.io')(server);
-
-require('./socket')(io,cookie,cookieParser);
-
-var myIceServers = [
-    {url: "stun:stun.l.google.com:19302"},
-    {url: "stun:stun1.l.google.com:19302"},
-    {url: "stun:stun2.l.google.com:19302"},
-    {url: "stun:stun3.l.google.com:19302"},
-    {url: "stun:stun4.l.google.com:19302"},
-    {url: "turn:172.17.19.101:3478", "username":"redimed", "credential":"redimed123"}
-];
+var httpsServer = https.createServer(ssl_options,app);
 
 var clientDir = path.join(__dirname, 'client');
 var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 
-
+app.set('port', process.env.PORT || 443);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.enable('trust proxy');
 app.use(useragent.express());
 app.use(restful(db.sequelize, { endpoint: '/api/restful'}));
 app.use(favicon());
@@ -179,15 +174,24 @@ app.use(function(err, req, res, next){
     return;
 });
 
+var io = require('socket.io')(httpsServer);
+
+require('./socket')(io,cookie,cookieParser);
+
 db.sequelize
     .authenticate()
     .complete(function(err) {
         if (err) {
             throw err[0];
         } else {
-            server.listen(3000);
+            http.createServer(httpApp).listen(httpApp.get('port'), function() {
+                console.log('Express HTTP server listening on port ' + httpApp.get('port'));
+            });
+             
+            httpsServer.listen(app.get('port'), function() {
+                console.log('Express HTTPS server listening on port ' + app.get('port'));
+            });
             log.info('Connection has been established successfully!');
-            log.info('App server listening on port ' + server.address().port);
         }
     }
 );

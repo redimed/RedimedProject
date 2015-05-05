@@ -37,7 +37,7 @@
     <div class="portlet-body">
         <div class="table-scrollable">
             <table ng-table="tableParams" show-filter="true"  class="table table-bordered table-condensed  table-responsive">
-                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showSubCompany(b)" ng-class="{selected : b.id === selectedId}" >
+                <tr style="white-space: nowrap" align="center" ng-if="b.id !== companyInfo.id" ng-repeat="b in $data" ng-click="showSubCompany(b)" ng-class="{selected : b.id === selectedId}" >
                     <td data-title="'Company Name'" sortable="'Company_name'" filter="{ 'Company_name': 'text' }">
                         <a href="javascript:;" ng-click="editCompany(b)">{{b.Company_name}}</a>
                     </td>
