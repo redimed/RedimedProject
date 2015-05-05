@@ -37,13 +37,21 @@ angular.module('app.loggedIn.mdtrecall.detail.directive', [])
 				} else {
 					// patient_id 
 					// phanquocchien.c1109g@gmail.com
+					scope.mdtRecallMap.transaction_date = new Date();
 					scope.mdtRecallMap.patient_id = scope.params.patient_id;
 					scope.mdtRecallMap.created_by = scope.params.created_by;
 				}
 				
 			}//end init
 			init();
-
+			//phanquocchien.c1109g@gmail.com
+			//recall date = transation date + period
+			scope.setRecallDate = function(){
+				if (scope.mdtRecallMap.recall_period) {
+					scope.recall_date_temp = moment(scope.mdtRecallMap.transaction_date).add(scope.mdtRecallMap.recall_period,'months');
+					scope.mdtRecallMap.recall_date = new Date(scope.recall_date_temp);
+			    }
+			}
 			scope.actionCenter.updateRecall = function(){
 				mdtRecallService.byId(scope.params.id).then(function(response){
 						if(response.status == 'error') {
