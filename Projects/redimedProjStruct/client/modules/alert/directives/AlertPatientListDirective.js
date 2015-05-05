@@ -33,6 +33,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				description: '',
 				Creation_date: 'desc',
 				Patient_id: scope.patientId,
+				CAL_ID: scope.calId,
 				isEnable:''
 			}
 
@@ -40,6 +41,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
 					var postData = angular.copy(scope.alert.search);
 
+					console.log(postData);
 					AlertModel.listNoFollowPatient(postData)
 					.then(function(response){
 						scope.alert.list = response.data;
