@@ -1,7 +1,14 @@
 angular.module("app.loggedIn.doctor.timetable.detail.leave.controller",[])
 
 .controller("DoctorTimetableDetailLeaveController", function($scope, $state, $stateParams, DoctorService, ConfigService, mdtDoctorService, mdtTimetableService, sysServiceService, REAL_DAY_OF_WEEK, toastr,$modal){
-	
+	$scope.list_day_of_week = [
+		{value: 'Monday'},
+		{value: 'Tuesday'},
+		{value: 'Wednesday'},
+		{value: 'Thursday'},
+		{value: 'Friday'},
+		{value: 'Saturday'}
+	];
 	var submitLeave = function() {
 		//Tan modify
 		ConfigService.beforeSave($scope.leave.errors);

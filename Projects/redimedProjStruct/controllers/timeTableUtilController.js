@@ -23,5 +23,15 @@ module.exports =
     	4:'Thursday',
     	5:'Friday',
     	6:'Saturday'
+    },
+
+    sqlDayOfWeek:{
+        0:1,
+        1:2,
+        2:3,
+        3:4,
+        4:5,
+        5:6,
+        6:7
     }
 }
