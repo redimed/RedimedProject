@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.alert.controllers.patientList', [])
 
-.controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id, AlertModel, toastr){
+.controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id, CAL_ID, AlertModel, toastr){
 	var onSaveCheck = function(data){
 		var postData = angular.copy(data);
 
@@ -13,6 +13,7 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 	
 	$scope.alert = {
 		Patient_id: Patient_id,
+		CAL_ID: CAL_ID,
 		limit: 10,
 		onSaveCheck: function(data){ onSaveCheck(data); }
 	}
@@ -29,6 +30,9 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 			resolve: {
 				Patient_id: function(){
 					return $stateParams.patientId;
+				},
+				CAL_ID: function(){
+					return $stateParams.calId;
 				}
 			}
 		})
@@ -45,6 +49,7 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 		},
 		reload: false,
 		Patient_id: $stateParams.patientId,
+		CAL_ID: $stateParams.calId,
 		limit: 20
 	}
 })

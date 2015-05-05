@@ -12,7 +12,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				$modal.open({
 					templateUrl: 'notifyAlert',
 					controller: function($scope, patient, AlertModel, OutreferralModel){
-						var postData = {Patient_id: patient.Patient_id, limit: 10, offset: 0, Creation_date: 'desc', name: '', description: ''};
+						var postData = {Patient_id: patient.Patient_id, CAL_ID: col.CAL_ID, limit: 20, offset: 0, Creation_date: 'desc', name: '', description: ''};
 
 						$scope.alert = {
 							list: []

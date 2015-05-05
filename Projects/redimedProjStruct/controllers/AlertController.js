@@ -19,9 +19,9 @@ module.exports = {
 				this.select('*').from('cln_patient_alerts')
 				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
 				.where('cln_patient_alerts.patient_id', postData.Patient_id)
-				//.where('cln_patient_alerts.isEnable', 1)
+				.where('cln_patient_alerts.cal_id', postData.CAL_ID)
 			})
-			//.where('cln_alerts.isenable', 1)
+			.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
@@ -34,9 +34,10 @@ module.exports = {
 			.whereNotExists(function(){
 				this.select('*').from('cln_patient_alerts')
 				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
-				.where('cln_patient_alerts.patient_id', postData.Patient_id);
+				.where('cln_patient_alerts.patient_id', postData.Patient_id)
+				.where('cln_patient_alerts.cal_id', postData.CAL_ID);
 			})
-			//.where('cln_alerts.isenable', 1)
+			.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
@@ -64,12 +65,12 @@ module.exports = {
 				'cln_alerts.id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
-				'cln_alerts.Creation_date',
-				'cln_patient_alerts.isEnable'
+				'cln_alerts.Creation_date'
 			)
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
-			//.where('cln_alerts.isenable', 1)
+			.where('cln_patient_alerts.cal_id', postData.CAL_ID)
+			.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
@@ -81,7 +82,8 @@ module.exports = {
 			.count('cln_alerts.id as a')
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
-			//.where('cln_alerts.isenable', 1)
+			.where('cln_patient_alerts.cal_id', postData.CAL_ID)
+			.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
