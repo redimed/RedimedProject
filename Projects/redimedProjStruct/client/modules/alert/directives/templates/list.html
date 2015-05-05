@@ -12,7 +12,7 @@
 					<i class="fa fa-caret-down"></i>
 				</a>
 			</th>
-			<th></th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,13 +31,10 @@
 			<td>{{l.description}}</td>
 			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
-				<a ng-click="alert.dialog.edit(l)">
-					<i class="fa fa-pencil"></i>
-				</a>
-				&nbsp
+				<a><button class="btn btn-primary" ng-click="alert.dialog.edit(l)">Edit</button></a>
 				<a>
-				   	<span  ng-if="l.isenable"  ng-click="alert.disableAlert(l)">Enable</span>
-					<span  ng-if="!l.isenable"  ng-click="alert.disableAlert(l)">Disable</span>
+				   	<button class="btn btn-primary"  ng-if="l.isenable" ng-click="alert.disableAlert(l)">Enable</button>
+					<button class="btn btn-secondary" ng-if="!l.isenable" ng-click="alert.disableAlert(l)">Disable</button>
 				</a>
 			</td>
 		</tr>
