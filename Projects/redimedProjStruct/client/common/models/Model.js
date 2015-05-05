@@ -558,6 +558,7 @@ angular.module("app.model", [])
 	FEE_TYPE_ID: '',
 	IS_REFERRAL: '0',
 	Isenable: '1',
+	IS_BOOKABLE:'1',
 	Created_by: null,
 	Creation_date: null,
 	Last_updated_by: null,
