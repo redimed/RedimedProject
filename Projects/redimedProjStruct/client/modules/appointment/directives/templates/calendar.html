@@ -2,13 +2,13 @@
 	<h3>Notification List</h3>
 	<hr>
 	<span ng-repeat="list in alertCenter.list">
-		<h4 ng-if="list.alert.length > 0 || (list.IS_REFERRAL && list.outreferral_id === 'no')">
+		<h4 ng-if="(list.IS_REFERRAL && list.outreferral_id === 'no')">
 			{{list.First_name}} {{list.Sur_name}}
 			({{list.FROM_TIME}} - {{list.TO_TIME}})
 		</h4>
-		<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+		<!--<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
 			<li>{{alert.name}}</li>
-		</ul>
+		</ul>-->
 		<p ng-if="list.IS_REFERRAL">
 			<b ng-if="list.outreferral_id === 'no'">There is no referral. Please make referral</b>
 		</p>

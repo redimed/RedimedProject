@@ -12,6 +12,8 @@ module.exports = {
 	alertCenter: function(req, res){
 		var postData = req.body.data;
 
+		if(!postData.clinical_dept_id) postData.clinical_dept_id = '';
+
 		var main_sql = knex
 		.distinct(
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
@@ -34,8 +36,7 @@ module.exports = {
 		.innerJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
 		.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
 		.leftOuterJoin('cln_patient_alerts', function(){
-			this.on('cln_patient_alerts.cal_id', '=', 'cln_appointment_calendar.CAL_ID')
-			.andOn('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
+			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){
