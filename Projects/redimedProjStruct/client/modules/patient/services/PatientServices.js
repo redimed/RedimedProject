@@ -97,7 +97,12 @@ angular.module("app.loggedIn.patient.services", [])
     instanceService.getRecallAppointments = function(patient_id) {
         var funcApi = khankAPI.all('patients/recall_appointments');
         return funcApi.post({patient_id: patient_id});
-    }    
+    }   
+    //new getRecallAppoinment
+    instanceService.getRecallAppointmentsNew = function(postData) {
+        var funcApi = khankAPI.all('patients/recall_appointments_new');
+        return funcApi.post({data:postData});
+    }  
      /*
     *  END KHANK 
     */

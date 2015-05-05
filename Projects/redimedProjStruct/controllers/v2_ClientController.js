@@ -85,6 +85,33 @@ module.exports = {
 			res.json(500, {status: 'error', error: error});
 		});
     },
+    postRecallAppointmentsNew: function(req, res) {
+    	var postData = req.body.data;
+
+    	var sql = knex()
+    			.select(
+    				'cln_appointment_calendar.FROM_TIME',
+    				'cln_appointment_calendar.TO_TIME',
+    				'doctors.NAME',
+    				'cln_clinical_depts.CLINICAL_DEPT_NAME',
+    				'sys_services.SERVICE_NAME'
+    				)
+    			.from('cln_appt_patients')
+    			.innerJoin('cln_appointment_calendar', 'cln_appt_patients.CAL_ID', 'cln_appointment_calendar.CAL_ID')
+    			.innerJoin('doctors',  'cln_appointment_calendar.DOCTOR_ID','doctors.doctor_id')
+    			.innerJoin('cln_clinical_depts','cln_appointment_calendar.CLINICAL_DEPT_ID','cln_clinical_depts.CLINICAL_DEPT_ID')
+    			.innerJoin('sys_services','cln_appointment_calendar.SERVICE_ID','sys_services.SERVICE_ID')
+		    	.where('cln_appt_patients.Patient_id', postData.Patient_id)
+		    	.toString();
+
+				db.sequelize.query(sql)
+				.success(function(data){
+					res.json({data: data});
+				}) 
+				.error(function(error){
+		            res.json(500, {error: error,sql:sql});
+		        })
+    },
 
 	postClaims: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
