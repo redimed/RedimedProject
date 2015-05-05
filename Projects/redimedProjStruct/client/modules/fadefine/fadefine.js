@@ -20,7 +20,7 @@ angular.module('app.loggedIn.fadefine',[
 		}
 	})
 	.state('loggedIn.fadefine.detail',{
-		url:'/fa/add',
+		url:'/fa/:action/:headerId',
 		views: {
 			'main-content':{
 				templateUrl:'modules/fadefine/views/detail.html',

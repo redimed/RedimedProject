@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService){
+.controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr){
 
 	//init header definition
 	$scope.header = angular.copy(FaHeaderModel);
@@ -32,6 +32,18 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	});
 
 	$scope.isSectionDropable = true;
+
+	//get header if stateParams.action = edit
+	if($stateParams.action === 'edit' && !!$stateParams.headerId){
+		var getHeaderId = $stateParams.headerId;
+		FaDefineService.getFa(getHeaderId).then(function(getResult){
+			console.log("this is result", getResult);
+			if(getResult.status === 'success'){
+				$scope.header = getResult.data;
+			}
+			else toastr.error("Unexpected error!", 'Error!')
+		})
+	}
 
 	//functions
 	$scope.addSection = function(){

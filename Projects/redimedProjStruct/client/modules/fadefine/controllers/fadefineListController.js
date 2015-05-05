@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.list.controller', [])
-.controller('FaDefineListController', function($scope, FaDefineService, toastr){
+.controller('FaDefineListController', function($scope, $state, FaDefineService, toastr){
 	$scope.fa_panel={};
 
 	var selectedID = null;
@@ -27,9 +27,9 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
                 {
                     class: 'fa fa-info', title: 'Edit',
                     callback: function(item){
-                        console.log('this is selected item',item)
-                            // $scope.medicine.id = item.medicine_id;
-                            // $scope.medicineEditForm.open();
+                        console.log('this is selected item',item);
+                        $state.go('loggedIn.fadefine.detail',{action:'edit', headerId: item.FA_ID});
+                        
                     }
                 },
                 {
