@@ -68,4 +68,8 @@ app.post("/api/TimeSheet/post-history-leave", TimeSheet.LoadHistoryLeave);
 app.post("/api/TimeSheet/post-view-leave", TimeSheet.ViewLeave);
 app.post("/api/TimeSheet/post-submit-view", TimeSheet.SubmitOnViewLeave);
 app.post("/api/TimeSheet/post-load-edit", TimeSheet.LoadLeaveEdit);
+app.post("/api/TimeSheet/post-update-leave", TimeSheet.UpdateLeave);
+app.post("/api/TimeSheet/post-list-leave", TimeSheet.LoadLeaveApprove);
+app.post("/api/TimeSheet/post-approve-leave", TimeSheet.ApproveLeave);
+app.post("/api/TimeSheet/post-reject-leave", TimeSheet.RejectLeave);
 //END lEAVE

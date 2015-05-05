@@ -272,10 +272,39 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 info: info
             });
         };
+
         TimeSheetService.LoadLeaveEdit = function(leaveID) {
             var LoadLeaveEdit = api.all("TimeSheet/post-load-edit");
             return LoadLeaveEdit.post({
                 leaveID: leaveID
+            });
+        };
+
+        TimeSheetService.UpdateLeave = function(info) {
+            var UpdateLeave = api.all("TimeSheet/post-update-leave");
+            return UpdateLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadLeaveApprove = function(info) {
+            var LoadLeaveApprove = api.all("TimeSheet/post-list-leave");
+            return LoadLeaveApprove.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.ApproveLeave = function(info) {
+            var ApproveLeave = api.all("TimeSheet/post-approve-leave");
+            return ApproveLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.RejectLeave = function(info) {
+            var RejectLeave = api.all("TimeSheet/post-reject-leave");
+            return RejectLeave.post({
+                info: info
             });
         };
         //END LEAVE FORM

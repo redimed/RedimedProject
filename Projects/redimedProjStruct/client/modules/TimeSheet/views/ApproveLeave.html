@@ -1,1 +1,126 @@
-Approve Leave
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
+            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.TimeSheetHome">
+                <span style="font-size:15px;font-weight:bold;">Leave Management System</span>
+            </a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a ui-sref="loggedIn.CreateLeave">
+                <span style="font-size:15px;font-weight:bold;">Approve and Manage Leave</span>
+            </a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+    </ul>
+</div>
+<div class="portlet box blue-hoki">
+    <div class="portlet-title">
+        <div class="caption" style="font-size:14px;font-weight:bold;">
+            <i class="fa fa-cogs"></i>List of Leaves
+            <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="portlet-body">
+            <div class="panel-body table-dynamic">
+                <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                </center>
+                <table class="responsive table table-bordered" ng-show="!list.loading">
+                    <thead ng-show="list.result!==null">
+                        <tr>
+                            <th style="width:20%;">
+                                <div class="th">
+                                    Employee
+                                </div>
+                            </th>
+                            <th style="width:20%;">
+                                <div class="th">
+                                    <span class="glyphicon glyphicon-chevron-up" ng-click="clickAsc()" ng-class="{'active': searchObjectMap.order[0]==='ASC'}">
+                            </span>
+                                    <span class="glyphicon glyphicon-chevron-down" ng-click="clickDesc()" ng-class="{ 'active': searchObjectMap.order[0]==='DESC' } ">
+                            </span> Time Leave
+                                </div>
+                            </th>
+                            <th style="width:15%;">
+                                <div class="th">
+                                    Total Hours Leave
+                                </div>
+                            </th>
+                            <th style="width:20%;">
+                                <div class="th">
+                                    Status
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Reason for Leave
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)" style="font-size:14px;">
+                            <td style="width:20%;">
+                                <input type="text" class="input-sm form-control" ng-model="searchObjectMap.search[0]" ng-change="loadList()" />
+                            </td>
+                            <td style="width:20%;">
+                            </td>
+                            <td style="width:15%;">
+                            </td>
+                            <td style="width:20%;">
+                                <select class="form-control input-sm" ng-options="stt.code as stt.name for stt in listStatus" ng-model="searchObjectMap.select[0]" ng-change="loadList()" style="font-size:14px;"></select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr ng-show="list.result===null" style="font-size:14px;">
+                            <td colspan="4">
+                                <h4 class="custom-timesheet">There is no items</h4>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="l in list.result" style="cursor: pointer;font-size:14px; " ng-dblclick="view(l.leave_id)">
+                            <td style="text-align:left;font-size:14px;">
+                                <span>{{((l.FirstName!==undefined && l.FirstName!==null)?l.FirstName:"") +" "+((l.LastName!==undefined && l.LastName!==null)?l.LastName:"")}}</span>
+                            </td>
+                            <td style="font-size:14px; text-align:left;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
+                            <td style="text-align:center;font-size:14px;">
+                                <span>{{l.time_leave|customHours}}</span>
+                            </td>
+                            <td>
+                                <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
+                            're-submitted':l.name==='Re-submitted'}">{{l.name}}</span>
+                            </td>
+                            <td style="text-align:left;font-size:14px;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                    <div class="row ">
+                        <div class="col-ms-6 page-num-info ">
+                            <div class="col-md-4 col-sm-5 ">
+                                <div class="input-group ">
+                                    <span class="custom-timesheet" style="font-size:14px;">Total: {{count}}</span>
+                                    <span class="custom-timesheet" style="font-size:14px;">Show</span>
+                                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;font-size:14px;">
+                                    </select>
+                                    <span class="custom-timesheet" style="font-size:14px;">entries per page</span>
+                                </div>
+                            </div>
+                            <div class="col-ms-6 text-right pagination-container ">
+                                <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                                <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                            </div>
+                        </div>
+                </footer>
+                </div>
+            </div>
+        </div>
+        <script type="text/ng-template " id="ViewLeaveApprove">
+            <view-leaveapprove ng-model="idView" on-cancel="clickCancel(return) " on-reject="clickReject(return)" on-approve="clickApprove(return)"></view-leaveapprove>
+        </script>

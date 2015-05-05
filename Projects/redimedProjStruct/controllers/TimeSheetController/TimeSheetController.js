@@ -2069,8 +2069,10 @@ module.exports = {
                 standard: info.standard,
                 time_leave: info.time_leave_real,
                 reason_leave: info.reason_leave,
+                is_approve_first: 1,
                 user_id: info.USER_ID,
                 status_id: info.statusID,
+                status_id_first: info.statusID,
                 created_by: info.USER_ID
             })
             .success(function(result) {
@@ -2083,7 +2085,7 @@ module.exports = {
                             leave_id: result.dataValues.leave_id,
                             leave_type_id: info.infoTypeLeave[i].leave_type_id,
                             time_leave: info.infoTypeLeave[i].time_leave_real,
-                            other: i === 4 ? info.infoTypeLeave[i].type_other : null,
+                            type_other: i === 4 ? info.infoTypeLeave[i].type_other : null,
                             reason_leave: info.infoTypeLeave[i].reason_leave,
                             created_by: info.USER_ID
                         }));
@@ -2224,7 +2226,7 @@ module.exports = {
         var leave_id = req.body.leave_id;
         var queryView = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, " +
             "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " +
-            "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.other, " +
+            "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " +
             "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " +
             "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, time_task_status.task_status_id " +
             "FROM hr_employee " +
@@ -2300,7 +2302,7 @@ module.exports = {
             "WHERE hr_leave.leave_id = :leaveID";
         var queryLoadLeaveDetailEdit = "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " +
             "hr_leave_detail.reason_leave, " +
-            "hr_leave_detail.other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " +
+            "hr_leave_detail.type_other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " +
             "FROM hr_employee " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
             "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
@@ -2352,10 +2354,48 @@ module.exports = {
     UpdateLeave: function(req, res) {
         var info = req.body.info;
         db.HrLeave.update({
-
+                application_date: info.application_date,
+                start_date: info.start_date,
+                finish_date: info.finish_date,
+                work_date: info.work_date,
+                standard: info.standard,
+                time_leave: info.time_leave_real,
+                reason_leave: info.reason_leave,
+                is_approve_first: 1,
+                is_approve_second: 0,
+                status_id: info.statusID,
+                status_id_first: info.statusID,
+                status_id_second: null,
+                user_id: info.USER_ID,
+                last_updated_by: info.USER_ID
+            }, {
+                leave_id: info.leave_id
             })
             .success(function(result) {
-
+                for (var i = 0; i < info.infoTypeLeave.length; i++) {
+                    chainer.add(db.HrLeaveDetail.update({
+                        time_leave: info.infoTypeLeave[i].time_leave_real,
+                        reason_leave: info.infoTypeLeave[i].reason_leave,
+                        last_updated_by: info.USER_ID,
+                        type_other: i === 4 ? info.infoTypeLeave[i].type_other : null
+                    }, {
+                        leave_detail_id: info.infoTypeLeave[i].leave_detail_id
+                    }));
+                }
+                chainer.runSerially()
+                    .success(function(resultAll) {
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -2366,6 +2406,246 @@ module.exports = {
             });
     },
     //END UPDATE
+
+    //LIST LEAVE APPROVE
+    LoadLeaveApprove: function(req, res) {
+        var info = req.body.info;
+        var searchStr = " AND (",
+            orderStr = " ORDER BY ",
+            selectStr = " AND ";
+        //search
+        if (info.search[0] !== undefined &&
+            info.search[0] !== null &&
+            info.search[0] !== '' &&
+            info.search[0] !== ' ') {
+            searchStr += "hr_employee.FirstName like '%" + info.search[0] +
+                "%' OR hr_employee.LastName like '%" + info.search[0] + "%') ";
+        } else {
+            searchStr = "";
+        }
+        //end search
+
+        //order
+        if (info.order[0] !== undefined &&
+            info.order[0] !== null &&
+            info.order[0] !== '' &&
+            info.order[0] !== ' ') {
+            orderStr += "hr_leave.start_date " + info.order[0];
+        } else {
+            orderStr = "";
+        }
+        //end order
+
+        //sellect
+        if (info.select[0] !== undefined &&
+            info.select[0] !== null &&
+            info.select[0] !== '' &&
+            info.select[0] !== ' ') {
+            selectStr += "time_task_status.task_status_id = " + info.select[0];
+        } else {
+            selectStr = "";
+        }
+        //end select
+
+        var queryGetDept =
+            "SELECT DISTINCT sys_hierarchies_users.DEPARTMENT_CODE_ID, sys_hierarchy_nodes.NODE_CODE, sys_hierarchy_nodes.NODE_ID " + //SELECT
+            "FROM sys_hierarchies_users " + //FROM
+            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+            "WHERE sys_hierarchies_users.USER_ID = :userID"; //WHERE
+        db.sequelize.query(queryGetDept, null, { //GET DEPARTMENT CODE, NODE CODE OF USER
+                raw: true
+            }, {
+                userID: info.USER_ID
+            })
+            .success(function(resultDept) {
+                if (resultDept !== undefined &&
+                    resultDept !== null &&
+                    resultDept[0] !== undefined &&
+                    resultDept[0] !== null) {
+                    var DEPARTMENT_CODE_ID = resultDept[0].DEPARTMENT_CODE_ID;
+                    var NODE_CODE = resultDept[0].NODE_CODE;
+                    var NODE_ID = resultDept[0].NODE_ID;
+                    var queryGetListLeave = "";
+                    var queryGetUserSubordinate = "SELECT DISTINCT sys_hierarchies_users.USER_ID " + //SELECT
+                        "FROM sys_hierarchies_users " + //FROM
+                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //INNER JOIN
+                        "WHERE sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                    db.sequelize.query(queryGetUserSubordinate, null, {
+                            raw: true
+                        }, {
+                            nodeId: NODE_ID,
+                            deptId: DEPARTMENT_CODE_ID
+                        })
+                        .success(function(resultSubordinate) {
+                            var listUser = "";
+                            if (resultSubordinate !== undefined &&
+                                resultSubordinate !== null &&
+                                resultSubordinate.length !== 0) {
+                                for (var i = 0; i < resultSubordinate.length; i++) {
+                                    listUser += resultSubordinate[i].USER_ID + ", ";
+                                }
+                                if (listUser !== "") {
+                                    listUser = listUser.substring(0, listUser.length - 2);
+                                    listUser = "(" + listUser + ")";
+                                } else {
+                                    listUser = "(-1)";
+                                }
+                            }
+
+                            if (NODE_CODE === "Head of Dept.") {
+                                queryGetListLeave =
+                                    "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
+                                    "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
+                                    "time_task_status.task_status_id, time_task_status.name " + //SElECT
+                                    "FROM hr_employee " + //FROM
+                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                    "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                    "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
+                                    "WHERE hr_leave.user_id IN " + listUser +
+                                    " AND hr_leave.is_approve_first = 1 AND hr_leave.is_approve_second = 0 AND (hr_leave.status_id_first=2 OR hr_leave.status_id_first=5)" +
+                                    selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                            } else if (NODE_CODE === "Director") {
+                                queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
+                                    "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
+                                    "time_task_status.task_status_id, time_task_status.name " + //SElECT
+                                    "FROM hr_employee " + //FROM
+                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                    "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                    "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
+                                    "WHERE hr_leave.user_id IN " + listUser +
+                                    " AND hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND (hr_leave.status_id_second===2 OR hr_leave.status_id_second===5)" +
+                                    selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                            } else {
+                                //exception
+                                res.json({
+                                    status: "error",
+                                    result: []
+                                });
+                            }
+                            db.sequelize.query(queryGetListLeave, null, {
+                                    raw: true
+                                }, {
+                                    limit: info.limit,
+                                    offset: info.offset
+                                })
+                                .success(function(resultListLeave) {
+                                    var queryGetStatus = "SElECT time_task_status.task_status_id as code, time_task_status.name " +
+                                        "FROM time_task_status";
+                                    db.sequelize.query(queryGetStatus)
+                                        .success(function(resultGetStatus) {
+                                            res.json({
+                                                status: "success",
+                                                result: resultListLeave,
+                                                listStatus: resultGetStatus
+                                            });
+                                            return;
+                                        })
+                                        .error(function(err) {
+                                            console.log("*****ERROR:" + err + "*****");
+                                            res.json({
+                                                status: "error"
+                                            });
+                                            return;
+                                        });
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error",
+                                        result: []
+                                    });
+                                    return;
+                                });
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error"
+                            });
+                            return;
+                        });
+
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+            });
+
+
+    },
+    //END LIST APPROVE
+
+    // APPROVE LEAVE
+    ApproveLeave: function(req, res) {
+        var info = req.body.info;
+        var dateApprove = moment().format('YYYY-MM-DD h:mm:ss');
+        var queryGetInfoLeave = "SELECT hr_leave.leave_id, hr_leave.standard, hr_leave.is_approve_first, " +
+            "hr_leave.is_approve_second, hr_leave.status_id_first, hr_leave.status_id_second " +
+            "FROM hr_leave " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        db.sequelize.query(queryGetInfoLeave, null, {
+                raw: true
+            }, {
+                leaveID: info.leaveID
+            })
+            .success(function(resultInfoLeave) {
+                if (resultInfoLeave !== undefined &&
+                    resultInfoLeave !== null &&
+                    resultInfoLeave[0] !== undefined &&
+                    resultInfoLeave[0] !== null) {
+
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+            });
+        // if (info !== undefined &&
+        //     info !== null &&
+        //     info.standard === 1) {
+        //     status_id = 3;
+        // } else if (info === 0) {
+
+        // } else {
+        //     res.json({
+        //         status: "error",
+        //         result: []
+        //     });
+        //     return;
+        // }
+    },
+    //END APPROVE
+
+    //REJECT LEAVE
+    RejectLeave: function(req, res) {
+        var info = req.body.info;
+        db.HrLeave.update({
+                status_id: 4,
+                comments: info.comments,
+
+            })
+            .success(function(result) {
+                res.json({
+                    status: "success"
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    //END REJECT
 };
 
 //FUNCTION GET WEEKNO

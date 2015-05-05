@@ -1,7 +1,6 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
     .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService, $stateParams) {
         $scope.info = {};
-        $scope.info.standard = 1;
         // POPUP DATE
         $scope.dateOptions = {
             formatYear: "yy",
@@ -9,6 +8,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
         };
         //END POPUP
         if ($stateParams.id) {
+            $scope.isEdit = true;
             //EDIT
             TimeSheetService.LoadLeaveEdit($stateParams.id).then(function(response) {
                 if (response !== undefined && response !== null &&
@@ -22,8 +22,26 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 }
 
                 $scope.info.infoTypeLeave = response.resultLeaveDetail;
+                //convert time
+                angular.forEach($scope.info.infoTypeLeave, function(leave, index) {
+                    if ($scope.info.infoTypeLeave[index] !== undefined &&
+                        $scope.info.infoTypeLeave[index] !== null &&
+                        $scope.info.infoTypeLeave[index].time_leave !== undefined &&
+                        $scope.info.infoTypeLeave[index].time_leave !== null &&
+                        $scope.info.infoTypeLeave[index].time_leave !== 0 &&
+                        !(isNaN($scope.info.infoTypeLeave[index].time_leave))) {
+                        $scope.info.infoTypeLeave[index].time_leave = StaffService.convertFromFullToShow($scope.info.infoTypeLeave[index].time_leave);
+                        if (index === 0 &&
+                            $scope.info.infoTypeLeave[index].time_leave.length === 4 &&
+                            $scope.info.standard === 0) {
+                            $scope.info.infoTypeLeave[index].time_leave = '0' + $scope.info.infoTypeLeave[index].time_leave;
+                        }
+                    }
+                });
+                //end convert
             });
         } else {
+            $scope.isEdit = false;
             //ADD NEW
             //LOAD INFO EMPLOYEE
             if ($cookieStore.get('userInfo') !== undefined && $cookieStore.get('userInfo') !== null &&
@@ -35,6 +53,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                             response.result !== undefined && response.result !== null &&
                             response.result[0] !== undefined && response.result[0] !== null) {
                             $scope.info = response.result[0];
+                            $scope.info.standard = 1;
                         }
                         //employee
                         $scope.info.application_date = new Date();
@@ -58,54 +77,75 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 toastr.error("You not section!", "Error");
             }
             //END LOAD INFO
+            // LOAD TYPE LEAVE
+            TimeSheetService.LoadTypeLeave().then(function(response) {
+                if (response.status === "success") {
+                    $scope.info.infoTypeLeave = angular.copy(response.result);
+                } else if (response.status === "error") {
+                    $state.go("loggedIn.TimeSheetHome", null, {
+                        "reload": true
+                    });
+                    toastr.error("Load type leave fail!", "Error");
+                } else {
+                    $state.go("loggedIn.TimeSheetHome", null, {
+                        "reload": true
+                    });
+                    toastr.error("Server not response!", "Error");
+                }
+            });
+            //END
         }
         $scope.clickSendServer = function(statusID, formLeave) {
             if (formLeave.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
                 $scope.isRequired = 1;
             } else {
-                //SAVE LEAVE FORM IN SERVER
                 $scope.info.statusID = statusID;
                 $scope.info.USER_ID = $cookieStore.get('userInfo').id;
-                TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
-                    if (response.status === "success") {
-                        toastr.success("Apply for leave success!", "Success");
-                        $state.go("loggedIn.LeaveHistory", null, {
-                            "reload": true
-                        });
-                    } else if (response.status === "error") {
-                        $state.go("loggedIn.TimeSheetHome", null, {
-                            "reload": true
-                        });
-                        toastr.error("Apply for leave fail!", "Error");
-                    } else {
-                        $state.go("loggedIn.TimeSheetHome", null, {
-                            "reload": true
-                        });
-                        toastr.error("Server not response!", "Error");
-                    }
-                });
-                // END SAVE SERVER
+                if ($scope.isEdit === false) {
+                    //ADD
+                    //SAVE LEAVE FORM IN SERVER
+                    TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
+                        if (response.status === "success") {
+                            toastr.success("Apply for leave success!", "Success");
+                            $state.go("loggedIn.LeaveHistory", null, {
+                                "reload": true
+                            });
+                        } else if (response.status === "error") {
+                            $state.go("loggedIn.TimeSheetHome", null, {
+                                "reload": true
+                            });
+                            toastr.error("Apply for leave fail!", "Error");
+                        } else {
+                            $state.go("loggedIn.TimeSheetHome", null, {
+                                "reload": true
+                            });
+                            toastr.error("Server not response!", "Error");
+                        }
+                    });
+                    // END SAVE SERVER
+                } else if ($scope.isEdit === true) {
+                    //UPDATE
+                    TimeSheetService.UpdateLeave($scope.info).then(function(response) {
+                        if (response.status === "success") {
+                            $state.go("loggedIn.LeaveHistory", null, {
+                                "reload": true
+                            });
+                            toastr.success("Update leave success!", "Success");
+                        } else if (response.status === "error") {
+                            toastr.error("Update leave fail!", "Error");
+                        } else {
+                            //catch exception
+                            $state.go("loggedIn.TimeSheetHome", null, {
+                                "reload": true
+                            });
+                            toastr.error("Server not response!", "Error");
+                        }
+                    });
+                }
+
             }
         };
-
-        // LOAD TYPE LEAVE
-        TimeSheetService.LoadTypeLeave().then(function(response) {
-            if (response.status === "success") {
-                $scope.info.infoTypeLeave = angular.copy(response.result);
-            } else if (response.status === "error") {
-                $state.go("loggedIn.TimeSheetHome", null, {
-                    "reload": true
-                });
-                toastr.error("Load type leave fail!", "Error");
-            } else {
-                $state.go("loggedIn.TimeSheetHome", null, {
-                    "reload": true
-                });
-                toastr.error("Server not response!", "Error");
-            }
-        });
-        //END
 
         $scope.changeTime = function() {
             var total_time = 0;

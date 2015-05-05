@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
         leave_type_id: DataTypes.INTEGER(11),
         time_leave: DataTypes.INTEGER(11),
         reason_leave: DataTypes.INTEGER(11),
-        other: DataTypes.STRING(500),
+        type_other: DataTypes.STRING(500),
         creation_date: DataTypes.DATE,
         last_update_date: DataTypes.DATE,
         creted_by: DataTypes.INTEGER(11),

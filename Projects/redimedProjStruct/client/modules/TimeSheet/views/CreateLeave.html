@@ -150,8 +150,8 @@
                                     <label style="margin-top:3px;">{{l.leave_name}}</label>
                                 </div>
                                 <div class="col-md-9" style="margin-bottom:0px;" ng-if="l.leave_type_id===5">
-                                    <div ng-class="{'error-input': ((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='')) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')}" style="width:437px;">
-                                        <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" ng-required="((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='')) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')" />
+                                    <div ng-class="{'error-input': ((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='' && info.infoTypeLeave[$index].time_leave!==0)) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')}" style="width:437px;">
+                                        <input ng-if="l.leave_type_id===5" class="form-control input-sm" style="font-size:14px; width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" ng-required="((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='' && info.infoTypeLeave[$index].time_leave!==0)) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')" />
                                     </div>
                                 </div>
                             </td>
@@ -182,7 +182,8 @@
                 </table>
             </div>
             <div class="row" style="margin-right:-7px;">
-                <a class="btn btn-xs red pull-right" ui-sref="loggedIn.TimeSheetHome" style="width:75px; font-size:14px;">Cancel</a>
+                <a class="btn btn-xs red pull-right" ng-if="isEdit===true" ui-sref="loggedIn.LeaveHistory" style="width:75px; font-size:14px;">Cancel</a>
+                <a class="btn btn-xs red pull-right" ng-if="isEdit===false" ui-sref="loggedIn.TimeSheetHome" style="width:75px; font-size:14px;">Cancel</a>
                 <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px; font-size:14px; ">Submit</button>
                 <button class="btn btn-xs green pull-right" ng-click="clickSendServer(1,formLeave)" style="width:75px; font-size:14px;">Save</button>
             </div>
