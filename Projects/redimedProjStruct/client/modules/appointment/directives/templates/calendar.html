@@ -1,4 +1,6 @@
 <div id="alert-center" class="bv-right-list">
+	<h3>Notification List</h3>
+	<hr>
 	<span ng-repeat="list in alertCenter.list">
 		<h4 ng-if="list.alert.length > 0 || (list.IS_REFERRAL && list.outreferral_id === 'no')">
 			{{list.First_name}} {{list.Sur_name}}
