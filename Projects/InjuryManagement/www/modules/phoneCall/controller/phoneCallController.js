@@ -137,6 +137,7 @@ angular.module('starter.phoneCall.controller',[])
                 session = TB.initSession($scope.apiKey, $scope.sessionID);
                 session.on({
                     'streamCreated': function (e) {
+                        console.log(e);
                         if(e.stream.connection.connectionId == session.connection.connectionId){
                             return;
                         }
@@ -151,13 +152,7 @@ angular.module('starter.phoneCall.controller',[])
                             width: 264,
                             height: 198
                         });
-
                         TB.updateViews();
-
-                        //$timeout(function(){
-                        //    TB.updateViews();
-                        //}, 0.5 * 1000);
-
                     }
                 });
                 session.connect($scope.tokenID, function (error) {

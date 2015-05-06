@@ -42,7 +42,7 @@ angular.module('starter', ['ionic',
     })
 
     .factory('signaling', function (socketFactory, HOST_CONFIG) {
-        var socket = io.connect("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true, 'force new connection': false});
+        var socket = io.connect("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/", {'secure':true, reconnect: true, 'force new connection': false});
 
         var socketFactory = socketFactory({
             ioSocket: socket
@@ -53,7 +53,7 @@ angular.module('starter', ['ionic',
 
     .config(function($stateProvider, $urlRouterProvider, RestangularProvider, HOST_CONFIG) {
 
-        RestangularProvider.setBaseUrl("http://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
+        RestangularProvider.setBaseUrl("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port);
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state("init", {
@@ -102,7 +102,7 @@ angular.module('starter', ['ionic',
 
         localStorageService.set('mode','read');
 
-        $rootScope.$on("$stateChangeSuccess", function(e, toState,toParams, fromState, fromParams) {
+        $rootScope.$on("$stateChangeSuccess", function (e, toState,toParams, fromState, fromParams) {
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
                 if(toState.name !== "security.forgot" && toState.name !== "security.login") {
@@ -120,7 +120,11 @@ angular.module('starter', ['ionic',
             if( $state.is("app.mainBluetooth")) {
                 window.bluetooth.enable();
             }
-            ionPlatform.ready.then(function (device) {
+
+            if($state.is("app.phoneCall")) {
+                screen.lockOrientation('landscape');
+            }
+            document.addEventListener("deviceready", function() {
 
                 var config = null;
 
@@ -142,15 +146,35 @@ angular.module('starter', ['ionic',
                     console.log("Register Push Notification Status: " + err)
                 });
             });
-            if($state.is("app.phoneCall")) {
-                screen.lockOrientation('landscape');
-            }
         });
+
+        document.addEventListener("deviceready", function() {
+            checkConnection();
+            $rootScope.$on("$stateChangeSuccess", function () {
+                checkConnection();
+            });
+        });
+
+        function checkConnection() {
+            var networkState = navigator.connection.type;
+            var states = {};
+            $rootScope.popupMessage = {message : "Check your connection and try again."};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.CELL]     = 'Cell generic connection';
+            states[Connection.NONE]     = 'No network connection';
+            if(networkState == Connection.NONE) {
+                $ionicPopup.show({
+                    templateUrl: 'modules/popup/PopUpError.html',
+                    scope: $rootScope,
+                    buttons: [
+                        { text: "Ok" },
+                    ]
+                });
+            }
+        }
     });
-//if (!OT) {
-//    var OT = {};
-//}
-//OT.onLoad = function(fn) {
-//    document.addEventListener('deviceReady', fn);
-//};
-//OT.$ = OT.getHelper();

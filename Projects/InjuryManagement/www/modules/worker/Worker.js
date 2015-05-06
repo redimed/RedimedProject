@@ -16,26 +16,26 @@ angular.module('starter.worker', [
             }
         })
         .state('app.worker.add',{
-            url:"/add",
+            url:"/firstInfo",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/add.html"
+                    templateUrl: "modules/worker/views/first.html"
                 }
             }
         })
         .state('app.worker.main', {
-            url:"/main",
+            url:"/secondInfo",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/main.html"
+                    templateUrl: "modules/worker/views/second.html"
                 }
             }
         })
         .state('app.worker.second', {
-            url:"/second",
+            url:"/last",
             views: {
                 'content':{
-                    templateUrl: "modules/worker/views/second.html"
+                    templateUrl: "modules/worker/views/last.html"
                 }
             }
         })

@@ -1,7 +1,7 @@
 angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $rootScope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
-                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
+                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading, $ionicPlatform){
         $scope.notifications = [];
 
         $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
@@ -60,15 +60,33 @@ angular.module('starter.security.login.controller',[])
 
         signaling.on('isError', function () {
             $ionicLoading.hide();
-            cordova.plugins.Keyboard.close();
-            var alertPopup = $ionicPopup.confirm({
-                title: "Can't Login",
-                template: 'Account is using!'
-            }).then( function(result) {
-                if(result){
-                    signaling.emit('forceLogin', $scope.modelUser.username);
-                }
+            document.addEventListener("deviceready", function() {
+                cordova.plugins.Keyboard.close();
+            });
+            $scope.popupMessage = {message: "Can't login. Because account is using!"};
+            $ionicPopup.show({
+                templateUrl: 'modules/popup/PopUpConfirm.html',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<span>Yes, push out!</span>',
+                        type: 'button button-assertive',
+                        onTap: function(e) {
+                            signaling.emit('forceLogin', $scope.modelUser.username);
+                        }
+                    }
+                ]
             })
+            //$scope.popupMessage = {message: "Can't login. Because account is using!"};
+            //$ionicPopup.confirm({
+            //    templateUrl: 'modules/popup/PopUpConfirm.html',
+            //    scope: $scope
+            //}).then( function(result) {
+            //    if(result){
+            //        signaling.emit('forceLogin', $scope.modelUser.username);
+            //    }
+            //})
         });
 
         signaling.on('isSuccess', function () {
@@ -90,16 +108,40 @@ angular.module('starter.security.login.controller',[])
                 signaling.emit('checkLogin', $scope.modelUser.username);
             }, function(error) {
                 $ionicLoading.hide();
-                $ionicPopup.alert({
-                    title: "Can't Login",
-                    template: 'Invalid Username or Password!'
-                })
+                document.addEventListener("deviceready", function() {
+                    var networkState = navigator.connection.type;
+                    if(networkState == Connection.NONE) {
+                        $scope.popupMessage = {message : "Check your connection and try again."};
+                        $ionicPopup.show({
+                            templateUrl: 'modules/popup/PopUpError.html',
+                            scope: $scope,
+                            buttons: [
+                                { text: "Ok" },
+                            ]
+                        });
+                    } else {
+                        $scope.popupMessage = {message : "Invalid username or password."};
+                        $ionicPopup.show({
+                            templateUrl: 'modules/popup/PopUpError.html',
+                            scope: $scope,
+                            buttons: [
+                                { text: "Ok" },
+                            ]
+                        });
+                    }
+                });
+                //$ionicPopup.alert({
+                //    title: "Can't Login",
+                //    template: 'Invalid Username or fPassasdfasdfword!'
+                //})
             });
         }
 
         $scope.keyPress = function(keyCode) {
             if(keyCode == '13' && $scope.modelUser.username && $scope.modelUser.password){
-                cordova.plugins.Keyboard.close();
+                document.addEventListener("deviceready", function() {
+                    cordova.plugins.Keyboard.close();
+                });
                 $scope.loginApp();
             }
         }
@@ -120,68 +162,80 @@ angular.module('starter.security.login.controller',[])
                 signaling.on('login_success',function(){
                     UserService.detail().then(function(response) {
 
-                    if(typeof response.userInfo !== 'undefined')
-                        localStorageService.set("userInfo", response.userInfo);
+                        if(typeof response.userInfo !== 'undefined')
+                            localStorageService.set("userInfo", response.userInfo);
 
-                    
 
-                    if(typeof response.companyInfo !== 'undefined')
-                        localStorageService.set("companyInfo", response.companyInfo);
 
-                    if(response.userInfo['function_mobile'] != null){
-                        UserService.getFunction(response.userInfo['function_mobile']).then(function(data) {
-                            var rs = data.definition.split('(');
-                            if(rs[0] != null)
+                        if(typeof response.companyInfo !== 'undefined')
+                            localStorageService.set("companyInfo", response.companyInfo);
+
+                        if(response.userInfo['function_mobile'] != null){
+                            UserService.getFunction(response.userInfo['function_mobile']).then(function(data) {
+                                var rs = data.definition.split('(');
+                                if(rs[0] != null)
+                                {
+                                    if(rs[1] != null)
+                                    {
+                                        var r = rs[1].split(')');
+                                        var params = eval("("+r[0]+")");
+
+                                        $state.go(rs[0],params,{reload:true});
+                                    }
+                                    else
+                                    {
+                                        $state.go(rs[0],{reload:true});
+                                    }
+                                }
+                            })
+                        }
+                        else
+                        {
+                            if(localStorageService.get("userInfo").UserType.user_type == "Driver")
                             {
-                                if(rs[1] != null)
-                                {
-                                    var r = rs[1].split(')');
-                                    var params = eval("("+r[0]+")");
-
-                                    $state.go(rs[0],params,{reload:true});
-                                }
-                                else
-                                {
-                                    $state.go(rs[0],{reload:true});
-                                }
+                                $ionicLoading.hide();
+                                $state.go('app.driver.list');
                             }
-                        })
-                    }
-                    else
-                    {
-                        if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                        {
-                            $ionicLoading.hide();
-                            $state.go('app.driver.list');
+                            else if(localStorageService.get("userInfo").UserType.user_type == "Company")
+                            {
+                                $ionicLoading.hide();
+                                $state.go('app.injury.info');
+                            }
+                            else {
+                                $ionicLoading.hide();
+                                $state.go('app.injury.info');
+                            }
                         }
-                        else if(localStorageService.get("userInfo").UserType.user_type == "Company")
-                        {
-                            $ionicLoading.hide();
-                            $state.go('app.injury.info');
-                        }
-                        else {
-                            $ionicLoading.hide();
-                            $state.go('app.injury.info');
-                        }
-                    }
-                    $ionicLoading.hide();
-                });
-            })
-                
+                        $ionicLoading.hide();
+                    });
+                })
+
             }, function(error) {
                 $ionicLoading.hide();
                 console.log(error);
-                $ionicPopup.alert({
-                    title: "Can't Login",
-                    template: 'Please Check Your Information!'
-                })
+                $scope.popupMessage = {message : "Please check your information."};
+                $ionicPopup.show({
+                    templateUrl: 'modules/popup/PopUpError.html',
+                    scope: $scope,
+                    buttons: [
+                        { text: "Ok" },
+                    ]
+                });
+                //$ionicPopup.alert({
+                //    title: "Can't Login",
+                //    template: 'Please Check Your Information!'
+                //})
             });
         }
 
-        // Get Current Offset() div
-        //$('#B').click(function(e) {
-        //    alert('ClICK');
-        //    var posX = $(this).offset().left, posY = $(this).offset().top;
-        //    alert((e.pageX - posX)+ ' , ' + (e.pageY - posY));
-        //});
+        $scope.demoShowpopup = function() {
+            $scope.popupMessage = { message: "Please select patient, before using Bluetooth." };
+            $ionicPopup.show({
+                templateUrl: "modules/popup/PopUpError.html",
+                scope: $scope,
+                buttons: [
+                    { text: "Ok" }
+                ]
+            });
+        }
     });

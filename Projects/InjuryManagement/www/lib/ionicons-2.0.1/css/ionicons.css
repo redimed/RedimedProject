@@ -403,7 +403,7 @@
 
 .ion-close-circled:before { content: "\f128"; }
 
-.ion-close-round:before { content: "\f129"; }
+.ion-close-round:before { content: "\f129"; color: #ef4e3a}
 
 .ion-closed-captioning:before { content: "\f317"; }
 

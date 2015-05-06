@@ -115,62 +115,108 @@ angular.module('starter.worker.add.controller',[])
             });
         }
 
-        $scope.Checkfield = function (isMobile) {
+        $scope.checkField = function (isMobile) {
             if(isMobile)
             {
-                WorkerServices.checkMobile($scope.worker.Mobile).then(function(data){
-                    if(data.status == 'success')
-                    {
-                        if(data.count == 0)
+                $scope.iconLoadingMobile = true;
+                if($scope.worker.Mobile == '' || typeof $scope.worker.Mobile == 'undefined') {
+                    $timeout(function(){
+                        $scope.iconLoadingMobile = false;
+                        $scope.iconSuccessMobile = false;
+                        $scope.iconErrorMobile = false;
+                    }, 0.1 * 1000);
+                } else {
+                    WorkerServices.checkMobile($scope.worker.Mobile).then(function(data){
+                        $scope.iconSuccessMobile = false;
+                        $scope.iconErrorMobile = false;
+                        if(data.status == 'success')
                         {
-                            $scope.isFailMobile = false;
+                            if(data.count == 0)
+                            {
+                                $scope.isFailMobile = false;
+                            }
+                            else
+                            {
+                                $scope.isFailMobile = true;
+                            }
+                            $timeout(function(){
+                                $scope.iconLoadingMobile = false;
+                                if($scope.isFailMobile){
+                                    $scope.iconLoadingMobile = false;
+                                    $scope.iconErrorMobile = true;
+                                } else {
+                                    $scope.iconSuccessMobile = true;
+                                }
+                            }, 2 * 1000);
                         }
-                        else
-                        {
-                            $scope.isFailMobile = true;
-                        }
-                    }
-
-                })
+                    })
+                }
             }
             else
             {
                 WorkerServices.checkEmail($scope.worker.Email).then(function (data) {
-                    if (data.status == 'success')
-                    {
-                        if (data.data.length == 0) {
-                            $scope.isFailEmail = false;
-                        }
-                        else {
-                            $scope.isFailEmail = true;
+                    if(typeof $scope.worker.Email == 'undefined') {
+                        $scope.iconLoadingMail = true;
+                        $scope.iconSuccessMail = false;
+                        $scope.iconErrorMail = false;
+                        $timeout(function(){
+                            $scope.iconLoadingMail = false;
+                            $scope.iconSuccessMail = false;
+                        }, 10 * 1000);
+                    } else {
+                        if (data.status == 'success')
+                        {
+                            $scope.iconLoadingMail = false;
+                            if (data.data.length == 0) {
+                                $scope.iconSuccessMail = true;
+                                $scope.isFailEmail = false;
+                            }
+                            else {
+                                $scope.iconErrorMail = true;
+                                $scope.isFailEmail = true;
+                            }
                         }
                     }
-
                 })
             }
         }
 
-        $scope.nextFormMain = function(infor) {
+        $scope.nextFormFirst = function(first) {
             $scope.isSubmit = true;
-            if (infor.$invalid){
-                var alertPopup = $ionicPopup.alert({
-                    title: "Can't next form",
-                    template: 'Please Check Your Information!'
+            if (first.$invalid || $scope.dateError) {
+                $scope.popupMessage = { message:"Please check your information!" };
+                $ionicPopup.show({
+                    templateUrl: "modules/popup/PopUpError.html",
+                    scope: $scope,
+                    buttons: [
+                        { text: "Ok" }
+                    ]
                 });
-            }
-            else
-            {
-                $state.go("app.worker.main");
+            } else {
+                $state.go('app.worker.main');
             }
         }
 
-        $scope.nextFormSecond = function(main) {
+        $scope.changeDOBworker = function() {
+            var today = new Date().getFullYear();
+            if($scope.worker.DOB.split("-")[0] >= today.toString() || $scope.worker.DOB == '') {
+                $scope.dateError = true;
+            } else {
+                $scope.dateError = false;
+            }
+        }
+
+        $scope.nextFormSecond = function(last) {
             $scope.isSubmit2 = true;
-            if (main.$invalid){
-                var alertPopup = $ionicPopup.alert({
-                    title: "Can't next form",
-                    template: 'Please Check Your Information!'
-                });
+            if (last.$invalid){
+                $scope.popupMessage = { message:"Please check your information!" };
+                $ionicPopup.show({
+                    templateUrl: "modules/popup/PopUpError.html",
+                    scope: $scope,
+                    buttons: [
+                        { text: "Ok" }
+                    ]
+                })
             }
             else
             {
@@ -185,31 +231,26 @@ angular.module('starter.worker.add.controller',[])
         }
 
         //submit worker check true false
-        $scope.submit = function (workerForm, second) {
+        $scope.submitInsertWorker = function (workerForm, last) {
             $scope.isSubmit3 = true;
-            if (second.$invalid) {
-                var alertPopup = $ionicPopup.alert({
-                    title: "Can't insert worker",
-                    template: 'Please Check Your Information!'
+            if (last.$invalid) {
+                $scope.popupMessage = { message:"Please check your information!" };
+                $ionicPopup.show({
+                    templateUrl: "modules/popup/PopUpError.html",
+                    scope: $scope,
+                    buttons: [
+                        { text: "Ok" }
+                    ]
                 });
                 return;
-            }
+            };
             if($scope.injurySubmitNonemer)
             {
-                //have id worker submit booking
                 $state.go('app.chooseAppointmentCalendar');
             }
             else
             {
                 WorkerServices.insertWorker({patient: $scope.worker}).then(function (data) {
-                    if (data.status != 'success') {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Cannot Insert',
-                            template: 'Please Check Your Information!'
-                        });
-                        return;
-                    }
-
                     $ionicLoading.show({
                         template: "<div class='icon ion-ios7-reloading'></div>"+
                         "<br />"+
@@ -219,30 +260,49 @@ angular.module('starter.worker.add.controller',[])
                         maxWidth: 200,
                         showDelay: 0
                     });
-
-                    $timeout(function () {
-                        reset();
+                    console.log(data);
+                    if (data.status != 'success') {
                         $ionicLoading.hide();
-                        var alertPopup = $ionicPopup.confirm({
-                            title: 'Insert Successfully',
-                            template: 'We have added worker to company! You want write NFC to tag?'
-                        });
-
-                        alertPopup.then(function(res){
-                            if(res){
-
-                                $scope.nfcInfo = data;
-                                $state.go('app.worker.writeNFC');
-                            }else{
-                                console.log("No Write");
-                            }
+                        $scope.popupMessage = { message:"Please check your information!" };
+                        $ionicPopup.show({
+                            templateUrl: "modules/popup/PopUpError.html",
+                            scope: $scope,
+                            buttons: [
+                                { text: "Ok" }
+                            ]
                         })
-                    }, 2000);
+                        return;
+                    } else {
+                        $timeout(function () {
+                            reset();
+                            $ionicLoading.hide();
+                            $scope.popupMessage = { message: "We have added worker to company. Do you want write NFC to tag?" };
+                            $ionicPopup.show({
+                                templateUrl: "modules/popup/PopUpSuccess.html",
+                                scope: $scope,
+                                buttons: [
+                                    {
+                                        text: "Cancel",
+                                        onTap: function() {
+                                            $state.go('app.worker.add', {reload: true});
+                                        }
+                                    },
+                                    {
+                                        text: "Yes, I do",
+                                        type: "button button-assertive",
+                                        onTap: function(e) {
+                                            $scope.nfcInfo = data;
+                                            $state.go('app.worker.writeNFC');
+                                        }
+                                    }
+                                ]
+                            })
+                        }, 2000);
+                    }
                 })
             }
         }
         init();
-       
 
         if($scope.nfcInfo.length == 0){
             $scope.nfcInfo = localStorageService.get('newInfo');
