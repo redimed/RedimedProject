@@ -4,6 +4,8 @@
  */
 
 var moment=require('moment');
+var jf = require('jsonfile');
+var util = require('util');
 
 /**
  * Xuat log
@@ -18,6 +20,17 @@ function exlog()
         console.log(arguments[i]);
     }
     console.log("END KISS LOG---------------------------------\n\n");
+}
+
+function exFileJSON(data,fileName)
+{
+    
+    var file = './temp/'+fileName;
+    var obj = {name: 'JP'}
+     
+    jf.writeFile(file, data, function(err) {
+      console.log(err);
+    })
 }
 
 
@@ -60,11 +73,72 @@ function checkListData()
     return true;
 }
 
+
+/**
+ * Ham thuc thi mot cau truy van
+ * logQuery=true=> xuat log cau query dang chay
+ * logResult=true=>xuat log ket qua cau query dang chay
+ * tannv.dts@gmail.com
+ */
+function executeQuery(req,sql,params,functionSuccess,functionError,logQuery,logResult)
+{
+    if(checkData(req.kissConnection))
+    {
+        execute();
+    }
+    else
+    {
+        req.getConnection(function(err,connection)
+        {
+            if(!err)
+            {
+                req.kissConnection=connection;
+                execute();
+            }
+            else
+            {
+                exlog("kissUtil","executeQuery error","Err","Khong lay duoc connection");
+                functionError(err);
+                return;
+            }
+        });
+    }
+
+    function execute()
+    {
+        var query = req.kissConnection.query(sql,params,function(err,result)
+        {
+            if(!err)
+            {
+                if(logQuery===true)
+                {
+                    if(logResult===true)
+                    {
+                        exlog("kissUtil","executeQuery success",query.sql,result);
+                    }
+                    else
+                    {
+                        exlog("kissUtil","executeQuery success",query.sql);
+                    }
+                } 
+                functionSuccess(result);
+                return;
+            }
+            else
+            {
+                exlog("kissUtil","executeQuery error",query.sql,err);
+                functionError(err);
+                return;   
+            }
+        });
+    }
+}
+
 module.exports =
 {
 
     exlog:exlog,
-
+    exFileJSON:exFileJSON,
     /**
      * tannv.dts@gmail.com
      * reference: http://stackoverflow.com/questions/2998784/how-to-output-integers-with-leading-zeros-in-javascript
@@ -86,6 +160,12 @@ module.exports =
     isEmpty:isEmpty,
 
     haveData:haveData,
+
+    status:{
+        success:'success',
+        fail:'fail',
+        ask:'ask'
+    },
 
     /**
      * Tao ra 1 key moi cho row moi cua table
@@ -231,7 +311,9 @@ module.exports =
      * logResult=true=>xuat log ket qua cau query dang chay
      * tannv.dts@gmail.com
      */
-    executeQuery:function(req,sql,params,functionSuccess,functionError,logQuery,logResult)
+    executeQuery:executeQuery,
+
+    executeInsert:function(req,tableName,listData,functionSuccess,functionError,logQuery,logResult)
     {
         if(checkData(req.kissConnection))
         {
@@ -248,7 +330,7 @@ module.exports =
                 }
                 else
                 {
-                    exlog("kissUtil","executeQuery error","Err","Khong lay duoc connection");
+                    exlog("kissUtil","executeInsert error","Err","Khong lay duoc connection");
                     functionError(err);
                     return;
                 }
@@ -257,31 +339,62 @@ module.exports =
 
         function execute()
         {
-            var query = req.kissConnection.query(sql,params,function(err,result)
+            var getKeys = function(obj){
+                var keys = [];
+                for(var key in obj){
+                    keys.push(key);
+                }
+                return keys;
+            }
+            var getValues=function(obj){
+                var values = [];
+                for(var key in obj){
+                    values.push(obj[key]);
+                }
+                return values;
+            }
+            if(listData.length>0)
             {
-                if(!err)
+                var columns=getKeys(listData[0]);
+                var values=[];
+                for(var i=0;i<listData.length;i++)
                 {
-                    if(logQuery===true)
+                    values.push(getValues(listData[i]));
+                }
+             
+                var sql="insert into ?? (??) values ?";
+                var query = req.kissConnection.query(sql,[tableName,columns,values],function(err,result)
+                {
+                    if(!err)
                     {
-                        if(logResult===true)
+                        if(logQuery===true)
                         {
-                            exlog("kissUtil","executeQuery success",query.sql,result);
-                        }
-                        else
-                        {
-                            exlog("kissUtil","executeQuery success",query.sql);
-                        }
-                    } 
-                    functionSuccess(result);
-                    return;
-                }
-                else
-                {
-                    exlog("kissUtil","executeQuery error",query.sql,err);
-                    functionError(err);
-                    return;   
-                }
-            });
+                            if(logResult===true)
+                            {
+                                exlog("kissUtil","executeQuery success",query.sql,result);
+                            }
+                            else
+                            {
+                                exlog("kissUtil","executeQuery success",query.sql);
+                            }
+                        } 
+                        functionSuccess(result);
+                        return;
+                    }
+                    else
+                    {
+                        exlog("kissUtil","executeQuery error",query.sql,err);
+                        functionError(err);
+                        return;   
+                    }
+                });
+            }
+            else
+            {
+                functionError({msg:'Data rong'});
+            }
+            
+            
         }
     },
 
@@ -314,6 +427,21 @@ module.exports =
         }   
         exlog("tokenBinding",strSrc);
         return strSrc;
+    },
+
+    getSessionCode:function(req,note,functionSuccess,functionError)
+    {
+        if(note===undefined)
+            note=null;
+        var insertInfo={
+            note:note
+        }
+        var sql="insert into SYS_SESSION set ?";
+        executeQuery(req,sql,[insertInfo],function(result){
+            functionSuccess(result.insertId);
+        },function(err){
+            functionError(err); 
+        });
     }
     
 }

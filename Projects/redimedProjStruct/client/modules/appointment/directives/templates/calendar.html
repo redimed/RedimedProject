@@ -1,3 +1,21 @@
+<div id="alert-center" class="bv-right-list">
+	<h3>Notification List</h3>
+	<hr>
+	<span ng-repeat="list in alertCenter.list">
+		<h4 ng-if="(list.IS_REFERRAL && list.outreferral_id === 'no')">
+			{{list.First_name}} {{list.Sur_name}}
+			({{list.FROM_TIME}} - {{list.TO_TIME}})
+		</h4>
+		<!--<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+			<li>{{alert.name}}</li>
+		</ul>-->
+		<p ng-if="list.IS_REFERRAL">
+			<b ng-if="list.outreferral_id === 'no'">There is no referral. Please make referral</b>
+		</p>
+	</span>
+</div>
+<div class="bv-arrow" ng-click="clickArrow()"></div>
+
 <div id="appointment">
 	<div class="row">
 		<!-- DATEPICKER -->
@@ -45,7 +63,8 @@
 		<div class="appointment-row" ng-repeat="app in appointment.list">
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
-				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)">
+				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)"
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}'}">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
@@ -55,7 +74,10 @@
 				<span ng-if="col.PATIENTS === 'ok'">
 					<span ng-repeat="patient in col.patients">
 						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)">
-							{{patient.First_name}} {{patient.Sur_name}}&nbsp;
+							<span>
+								{{patient.First_name}} {{patient.Sur_name}}
+							</span>
+							&nbsp;
 							<a ng-click="showDropdown(patient, col)">
 								<i class="fa fa-caret-right"></i>
 							</a>
@@ -84,13 +106,13 @@
 
 <script type="text/ng-template" id="appointmentAdd">
 	<div class="modal-body">	
-		<appointment-add params="appointment" patient="patient"></appointment-add>
+		<appointment-add params="appointment" patient="patient" options="options"></appointment-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="patientAdd">
-	<div class="modal-body">	
-		<patient-detail options="options"></patient-detail>
+	<div class="modal-body">
+		<patient-detail options="options" params="params" onsuccess="onsuccess" patient="onsuccess"></patient-detail>
 	</div>
 </script>
 
@@ -146,9 +168,9 @@
 
 <script type="text/ng-template" id="claimSelect">
 	<div class="modal-body">	
-		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true"
+		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true" add-success="claim.addSuccess"
 			cal-id="claim.CAL_ID"
-			permission="{edit: false, remove: false}" on-row-click="claim.clickRow(row)">
+			permission="{edit: false, remove: false, add: true}" on-row-click="claim.clickRow(row)">
 		</claim-patient-list>
 	</div>
 </script>
@@ -162,16 +184,16 @@
 
 <script type="text/ng-template" id="referralSelect">
 	<div class="modal-body">	
-		<outreferral-patient-list reload="reload" limit="limit" 
-			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)">
+		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
+			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
+			permission="{edit: false, remove: false, add: true}">
 		</outreferral-patient-list>
 	</div>
 </script>
 
 <script type="text/ng-template" id="notifyAlert">
 	<div class="modal-body">
-		<h4>Outside Referral</h4>
-		{{outreferral.name}}
+		<p>{{outreferral.name}}</p>
 		<h4>Alert List</h4>
 		<ul>
 			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>

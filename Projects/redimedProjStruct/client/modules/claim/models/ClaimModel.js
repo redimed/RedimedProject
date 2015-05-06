@@ -38,10 +38,6 @@ angular.module("app.loggedIn.claim.model", [])
         var detailApi = appApi.all('one');
         return detailApi.post({data: data});   
     }
-    instanceService.disableClaim = function(data){
-        var detailApi = appApi.all('disableClaim');
-        return detailApi.post({data: data});   
-    }
 
     return instanceService;
 })

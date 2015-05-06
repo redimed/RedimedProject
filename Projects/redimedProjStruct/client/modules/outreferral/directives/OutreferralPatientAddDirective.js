@@ -11,7 +11,7 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 		templateUrl: 'modules/outreferral/directives/templates/patientAdd.html',
 		link: function(scope, elem, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
-
+			var user_type = $cookieStore.get('userInfo').user_type;
 			var form = {
 				CAL_ID: scope.calId,
 				patient_id: scope.patientId,
@@ -47,7 +47,16 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					ConfigService.beforeError(scope.outreferral.errors);
 				})
 			}
-
+			var load = function(){
+				var postData = user_id;
+				if (user_type == 4) {
+					OutreferralModel.DotorFromUserId(postData)
+					.then(function(response){
+						scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
+						scope.referdoctor.name = response.data[0].NAME;
+					}, function(error){})
+				};
+			}
 			var outdoctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectOutdoctorDialog',
@@ -97,8 +106,30 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					select: function(){ doctorSelect(); }
 				}
 			}
-
+			scope.onChange = function(){
+				if (scope.outreferral.form.date_started !=null ) {
+					if (scope.outreferral.form.duration == null) {
+					scope.outreferral.form.expire_date = scope.outreferral.form.date_started;
+					}
+					else{
+					var a = parseInt(scope.outreferral.form.duration);
+					var date_started = ConfigService.convertToDB(scope.outreferral.form.date_started)
+					date_started = moment(date_started).format();
+					var b = moment(date_started).add(a,'months').toString();
+					var date = moment(b).format('YYYY-MM-DD');
+					date = ConfigService.convertToDate(date);
+					scope.outreferral.form.expire_date = date;
+					}
+				};
+			}
+			scope.outreferral = {
+				form: angular.copy(form),
+				load: function(){ load(); },
+				errors: [],
+				save: function(){ save(); }
+			}
 			//INIT
+			scope.outreferral.load();
 		}
 	}
 })//END Claim List

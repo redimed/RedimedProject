@@ -328,25 +328,40 @@ module.exports = {
 
         }
 
-        db.User.update({
-           password:byscrip
-        },{Contact_email:femail}).success(function(data){
+        db.User.find({where:{Contact_email : femail}},{raw:true})
+            .success(function(data){
+                if(data)
+                {
+                    db.User.update({
+                       password:byscrip
+                    },{Contact_email:femail}).success(function(data){
 
-            transport.sendMail(mailOptions, function(error, response){  //callback
-                if(error){
-                    console.log(error);
-                    res.json({status:"fail"});
-                }else{
-                    console.log("Message sent: " + response.message);
-                    res.json({status:"success"});
+                        transport.sendMail(mailOptions, function(error, response){  //callback
+                            if(error){
+                                console.log(error);
+                                res.json({status:"error"});
+                            }else{
+                                console.log("Message sent: " + response.message);
+                                res.json({status:"success"});
+                            }
+                            transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
+                        });
+
+
+                    }).error(function(err){
+                        res.json({status:'Error'});
+                    })
                 }
-                transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
-            });
+                else
+                    res.json({status:'error'});
 
+            })
+            .error(function(err){
+                console.log(err);
+                res.json({status:'error'});
+            })
 
-        }).error(function(err){
-            res.json({status:'Error'});
-        })
+        
 
     },
     checkEmail: function(req,res){

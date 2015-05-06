@@ -38,10 +38,25 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 
 		checkCallInfo = $interval(function(){
 			refresh($scope.patient_id);
-			if(typeof $cookieStore.get('callInfo') !== 'undefined')
+
+			if(callModal.active())
 			{
-				$scope.callInfo = $cookieStore.get('callInfo');
+				if(typeof $cookieStore.get('callInfo') !== 'undefined')
+					$scope.callInfo = $cookieStore.get('callInfo');
 			}
+			else
+			{
+				if(typeof $cookieStore.get('callInfo') !== 'undefined')
+				{
+					$scope.callInfo = {
+						isCalling: null,
+						callUser: null
+					};
+					$cookieStore.remove("callInfo");
+					
+				}
+			}
+			
 		},1 * 1000);
 
 	    $scope.refreshList = function(){
@@ -63,9 +78,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				var fName = [];
-				fName.push(rs.data.First_name);
-				fName.push(rs.data.Sur_name);
-				fName.push(rs.data.Middle_name);
+				fName.push(rs.data.First_name,rs.data.Sur_name,rs.data.Middle_name);
 
 				$scope.patientInfo = rs.data;
 				$scope.patientInfo.FullName = 
@@ -236,10 +249,12 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		//==================================MAKE CALL============================
 		$scope.makeCall = function(user){
 			$scope.isCalling = true;
-			UserService.getUserInfo(user.id).then(function(data){
-				if(!data.img)
-	                data.img = "theme/assets/icon.png"
 
+			if(callModal.active())
+            	callModal.deactivate();
+
+			UserService.getUserInfo(user.id).then(function(data){
+                data.img = "theme/assets/icon.png";
 	            callModal.activate({callUserInfo: data, callUser: user.id, isCaller: true, opentokInfo: null, streams: null});
 			})
 	    }

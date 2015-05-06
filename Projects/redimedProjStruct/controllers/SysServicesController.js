@@ -4,7 +4,7 @@ var mdt_functions = require('../mdt-functions.js');
 module.exports = {
 	postAdd: function(req, res){
 		var postData = req.body.add_data;
-
+		console.log(postData);
 		db.SysServices.create(postData)
 		.success(function(created){
 			if(!created) res.json(500, {'status': 'error', 'message': 'Cannot Insert'});
@@ -15,7 +15,9 @@ module.exports = {
 		})
 	},
 	postEdit: function(req, res){
+
 		var postData = req.body.edit_data;
+		console.log(postData);
 		var edit_id = req.body.edit_id;
 
 		db.SysServices.find(edit_id)

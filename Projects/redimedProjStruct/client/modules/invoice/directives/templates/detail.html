@@ -4,7 +4,7 @@
 	        <i class="fa fa-medkit"></i> Invoice Detail
 	    </div>
 	    <div class="pull-right navbar-right">
-            <button ng-click="clickAction()" class="btn btn-default" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
+            <button ng-click="clickAction()" class="btn btn-default" ng-show="showSave"><i class="fa fa-save"></i> Edit </button>
         </div>
 	</div>
 	<div class="portlet-body">
@@ -14,8 +14,15 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
 			<label>Patient</label>
-			<input disabled type="text" placeholder="Patient" class="form-control" 
+			<div>
+				<input disabled type="text" placeholder="Patient" class="form-control" 
 				ng-model="InvoiceMap.patient.full_name" float-label>
+			</div>
+			<div style="position: absolute;right: 0;top: 0px;">
+			<button  style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="patientSearch.open()">
+				<i class="fa fa-search"></i>
+			</button>
+			</div>
 		</span>	
 	</div>
 	<!--Patient_id-->
@@ -64,7 +71,11 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
 			<label>Site</label>
-			<input type="text" disabled placeholder="Site" ng-model="InvoiceMap.site.Site_name" class="form-control" float-label>
+			<!-- <input type="text" placeholder="Site" ng-model="InvoiceMap.site.Site_name" class="form-control" float-label> -->
+			<select class="form-control" name="SITE_ID"
+				ng-model="InvoiceMap.SITE_ID"
+				ng-options="item.id as item.Site_name for item in options.redimedsites"  float-label>
+			</select>
 		</span>	
 	</div>
 	<!--SITE_ID-->
@@ -73,7 +84,11 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
 			<label>Department</label>
-			<input type="text" disabled placeholder="Department" ng-model="InvoiceMap.department.CLINICAL_DEPT_NAME" class="form-control" float-label>
+			<!-- <input type="text" disabled placeholder="Department" ng-model="InvoiceMap.department.CLINICAL_DEPT_NAME" class="form-control" float-label> -->
+			<select disabled class="form-control" name="DEPT_ID" id="DEPT_ID"
+				ng-model="InvoiceMap.DEPT_ID"
+				ng-options="item.CLINICAL_DEPT_ID as item.CLINICAL_DEPT_NAME for item in options.departments" float-label>
+			</select>
 		</span>	
 	</div>
 	<!--DEPT_ID-->
@@ -82,8 +97,16 @@
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
 			<label>Doctor</label>
-			<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control"  float-label>
-		</span>	</div>
+			<div>
+				<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control"  float-label>
+			</div>
+			<div style="position: absolute;right: 0;top: 0px;">
+				<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="doctorSearch.open()">
+					<i class="fa fa-search"></i>
+				</button>
+			</div>
+		</span>	
+	</div>
 	<!--DOCTOR_ID-->
 
 
@@ -117,19 +140,19 @@
 				<i class="fa fa-search"></i> Choose Claim
 			</span>
 		</button> -->
-		<div class="input-group input-large">
+		<span class="field">
 			<input ng-if="!InvoiceMap.claim_id" disabled type="text" value="No Claim" class="form-control" placeholder=".input-large">
 			
 			<input ng-if="InvoiceMap.claim_id" disabled type="text" ng-model="InvoiceMap.claim.Injury_name" class="form-control">
 
-			<div class="input-group-btn" dropdown="">
-				<button type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false" ng-show="claimShow">Claim <i class="fa fa-angle-down"></i></button>
+			<div style="position: absolute;top: 0;right: 0;" dropdown="">
+				<button style="margin-right: 0px;height: 32px;" type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false" ng-show="claimShow">Claim <i class="fa fa-angle-down"></i></button>
 				<ul class="dropdown-menu" role="menu">
 					<li><a ng-click="patientClaim.open()"><i class="fa fa-search"></i> Choose Claim </a></li>
 					<li><a><i class="fa fa-times"></i> Remove Claim</a></li>
 				</ul>
 			</div>
-		</div>
+		</span>
 	</div>
 	<!--claim_id-->
 	<div class="break-row"></div>
@@ -221,3 +244,25 @@
     <my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="itemSearch.click"></my-data-table>
 </div>
  <!-- POPUP SEARCH-ITEM  -->
+
+ <!-- POPUP PATIENT SEARCH -->
+<div class="mdt-search" style="display: block;" ng-show="patientSearch.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="patientSearch.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <patient-search click-row="patientSearch.click(row)"></patient-search>
+</div>
+ <!-- END POPUP PATIENT SEARCH  -->
+
+<!-- POPUP DOCTOR SEARCH -->
+<div class="mdt-search" style="display: block;" ng-show="doctorSearch.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="doctorSearch.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <mdtdoctor-search click-row="doctorSearch.click(row)"></mdtdoctor-search>
+</div>
+ <!-- END POPUP DOCTOR SEARCH  -->

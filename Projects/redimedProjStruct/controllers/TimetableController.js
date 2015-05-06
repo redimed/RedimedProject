@@ -4,6 +4,8 @@ var db = require('../models');
 var S = require('string');
 var moment = require('moment');
 var _ = require('lodash');
+var timeTableUtil=require('./timeTableUtilController');
+var kiss=require('./kissUtilsController');
 
 module.exports = {
 	postRemove: function(req, res){
@@ -28,168 +30,185 @@ module.exports = {
 
 	postSiteRemove: function(req, res){
 		var postData = req.body.data;
+		var sql="delete from sys_cal_sites_df where id=?";
+		kiss.executeQuery(req,sql,[postData.id],function(result){
+			kiss.exlog("postSiteRemove","delete success",result);
+			res.json({status:"success"});
+		},function(err){
+			kiss.exlog("postSiteRemove","Loi delete site",err);
+			res.status(500).json({status:'fail'});
+		});
+	},
 
-		var sql = knex('sys_cal_sites_df')
-		.where('id', postData.id)
-		.update({isenable: 0})
-		.toString();
+	/**
+	 * Kiem tra co appointment da duoc booking hay chua
+	 * tannv.dts@gmail.com
+	 */
+	beforeGenerateCalendar:function(req,res)
+	{
+		var postData = req.body.data;
+		var fromTimeInit=postData.from_time;//tan add, day la phien lam viec dau tien co the
+		var toTimeInit=postData.to_date;//tan add, day la phien lam viec cuoi cung co the
+		var from_time=postData.from_time;
+		var to_time=moment(postData.to_time,'HH:mm').add(postData.appt_interval,'minutes').format("HH:mm");//tan modify
+		//==> quan diem from_time va to_time hien tai
+		//from_time: thoi diem bat dau lam viec
+		//to_time: thoi diem ket thuc cong vec
+		//comment by: tan
+		var fromDateTime=moment(postData.from_date).format("YYYY/MM/DD")+" "+from_time;//tan add
+		var toDateTime=moment(postData.to_date).format("YYYY/MM/DD")+" "+to_time;//tan add
+		//==>Y nghia
+		//fromDateTime: chuoi ngay thang nam the hien thoi diem bat dau lam viec
+		//toDateTime: chuoi ngay thang nam the hien thoi diem ket thuc lam viec
+		//comment by: tan
+		var sql=
+			" SELECT calendar.*,CONCAT(patient.`First_name`,' ',patient.`Sur_name`) AS PATIENT_FULL_NAME, "+
+			" service.`SERVICE_NAME`                                                                      "+
+			" FROM `cln_appointment_calendar` calendar                                                    "+
+			" INNER JOIN `cln_appt_patients` apptPatient ON calendar.`CAL_ID`=`apptPatient`.`CAL_ID`      "+
+			" INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`        "+
+			" INNER JOIN `sys_services` service ON calendar.`SERVICE_ID`=service.`SERVICE_ID`             "+
+			" WHERE calendar.`FROM_TIME`>=?  AND calendar.`FROM_TIME`<?  	                              "+
+			" AND calendar.`DOCTOR_ID`=?                                                                  ";
+		kiss.executeQuery(req,sql,[fromDateTime,toDateTime,postData.doctor_id],function(rows){
+			kiss.exlog(kiss.status)
+			res.json({status:kiss.status.success,data:rows});
+		},function(err){
+			kiss.exlog("postCreateTimetable","Loi truy van lay cac appointmentCalendar da duoc booking",err);
+			res.status(500).json({status:'fail'});
+		},true);
 
-		db.sequelize.query(sql)
-		.success(function(deleted){
-			res.json({data: deleted});
-		})
-		.error(function(error){
-			res.status(500).json({error: error, sql: sql});
-		})
 	},
 
 	postCreateTimetable: function(req, res){
 		var postData = req.body.data;
-
-		if(postData.site.length === 0){
-			res.status(500).json({message: 'There is no site to add'});
-			return;
+		//tan modify
+		var doctorId=postData.doctor_id;
+		var day_of_Week_code=postData.day_of_Week_code;
+		var interval=postData.appt_interval;
+		var serviceId=postData.service_id;
+		var clinicalDeptId=postData.clinical_dept_id;
+		var beginDateTime=moment(postData.from_date).format("YYYY/MM/DD")+" "+postData.from_time;//tan add
+		var tempToTime=moment(postData.to_time,'HH:mm').add(interval,'minutes').format("HH:mm");
+		var endDateTime=moment(postData.to_date).format("YYYY/MM/DD")+" "+tempToTime;//tan add
+		kiss.exlog("endDateTime",endDateTime)
+		//Sap xep lai danh sach tuan
+		//tannv.dts@gmail.com
+		postData.site=_.sortBy(postData.site, 'week_ord_of_month');
+		//Lay danh sach cac site theo tuan
+		//tannv.dts@gmail.com
+		var listSite=postData.site;
+		var currentSiteIndex=-1;
+		function getSite()
+		{
+			currentSiteIndex++;
+			if(currentSiteIndex>=listSite.length-1)
+			{
+				var tempIndex=currentSiteIndex;
+				currentSiteIndex=-1;
+				return listSite[tempIndex];
+			}
+			else
+			{
+				return listSite[currentSiteIndex];
+			}
 		}
 
-		var weekEnd = 7;
+		//Lay danh sach tuan va site
+		//tannv.dts@gmail.com
+		var periodDay=moment(new Date(postData.to_date)).diff(new Date(postData.from_date),'days');
+		var listX=[];
 
-		var dowFromDate = moment(postData.from_date).days();
-		var diffFromDateToSunday = weekEnd - dowFromDate;
-		var diffFromDateToToDay = moment(postData.to_date).diff(moment(postData.from_date), 'days');
-
-		var dateArrayFromDayToDate = [];
-
-		//GET FIRST WEEK
-		if(diffFromDateToSunday < diffFromDateToToDay){
-			for(var i = 0; i <= diffFromDateToSunday; i++){
-				var current_date = moment(postData.from_date).add(i, 'day').format('YYYY-MM-DD');
-
-				var site_id = 0;
-				_.forEach(postData.site, function(site){
-					if(site.week_ord_of_month === 1)
-						site_id = site.site_id;
-				})
-
-				if(moment(current_date).days() === postData.day_of_Week_code){
-					var from_time_seconds = commonFunction.addInterval(postData.from_time, 0);
-					var to_time_seconds = commonFunction.addInterval(postData.to_time, 0);
-
-					while(from_time_seconds < to_time_seconds){
-						var from_time_hhmm = commonFunction.toHHMM(from_time_seconds);
-						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.appt_interval);
-						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);
-
-						var object = {DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
-									FROM_TIME: current_date + ' ' + from_time_hhmm, 
-									TO_TIME: current_date + ' ' + to_time_hhmm, SERVICE_ID: postData.service_id,
-									CLINICAL_DEPT_ID: postData.clinical_dept_id};
-						dateArrayFromDayToDate.push(object);
-
-						from_time_seconds = from_time_seconds + postData.appt_interval*60;
-					}
-				}//end if
-			}
-
-			var current_site = 2;
-			var diff_day = 0;
-
-			for(var i = diffFromDateToSunday+1; i <= diffFromDateToToDay; i++){
-				var current_date = moment(postData.from_date).add(i, 'day').format('YYYY-MM-DD');
-
-				var site_id = 0;
-
-				var temp_site = current_site;
-				while(!site_id){
-					_.forEach(postData.site, function(site){
-						if(site.week_ord_of_month === temp_site){
-							site_id = site.site_id;
-							return;
-						}
-					})
-
-					if(!site_id){
-						if(temp_site === 4) temp_site = 2;
-						else if(temp_site === 3) temp_site = 1;
-						else temp_site--;
-					}
+		for (var i=0;i<=periodDay;i++)
+		{
+			var currentDate=moment(new Date(postData.from_date)).add(i,'days');
+			if(currentDate.day()==day_of_Week_code)
+			{
+				var item={};
+				item.date=currentDate;
+				item.site=getSite();
+				//----------------------------
+				//Lay ra list time
+				var listTime=[];
+				var currentTime=moment( currentDate.format("YYYY/MM/DD")+" "+postData.from_time,"YYYY/MM/DD HH:mm");
+				var lastedTime=moment( currentDate.format("YYYY/MM/DD")+" "+postData.to_time,"YYYY/MM/DD HH:mm");
+				while(lastedTime.diff(currentTime,'minutes')>=0)
+				{
+					listTime.push(currentTime.clone());
+					currentTime=currentTime.add(interval,"minutes");
 				}
+				item.listTime=listTime;
+				//----------------------------
+				listX.push(item);
+			}
+		}
 
-				if(moment(current_date).days() === postData.day_of_Week_code){
-					var from_time_seconds = commonFunction.addInterval(postData.from_time, 0);
-					var to_time_seconds = commonFunction.addInterval(postData.to_time, 0);
-
-					while(from_time_seconds < to_time_seconds){
-						var from_time_hhmm = commonFunction.toHHMM(from_time_seconds);
-						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.appt_interval);
-						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);
-
-						var object = {DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
-									FROM_TIME: current_date + ' ' + from_time_hhmm, 
-									TO_TIME: current_date + ' ' + to_time_hhmm, SERVICE_ID: postData.service_id,
-									CLINICAL_DEPT_ID: postData.clinical_dept_id};
-						dateArrayFromDayToDate.push(object);
-
-						from_time_seconds = from_time_seconds + postData.appt_interval*60;
-					}
-				}//end if
-
-				if(diff_day === 6){
-					diff_day = -1;
-					current_site++;
+		var dateArrayFromDayToDate=[];
+		_.forEach(listX, function(dateItem) {
+			_.forEach(dateItem.listTime, function(timeItem) {
+				var slot={};
+				slot.DOCTOR_ID=doctorId;
+				slot.SERVICE_ID=serviceId;
+				slot.CLINICAL_DEPT_ID=clinicalDeptId;
+				slot.FROM_TIME=timeItem.format("YYYY/MM/DD HH:mm");
+				slot.TO_TIME=timeItem.clone().add(interval,'minutes').format("YYYY/MM/DD HH:mm");
+				slot.SITE_ID=dateItem.site.site_id;
+				dateArrayFromDayToDate.push(slot);
+			});
+		});
+		
+		//kiss.exFileJSON(dateArrayFromDayToDate,'dateArrayFromDayToDate.txt');
+		
+		kiss.beginTransaction(req,function(){
+			//Xoa du lieu appointment cu
+			//tannv.dts@gmail.com
+			var sql=
+				" DELETE FROM `cln_appointment_calendar`                            "+
+				" WHERE `DOCTOR_ID`=?                                               "+
+				" AND (DATE(`FROM_TIME`)>=DATE(?) AND DATE(`FROM_TIME`)<=DATE(?))   "+
+				" AND (                                                             "+
+				" 	(TIME(`FROM_TIME`)>=TIME(?) AND TIME(`FROM_TIME`)<TIME(?))      "+
+				" 	OR (TIME(`TO_TIME`)>TIME(?) AND TIME(`TO_TIME`)<=TIME(?))       "+
+				" )                                                                 "+
+				" AND DAYOFWEEK(`FROM_TIME`) =?                                     ";
+			kiss.executeQuery(req,sql,[doctorId,beginDateTime,endDateTime,beginDateTime,endDateTime,beginDateTime,endDateTime,timeTableUtil.sqlDayOfWeek[day_of_Week_code]],function(result){
+				
+				kiss.commit(req,function(){
+							res.json({status: 'success'});
+						},function(err){
+							kiss.exlog("postCreateTimetable","Loi commit new appointment calendar",err);
+							res.status(500).json({status:'fail'});
+						})
+				//Tan code begin----------------------------------
+				//Save apppointment calendar moi
+				if(dateArrayFromDayToDate.length > 0){
+					kiss.executeInsert(req,'cln_appointment_calendar',dateArrayFromDayToDate,function(result){
+						kiss.commit(req,function(){
+							res.json({status: 'success'});
+						},function(err){
+							kiss.exlog("postCreateTimetable","Loi commit new appointment calendar",err);
+							res.status(500).json({status:'fail'});
+						})
+					},function(err){
+						kiss.exlog("postCreateTimetable","Loi insert new appointment calendar",err);
+						kiss.rollback(req,function(){
+							res.status(500).json({status:'fail'});
+						});
+					},true)
+				}else{
+					res.json({data: null});
 				}
-
-				diff_day++;
-
-				if(current_site === 5) current_site = 1;
-			}
-
-		}else{
-			for(var i = 0; i <= diffFromDateToToDay; i++){
-				var current_date = moment(postData.from_date).add(i, 'day').format('YYYY-MM-DD');
-
-				var site_id = 0;
-				_.forEach(postData.site, function(site){
-					if(site.week_ord_of_month === 1)
-						site_id = site.site_id;
-				})
-
-				if(moment(current_date).days() === postData.day_of_Week_code){
-					var from_time_seconds = commonFunction.addInterval(postData.from_time, 0);
-					var to_time_seconds = commonFunction.addInterval(postData.to_time, 0);
-
-					while(from_time_seconds < to_time_seconds){
-						var from_time_hhmm = commonFunction.toHHMM(from_time_seconds);
-						var from_add_time_seconds = commonFunction.addInterval(from_time_hhmm, postData.appt_interval);
-						var to_time_hhmm = commonFunction.toHHMM(from_add_time_seconds);					
-
-						var object = {DOCTOR_ID: postData.doctor_id, SITE_ID: site_id, 
-									FROM_TIME: current_date + ' ' + from_time_hhmm, 
-									TO_TIME: current_date + ' ' + to_time_hhmm, SERVICE_ID: postData.service_id,
-									CLINICAL_DEPT_ID: postData.clinical_dept_id};
-						dateArrayFromDayToDate.push(object);
-
-						from_time_seconds = from_time_seconds + postData.appt_interval*60;
-					}
-				}//end if
-			}
-		}
-		//END GET FIRST WEEK
-
-		if(dateArrayFromDayToDate.length > 0){
-			var sql = knex('cln_appointment_calendar')
-			.insert(dateArrayFromDayToDate)
-			.toString();
-
-			db.sequelize.query(sql)
-			.success(function(response){
-				res.json({data: 'created'});
-			})
-			.error(function(error){
-				res.status(500).json({error: error, sql: sql});
-			})
-		}else{
-			res.json({data: null});
-		}
+				//tan code end------------------------------------
+			},function(err){
+				kiss.exlog("postCreateTimetable","Delete old appointment calendar fail.",err);
+				kiss.rollback(req,function(){
+					res.status(500).json({status:'fail'});
+				});
+			},true);
+		},function(err){
+			kiss.exlog("postCreateTimetable","Loi mo transaction",err);
+			res.status(500).json({status:'fail'});
+		})
 
 	},
 
@@ -343,7 +362,8 @@ module.exports = {
 
 		/* FROM DATE, TO DATE NOT LARGER, SMALLER */
 		if(postData.from_date && postData.to_date){
-			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			// if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			if(moment(postData.to_date).diff(moment(postData.from_date))<0){
 				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
 				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
 			}
@@ -361,6 +381,8 @@ module.exports = {
 			return;
 		}	
 
+		postData.day_of_week_value=timeTableUtil.dayOfWeekValue[postData.day_of_Week];
+		
 		var sql = knex('sys_permernant_calendar_df')
 				.where('cal_header_df_id', postData.cal_header_df_id)
 				.update(postData).toString();
@@ -424,7 +446,8 @@ module.exports = {
 
 		/* FROM DATE, TO DATE NOT LARGER, SMALLER */
 		if(postData.from_date && postData.to_date){
-			if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			// if(!moment(postData.from_date).isBefore(moment(postData.to_date))){
+			if(moment(postData.to_date).diff(moment(postData.from_date))<0){
 				errors.push({field: 'from_date', message: 'From Date must be smaller than To Date'});
 				errors.push({field: 'to_date', message: 'To Date must be larger than From Date'});
 			}
@@ -442,6 +465,7 @@ module.exports = {
 			return;
 		}	
 
+		postData.day_of_week_value=timeTableUtil.dayOfWeekValue[postData.day_of_Week];
 		var sql = knex('sys_permernant_calendar_df')
 				.insert(postData).toString();
 
@@ -493,6 +517,7 @@ module.exports = {
 			'doctor_id',
 			'sys_permernant_calendar_df.service_id',
 			'day_of_Week',
+			'day_of_week_value',
 			'from_time',
 			'to_time',
 			'from_date',
@@ -510,7 +535,10 @@ module.exports = {
 			'sys_services.Isenable': 1,
 			'sys_permernant_calendar_df.isenable': 1
 		})
-		.orderBy('day_of_Week', 'asc')
+		.orderBy('day_of_week_value', 'asc')
+		.orderBy('SERVICE_NAME','asc')
+		.orderBy('from_date','asc')
+		.orderBy('from_time','asc')
 		.toString();
 
 		db.sequelize.query(sql)
@@ -520,5 +548,123 @@ module.exports = {
 		.error(function(error){
 			res.status(500).json({error: error, sql: sql});
 		})
-	}//end list
+	},//end list
+
+	/**
+	 * tannv.dts@gmail.com
+	 * Xoa tat ca cac appointment calendar trong mot ngay
+	 * input: {data:{doctorId:_,date:_}}
+	 * output: {status:success|fail}
+	 */
+	deleteAllCalendarInDate:function(req,res)
+	{
+		var postData=kiss.checkData(req.body.data)?req.body.data:{};
+		var doctorId=kiss.checkData(postData.doctorId)?postData.doctorId:'';
+		var date=kiss.checkData(postData.date)?moment(new Date(postData.date)):null;
+		if(!kiss.checkListData(doctorId,date))
+		{
+			kiss.exlog("deleteAllCalendarInDate","Loi data truyen den");
+			res.status(500).json({status:kiss.status.fail});
+			return;
+		}
+
+		var sql="DELETE FROM `cln_appointment_calendar` WHERE DATE(`FROM_TIME`)=? AND `DOCTOR_ID`=?";
+		kiss.executeQuery(req,sql,[date.format("YYYY/MM/DD"),doctorId],function(result){
+			res.json({status:kiss.status.success});
+		},function(err){
+			kiss.exlog("deleteAllCalendarInDate","Loi truy van delete",err);
+			res.status(500).json({status:kiss.status.fail});
+		});
+
+	},
+
+	/**
+	 * tannv.dts@gmail.com
+	 * Kiem tra xem co appointment calendar nao duoc booking hay chua
+	 * input: {data:doctorId:_,date:_}
+	 * output:{status:success|fail,data:_}
+	 */
+	beforeDeleteAllCalendarInDate:function(req,res)
+	{
+		var postData=kiss.checkData(req.body.data)?req.body.data:{};
+		var doctorId=kiss.checkData(postData.doctorId)?postData.doctorId:'';
+		var date=kiss.checkData(postData.date)?moment(new Date(postData.date)):null;
+		if(!kiss.checkListData(doctorId,date))
+		{
+			kiss.exlog("beforeDeleteAllCalendarInDate","Loi data truyen den");
+			res.status(500).json({status:kiss.status.fail});
+			return;
+		}
+
+		var sql=
+			" SELECT calendar.*, CONCAT(patient.`First_name`,' ',patient.`Sur_name`) AS PATIENT_FULL_NAME,   "+
+			" service.`SERVICE_NAME`                                                                         "+
+			" FROM `cln_appointment_calendar` calendar                                                       "+
+			" INNER JOIN `cln_appt_patients` appt ON calendar.`CAL_ID`=appt.`CAL_ID`                         "+
+			" INNER JOIN `cln_patients` patient ON appt.`Patient_id`=patient.`Patient_id`                    "+
+			" INNER JOIN `sys_services` service ON calendar.`SERVICE_ID`=service.`SERVICE_ID`                "+
+			" WHERE DATE(`FROM_TIME`)=? AND `DOCTOR_ID`=?;                                                   ";
+		kiss.executeQuery(req,sql,[date.format("YYYY/MM/DD"),doctorId],function(rows){
+			res.json({status:kiss.status.success,data:rows});
+		},function(err){
+			kiss.exlog("beforeDeleteAllCalendarInDate","Loi query",err);
+			res.status(500).json({status:kiss.status.fail});
+		});
+	},
+
+	/**
+	 * Kiem tra selectedCalendar co duoc booking hay chua
+	 * tannv.dts@gmail.com
+	 * input: calId
+	 * output: data:_
+	 */
+	beforeDeleteSelectedCalendar:function(req,res)
+	{
+		var calId=kiss.checkData(req.body.calId)?req.body.calId:'';
+		if(!kiss.checkListData(calId)){
+			kiss.exlog("deleteSelectedCalendar","Loi data truyen den");
+			res.json({status:'fail'});
+			return;
+		}
+		var sql=
+			" SELECT calendar.*, CONCAT(patient.`First_name`,' ',patient.`Sur_name`) AS PATIENT_FULL_NAME,   "+
+			" service.`SERVICE_NAME`                                                                         "+
+			" FROM `cln_appointment_calendar` calendar                                                       "+
+			" INNER JOIN `cln_appt_patients` appt ON calendar.`CAL_ID`=appt.`CAL_ID`                         "+
+			" INNER JOIN `cln_patients` patient ON appt.`Patient_id`=patient.`Patient_id`                    "+
+			" INNER JOIN `sys_services` service ON calendar.`SERVICE_ID`=service.`SERVICE_ID`                "+
+			" WHERE `calendar`.`CAL_ID`=?                                                                    ";
+
+		kiss.executeQuery(req,sql,[calId],function(rows){
+			res.json({status:kiss.status.success,data:rows});
+		},function(err){
+			kiss.exlog("beforeDeleteSelectedCalendar","Loi truy van select",err);
+			res.json({status:kiss.status.fail});
+		})
+	},
+
+	/**
+	 * Xoa calendar duoc chon
+	 * tannv.dts@gmail.com
+	 * input: calId
+	 * output: status:success|fail
+	 */
+	deleteSelectedCalendar:function(req,res)
+	{
+		var calId=kiss.checkData(req.body.calId)?req.body.calId:'';
+		if(!kiss.checkListData(calId)){
+			kiss.exlog("deleteSelectedCalendar","Loi data truyen den");
+			res.json({status:kiss.status.fail});
+			return;
+		}
+
+		var sql="DELETE FROM `cln_appointment_calendar` WHERE `CAL_ID`=?";
+
+		kiss.executeQuery(req,sql,[calId],function(result){
+			res.json({status:kiss.status.success});
+		},function(err){
+			kiss.exlog("deleteSelectedCalendar","Loi truy van delete",err);
+			res.json({status:kiss.status.fail});
+		})
+	}
 }

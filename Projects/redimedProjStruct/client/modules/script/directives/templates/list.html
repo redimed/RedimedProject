@@ -35,7 +35,11 @@
 					<td>{{row.Medicare}}</td>
 					<td align="center">
 						<a><i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>
-						<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;
+						<!--<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;-->
+						<a>
+							<span ng-if="row.isEnable" ng-click="disable(row)">Enable</span>
+							<span ng-if="!row.isEnable" ng-click="disable(row)">Disable</span>
+						</a>
 					</td>
 				</tr>
 			</tbody>

@@ -6,6 +6,41 @@ var _ = require('lodash');
 var moment = require('moment');
 
 module.exports = {
+	postCheckPatientCalendar: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('cln_patient_outreferral')
+				.count('id as count')
+				.innerJoin('cln_appointment_calendar', 'cln_patient_outreferral.CAL_ID', 'cln_appointment_calendar.CAL_ID')
+				.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+				.where({
+					'cln_patient_outreferral.patient_id': postData.patient_id,
+					'cln_patient_outreferral.CAL_ID': postData.CAL_ID
+				})
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			var service_sql = knex('cln_appointment_calendar')
+							.select('sys_services.*')
+							.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+							.where({
+								'cln_appointment_calendar.CAL_ID': postData.CAL_ID
+							})
+							.toString();
+
+			db.sequelize.query(service_sql)
+			.success(function(services){
+				res.json({data: rows[0].count, service: services[0]});
+			})
+			.error(function(error){
+				res.json(500, {error: error});	
+			})
+		})
+		.error(function(error){
+			res.json(500, {error: error});	
+		})
+	},
 	postEdit: function(req, res){
 		var postData = req.body.data;
 
@@ -260,7 +295,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-				.column(
+				.distinct(
 					'outside_referrals.id',
 					'outside_referrals.date_issued',
 					'outside_referrals.date_started',
@@ -308,7 +343,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-				.column(
+				.distinct(
 					'outside_referrals.id',
 					'outside_referrals.date_issued',
 					'outside_referrals.date_started',
@@ -390,6 +425,23 @@ module.exports = {
 		})
 		.error(function(error){
 			res.json(500, {error: error});	
+		})
+	},
+
+	postDotorFromUserId : function(req,res){
+		var postData = req.body.data;
+		var sql = knex()
+				.select('*')
+				.from('doctors')
+				.where('User_id',postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,sql:sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error,sql: sql});
 		})
 	}
 }

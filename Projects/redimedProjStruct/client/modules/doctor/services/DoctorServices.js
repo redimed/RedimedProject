@@ -16,10 +16,12 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
      * KHANK API
      */
 
-    doctorService.doctor_calendar_by_date = function(doctor_id, select_date) {
+    doctorService.doctor_calendar_by_date = function(doctor_id, from, to) {
 
         var instanceApi = doctorApi.all("v2/doctor/calendar_by_date");
-        return instanceApi.post({'doctor_id' : doctor_id, date: select_date});
+        // return instanceApi.post({'doctor_id' : doctor_id, date: select_date});
+
+        return instanceApi.post({'doctor_id' : doctor_id, fromDate: from, toDate: to})
     }
 
      doctorService.catItemDept = function(items) {
@@ -267,30 +269,39 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
         var api = doctorApi.all('v2/timetable/delete_date');
         return api.post({doctor_id: doctor_id, date: date})
     }
-
+    /*
+    phanquocchien.c1109g@gmai.com
+    add new casual calendar
+     */
     doctorService.addCalendar = function(postData) {
-        var api = restfulApi.all('Appointment');
-        return api.post(postData);
-// http://localhost:3000/api/restful/Appointment
+        var result=doctorApi.all('appointment/insert-casual-calendar');
+        return result.post({postData:postData});
     }
-
-    doctorService.editCalendar = function(cal_id, postData) {
-        var api = restfulApi.one('Appointment/' + cal_id);
-
-        for(var key in postData) {
-            api[key] = postData[key];
-        }
-        return api.put();
+    /*
+    phanquocchien.c1109g@gmai.com
+    edit calendar
+     */
+    doctorService.editCalendar = function(postData) {
+        var result=doctorApi.all('appointment/edit-casual-calendar');
+        return result.post({postData:postData});
     }
 
     doctorService.leaveCalendar = function(doctor_id, from_time, to_time) {
         var api = doctorApi.all('v2/timetable/doctor_leave');
         return api.post({doctor_id: doctor_id, from_time: from_time, to_time: to_time})
     }
+
     var leaveApi = Restangular.all("api/meditek/v1/appointment");
+    
     doctorService.leaveCal = function(data) {
         var instanceApi = leaveApi.all('leaveCal');
         return instanceApi.post({data: data});
     }
-     return doctorService;
+
+    doctorService.beforeLeaveCal = function(data) {
+        var instanceApi = leaveApi.all('beforePostLeaveCal');
+        return instanceApi.post({data: data});
+    }
+
+    return doctorService;
  })

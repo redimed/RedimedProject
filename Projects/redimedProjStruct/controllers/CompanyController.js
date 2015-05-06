@@ -5,6 +5,29 @@ var S = require('string');
 var db = require('../models');
 
 module.exports = {
+    postDetail: function(req, res){
+        var postData = req.body.data;
+
+        var sql = knex
+                .select(
+                    'companies.Company_name',
+                    'cln_insurers.insurer_name'
+                )
+                .from('cln_patients')
+                .innerJoin('companies', 'cln_patients.company_id', 'companies.id')
+                .leftOuterJoin('cln_insurers', 'companies.Insurer', 'cln_insurers.id')
+                .where('cln_patients.Patient_id', postData.Patient_id)
+                .toString();
+
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
+
     postDisableCompany : function(req,res){
        var postData = req.body.data;
         if (postData.isEnable == 1) {
@@ -455,6 +478,55 @@ module.exports = {
                 res.json(500, {error: error});
             })
     },//end postAdd
+    postAddlistNotFollow : function(req,res){
+        var postData = req.body.data;
+        var sql = knex('patient_companies')
+        .insert({
+            patient_id : postData.patient_id,
+            company_id :postData.company_id,
+            isEnable :1
+        })
+        .toString()
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        }) 
+    },
+    postListNotFollow :function(req,res){
+        var postData = req.body.data;
+        var company_array = [];
+        if (postData.listId !=null) {
+             _.forEach(postData.listId, function(id){
+            company_array.push(id.id);
+            })
+        };
+        var sql = knex
+        .select('*')
+        .from('companies')
+        .whereNotIn('companies.id',company_array)
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .toString();
+        var sql_count = knex('companies')
+            .count('id as a')
+            .toString();
+        db.sequelize.query(sql)
+        .success(function(detail){
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: detail, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+    },
     postlistInsurer: function(req, res){
         var postData = req.body.data;
         var sql = knex
@@ -589,6 +661,17 @@ module.exports = {
             })
 
     },
+    checkName: function(req,res){
+        var name = req.body.name;
+
+        db.Company.find({where:{Company_name: name}},{raw:true})
+            .success(function(data){
+                if(data)
+                    res.json({status:'error'});
+                else
+                    res.json({status:'success'});
+            })
+    },
     subCompany: function(req,res)
     {
         var id = req.body.id;
@@ -667,6 +750,17 @@ module.exports = {
         },{id:comId})
             .success(function(data){
                 res.json({status:'success'});
+            })
+            .error(function(err){
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
+    getListPatient: function(req,res){
+        var comId = req.body.companyId;
+        db.Patient.findAll({where:{company_id:comId}},{raw:true})
+            .success(function(data){
+                res.json({status:'success',data:data});
             })
             .error(function(err){
                 res.json({status:'error'});

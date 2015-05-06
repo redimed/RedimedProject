@@ -7,6 +7,34 @@ var _ = require('lodash');
 
 module.exports = {
 
+	postDisable: function(req, res){
+
+		var postData = req.body.data;
+		if(postData.isEnable == 1){
+			postData.isEnable = 0;	
+		}else{
+			postData.isEnable = 1;
+		}
+
+		var sql = knex('cln_scripts')
+		.update({
+			'isEnable': postData.isEnable
+		})
+		.where({
+			'ID': postData.script_id,
+			'Patient_id': postData.patient_id,
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data, sql: sql});
+		})
+		.error(function(error){
+			res.json({data: data, error: error});
+		})
+
+	},
+
 	postList: function(req, res){
 
 		var postData = req.body.data;
@@ -19,7 +47,8 @@ module.exports = {
 		'cln_scripts.Medicare',
 		'cln_patients.First_name',
 		'cln_patients.Sur_name',
-		'cln_scripts.Creation_date')
+		'cln_scripts.Creation_date',
+		'cln_scripts.isEnable')
 		.from('cln_scripts')
 		.innerJoin('cln_patients', 'cln_scripts.Patient_id', 'cln_patients.Patient_id')
 		.where(knex.raw('IFNULL(cln_scripts.scriptNum, "") LIKE "%' + postData.scriptNum + '%"'))

@@ -1,6 +1,6 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
-
+var knex = require('../knex-connect.js');
 
 
 module.exports = {
@@ -16,7 +16,23 @@ module.exports = {
 					order: "Patient_id DESC" 
 				})
 				.success(function(patient){
-					res.json({"status": "success", "data": patient});
+					if(typeof postData.CAL_ID !== 'undefined'){
+						var sql = knex('cln_appt_patients')
+								.insert({
+									Patient_id: patient.Patient_id,
+									CAL_ID: postData.CAL_ID
+								})
+								.toString();
+						db.sequelize.query(sql)
+						.success(function(inserted){
+							res.json({"status": "success", "data": patient});
+						})
+						.error(function(error){
+							res.json(500, {"status": "error", "message": error});				
+						})
+
+					}else
+						res.json({"status": "success", "data": patient});
 				})
 			}
 		})

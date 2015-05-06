@@ -24,6 +24,20 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 	})
 })
 
+.controller('ClaimPatientShowDialog', function($scope, $modalInstance, $stateParams, list){
+	$scope.claim = {
+		Claim_id: list.Claim_id,
+		Patient_id: $stateParams.patientId,
+		success: false
+	}
+
+	$scope.$watch('claim.success', function(success){
+		if(success){
+			$modalInstance.close('success');
+		}
+	})
+})
+
 .directive('claimPatientList', function(ClaimModel, $modal, toastr, $stateParams){
 	return {
 		restrict: 'EA',
@@ -34,18 +48,23 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 			calId: '=',
 			withoutPatient: '@',
 			permission: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			addSuccess: '='
 		},
 		templateUrl: 'modules/claim/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
 			if(typeof scope.permission === 'undefined'){
 				scope.action = {
 					edit: true,
-					remove: true
+					remove: true,
+					add: true,
+					show: true
 				}
 			}else{
 				scope.action = scope.$eval(scope.permission);
 			}
+			
+			console.log(scope.action);
 
 			var search = {
 				page: 1,
@@ -56,8 +75,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				Claim_date: 'desc',
 				Injury_name: '',
 				Injury_date: 'asc',
-				Patient_id: scope.patientId,
-				isEnable:null
+				Patient_id: scope.patientId
 			}
 
 			var load = function(){
@@ -139,28 +157,72 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 					}
 				})
 			}
-			var disable = function(row)
-			{
-				var postData ={
-					patient_id :$stateParams.patientId,
-					CAL_ID : $stateParams.calId,
-					isEnable : row.isEnable,
-					Claim_id : row.Claim_id
-				}
-				ClaimModel.disableClaim(postData)
-				.then(function(response){
-					scope.claim.load();
-				},function(error){
 
+			var add = function(){
+				$modal.open({
+					templateUrl: 'claimAdd',
+					controller: function($scope, $modalInstance, patientId, calId){
+						$scope.claim = {
+							Patient_id: patientId,
+							CAL_ID: calId,
+							success: false
+						}
+
+						$scope.$watch('claim.success', function(success){
+							if(success)
+								$modalInstance.close('success');
+						})
+					},
+					size: 'lg',
+					resolve: {
+						patientId: function(){
+							return scope.patientId;
+						},
+						calId: function(){
+							return scope.calId;
+						}
+					}
+				})
+				.result.then(function(success){
+					if(success === 'success'){
+						toastr.success('Add Successfully');
+						scope.addSuccess = true;
+					}
 				})
 			}
+
+			var show = function(list){
+				$modal.open({
+					templateUrl: 'dialogClaimShow',
+					controller: 'ClaimPatientShowDialog',
+					size: 'lg',
+					resolve: {
+						list: function(){
+							return list;
+						}
+					}
+				})
+				.result.then(function(response){
+					if(response === 'success'){
+						toastr.success('Edit Successfully');
+						scope.claim.load();
+					}
+				})
+			}
+
 			scope.claim = {
 				dialog: {
+					add: function(){
+						add();
+					},
 					remove: function(list){
 						remove(list);
 					},
 					edit: function(list){
 						edit(list);
+					},
+					show: function(list){
+						show(list);
 					}
 				},
 				load: function(){ load(); },
@@ -169,8 +231,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				search: angular.copy(search),
 				onPage: function(page){ onPage(page); },
 				onSearch: function(){ onSearch(); },
-				onOrderBy: function(option){ onOrderBy(option); },
-				disable:function(row){disable(row)}
+				onOrderBy: function(option){ onOrderBy(option); }
 			}
 
 			//INIT

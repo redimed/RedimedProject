@@ -245,7 +245,7 @@ input[class^="mdt-checkbox"] + label {
 /* MEDITEK INPUT AND SELECT */
 
 .field {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     display: block;
     position: relative;
     height: 36px;
@@ -1088,8 +1088,8 @@ table.timetable-table td:last-child {
 }
 
 .table-dynamic .table-bordered {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 1.5px solid #ddd;
+    border-bottom: 1.5px solid #ddd;
     font-size: 14px;
 }
 
@@ -1180,6 +1180,10 @@ table.timetable-table td:last-child {
     padding: 8px 10px;
 }
 
+.table-dynamic .table-bordered {
+    border-collapse: inherit;
+}
+
 .table-dynamic .table-bordered>thead>tr>th,
 .table-dynamic .table-bordered>tbody>tr>th,
 .table-dynamic .table-bordered>tfoot>tr>th,
@@ -1189,8 +1193,9 @@ table.timetable-table td:last-child {
     padding: 2px 5px 2px 5px;
     line-height: 1.42857143;
     vertical-align: top;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    border-top: 1.5px solid #ddd;
+    border-right: 1.5px solid #ddd;
+    -moz-user-select: none;
 }
 
 .odd {
@@ -1251,50 +1256,45 @@ table.timetable-table td:last-child {
 /*end tr chevron*/
 /*end css custom by thanh*/
 
-.table-div{
+.table-div {
     width: 100%;
 }
 
-.table-div .header{
-    width: 14%; 
+.table-div .header {
+    width: 14%;
     display: inline-block;
     font-weight: bold;
 }
 
-.table-div .table-div-row{
+.table-div .table-div-row {
     width: 100%;
     padding: 5 5;
 }
 
-.table-div .table-div-row .content{
+.table-div .table-div-row .content {
     width: 14%;
     display: inline-block;
 }
 
-.table-div .active{
+.table-div .active {
     background-color: #2BEABB;
 }
 
-.appointment{
+.appointment {}
 
-}
-
-.appointment .appointment-row{
-
-}
+.appointment .appointment-row {}
 
 .appointment .appointment-block-time,
 .appointment .appointment-block,
-.appointment .appointment-block-header
-{
+.appointment .appointment-block-header {
     display: inline-block;
 }
 
-.appointment .appointment-block-time{
+.appointment .appointment-block-time {
     width: 100px;
 }
 
-.appointment .appointment-block{
+.appointment .appointment-block {
     width: 150px;
     font-size: 11px;
     height: 70px;
@@ -1303,19 +1303,58 @@ table.timetable-table td:last-child {
     color: white;
 }
 
-.appointment .appointment-block-header{
+.appointment .appointment-block-header {
     width: 150px;
     font-weight: bold;
 }
 
-.appointment .appointment-block a{
+.appointment .appointment-block a {
     color: white;
 }
 
-.block-transparent{
+.block-transparent {
     background-color: #F9F9F9;
 }
 
-.block-active{
+.block-active {
     background-color: #7FBFF3;
+}
+.seperate-section{
+    height:5px;
+}
+
+[ng-drag].drag-over{
+    opacity:0.5;
+}
+
+[ng-drag].dragging{
+    opacity:0.5;
+}
+
+[ng-drop].drag-enter{
+    border: dashed blue 20px;
+    opacity: 0.5;
+}
+
+.bv-right-list{
+    position: absolute;
+    padding: 10px;
+    right: 0;
+    top: 0;
+    min-height: 100%;
+    width: 250px;
+    color: white;
+    background-color: #3D4A53;
+    z-index: 888;
+}
+.bv-arrow {
+    width: 0; 
+    height: 0; 
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent; 
+    z-index: 888;
+    border-right:30px solid #1C2D5C;
+    position: absolute;
+    top: 5%;
+    right: 250px;
 }

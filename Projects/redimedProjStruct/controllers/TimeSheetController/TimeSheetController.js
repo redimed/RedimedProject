@@ -1698,10 +1698,10 @@ module.exports = {
         // END ACTIVITY
 
         // SELECT TIMECHARGE ALL
-        var querySumTimeCharge = "SELECT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
+        var querySumTimeCharge = "SELECT DISTINCT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
             "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
             " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
-            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, " +
+            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, time_tasks_week.week_no, " +
             "hr_employee.FirstName, hr_employee.LastName, departments.departmentName, departments.departmentid " +
             "FROM time_tasks_week " +
             "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
@@ -1711,164 +1711,165 @@ module.exports = {
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
         // END ALL
-
-        var queryGetListDept = "SELECT departments.departmentName FROM departments WHERE departments.departmentid IN (" + strListDeptID + ")";
-        db.sequelize.query(queryGetListDept)
-            .success(function(resultDeptName) {
-                if (listDept.length !== 11) {
-                    for (var m = 0; m < resultDeptName.length; m++) {
-                        strListDept += resultDeptName[m].departmentName + ", ";
-                    }
-                    strListDept = strListDept.substring(0, strListDept.length - 2);
-                } else if (listDept.length === 11) {
-                    strListDept = "All";
-                }
-                db.sequelize.query(queryDept)
-                    .success(function(resultDept) {
-                        db.sequelize.query(querySumTimeCharge)
-                            .success(function(resultTimeCharge) {
-                                db.sequelize.query(queryActivity)
-                                    .success(function(resultActivity) {
-                                        for (var i = 0; i < resultDept.length; i++) {
-                                            resultDept[i].listEmployee = [];
-                                            for (var j = 0; j < resultTimeCharge.length; j++) {
-                                                if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
-                                                    //PUSH DATA
-                                                    resultDept[i].listEmployee.push({
-                                                        employee_id: resultTimeCharge[j].Employee_ID,
-                                                        name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
-                                                        time_charge: resultTimeCharge[j].SUM_CHARGE,
-                                                        time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
-                                                        over_time: resultTimeCharge[j].SUM_OVER_TIME,
-                                                        SUM_CHARGE_ACTIVITY: [],
-                                                        activity_id: resultTimeCharge[j].activity_id
-                                                    });
-                                                    //END
-                                                    for (var k = 0; k < resultActivity.length; k++) {
-                                                        if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
-                                                            resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
-                                                        }
-                                                    }
+        db.sequelize.query(queryDept)
+            .success(function(resultDept) {
+                db.sequelize.query(querySumTimeCharge)
+                    .success(function(resultTimeCharge) {
+                        db.sequelize.query(queryActivity)
+                            .success(function(resultActivity) {
+                                for (var i = 0; i < resultDept.length; i++) {
+                                    resultDept[i].listEmployee = [];
+                                    for (var j = 0; j < resultTimeCharge.length; j++) {
+                                        if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
+                                            //PUSH DATA
+                                            resultDept[i].listEmployee.push({
+                                                employee_id: resultTimeCharge[j].Employee_ID,
+                                                name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
+                                                time_charge: resultTimeCharge[j].SUM_CHARGE,
+                                                time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
+                                                over_time: resultTimeCharge[j].SUM_OVER_TIME,
+                                                SUM_CHARGE_ACTIVITY: [],
+                                                activity_id: resultTimeCharge[j].activity_id
+                                            });
+                                            //END
+                                            for (var k = 0; k < resultActivity.length; k++) {
+                                                if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
+                                                    resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
                                                 }
                                             }
                                         }
-                                        //INSERT TEMP TABLE REPORTS1
+                                    }
+                                }
+                                //INSERT TEMP TABLE REPORTS1
 
-                                        //SUM TIME ON DEPT
-                                        for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
-                                            resultDept[deptIndex].sum_ac1_dept = 0;
-                                            resultDept[deptIndex].sum_ac2_dept = 0;
-                                            resultDept[deptIndex].sum_ac3_dept = 0;
-                                            resultDept[deptIndex].sum_ac4_dept = 0;
-                                            resultDept[deptIndex].sum_ac5_dept = 0;
-                                            for (var empIndex = 0; empIndex < resultDept[deptIndex].listEmployee.length; empIndex++) {
-                                                resultDept[deptIndex].sum_ac1_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1]);
-                                                resultDept[deptIndex].sum_ac2_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2]);
-                                                resultDept[deptIndex].sum_ac3_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3]);
-                                                resultDept[deptIndex].sum_ac4_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4]);
-                                                resultDept[deptIndex].sum_ac5_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5]);
-                                            }
-                                        }
-                                        //END
-                                        var listEmployeeInsert = "";
-                                        var listTimeInsert = "";
-                                        for (var i = 0; i < resultDept.length; i++) {
-                                            for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
+                                //SUM TIME ON DEPT
+                                for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
+                                    resultDept[deptIndex].sum_ac1_dept = 0;
+                                    resultDept[deptIndex].sum_ac2_dept = 0;
+                                    resultDept[deptIndex].sum_ac3_dept = 0;
+                                    resultDept[deptIndex].sum_ac4_dept = 0;
+                                    resultDept[deptIndex].sum_ac5_dept = 0;
+                                    resultDept[deptIndex].time_in_lieu_dept = 0;
+                                    resultDept[deptIndex].overtime_dept = 0;
+                                    for (var empIndex = 0; empIndex < resultDept[deptIndex].listEmployee.length; empIndex++) {
+                                        resultDept[deptIndex].sum_ac1_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1]);
+                                        resultDept[deptIndex].sum_ac2_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2]);
+                                        resultDept[deptIndex].sum_ac3_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3]);
+                                        resultDept[deptIndex].sum_ac4_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4]);
+                                        resultDept[deptIndex].sum_ac5_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5]);
+                                        resultDept[deptIndex].time_in_lieu_dept += ((resultDept[deptIndex].listEmployee[empIndex].time_in_lieu === undefined || resultDept[deptIndex].listEmployee[empIndex].time_in_lieu === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].time_in_lieu);
+                                        resultDept[deptIndex].overtime_dept += ((resultDept[deptIndex].listEmployee[empIndex].over_time === undefined || resultDept[deptIndex].listEmployee[empIndex].over_time === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].over_time);
+                                    }
+                                }
+                                //END
 
-                                                // VALUE EMP
-                                                listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
-                                                    resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "','" + strListDept +
-                                                    "'," + resultDept[i].sum_ac1_dept +
-                                                    "," + resultDept[i].sum_ac2_dept + "," +
-                                                    resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
-                                                    resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept + resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," + convertTime(resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept + resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "), ";
-                                                //EMP
-                                                // VALUE TIME CHARGE
-                                                listTimeInsert += "(" + USER_ID + "," +
-                                                    resultDept[i].listEmployee[j].employee_id + "," +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2]) + "," +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3]) + "," +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
-                                                    (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
-                                                    (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + ", " +
-                                                    convertTime(resultDept[i].listEmployee[j].time_charge) + ", null, null, 1), ";
-                                                //TIME CHARGE
+                                // SUM ALL
+                                var sum_all = 0;
+                                var sum_ac1_all = 0,
+                                    sum_ac2_all = 0,
+                                    sum_ac3_all = 0,
+                                    sum_ac4_all = 0,
+                                    sum_ac5_all = 0,
+                                    time_in_lieu_all = 0,
+                                    overtime_all = 0;
+                                for (var deptIndexAll = 0; deptIndexAll < resultDept.length; deptIndexAll++) {
+                                    sum_ac1_all += resultDept[deptIndexAll].sum_ac1_dept;
+                                    sum_ac2_all += resultDept[deptIndexAll].sum_ac2_dept;
+                                    sum_ac3_all += resultDept[deptIndexAll].sum_ac3_dept;
+                                    sum_ac4_all += resultDept[deptIndexAll].sum_ac4_dept;
+                                    sum_ac5_all += resultDept[deptIndexAll].sum_ac5_dept;
+                                    time_in_lieu_all += resultDept[deptIndexAll].time_in_lieu_dept;
+                                    overtime_all += resultDept[deptIndexAll].overtime_dept;
+                                    sum_all +=
+                                        sum_ac1_all +
+                                        sum_ac2_all +
+                                        sum_ac3_all +
+                                        sum_ac4_all +
+                                        sum_ac5_all;
+                                }
 
-                                                // VALUE TIME IN LIEU
-                                                listTimeInsert += "(" + USER_ID + "," +
-                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
-                                                    convertTime(resultDept[i].listEmployee[j].time_in_lieu) + ",'" +
-                                                    resultDept[i].listEmployee[j].time_in_lieu + "', null, 2), ";
-                                                //END
+                                //END
+                                var listEmployeeInsert = "";
+                                var listTimeInsert = "";
+                                for (var i = 0; i < resultDept.length; i++) {
+                                    for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
 
-                                                // VALUE OVERTIME
-                                                listTimeInsert += "(" + USER_ID + "," +
-                                                    resultDept[i].listEmployee[j].employee_id + ", null, null, null, null, null, null, " +
-                                                    convertTime(resultDept[i].listEmployee[j].over_time) + ", null, '" +
-                                                    resultDept[i].listEmployee[j].over_time + "', 3), ";
-                                                // END
-                                            }
-                                        }
-                                        if (listEmployeeInsert !== "") {
-                                            listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
-                                        }
-                                        if (listTimeInsert !== "") {
-                                            listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
-                                        }
-                                        var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, deptList, time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, convert_dept) VALUES " + listEmployeeInsert;
-                                        var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4,time_ac5, time_charge_sum, time_convert, time_in_lieu, time_over, `order`) VALUES " + listTimeInsert;
-                                        var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
-                                        var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
-                                        db.sequelize.query(queryDelEmployee)
-                                            .success(function(delSuccessEmp) {
-                                                db.sequelize.query(queryDelTime)
-                                                    .success(function(delSuccessTime) {
-                                                        //INSERT EMP
-                                                        if (listEmployeeInsert !== "") {
-                                                            db.sequelize.query(queryInsertEmployee)
-                                                                .success(function(insertSuccessEmp) {
-                                                                    // INSERT TIME
-                                                                    if (queryInsertTimeInSert !== "") {
-                                                                        db.sequelize.query(queryInsertTimeInSert)
-                                                                            .success(function(insertSuccessTime) {
+                                        // VALUE EMP
+                                        listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
+                                            resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "'," + resultDept[i].sum_ac1_dept +
+                                            "," + resultDept[i].sum_ac2_dept + "," +
+                                            resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
+                                            resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept +
+                                                resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," +
+                                            resultDept[i].time_in_lieu_dept + "," + resultDept[i].overtime_dept + ", " + sum_ac1_all +
+                                            ", " + sum_ac2_all + ", " + sum_ac3_all + ", " + sum_ac4_all + ", " +
+                                            sum_ac5_all + ", " + sum_all + ", " + time_in_lieu_all + ", " + overtime_all +
+                                            "), ";
+                                        //EMP
+                                        // VALUE TIME CHARGE
+                                        listTimeInsert += "(" + USER_ID + "," +
+                                            resultDept[i].listEmployee[j].employee_id + "," +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2]) + "," +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3]) + "," +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
+                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
+                                            (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + "," + resultDept[i].listEmployee[j].time_in_lieu + ", " + resultDept[i].listEmployee[j].over_time + "), ";
+                                        //TIME 3
+                                    }
+                                }
+                                if (listEmployeeInsert !== "") {
+                                    listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
+                                }
+                                if (listTimeInsert !== "") {
+                                    listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
+                                }
+                                var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, " +
+                                    "time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, time_in_lieu_dept, overtime_dept, time_ac1_all, time_ac2_all, time_ac3_all, time_ac4_all, time_ac5_all, total_all, time_in_lieu_all, overtime_all)" +
+                                    " VALUES " + listEmployeeInsert;
+                                var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4, time_ac5, time_charge_sum, time_in_lieu, time_over) VALUES " + listTimeInsert;
+                                var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
+                                var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
+                                db.sequelize.query(queryDelEmployee)
+                                    .success(function(delSuccessEmp) {
+                                        db.sequelize.query(queryDelTime)
+                                            .success(function(delSuccessTime) {
+                                                //INSERT EMP
+                                                if (listEmployeeInsert !== "") {
+                                                    db.sequelize.query(queryInsertEmployee)
+                                                        .success(function(insertSuccessEmp) {
+                                                            // INSERT TIME
+                                                            if (queryInsertTimeInSert !== "") {
+                                                                db.sequelize.query(queryInsertTimeInSert)
+                                                                    .success(function(insertSuccessTime) {
 
-                                                                                //RES.JSON
-                                                                                res.json({
-                                                                                    status: "success",
-                                                                                    result: resultDept
-                                                                                });
-                                                                                return;
-                                                                                //END
-                                                                            })
-                                                                            .error(function(err) {
-                                                                                console.log("*****ERROR:" + err + "*****");
-                                                                                res.json({
-                                                                                    status: "error",
-                                                                                    result: []
-                                                                                });
-                                                                                return;
-                                                                            });
-                                                                    }
-                                                                })
-                                                                .error(function(err) {
-                                                                    console.log("*****ERROR:" + err + "*****");
-                                                                    res.json({
-                                                                        status: "error",
-                                                                        result: []
+                                                                        //RES.JSON
+                                                                        res.json({
+                                                                            status: "success",
+                                                                            result: resultDept
+                                                                        });
+                                                                        return;
+                                                                        //END
+                                                                    })
+                                                                    .error(function(err) {
+                                                                        console.log("*****ERROR:" + err + "*****");
+                                                                        res.json({
+                                                                            status: "error",
+                                                                            result: []
+                                                                        });
+                                                                        return;
                                                                     });
-                                                                    return;
-                                                                });
-                                                        }
-                                                    })
-                                                    .error(function(err) {
-                                                        console.log("*****ERROR:" + err + "*****");
-                                                        res.json({
-                                                            status: "error",
-                                                            result: []
+                                                            }
+                                                        })
+                                                        .error(function(err) {
+                                                            console.log("*****ERROR:" + err + "*****");
+                                                            res.json({
+                                                                status: "error",
+                                                                result: []
+                                                            });
+                                                            return;
                                                         });
-                                                        return;
-                                                    });
+                                                }
                                             })
                                             .error(function(err) {
                                                 console.log("*****ERROR:" + err + "*****");
@@ -1878,7 +1879,6 @@ module.exports = {
                                                 });
                                                 return;
                                             });
-                                        //END INSERT
                                     })
                                     .error(function(err) {
                                         console.log("*****ERROR:" + err + "*****");
@@ -1888,6 +1888,7 @@ module.exports = {
                                         });
                                         return;
                                     });
+                                //END INSERT
                             })
                             .error(function(err) {
                                 console.log("*****ERROR:" + err + "*****");
@@ -1897,7 +1898,6 @@ module.exports = {
                                 });
                                 return;
                             });
-
                     })
                     .error(function(err) {
                         console.log("*****ERROR:" + err + "*****");
@@ -1907,6 +1907,7 @@ module.exports = {
                         });
                         return;
                     });
+
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -2013,6 +2014,49 @@ module.exports = {
             });
         //END
 
+    },
+    LoadInfoEmployee: function(req, res) {
+        var USER_ID = req.body.USER_ID;
+        var queryGetInfoUser = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct, " +
+            "departments.departmentName FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+            "WHERE users.id = ?";
+        db.sequelize.query(queryGetInfoUser, null, {
+                raw: true
+            }, [USER_ID])
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    LoadTypeLeave: function(req, res) {
+        var queryGetTypeLeave = "SELECT hr_leave_type.leave_name, hr_leave_type.leave_type_id FROM hr_leave_type";
+        db.sequelize.query(queryGetTypeLeave)
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
     }
 
 };

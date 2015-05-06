@@ -110,6 +110,28 @@ angular.module('app.loggedIn.company.directives.list', [])
 
 				})
 			}
+			scope.Select = function(){
+				var modalInstance = $modal.open({
+			      templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
+			      controller: 'CompanyListNoFollowDialog',
+			      size :'',
+			      resolve: {
+						listId: function(){
+							return scope.company.list;
+						}
+					}
+			    })
+			    .result.then(function(row){
+			    	var postData = {
+			    		patient_id:$stateParams.patientId,
+			    		company_id:row.id
+			    	}
+			    	CompanyModel.AddlistNotFollow(postData)
+			    	.then(function(response){
+			    		scope.company.load();
+			    	})
+			    })
+			}
 			scope.company = {
 				search: search,
 				error: '',

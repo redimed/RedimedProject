@@ -25,6 +25,10 @@ angular.module('app.loggedIn.script.model', [])
 		var instanceApi = mainApi.all('byid');
 		return instanceApi.post({data: data});
 	}
+	mainModel.postDisable = function(data){
+		var instanceApi = mainApi.all('disable');
+		return instanceApi.post({data: data});
+	}
 	return mainModel;
 
 });

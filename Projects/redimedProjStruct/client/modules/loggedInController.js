@@ -57,13 +57,7 @@ angular.module("app.loggedIn.controller",[
         if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
         {
             if(!$cookieStore.get("isRemember"))
-            {
-                $cookieStore.remove("userInfo");
-                $cookieStore.remove("companyInfo");
-                $cookieStore.remove("doctorInfo");
-                $cookieStore.remove("fromState");
-                $cookieStore.remove("isRemember");
-            }
+                $scope.logout();
         }
     });
 
@@ -337,6 +331,8 @@ angular.module("app.loggedIn.controller",[
             $cookieStore.remove("doctorInfo");
             $cookieStore.remove("fromState");
             $cookieStore.remove("toState");
+            $cookieStore.remove("fromState");
+            $cookieStore.remove("isRemember");
             $state.go("security.login",null,{location: "replace", reload: true});
 
             socket.removeAllListeners();

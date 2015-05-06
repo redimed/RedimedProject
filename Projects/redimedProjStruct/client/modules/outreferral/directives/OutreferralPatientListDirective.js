@@ -24,6 +24,21 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 	})
 })
 
+.controller('OutreferralPatientShowDialog', function($scope, $modalInstance, $stateParams, list){
+	$scope.outreferral = {
+		id: list.id,
+		patient_id: list.patient_id,
+		success: false
+	}
+
+	$scope.$watch('outreferral.success', function(success){
+		if(success){
+			$modalInstance.close('success');
+		}
+	})
+})
+
+
 .directive('outreferralPatientList', function(OutreferralModel, $modal, toastr, $stateParams){
 	return {
 		restrict: 'EA',
@@ -34,14 +49,16 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 			calId: '=',
 			withoutPatient: '@',
 			permission: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			addSuccess: '='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
 			if(typeof scope.permission === 'undefined'){
 				scope.action = {
 					edit: true,
-					remove: true
+					remove: true,
+					add: trues
 				}
 			}else{
 				scope.action = scope.$eval(scope.permission);
@@ -163,13 +180,71 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 				})
 			}
 
+			var add = function(){
+				$modal.open({
+					templateUrl: 'referralAdd',
+					controller: function($scope, $modalInstance, patientId, calId){
+						$scope.outreferral = {
+							Patient_id: patientId,
+							CAL_ID: calId,
+							success: false
+						}
+
+						$scope.$watch('outreferral.success', function(success){
+							if(success)
+								$modalInstance.close('success');
+						})
+					},
+					size: 'lg',
+					resolve: {
+						patientId: function(){
+							return scope.patientId;
+						},
+						calId: function(){
+							return scope.calId;
+						}
+					}
+				})
+				.result.then(function(success){
+					if(success === 'success'){
+						toastr.success('Add Successfully');
+						scope.addSuccess = true;
+					}
+				})
+			}
+
+			var show = function(list){
+				$modal.open({
+					templateUrl: 'dialogOutreferralShow',
+					controller: 'OutreferralPatientShowDialog',
+					size: 'lg',
+					resolve: {
+						list: function(){
+							return list;
+						}
+					}
+				})
+				.result.then(function(response){
+					if(response === 'success'){
+						toastr.success('Edit Successfully');
+						scope.outreferral.load();
+					}
+				})
+			}
+
 			scope.outreferral = {
 				dialog: {
+					add: function(){
+						add();
+					},
 					remove: function(list){
 						remove(list);
 					},
 					edit: function(list){
 						edit(list);
+					},
+					show: function(list){
+						show(list);
 					}
 				},
 				load: function(){ load(); },

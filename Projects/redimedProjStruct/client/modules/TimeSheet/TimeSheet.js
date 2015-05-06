@@ -71,5 +71,22 @@ angular.module("app.loggedIn.TimeSheet", [
                 url: "/Report5TimeSheet",
                 templateUrl: "modules/TimeSheet/views/Report5.html",
                 controller: "Report5Controller"
+            })
+            //MODULE LEAVE FORM
+            .state("loggedIn.CreateLeave", {
+                url: "/CreateLeave",
+                templateUrl: "modules/TimeSheet/views/CreateLeave.html",
+                controller: "CreateLeaveController"
+            })
+            .state("loggedIn.LeaveHistory", {
+                url: "/LeaveHistory",
+                templateUrl: "modules/TimeSheet/views/HistoryLeave.html",
+                controller: "HistoryLeaveController"
+            })
+            .state("loggedIn.ApproveLeave", {
+                url: "/ApproveLeave",
+                templateUrl: "modules/TimeSheet/views/ApproveLeave.html",
+                controller: "ApproveLeaveController"
             });
+        //END LEAVE
     });

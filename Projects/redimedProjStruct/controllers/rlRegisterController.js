@@ -407,9 +407,9 @@ module.exports =
             if(result.affectedRows>0)
                 res.json({status:'success'});
             else 
-                res.json({status:'fail'});
+                res.json({status:'fail',msg:'Khong co dong nao duoc cap nhat'});
         },function(err){
-            res.json({status:'fail'});
+            res.json({status:'fail',err:err});
         })
     },
 

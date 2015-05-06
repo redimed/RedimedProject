@@ -65,11 +65,11 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
-                                <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
-                                <td class="btn btn-xs" style="font-size:14px;" ng-repeat="act in task.arrActivity track by $index">
+                                <td  style="text-align:left;font-size:14px;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
+                                <td style="font-size:14px; text-align:center;" ng-repeat="act in task.arrActivity track by $index">
                                     {{act}}
                                 </td>
-                                <td class="btn btn-xs bold" style="font-size:14px;">{{task.total}}</td>
+                                <td class="bold" style="font-size:14px; text-align:center;">{{task.total}}</td>
                                 <td class="btn btn-xs">
                                     <a ng-click="viewDetailDate(week,task.date)" class="btn btn-xs" style="font-size:14px;">View Detail</a>
                                 </td>

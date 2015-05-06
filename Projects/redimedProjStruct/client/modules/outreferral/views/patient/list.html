@@ -1,6 +1,6 @@
 <button class="btn btn-primary" ng-click="outreferral.dialog.add()">Add Referral</button>
 <outreferral-patient-list reload="outreferral.reload" limit="outreferral.limit" 
-	patient-id="outreferral.Patient_id">
+	patient-id="outreferral.Patient_id" permission="{'add': false, 'edit': true, 'show': true}">
 </outreferral-patient-list>
 
 <script type="text/ng-template" id="dialogOutreferralAdd">

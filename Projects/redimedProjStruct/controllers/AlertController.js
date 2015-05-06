@@ -9,7 +9,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex('cln_alerts')
-			.column(
+			.distinct(
 				'cln_alerts.id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
@@ -19,9 +19,9 @@ module.exports = {
 				this.select('*').from('cln_patient_alerts')
 				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
 				.where('cln_patient_alerts.patient_id', postData.Patient_id)
-				//.where('cln_patient_alerts.isEnable', 1)
+				//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
 			})
-			//.where('cln_alerts.isenable', 1)
+			.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.limit(postData.limit)
@@ -34,9 +34,10 @@ module.exports = {
 			.whereNotExists(function(){
 				this.select('*').from('cln_patient_alerts')
 				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
-				.where('cln_patient_alerts.patient_id', postData.Patient_id);
+				.where('cln_patient_alerts.patient_id', postData.Patient_id)
+				//.where('cln_patient_alerts.cal_id', postData.CAL_ID);
 			})
-			//.where('cln_alerts.isenable', 1)
+			.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
 			.toString();
@@ -60,15 +61,15 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex('cln_alerts')
-			.column(
+			.distinct(
 				'cln_alerts.id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
-				'cln_alerts.Creation_date',
-				'cln_patient_alerts.isEnable'
+				'cln_alerts.Creation_date'
 			)
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
+			//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
 			//.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
@@ -81,6 +82,7 @@ module.exports = {
 			.count('cln_alerts.id as a')
 			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
+			//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
 			//.where('cln_alerts.isenable', 1)
 			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
 			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
@@ -178,25 +180,14 @@ module.exports = {
 	postRemove: function(req, res){
 		var postData = req.body.data;
 
-		var sql = knex('cln_alerts')
-			.where('id', postData.id)
-			.del()
-			.toString();
-
 		var sub_sql = knex('cln_patient_alerts')
 			.where('alert_id', postData.id)
 			.del()
 			.toString();
 
-		db.sequelize.query(sql)
+		db.sequelize.query(sub_sql)
 		.success(function(del){
-			db.sequelize.query(sub_sql)
-			.success(function(del){
-				res.json({data: del});
-			})
-			.error(function(error){
-				res.json(500, {error: error});
-			})
+			res.json({data: del});
 		})
 		.error(function(error){
 			res.json(500, {error: error});

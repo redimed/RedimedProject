@@ -7,18 +7,15 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
+            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:14px; font-weight:bold;">Utilization Time Reporting System</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
             <a ui-sref="loggedIn.Report4TimeSheet" style="font-size:14px; font-weight:bold;">Report on Actual Working Hours</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
-        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0" href="http://apps.redimed.com.au:4002/RedimedJavaREST/api/document/timesheet/{{USER_ID}}" target="_blank">Print PDF</a>
-    </div>
-</div>
-&nbsp;
 <div class="panel panel-info">
     <div class="panel-body">
         <div class="row">
@@ -41,6 +38,12 @@
                 <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="changeEmp(info)" checkboxes="true"></div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
+        <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetActualHours/{{USER_ID}}" target="_blank">Display</a>
     </div>
 </div>
 <!-- END INFO SYS -->

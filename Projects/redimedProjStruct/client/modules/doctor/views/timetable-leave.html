@@ -3,7 +3,28 @@
         Leave
     </div>
     <div class="panel-body">
-    	<div class="form-group">
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="day_of_Week">Day Of Week</label>
+                <select id="day_of_Week" ng-model="leave.form.day_of_Week" class="form-control"
+                        ng-options="d.value as d.value for d in list_day_of_week">
+                    <option value="">All Day of Week</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputName2">From Date</label>
+                <input placeholder="From Date" ng-model="leave.form.from_date" 
+                    id ="from_date" class="form-control" custom-date>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail2">To Date</label>
+                <input placeholder="To Date" ng-model="leave.form.to_date" 
+                    id="to_date" class="form-control" custom-date>
+            </div>
+            <button class="btn green" ng-click="leave.submitLeave()"> <i class="fa fa-send"></i>Remove all</button>
+        </div>
+    	<!-- <div class="form-group">
             <label class="control-label col-md-2 col-sm-3 col-xs-6">From Date</label>
             <div class="col-md-2 col-sm-3 col-xs-6">
                 <input placeholder="From Date" ng-model="leave.form.from_date" 
@@ -16,8 +37,46 @@
             </div>
 
             <div class="col-md-2 col-sm-3 col-xs-6">
-                <button class="btn green" ng-click="leave.submitLeave()"> <i class="fa fa-send"></i> Submit</button>
+                <button class="btn green" ng-click="leave.submitLeave()"> <i class="fa fa-send"></i>Remove all</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
+
+
+<!-- TANNV.DTS@GMAIL.COM ADD COMPONENT -->
+<script type="text/ng-template" id="notifyToLeaveCalendar">
+    <div class="modal-body">
+        <div ng-show="bookedList.length>0">
+            <p>
+                List appointment calendar have been booked:
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>CAL ID</th>
+                        <th>APPOINTMENT TIME</th>
+                        <th>SERVICE</th>
+                        <th>PATIENT NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="booked in bookedList">
+                        <td>{{booked.CAL_ID}}</td>
+                        <td>{{booked.FROM_TIME|date:'HH:mm dd-MM-yyyy'}}</td>
+                        <td>{{booked.SERVICE_NAME}}</td>
+                        <td>{{booked.PATIENT_FULL_NAME}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p ng-hide="bookedList.length>0">Do you want to delete all calendar from {{fromDateDisplay }} to {{toDateDisplay}}?</p>
+        <p ng-show="bookedList.length>0">Do you want to delete all booked appointments and delete all calendar from {{fromDateDisplay}} to {{toDateDisplay}}?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<!-- --------------------------------- -->

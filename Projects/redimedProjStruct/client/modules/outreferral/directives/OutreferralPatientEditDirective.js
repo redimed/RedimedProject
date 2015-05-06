@@ -8,7 +8,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 			id: '=',
 			success: '='
 		},
-		templateUrl: 'modules/outreferral/directives/templates/patientAdd.html',
+		templateUrl: 'modules/outreferral/directives/templates/patientEdit.html',
 		link: function(scope, elem, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
 
@@ -96,6 +96,22 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 					delete scope.outreferral.form.outdoctor_name;
 
 				}, function(error){})
+			}
+			scope.onChange = function(){
+				if (scope.outreferral.form.date_started !=null ) {
+					if (scope.outreferral.form.duration == null) {
+					scope.outreferral.form.expire_date = scope.outreferral.form.date_started;
+					}
+					else{
+					var a = parseInt(scope.outreferral.form.duration);
+					var date_started = ConfigService.convertToDB(scope.outreferral.form.date_started)
+					date_started = moment(date_started).format();
+					var b = moment(date_started).add(a,'months').toString();
+					var date = moment(b).format('YYYY-MM-DD');
+					date = ConfigService.convertToDate(date);
+					scope.outreferral.form.expire_date = date;
+					}
+				};
 			}
 
 			scope.outreferral = {

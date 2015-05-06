@@ -3,6 +3,7 @@
     .invite-modal-window .modal{
       z-index: 99999 !important;
     }
+
 </style>
 <div draggable drag="isDrag" ng-class="{'btf-modal-big' : !isMinimize , 'btf-modal-small':isMinimize}">
   <div class="modal-content">
@@ -71,7 +72,7 @@
                   </ot-whiteboard>
               </ot-layout>
               
-              <div id="facePublisher"
+              <div draggable drag="!isMinimize" id="facePublisher"
                   ng-hide="isMinimize"
                   ng-if="publishing">
                   <ot-publisher id="facePublisher"
@@ -119,6 +120,11 @@
               <li>
                 <a ng-click="addPeople()" class="btn-bottom-menu" href="javascript:;">
                   <i class="icon ion-person-add"></i>
+                </a>
+              </li>
+              <li>
+                <a ng-click="toggleWhiteboard()" class="btn-bottom-menu" href="javascript:;">
+                  <i class="icon ion-person"></i>
                 </a>
               </li>
             </div>

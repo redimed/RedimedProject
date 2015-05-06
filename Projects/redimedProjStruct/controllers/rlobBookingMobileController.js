@@ -11,11 +11,12 @@ var fs = require('fs');//Read js file for import into
 module.exports =
 {
     insertNonEmergency:function(req,res){
+        console.log(req.body.info);
+        // return
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
         var LASTNAME=kiss.checkData(req.body.info.LASTNAME)?req.body.info.LASTNAME:null;
         var GENDER=kiss.checkData(req.body.info.GENDER)?req.body.info.GENDER:null;
         var DOB=kiss.checkData(req.body.info.DOB)?req.body.info.DOB:null;
-        // var ADD=kiss.checkData(req.body.info.ADD)?req.body.info.ADD:null;
         var CONTACT_NO=kiss.checkData(req.body.info.CONTACT_NO)?req.body.info.CONTACT_NO:null;
         var MEDICARE_NO=kiss.checkData(req.body.info.MEDICARE_NO)?req.body.info.MEDICARE_NO:null;
         var MEDICARE_REF=kiss.checkData(req.body.info.MEDICARE_REF)?req.body.info.MEDICARE_REF:null;
@@ -25,8 +26,7 @@ module.exports =
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
         var CAL_ID=kiss.checkData(req.body.info.CAL_ID)?req.body.info.CAL_ID:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        // console.log(req.body.info.ADD);
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY,CAL_ID))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID))
         {
             kiss.exlog('insertNonEmergency',"Loi data truyen den");
             res.json({status:'fail'});
@@ -36,18 +36,16 @@ module.exports =
             FIRSTNAME:FIRSTNAME,
             LASTNAME:LASTNAME,
             GENDER:GENDER,
-            DOB:DOB,
-            // ADD:ADD,
+            DOB:moment(DOB).format("YYYY/MM/DD HH:mm:ss"),
             CONTACT_NO:CONTACT_NO,
             MEDICARE_NO:MEDICARE_NO,
             MEDICARE_REF:MEDICARE_REF,
             TYPE_NAME:TYPE_NAME,
             INJURY:INJURY,
             CAL_ID:CAL_ID,
-            // LONGITUDE:LONGITUDE,
-            // LATITUDE:LATITUDE,
             CREATION_DATE:currentDate
         }
+
         var sql="INSERT INTO `waf_sponsor1` SET ?";
         req.getConnection(function(err,connection)
         {
@@ -66,6 +64,9 @@ module.exports =
             });
         });
     },insertEmergency:function(req,res){
+        // console.log(req.body.info);
+        // return
+        // console.log()
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
         var LASTNAME=kiss.checkData(req.body.info.LASTNAME)?req.body.info.LASTNAME:null;
         var GENDER=kiss.checkData(req.body.info.GENDER)?req.body.info.GENDER:null;
@@ -85,17 +86,11 @@ module.exports =
             res.json({status:'fail'});
             return;
         }
-        if (LONGITUDE == -77.028333) {
-            LONGITUDE = null
-        };
-        if (LATITUDE == -12.043333) {
-            LATITUDE = null
-        };
         var insertRow={
             FIRSTNAME:FIRSTNAME,
             LASTNAME:LASTNAME,
             GENDER:GENDER,
-            DOB:DOB,
+            DOB:moment(DOB).format("YYYY/MM/DD HH:mm:ss"),
             ADD:ADD,
             CONTACT_NO:CONTACT_NO,
             MEDICARE_NO:MEDICARE_NO,
@@ -106,6 +101,7 @@ module.exports =
             LATITUDE:LATITUDE,
             CREATION_DATE:currentDate
         }
+        // console.log(insertRow);
         var sql="INSERT INTO `waf_sponsor1` SET ?";
         req.getConnection(function(err,connection)
         {

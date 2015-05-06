@@ -29,7 +29,24 @@ angular.module("app.loggedIn.patient.appt.controller", [])
 			});
 		})
     }
-	getRecallAppt();
+	// getRecallAppt();
+	//get new Appointment
+	var getRecallApptNew = function(){
+		var postData ={
+			Patient_id :$stateParams.patient_id,
+			CAL_ID:$stateParams.cal_id
+		}
+
+    	PatientService.getRecallAppointmentsNew(postData)
+		.then(function(response){
+			$scope.appt_listNew = response.data;
+			angular.forEach($scope.appt_listNew, function(item){
+				item.FROM_TIME = ConfigService.getCommonDatetime(item.FROM_TIME);
+				item.TO_TIME = ConfigService.getCommonDatetime(item.TO_TIME);
+			});
+		})
+    }
+    getRecallApptNew();
 
 	/*
     *	 GET PATIENT DETAIL

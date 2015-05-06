@@ -1,9 +1,12 @@
 <button class="btn btn-primary" ng-click="alert.dialog.select()">Select Alert</button>
-<alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload"></alert-patient-list>
+<alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload" 
+	permission="{edit: true, remove: true}" cal-id="alert.CAL_ID">
+</alert-patient-list>
 
 <script type="text/ng-template" id="dialogAlertPatientSelect">
     <div class="modal-body">
-    	<alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload" without-patient="true"
+    	<alert-patient-list patient-id="alert.Patient_id" cal-id="alert.CAL_ID" 
+    		limit="alert.limit" reload="alert.reload" without-patient="true"
     		permission="{edit: false, remove: false, checkbox: true}" on-savecheck="alert.onSaveCheck(data)">
     	</alert-patient-list>
     </div>

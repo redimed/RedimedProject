@@ -227,10 +227,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="row in company.listInsurer" ng-dblclick="onRowClick(row)" ng-style="row.id === company.checkColor && {'background-color':'1E90FF'}">
+							<tr ng-repeat="row in company.listInsurer">
 								<td>{{row.insurer_name}}</td>
 								<td>{{row.address}}</td>
-								<td align="center"><a><i class="fa fa-times" ng-click="clickDisable(row)"></i></a>
+								<td align="center">
+								<a>
+								   	<button class="btn btn-primary"  ng-if="row.id === company.checkColor"  ng-click="onRowClick(row)">Active</button>
+									<button class="btn btn-secondary" ng-if="row.id !== company.checkColor"  ng-click="onRowClick(row)">Inactive</button>
+								</a>
 								</td>
 
 							</tr>

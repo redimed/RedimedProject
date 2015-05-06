@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdtoutdoctorSearch', function(mdtOutdoctorService, toastr){
+angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdtoutdoctorSearch', function(mdtOutdoctorService, toastr,$modal){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -12,7 +12,19 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 				angular.element("#"+scope.isClose).fadeOut();
 			}
 			//END POPUP
-
+			scope.OutSideDoctor = function(size){
+				var modalInstance = $modal.open({
+			      templateUrl: 'modules/mdtoutdoctor/dialogs/templates/add.html',
+			      controller: 'MdtoutdoctorAdddialog',
+			      size :''
+			    })
+			    .result.then(function(response){
+			    	if(response === 'success'){
+						toastr.success('Add Successfully');
+						loadList();
+					}   	
+			    })
+			}
 			var init = function(){
 				scope.list = {};
 				scope.params = {
@@ -46,6 +58,9 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 			loadList();
 			scope.setPage = function(){
 				scope.params.pagination.offset = (scope.params.pagination.current_page-1)*scope.params.pagination.limit;
+				loadList();
+			}
+			scope.refresh = function(){
 				loadList();
 			}
 		}//end link

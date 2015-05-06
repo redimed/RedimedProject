@@ -417,5 +417,88 @@ module.exports =
                 }
             });
         });
+    },
+
+    /**
+     * Phan quoc chien add
+     * tannv.dts mofify
+     * Them mot calendar moi vao ngay
+     */
+    insertCasualCalendar:function(req,res){
+
+        console.log(req.body.postData);
+        var postData = req.body.postData;
+        var FROM_TIME=kiss.checkData(postData.FROM_TIME)?postData.FROM_TIME:null;
+        var TO_TIME=kiss.checkData(postData.TO_TIME)?postData.TO_TIME:null;
+        var SITE_ID=kiss.checkData(postData.SITE_ID)?postData.SITE_ID:null;
+        var DOCTOR_ID=kiss.checkData(postData.DOCTOR_ID)?postData.DOCTOR_ID:null;
+        var CLINICAL_DEPT_ID=kiss.checkData(postData.CLINICAL_DEPT_ID)?postData.CLINICAL_DEPT_ID:null;
+        var SERVICE_ID=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:null;
+
+        if(!kiss.checkListData(FROM_TIME,TO_TIME,SITE_ID,DOCTOR_ID,CLINICAL_DEPT_ID,SERVICE_ID))
+        {
+            kiss.exlog('insertCasualCalendar',"Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var insertRow={
+            DOCTOR_ID:DOCTOR_ID,
+            SITE_ID:SITE_ID,
+            FROM_TIME:FROM_TIME,
+            TO_TIME:TO_TIME,
+            SERVICE_ID:SERVICE_ID,
+            CLINICAL_DEPT_ID:CLINICAL_DEPT_ID
+        }
+
+        var sql="INSERT INTO `cln_appointment_calendar` SET ?";
+        
+        kiss.executeQuery(req,sql,[insertRow],function(result){
+            res.json({status:'success',data:result.insertId});  
+        },function(err){
+            kiss.exlog("insertCasualCalendar","Loi truy van insert",err);
+            res.json({status:'fail'});
+        })
+    },
+
+    /**
+     * Phan Quoc chien add
+     * tannv.dts modify
+     * Chinh sua mot calendar
+     */
+    editCasualCalendar:function(req,res){
+        // { FROM_TIME: '2015-04-27 07:00:00',
+        //   TO_TIME: '2015-04-27 07:30:00',
+        //   SITE_ID: 2,
+        //   SERVICE_ID: 7,
+        //   CAL_ID: 7092 }
+        var postData = req.body.postData;
+        var FROM_TIME=kiss.checkData(postData.FROM_TIME)?postData.FROM_TIME:null;
+        var TO_TIME=kiss.checkData(postData.TO_TIME)?postData.TO_TIME:null;
+        var SITE_ID=kiss.checkData(postData.SITE_ID)?postData.SITE_ID:null;
+        var CAL_ID=kiss.checkData(postData.CAL_ID)?postData.CAL_ID:null;
+        var SERVICE_ID=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:null;
+
+        if(!kiss.checkListData(FROM_TIME,TO_TIME,SITE_ID,SERVICE_ID,CAL_ID))
+        {
+            kiss.exlog('editCasualCalendar',"Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var insertRow={
+            SITE_ID:SITE_ID,
+            FROM_TIME:FROM_TIME,
+            TO_TIME:TO_TIME,
+            SERVICE_ID:SERVICE_ID
+        }
+
+        var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
+        kiss.executeQuery(req,sql,[insertRow,CAL_ID],function(result){
+            res.json({status:'success'});  
+        },function(err){
+            kiss.exlog("editCasualCalendar","Loi truy van update",err);
+            res.json({status:'fail'});
+        });
     }
 };

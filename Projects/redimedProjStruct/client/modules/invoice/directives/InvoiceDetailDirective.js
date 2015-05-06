@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.detail.directive', [])
 
-.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $state, $timeout, $filter){
+.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $state, $timeout, $filter,CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -13,6 +13,71 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			$scope.goToAppt = function(patient_id, cal_id) {
 				 $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: cal_id});
 			}
+
+			/*
+			*	SEARCH PATIENT
+			*/
+
+			$scope.patientSearch = {
+				is_show: false,
+				open: function() {
+					this.is_show = true;
+				},
+				close: function() {
+					this.is_show = false;
+				},
+				click: function(item) {
+					console.log(item);
+					$scope.InvoiceMap.Patient_id = item.Patient_id;
+					$scope.InvoiceMap.Company_id = item.company_id;
+					$scope.InvoiceMap.patient = {
+						full_name: item.First_name + ' ' + item.Sur_name
+					}
+					$scope.patientSearch.close();
+
+					// LOAD COMPANY
+					CompanyService.get(item.company_id).then(function(response){
+						if( response.status == 'success' && response.data) {
+							var company = response.data;
+							console.log(response.data);
+							$scope.InvoiceMap.company = {Company_name: company.Company_name};
+						}
+					})
+
+					// LOAD CLAIM 
+					$scope.patientClaim.options.search.Patient_id = item.Patient_id;
+			 		$scope.patientClaimPanel.reload();
+				}
+			}
+
+			/*
+			*	SEARCH DOCTOR
+			*/
+
+			$scope.doctorSearch = {
+				is_show: false,
+				open: function() {
+					this.is_show = true;
+				},
+				close: function() {
+					this.is_show = false;
+				},
+				click: function(item) {
+					$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
+					$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
+
+					$scope.InvoiceMap.doctor = {
+						NAME: item.NAME
+					}
+					$scope.doctorSearch.close();
+					// LOAD SERVICE
+
+					ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
+						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
+					});
+				}
+			}
+
 			/*
 			*	SEARCH CLAIM
 			*/
@@ -33,6 +98,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						if(response.status == 'success') {
 							toastr.success('Save Claim Successfully !!!', 'Success');
 							$scope.InvoiceMap.claim = item;
+							$scope.InvoiceMap.Insurer_id = item.insurer_site;
 							$scope.InvoiceMap.claim_id = item.Claim_id;
 							$scope.InvoiceMap.insurer = {insurer_name: item.Insurer }
 							$scope.patientClaim.close();
@@ -58,29 +124,29 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			*	SEARCH DOCTOR
 			*/
 
-			// $scope.doctorSearch = {
-			// 	is_show: false,
-			// 	open: function() {
-			// 		this.is_show = true;
-			// 	},
-			// 	close: function() {
-			// 		this.is_show = false;
-			// 	},
-			// 	click: function(item) {
-			// 		$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
-			// 		$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
+			$scope.doctorSearch = {
+				is_show: false,
+				open: function() {
+					this.is_show = true;
+				},
+				close: function() {
+					this.is_show = false;
+				},
+				click: function(item) {
+					$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
+					$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
 
-			// 		$scope.InvoiceMap.doctor = {
-			// 			NAME: item.NAME
-			// 		}
-			// 		$scope.doctorSearch.close();
-			// 		// LOAD SERVICE
+					$scope.InvoiceMap.doctor = {
+						NAME: item.NAME
+					}
+					$scope.doctorSearch.close();
+					// LOAD SERVICE
 
-			// 		ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
-			// 			$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
-			// 		});
-			// 	}
-			// }
+					ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
+						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
+					});
+				}
+			}
 
 			/*
 			*	SEARCH ITEM

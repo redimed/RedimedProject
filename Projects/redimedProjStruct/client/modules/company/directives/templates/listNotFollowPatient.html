@@ -1,0 +1,28 @@
+		<pagination boundary-links="true" total-items="company.count" ng-model="company.search.page" 
+	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+	        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="setPage(company.search.page)">
+	    </pagination>
+		<!-- END PAGINATION -->
+	<div class="portlet-body">
+		    <div class="row">
+			<div class="col-md-12">
+				<table class="mdt-table table-hover">
+					<thead>
+						<tr>
+							<th>Company Name</th>
+							<th>Industry</th>
+							<th>Address</th>
+							<th>Country</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in company.list" ng-click="onRowClick({row: row})">
+							<td >{{row.Company_name}}</td>
+							<td>{{row.Industry}}</td>
+							<td>{{row.Addr}}</td>
+							<td>{{row.country}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>

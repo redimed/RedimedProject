@@ -1,3 +1,12 @@
+<button class="btn btn-primary" ng-click="outreferral.dialog.add()" ng-if="action.add">Add</button>
+
+<script type="text/ng-template" id="referralAdd">
+	<div class="modal-body">	
+		<outreferral-patient-add patient-id="outreferral.Patient_id" cal-id="outreferral.CAL_ID" 
+			success="outreferral.success"></outreferral-patient-add>
+	</div>
+</script>
+
 <table class="table">
 	<thead>
 		<tr>
@@ -15,14 +24,20 @@
 			<td>{{l.date_started | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>{{l.expire_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
-				<a ng-click="outreferral.dialog.edit(l)" ng-if="action.edit">
+				<button ng-click="outreferral.dialog.edit(l)" ng-if="action.edit" class="btn btn-primary btn-sm">
+					Edit
+				</button>
+				<button ng-click="outreferral.dialog.show(l)" ng-if="action.show" class="btn btn-primary btn-sm">
+					Show
+				</button>
+				<!--<a ng-click="outreferral.dialog.edit(l)" ng-if="action.edit">
 					<i class="fa fa-pencil"></i>
 				</a>
 				&nbsp
 				<a>
 				   	<span  ng-if="l.isEnable"  ng-click="outreferral.clickEnable(l)">Enable</span>
 					<span  ng-if="!l.isEnable"  ng-click="outreferral.clickDisale(l)">Disable</span>
-				</a>
+				</a>-->
 			</td>
 		</tr>
 	</tbody>
@@ -46,5 +61,12 @@
     <div class="modal-body">
         <outreferral-patient-edit id="outreferral.id" patient-id="outreferral.patient_id" success="outreferral.success">
         </outreferral-patient-edit>
+    </div>
+ </script>
+
+  <script type="text/ng-template" id="dialogOutreferralShow">
+    <div class="modal-body">
+        <outreferral-patient-show id="outreferral.id" patient-id="outreferral.patient_id" success="outreferral.success">
+        </outreferral-patient-show>
     </div>
  </script>

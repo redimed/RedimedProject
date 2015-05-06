@@ -6,12 +6,12 @@
 			<i class="fa fa-save"></i> Save
 		</button>
 		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
-			<i class="fa fa-pencil"></i> Edit
+			<i class="fa fa-pencil"></i> Update
 		</button>
 	</div>
 </div>
 <!--END ACTION -->
-
+<!--phanquocchien.c1109g@gmail.com-->
 <div class="row">
 
 	<!--notes-->
@@ -19,21 +19,43 @@
 		<span class="field">
 			<label for="notes">Notes</label>
 			<input type="text" placeholder="Notes" name="notes" ng-model="mdtRecallMap.notes" class="form-control" id="notes" float-label>
-		</span>	</div>
+		</span>	
+	</div>
 	<!--notes-->
 
+	<!--Transaction Date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="notes">Transaction Date</label>
+			<input type="text" placeholder="Transaction Date" name="notes" ng-model="mdtRecallMap.transaction_date" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" id="transaction_date" ng-change="setRecallDate()" float-label>
+		</span>	
+	</div>
+	<!--Transaction Date-->
+
+	<!--Recall Date-->
+	<div class="col-md-4 col-sm-6 col-xs-12">
+		<span class="field">
+			<label for="notes">Recall Date</label>
+			<input disabled type="text" placeholder="Recall Date" name="notes" ng-model="mdtRecallMap.recall_date" class="form-control" id="recall_date" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" float-label>
+		</span>	
+	</div>
+	<!--Recall Date-->
+</div>
+<!--phanquocchien.c1109g@gmail.com-->
+<div class="row">
 	<!--recall_period-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
-			<label for="remind_before">Remind before</label>
+			<label for="remind_before">Remind period</label>
 
-			<select class="form-control" name="recall_period"
+			<select ng-change="setRecallDate()" class="form-control" name="recall_period"
                 ng-model="mdtRecallMap.recall_period"
                 ng-options="item.code as item.title for item in options.recall_period"
            		 float-label>
                 <option disabled value="">-- Recall Period --</option>
             </select>
-		</span>	</div>
+		</span>	
+	</div>
 	<!--recall_period-->
 
 	<!--remind_before-->
@@ -47,7 +69,8 @@
            		 float-label>
                 <option disabled value="">-- Remind Before --</option>
             </select>
-		</span>	</div>
+		</span>	
+	</div>
 	<!--remind_before-->
 </div>
 </form>

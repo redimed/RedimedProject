@@ -165,6 +165,7 @@ angular.module('app.loggedIn.company.directives.edit', [])
 			      }
 			    })
 			    .result.then(function(row){
+			    	row.checkisEnable=1;
 					var flag = 0
 					for (var i = 0; i <= scope.company.listTemp.length; i++) {
 						if (scope.company.listTemp[i] == row.id) {

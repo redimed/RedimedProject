@@ -15,7 +15,6 @@ module.exports = {
 			.innerJoin('companies', 'cln_patients.company_id', 'companies.id')
 			.innerJoin('cln_insurers', 'companies.Insurer', 'cln_insurers.id')
 			.where({
-				'cln_patients.Isenable': 1,
 				'cln_patients.Patient_id': postData.Patient_id
 			})
 			.toString();
@@ -27,7 +26,26 @@ module.exports = {
 		.error(function(error){
 			res.status(500).json({error: error, sql: sql});
 		})
-	}
+	},
 
-	
+	postOneFollowCompany: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex
+				.column('cln_insurers.insurer_name', 'cln_insurers.id')
+				.from('companies')
+				.leftOuterJoin('cln_insurers', 'companies.Insurer', 'cln_insurers.id')
+				.where({
+					'companies.id': postData.company_id
+				})
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows[0]});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	}	
 }

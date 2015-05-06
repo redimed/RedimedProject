@@ -1,6 +1,10 @@
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 var PatientModel = require('../v1_models/Cln_patients');
 var db = require('../models');
-
+var S = require('string');
+var moment = require('moment');
+var _ = require('lodash');
 var mdtFunction = require('../functions');
 
 module.exports = {
@@ -81,28 +85,72 @@ module.exports = {
 			res.json(500, {status: 'error', error: error});
 		});
     },
+    postRecallAppointmentsNew: function(req, res) {
+    	var postData = req.body.data;
+
+    	var sql = knex()
+    			.select(
+    				'cln_appointment_calendar.FROM_TIME',
+    				'cln_appointment_calendar.TO_TIME',
+    				'doctors.NAME',
+    				'cln_clinical_depts.CLINICAL_DEPT_NAME',
+    				'sys_services.SERVICE_NAME'
+    				)
+    			.from('cln_appt_patients')
+    			.innerJoin('cln_appointment_calendar', 'cln_appt_patients.CAL_ID', 'cln_appointment_calendar.CAL_ID')
+    			.innerJoin('doctors',  'cln_appointment_calendar.DOCTOR_ID','doctors.doctor_id')
+    			.innerJoin('cln_clinical_depts','cln_appointment_calendar.CLINICAL_DEPT_ID','cln_clinical_depts.CLINICAL_DEPT_ID')
+    			.innerJoin('sys_services','cln_appointment_calendar.SERVICE_ID','sys_services.SERVICE_ID')
+		    	.where('cln_appt_patients.Patient_id', postData.Patient_id)
+		    	.toString();
+
+				db.sequelize.query(sql)
+				.success(function(data){
+					res.json({data: data});
+				}) 
+				.error(function(error){
+		            res.json(500, {error: error,sql:sql});
+		        })
+    },
 
 	postClaims: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
         var fields = req.body.fields;
 		var search_data = req.body.search;
-		var Patient_id = search_data.Patient_id;
+		var Patient_id = search_data.Patient_id!=null?search_data.Patient_id:null;
 
+		if (Patient_id!=null) {
+			db.Claim.findAndCountAll({
+				where: {
+					Patient_id:Patient_id
+				},
+				offset: offset,
+				limit: limit,
+				attributes: fields
+			}).success(function(result){
+				console.log(result);
 
-		db.Claim.findAndCountAll({
-			where: {
-				Patient_id: Patient_id
-			},
-			offset: offset,
-			limit: limit,
-			attributes: fields
-		}).success(function(result){
-			res.json({"status": "success", "list": result.rows, "count": result.count});
-		})
-		.error(function(error){
-			res.json(500, {"status": "error", "message": error});
-		});
+				res.json({"status": "success", "list": result.rows, "count": result.count});
+			})
+			.error(function(error){
+				res.json(500, {"status": "error", "message": error});
+			});
+		}else{
+			db.Claim.findAndCountAll({
+				offset: offset,
+				limit: limit,
+				attributes: fields
+			}).success(function(result){
+				console.log(result);
+
+				res.json({"status": "success", "list": result.rows, "count": result.count});
+			})
+			.error(function(error){
+				res.json(500, {"status": "error", "message": error});
+			});
+		};
+		
 	},
 
 	postCompanies: function(req, res){
@@ -237,15 +285,20 @@ module.exports = {
     },
 
 	getNumScripts : function(req, res) {
-    	var id = req.query.id;
-		if(!id) {
-			res.json(500, {status: 'error'});
-			return;
-		}
-		db.Script.count({
-			where: {patient_id: id}
-		}).success(function(data){
-			res.json({status: 'success', count: data});
+
+		var id = req.query.id;
+		console.log(id);
+		
+    	var sql = knex('cln_scripts')
+    	.where({
+    		'cln_scripts.Patient_id': id
+    	})
+    	.count('cln_scripts.ID as a')
+    	.toString();
+    	console.log(sql);
+		db.sequelize.query(sql)
+		.success(function(count){
+			res.json({status: 'success', count: count[0].a});
 		}) . error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
@@ -292,5 +345,5 @@ module.exports = {
 		}).error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
-    },
+    }
 }

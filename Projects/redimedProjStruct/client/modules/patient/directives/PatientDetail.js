@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function($stateParams, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout){
+.directive("patientDetail", function($stateParams, $modal, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout, CompanyModel, InsurerService){
 	return{
 		restrict: "EA",
 		scope: {
@@ -8,7 +8,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			isClose: "@",
 			patient: "=",
 			params: "=",
-			onsuccess: '=onsuccess'
+			onsuccess: '='
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
@@ -175,7 +175,29 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 
 			var idPatientDetailCompany = "#PatientDetailCompany";
 			scope.clickCompany = function(){
-				angular.element(idPatientDetailCompany).fadeIn();
+				$modal.open({
+					templateUrl: 'dialogCompanyList',
+					controller: function($scope, $modalInstance){
+						$scope.clickRow = function(row){
+							$modalInstance.close(row);
+						}
+					}
+				})
+				.result.then(function(row){
+					if(row){
+						scope.selectedCompany.id = row.id;
+						scope.selectedCompany.Company_name = row.Company_name;
+
+						InsurerService.oneFollowCompany({company_id: row.id}).then(function(response){
+							scope.selectedCompany.insurer = {
+								insurer_name: 'No Insurer'
+							};
+
+							if(response.data.insurer_name !== null)
+								scope.selectedCompany.insurer.insurer_name = response.data.insurer_name;
+						}, function(error){})
+					}
+				})
 			}
 
 			scope.selectCompany = function(row){
@@ -229,15 +251,16 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                        if(scope.isClose){
 	                        	scope.closePopup();
 	                        }
-	                        if (scope.onsuccess) {
-                            	scope.onsuccess(response);
-                        	}
 						})
 					}else{
 						if(uploader.queue.length > 0){
 							var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
 							postData.avatar = "img/patient/avt/" + upload_file_name;
 						}
+						if(typeof scope.params.permission.calendar !== 'undefined' && scope.params.permission.calendar === true){
+							postData.CAL_ID = scope.params.CAL_ID;
+						}
+
 						PatientService.mdtAdd(postData).then(function (data) {
 	                        if (data.status != 'success') {
 	                            toastr.error("Cannot Insert!", "Error");
@@ -256,17 +279,14 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		                        scope.patient.Patient_id = data.data.Patient_id;
 		                        //end return
 	                        }
-	                        
-	                        if (scope.onsuccess) {
-                            	scope.onsuccess(data);
-                        	}
 
 	                        initObject();
 
 	                        if(scope.isClose){
 	                        	scope.closePopup();
 	                        }
-	                        
+	                        scope.onsuccess = data.data;
+	                        scope.patient = data.data;
 	                    })
 					}
 				}else{

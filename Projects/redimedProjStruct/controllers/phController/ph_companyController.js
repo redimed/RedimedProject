@@ -4,6 +4,8 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var moment=require('moment');
+var db = require("../../models");
+
 
 module.exports = {
 	//get data ph_company
@@ -237,7 +239,7 @@ module.exports = {
 	//insert new shop company
 	insertCompanyShop:function(req,res){
 		var data = req.body;
-		
+		console.log(data.ShopInfo.shop_name)
 		var sqlInsertShop = 
 				" INSERT INTO ph_company_shops(company_id,shop_name,address,suburb,postcode,state,phone) "+
 				" VALUES (?,?,?,?,?,?,?) ";
@@ -311,7 +313,7 @@ module.exports = {
 		console.log(data);
 		var sqlInsertPost = 
 			"INSERT INTO ph_posts (company_id,required_date,time_od_shift,local_weekday_rate,nonelocal_weekday_rate,sat_rate,sun_rate,ph_rate,isTravel,isAccommodation,post_type,job_title,job_description,Start_date,Duration,job_type,Qualification,experiences_require,hours_per_week,days_per_week,isweekend_shift,CREATION_DATE) "+
-			"VALUES (?,?,'time_od_shift','local_weekday_rate','nonelocal','sat_rate','sun_rate','ph_rate',1,1,'post_type','job_title','job_description','2014-05-05','duration','job_type','qualification','exper','hpw',1,1,'2015-02-02') ";
+			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		var required_date = moment(data.required_date).format("YYYY-MM-DD");
 		var time_od_shift = moment(data.time_od_shift).format("h:mm:ss a");
 		var Start_date =  moment(data.Start_date).format("YYYY-MM-DD");
@@ -328,7 +330,91 @@ module.exports = {
 				}
 			})
 		})
+	},
+	addNewUserInCompany:function(req,res){
+		var data = req.body;
+		console.log(data)
+		var password=bcrypt.hashSync(data.password);
+		var sqlCheckUserName = "SELECT user_id FROM ph_users WHERE username = ? ";
+		var sqlInsertUser = 
+			"INSERT INTO ph_users(username,PASSWORD,user_type,firstname,surname,mobile,email)   "+
+			"VALUES (?,?,?,?,?,?,?) ";
+		var sqlInsertCompanyUser = 
+			"INSERT INTO ph_company_users (company_id,user_id,isMain,isEnable) "+
+			"VALUES(?,?,?,?)" ;
+		db.sequelize.query(sqlCheckUserName,null,{raw:true},[data.username])
+            .success(function(rows){
+            	if(typeof rows[0] == "undefined"){
+            		console.log(rows)
+            		db.sequelize.query(sqlInsertUser,null,{raw:true},[data.username,password,'Company',data.firstname,data.surname,data.mobile,data.email])
+            				.success(function(){
+            						//get this user new insert database
+								db.sequelize.query(sqlCheckUserName,null,{raw:true},[data.username])
+								            .success(function(rows){
+								            	var user_id = rows[0].user_id;
+								            	// start insert usercompany
+								            		db.sequelize.query(sqlInsertCompanyUser,null,{raw:true},[data.company_id,user_id,0,1])
+											            .success(function(rows){
+											            	console.log("insert sucess---------------");
+											            	res.json({status:'success'});	
+											            })
+											            .error(function(err){
+											                res.json({status:'error',err:err});
+											            })
+								            	// end
+								            })
+								            .error(function(err){
+								                res.json({status:'error',err:err});
+								            })
+            				})
+            				.error(function(err){
+            					console.log(err);
+            					res.json({status:'error',err:err});
+            				})
+            		}else{
+            			console.log("err")
+            			res.json({status:'error',err:"Has user in database"});	
+            		}
+            
+                // res.json({status:'success',rs:data});
+            })
+            .error(function(err){
+                res.json({status:'error',err:err});
+            })
+	},
+
+	getUserByCompany:function(req,res){
+		var data = req.body;
+		var sql = 
+			"SELECT u.`user_id`,u.`username`,u.`user_type`,u.`firstname`,u.`surname`,u.`mobile`,u.`email` FROM ph_users u "+
+			"INNER JOIN ph_company_users cu "+
+			"ON  cu.`user_id` = u.`user_id` "+
+			"WHERE cu.`company_id` = ? ";
+			db.sequelize.query(sql,null,{raw:true},[data.company_id])
+				.success(function(rows){
+					console.log(rows)
+					res.json({status:'success',data:rows});	
+				})
+				.error(function(err){
+					res.json({status:'error',err:err});
+				})
+
+	},
+	checkIsMain:function(req,res){
+		var user_id = req.body.user_id;
+		console.log(user_id);
+		var sql = "SELECT isMain FROM ph_company_users WHERE user_id = ?";
+		db.sequelize.query(sql,null,{raw:true},[user_id])
+				.success(function(rows){
+					console.log(rows)
+					res.json({status:'success',data:rows[0]});	
+				})
+				.error(function(err){
+					res.json({status:'error',err:err});
+				})
 	}
 
 
+
 }
+
