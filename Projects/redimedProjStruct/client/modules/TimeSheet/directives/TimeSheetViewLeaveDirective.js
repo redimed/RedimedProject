@@ -24,6 +24,7 @@ angular.module("app.loggedIn.TimeSheet.ViewLeave.Directive", [])
                                     ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName +
                                         " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
                                 scope.statusID = scope.list.result[0].task_status_id;
+                                scope.is_reject = scope.list.result[0].is_reject;
                             }
                         });
                     }

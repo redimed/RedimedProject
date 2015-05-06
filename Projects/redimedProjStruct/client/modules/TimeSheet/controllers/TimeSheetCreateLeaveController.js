@@ -16,6 +16,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     response.resultLeave !== null &&
                     response.resultLeave[0] !== undefined && response.resultLeave[0] !== null) {
                     $scope.info = response.resultLeave[0];
+                    $scope.is_reject = response.resultLeave[0].is_reject;
                     //convert time
                     $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
                     //end

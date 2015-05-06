@@ -77,13 +77,45 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                                         "reload": true
                                     });
                                     toastr.success("Reject leave success!", "Success");
+                                } else if (response.status === "error") {
+                                    modalInstance.close();
+                                    $state.go("loggedIn.ApproveLeave", null, {
+                                        "reload": true
+                                    });
+                                    toastr.error("Reject leave fail!", "Error");
+                                } else {
+                                    //catch exception
+                                    modalInstance.close();
+                                    $state.go("loggedIn.ApproveLeave", null, {
+                                        "reload": true
+                                    });
+                                    toastr.error("Server not response!", "Error");
                                 }
                             });
                         }
                     };
                     $scope.clickApprove = function(value) {
                         TimeSheetService.ApproveLeave(value).then(function(response) {
-                            console.log(response);
+                            if (response.status === "success") {
+                                modalInstance.close();
+                                $state.go("loggedIn.ApproveLeave", null, {
+                                    "reload": true
+                                });
+                                toastr.success("Approve leave success!", "Success");
+                            } else if (response.status === "error") {
+                                modalInstance.close();
+                                $state.go("loggedIn.ApproveLeave", null, {
+                                    "reload": true
+                                });
+                                toastr.error("Approve leave fail!", "Error");
+                            } else {
+                                //catch exception
+                                modalInstance.close();
+                                $state.go("loggedIn.ApproveLeave", null, {
+                                    "reload": true
+                                });
+                                toastr.error("Server not response!", "Error");
+                            }
                         });
                     };
                 },

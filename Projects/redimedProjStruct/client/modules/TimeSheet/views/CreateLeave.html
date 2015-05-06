@@ -130,7 +130,7 @@
                 <table class="responsive table table-bordered " ng-show="!tasks.loading ">
                     <tbody>
                         <tr>
-                            <td colspan="3 " style="background-color:#67809f; color:white; font-weight:bold; ">STANDARD LEAVE REQUEST – TEAM LEADER ONLY - APPROVAL REQUIRED </td>
+                            <td colspan="3 " style="background-color:#67809f; color:white; font-weight:bold; ">LEAVE REQUEST</td>
                         </tr>
                         <tr>
                             <td colspan="3 " rowspan="1 "></td>
@@ -184,7 +184,8 @@
             <div class="row" style="margin-right:-7px;">
                 <a class="btn btn-xs red pull-right" ng-if="isEdit===true" ui-sref="loggedIn.LeaveHistory" style="width:75px; font-size:14px;">Cancel</a>
                 <a class="btn btn-xs red pull-right" ng-if="isEdit===false" ui-sref="loggedIn.TimeSheetHome" style="width:75px; font-size:14px;">Cancel</a>
-                <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px; font-size:14px; ">Submit</button>
+                <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px; font-size:14px; " ng-if="is_reject!==1">Submit</button>
+                <button class="btn btn-xs purple pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px; font-size:14px; " ng-if="is_reject===1">Re-submit</button>
                 <button class="btn btn-xs green pull-right" ng-click="clickSendServer(1,formLeave)" style="width:75px; font-size:14px;">Save</button>
             </div>
         </div>

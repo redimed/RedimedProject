@@ -56,11 +56,12 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                     $scope.clickCancel = function(value) {
                         modalInstance.close();
                     };
-                    $scope.clickSubmitAgain = function(status, leaveID) {
+                    $scope.clickSubmitAgain = function(statusID, leaveID) {
                         //UPDATE STATUS
                         var info = {
-                            status: status,
-                            leaveID: leaveID
+                            statusID: statusID,
+                            leaveID: leaveID,
+                            userID: $cookieStore.get("userInfo").id
                         };
                         TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
                             if (response.status === "success") {

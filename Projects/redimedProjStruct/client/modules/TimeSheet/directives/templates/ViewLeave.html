@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-hide="(l.sumDATE===0 && l.activity_id !==18)">
-                                <td style="text-align:left;font-size:14px; width:40%;"><span>{{((l.leave_name!==undefined && l.leave_name!==null && l.leave_name!=="")?l.leave_name:"")}}</span>&nbsp;<span class="text-info">{{(l.other!==undefined && l.other!==null && l.other!=="")?l.other:""}}</span></td>
+                                <td style="text-align:left;font-size:14px; width:40%;"><span>{{((l.leave_name!==undefined && l.leave_name!==null && l.leave_name!=="")?l.leave_name:"")}}</span>&nbsp;<span class="text-info">{{(l.type_other!==undefined && l.type_other!==null && l.type_other!=="")?l.type_other:""}}</span></td>
                                 <td style="font-size:14px; text-align:center; width:10%;">{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</td>
                                 <td style="font-size:14px; width:50%;">{{(l.reason_leave!==undefined && l.reason_leave!==null && l.reason_leave!=='')?(l.reason_leave):""}}</td>
                             </tr>
@@ -57,7 +57,7 @@
             <div class="col-md-12" style="margin-top:5px; font-size:14px;">
                 <span>Total Leave Hours:<span class="text-info bold" style="margin-left:15px;">{{list.result[0].time_leave_all | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaiting for Submit',
-                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span></span>
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{list.result[0].status}}</span></span>
             </div>
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
@@ -65,7 +65,7 @@
         <a style="width:70px; font-size:14px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: true})">Cancel</a>
         <a style="width:70px; font-size:14px;" ng-if="statusID===1 || statusID===4" class="btn pull-right btn-xs blue-steel" ng-click="onEdit({leaveID: list.result[0].leave_id})">Edit</a>
         <a style="width:70px; font-size:14px;" ng-if="statusID===1" class="btn pull-right btn-xs green" ng-click="onSubmitagain({status: 2, leaveID: list.result[0].leave_id})">Submit</a>
-        <a style="width:70px; font-size:14px;" ng-if="statusID===4" class="btn pull-right btn-xs purple" ng-click="onSubmitagain({status: 5, leaveID: list.result[0].leave_id})">Re-submit</a>
+        <a style="width:70px; font-size:14px;" ng-if="is_reject===1 && statusID!==2 && statusID!==5" class="btn pull-right btn-xs purple" ng-click="onSubmitagain({status: 5, leaveID: list.result[0].leave_id})">Re-submit</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>

@@ -93,7 +93,7 @@
                             </td>
                             <td>
                                 <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
-                            're-submitted':l.name==='Re-submitted'}">{{l.name}}</span>
+                            're-submitted':l.name==='Re-submitted'}">{{(l.name==="Submitted")?"Awaiting for Approve": l.name}}</span>
                             </td>
                             <td style="text-align:left;font-size:14px;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
                             </td>

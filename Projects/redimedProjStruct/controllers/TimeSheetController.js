@@ -930,9 +930,11 @@ var SendMailSubmit = function(req, res, info) {
                                                                     '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                                                             };
                                                             // END APPROVE
+
                                                             //CALL SEND MAIL
                                                             FunctionSendMail.sendEmail(req, res, mailOptions);
                                                             // END CALL
+                                                            
                                                             // END SEND
                                                         }
                                                     })

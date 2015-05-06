@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-hide="(l.sumDATE===0 && l.activity_id !==18)">
-                                <td style="text-align:left;font-size:14px; width:40%;"><span>{{((l.leave_name!==undefined && l.leave_name!==null && l.leave_name!=="")?l.leave_name:"")}}</span>&nbsp;<span class="text-info">{{(l.other!==undefined && l.other!==null && l.other!=="")?l.other:""}}</span></td>
+                                <td style="text-align:left;font-size:14px; width:40%;"><span>{{((l.leave_name!==undefined && l.leave_name!==null && l.leave_name!=="")?l.leave_name:"")}}</span>&nbsp;<span class="text-info">{{(l.type_other!==undefined && l.type_other!==null && l.type_other!=="")?l.type_other:""}}</span></td>
                                 <td style="font-size:14px; text-align:center; width:10%;">{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</td>
                                 <td style="font-size:14px; width:50%;">{{(l.reason_leave!==undefined && l.reason_leave!==null && l.reason_leave!=='')?(l.reason_leave):""}}</td>
                             </tr>
@@ -71,7 +71,7 @@
         </fieldset>
         <!-- BUTTON -->
         <a style="width:70px; font-size:14px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
-        <a style="width:70px; font-size:14px;" class="btn pull-right btn-xs blue" ng-click="onApprove({return: info})" ng-if="statusID===2 || statusID===5">Approve</a>
+        <a style="width:70px; font-size:14px;" class="btn pull-right btn-xs blue" ng-click="onApprove({return: info})" ng-if="statusID===2 || statusID===5" ng-disabled="info.isReject===true">Approve</a>
         <a style="width:70px; font-size:14px;" class="btn pull-right btn-xs red" ng-click="onReject({return: info})" ng-if="statusID===2 || statusID===5" ng-disabled="info.isReject===true && ViewLeave.comments.$error.required===true">Reject</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->

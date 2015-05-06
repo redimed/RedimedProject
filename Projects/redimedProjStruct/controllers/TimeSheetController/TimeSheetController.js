@@ -1,3 +1,4 @@
+//LIBRARY
 var db = require("../../models");
 var FunctionSendMail = require("../../controllers/TimeSheetController/timeSheetEmailController.js");
 var sys_hierarchy_group = db.sys_hierarchy_group;
@@ -11,6 +12,8 @@ var Location = db.timeLocation;
 var moment = require('moment');
 var CronJob = require('cron').CronJob;
 var chainer = new db.Sequelize.Utils.QueryChainer();
+//END LIBRARY
+
 module.exports = {
     //MODULE TREE
     LoadTreeTimeSheet: function(req, res) {
@@ -1975,7 +1978,7 @@ module.exports = {
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to complete and submit your timesheet. ' +
                                             'Failure to submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
@@ -2093,6 +2096,32 @@ module.exports = {
                 }
                 chainer.runSerially()
                     .success(function(resultAll) {
+                        //SAVE TRACKER - SEND MAIL
+                        if (info.statusID === 2 || info.statusID === 5) {
+                            //TRACKER
+                            var trackerInfo = {};
+
+                            if (result !== undefined && result !== null &&
+                                result !== undefined && result !== null &&
+                                result.dataValues !== undefined && result.dataValues !== null &&
+                                result.dataValues.leave_id !== undefined && result.dataValues.leave_id !== null) {
+                                trackerInfo.leaveID = result.dataValues.leave_id;
+                            }
+                            trackerInfo.creationDate = moment().format("YYYY-MM-DD h:mm:ss");
+                            trackerInfo.userID = info.USER_ID;
+                            trackerInfo.statusID = info.statusID;
+                            TracKerLeave(trackerInfo);
+                            //END TRACKER
+
+                            //CALL SEND MAIL
+                            var sendMailInfo = {
+                                userID: trackerInfo.userID
+                            };
+                            sendMailSubmitLeave(req, res, sendMailInfo);
+                            // END CALL
+
+                        }
+                        //END TRACKER - SEND MAIL
                         res.json({
                             status: "success"
                         });
@@ -2224,7 +2253,7 @@ module.exports = {
     // VIEW LEAVE
     ViewLeave: function(req, res) {
         var leave_id = req.body.leave_id;
-        var queryView = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, " +
+        var queryView = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, hr_leave.is_reject, " +
             "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " +
             "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " +
             "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " +
@@ -2261,7 +2290,8 @@ module.exports = {
 
     // SUBMIT ON VIEW LEAVE
     SubmitOnViewLeave: function(req, res) {
-        var statusID = req.body.info.status;
+        var infoTracKer = req.body.info;
+        var statusID = req.body.info.statusID;
         var leaveID = req.body.info.leaveID;
         var dateUpdate = moment().format("YYYY-MM-DD hh:mm:ss");
         var queryUpdateStatus = "UPDATE hr_leave SET hr_leave.status_id = :statusID, last_update_date = :dateUpdate " +
@@ -2274,6 +2304,10 @@ module.exports = {
                 leaveID: leaveID
             })
             .success(function(result) {
+                //CALL TRACKER
+                infoTracKer.creationDate = moment().format("YYYY-MM-DD h:mm:ss");
+                TracKerLeave(infoTracKer);
+                //END TRACKER
                 res.json({
                     status: "success"
                 });
@@ -2292,7 +2326,7 @@ module.exports = {
     //LOAD LEAVE EDIT
     LoadLeaveEdit: function(req, res) {
         var leaveID = req.body.leaveID;
-        var queryLoadLeaveEdit = "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, " +
+        var queryLoadLeaveEdit = "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, " +
             "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " +
             "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " +
             "FROM hr_leave " +
@@ -2384,6 +2418,15 @@ module.exports = {
                 }
                 chainer.runSerially()
                     .success(function(resultAll) {
+                        //TRACKER LEAVE
+                        var infoTracKer = {
+                            statusID: info.statusID,
+                            leaveID: info.leave_id,
+                            creationDate: moment().format("YYYY-MM-DD h:mm:ss"),
+                            userID: info.USER_ID
+                        };
+                        TracKerLeave(infoTracKer);
+                        //END TRACKER
                         res.json({
                             status: "success"
                         });
@@ -2491,30 +2534,75 @@ module.exports = {
                                     listUser = "(-1)";
                                 }
                             }
+                            if (NODE_CODE === "Head of Dept." || NODE_CODE === "Director") {
 
-                            if (NODE_CODE === "Head of Dept.") {
-                                queryGetListLeave =
-                                    "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
-                                    "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
-                                    "time_task_status.task_status_id, time_task_status.name " + //SElECT
-                                    "FROM hr_employee " + //FROM
-                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
-                                    "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
-                                    "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
-                                    "WHERE hr_leave.user_id IN " + listUser +
-                                    " AND hr_leave.is_approve_first = 1 AND hr_leave.is_approve_second = 0 AND (hr_leave.status_id_first=2 OR hr_leave.status_id_first=5)" +
-                                    selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
-                            } else if (NODE_CODE === "Director") {
-                                queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
-                                    "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
-                                    "time_task_status.task_status_id, time_task_status.name " + //SElECT
-                                    "FROM hr_employee " + //FROM
-                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
-                                    "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
-                                    "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
-                                    "WHERE hr_leave.user_id IN " + listUser +
-                                    " AND hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND (hr_leave.status_id_second===2 OR hr_leave.status_id_second===5)" +
-                                    selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                if (NODE_CODE === "Head of Dept.") {
+                                    queryGetListLeave =
+                                        "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
+                                        "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
+                                        "hr_leave.status_id_first as task_status_id, time_task_status.name " + //SElECT
+                                        "FROM hr_employee " + //FROM
+                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                        "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id_first " + //INNER JOIN
+                                        "WHERE hr_leave.user_id IN " + listUser +
+                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                } else if (NODE_CODE === "Director") {
+                                    queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
+                                        "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
+                                        "time_task_status.task_status_id, time_task_status.name " + //SElECT
+                                        "FROM hr_employee " + //FROM
+                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                        "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
+                                        " AND hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1" +
+                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                }
+                                db.sequelize.query(queryGetListLeave, null, {
+                                        raw: true
+                                    }, {
+                                        limit: info.limit,
+                                        offset: info.offset
+                                    })
+                                    .success(function(resultListLeave) {
+                                        var queryGetStatus = "SElECT time_task_status.task_status_id as code, time_task_status.name " +
+                                            "FROM time_task_status";
+                                        db.sequelize.query(queryGetStatus)
+                                            .success(function(resultGetStatus) {
+                                                if (searchStr === "" &&
+                                                    selectStr === "" &&
+                                                    resultListLeave.length === 0) {
+                                                    res.json({
+                                                        status: "success",
+                                                        result: null,
+                                                        listStatus: resultGetStatus
+                                                    });
+                                                    return;
+                                                } else {
+                                                    res.json({
+                                                        status: "success",
+                                                        result: resultListLeave,
+                                                        listStatus: resultGetStatus
+                                                    });
+                                                    return;
+                                                }
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                                return;
+                                            });
+                                    })
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error",
+                                            result: []
+                                        });
+                                        return;
+                                    });
                             } else {
                                 //exception
                                 res.json({
@@ -2522,40 +2610,7 @@ module.exports = {
                                     result: []
                                 });
                             }
-                            db.sequelize.query(queryGetListLeave, null, {
-                                    raw: true
-                                }, {
-                                    limit: info.limit,
-                                    offset: info.offset
-                                })
-                                .success(function(resultListLeave) {
-                                    var queryGetStatus = "SElECT time_task_status.task_status_id as code, time_task_status.name " +
-                                        "FROM time_task_status";
-                                    db.sequelize.query(queryGetStatus)
-                                        .success(function(resultGetStatus) {
-                                            res.json({
-                                                status: "success",
-                                                result: resultListLeave,
-                                                listStatus: resultGetStatus
-                                            });
-                                            return;
-                                        })
-                                        .error(function(err) {
-                                            console.log("*****ERROR:" + err + "*****");
-                                            res.json({
-                                                status: "error"
-                                            });
-                                            return;
-                                        });
-                                })
-                                .error(function(err) {
-                                    console.log("*****ERROR:" + err + "*****");
-                                    res.json({
-                                        status: "error",
-                                        result: []
-                                    });
-                                    return;
-                                });
+
                         })
                         .error(function(err) {
                             console.log("*****ERROR:" + err + "*****");
@@ -2583,6 +2638,12 @@ module.exports = {
     ApproveLeave: function(req, res) {
         var info = req.body.info;
         var dateApprove = moment().format('YYYY-MM-DD h:mm:ss');
+        var infoTracKer = {
+            leaveID: info.leaveID,
+            statusID: 3,
+            userID: info.userID,
+            creationDate: moment().format("YYYY-MM-DD h:mm:ss")
+        };
         var queryGetInfoLeave = "SELECT hr_leave.leave_id, hr_leave.standard, hr_leave.is_approve_first, " +
             "hr_leave.is_approve_second, hr_leave.status_id_first, hr_leave.status_id_second " +
             "FROM hr_leave " +
@@ -2597,7 +2658,101 @@ module.exports = {
                     resultInfoLeave !== null &&
                     resultInfoLeave[0] !== undefined &&
                     resultInfoLeave[0] !== null) {
+                    //check standard 
+                    if (resultInfoLeave[0].standard === 0) {
+                        if (resultInfoLeave[0].is_approve_first === 0 &&
+                            resultInfoLeave[0].is_approve_second === 1) {
+                            //approve
+                            db.HrLeave.update({
+                                    status_id: 3,
+                                    status_id_first: 3,
+                                    status_id_second: 3,
+                                    date_approve: dateApprove
+                                }, {
+                                    leave_id: info.leaveID
+                                })
+                                .success(function(result) {
+                                    //TRACKER LEAVE
+                                    TracKerLeave(infoTracKer);
+                                    //END TRACKER
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+                                });
+                            //end approve
+                        } else if (resultInfoLeave[0].is_approve_first === 1 &&
+                            resultInfoLeave[0].is_approve_second === 0) {
+                            //approve fisrt and waitting second
+                            db.HrLeave.update({
+                                    is_approve_first: 0,
+                                    is_approve_second: 1,
+                                    status_id_first: 3
+                                }, {
+                                    leave_id: info.leaveID
+                                })
+                                .success(function(result) {
+                                    //TRACKER LEAVE
+                                    TracKerLeave(infoTracKer);
+                                    //END TRACKER
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+                                });
+                            //end approve first - second
+                        }
 
+                    } else if (resultInfoLeave[0].standard === 1) {
+                        //approve
+                        db.HrLeave.update({
+                                status_id: 3,
+                                is_approve_first: 0,
+                                is_approve_second: 1,
+                                status_id_first: 3,
+                                status_id_second: 3,
+                                date_approve: dateApprove
+                            }, {
+                                leave_id: info.leaveID
+                            })
+                            .success(function(result) {
+                                //TRACKER LEAVE
+                                TracKerLeave(infoTracKer);
+                                //END TRACKER
+                                res.json({
+                                    status: "success"
+                                });
+                                return;
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "success"
+                                });
+                                return;
+                            });
+                        //end approve
+                    }
+                    //end
+                } else {
+                    res.json({
+                        status: "error"
+                    });
+                    return;
                 }
             })
             .error(function(err) {
@@ -2607,19 +2762,6 @@ module.exports = {
                     result: []
                 });
             });
-        // if (info !== undefined &&
-        //     info !== null &&
-        //     info.standard === 1) {
-        //     status_id = 3;
-        // } else if (info === 0) {
-
-        // } else {
-        //     res.json({
-        //         status: "error",
-        //         result: []
-        //     });
-        //     return;
-        // }
     },
     //END APPROVE
 
@@ -2628,10 +2770,26 @@ module.exports = {
         var info = req.body.info;
         db.HrLeave.update({
                 status_id: 4,
+                is_approve_first: 1,
+                is_approve_second: 0,
+                status_id_first: 4,
+                status_id_second: null,
                 comments: info.comments,
+                is_reject: 1
 
+            }, {
+                leave_id: info.leaveID
             })
             .success(function(result) {
+                //TRACKER LEAVE
+                var infoTracKer = {
+                    leaveID: info.leaveID,
+                    userID: info.userID,
+                    creationDate: moment().format("YYYY-MM-DD h:mm:ss"),
+                    statusID: 4
+                };
+                TracKerLeave(infoTracKer);
+                //END TRACKER
                 res.json({
                     status: "success"
                 });
@@ -2648,6 +2806,96 @@ module.exports = {
     //END REJECT
 };
 
+//FUNCTION SEND MAIL SUBMIT
+var sendMailSubmitLeave = function(req, res, info) {
+    var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var DATE_OF_WEEK = arrayWeek[moment(info.date).format('e') - 1];
+    var DATE_SUBMIT = moment(info.date).format('DD/MM/YYYY - HH:mm:ss');
+    //GET INFOMATION MANAGER AND EMPLOYEE
+    var queryGetInfoEmployee = "SELECT hr_employee.FirstName, hr_employee.LastName, sys_hierarchy_nodes.NODE_ID " +
+        "FROM hr_employee " +
+        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+        "WHERE users.id = :userID";
+    db.sequelize.query(queryGetInfoEmployee, null, {
+            raw: true
+        }, {
+            userID: info.userID
+        })
+        .success(function(resultInfoEmployee) {
+            if (resultInfoEmployee !== undefined &&
+                resultInfoEmployee !== null &&
+                resultInfoEmployee.length !== 0 &&
+                resultInfoEmployee[0] !== undefined &&
+                resultInfoEmployee[0] !== null &&
+                !(isNaN(resultInfoEmployee[0].NODE_ID))) {
+                var queryGetInfoManage = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                    "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                    "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
+                    "WHERE sys_hierarchy_nodes.NODE_ID = :nodeID";
+                db.sequelize.query(queryGetInfoManage, null, {
+                        raw: true
+                    }, {
+                        nodeID: resultInfoEmployee[0].NODE_ID
+                    })
+                    .success(function(resultInfoManage) {
+                        if (resultInfoManage !== undefined &&
+                            resultInfoManage !== null &&
+                            resultInfoManage.length !== 0 &&
+                            resultInfoManage[0] !== undefined &&
+                            resultInfoManage[0] !== null &&
+                            resultInfoManage[0].Email !== undefined &&
+                            resultInfoManage[0].Email !== null &&
+                            resultInfoManage[0].Email.length !== 0) {
+                            //SEND EMAIL TO MANAGE
+                            mailOptions = {
+                                senders: 'TimeSheet',
+                                recipients: resultInfoManage[0].Email,
+                                subject: 'Notification of Submitted Leave(s)',
+                                htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultInfoManage[0].FirstName + ' ' + resultInfoManage[0].LastName + ',</label></b><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a leave from <b>' + resultInfoEmployee[0].FirstName + ' ' + resultInfoEmployee[0].LastName + '</b> on <b>' + DATE_OF_WEEK + ', ' +
+                                    DATE_SUBMIT + '.</b><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Leave Management System to review and approve/reject the leave.<br/><br/><br/>' +
+                                    'Access the e-Timesheet/Leave Management System at https://apps.redimed.com.au</label><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Leave Reporting System<br></label><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
+                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                    '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                    'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                                    '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                            };
+
+                            // CALL SEND MAIL
+                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                            // END CALL
+
+                            // END SEND EMAIL
+                        }
+                    })
+                    .error(function(err) {
+                        cosole.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+        });
+    //END GET INFOMATION
+};
+//END SEND MAIL SUBMIT
+
 //FUNCTION GET WEEKNO
 var getWeekNo = function() {
     d = new Date();
@@ -2659,7 +2907,7 @@ var getWeekNo = function() {
 };
 //END
 
-// FUNCTION TRACKER
+// FUNCTION TRACKER TIMESHEET
 var TracKerTimeSheet = function(info) {
     var arrayAction = {
         1: "Save",
@@ -2679,7 +2927,36 @@ var TracKerTimeSheet = function(info) {
             console.log("*****ERROR:" + err + "*****");
         });
 };
-//END
+//END TRACKER TIMESHEET
+
+//FUNCTION TRACKER LEAVE
+var TracKerLeave = function(info) {
+    var arrayAction = {
+        1: "Save",
+        2: "Submit",
+        3: "Approve",
+        4: "Reject",
+        5: "Resubmit"
+    };
+    var nameAction = arrayAction[info.statusID];
+    var queryTracKer = "INSERT INTO leave_tracker (action_name, leave_id, user_id, creation_date) " +
+        "VALUES(:nameAction, :leaveID, :userID, :creationDate)";
+    db.sequelize.query(queryTracKer, null, {
+            "reload": true
+        }, {
+            nameAction: nameAction,
+            leaveID: info.leaveID,
+            userID: info.userID,
+            creationDate: info.creationDate
+        })
+        .success(function(resultTracKer) {
+            console.log("***** SAVE TRACKER SUCCESS *****");
+        })
+        .error(function(error) {
+            console.log("***** SAVE TRACKER ERROR *****");
+        });
+};
+//END TRACKER
 
 
 //FUNCTION GET FORMAT TIME_CHARGE
@@ -2747,7 +3024,7 @@ var SendMailTimeSheet = function(req, res, info) {
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected.<br/><br/><br/> Please log into the Timesheet System to correct and re-submit your timesheet. ' +
                         'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au<label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond' +
@@ -2773,7 +3050,7 @@ var SendMailTimeSheet = function(req, res, info) {
                         '</b></label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' +
                         start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
-                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label</i>' +

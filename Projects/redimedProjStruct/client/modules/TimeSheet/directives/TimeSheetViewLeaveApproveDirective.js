@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ApproveLeave.Directive", [])
-    .directive("viewLeaveapprove", function(TimeSheetService) {
+    .directive("viewLeaveapprove", function(TimeSheetService, $cookieStore) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -17,6 +17,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Directive", [])
                         !isNaN(newModel)) {
                         scope.info.isReject = false;
                         scope.info.leaveID = newModel;
+                        scope.info.userID = $cookieStore.get("userInfo").id;
                         TimeSheetService.ViewLeave(newModel).then(function(response) {
                             scope.list = response;
                             if (scope.list !== undefined &&
