@@ -9,6 +9,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.booking.admin",
     "app.loggedIn.document", // Document telehealth
     "app.loggedIn.rlob", //Redi Legal Online Booking
+    "app.loggedIn.medifood", //Medifood
     "app.loggedIn.vaccinob", //Vaccination Online Booking
     "app.loggedIn.iso", //ISO manage files
     "app.loggedIn.pr",//PAYROLL (TANNV.DTS@GMAIL.COM)

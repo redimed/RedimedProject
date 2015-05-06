@@ -410,8 +410,8 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
                         console.log($scope.selectedBooking);
                         if ($scope.selectedBooking.STATUS == $scope.bookingStatus.cancel) {
                             rlobService.selectAppointment($scope.selectedBooking.CAL_ID).then(function(data){
-                                console.log(data.data.PATIENTS);
-                                if (data.data.PATIENTS === null) {
+                                if (data.data.NOTES === null) 
+                                {
                                     var patientName = $scope.selectedBooking.WRK_OTHERNAMES+" "+$scope.selectedBooking.WRK_SURNAME;
                                     rlobService.undoCancelBooking(calID,patientID).then(function(data){
                                         if (data.status == 'success') {
