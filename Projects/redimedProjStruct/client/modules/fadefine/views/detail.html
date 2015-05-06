@@ -62,7 +62,7 @@
 											</div>
 											<div class="col-md-4 col-sm-4 col-xs-4">
 												<label>
-													<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1==='1'"/> Is score?
+													<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1===1"/> Is score?
 												</label>
 												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
 													
@@ -71,7 +71,7 @@
 											</div>
 											<div class="col-md-4 col-sm-4 col-xs-4">
 												<label>
-													<input type="checkbox" ng-model="line.ISRATING1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING1==='1'"/> Is rating?
+													<input type="checkbox" ng-model="line.ISRATING1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING1===1"/> Is rating?
 												</label>
 
 												<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID1">
@@ -80,7 +80,7 @@
 												
 											</div>
 										</div>
-									<h3 class="form-section">Rating 2 definition</h3>
+									<h3 class="form-section">Scoring/Rating 2 definition</h3>
 										<div class="row">
 											<div class="col-md-4 col-sm-4 col-xs-4">
 												<input type="text" class="form-control" placeholder="Name header" ng-model="line.VAL2_NAME_HEADER"/>
@@ -88,7 +88,7 @@
 											</div>
 											<div class="col-md-4 col-sm-4 col-xs-4">
 												<label>
-													<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2==='1'"/> Is score?
+													<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2===1"/> Is score?
 												</label>
 												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
 													
@@ -97,7 +97,7 @@
 											</div>
 											<div class="col-md-4 col-sm-4 col-xs-4">
 												<label>
-													<input type="checkbox" ng-model="line.ISRATING2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING2==='1'"/> Is rating?
+													<input type="checkbox" ng-model="line.ISRATING2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISRATING2===1"/> Is rating?
 												</label>
 
 												<select class="form-control" ng-options="rt.RATING_ID as rt.DESCRIPTION for rt in rating_type_opt" ng-model="line.RATING_ID2">
@@ -109,17 +109,17 @@
 									<h3 class="form-section">General definition</h3>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText"/> Has comment text?
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText" ng-checked="line.IsCommentsText===1"/> Has comment text?
 											</label>
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="LineType"/> Is in summary line?
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.LineType" ng-checked="line.LineType===1"/> Is in summary line?
 											</label>
 										</div>
 										<div class="col-md-4 col-sm-4 col-xs-4">
 											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE"/> Is showing ranking table?
+													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE" ng-checked="line.IS_SHOW_RANKING_TABLE===1"/> Is showing ranking table?
 											</label>
 										</div>
 								</accordion-group>
@@ -147,33 +147,33 @@
 													<div class="col-md-7 col-xs-7 col-sm-7">
 														<div>
 															<label>
-																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)" ng-init="val1_type=-1">
+																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)" ng-init="val1_type=value1TypeInit(detail)">
 														
 																</select>
 															</label> 
 															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME" ng-disabled="val1_type===-1" placeholder="Value 1 name"/>
 															&nbsp;
 															<label ng-show="detail.VAL1_ISVALUE===1">
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER===1" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>
 														</div>
 														<div>
 															<label>
-																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)" ng-init="val2_type=-1">
+																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val2_type" ng-change="value2TypeWatch(detail, val2_type)" ng-init="val2_type=value2TypeInit(detail)">
 														
 																</select>
 															</label> 
 															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_NAME" ng-disabled="val2_type===-1" placeholder="Value 2 name"/>
 															&nbsp;
 															<label ng-show="detail.VAL2_ISVALUE===1">
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER==='1'" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER===1" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>
 														</div>
 													</div>
 													<div class="col-md-5 col-xs-5 col-sm-5">
 														<div>
 															<label>
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText==='1'" ng-model="detail.IsCommentsText" ng-change="IsCommentTextWatch(detail, detail.IsCommentsText)"></span> Comment
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText===1" ng-model="detail.IsCommentsText" ng-change="IsCommentTextWatch(detail, detail.IsCommentsText)"></span> Comment
 															</label>
 															<label ng-show="detail.IsCommentsText==='1' && (detail.VAL1_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX===1)">
 																required when

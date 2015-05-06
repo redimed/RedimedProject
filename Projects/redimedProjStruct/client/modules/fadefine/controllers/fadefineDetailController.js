@@ -59,6 +59,9 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 									else{
 										line.details = detailAndCommentRes.data.details;
 										line.comments = detailAndCommentRes.data.comments;
+										if(section.lines.indexOf(line)===section.lines.length-1){
+											console.log($scope.header);
+										}
 									}
 								})
 							})
@@ -169,6 +172,32 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL2_ISCOMMENT_WHEN_YES = null;
 			detail.VAL2_ISCOMMENT_WHEN_NO = null;
 		}
+	}
+
+	$scope.value1TypeInit = function(detail){
+		if($stateParams.action!=='add'){
+			if((detail.VAL1_ISVALUE===0 ||detail.VAL1_ISVALUE===null) && (detail.VAL1_ISCHECKBOX===0 || detail.VAL1_ISCHECKBOX===null)){
+				return -1;
+			}
+			else{
+				if(detail.VAL1_ISVALUE===1) return 0;
+				else return detail.VAL1_ISCHECKBOX;
+			}
+		}
+		else return -1;
+	}
+
+	$scope.value2TypeInit = function(detail){
+		if($stateParams.action!=='add'){
+			if((detail.VAL2_ISVALUE===0 ||detail.VAL2_ISVALUE===null) && (detail.VAL2_ISCHECKBOX===0 || detail.VAL2_ISCHECKBOX===null)){
+				return -1;
+			}
+			else{
+				if(detail.VAL2_ISVALUE===1) return 0;
+				else return detail.VAL2_ISCHECKBOX;
+			}
+		}
+		else return -1;
 	}
 
 	$scope.IsCommentTextWatch = function(detail, IsCommentTextValue){

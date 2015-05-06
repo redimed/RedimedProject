@@ -343,7 +343,7 @@ module.exports = {
 				.select()
 				.from('sys_fa_df_sections')
 				.where({FA_ID: headerId})
-				.orderBy('ORD', 'desc')
+				.orderBy('ORD')
 				.then(function(sectionRes){
 					if(sectionRes.length===0) res.json(500,{status:'get sections error', error:err});
 					else{
@@ -397,11 +397,12 @@ module.exports = {
 			.from('sys_fa_df_comments')
 			.where({LINE_ID: lineId})
 			.then(function(commentRes){
+				console.log('those are comments', commentRes)
 				res.json({
 					status: 'success',
 					data:{
 						details: detailRes,
-						commments: commentRes
+						comments: commentRes
 					}
 				})
 			})
