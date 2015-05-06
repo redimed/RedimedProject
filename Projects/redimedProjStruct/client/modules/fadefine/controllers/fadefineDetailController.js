@@ -36,12 +36,36 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	//get header if stateParams.action = edit
 	if($stateParams.action === 'edit' && !!$stateParams.headerId){
 		var getHeaderId = $stateParams.headerId;
-		FaDefineService.getFa(getHeaderId).then(function(getResult){
-			console.log("this is result", getResult);
-			if(getResult.status === 'success'){
-				$scope.header = getResult.data;
+		FaDefineService.getHeaderAndSection(getHeaderId).then(function(headerAndSectionRes){
+			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
+			else{
+				$scope.header = headerAndSectionRes.data;
+				//get lines of section
+				$scope.header.sections.forEach(function(section){
+					FaDefineService.getLines(section.SECTION_ID, getHeaderId).then(function(lineRes){
+						if(lineRes.status==='error') {
+							$scope.header={};
+							toastr.error('Unexpected error', 'Error!');
+						}
+						else{
+							section.lines=lineRes.data;
+							//get details and comment of lines
+							section.lines.forEach(function(line){
+								FaDefineService.getDetailsAndComments(line.LINE_ID).then(function(detailAndCommentRes){
+									if(detailAndCommentRes.status === 'error'){
+										$scope.header={};
+										toastr.error('Unexpected error', 'Error!');
+									}
+									else{
+										line.details = detailAndCommentRes.data.details;
+										line.comments = detailAndCommentRes.data.comments;
+									}
+								})
+							})
+						}
+					})
+				})
 			}
-			else toastr.error("Unexpected error!", 'Error!')
 		})
 	}
 
