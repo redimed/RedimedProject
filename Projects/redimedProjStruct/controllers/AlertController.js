@@ -9,7 +9,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex('cln_alerts')
-			.column(
+			.distinct(
 				'cln_alerts.id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
@@ -61,7 +61,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex('cln_alerts')
-			.column(
+			.distinct(
 				'cln_alerts.id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
