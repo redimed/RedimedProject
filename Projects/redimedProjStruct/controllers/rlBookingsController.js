@@ -11,7 +11,7 @@ var rlobUtil=require('./rlobUtilsController');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
 var rlobController=require('./rlobController');
-
+var _ = require('lodash');
 
 
 module.exports =
@@ -250,6 +250,7 @@ module.exports =
 
     listBookingsForCustomer:function(req,res)
     {
+        kiss.exFileJSON(req.cookies.userInfo,'userInfo.txt');
         var searchInfo=kiss.checkData(req.body.searchInfo)?req.body.searchInfo:{};
         var currentPage=kiss.checkData(searchInfo.currentPage)?searchInfo.currentPage:'';
         var itemsPerPage=kiss.checkData(searchInfo.itemsPerPage)?searchInfo.itemsPerPage:'';
@@ -266,71 +267,116 @@ module.exports =
         var orderBy=kiss.checkData(searchInfo.orderBy)?(' ORDER BY '+searchInfo.orderBy):'';
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=kiss.checkData(userInfo.id)?userInfo.id:'';
-        kiss.exlog(searchInfo);
-        // var userId='';
-        var sql=
-            " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`,CONCAT(WRK_OTHERNAMES,' ',WRK_SURNAME) as 'FULL_NAME'                                    "+
-            " FROM `rl_bookings` booking                                                              "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                "+
-            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                   "+
-            " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                     "+
-            "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                    "+
-            "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                       "+
-            "   AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE CONCAT('%',?,'%') "+
-            "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                       "+
-            "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?      "+
-            "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                           "+
-            "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                  "+
-            "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                           "+
-            orderBy+
-            " LIMIT ?,?                                                                               ";
+        var companyId=kiss.checkData(userInfo.company_id)?userInfo.company_id:'';
+        var isMedicoLegalMaster=kiss.checkData(userInfo.IS_MEDICO_LEGAL_MASTER)?userInfo.IS_MEDICO_LEGAL_MASTER:'';
 
-        var sqlCount=
-            " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                           "+
-            " FROM (SELECT *,CONCAT(WRK_OTHERNAMES,' ',`WRK_SURNAME`) AS 'FULL_NAME' FROM `rl_bookings`) booking                                                                  "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
-            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                       "+
-            " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                         "+
-            "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                        "+
-            "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                           "+
-            "   AND booking.FULL_NAME LIKE CONCAT('%',?,'%') "+
-            "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                           "+
-            "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?          "+
-            "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
-            "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                      "+
-            "   AND booking.`ASS_ID` LIKE CONCAT('%',?,'%')                                               ";
-        req.getConnection(function(err,connection)
+        if(!kiss.checkListData(userId,companyId,isMedicoLegalMaster))
         {
-            var query = connection.query(sql,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,rows)
-            {
-                if(err)
+            kiss.exlog("Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+
+        var legalUserIdsInCompany=[];
+
+        if(isMedicoLegalMaster==1)
+        {
+            var sql=
+                " SELECT u.* FROM users u                             "+
+                " WHERE u.MEDICO_LEGAL_REGISTER_STATUS IS NOT NULL    "+
+                " AND u.`company_id`=?                                "+
+                " AND u.`isEnable`=1                                  ";
+            kiss.executeQuery(req,sql,[companyId],function(rows){
+                if(rows.length>0)
                 {
-                    kiss.exlog("listBookingsForCustomer",err,query.sql);
-                    res.json({status:'fail'});
+                    _.forEach(rows, function(item) {
+                        legalUserIdsInCompany.push(item.id);
+                    });
                 }
                 else
                 {
-                    req.getConnection(function(err,connection)
-                    {
-                        var query = connection.query(sqlCount,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,userId,startIndex,itemsPerPage],function(err,result)
-                        {
-                            if(err)
-                            {
-                                kiss.exlog("listBookingsForCustomer",err,query.sql);
-                                res.json({status:'fail'});
-                            }
-                            else
-                            {
-                                var totalItems=result[0].TOTAL_ITEMS;
-                                res.json({status:'success',data:{list:rows,totalItems:totalItems}});
-                            }
-
-                        });
-                    });
+                    legalUserIdsInCompany.push(userId);
                 }
-
+                getData();
+            },function(err){
+                kiss.exlog("listBookingsForCustomer","Loi lay danh sach user trong company");
+                res.json({status:"fail"});
             });
-        });
+        }
+        else
+        {
+            legalUserIdsInCompany.push(userId);
+            getData();
+        }
+        
+
+        function getData()
+        {
+            var sql=
+                " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`,CONCAT(WRK_OTHERNAMES,' ',WRK_SURNAME) as 'FULL_NAME'                                    "+
+                " FROM `rl_bookings` booking                                                              "+
+                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                "+
+                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                   "+
+                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                     "+
+                "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                    "+
+                "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                       "+
+                "   AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE CONCAT('%',?,'%') "+
+                "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                       "+
+                "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?      "+
+                "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                           "+
+                "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                  "+
+                "   AND booking.`ASS_ID` IN (?)                                           "+
+                orderBy+
+                " LIMIT ?,?                                                                               ";
+
+            var sqlCount=
+                " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                           "+
+                " FROM (SELECT *,CONCAT(WRK_OTHERNAMES,' ',`WRK_SURNAME`) AS 'FULL_NAME' FROM `rl_bookings`) booking                                                                  "+
+                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
+                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                       "+
+                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                         "+
+                "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                        "+
+                "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                           "+
+                "   AND booking.FULL_NAME LIKE CONCAT('%',?,'%') "+
+                "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                           "+
+                "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?          "+
+                "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
+                "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                      "+
+                "   AND booking.`ASS_ID` IN (?)                                               ";
+            req.getConnection(function(err,connection)
+            {
+                var query = connection.query(sql,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,legalUserIdsInCompany,startIndex,itemsPerPage],function(err,rows)
+                {
+                    if(err)
+                    {
+                        kiss.exlog("listBookingsForCustomer",err,query.sql);
+                        res.json({status:'fail'});
+                    }
+                    else
+                    {
+                        req.getConnection(function(err,connection)
+                        {
+                            var query = connection.query(sqlCount,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,legalUserIdsInCompany,startIndex,itemsPerPage],function(err,result)
+                            {
+                                if(err)
+                                {
+                                    kiss.exlog("listBookingsForCustomer",err,query.sql);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    var totalItems=result[0].TOTAL_ITEMS;
+                                    res.json({status:'success',data:{list:rows,totalItems:totalItems}});
+                                }
+
+                            });
+                        });
+                    }
+
+                });
+            });
+        }
+
     },
 
     /**
