@@ -1,28 +1,37 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
     .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService, $stateParams) {
         $scope.info = {};
+
         // POPUP DATE
         $scope.dateOptions = {
             formatYear: "yy",
             startingDate: 1
         };
         //END POPUP
+
         if ($stateParams.id) {
+
+            //SET FIELD EDIT
             $scope.isEdit = true;
+            //END SET
+
             //EDIT
             TimeSheetService.LoadLeaveEdit($stateParams.id).then(function(response) {
                 if (response !== undefined && response !== null &&
                     response.resultLeave !== undefined &&
                     response.resultLeave !== null &&
+                    response.resultLeave.length !== 0 &&
                     response.resultLeave[0] !== undefined && response.resultLeave[0] !== null) {
                     $scope.info = response.resultLeave[0];
                     $scope.is_reject = response.resultLeave[0].is_reject;
+
                     //convert time
                     $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
                     //end
                 }
 
                 $scope.info.infoTypeLeave = response.resultLeaveDetail;
+
                 //convert time
                 angular.forEach($scope.info.infoTypeLeave, function(leave, index) {
                     if ($scope.info.infoTypeLeave[index] !== undefined &&
@@ -40,6 +49,10 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     }
                 });
                 //end convert
+
+                //CALL CHANGE TIME - INIT TIME CHARGE
+                $scope.changeTime();
+                //END CALL
             });
         } else {
             $scope.isEdit = false;
@@ -104,7 +117,8 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 $scope.info.statusID = statusID;
                 $scope.info.USER_ID = $cookieStore.get('userInfo').id;
                 if ($scope.isEdit === false) {
-                    //ADD
+                    //ADD NEW
+
                     //SAVE LEAVE FORM IN SERVER
                     TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
                         if (response.status === "success") {
@@ -125,7 +139,9 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         }
                     });
                     // END SAVE SERVER
+
                 } else if ($scope.isEdit === true) {
+
                     //UPDATE
                     TimeSheetService.UpdateLeave($scope.info).then(function(response) {
                         if (response.status === "success") {
@@ -136,6 +152,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         } else if (response.status === "error") {
                             toastr.error("Update leave fail!", "Error");
                         } else {
+
                             //catch exception
                             $state.go("loggedIn.TimeSheetHome", null, {
                                 "reload": true
@@ -164,6 +181,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
                     $scope.info.infoTypeLeave[0].time_leave.length === 5) {
                     $scope.info.infoTypeLeave[0].time_leave = $scope.info.infoTypeLeave[0].time_leave.substr(1, $scope.info.infoTypeLeave[0].time_leave.length - 1);
+
                     //CALL CHANGETIME
                     $scope.changeTime();
                     //END CALL
@@ -173,6 +191,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
                     $scope.info.infoTypeLeave[0].time_leave.length === 4) {
                     $scope.info.infoTypeLeave[0].time_leave = '0' + $scope.info.infoTypeLeave[0].time_leave;
+
                     //CALL CHANGETIME
                     $scope.changeTime();
                     //END CALL
