@@ -31,6 +31,8 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		$scope.rating_type_opt = result.list;
 	});
 
+	
+
 	$scope.isSectionDropable = true;
 
 	//get header if stateParams.action = edit
@@ -59,9 +61,6 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 									else{
 										line.details = detailAndCommentRes.data.details;
 										line.comments = detailAndCommentRes.data.comments;
-										if(section.lines.indexOf(line)===section.lines.length-1){
-											console.log($scope.header);
-										}
 									}
 								})
 							})
@@ -256,28 +255,58 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	//INSERT DEFINITION
 	$scope.addFaDefinition = function(){
 		addOrder($scope.header).then(function(result){
-			FaDefineService.insertFa($scope.header);
+			FaDefineService.insertFa($scope.header).then(function(res){
+				if(res.status==='success') toastr.success('New functional assessment definition added','Success!');
+				else toastr.error('Failed to add new functional assessment definition', 'Error!');
+			});
 		}, function(error){
 			console.log(error);
 		});
 	}
 
 	//GENERAL DEFINITION FUNCTION
+	// var addOrder = function(header){
+	// 	return new Promise(function(resolve, reject){
+	// 		header.sections.forEach(function(section){
+	// 			section.ORD = header.sections.indexOf(section) + 1;
+	// 			section.lines.forEach(function(line){
+	// 				line.ORD = section.lines.indexOf(line) + 1;
+	// 				line.details.forEach(function(detail){
+	// 					detail.ORD = line.details.indexOf(detail) + 1;
+	// 					if(detail.ORD === line.details.length){
+	// 						resolve(header);
+	// 					}
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+	// }
+
 	var addOrder = function(header){
 		return new Promise(function(resolve, reject){
-			header.sections.forEach(function(section){
-				section.ORD = header.sections.indexOf(section) + 1;
-				section.lines.forEach(function(line){
-					line.ORD = section.lines.indexOf(line) + 1;
-					line.details.forEach(function(detail){
-						detail.ORD = line.details.indexOf(detail) + 1;
-						if(detail.ORD === line.details.length){
-							resolve(header);
+			for(var i = 0; i<header.sections.length; i++){
+				header.sections[i].ORD = i+1;
+				if(header.sections[i].lines.length===0){
+					if(i===header.sections.length-1) resolve(header);
+					else continue;
+				}
+				else{
+					for(var j = 0; j < header.sections[i].lines.length; j++){
+						header.sections[i].lines[j].ORD = j+1;
+						if(header.sections[i].lines[j].details.length===0){
+							if(j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
+							else continue;
 						}
-					})
-				})
-			})
+						else{
+							for(var k = 0; k<header.sections[i].lines[j].details.length; k++){
+								header.sections[i].lines[j].details[k].ORD = k+1;
+								if(k= header.sections[i].lines[j].details.length-1 && j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
+								else continue;
+							}
+						}
+					}
+				}
+			}
 		})
 	}
-
 });
