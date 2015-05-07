@@ -49,6 +49,7 @@
                 <th>Have Letter</th>
                 <th>Have Calendar</th>
                 <th>Access Reports Online</th>
+                <th style="text-align:center;">Is Master Account</th>
                 <th style="text-align:center">Enable</th>
                 <th style="text-align:center">
                     
@@ -70,6 +71,7 @@
                     <option value="">---All---</option>
                 </select>
                 </td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -119,6 +121,11 @@
                     <input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
                            ng-checked="item.IS_ACCESS_REPORTS_ONLINE==1"
                            ng-model="item.IS_ACCESS_REPORTS_ONLINE"/>
+                </td>
+                <td style="text-align:center">
+                    <input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
+                           ng-checked="item.IS_MEDICO_LEGAL_MASTER==1"
+                           ng-model="item.IS_MEDICO_LEGAL_MASTER"/>
                 </td>
                 <td style="text-align:center">
                     <input ng-disabled="'true'" type="checkbox" ng-true-value="1" ng-false-value="0"
@@ -222,6 +229,7 @@
                     </div>
 
 
+                    
                     <div class="form-group">
                         <label>
                                 <input type="checkbox" ng-model="editItem.IS_ACCESS_REPORTS_ONLINE" ng-true-value="1" ng-false-value="0" ng-checked="editItem.IS_ACCESS_REPORTS_ONLINE==1" name="isAccessReportOnline">
@@ -261,6 +269,12 @@
                         <!-- <input type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.PENDING.value"> {{registerStatus.PENDING.display}}  -->
                         <input ng-disabled="!(editItem.MEDICO_LEGAL_REGISTER_STATUS===registerStatus.PENDING.value)" type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.APPROVE.value"> {{registerStatus.APPROVE.display}} 
                         <input ng-disabled="!(editItem.MEDICO_LEGAL_REGISTER_STATUS===registerStatus.PENDING.value)" type="radio" ng-model="editItem.MEDICO_LEGAL_REGISTER_STATUS" ng-value="registerStatus.REJECT.value"> {{registerStatus.REJECT.display}}  
+                    </div>
+                    <div class="form-group">
+                        <label>
+                                <input type="checkbox" ng-model="editItem.IS_MEDICO_LEGAL_MASTER" ng-true-value="1" ng-false-value="0" ng-checked="editItem.IS_MEDICO_LEGAL_MASTER==1" name="IsMasterAccount">
+                                Is Master Account
+                        </label>
                     </div>
                     
                     <!-- <div class="form-group">
