@@ -1,12 +1,13 @@
-angular.module('app.loggedIn.company.directives.add', [])
+angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 
-.directive('addCompany', function(CompanyModel, $filter,$state,$modal,$stateParams,toastr,$cookieStore,ConfigService){
+.directive('addCompanyNotFollow', function(CompanyModel, $filter,$state,$modal,$stateParams,toastr,$cookieStore,ConfigService){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/add.html',
 		scope: {
 			options: '=',
-			onRowClick: '&'
+			onRowClick: '&',
+			success:'='
 		},
 		link: function(scope, elem, attrs)
 		{
@@ -42,8 +43,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        isPO:null,
 		        isExtra:null,
 		        parent_id :null,
-		        listInsurerid :[],
-		        patient_id :$stateParams.patientId
+		        listInsurerid :[]
 			}
 			
 			scope.onRowClick = function(row){
@@ -134,10 +134,10 @@ angular.module('app.loggedIn.company.directives.add', [])
 		    	var postData = angular.copy(scope.company.form);
 		    	postData.Insurer = scope.company.InsurerTemp === '' ? null : scope.company.InsurerTemp;
 		    	postData.listInsurerid = scope.company.listTemp;
-		  		CompanyModel.add(postData)
+		  		CompanyModel.addCompanyNotFollow(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
-		  				$state.go('loggedIn.company');
+		  				scope.success = true;
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);

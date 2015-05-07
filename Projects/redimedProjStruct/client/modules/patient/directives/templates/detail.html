@@ -1,9 +1,14 @@
 <script type="text/ng-template" id="dialogCompanyList">
     <div class="modal-body">
-        <list-company-notfollow on-row-click="clickRow(row)"></list-company-notfollow>
+        <list-company-notfollow on-row-click="clickRow(row)" action-center="actionCenter"></list-company-notfollow>
     </div>
 </script>
-
+<script type="text/ng-template" id="dialogAddCompany">
+    <div class="modal-body">
+        <add-company-not-follow success="success"></add-company-not-follow>
+    </div>
+</script>
+<!-- <add-company></add-company> -->
 <form name="patientForm" novalidate>
 <!-- ACTION -->
 <div class="row" style="margin-bottom: 15px;">
@@ -152,7 +157,7 @@
     <div class="break-row"></div>
 
     <!-- SEX -->
-    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+    <div style="z-index:0" class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
         <input type="checkbox" class="mdt-sex" id="sex" ng-model="modelObjectMap.Sex" ng-true-value="1" ng-false-value="0">
         <label for="sex"></label>
     </div>
@@ -177,10 +182,17 @@
 
     <!-- OCCUPATION -->
     <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-        <span class="field">
+        <span class="field" ng-class="{'has-error': patientForm.occupation.$invalid && isSubmit}">
             <label for="occupation">Occupation</label>
             <input type="text" placeholder="Occupation" name="occupation" ng-model="modelObjectMap.Occupation"
-                class="form-control" id="occupation" float-label>
+                class="form-control" id="occupation" required float-label>
+            <!-- ERROR -->
+            <span ng-show="patientForm.occupation.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="patientForm.occupation.$error.required">
+                    Occupation is required
+                </span>
+            </span>
+            <!-- ERROR -->
         </span>
     </div>
     <!-- END OCCUPATION -->
@@ -207,10 +219,17 @@
 
     <!-- MOBILE -->
     <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-        <span class="field">
+        <span class="field" ng-class="{'has-error': patientForm.mobile.$invalid && isSubmit}">
             <label for="mobile">Mobile Phone</label>
             <input type="text" placeholder="Mobile Phone" name="mobile" ng-model="modelObjectMap.Mobile"
-                class="form-control" id="mobile" float-label>
+                class="form-control" id="mobile" required float-label>
+            <!-- ERROR -->
+            <span ng-show="patientForm.mobile.$invalid && isSubmit">
+                <span class="mdt-popover above" ng-show="patientForm.mobile.$error.required">
+                    Mobile Phone is required
+                </span>
+            </span>
+            <!-- ERROR -->
         </span>
     </div>
     <!-- END MOBILE -->
@@ -288,70 +307,113 @@
             <i class="fa fa-bars"></i>
             &nbspAddress Information
         </accordion-heading>
+        <div style="padding-top: 50px;">
+            <!-- ADDRESS 1 -->
+            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                <span class="field" ng-class="{'has-error': patientForm.address1.$invalid && isSubmit}">
+                    <label for="address1">Address 1</label>
+                    <input type="text" placeholder="Address 1" name="address1" ng-model="modelObjectMap.Address1"
+                        class="form-control" id="address1" required float-label>
+                    <!-- ERROR -->
+                    <span ng-show="patientForm.address1.$invalid && isSubmit">
+                        <span style="left: -25px;" class="mdt-popover below" ng-show="patientForm.address1.$error.required">
+                            Address 1 is required
+                        </span>
+                    </span>
+                    <!-- ERROR -->
+                </span>
+            </div>
+            <!-- END ADDRESS 1 -->
 
-        <!-- ADDRESS 1 -->
-        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-            <span class="field">
-                <label for="address1">Address 1</label>
-                <input type="text" placeholder="Address 1" name="address1" ng-model="modelObjectMap.Address1"
-                    class="form-control" id="address1" float-label>
-            </span>
-        </div>
-        <!-- END ADDRESS 1 -->
+            <!-- ADDRESS 2 -->
+            <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                <span class="field" ng-class="{'has-error': patientForm.address2.$invalid && isSubmit}">
+                    <label for="address2">Address 2</label>
+                    <input type="text" placeholder="Address 2" name="address2" ng-model="modelObjectMap.Address2"
+                        class="form-control" id="address2" required float-label>
+                    <!-- ERROR -->
+                    <span ng-show="patientForm.address2.$invalid && isSubmit">
+                        <span style="left: -10px;" class="mdt-popover above" ng-show="patientForm.address2.$error.required">
+                            Address 2 is required
+                        </span>
+                    </span>
+                    <!-- ERROR -->
+                </span>
+            </div>
+            <!-- END ADDRESS 2 -->
 
-        <!-- ADDRESS 2 -->
-        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-            <span class="field">
-                <label for="address2">Address 2</label>
-                <input type="text" placeholder="Address 2" name="address2" ng-model="modelObjectMap.Address2"
-                    class="form-control" id="address2" float-label>
-            </span>
-        </div>
-        <!-- END ADDRESS 2 -->
+            <!-- SURBURB -->
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <span class="field" ng-class="{'has-error': patientForm.surburb.$invalid && isSubmit}">
+                    <label for="surburb">Surburb</label>
+                    <input type="text" placeholder="Surburb" name="surburb" ng-model="modelObjectMap.Surburb"
+                        class="form-control" id="surburb" required float-label>
+                    <!-- ERROR -->
+                    <span ng-show="patientForm.surburb.$invalid && isSubmit">
+                        <span class="mdt-popover above" ng-show="patientForm.surburb.$error.required">
+                            Surburb is required
+                        </span>
+                    </span>
+                    <!-- ERROR -->
+                </span>
+            </div>
+            <!-- END SURBURB -->
 
-        <!-- SURBURB -->
-        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="surburb">Surburb</label>
-                <input type="text" placeholder="Surburb" name="surburb" ng-model="modelObjectMap.Surburb"
-                    class="form-control" id="surburb" float-label>
-            </span>
-        </div>
-        <!-- END SURBURB -->
+            <!-- POST CODE -->
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <span class="field" ng-class="{'has-error': patientForm.postcode.$invalid && isSubmit}">
+                    <label for="postcode">Post Code</label>
+                    <input type="text" placeholder="Post code" name="postcode" ng-model="modelObjectMap.Post_code"
+                        class="form-control" id="postcode" required float-label>
+                    <!-- ERROR -->
+                    <span ng-show="patientForm.postcode.$invalid && isSubmit">
+                        <span class="mdt-popover above" ng-show="patientForm.postcode.$error.required">
+                            Post Code is required
+                        </span>
+                    </span>
+                    <!-- ERROR -->
+                </span>
+            </div>
+            <!-- END POST CODE -->
 
-        <!-- POST CODE -->
-        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="postcode">Post Code</label>
-                <input type="text" placeholder="Post code" name="postcode" ng-model="modelObjectMap.Post_code"
-                    class="form-control" id="postcode" float-label>
-            </span>
-        </div>
-        <!-- END POST CODE -->
+            <!-- COUNTRY -->
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <span class="field" ng-class="{'has-error': patientForm.country.$invalid && isSubmit}">
+                    <label for="country">Country</label>
+                    <select ng-options="country.Country_name as country.Country_name for country in options.countries" 
+                        name="country" ng-model="modelObjectMap.Country" id="country" float-label required ng-change="loadState()">
+                        <option value="" disabled selected>Country</option>
+                    </select>
+                    <!-- ERROR -->
+                    <span ng-show="patientForm.country.$invalid && isSubmit">
+                        <span class="mdt-popover above" ng-show="patientForm.country.$error.required">
+                            Country is required
+                        </span>
+                    </span>
+                    <!-- ERROR -->
+                </span>
+            </div>
+            <!-- END COUNTRY -->
 
-        <!-- COUNTRY -->
-        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="country">Country</label>
-                <select ng-options="country.Country_name as country.Country_name for country in options.countries" 
-                    name="country" ng-model="modelObjectMap.Country" id="country" float-label ng-change="loadState()">
-                    <option value="" disabled selected>Country</option>
-                </select>
-            </span>
+            <!-- STATE -->
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <span class="field" ng-class="{'has-error': patientForm.state.$invalid && isSubmit}">
+                    <label for="state">State</label>
+                    <select ng-options="state.id as state.State for state in options.states" 
+                        name="state" ng-model="modelObjectMap.State" id="state" required float-label>
+                        <option value="" disabled selected>State</option>
+                    </select>
+                    <!-- ERROR -->
+                    <span ng-show="patientForm.state.$invalid && isSubmit">
+                        <span style="bottom: 60px;" class="mdt-popover above" ng-show="patientForm.state.$error.required">
+                            State is required
+                        </span>
+                    </span>
+                    <!-- ERROR -->
+                </span>
+            </div>
+            <!-- END STATE -->
         </div>
-        <!-- END COUNTRY -->
-
-        <!-- STATE -->
-        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-                <label for="state">State</label>
-                <select ng-options="state.id as state.State for state in options.states" 
-                    name="state" ng-model="modelObjectMap.State" id="state" float-label>
-                    <option value="" disabled selected>State</option>
-                </select>
-            </span>
-        </div>
-        <!-- END STATE -->
 
     </accordion-group>
     <!-- END ADDRESS -->

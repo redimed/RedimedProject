@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.company.directives.listNotFollow', [])
 
-.directive('listCompanyNotfollow', function(CompanyModel, $filter,$state){
+.directive('listCompanyNotfollow', function(CompanyModel, $filter,$state,$stateParams){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/listNotFollowPatient.html',
@@ -8,7 +8,8 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 			options: '=',
 			limit: '@',
 			onRowClick: '&',
-			listId:'='
+			listId:'=',
+			actionCenter:'='
 		},
 	    link: function(scope, elem, attrs){
 			var setPage = function(page){
@@ -38,6 +39,9 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 					scope.company.error = $filter('translate')(error.data.code);
 				})
 			}
+			scope.addNewCompanyNotPatient = function(){
+				$state.go('loggedIn.company.add',{addNotPatient:true});
+			}
 			var onSearch = function(option){
 				switch(option.field){
 					case 'Company_name':
@@ -56,6 +60,9 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 				scope.company.load();
 				setPage(1);
 			}
+			// var goToStateAddCompany = function(){
+			// 	$state.go('loggedIn.company.addCompanyNotFollow',{patientId:$stateParams.patient_id});
+			// }
 			scope.company = {
 				search: search,
 				error: '',
@@ -65,6 +72,7 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 				load: function(){ load(); },
 				setPage: function(page){ setPage(page); },
 				onSearch: function(option){ onSearch(option)}
+				// goToStateAddCompany:function(){goToStateAddCompany()}
 			}
 
 			/* LOAD FIRST */

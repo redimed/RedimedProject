@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function($stateParams, $modal, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout, CompanyModel, InsurerService){
+
+.directive("patientDetail", function($stateParams,$state, $modal, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout, CompanyModel, InsurerService){
 	return{
 		restrict: "EA",
 		scope: {
@@ -13,7 +14,6 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
 			scope.avt_path = '';
-
 			var uploader = scope.uploader = new FileUploader({
 				url: '/api/erm/v2/patient/upload_avt',
 		        autoUpload: false,
@@ -68,7 +68,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				}
 			}
 			//END LOAD STATE
-
+			
 			// VERIFIED MEDICARE
 			scope.verifiedMedicare = function(){
 				if(!isNaN(parseFloat(scope.modelObjectMap.Medicare_no)) && isFinite(scope.modelObjectMap.Medicare_no)){
@@ -136,6 +136,9 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							angular.extend(scope.modelObjectMap, response.data);
 							console.log('this is modelObjectMap', scope.modelObjectMap);
 							for(var key in scope.modelObjectMap){
+								if (!scope.modelObjectMap.Country || scope.modelObjectMap.Country === "") {
+									scope.modelObjectMap.Country = "Australia";
+								}
 								if(scope.modelObjectMap[key]){
 									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1 || key.indexOf("No_") != -1 || key.indexOf('Diabetic') != -1 || key.indexOf('Inactive') != -1 || key.indexOf('Deceased') != -1 || key.indexOf('Gradudate_') != -1)
 										scope.modelObjectMap[key] = scope.modelObjectMap[key].toString();
@@ -178,6 +181,23 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				$modal.open({
 					templateUrl: 'dialogCompanyList',
 					controller: function($scope, $modalInstance){
+						$scope.actionCenter={
+							createAdd:true,
+							goToStateAddCompany:function(){
+
+								$modal.open({
+									templateUrl: 'dialogAddCompany',
+									controller: function($scope, $modalInstance){
+										 $scope.$watch('success', function(item){
+							            	if(item === true)
+							            		$modalInstance.close('success');
+							            }) 
+									},
+									size:'lg'
+								})
+								//end modal dialogAddCompany
+							}
+						}
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
 						}
@@ -199,7 +219,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 					}
 				})
 			}
-
+			
 			scope.selectCompany = function(row){
 				angular.element(idPatientDetailCompany).fadeOut();
 				angular.extend(scope.selectedCompany, row);
