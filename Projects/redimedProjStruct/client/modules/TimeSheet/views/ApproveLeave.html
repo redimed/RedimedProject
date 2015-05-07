@@ -22,7 +22,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption" style="font-size:14px;font-weight:bold;">
-            <i class="fa fa-cogs"></i>List of Leaves
+            <i class="glyphicon glyphicon-list"></i>List of Leaves
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -34,12 +34,12 @@
                 <table class="responsive table table-bordered" ng-show="!list.loading">
                     <thead ng-show="list.result!==null">
                         <tr>
-                            <th style="width:20%;">
+                            <th style="width:200px;">
                                 <div class="th">
                                     Employee
                                 </div>
                             </th>
-                            <th style="width:20%;">
+                            <th style="width:200px;">
                                 <div class="th">
                                     <span class="glyphicon glyphicon-chevron-up" ng-click="clickAsc()" ng-class="{'active': searchObjectMap.order[0]==='ASC'}">
                             </span>
@@ -47,12 +47,12 @@
                             </span> Time Leave
                                 </div>
                             </th>
-                            <th style="width:15%;">
+                            <th style="width:150px;">
                                 <div class="th">
                                     Total Hours Leave
                                 </div>
                             </th>
-                            <th style="width:20%;">
+                            <th style="width:200px;">
                                 <div class="th">
                                     Status
                                 </div>
@@ -66,14 +66,14 @@
                     </thead>
                     <tbody>
                         <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)" style="font-size:14px;">
-                            <td style="width:20%;">
+                            <td style="width:200px;">
                                 <input type="text" class="input-sm form-control" ng-model="searchObjectMap.search[0]" ng-change="loadList()" />
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:200px;">
                             </td>
-                            <td style="width:15%;">
+                            <td style="width:150px;">
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:200px;">
                                 <select class="form-control input-sm" ng-options="stt.code as stt.name for stt in listStatus" ng-model="searchObjectMap.select[0]" ng-change="loadList()" style="font-size:14px;"></select>
                             </td>
                             <td></td>
@@ -84,14 +84,14 @@
                             </td>
                         </tr>
                         <tr ng-repeat="l in list.result" style="cursor: pointer;font-size:14px; " ng-dblclick="view(l.leave_id)">
-                            <td style="text-align:left;font-size:14px;">
+                            <td style="text-align:left;font-size:14px; width:200px;">
                                 <span>{{((l.FirstName!==undefined && l.FirstName!==null)?l.FirstName:"") +" "+((l.LastName!==undefined && l.LastName!==null)?l.LastName:"")}}</span>
                             </td>
-                            <td style="font-size:14px; text-align:left;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
-                            <td style="text-align:center;font-size:14px;">
+                            <td style="font-size:14px; text-align:left; width:200px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
+                            <td style="text-align:center;font-size:14px; width:150px;">
                                 <span>{{l.time_leave|customHours}}</span>
                             </td>
-                            <td>
+                            <td style="text-align:center;font-size:14px; width:200px;">
                                 <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{(l.name==="Submitted")?"Awaiting for Approve": l.name}}</span>
                             </td>

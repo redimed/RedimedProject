@@ -22,7 +22,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption" style="font-size:14px;font-weight:bold;">
-            <i class="fa fa-cogs"></i>List of Leaves
+            <i class="glyphicon glyphicon-list"></i>List of Leaves
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -34,22 +34,22 @@
                 <table class="responsive table table-bordered" ng-show="!list.loading">
                     <thead ng-show="list.result!==null">
                         <tr>
-                            <th style="width:20%;">
+                            <th style="width:200px;">
                                 <div class="th">
                                     Time Leave
                                 </div>
                             </th>
-                            <th style="width:20%;">
+                            <th style="width:150px;">
                                 <div class="th">
                                     Total Leave Hours
                                 </div>
                             </th>
-                            <th style="width:20%;">
+                            <th style="width:200px;">
                                 <div class="th">
                                     Status
                                 </div>
                             </th>
-                            <th>
+                            <th style="width:150px;">
                                 <div class="th">
                                     Application Date
                                 </div>
@@ -63,14 +63,14 @@
                     </thead>
                     <tbody>
                         <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)" style="font-size:14px;">
-                            <td style="width:20%;">
+                            <td style="width:200px;">
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:150px;">
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:200px;">
                                 <select class="form-control input-sm" ng-options="stt.task_status_id as stt.name for stt in listStatus" ng-model="searchObjectMap.select['hr_leave.status_id']" ng-change="loadList()" style="font-size:14px;"></select>
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:150px;">
                             </td>
                             <td></td>
                         </tr>
@@ -80,12 +80,13 @@
                             </td>
                         </tr>
                         <tr ng-repeat="l in list.result" style="cursor: pointer;font-size:14px; " ng-dblclick="view(l.leave_id)">
-                            <td style="text-align:left;font-size:14px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
-                            <td style="font-size:14px; text-align:center;" class="btn btn-xs">{{l.time_leave| customHours}}</td>
-                            <td style="text-align:left;font-size:14px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
+                            <td style="text-align:left;font-size:14px; width:200px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
+                            <td style="font-size:14px; text-align:center; width:150px;" class="btn btn-xs">{{l.time_leave| customHours}}</td>
+                            <td style="text-align:left;font-size:14px; width:200px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{l.name}}</td>
-                                                        <td>{{l.application_date | date: "dd-MM-yyyy"}}</td>
-                        <td style="text-align:left;font-size:14px;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span></td>
+                             <td style="text-align:left;font-size:14px; width:150px;"><span class="text-info">{{l.application_date | date: "dd-MM-yyyy"}}</span></td>
+                            <td style="text-align:left;font-size:14px;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

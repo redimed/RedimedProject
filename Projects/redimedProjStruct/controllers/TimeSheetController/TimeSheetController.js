@@ -3176,6 +3176,7 @@ var sendMailSubmitLeaveAgain = function(req, res, info) {
                                 "FROM hr_employee " +
                                 "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
                                 "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
                                 "INNER JOIN sys_hierarchy_group on sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
                                 "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
                                 "WHERE hr_leave.leave_id = :leaveID AND sys_hierarchy_group.GROUP_TYPE='Time Sheet'";
@@ -3194,7 +3195,7 @@ var sendMailSubmitLeaveAgain = function(req, res, info) {
                                                 recipients: resultInfoUserApproveSecond[keyManageSecond].Email,
                                                 subject: 'Notification of Submitted Leave(s)',
                                                 htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultInfoUserApproveSecond[keyManageSecond].FirstName + ' ' + resultInfoUserApproveSecond[keyManageSecond].LastName + ',</label></b><br/><br/><br/>' +
-                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a leave from <b>' + queryGetInfoEmployee[0].FirstName + ' ' + queryGetInfoEmployee[0].LastName + '</b> on <b>' + DATE_OF_WEEK + ', ' +
+                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a leave from <b>' + resultInfoEmployee[0].FirstName + ' ' + resultInfoEmployee[0].LastName + '</b> on <b>' + DATE_OF_WEEK + ', ' +
                                                     DATE_SUBMIT + '.</b><br/><br/><br/>' +
                                                     '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the e-Timesheet/Leave Management System to review and approve/reject the leave.<br/><br/><br/>' +
                                                     'Access the e-Timesheet/Leave Management System at https://apps.redimed.com.au</label><br/><br/><br/>' +
@@ -3301,7 +3302,7 @@ var sendMailLeave = function(req, res, info) {
                         result[0].FirstName + ' ' + result[0].LastName +
                         '</b></label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' +
-                        start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
+                        start_date + '–' + finish_date + ') has been approved.</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet/Leave Management System at https://apps.redimed.com.au</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Leave Reporting System<label><br/><br/><br/>' +
