@@ -813,7 +813,7 @@ module.exports = {
         });
     },
     companyList: function(req,res){
-        db.Company.findAll()
+        db.Company.findAll({order: 'Company_name ASC'})
             .success(function(data){
                 res.json(data);
             })

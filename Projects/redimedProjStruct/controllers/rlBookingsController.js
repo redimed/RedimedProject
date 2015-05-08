@@ -389,7 +389,7 @@ module.exports =
     {
         var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'';
         var userId=kiss.checkData(req.body.userId)?req.body.userId:null;
-        if(!kiss.checkListData(bookingId,userId))
+        if(!kiss.checkListData(bookingId))
         {
             kiss.exlog("getBookingById","Loi data truyen den");
             res.json({status:'fail'});
