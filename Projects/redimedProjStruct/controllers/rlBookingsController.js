@@ -301,7 +301,7 @@ module.exports =
             },function(err){
                 kiss.exlog("listBookingsForCustomer","Loi lay danh sach user trong company");
                 res.json({status:"fail"});
-            });
+            }); 
         }
         else
         {
@@ -312,6 +312,7 @@ module.exports =
 
         function getData()
         {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..",legalUserIdsInCompany);
             var sql=
                 " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`,CONCAT(WRK_OTHERNAMES,' ',WRK_SURNAME) as 'FULL_NAME'                                    "+
                 " FROM `rl_bookings` booking                                                              "+
@@ -343,6 +344,7 @@ module.exports =
                 "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
                 "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                      "+
                 "   AND booking.`ASS_ID` IN (?)                                               ";
+            
             req.getConnection(function(err,connection)
             {
                 var query = connection.query(sql,[claimNo,firstName,surname,fullName,type,appointmentDateFrom,appointmentDateTo,bookingStatus,documentStatus,legalUserIdsInCompany,startIndex,itemsPerPage],function(err,rows)
@@ -385,33 +387,90 @@ module.exports =
      */
     getBookingById:function(req,res)
     {
-        var bookingId=req.body.bookingId;
-        var userId=(req.body.userId)?req.body.userId:null;
-        var sql=
-            " SELECT booking.*,company.`Company_name`,doctor.`NAME`,redi.`Site_addr`,redi.`Site_name`,rltype.`Rl_TYPE_NAME`,                     "+
-            "   COUNT(files.`FILE_ID`) AS NUMBER_OF_RESULTS                                                                                      "+
-            " FROM `rl_bookings` booking                                                                                                         "+
-            " INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
-            " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                              "+
-            " INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                    "+
-            " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                         "+
-            " LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
-            " WHERE booking.`BOOKING_ID`= ?                                                                                                      "+
-            (userId!=null?' AND booking.ASS_ID=? ':'')+
-            " GROUP BY booking.`BOOKING_ID`                                                                                   ";
-
-        kiss.executeQuery(req,sql,userId!=null?[bookingId,userId]:[bookingId],function(rows){
-            if(rows.length>0)
-                res.json({status:'success',data:rows[0]});
-            else
-            {
-                kiss.exlog("getBookingById","Khong lay duoc booking Info");
-                res.json({status:'fail'});
-            }
-        },function(err){
-            kiss.exlog("getBookingById","Loi truy van",err);
+        var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'';
+        var userId=kiss.checkData(req.body.userId)?req.body.userId:null;
+        if(!kiss.checkListData(bookingId,userId))
+        {
+            kiss.exlog("getBookingById","Loi data truyen den");
             res.json({status:'fail'});
-        },true)
+            return;
+        }
+        
+        var legalUserIdsInCompany=[];
+        if(userId!==null)
+        {
+            legalUserIdsInCompany.push(userId);
+            var sql="select * from users where id=? and IS_MEDICO_LEGAL_MASTER=1";
+            kiss.executeQuery(req,sql,[userId],function(rows){
+                if(rows.length>0)
+                {
+                    if(kiss.checkData(rows[0].company_id))
+                    {
+                        var sql=
+                            " SELECT u.* FROM users u                             "+
+                            " WHERE u.MEDICO_LEGAL_REGISTER_STATUS IS NOT NULL    "+
+                            " AND u.`company_id`=?                                "+
+                            " AND u.`isEnable`=1                                  ";
+                        kiss.executeQuery(req,sql,[rows[0].company_id],function(rows){
+                            _.forEach(rows, function(item) {
+                                legalUserIdsInCompany.push(item.id);
+                            });
+                            getData();
+                        },function(err){
+                            kiss.exlog("getBookingById","Loi truy van lay users cua company",err);
+                            res.json({status:'fail'});
+                        });
+
+                    }
+                    else
+                    {
+                        getData();
+                    }
+                }
+                else
+                {
+                    getData();
+                }
+                
+            },function(err){
+                kiss.exlog("getBookingById","Loi truy van lay thong tin user");
+                res.json({status:'fail'});
+            });
+        }
+        else
+        {
+            getData();
+        }
+
+        function getData()
+        {
+            var sql=
+                " SELECT booking.*,company.`Company_name`,doctor.`NAME`,redi.`Site_addr`,redi.`Site_name`,rltype.`Rl_TYPE_NAME`,                     "+
+                "   COUNT(files.`FILE_ID`) AS NUMBER_OF_RESULTS                                                                                      "+
+                " FROM `rl_bookings` booking                                                                                                         "+
+                " INNER JOIN `companies` company ON booking.`COMPANY_ID`=company.`id`                                                                "+
+                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                                              "+
+                " INNER JOIN `redimedsites` redi ON booking.`SITE_ID`=`redi`.`id`                                                                    "+
+                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=`rltype`.`RL_TYPE_ID`                                                         "+
+                " LEFT JOIN (SELECT f.* FROM `rl_booking_files` f WHERE f.`isClientDownLoad`=1) files ON booking.`BOOKING_ID`=files.`BOOKING_ID`     "+
+                " WHERE booking.`BOOKING_ID`= ?                                                                                                      "+
+                (userId!=null?' AND booking.ASS_ID in (?) ':'')+
+                " GROUP BY booking.`BOOKING_ID`                                                                                   ";
+
+            kiss.executeQuery(req,sql,userId!=null?[bookingId,legalUserIdsInCompany]:[bookingId],function(rows){
+                if(rows.length>0)
+                    res.json({status:'success',data:rows[0]});
+                else
+                {
+                    kiss.exlog("getBookingById","Khong lay duoc booking Info");
+                    res.json({status:'fail'});
+                }
+            },function(err){
+                kiss.exlog("getBookingById","Loi truy van",err);
+                res.json({status:'fail'});
+            },true)
+        }
+        
     },
 
     /**
