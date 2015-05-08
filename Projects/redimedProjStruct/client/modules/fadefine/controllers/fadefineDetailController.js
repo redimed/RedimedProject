@@ -328,6 +328,13 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		});
 	}
 
+	//EDIT DEFINITION
+	$scope.editDefinition = function(){
+		addOrder($scope.header).then(function(result){
+			
+		})
+	}
+
 	//GENERAL DEFINITION FUNCTION
 	// var addOrder = function(header){
 	// 	return new Promise(function(resolve, reject){
@@ -364,7 +371,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 						else{
 							for(var k = 0; k<header.sections[i].lines[j].details.length; k++){
 								header.sections[i].lines[j].details[k].ORD = k+1;
-								if(k= header.sections[i].lines[j].details.length-1 && j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
+								if(k === header.sections[i].lines[j].details.length-1 && j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
 								else continue;
 							}
 						}
@@ -372,5 +379,46 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 				}
 			}
 		})
+	}
+
+	var getSeperate = function(processObj){
+		var header = {};
+		var sections = [];
+		var lines = [];
+		var details = [];
+		var comments = [];
+
+		//make tmpHeader value
+		var tmpHeader = angular.copy(processObj);
+		//get header
+		header = delete tmpHeader.sections;
+		
+		//get sections
+		for(var i = 0; i<processObj.sections.length; i++){
+			var tmpSection = angular.copy(processObj.sections[i]);
+			if(tmpSection.lines) delete tmpSection.lines;
+
+			sections.push(tmpSection);
+			//get lines
+			for(var j = 0; j<processObj.sections[i].lines.length; j++){
+				var tmpLine = angular.copy(processObj.sections[i].lines[j]);
+				var tmpLine2 = angular.copy(processObj.sections[i].lines[j]);
+				if(tmpLine.details) delete tmpLine.details;
+				if(tmpLine.comments) delete tmpLine.comments;
+				lines.push(tmpLine);
+				//get details and comments
+				details = details.concat(tmpLine2.details);
+				comments = comments.concat(tmpLine2.comments);
+			}
+		}
+
+		var postObj = {
+			header: header,
+			sections: sections,
+			lines: lines,
+			details: details,
+			comment: comments
+		}
+		return postObj;
 	}
 });
