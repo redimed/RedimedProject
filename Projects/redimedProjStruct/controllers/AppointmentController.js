@@ -260,9 +260,11 @@ module.exports = {
 			'cln_appt_patients.Patient_id',
 			'cln_patients.First_name',
 			'cln_patients.Sur_name',
-			'cln_patient_outreferral.patient_id AS outreferral'
+			'cln_patient_outreferral.patient_id AS outreferral',
+			'doctors.Appt_interval'
 		)
 		.leftOuterJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
+		.leftOuterJoin('doctors', 'cln_appointment_calendar.DOCTOR_ID', 'doctors.doctor_id')
 		.leftOuterJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
 		.leftOuterJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
 		.leftOuterJoin('cln_patient_outreferral', 'cln_appt_patients.Patient_id', 'cln_patient_outreferral.patient_id')
@@ -278,7 +280,8 @@ module.exports = {
 		var sub_sql = knex
 		.distinct(
 			'cln_appointment_calendar.DOCTOR_ID',
-			'doctors.NAME'
+			'doctors.NAME',
+			'doctors.Appt_interval'
 		)
 		.select()
 		.from('cln_appointment_calendar')

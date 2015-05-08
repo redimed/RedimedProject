@@ -1282,7 +1282,9 @@ table.timetable-table td:last-child {
 
 .appointment {}
 
-.appointment .appointment-row {}
+.appointment .appointment-row {
+    display: block;
+}
 
 .appointment .appointment-block-time,
 .appointment .appointment-block,
@@ -1295,10 +1297,11 @@ table.timetable-table td:last-child {
 }
 
 .appointment .appointment-block {
+    vertical-align: top;
     width: 150px;
     font-size: 11px;
     height: 70px;
-    margin: 0 3px 3px 0;
+    margin-right: 3px;
     padding: 5px 0px 0px 5px;
     color: white;
 }
