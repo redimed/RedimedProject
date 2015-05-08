@@ -8,6 +8,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			options: '=',
 			params: '=',
 			patient: '=',
+			calendar: '=',
 			onsuccess: '='
 		},
 		templateUrl: 'modules/invoice/directives/templates/add.html',
@@ -196,7 +197,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
             	})
 			}
 
-
+			if($scope.calendar) 
+				$scope.InvoiceMap.cal_id = $scope.calendar;
 
 			/*
 			*	FUNCTION 

@@ -24,6 +24,10 @@ var inc_common_model =  [
 		model: db.SysServices , as: 'Service',
 		attributes: ['SERVICE_ID','SERVICE_NAME'],
 	},
+	{
+		model: db.Appointment , as: 'Appointment',
+		attributes: ['FROM_TIME','TO_TIME'],
+	},
 ];
 
 module.exports = {
@@ -150,10 +154,10 @@ module.exports = {
 		var search_data = req.body.search;
 		var whereOpt = {};
 
-
 		
-		if(search_data && search_data.patient_id) {
+		if(search_data && search_data.patient_id && search_data.cal_id) {
 			whereOpt.Patient_id = search_data.patient_id;
+			whereOpt.cal_id = search_data.cal_id;
 			var inc_model = inc_common_model;
 		} else {
 			var inc_model = inc_common_model.concat([

@@ -3,7 +3,12 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
 	var patient_id = $stateParams.patient_id;
     $scope.patient_id = patient_id;
     var cal_id = $stateParams.cal_id;
+    $scope.cal_id = cal_id;
     $scope.invoicePanel = {};
+
+    $scope.invoiceClick = function(item){
+        $state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
+    }
 
 	$scope.invoiceClass = function(item) {
         return {
@@ -24,6 +29,14 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
             	if(item.company) return item.company.Company_name;
             }},
+            {field: 'cal_id', label: 'From Time', type: 'custom', fn: function(item){
+                if(item.appointment.FROM_TIME)
+                    return ConfigService.getCommonDatetime(item.appointment.FROM_TIME);
+            }},
+            {field: 'cal_id', label: 'To Time', type: 'custom', fn: function(item){
+                if(item.appointment.TO_TIME)
+                    return ConfigService.getCommonDatetime(item.appointment.TO_TIME);
+            }},
             {field: 'Insurer_id', label: 'Insurer', type: 'custom', fn: function(item){
             	if(item.insurer) return item.insurer.insurer_name;
             }},
@@ -40,17 +53,17 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
             }},
         ],
-        search: {patient_id: patient_id},
-        use_actions: true, 
-        actions: [              
-            {
-                class: 'fa fa-money', title: 'Detail',
-                callback: function(item){
-                	console.log(item)
-               		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
-                }
-            },
-        ],
+        search: {patient_id: patient_id, cal_id:cal_id},
+        // use_actions: true, 
+        // actions: [              
+        //     {
+        //         class: 'fa fa-money', title: 'Detail',
+        //         callback: function(item){
+        //         	console.log(item)
+        //        		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
+        //         }
+        //     },
+        // ],
 	};
 
     $scope.addFormInvoice = {
