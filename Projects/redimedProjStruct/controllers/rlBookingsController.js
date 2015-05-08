@@ -250,7 +250,6 @@ module.exports =
 
     listBookingsForCustomer:function(req,res)
     {
-        kiss.exFileJSON(req.cookies.userInfo,'userInfo.txt');
         var searchInfo=kiss.checkData(req.body.searchInfo)?req.body.searchInfo:{};
         var currentPage=kiss.checkData(searchInfo.currentPage)?searchInfo.currentPage:'';
         var itemsPerPage=kiss.checkData(searchInfo.itemsPerPage)?searchInfo.itemsPerPage:'';
@@ -314,36 +313,39 @@ module.exports =
         {
             console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..",legalUserIdsInCompany);
             var sql=
-                " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`,CONCAT(WRK_OTHERNAMES,' ',WRK_SURNAME) as 'FULL_NAME'                                    "+
-                " FROM `rl_bookings` booking                                                              "+
-                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                "+
-                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                   "+
-                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                     "+
-                "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                    "+
-                "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                       "+
-                "   AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE CONCAT('%',?,'%') "+
-                "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                       "+
-                "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?      "+
-                "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                           "+
-                "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                  "+
-                "   AND booking.`ASS_ID` IN (?)                                           "+
+                " SELECT booking.*,rltype.`Rl_TYPE_NAME`,doctor.`NAME`,CONCAT(WRK_OTHERNAMES,' ',WRK_SURNAME) AS 'FULL_NAME',  "+
+                " u.`user_name` as ASS_USER_NAME                                                                                                "+
+                " FROM `rl_bookings` booking                                                                                   "+
+                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                                     "+
+                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                                        "+
+                " INNER JOIN users u ON booking.`ASS_ID`=u.`id`                                                                "+
+                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                                          "+
+                "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                                         "+
+                "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                                            "+
+                "   AND CONCAT(booking.`WRK_OTHERNAMES`,' ',booking.`WRK_SURNAME`) LIKE CONCAT('%',?,'%')                      "+
+                "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                                            "+
+                "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?                           "+
+                "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                                                "+
+                "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                                       "+
+                "   AND booking.`ASS_ID` IN (?)                                                                                "+
                 orderBy+
                 " LIMIT ?,?                                                                               ";
 
             var sqlCount=
-                " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                           "+
-                " FROM (SELECT *,CONCAT(WRK_OTHERNAMES,' ',`WRK_SURNAME`) AS 'FULL_NAME' FROM `rl_bookings`) booking                                                                  "+
-                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                    "+
-                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                       "+
-                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                         "+
-                "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                        "+
-                "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                           "+
-                "   AND booking.FULL_NAME LIKE CONCAT('%',?,'%') "+
-                "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                           "+
-                "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?          "+
-                "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                               "+
-                "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                      "+
-                "   AND booking.`ASS_ID` IN (?)                                               ";
+                " SELECT COUNT(booking.`BOOKING_ID`) AS TOTAL_ITEMS                                                   "+
+                " FROM (SELECT *,CONCAT(WRK_OTHERNAMES,' ',`WRK_SURNAME`) AS 'FULL_NAME' FROM `rl_bookings`) booking  "+                                                              
+                " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                            "+
+                " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                               "+
+                " INNER JOIN users u ON booking.ASS_ID=u.`id`                                                         "+
+                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                                 "+
+                "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                                "+
+                "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                                   "+
+                "   AND booking.FULL_NAME LIKE CONCAT('%',?,'%')                                                      "+
+                "   AND booking.`RL_TYPE_ID` LIKE CONCAT('%',?,'%')                                                   "+
+                "   AND DATE(booking.`APPOINTMENT_DATE`) >=? AND DATE(booking.`APPOINTMENT_DATE`)<=?                  "+
+                "   AND booking.`STATUS` LIKE CONCAT('%',?,'%')                                                       "+
+                "   AND booking.`DOCUMENT_STATUS` LIKE CONCAT('%',?,'%')                                              "+
+                "   AND booking.`ASS_ID` IN (?)                                                                       ";
             
             req.getConnection(function(err,connection)
             {
