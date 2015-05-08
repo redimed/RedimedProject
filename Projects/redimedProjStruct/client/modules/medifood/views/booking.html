@@ -1,0 +1,41 @@
+<p>Booked</p>
+
+<button type="button" class="btn btn-success" ng-click="book();">Complete</button>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Cost</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key,item) in chosenFoods">
+			<td>{{item.NAME}}</td>
+			<td>{{item.COST}}</td>
+			<td>
+				<button type="button" class="btn btn-success" ng-click="cancelFood(item);">Cancel</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Choose Item</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Cost</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key,item) in foodList">
+			<td>{{item.NAME}}</td>
+			<td>{{item.COST}}</td>
+			<td>
+				<button type="button" class="btn btn-success" ng-click="chooseFood(item);">Choose</button>
+			</td>
+		</tr>
+	</tbody>
+</table>

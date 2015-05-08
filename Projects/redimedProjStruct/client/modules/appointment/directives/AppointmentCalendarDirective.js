@@ -37,7 +37,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						AlertModel.listFollowPatient(postData)
 						.then(function(response){
 							$scope.alert.list = response.data;
-						}, function(error){})
+						}, function(error){})		
 					},
 					resolve: {
 						patient: function(){

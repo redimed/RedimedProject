@@ -1,8 +1,9 @@
 		<pagination boundary-links="true" total-items="company.count" ng-model="company.search.page" 
 	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-	        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="setPage(company.search.page)">
+	        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="company.setPage(company.search.page)">
 	    </pagination>
 		<!-- END PAGINATION -->
+		<button class="btn btn-primary pull-right" ng-show="actionCenter.createAdd===true" ng-click="actionCenter.goToStateAddCompany()">Add new</button>
 	<div class="portlet-body">
 		    <div class="row">
 			<div class="col-md-12">
@@ -16,6 +17,20 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr>
+							<td>
+								<input class="form-control input-sm" ng-model="company.search.Company_name" ng-change="company.onSearch({field: 'Company_name', value: company.search.Company_name})">
+							</td>
+							<td>
+								<input class="form-control input-sm" ng-model="company.search.Industry" ng-change="company.onSearch({field: 'Industry', value: company.search.Industry})">
+							</td>
+							<td>
+								<input class="form-control input-sm" ng-model="company.search.Addr" ng-change="company.onSearch({field: 'Addr', value: company.search.Addr})">
+							</td>
+							<td>
+								<input class="form-control input-sm" ng-model="company.search.country" ng-change="company.onSearch({field: 'country', value: company.search.country})">
+							</td>
+						</tr>
 						<tr ng-repeat="row in company.list" ng-click="onRowClick({row: row})">
 							<td >{{row.Company_name}}</td>
 							<td>{{row.Industry}}</td>

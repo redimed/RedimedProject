@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.patient.detail.directive", [])
 
-.directive("patientDetail", function($stateParams, $modal, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout, CompanyModel, InsurerService){
+
+.directive("patientDetail", function($stateParams,$state, $modal, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout, CompanyModel, InsurerService){
 	return{
 		restrict: "EA",
 		scope: {
@@ -136,6 +137,9 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							angular.extend(scope.modelObjectMap, response.data);
 							console.log('this is modelObjectMap', scope.modelObjectMap);
 							for(var key in scope.modelObjectMap){
+								if (!scope.modelObjectMap.Country || scope.modelObjectMap.Country === "") {
+									scope.modelObjectMap.Country = "Australia";
+								}
 								if(scope.modelObjectMap[key]){
 									if(key.indexOf("is") != -1 || key.indexOf("Is") != -1 || key.indexOf("No_") != -1 || key.indexOf('Diabetic') != -1 || key.indexOf('Inactive') != -1 || key.indexOf('Deceased') != -1 || key.indexOf('Gradudate_') != -1)
 										scope.modelObjectMap[key] = scope.modelObjectMap[key].toString();
@@ -178,6 +182,23 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				$modal.open({
 					templateUrl: 'dialogCompanyList',
 					controller: function($scope, $modalInstance){
+						$scope.actionCenter={
+							createAdd:true,
+							goToStateAddCompany:function(){
+
+								$modal.open({
+									templateUrl: 'dialogAddCompany',
+									controller: function($scope, $modalInstance){
+										 $scope.$watch('success', function(item){
+							            	if(item === true)
+							            		$modalInstance.close('success');
+							            }) 
+									},
+									size:'lg'
+								})
+								//end modal dialogAddCompany
+							}
+						}
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
 						}

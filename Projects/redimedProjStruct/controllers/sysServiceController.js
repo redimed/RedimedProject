@@ -1,19 +1,22 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
+var kiss=require('./kissUtilsController');
 
 module.exports = {
 	postByClinicalDepartment: function(req, res){
 		var dept_id = req.body.dept_id;
 
-		var sql = "SELECT ss.* FROM cln_dept_services cds INNER JOIN sys_services ss ON ss.SERVICE_ID=cds.SERVICE_ID AND cds.CLINICAL_DEPT_ID="+dept_id;
+		var sql = 
+			" SELECT ss.* FROM cln_dept_services cds                                                  "+
+			" INNER JOIN sys_services ss ON ss.SERVICE_ID=cds.SERVICE_ID AND cds.CLINICAL_DEPT_ID=?   "+
+			" ORDER BY ss.`SERVICE_NAME`                                                              ";
 
-		db.sequelize.query(sql)
-		.success(function(list){
+		kiss.executeQuery(req,sql,[dept_id],function(list){
 			res.json({'status': 'success', 'data': list});
-		})
-		.error(function(error){
+		},function(err){
 			res.json({'status': 'error', 'message': error});
-		})
+		});
+
 	},
 	postAdd: function(req, res){
 		var postData = req.body.add_data;

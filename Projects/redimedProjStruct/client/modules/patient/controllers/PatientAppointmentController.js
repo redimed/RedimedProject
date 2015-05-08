@@ -173,9 +173,9 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
             });
 
             // REDIRECT TO THE MOST RECENT APPOINTMENT
-            if(current_appt === null) {
-                $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: $scope.list_appt[0].CAL_ID})
-            }
+            // if(current_appt === null) {
+            //     $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: $scope.list_appt[0].CAL_ID})
+            // }
 
         }, function(error) {
             //console.log(error)
