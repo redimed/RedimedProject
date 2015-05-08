@@ -95,29 +95,59 @@ angular.module("starter.menu.controller",[])
                 platform: ionic.Platform.platform(),
                 info: userInfo,
                 token: notificationLS.regid
+            });
+            $scope.popupMessage = {message: "Do you want log out?" };
+            $ionicPopup.show({
+                templateUrl: 'modules/popup/PopUpConfirm.html',
+                scope: $scope,
+                buttons : [
+                    { text: "Cancel" },
+                    {
+                        text: "Yes, I do!",
+                        type: 'button button-assertive',
+                        onTap: function(e) {
+                            signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
+                            $ionicLoading.show({
+                                template: "<div class='icon ion-ios7-reloading'></div>"+
+                                "<br />"+
+                                "<span>Logout...</span>",
+                                animation: 'fade-in',
+                                showBackdrop: true,
+                                maxWidth: 200,
+                                showDelay: 0
+                            });
+                            signaling.on('logoutSuccess', function(){
+                                signaling.removeAllListeners();
+                                localStorageService.clearAll();
+                                $state.go("security.login", null, {reload: true});
+                                $ionicLoading.hide();
+                            })
+                        }
+                    }
+                ]
             })
-            $ionicPopup.confirm({
-                template: 'Are you sure you want to log out?'
-            }).then(function(result){
-                if(result){
-                    signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
-                    $ionicLoading.show({
-                        template: "<div class='icon ion-ios7-reloading'></div>"+
-                        "<br />"+
-                        "<span>Logout...</span>",
-                        animation: 'fade-in',
-                        showBackdrop: true,
-                        maxWidth: 200,
-                        showDelay: 0
-                    });
-                    signaling.on('logoutSuccess', function(){
-                        signaling.removeAllListeners();
-                        localStorageService.clearAll();
-                        $state.go("security.login", null, {reload: true});
-                        $ionicLoading.hide();
-                    })
-                }
-            })
+            //$ionicPopup.confirm({
+            //    template: 'Are you sure you want to log out?'
+            //}).then(function(result){
+            //    if(result){
+            //        signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
+            //        $ionicLoading.show({
+            //            template: "<div class='icon ion-ios7-reloading'></div>"+
+            //            "<br />"+
+            //            "<span>Logout...</span>",
+            //            animation: 'fade-in',
+            //            showBackdrop: true,
+            //            maxWidth: 200,
+            //            showDelay: 0
+            //        });
+            //        signaling.on('logoutSuccess', function(){
+            //            signaling.removeAllListeners();
+            //            localStorageService.clearAll();
+            //            $state.go("security.login", null, {reload: true});
+            //            $ionicLoading.hide();
+            //        })
+            //    }
+            //})
         }
 
         $scope.readNFC = function() {
@@ -295,10 +325,11 @@ angular.module("starter.menu.controller",[])
         });
 
         signaling.on('forceLogout', function(){
-            $ionicPopup.alert({
-                title: "Sorry",
-                template: 'Some is logged into your account!'
-            })
+            $scope.popupMessage = { message: "Some is logged into your account!"};
+            $ionicPopup.show({
+                templateUrl: 'modules/popup/PopUpError.html',
+                scope: $scope
+            });
             localStorageService.clearAll();
             $state.go("security.login", null, {location: "replace", reload: true});
             signaling.removeAllListeners();

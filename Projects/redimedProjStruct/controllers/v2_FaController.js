@@ -239,5 +239,263 @@ module.exports = {
 		.catch(function(error){
 			res.json(500,{status:'error', message:error});
 		})
+	},
+
+	// postGet: function(req,res){
+	// 	var getResult = {};
+	// 	var headerId = req.body.id;
+	// 	//get header
+	// 	knex
+	// 	.select()
+	// 	.from('sys_fa_df_headers')
+	// 	.where({FA_ID: headerId})
+	// 	.then(function(getHeaderRes){
+	// 		getResult = getHeaderRes[0];
+	// 		//get sections of header
+	// 		knex
+	// 		.select()
+	// 		.from('sys_fa_df_sections')
+	// 		.where({FA_ID: headerId})
+	// 		.orderBy('ORD')
+	// 		.then(function(getSectionsRes){
+	// 			if(getSectionsRes.length===0){
+	// 				res.json(500,{status: 'failed'}) 
+	// 			}
+	// 			else{
+	// 				getResult.sections = getSectionsRes;
+	// 				getResult.sections.forEach(function(section){
+	// 					//get lines in sections
+	// 					knex
+	// 					.select()
+	// 					.from('sys_fa_df_lines')
+	// 					.where({
+	// 						SECTION_ID: section.SECTION_ID,
+	// 						FA_ID: headerId
+	// 					})
+	// 					.orderBy('ORD')
+	// 					.then(function(getLinesRes){
+	// 							if(getLinesRes.length>0){
+	// 								section.lines = getLinesRes;
+	// 								section.lines.forEach(function(line, index){
+	// 								//get line details
+	// 									knex
+	// 									.select()
+	// 									.from('sys_fa_df_line_details')
+	// 									.where({LINE_ID: line.LINE_ID})
+	// 									.orderBy('ORD')
+	// 									.then(function(getDetailsRes){
+	// 										line.details = getDetailsRes;
+	// 										//get line comment
+	// 										knex
+	// 										.select()
+	// 										.from('sys_fa_df_comments')
+	// 										.where({LINE_ID: line.LINE_ID})
+	// 										.then(function(getCommentsRes){
+	// 											line.comments = getCommentsRes;
+	// 											if(getSectionsRes.indexOf(section)===getSectionsRes.length-1 && getLinesRes.indexOf(line)===getLinesRes.length-1){
+	// 												res.json({status:'success',data:getResult});
+	// 											}
+	// 										})
+	// 										.error(function(err){
+	// 											res.json(500, {status: 'failed', error: err})
+	// 										})
+	// 									})
+	// 									.error(function(err){
+	// 										res.json(500, {status: 'failed', error: err})
+	// 									})
+	// 								})
+	// 							}
+	// 							// else{
+	// 							// 	res.json
+	// 							// }
+
+	// 					})
+						
+	// 					.error(function(err){
+	// 						res.json(500, {status: 'failed', error: err})
+	// 					})
+	// 				})
+	// 			}
+	// 		})
+	// 		.error(function(err){
+	// 			res.json(500, {status: 'failed', error: err})
+	// 		})
+	// 	})
+	// 	.error(function(err){
+	// 		res.json(500, {status: 'failed', error: err})
+	// 	})
+	// }
+
+	postGetHeaderAndSections: function(req,res){
+		var getResult = {};
+		var headerId = req.body.id;
+		//get header
+		knex
+		.select()
+		.from('sys_fa_df_headers')
+		.where({FA_ID: headerId})
+		.then(function(headerRes){
+			if(headerRes.length===0) res.json(500,{status:'get header error', error:err});
+			else{
+				getResult = headerRes[0];
+				//get sections
+				knex
+				.select()
+				.from('sys_fa_df_sections')
+				.where({FA_ID: headerId})
+				.orderBy('ORD')
+				.then(function(sectionRes){
+					if(sectionRes.length===0) res.json(500,{status:'get sections error', error:err});
+					else{
+						getResult.sections = sectionRes;
+						res.json({status:'success', data:getResult});
+					}
+				})
+				.error(function(err){
+					res.json(500,{status:'error'}) 
+				})
+			}
+		})
+		.error(function(err){
+			res.json(500,{status:'error'})
+		})
+	},
+
+	postGetLines: function(req,res){
+		var sectionId = req.body.sectionId;
+		var headerId = req.body.headerId;
+		//get lines
+		knex
+		.select()
+		.from('sys_fa_df_lines')
+		.where({
+			SECTION_ID: sectionId,
+			FA_ID: headerId
+		})
+		.orderBy('ORD')
+		.then(function(lineRes){
+			res.json({status:'success',data: lineRes});
+		})
+		.error(function(err){
+			res.json(500,{status:'error'});
+		})
+
+	},
+
+	postGetDetailsAndComments: function(req,res){
+		var lineId = req.body.lineId;
+		//get details
+		knex
+		.select()
+		.from('sys_fa_df_line_details')
+		.where({LINE_ID: lineId})
+		.orderBy('ORD')
+		.then(function(detailRes){
+			//get comments
+			knex
+			.select()
+			.from('sys_fa_df_comments')
+			.where({LINE_ID: lineId})
+			.then(function(commentRes){
+				console.log('those are comments', commentRes)
+				res.json({
+					status: 'success',
+					data:{
+						details: detailRes,
+						comments: commentRes
+					}
+				})
+			})
+			.error(function(err){
+				res.json(500, {status:'error'})
+			})
+		})
+		.error(function(err){
+			res.json(500,{status:'error'})
+		})
+
 	}
+
+	// postGet: function(req,res){
+	// 	var getResult = {};
+	// 	var headerId = req.body.id;
+
+	// 	//get header
+	// 	knex
+	// 	.select()
+	// 	.from('sys_fa_df_headers')
+	// 	.where({FA_ID: headerId})
+	// 	.then(function(headerRes){
+	// 		if(headerRes.length===0) res.json(500,{status:'get header error', error:err});
+	// 		else {
+	// 			getResult = headerRes[0];
+	// 			//get sections
+	// 			knex
+	// 			.select()
+	// 			.from('sys_fa_df_sections')
+	// 			.where({FA_ID: headerId})
+	// 			.orderBy('ORD', 'desc')
+	// 			.then(function(sectionRes){
+	// 				if(sectionRes.length===0) res.json(500,{status:'get section error', error:err});
+	// 				else{
+	// 					getResult.sections=sectionRes;
+	// 					getResult.sections.forEach(function(section){
+	// 						//get lines
+	// 						knex
+	// 						.select()
+	// 						.from('sys_fa_df_lines')
+	// 						.where({
+	// 							SECTION_ID: section.SECTION_ID,
+	// 							FA_ID: headerId
+	// 						})
+	// 						.orderBy('ORD')
+	// 						.then(function(lineRes){
+	// 							if(lineRes.length===0){
+	// 								if(getResult.sections.indexOf(section) === getResult.sections.length - 1)
+	// 									res.json({status:'success',data: getResult});
+	// 							}
+	// 							else{
+	// 								section.lines = lineRes;
+	// 								section.lines.forEach(function(line){
+	// 									//get detail
+	// 									knex
+	// 									.select()
+	// 									.from('sys_fa_df_line_details')
+	// 									.where({LINE_ID: line.LINE_ID})
+	// 									.orderBy('ORD')
+	// 									.then(function(detailRes){
+	// 										line.details = detailRes;
+	// 										//get comment
+	// 										knex
+	// 										.select()
+	// 										.from('sys_fa_df_comments')
+	// 										.where({LINE_ID: line.LINE_ID})
+	// 										.then(function(commentRes){
+	// 											line.comment = commentRes;
+	// 											if(getResult.sections.indexOf(section)===getResult.sections.length-1 && section.lines.indexOf(line)===section.lines.length-1)
+	// 												res.json({status:'success',data:getResult});
+
+	// 										})
+	// 										.error(function(err){
+	// 											res.json(500,{status:'get section error', error:err});
+	// 										})
+	// 									})
+	// 									.error(function(err){
+	// 										res.json(500,{status:'get section error', error:err});
+	// 									})
+	// 								})
+	// 							}
+	// 						})
+	// 					})
+	// 				}
+	// 			})
+	// 			.error(function(err){
+	// 				res.json(500,{status:'get section error', error:err});
+	// 			})
+	// 		}
+	// 	})
+	// 	.error(function(err){
+	// 		res.json(500,{status:'get header error', error:err});
+	// 	})
+	// }
 }

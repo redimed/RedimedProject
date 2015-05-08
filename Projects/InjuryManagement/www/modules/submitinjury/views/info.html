@@ -1,7 +1,9 @@
 <ion-view title="Submit Injury">
     <ion-nav-buttons side="left">
         <a menu-toggle="left" class="button button-icon icon ion-navicon" style="color:#fff"></a>
-        <a class="button button-icon icon" ui-sref="app.injury.mapCompany" style="color:#fff"><i class="fa fa-map-marker"></i></a>
+        <a ui-sref="app.injury.mapCompany" class="button button-icon icon" style="color:#fff">
+            <i class="fa fa-map-marker"></i>
+        </a>
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
@@ -12,7 +14,6 @@
         <ion-content class="padding">
             <ion-list>
                 <div style="z-index: 1; position:relative; width: 100%; top: 20px;">
-
                     <label class="item item-input item-select label-custom-field" >
                         <span class="input-label span-input-color">Title</span>
                         <select ng-required="true" ng-model="worker.Title" name="Title" class="browser-default"
@@ -21,9 +22,13 @@
                         </select>
                         <hr class="customHr" ng-class="{'has-error':isSubmit && info.Title.$invalid}">
                     </label>
+
                     <label class="item item-input label-custom-field" >
                         <span class="input-label span-input-color">First Name</span>
-                        <input ng-required="true" type="text" ng-model="worker.First_name" name="First_name" ng-disabled="worker.Patient_id != -1 && temp1.First_name"   ng-maxlength=30  ng-class="{'has-error':isSubmit && info.First_name.$invalid}"/>
+                        <input ng-required="true" type="text" ng-model="worker.First_name"
+                               name="First_name" ng-disabled="worker.Patient_id != -1 && temp1.First_name"
+                               ng-maxlength=30  ng-class="{'has-error':isSubmit && info.First_name.$invalid}"
+                               ng-pattern="/^[\w&.-]+$/" />
 
                     </label>
 
@@ -59,11 +64,20 @@
 
                     <label class="item item-input label-custom-field">
                         <span class="input-label span-input-color">Middle Name</span>
-                        <input type="text" ng-model="worker.Middle_name" name="Middle_name" ng-disabled="worker.Patient_id != -1 && temp1.Middle_name" ng-maxlength=30 ng-class="{'has-error':isSubmit && info.Middle_name.$invalid && info.Middle_name.$error}"/>
+                        <input type="text" ng-model="worker.Middle_name"
+                               name="Middle_name" ng-disabled="worker.Patient_id != -1 && temp1.Middle_name"
+                               ng-maxlength=30
+                               ng-class="{'has-error':isSubmit && info.Middle_name.$invalid && info.Middle_name.$error}"
+                               ng-pattern="/^[\w&.-]+$/"/>
                     </label>
+
                     <small class="error"
                            ng-show="info.Middle_name.$error.maxlength">
                         Your Middle Name is required to be at least 30 characters
+                    </small>
+                    <small class="error"
+                           ng-show="info.Middle_name.$error.pattern">
+                        Your Middle Name is required to be at $#%#
                     </small>
 
 
@@ -86,13 +100,22 @@
                             </h4>
                         </a>
                     </ion-scroll>
+
                     <label class="item item-input label-custom-field" >
                         <span class="input-label span-input-color">Sur Name</span>
-                        <input ng-required="true" type="text" ng-model="worker.Sur_name" name="Sur_name" ng-disabled="worker.Patient_id != -1 && temp1.Sur_name" ng-maxlength=30 ng-class="{'has-error':isSubmit && info.Sur_name.$invalid}" />
+                        <input ng-required="true" type="text"
+                               ng-model="worker.Sur_name" name="Sur_name"
+                               ng-disabled="worker.Patient_id != -1 && temp1.Sur_name"
+                               ng-maxlength=30 ng-class="{'has-error':isSubmit && info.Sur_name.$invalid}"
+                               ng-pattern="/^[\w&.-]+$/"/>
                     </label>
                     <small class="error"
                            ng-show="info.Sur_name.$error.maxlength">
-                        Your Middle Name is required to be at least 30 characters
+                        Your Sur Name is required to be at least 30 characters
+                    </small>
+                    <small class="error"
+                           ng-show="info.Sur_name.$error.pattern">
+                        Your Sur Name is required to be at $#%#
                     </small>
                     <ion-scroll direction="y" class="list searchform" ng-hide="!worker.Sur_name || !isShow">
                         <a class="item itemsearch"
@@ -115,15 +138,26 @@
                     </ion-scroll>
 
                     <label class="item item-input label-custom-field" >
-                        <span class="input-label span-input-color">Mobile Phone</span>
-                        <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile" ng-change="Checkfield(isMobile = true)" ng-disabled="worker.Patient_id != -1 && temp1.Mobile" ng-class="{'has-error':(isSubmit && info.Mobile.$invalid) || isFailMobile}"/>
+                        <span class="input-label span-input-color">Mobile Phone
+                        <i class="icon" style="float: right; font-size: 18px; margin-right: 30px;"
+                           ng-class="{'ion-loading-a positive': iconLoadingMobile, 'ion-checkmark-round balanced': iconSuccessMobile, 'ion-close-round assertive': iconErrorMobile}"></i>
+                    </span>
+                        <input ng-required="true" type="tel" ng-model="worker.Mobile" name="Mobile"
+                               maxlength="11"
+                               ng-keyup="checkField(isMobile = true)"
+                               ng-disabled="worker.Patient_id != -1 && temp1.Mobile"
+                               ng-class="{'has-error':(isSubmit && info.Mobile.$invalid) || isFailMobile}"/>
                     </label>
 
                     <label class="item item-input label-custom-field" >
-                        <span class="input-label span-input-color">Email</span>
-                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email" ng-change="Checkfield(isMobile = false)" ng-blur="isSuccess = false" ng-disabled="worker.Patient_id != -1 && temp1.Email" ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}"/>
-                        <i ng-class="{'icon ion-loading-a':isLoading}"></i>
-                        <i ng-class="{'icon ion-checkmark-round text-success':isSuccess}"></i>
+                        <span class="input-label span-input-color">Email
+                        <i class="icon" style="float: right; font-size: 18px; margin-right: 30px;"
+                           ng-class="{'ion-loading-a positive': iconLoadingMail, 'ion-checkmark-round balanced': iconSuccessMail, 'ion-close-round assertive': iconErrorMail}"></i>
+                        </span>
+                        <input ng-required="true" type="email" ng-model="worker.Email" name="Email"
+                               ng-keyup="checkField(isMobile = false)"
+                               ng-disabled="worker.Patient_id != -1 && temp1.Email"
+                               ng-class="{'has-error':(isSubmit && info.Email.$invalid) || isFailEmail}"/>
                     </label>
                     <small class="error"
                            ng-show="info.Email.$error.email">
@@ -140,7 +174,7 @@
                     </label>
                     <label class="item item-input label-custom-field" >
                         <span class="input-label span-input-color">Birthday</span>
-                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()"  min="1865-01-01" max="1995-01-01" ng-class="{'has-error':isSubmit && info.DOB.$invalid}" />
+                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()" min="1865-01-01" max="1995-01-01" ng-class="{'has-error':isSubmit && info.DOB.$invalid}" />
                     </label>
                     <label class="item item-input label-custom-field"  style="border-bottom-color:white">
                         <span class="input-label span-input-color">Address</span>
@@ -150,7 +184,7 @@
                            ng-show="info.Address1.$error.maxlength">
                         The Address1 is required to be at least 200 characters
                     </small>
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 20px;">
                         <div class="col" style="text-align: right">
                             <a class="button button-icon icon ion-refresh im-button-custom" ng-click="resetFormInjury()"></a>
                         </div>
@@ -163,6 +197,7 @@
                     </div>
                 </div>
                 </div>
+
             </ion-list>
         </ion-content>
     </form>

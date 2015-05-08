@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes){
 		Creation_date: DataTypes.DATE,
 		Last_updated_by: DataTypes.INTEGER(11),
 		Last_update_date: DataTypes.DATE,
+        IS_BOOKABLE: DataTypes.INTEGER(11)
 	}, {
 		tableName: 'sys_services',
 		createdAt: 'Creation_date',

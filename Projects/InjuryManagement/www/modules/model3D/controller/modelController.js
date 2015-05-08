@@ -1,16 +1,18 @@
 angular.module('starter.model.controller',[])
-	.controller('modelController', function($scope, $window, $ionicModal, $cordovaCamera, InjuryServices,  $state){
+	.controller('modelController', function($scope, $window, $ionicModal, $cordovaCamera, InjuryServices,  $state, $stateParams){
 
         $scope.parts = [];
         $scope.desItem = [];
-        
+        $scope.gender = $stateParams.linkGender;
+        $scope.w = $window.innerWidth;
+
         var sprin = $('.spritespin').spritespin({
-          source: SpriteSpin.sourceArray('img/model/{frame}.png', { frame: [1,4], digits: 1 }),
+          source: SpriteSpin.sourceArray('img/model/mobile/'+ $scope.gender + '/{frame}.png', { frame: [1,4], digits: 1}),
           width: $window.innerWidth,
           height: $window.innerHeight,
-          sense: 1,
+          sense: -1,
           animate: false,
-          reverse: true, 
+          reverse: true,
           mods: ['drag', '360'],
           behavior: 'drag',
           module: null,
@@ -44,35 +46,51 @@ angular.module('starter.model.controller',[])
           var f_body = [
               {'body':head}, {'body':chest}, {'body':belly}, {'body':groin},
               {'body':l_arm}, {'body':l_elbow}, {'body':l_hand},
-              {'body':r_arm}, {'body': r_elbow}, {'body':r_hand}, 
-              {'body': l_calf}, {'body':r_calf}, {'body':l_shin}, {'body': r_shin}, 
+              {'body':r_arm}, {'body': r_elbow}, {'body':r_hand},
+              {'body': l_calf}, {'body':r_calf}, {'body':l_shin}, {'body': r_shin},
               {'body': l_foot}, {'body': r_foot}
           ];
 
           var b_body = [
               {'body':b_head}, {'body':r_back}, {'body':l_back},
-              {'body':bl_arm}, {'body':bl_elbow}, {'body':bl_hand}, 
-              {'body':br_arm}, {'body':br_elbow}, {'body':br_hand}, 
-              {'body':bl_calf}, {'body':br_calf}, {'body':bl_shin}, {'body':br_shin}, 
-              {'body':bl_foot}, {'body':br_foot}
+              {'body':bl_arm}, {'body':bl_elbow}, {'body':bl_hand},
+              {'body':br_arm}, {'body':br_elbow}, {'body':br_hand},
+              {'body':bl_calf}, {'body':br_calf}, {'body':bl_shin}, {'body':br_shin},
+              {'body':bl_foot}, {'body':br_foot}, {'body':l_back}, {'body':r_back},, {'body': bottom}
+          ];
+
+          var r_body = [
+              {'body':r_head}, {'body': rr_arm}, {'body': rr_elbow}, {'body': rr_hand},
+              {'body':rr_calf}, {'body': rr_shin}, {'body': rr_foot}
+          ];
+
+          var l_body = [
+              {'body':l_head}, {'body': ll_arm}, {'body': ll_elbow}, {'body': ll_hand},
+              {'body':ll_calf}, {'body': ll_shin}, {'body': ll_foot}
           ];
 
           $scope.temp = [];
 
           if (api.data.frame == 0) {
             checkFrame(f_body);
-          };
+          }
+          if (api.data.frame == 3) {
+            checkFrame(r_body);
+          }
           if (api.data.frame == 2) {
             checkFrame(b_body);
-          };
+          }
+          if (api.data.frame == 1) {
+            checkFrame(l_body);
+          }
           
           function checkFrame(body){
                 body.forEach(function(data){
-                    if (mousePos.x >= data.body.x1 && mousePos.x >= data.body.x4 && 
+                    if (mousePos.x >= data.body.x1 && mousePos.x >= data.body.x4 &&
                         mousePos.x <= data.body.x2 && mousePos.x <= data.body.x3 &&
-                        mousePos.y >= data.body.y1 && mousePos.y >= data.body.y2 && 
-                        mousePos.y <= data.body.y3 && mousePos.y <= data.body.y4) {          
-                        $scope.temp.push({
+                        mousePos.y >= data.body.y1 && mousePos.y >= data.body.y2 &&
+                        mousePos.y <= data.body.y3 && mousePos.y <= data.body.y4) {
+                      $scope.temp.push({
                           'body'  : data,
                           'count' : mousePos.x - data.body.x1
                         });
@@ -82,60 +100,58 @@ angular.module('starter.model.controller',[])
                 if(typeof $scope.temp !== 'undefined'){
                   $scope.temp = _.min($scope.temp, 'count');
                   $scope.showModal($scope.temp.body.body.name);
-                  // draw($scope.temp.body.body, ctx, mousePos);
-                  // $scope.parts.push($scope.temp.body.body.name);
+                  //draw($scope.temp.body.body, ctx);
+                  //$scope.parts.push($scope.temp.body.body.name);
                 }
           }, false);
 
-          // function getDistance(evt) {
-          //   var startingTop = 40;
-          //   var startingLeft = 0;
-          //   var math = Math.abs(((startingTop - evt.clientY) + (startingLeft - evt.clientX))) + 'px';
-          //   return {
-          //       x : Math.abs(startingLeft - evt.clientX),
-          //       y : Math.abs(startingTop - evt.clientY)
-          //   };
-          // }
-     
-          // function draw(data, ctx, dis){
-          //     var r_a = 0.3; 
-              // var img = new Image();
-              // img.src = "img/model/01.png"; 
-              // var w = data.x2 - data.x1;
-              // var h = data.y3 - data.y2;
-              // var cy = dis.y - (h/2);
-              // var cx =  dis.x - (w/2);
-              // ctx.fillRect(cx, cy, w, h);
-              // ctx.stroke();
-              // ctx.drawImage(img,680,105,60,80);
-              // console.log(img);
+          // function draw(data, ctx){
+          //   var width = 0;
+          //   var height = 0;
+          //   var resultW = 0;
+          //   var resultH = 0;
 
           //   ctx.beginPath();
-          //   var a1 = data.x1 - (data.y4 - data.y1);
-          //   var c1 = (+data.x2) + (+data.y4 - data.y1);
-          //   ctx.moveTo(data.x1, data.y1);
-          //   ctx.quadraticCurveTo(a1, data.y2, data.x1, data.y4);
+          //   ctx.fillStyle = "rgba(32, 45, 21, 0.3)";
 
-          //   ctx.moveTo(data.x1, data.y1);
-          //   ctx.quadraticCurveTo(data.x1, data.y1, data.x2, data.y2);
+          //   width = $window.innerWidth;
+          //   height = (data.y3 - data.y2);
 
-          //   ctx.moveTo(data.x2, data.y2);
-          //   ctx.quadraticCurveTo(c1, data.y1, data.x3, data.y3);
+          //   resultW = ((width - 360)/2) - (data.x2/2);
+          //   resultH = (+height + +data.y2);
 
-          //   ctx.moveTo(data.x1, data.y4);
-          //   ctx.quadraticCurveTo(data.x1, data.y4, data.x3, data.y4);
-          //   ctx.closePath();
-          //   ctx.lineWidth = 1;
-          //   ctx.strokeStyle = 'blue';
+          //   ctx.fillRect(resultW + (+data.x2), resultH, data.x2 - 55, height);
+            // var a1 = data.x1 - (data.y4 - data.y1);
+            // var c1 = (+data.x2) + (+data.y4 - data.y1);
+            // ctx.moveTo(cx, cy);
+            // ctx.quadraticCurveTo(a1, data.y2, data.x1, data.y4);
+
+            // ctx.moveTo(cx, cy);
+            // ctx.quadraticCurveTo(data.x1, data.y1, data.x2, data.y2);
+
+            // ctx.moveTo(data.x2, data.y2);
+            // ctx.quadraticCurveTo(c1, data.y1, data.x3, data.y3);
+
+            // ctx.moveTo(data.x1, data.y4);
+            // ctx.quadraticCurveTo(data.x1, data.y4, data.x3, data.y4);
+
+            // ctx.moveTo(+data.x1, +data.y1);
+            // ctx.lineTo(+data.x2, +data.y2);
+
+            // ctx.moveTo(+data.x2, +data.y2);
+            // ctx.lineTo(+data.x3, +data.y3);
+
+            // ctx.moveTo(+data.x4, +data.y4);
+            // ctx.lineTo(+data.x1, +data.y1);
+
+            // ctx.moveTo(+data.x3, +data.y3);
+            // ctx.lineTo(+data.x4, +data.y4);
+
+            // ctx.closePath();
+            // ctx.lineWidth = 1;
+            // ctx.strokeStyle = 'blue';
           //   ctx.stroke();
           // }
-
-          // canvas.addEventListener('mousemove', function(evt) {
-          //   var mousePos = getMousePos(canvas, evt);
-          //   var message = mousePos.x + ' / ' + mousePos.y;
-          //   var div = document.getElementById("textDIV");
-          //   div.textContent = message;
-          // });
 
           $scope.items = {};
           $scope.tempItem = [];
@@ -152,370 +168,488 @@ angular.module('starter.model.controller',[])
             $scope.linkName = item;
             if ($scope.linkName) {
               $scope.tempItem = $scope.items[$scope.linkName];
-            };
+            }
             $scope.ModelControllerModal.show();
-          };     
+          };
           $scope.closeModal = function(des) {
             $scope.ModelControllerModal.hide();
           };
 
           $scope.takePicture = function(typeCam){
             $scope.itemName = $scope.linkName;
+            var options = {};
             if (typeCam == "CAMERA") {
-              var options = {
-                quality: 70,
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                allowEdit: false,
-                encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 200,
-                targetHeight: 100,
+              options = {
+                quality : 70,
+                destinationType : Camera.DestinationType.FILE_URI,
                 popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: true
+                sourceType: navigator.camera.PictureSourceType.CAMERA,
+                targetWidth: 250,
+                targetHeight: 100,
+                //allowEdit: false,
+                //saveToPhotoAlbum: true
               };
-            };
+            }
+                
             if (typeCam == "PHOTOLIBRARY"){
-              var options = {
+              options = {
                 quality: 70,
                 destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                targetWidth: 200,
+                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+                targetWidth: 250,
                 targetHeight: 100
               };
-            };
+            }
 
             $cordovaCamera.getPicture(options).then(function(imageURI) {
-                if (!$scope.items[$scope.itemName]) {
-                  $scope.items[$scope.itemName] = [];
-                };
-                $scope.items[$scope.itemName].push({
-                  'sourceImg'  : imageURI,
-                  'des'   : ''
+                    if (!$scope.items[$scope.itemName]) {
+                      $scope.items[$scope.itemName] = [];
+                    }
+                    $scope.items[$scope.itemName].push({
+                      'sourceImg'  : imageURI,
+                      'des'   : ''
+                    });
+                    if ($scope.linkName) {
+                      $scope.tempItem = $scope.items[$scope.linkName];
+                    }
+                }, function(err) {
+                  console.log("Error Camera Model3D: " + err);
                 });
-                if ($scope.linkName) {
-                  $scope.tempItem = $scope.items[$scope.linkName];
-                };
-            }, function(err) {
-              console.log("Error Camera Model3D: " + err);
-            });
-          }
+          };
 
           $scope.removeItem = function(part){
-            $scope.parseObj = JSON.parse(part);
-            
-            for (var i = 0; i < $scope.tempItem.length; i++) {
-              if ($scope.tempItem[i].name === $scope.parseObj.name) {
-                $scope.tempItem.splice(i, 1);
-                return;
-              }
-            }
-          }
+            // $scope.parseObj = JSON.parse(part);
+            // for (var i = 0; i < $scope.tempItem.length; i++) {
+            //   if ($scope.tempItem[i].sourceImg === $scope.parseObj.sourceImg) {
+            //     $scope.tempItem.splice(i, 1);
+            //     return;
+            //   }
+            // }
+            $scope.tempItem.splice($scope.tempItem.indexOf(part), 1);
+          };
 
           $scope.nextform = function(){
             InjuryServices.getInjuryInfo.Model = $scope.items;
             $state.go("app.injury.desInjurySuccess");
-          }
+          };
 
-	 	     //đầu
+          //đầu
           var head = {
-            x1:'480', y1:'100', 
-            x2:'510', y2:'100', 
-            x3:'510', y3:'145', 
-            x4:'480', y4:'145',
+            x1: '156', y1: '88',
+            x2: '204', y2: '88',
+            x3: '204', y3: '140',
+            x4: '156', y4: '140',
             'name':'head',
             'frame' : 0
           };
 
-        // dau sau
+          // dau sau
           var b_head = {
-            x1:'460', y1:'88', 
-            x2:'515', y2:'88', 
-            x3:'515', y3:'139', 
-            x4:'460', y4:'139',
+            x1: '156', y1: '88',
+            x2: '204', y2: '88',
+            x3: '204', y3: '140',
+            x4: '156', y4: '140',
             'name':'b_head',
             'frame' : 2
+          };
+
+          var r_head = {
+            x1: '156', y1: '88',
+            x2: '204', y2: '88',
+            x3: '204', y3: '140',
+            x4: '156', y4: '140',
+            'name':'r_head',
+            'frame' : 3
+          };
+
+          var l_head = {
+            x1: '170', y1: '90',
+            x2: '220', y2: '90',
+            x3: '220', y3: '140',
+            x4: '170', y4: '140',
+            'name':'l_head',
+            'frame' : 1
           };
 
         //left
         //tay
           var l_arm = {
-            x1:'421', y1:'145', 
-            x2:'515', y2:'145', 
-            x3:'515', y3:'232', 
-            x4:'421', y4:'232',
+            x1:'218', y1:'153',
+            x2:'245', y2:'153',
+            x3:'245', y3:'190',
+            x4:'218', y4:'190',
             'name':'l_arm',
             'frame' : 0
           };
 
-        // var l_arm = {
-        //   x1:'440', y1:'165', 
-        //   x2:'455', y2:'180', 
-        //   x3:'420', y3:'215', 
-        //   x4:'415', y4:'205',
-        //   'name':'l_arm',
-        //   'frame' : 0
-        // };
-
         //back left arm
-          var bl_arm = {
-            x1:'421', y1:'145', 
-            x2:'515', y2:'145', 
-            x3:'515', y3:'232', 
-            x4:'421', y4:'232',
-            'name':'bl_arm',
+          var br_arm = {
+            x1:'218', y1:'153',
+            x2:'245', y2:'153',
+            x3:'245', y3:'190',
+            x4:'218', y4:'190',
+            'name':'br_arm',
             'frame': 2
           };
 
         //right arm
-          var r_arm ={
-            x1:'525', y1:'144', 
-            x2:'559', y2:'144', 
-            x3:'559', y3:'234', 
-            x4:'525', y4:'234',
+          var r_arm = {
+            x1: '115', y1: '152',
+            x2: '144', y2: '152',
+            x3: '144', y3: '190',
+            x4: '115', y4: '190',
             'name':'r_arm',
             'frame': 0
           };
         //back right arm
-          var br_arm ={
-            x1:'525', y1:'144', 
-            x2:'559', y2:'144', 
-            x3:'559', y3:'234', 
-            x4:'525', y4:'234',
-            'name':'br_arm',
+          var bl_arm = {
+            x1: '115', y1: '152',
+            x2: '144', y2: '152',
+            x3: '144', y3: '190',
+            x4: '115', y4: '190',
+            'name':'bl_arm',
             'frame': 2
           };
         //khủy tay trai
           var l_elbow = {
-            x1:'559', y1:'193', 
-            x2:'606', y2:'193', 
-            x3:'606', y3:'228', 
-            x4:'559', y4:'228',
+            x1:'235', y1:'192',
+            x2:'275', y2:'192',
+            x3:'275', y3:'210',
+            x4:'235', y4:'210',
             'name': 'l_elbow',
             'frame':0
           };
         //khuy tay trai sau
-          var bl_elbow = {
-            x1:'559', y1:'193', 
-            x2:'606', y2:'193', 
-            x3:'606', y3:'228', 
-            x4:'559', y4:'228',
-            'name': 'bl_elbow',
+          var br_elbow = {
+            x1:'235', y1:'192',
+            x2:'275', y2:'192',
+            x3:'275', y3:'210',
+            x4:'235', y4:'210',
+            'name': 'br_elbow',
             'frame':2
           };
         //khuy tay phai
           var r_elbow ={
-            x1:'317', y1:'197', 
-            x2:'419', y2:'197', 
-            x3:'419', y3:'231', 
-            x4:'317', y4:'231',
+            x1: '90', y1: '190',
+            x2: '144', y2: '190',
+            x3: '144', y3: '215',
+            x4: '90', y4: '215',
             'name': 'r_elbow',
             'frame':0
-          }
+          };
          //khuy tay phai sau
-          var br_elbow = {
-            x1:'317', y1:'197', 
-            x2:'419', y2:'197', 
-            x3:'419', y3:'231', 
-            x4:'317', y4:'231',
-            'name': 'br_elbow',
+          var bl_elbow = {
+            x1: '90', y1: '190',
+            x2: '144', y2: '190',
+            x3: '144', y3: '215',
+            x4: '90', y4: '215',
+            'name': 'bl_elbow',
             'frame':2
           };
         //bàn tay trai
           var l_hand = {
-            x1:'368', y1:'233', 
-            x2:'407', y2:'233', 
-            x3:'407', y3:'266', 
-            x4:'368', y4:'266',
+            x1:'260', y1:'215',
+            x2:'285', y2:'215',
+            x3:'285', y3:'245',
+            x4:'260', y4:'245',
             'name':'l_hand',
             'frame':0
           };
         //ban tay trai sau
-          var bl_hand = {
-            x1:'368', y1:'233', 
-            x2:'407', y2:'233', 
-            x3:'407', y3:'266', 
-            x4:'368', y4:'266',
-            'name':'bl_hand',
+          var br_hand = {
+            x1:'260', y1:'215',
+            x2:'285', y2:'215',
+            x3:'285', y3:'245',
+            x4:'260', y4:'245',
+            'name':'br_hand',
             'frame':2
           };
         //ban tay phai
           var r_hand = {
-            x1:'573', y1:'236', 
-            x2:'615', y2:'236', 
-            x3:'615', y3:'267', 
-            x4:'573', y4:'267',
+            x1: '77', y1: '215',
+            x2: '105', y2: '215',
+            x3: '105', y3: '245',
+            x4: '77', y4: '245',
             'name':'r_hand',
             'frame':0
           };
         //ban tay phai sau
-          var br_hand = {
-            x1:'573', y1:'236', 
-            x2:'615', y2:'236', 
-            x3:'615', y3:'267', 
-            x4:'573', y4:'267',
-            'name':'br_hand',
+          var bl_hand = {
+            x1: '77', y1: '215',
+            x2: '105', y2: '215',
+            x3: '105', y3: '245',
+            x4: '77', y4: '245',
+            'name':'bl_hand',
             'frame':2
           };
-        //ngực
-        // var chest = {
-        //   x1:'460', y1:'157', 
-        //   x2:'521', y2:'157', 
-        //   x3:'521', y3:'208', 
-        //   x4:'460', y4:'208',
-        //   'name' : 'chest',
-        //    'frame':0
-        // };
 
           var chest = {
-            x1:'460', y1:'170', 
-            x2:'520', y2:'170', 
-            x3:'510', y3:'210', 
-            x4:'450', y4:'210',
+            x1: '145', y1: '150',
+            x2: '214', y2: '150',
+            x3: '214', y3: '191',
+            x4: '145', y4: '191',
             'name':'chest',
             'frame' : 0
           };
         //bụng
           var belly = {
-            x1:'454', y1:'214', 
-            x2:'522', y2:'214', 
-            x3:'522', y3:'274', 
-            x4:'454', y4:'274',
+            x1: '146', y1: '200',
+            x2: '215', y2: '200',
+            x3: '215', y3: '234',
+            x4: '146', y4: '234',
             'name':'belly',
-             'frame':0
+            'frame':0
           };
         //háng
           var groin = {
-            x1:'442', y1:'249', 
-            x2:'538', y2:'249', 
-            x3:'538', y3:'303', 
-            x4:'442', y4:'303',
-            'name':'groin', 
+            x1: '145', y1: '240',
+            x2: '212', y2: '240',
+            x3: '212', y3: '267',
+            x4: '145', y4: '267',
+            'name':'groin',
             'frame':0
           };
         //bắp chân trai
           var l_calf = {
-            x1:'425', y1:'291', 
-            x2:'482', y2:'291', 
-            x3:'482', y3:'366', 
-            x4:'425', y4:'366',
+            x1:'185', y1:'270',
+            x2:'220', y2:'270',
+            x3:'220', y3:'315',
+            x4:'185', y4:'315',
             'name':'l_calf',
-             'frame':0
+            'frame':0
           };
         //bap chan trai sau
-          var bl_calf = {
-            x1:'425', y1:'291', 
-            x2:'482', y2:'291', 
-            x3:'482', y3:'366', 
-            x4:'425', y4:'366',
-            'name':'bl_calf',
+          var br_calf = {
+            x1:'185', y1:'270',
+            x2:'220', y2:'270',
+            x3:'220', y3:'315',
+            x4:'185', y4:'315',
+            'name':'br_calf',
              'frame':2
           };
         // bap chan phai
           var r_calf = {
-            x1:'489', y1:'293', 
-            x2:'546', y2:'293', 
-            x3:'546', y3:'365', 
-            x4:'489', y4:'365',
+            x1: '141', y1: '270',
+            x2: '172', y2: '270',
+            x3: '172', y3: '314',
+            x4: '141', y4: '314',
             'name':'r_calf',
-             'frame':0
+            'frame':0
           };
         //bap chan phai sau
-          var br_calf = {
-            x1:'489', y1:'293', 
-            x2:'546', y2:'293', 
-            x3:'546', y3:'365', 
-            x4:'489', y4:'365',
-            'name':'br_calf',
-             'frame':2
+          var bl_calf = {
+            x1: '141', y1: '270',
+            x2: '172', y2: '270',
+            x3: '172', y3: '314',
+            x4: '141', y4: '314',
+            'name':'bl_calf',
+            'frame':2
           };
         //ống chân trai
           var l_shin = {
-            x1:'418', y1:'368', 
-            x2:'480', y2:'368', 
-            x3:'480', y3:'441', 
-            x4:'418', y4:'441',
+            x1:'200', y1:'320',
+            x2:'225', y2:'320',
+            x3:'225', y3:'376',
+            x4:'200', y4:'376',
             'name':'l_shin',
-             'frame':0
+            'frame':0
           };
         //ong chan trai sau
-          var bl_shin = {
-            x1:'418', y1:'368', 
-            x2:'480', y2:'368', 
-            x3:'480', y3:'441', 
-            x4:'418', y4:'441',
-            'name':'bl_shin',
-             'frame':2
+          var br_shin = {
+            x1:'200', y1:'320',
+            x2:'225', y2:'320',
+            x3:'225', y3:'376',
+            x4:'200', y4:'376',
+            'name':'br_shin',
+            'frame':2
           };
         //ong chan phai
           var r_shin = {
-            x1:'500', y1:'369', 
-            x2:'567', y2:'369', 
-            x3:'567', y3:'442', 
-            x4:'500', y4:'442',
+            x1: '136', y1: '320',
+            x2: '162', y2: '320',
+            x3: '162', y3: '376',
+            x4: '136', y4: '376',
             'name':'r_shin',
-             'frame':0
+            'frame':0
           };
         //ong chan phai sau
-          var br_shin = {
-            x1:'500', y1:'369', 
-            x2:'567', y2:'369', 
-            x3:'567', y3:'442', 
-            x4:'500', y4:'442',
-            'name':'br_shin',
-             'frame':2
+          var bl_shin = {
+            x1: '136', y1: '320',
+            x2: '162', y2: '320',
+            x3: '162', y3: '376',
+            x4: '136', y4: '376',
+            'name':'bl_shin',
+            'frame':2
           };
         //bàn chân trai
           var l_foot = {
-            x1:'419', y1:'445', 
-            x2:'480', y2:'445', 
-            x3:'480', y3:'477', 
-            x4:'419', y4:'477',
+            x1:'200', y1:'380',
+            x2:'230', y2:'380',
+            x3:'230', y3:'400',
+            x4:'200', y4:'400',
             'name':'l_foot',
-             'frame':0
+            'frame':0
           };
         //ban chan trai sau
-          var bl_foot = {
-            x1:'419', y1:'445', 
-            x2:'480', y2:'445', 
-            x3:'480', y3:'477', 
-            x4:'419', y4:'477',
-            'name':'bl_foot',
-             'frame':2
+          var br_foot = {
+            x1:'200', y1:'380',
+            x2:'230', y2:'380',
+            x3:'230', y3:'400',
+            x4:'200', y4:'400',
+            'name':'br_foot',
+            'frame':2
           };
         //ban chan phai
           var r_foot = {
-            x1:'502', y1:'446', 
-            x2:'566', y2:'446', 
-            x3:'566', y3:'478', 
-            x4:'502', y4:'478',
+            x1: '135', y1: '382',
+            x2: '162', y2: '382',
+            x3: '162', y3: '405',
+            x4: '135', y4: '405',
             'name':'r_foot',
-             'frame':0
+            'frame':0
           };
         //ban chan phai sau
-          var br_foot = {
-            x1:'502', y1:'446', 
-            x2:'566', y2:'446', 
-            x3:'566', y3:'478', 
-            x4:'502', y4:'478',
-            'name':'br_foot',
-             'frame':2
+          var bl_foot = {
+            x1: '135', y1: '382',
+            x2: '162', y2: '382',
+            x3: '162', y3: '405',
+            x4: '135', y4: '405',
+            'name':'bl_foot',
+            'frame':2
           };
         //lung trai
           var l_back = {
-            x1:'456', y1:'152', 
-            x2:'487', y2:'152', 
-            x3:'487', y3:'250', 
-            x4:'456', y4:'250',
+            x1:'147', y1:'145',
+            x2:'178', y2:'145',
+            x3:'178', y3:'215',
+            x4:'147', y4:'215',
             'name':'l_back',
             'frame':2
           };
         //lung phai
           var r_back = {
-            x1:'493', y1:'152', 
-            x2:'520', y2:'152', 
-            x3:'520', y3:'250', 
-            x4:'493', y4:'250',
+            x1:'185', y1:'145',
+            x2:'215', y2:'145',
+            x3:'215', y3:'215',
+            x4:'185', y4:'215',
             'name':'r_back',
-             'frame':2
-          }
-  })
+            'frame':2
+          };
+        //mong
+          var bottom = {
+            x1:'145', y1:'222',
+            x2:'215', y2:'222',
+            x3:'215', y3:'257',
+            x4:'145', y4:'257',
+            'name':'bottom',
+            'frame':2
+          };
+
+          var rr_arm = {
+            x1:'148', y1:'155',
+            x2:'175', y2:'155',
+            x3:'175', y3:'190',
+            x4:'148', y4:'190',
+            'name':'rr_arm',
+            'frame':3
+          };
+
+          var rr_elbow = {
+            x1:'150', y1:'195',
+            x2:'200', y2:'195',
+            x3:'200', y3:'215',
+            x4:'150', y4:'215',
+            'name':'rr_elbow',
+            'frame':3
+          };
+
+          var rr_hand = {
+            x1:'190', y1:'205',
+            x2:'222', y2:'205',
+            x3:'222', y3:'245',
+            x4:'190', y4:'245',
+            'name':'rr_hand',
+            'frame':3
+          };
+
+          var rr_calf = {
+            x1:'135', y1:'222',
+            x2:'185', y2:'222',
+            x3:'185', y3:'305',
+            x4:'135', y4:'305',
+            'name':'rr_calf',
+            'frame':3
+          };
+
+          var rr_shin = {
+            x1:'135', y1:'315',
+            x2:'188', y2:'315',
+            x3:'188', y3:'375',
+            x4:'135', y4:'375',
+            'name':'rr_shin',
+            'frame':3
+          };
+
+          var rr_foot = {
+            x1:'135', y1:'385',
+            x2:'200', y2:'385',
+            x3:'200', y3:'400',
+            x4:'135', y4:'400',
+            'name':'rr_foot',
+            'frame':3
+          };
+
+          var ll_arm = {
+            x1:'185', y1:'160',
+            x2:'210', y2:'160',
+            x3:'210', y3:'190',
+            x4:'185', y4:'190',
+            'name':'ll_arm',
+            'frame':1
+          };
+
+          var ll_elbow = {
+            x1:'170', y1:'195',
+            x2:'210', y2:'195',
+            x3:'210', y3:'215',
+            x4:'170', y4:'215',
+            'name':'ll_elbow',
+            'frame':1
+          };
+
+          var ll_hand = {
+            x1:'130', y1:'215',
+            x2:'170', y2:'215',
+            x3:'170', y3:'240',
+            x4:'130', y4:'240',
+            'name':'ll_hand',
+            'frame':1
+          };
+
+          var ll_calf = {
+            x1:'175', y1:'225',
+            x2:'222', y2:'225',
+            x3:'222', y3:'300',
+            x4:'175', y4:'300',
+            'name':'ll_calf',
+            'frame':1
+          };
+
+          var ll_shin = {
+            x1:'180', y1:'315',
+            x2:'220', y2:'315',
+            x3:'220', y3:'380',
+            x4:'180', y4:'380',
+            'name':'ll_shin',
+            'frame':1
+          };
+
+          var ll_foot = {
+            x1:'165', y1:'380',
+            x2:'222', y2:'380',
+            x3:'222', y3:'400',
+            x4:'165', y4:'400',
+            'name':'ll_foot',
+            'frame':1
+          };
+  });

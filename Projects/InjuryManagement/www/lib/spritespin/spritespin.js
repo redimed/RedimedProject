@@ -491,8 +491,8 @@
 
     // resulting layout
     var css = {
-      width    : '977',
-      height   : '563',
+      width    : '360',
+      height   : '500',
       top      : 0,
       left     : 0,
       bottom   : 0,

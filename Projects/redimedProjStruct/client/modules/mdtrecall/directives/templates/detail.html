@@ -27,7 +27,7 @@
 	<div class="col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="notes">Transaction Date</label>
-			<input type="text" placeholder="Transaction Date" name="notes" ng-model="mdtRecallMap.transaction_date" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" id="transaction_date" float-label>
+			<input type="text" placeholder="Transaction Date" name="notes" ng-model="mdtRecallMap.transaction_date" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" id="transaction_date" ng-change="setRecallDate()" float-label>
 		</span>	
 	</div>
 	<!--Transaction Date-->
@@ -36,7 +36,7 @@
 	<div class="col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
 			<label for="notes">Recall Date</label>
-			<input type="text" placeholder="Recall Date" name="notes" ng-model="mdtRecallMap.recall_date" class="form-control" id="recall_date" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" float-label>
+			<input disabled type="text" placeholder="Recall Date" name="notes" ng-model="mdtRecallMap.recall_date" class="form-control" id="recall_date" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" float-label>
 		</span>	
 	</div>
 	<!--Recall Date-->
@@ -46,9 +46,9 @@
 	<!--recall_period-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
 		<span class="field">
-			<label for="remind_before">Remind before</label>
+			<label for="remind_before">Remind period</label>
 
-			<select class="form-control" name="recall_period"
+			<select ng-change="setRecallDate()" class="form-control" name="recall_period"
                 ng-model="mdtRecallMap.recall_period"
                 ng-options="item.code as item.title for item in options.recall_period"
            		 float-label>

@@ -21,15 +21,14 @@
             <!--SERVICE_NAME-->
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <span class="field" ng-class="{'has-error': sysservicesForm.service_name.$invalid && isSubmit}">
-                <label for="service_name">Service name</label>
-                <input type="text" placeholder="Service name" name="service_name" ng-model="SysServicesMap.SERVICE_NAME" class="form-control" id="service_name" float-label required>
-            </span>
-            <span ng-show="sysservicesForm.service_name.$invalid && isSubmit">
+                    <label for="service_name">Service name</label>
+                    <input type="text" placeholder="Service name" name="service_name" ng-model="SysServicesMap.SERVICE_NAME" class="form-control" id="service_name" float-label required>
+                </span>
+                <span ng-show="sysservicesForm.service_name.$invalid && isSubmit">
                     <span class="mdt-popover above" ng-show="sysservicesForm.service_name.$error.required">
                     Service name is required
                     </span>
                 </span>
-            	
             </div>
             <!--SERVICE_NAME-->
 
@@ -50,11 +49,12 @@
             </span>	
             </div>
             <!--SERVICE_COLOR-->
+        </div>
 
-
+        <div class="row">
             <div class="break-row"></div>
              <!-- FEE TYPE ID -->
-            <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
                 <select class="form-control" name="FEE_TYPE_ID"
                         ng-model="SysServicesMap.FEE_TYPE_ID"
                         ng-options="type.FEE_TYPE_ID as type.FEE_TYPE_NAME for type in options.fee_types"
@@ -66,19 +66,25 @@
 
 
             <!--IS_REFERRAL-->
-            <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
                 <input type="checkbox" name="IS_REFERRAL" id="IS_REFERRAL" class="mdt-checkbox" ng-model="SysServicesMap.IS_REFERRAL" ng-true-value="1" ng-false-value="0">
                 <label for="IS_REFERRAL">Is Referral</label>
             </div>
             <!--END IS_REFERRAL-->
 
+            <!--isbookable-->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <input type="checkbox" name="IS_BOOKABLE" id="IS_BOOKABLE" class="mdt-checkbox" ng-model="SysServicesMap.IS_BOOKABLE" ng-true-value="1" ng-false-value="0" >
+                <label for="IS_BOOKABLE">Is Bookable</label>
+            </div>
+            <!--isbookable-->
+
             <!--Isenable-->
-            <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
                 <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="SysServicesMap.Isenable" ng-true-value="1" ng-false-value="0">
                 <label for="isenable">Enable</label>
             </div>
             <!--Isenable-->
-
         </div>
     </div>
     <script>

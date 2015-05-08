@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService){
+.controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr){
 
 	//init header definition
 	$scope.header = angular.copy(FaHeaderModel);
@@ -31,7 +31,45 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		$scope.rating_type_opt = result.list;
 	});
 
+	
+
 	$scope.isSectionDropable = true;
+
+	//get header if stateParams.action = edit
+	if($stateParams.action === 'edit' && !!$stateParams.headerId){
+		var getHeaderId = $stateParams.headerId;
+		FaDefineService.getHeaderAndSection(getHeaderId).then(function(headerAndSectionRes){
+			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
+			else{
+				$scope.header = headerAndSectionRes.data;
+				//get lines of section
+				$scope.header.sections.forEach(function(section){
+					FaDefineService.getLines(section.SECTION_ID, getHeaderId).then(function(lineRes){
+						if(lineRes.status==='error') {
+							$scope.header={};
+							toastr.error('Unexpected error', 'Error!');
+						}
+						else{
+							section.lines=lineRes.data;
+							//get details and comment of lines
+							section.lines.forEach(function(line){
+								FaDefineService.getDetailsAndComments(line.LINE_ID).then(function(detailAndCommentRes){
+									if(detailAndCommentRes.status === 'error'){
+										$scope.header={};
+										toastr.error('Unexpected error', 'Error!');
+									}
+									else{
+										line.details = detailAndCommentRes.data.details;
+										line.comments = detailAndCommentRes.data.comments;
+									}
+								})
+							})
+						}
+					})
+				})
+			}
+		})
+	}
 
 	//functions
 	$scope.addSection = function(){
@@ -135,6 +173,32 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		}
 	}
 
+	$scope.value1TypeInit = function(detail){
+		if($stateParams.action!=='add'){
+			if((detail.VAL1_ISVALUE===0 ||detail.VAL1_ISVALUE===null) && (detail.VAL1_ISCHECKBOX===0 || detail.VAL1_ISCHECKBOX===null)){
+				return -1;
+			}
+			else{
+				if(detail.VAL1_ISVALUE===1) return 0;
+				else return detail.VAL1_ISCHECKBOX;
+			}
+		}
+		else return -1;
+	}
+
+	$scope.value2TypeInit = function(detail){
+		if($stateParams.action!=='add'){
+			if((detail.VAL2_ISVALUE===0 ||detail.VAL2_ISVALUE===null) && (detail.VAL2_ISCHECKBOX===0 || detail.VAL2_ISCHECKBOX===null)){
+				return -1;
+			}
+			else{
+				if(detail.VAL2_ISVALUE===1) return 0;
+				else return detail.VAL2_ISCHECKBOX;
+			}
+		}
+		else return -1;
+	}
+
 	$scope.IsCommentTextWatch = function(detail, IsCommentTextValue){
 		if(IsCommentTextValue === '0'){
 			detail.VAL1_ISCOMMENT_WHEN_YES = null;
@@ -191,28 +255,58 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	//INSERT DEFINITION
 	$scope.addFaDefinition = function(){
 		addOrder($scope.header).then(function(result){
-			FaDefineService.insertFa($scope.header);
+			FaDefineService.insertFa($scope.header).then(function(res){
+				if(res.status==='success') toastr.success('New functional assessment definition added','Success!');
+				else toastr.error('Failed to add new functional assessment definition', 'Error!');
+			});
 		}, function(error){
 			console.log(error);
 		});
 	}
 
 	//GENERAL DEFINITION FUNCTION
+	// var addOrder = function(header){
+	// 	return new Promise(function(resolve, reject){
+	// 		header.sections.forEach(function(section){
+	// 			section.ORD = header.sections.indexOf(section) + 1;
+	// 			section.lines.forEach(function(line){
+	// 				line.ORD = section.lines.indexOf(line) + 1;
+	// 				line.details.forEach(function(detail){
+	// 					detail.ORD = line.details.indexOf(detail) + 1;
+	// 					if(detail.ORD === line.details.length){
+	// 						resolve(header);
+	// 					}
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+	// }
+
 	var addOrder = function(header){
 		return new Promise(function(resolve, reject){
-			header.sections.forEach(function(section){
-				section.ORD = header.sections.indexOf(section) + 1;
-				section.lines.forEach(function(line){
-					line.ORD = section.lines.indexOf(line) + 1;
-					line.details.forEach(function(detail){
-						detail.ORD = line.details.indexOf(detail) + 1;
-						if(detail.ORD === line.details.length){
-							resolve(header);
+			for(var i = 0; i<header.sections.length; i++){
+				header.sections[i].ORD = i+1;
+				if(header.sections[i].lines.length===0){
+					if(i===header.sections.length-1) resolve(header);
+					else continue;
+				}
+				else{
+					for(var j = 0; j < header.sections[i].lines.length; j++){
+						header.sections[i].lines[j].ORD = j+1;
+						if(header.sections[i].lines[j].details.length===0){
+							if(j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
+							else continue;
 						}
-					})
-				})
-			})
+						else{
+							for(var k = 0; k<header.sections[i].lines[j].details.length; k++){
+								header.sections[i].lines[j].details[k].ORD = k+1;
+								if(k= header.sections[i].lines[j].details.length-1 && j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
+								else continue;
+							}
+						}
+					}
+				}
+			}
 		})
 	}
-
 });

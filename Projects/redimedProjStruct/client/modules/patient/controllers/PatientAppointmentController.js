@@ -1,10 +1,34 @@
 angular.module("app.loggedIn.patient.appointment.controller", [])
 
-.controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService, OutreferralModel){
-	//Detail appt modules
+.controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService, OutreferralModel,AlertModel){
+	
+
+    //Detail appt modules
     var patient_id =  $scope.patient_id = $stateParams.patient_id;
 	$scope.current_patient = {};
     $scope.cal_id = $stateParams.cal_id;
+
+    //Alert
+    $scope.dataAlert =[];
+    var alertPostData = {
+        Patient_id: $stateParams.patient_id,
+        CAL_ID: $stateParams.cal_id,
+        page: 1,
+        limit: 10,
+        offset: 0,
+        max_size: 5,
+        name: '',
+        description: '',
+        Creation_date: 'desc',
+        isenable:''
+    };
+    AlertModel.listFollowPatient(alertPostData)
+    .then(function(response){
+         _.forEach(response.data, function(id){
+                        $scope.dataAlert.push(id.name);
+                    })
+    }, function(error){})
+
 
     $scope.patient_detail_modules = [
         {'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',

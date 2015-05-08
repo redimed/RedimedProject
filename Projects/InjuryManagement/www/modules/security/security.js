@@ -8,8 +8,8 @@ angular.module('starter.security',[
                 abstract:true,
                 views:{
                     'root':{
-                        templateUrl:'modules/security/views/structure.html',
-                        controller:'securityController'
+                        templateUrl: 'modules/security/views/structure.html',
+                        controller: 'securityController'
                     }
                 }
             })
@@ -17,8 +17,8 @@ angular.module('starter.security',[
                 url:'/login',
                 views:{
                     'main-content':{
-                        templateUrl:'modules/security/views/login.html',
-                        controller:'securityLoginController'
+                        templateUrl: 'modules/security/views/login.html',
+                        controller: 'securityLoginController'
                     }
                 }
             })
@@ -26,8 +26,8 @@ angular.module('starter.security',[
                 url:'/forgot',
                 views:{
                     'main-content':{
-                        templateUrl:'modules/security/views/forgot.html',
-                        controller:'securityLoginController'
+                        templateUrl: 'modules/security/views/forgot.html',
+                        controller: 'securityForgotController'
                     }
                 }
             })

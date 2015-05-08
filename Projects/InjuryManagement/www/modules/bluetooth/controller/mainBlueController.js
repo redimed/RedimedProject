@@ -3,14 +3,15 @@ angular.module('starter.bluetooth.mainBlueController',[])
     .controller('mainBlueController', function($scope, localStorageService, $http, BluetoothServices, $ionicLoading, $ionicPopup, signaling) {
 
         $scope.isLoad = true;
-        $scope.Isclick = false;
         $scope.checkdataReviceStatus = false;
         $scope.disableList = false;
+
         $scope.listDiscover = [];
         $scope.listDiscoverScan = [];
         $scope.spiroSignal = {};
         $scope.copydataReceive = {};
         $scope.copydataDevice = {};
+
         localStorageService.get('callUser');
         var stmtNo = 1;
 
@@ -48,29 +49,28 @@ angular.module('starter.bluetooth.mainBlueController',[])
 
         });
 
-        $scope.DiscoveryDevice = function(Isclick) {
+        $scope.DiscoveryDevice = function(isClick) {
             for(var i=0; i<$scope.listDiscover.length; i++) {
                 $scope.listDiscover[i].isOnline = false;
             }
             $scope.listDiscoverScan = [];
             console.log('$scope.listDiscover', $scope.listDiscover);
-            onDiscover(Isclick);
+            onDiscover(isClick);
         }
 
-        function onDiscover(Isclick) {
-            if(Isclick == true) {
-                console.log('One Device Click ', Isclick);
+        function onDiscover(isClick) {
+            if(isClick == true) {
+                console.log('One Device Click ', isClick);
                 window.bluetooth.setDiscoveryOneDevice();
                 window.bluetooth.startDiscovery(onDeviceDiscovered, onDiscoveryFinished, onError);
             }
             else {
-                console.log('All Device Click ', Isclick);
+                console.log('All Device Click ', isClick);
                 window.bluetooth.startDiscovery(onDeviceDiscovered, onDiscoveryFinished, onError);
             }
             console.log('starting Discovery');
 
             $scope.isLoad = true;
-            $scope.isShowGif = false;
             $scope.deviceType = null;
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
@@ -117,8 +117,8 @@ angular.module('starter.bluetooth.mainBlueController',[])
             $scope.deviceType = deviceType;
             $scope.device_id = device_id;
             $scope.copydataReceive = {};
+
             $scope.isLoad = true;
-            $scope.isShowGif = true;
             $scope.disableList = true;
 
             window.bluetooth.isConnected(checkisCon);
@@ -170,9 +170,10 @@ angular.module('starter.bluetooth.mainBlueController',[])
 
         function onErrorConn(result) {
             if(result.code == 9) {
-                $ionicPopup.alert({
-                    title: 'Connection Error',
-                    template: 'Please Check Devices!'
+                $scope.popupMessage = { message: "Connection error, please check your devices!" };
+                $ionicPopup.show({
+                    templateUrl: "modules/popup/PopUpError.html",
+                    scope: $scope
                 });
                 $scope.isLoad = false;
             }
@@ -223,9 +224,10 @@ angular.module('starter.bluetooth.mainBlueController',[])
                         $scope.spiroSignal.deviceType = $scope.copydataReceive.deviceType;
 
                         if(isNaN($scope.spiroSignal.FVC) && isNaN($scope.spiroSignal.PEF) && isNaN($scope.spiroSignal.FEV1)) {
-                            $ionicPopup.alert({
-                                title: 'Read Data Failed',
-                                template: 'Please Try Again!'
+                            $scope.popupMessage = { message: "Read data fail, please try again!" };
+                            $ionicPopup.show({
+                                templateUrl: "modules/popup/PopUpError.html",
+                                scope: $scope
                             });
                         } else {
                             signaling.emit('onlineMeasureData', {info:$scope.spiroSignal});
@@ -299,7 +301,7 @@ angular.module('starter.bluetooth.mainBlueController',[])
                         console.log('not insert databse sys ==  undefined');
                         $scope.$apply(function() {
                             $scope.isLoad = false;
-                            $scope.disableList = false; 01646547672
+                            $scope.disableList = false;
                         })
                     }
                 }
@@ -348,7 +350,6 @@ angular.module('starter.bluetooth.mainBlueController',[])
             console.log('onConnectionLostReadData() ', $scope.deviceType);
             if ( $scope.deviceType !== 'Spirometer' && $scope.deviceType !== 'Blood Pressure' ) {
                 $scope.$apply(function(){
-                    $scope.isShowGif = false;
                     $scope.isLoad = false;
                 });
                 angular.copy($scope.dataReceive, $scope.copydataDevice);
@@ -377,10 +378,6 @@ angular.module('starter.bluetooth.mainBlueController',[])
             } else {
                 console.log('deviceType === spiro and blood ', $scope.deviceType);
             }
-        }
-
-        $scope.demoClick = function() {
-            alert('mainControllerBlue');
         }
 
         function writeData() {

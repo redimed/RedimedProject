@@ -1,5 +1,5 @@
 angular.module('starter.user.controller',[])
-.controller('userProfileController',function($scope, UserService, $http, localStorageService, OnlineBookingService, $state){
+    .controller('userProfileController',function($scope, UserService, $http, localStorageService, OnlineBookingService, $state, $ionicPopup) {
         var userInfo = null;
         var companyInfo = null;
 
@@ -84,26 +84,68 @@ angular.module('starter.user.controller',[])
             UserService.updateProfile($scope.detail).then(function(data){
                 if(data.status === 'success')
                 {
-                   alert("Edit Successfully!","Success");
+                    $scope.popupMessage = { message: "Your profile is saved!" };
+                    $ionicPopup.show({
+                        templateUrl: "modules/popup/PopUpSuccess.html",
+                        scope: $scope,
+                        buttons: [
+                            { text: "Ok" }
+                        ]
+                    });
                 }
                 else
                 {
-                   alert("Edit Failed!","Error");
+                    $scope.popupMessage = { message: "Sorry. Please check your information!" };
+                    $ionicPopup.show({
+                        templateUrl: "modules/popup/PopUpError.html",
+                        scope: $scope,
+                        buttons: [
+                            { text: "Ok" }
+                        ]
+                    });
                 }
             })
 
         }
         $scope.changePass = function(){
-                console.log($scope.info);
-            OnlineBookingService.changeUserPassword($scope.info).then(function(data){
-                if(data.status === 'success')
-                {
-                   alert("Change Password Successfully","Success");
-                    $state.go("app.profile");
-                }
-                else if(data.status === 'error')
-                    alert("Change Password Failed", "Error");
-            })
+            $scope.submittedChangePass = true;
+            if(typeof $scope.info.newPass !== 'undefined' || typeof $scope.info.passConfirm !== 'undefined') {
+                OnlineBookingService.changeUserPassword($scope.info).then(function(data){
+                    if(data.status === 'success')
+                    {
+                        $scope.popupMessage = { message: "Your changed password successful." };
+                        $ionicPopup.show({
+                            templateUrl: "modules/popup/PopUpSuccess.html",
+                            scope: $scope,
+                            buttons: [
+                                {
+                                    text: "Ok",
+                                    onTap: function() {
+                                        $state.go("app.profile", {reload: true});
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                    else if(data.status === 'error') {
+                        $scope.popupMessage = { message: "Your old password was entered incorrectly. Please enter it again." };
+                        $ionicPopup.show({
+                            templateUrl: "modules/popup/PopUpError.html",
+                            scope: $scope,
+                            buttons: [
+                                {
+                                    text: "Ok",
+                                    onTap: function() {
+                                        delete $scope.info['oldPass'];
+                                        delete $scope.info['newPass'];
+                                        delete $scope.info['passConfirm'];
+                                        $scope.submittedChangePass = false;
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                })
+            }
         }
-
     })

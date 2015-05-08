@@ -42,7 +42,7 @@
       <ul class="list">
         <li class="item item-button-right" ng-repeat="contact in contacts" ng-hide="contact.username == userName">
           <i class="icon ion-record" style="color: green; position: absolute; top: 45px; left: 50px;"></i>
-          <div ng-class="{'img-image-name-phone':contact}" ng-style={"background-color":contact.background}>
+          <div ng-class="{'img-image-name-phone':contact}" ng-style={"background-color":contact.background} style="border-radius: 5px;">
             {{ contact.letter }}
           </div>
           <span style="position: absolute; left: 70px; top: 35px;">

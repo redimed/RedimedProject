@@ -10,6 +10,7 @@
                     <th>COLOR</th>
                     <th>FEE TYPE</th>
                     <th>IS REFERRAL</th>
+                    <th>IS BOOKABLE</th>
                     <th>SERVICE STATUS</th>
                 </tr>
             </thead>
@@ -29,6 +30,7 @@
                     <td>{{l.feeType.FEE_TYPE_NAME}}</td>
 
                     <td><input type="checkbox" disabled ng-checked="l.IS_REFERRAL == 1" /></td>
+                    <td><input type="checkbox" disabled ng-checked="l.IS_BOOKABLE == 1" /></td>
                     <td> 
                         <span ng-if="l.Isenable===1">Enable</span>
                         <span ng-if="l.Isenable!==1">Disable</span>

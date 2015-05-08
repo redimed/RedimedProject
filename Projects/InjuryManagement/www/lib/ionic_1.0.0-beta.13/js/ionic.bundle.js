@@ -37609,13 +37609,13 @@ function($ionicModal, $ionicPosition, $document, $window) {
 }]);
 
 
+  //'<div class="popup-head">' +
+  //'<h3 class="popup-title" ng-bind-html="title"></h3>' +
+  //'<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
+  //'</div>' +
 var POPUP_TPL =
   '<div class="popup-container">' +
     '<div class="popup">' +
-      '<div class="popup-head">' +
-        '<h3 class="popup-title" ng-bind-html="title"></h3>' +
-        '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
-      '</div>' +
       '<div class="popup-body">' +
       '</div>' +
       '<div class="popup-buttons">' +

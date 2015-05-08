@@ -83,6 +83,15 @@
 	Need make a refferal. 
 	<a ui-sref="{{'loggedIn.patient.outreferral.list({patientId:' + patient_id + ', calId:' + cal_id + '})'}}"> DO IT NOW !!!</a>
 </div>
+<div ng-if="dataAlert.length > 0" class="alert alert-info">
+	<div ng-repeat="list in dataAlert">
+		<h4>{{list}}</h4>
+	</div>
+</div>
+<div ng-if="dataAlert.length == 0" class="alert alert-danger">
+	<h4>The is no alert</h4>
+</div>
+
 
 <div class="row">
 	<div class="col-lg-12" style="padding: 0">
