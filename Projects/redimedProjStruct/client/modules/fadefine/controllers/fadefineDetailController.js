@@ -1,6 +1,13 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 .controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr){
 
+	//init action
+	if($stateParams.action==='edit'){
+		$scope.isEdit = true;
+	}
+	else{
+		$scope.isEdit = false;
+	}
 	//init header definition
 	$scope.header = angular.copy(FaHeaderModel);
 	$scope.header.ISENABLE = 1;
@@ -42,8 +49,10 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
 			else{
 				$scope.header = headerAndSectionRes.data;
+				$scope.header.action = 'edit';
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
+					section.action='edit';
 					FaDefineService.getLines(section.SECTION_ID, getHeaderId).then(function(lineRes){
 						if(lineRes.status==='error') {
 							$scope.header={};
@@ -53,6 +62,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 							section.lines=lineRes.data;
 							//get details and comment of lines
 							section.lines.forEach(function(line){
+								line.action = 'edit';
 								FaDefineService.getDetailsAndComments(line.LINE_ID).then(function(detailAndCommentRes){
 									if(detailAndCommentRes.status === 'error'){
 										$scope.header={};
@@ -61,6 +71,12 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 									else{
 										line.details = detailAndCommentRes.data.details;
 										line.comments = detailAndCommentRes.data.comments;
+										line.details.forEach(function(detail){
+											detail.action = 'edit';
+										})
+										line.comments.forEach(function(comment){
+											comment.action = 'edit'
+										})
 									}
 								})
 							})
@@ -74,46 +90,94 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	//functions
 	$scope.addSection = function(){
 		var newSection = angular.copy(section_init);
+		if($scope.isEdit === true) newSection.action = 'add';
 		newSection.SECTION_NAME = "Untitled Section";
 		$scope.header.sections.push(newSection);
 	}
 
 	$scope.removeSection = function(section){
 		var indexToRemove = $scope.header.sections.indexOf(section);
-		$scope.header.sections.splice(indexToRemove,1);
+		if($scope.isEdit===false) {
+			$scope.header.sections.splice(indexToRemove,1);
+		}
+		else{
+			if(section.action === 'add') $scope.header.sections.splice(indexToRemove,1);
+			else {
+				section.action='delete';
+				for(var k=0; k<section.lines.length; k++){
+					if(section.lines[k].action==='add') section.lines.splice(k,1);
+					else {
+						section.lines[k].action='delete';
+						for(var i=0; i<section.lines[k].details.length; i++){
+							if(section.lines[k].details[i].action === 'add') section.lines[k].details.splice(i, 1);
+							else section.lines[k].details[i].action='delete';
+						}
+						for(var j=0; j<section.lines[k].comments.length; j++){
+							if(section.lines[k].comments[j].action==='add') section.lines[k].comments.splice(j, 1);
+							else section.lines[k].comments[j].action='delete';
+						}
+					}
+				}
+			}
+		}
 	}
 
 	$scope.addLine = function(section){
 		var newLine = angular.copy(line_init);
+		if($scope.isEdit === true) newLine.action = 'add';
 		newLine.QUESTION = "Untitled line";
 		section.lines.push(newLine);
 	}
 
 	$scope.removeLine = function(section, line){
 		var indexToRemove = section.lines.indexOf(line);
-		section.lines.splice(indexToRemove,1);
+		if($scope.isEdit===false) section.lines.splice(indexToRemove,1);
+		else{
+			if(line.action === 'add') section.lines.splice(indexToRemove,1);
+			else {
+				line.action='delete';
+				for(var i=0; i<line.details.length; i++){
+					if(line.details[i].action === 'add') line.details.splice(i, 1);
+					else line.details[i].action='delete';
+				}
+				for(var j=0; j<line.comments.length; j++){
+					if(line.comments[j].action==='add') line.comments.splice(j, 1);
+					else line.comments[j].action='delete';
+				}
+			}
+		}	
 	}
 
 	$scope.addDetail = function(line){
 		var newDetail = angular.copy(line_detail_init);
+		if($scope.isEdit === true) newDetail.action = 'add';
 		newDetail.QUESTION = "Untitled detail";
 		line.details.push(newDetail);
 	}
 
 	$scope.removeDetail = function(detail, line){
 		var indexToRemove = line.details.indexOf(detail);
-		line.details.splice(indexToRemove,1);
+		if($scope.isEdit===false) line.details.splice(indexToRemove,1);
+		else{
+			if(detail.action==='add') line.details.splice(indexToRemove,1);
+			else detail.action = 'delete';
+		}
 	}
 
 	$scope.addComment = function(line){
 		var newComment = angular.copy(line_comment_init);
+		if($scope.isEdit === true) newComment.action='add';
 		newComment.NAME = "Untitled comment"
 		line.comments.push(newComment);
 	}
 
 	$scope.removeComment = function(comment, line){
 		var indexToRemove = line.comments.indexOf(comment);
-		line.comments.splice(indexToRemove,1);
+		if($scope.isEdit === true) line.comments.splice(indexToRemove,1);
+		else{
+			if(comment.action==='add') line.comments.splice(indexToRemove,1);
+			else comment.action='delete';
+		}
 	}
 
 	$scope.value1TypeWatch = function(detail, val1_type){

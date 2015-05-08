@@ -9,7 +9,7 @@
 		</div>
 
 	    <!-- This is for sections -->
-	    <div ng-repeat="section in header.sections">
+	    <div ng-repeat="section in header.sections" ng-hide="section.action==='delete'">
 	    	<!-- <div ng-drop="true"  class="seperate-section">
 		    	
 		    </div> -->
@@ -31,7 +31,7 @@
 				</div>
 				<div class="portlet-body">
 					<!-- This is for lines -->
-					<div ng-drop="true" class="portlet box blue-hoki" ng-repeat="line in section.lines">
+					<div ng-drop="true" class="portlet box blue-hoki" ng-repeat="line in section.lines" ng-hide="line.action==='delete'">
 						<div class="portlet-title">
 							<div class="caption" style="width:50%;">
 								<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%" ng-model="line.QUESTION">
@@ -139,7 +139,7 @@
 										</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="detail in line.details">
+											<tr ng-repeat="detail in line.details" ng-hide="detail.action==='delete'">
 												<td width="20%">
 													<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
 												</td>
@@ -219,7 +219,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="comment in line.comments">
+											<tr ng-repeat="comment in line.comments" ng-hide="comment.action==='delete'">
 												<td>
 													<input type="text" class="form-control" value="Comment name 1" ng-model="comment.NAME"/>
 												</td>
@@ -256,7 +256,8 @@
 				
 			</div>
 			<div class="col-md-2 col-sm-2 col-xs-2">
-				<button type="button" class="btn green btn-lg" ng-click="addFaDefinition()"><i class="fa fa-plus"></i> Add definition</button>
+				<button type="button" class="btn green btn-lg" ng-click="addFaDefinition()" ng-show="isEdit===false"><i class="fa fa-plus"></i> Add definition</button>
+				<button type="button" class="btn green btn-lg" ng-show="isEdit===true"><i class="fa fa-pencil"></i> Edit definition</button>
 			</div>
 		</div>
 </form>
