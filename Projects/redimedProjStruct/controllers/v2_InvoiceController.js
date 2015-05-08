@@ -195,7 +195,7 @@ module.exports = {
 				attributes: ['Title', 'Sur_name', 'First_name', 'Middle_name']
 			},
 			{
-				model: db.Claim, as: 'Claim', attributes: ['Injury_name']
+				model: db.Claim, as: 'Claim', attributes: ['Injury_name','Insurer']
 			},
 			{ 
 				model: db.mdtInvoiceLine , as: 'Lines',
