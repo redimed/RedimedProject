@@ -23,12 +23,36 @@ angular.module('app.loggedIn.medifood.service',[])
                 return result.get();
             },
 
-            book:function(postData)
+            addItemToCart:function(postData)
             {
-                var result = api.all('medifood/book');
+                var result = api.all('medifood/add-item-to-cart');
+                return result.post({postData:postData});
+            },
+
+            getChosenFoods:function(postData)
+            {
+                var result = api.all('medifood/get-chosen-foods');
+                return result.post({postData:postData});
+            },
+
+            cancelItem:function(postData)
+            {
+                var result = api.all('medifood/cancel-item');
+                return result.post({postData:postData});
+            },
+
+            getAllBookingOfSession:function(sessionCode)
+            {
+                var result = api.all('medifood/get-all-booking-of-session');
+                return result.post({sessionCode:sessionCode});
+            },
+
+            changeSessionStatus:function(postData)
+            {
+                var result = api.all('medifood/change-session-status');
                 return result.post({postData:postData});
             }
-            
+
             // getUserNameList:function(userNameKey,pageIndex,itemsPerPage)
             // {
             //     var result=api.one('iso/core/get-user-name-list');
