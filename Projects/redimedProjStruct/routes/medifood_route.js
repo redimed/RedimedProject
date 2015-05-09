@@ -5,7 +5,11 @@ var medifoodController=require('./controllers/medifoodController');
 
 app.get('/api/medifood/create-session',medifoodController.createSession);
 app.get('/api/medifood/get-list-food',medifoodController.getListFood);
-app.post('/api/medifood/book',medifoodController.book);
+app.post('/api/medifood/add-item-to-cart',medifoodController.addItemToCart);
+app.post('/api/medifood/get-chosen-foods',medifoodController.getChosenFoods);
+app.post('/api/medifood/cancel-item',medifoodController.cancelItem);
+app.post('/api/medifood/get-all-booking-of-session',medifoodController.getAllBookingOfSession);
+app.post('/api/medifood/change-session-status',medifoodController.changeSessionStatus);
 
 //rlType
 // app.get('/api/rlob/rl_types/list',rlTypesController.list);
