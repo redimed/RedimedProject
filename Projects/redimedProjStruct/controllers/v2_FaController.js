@@ -3,6 +3,8 @@ var knex = require("../knex-connect.js");
 var moment = require('moment');
 var extend = require('util')._extend;
 
+var Promise = require('promise');
+
 module.exports = {
 	postSearch: function(req,res){
 		var postData = req.body;
@@ -345,7 +347,7 @@ module.exports = {
 				.where({FA_ID: headerId})
 				.orderBy('ORD')
 				.then(function(sectionRes){
-					if(sectionRes.length===0) res.json(500,{status:'get sections error', error:err});
+					if(sectionRes.length===0) res.json(500,{status:'get sections error'});
 					else{
 						getResult.sections = sectionRes;
 						res.json({status:'success', data:getResult});
@@ -414,7 +416,403 @@ module.exports = {
 			res.json(500,{status:'error'})
 		})
 
+	},
+
+	postEdit: function(req,res){
+		var updateHeader = function(header){
+			return new Promise(function(resolve, reject){
+				var updateHeader = extend({}, header);
+				delete updateHeader.sections;
+				delete updateHeader.action;
+				delete updateHeader.ASSESSED_SIGN;
+				console.log(updateHeader);
+				//update header
+				knex('sys_fa_df_headers')
+				.where({FA_ID: header.FA_ID})
+				.update(updateHeader)
+				.then(function(headerRes){
+					for(var i=0; i<header.sections.length; i++){
+						header.sections[i].FA_ID=header.FA_ID;
+					}
+					updateSections(header.sections, header.FA_ID).then(function(result){
+						if(result.status === 'failed') res.json(500,{status:'error'});
+						else if(result.status ==='success') res.json({status:'success'});
+					})
+				})
+				.error(function(err){
+					res.json(500,{status:'error', error:err});
+				})
+			})
+		};
+
+		var updateSections = function(sections, headerId){
+			return new Promise(function(resolve, reject){
+				sections.forEach(function(section){
+					if(section.action==='edit'){
+						var updateSection = extend({}, section);
+						if(updateSection.lines) delete updateSection.lines;
+						delete updateSection.action;
+						//update section
+						knex('sys_fa_df_sections')
+						.where({SECTION_ID: updateSection.SECTION_ID})
+						.update(updateSection)
+						.then(function(sectionRes){
+							if(section.lines.length===0){
+								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+							}
+							else {
+								// for(var i=0; i<section.lines.length; i++){
+								// 	section.lines[i].SECTION_ID = section.SECTION_ID;
+								// 	section.lines[i].FA_ID = headerId;
+								// }
+								updateLines(section.lines, section.SECTION_ID, headerId).then(function(result){
+									if(result.status==='failed') resolve({status:'failed'});
+									else{
+										if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+									}
+								})
+							}
+
+						})
+					}
+					else if(section.action==='add'){
+						var addSection = extend({}, section);
+						delete addSection.lines;
+						delete addSection.action;
+						addSection.FA_ID = headerId;
+						//add section
+						knex('sys_fa_df_sections')
+						.insert(addSection)
+						.then(function(sectionRes){
+							var sectionId = sectionRes[0];
+							if(section.lines.length===0){
+								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+							}
+							else {
+								// for(var i=0; i<section.lines.length; i++){
+								// 	section.lines[i].SECTION_ID = section.SECTION_ID;
+								// 	section.lines[i].FA_ID = headerId;
+								// }
+								updateLines(section.lines, sectionId, headerId).then(function(result){
+									if(result.status==='failed') resolve({status:'failed'});
+									else{
+										if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+									}
+								})
+							}
+						})
+					}
+					else{
+						//delete section
+						knex('sys_fa_df_sections')
+						.where({SECTION_ID: section.SECTION_ID})
+						.del()
+						.then(function(sectionRes){
+							if(section.lines.length===0){
+								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+							}
+							else {
+								// for(var i=0; i<section.lines.length; i++){
+								// 	section.lines[i].SECTION_ID = section.SECTION_ID;
+								// 	section.lines[i].FA_ID = headerId;
+								// }
+								updateLines(section.lines, null, null).then(function(result){
+									if(result.status==='failed') resolve({status:'failed'});
+									else{
+										if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+									}
+								})
+							}
+						})
+					}
+				})
+			})
+		};
+
+		var updateLines = function(lines, sectionId, headerId){
+			return new Promise(function(resolve, reject){
+				
+				lines.forEach(function(line){
+					if(line.action==='edit'){
+						var updateLine = extend({}, line)
+						updateLine.SECTION_ID = sectionId;
+						updateLine.FA_ID = headerId;
+						delete updateLine.details;
+						delete updateLine.comments;
+						delete updateLine.action;
+						//update line
+						knex('sys_fa_df_lines')
+						.where({LINE_ID: updateLine.LINE_ID})
+						.update(updateLine)
+						.then(function(lineRes){
+							updateDetail(line.details, line.comments, line.LINE_ID).then(function(result){
+								if(result.status==='success') {
+									if(lines.indexOf(line) === lines.length-1) resolve({status:'success'});
+								}
+								else if(result.status==='failed') resolve ({status:'failed'});
+							});
+						})
+					}
+					else if(line.action==='add'){
+						var addLine = extend({}, line);
+						addLine.SECTION_ID = sectionId;
+						addLine.FA_ID = headerId;
+						delete addLine.details;
+						delete addLine.comments;
+						delete addLine.action;
+						//insert line
+						knex('sys_fa_df_lines')
+						.insert(addLine)
+						.then(function(lineRes){
+							var lineId = lineRes[0];
+							updateDetail(line.details, line.comments, lineId).then(function(result){
+								if(result.status==='success') {
+									if(lines.indexOf(line) === lines.length-1) resolve({status:'success'});
+								}
+								else if(result.status==='failed') resolve ({status:'failed'});
+							});
+						})
+					}
+					else{
+						//delete line
+						knex('sys_fa_df_lines')
+						.where({LINE_ID: line.LINE_ID})
+						.del()
+						.then(function(lineRes){
+							updateDetail(line.details, line.comments, null).then(function(result){
+								if(result.status==='success') {
+									if(lines.indexOf(line) === lines.length-1) resolve({status:'success'});
+								}
+								else if(result.status==='failed') resolve ({status:'failed'});
+							});
+						})
+					}
+				})
+			})
+		};
+
+		var updateDetail = function(details, comments, lineId){
+			return new Promise(function(resolve, reject){
+				if(details.length===0){
+					updateComment(comments, lineId).then(function(result){
+						if(result.status ==='success') resolve({status:'success'});
+						else if(result.status === 'failed') resolve({status:'failed'});
+					})
+				}
+				else{
+					details.forEach(function(detail){
+						if(detail.action==='edit'){
+							var updateDetail = extend({},detail);
+							delete updateDetail.action;
+							//update detail
+							console.log(updateDetail);
+							knex('sys_fa_df_line_details')
+							.where({DETAIL_ID: updateDetail.DETAIL_ID})
+							.update(updateDetail)
+							.then(function(detailRes){
+								
+								if(details.indexOf(detail)===details.length-1){
+									updateComment(comments, lineId).then(function(result){
+										if(result.status ==='success') resolve({status:'success'});
+										else if(result.status === 'failed') resolve({status:'failed'});
+									})
+								}
+							})
+							.error(function(err){
+								res.json(500,{error:err});
+							})
+						}
+						else if(detail.action === 'add'){
+							var addDetail = extend({}, detail);
+							delete addDetail.action;
+							addDetail.LINE_ID = lineId;
+							//insert detail
+							knex('sys_fa_df_line_details')
+							.insert(addDetail)
+							.then(function(detailRes){
+								
+								if(details.indexOf(detail)===details.length-1){
+									updateComment(comments, lineId).then(function(result){
+										if(result.status ==='success') resolve({status:'success'});
+										else if(result.status === 'failed') resolve({status:'failed'});
+									})
+								}
+							})
+						}
+						else{
+							//delete detail
+							knex('sys_fa_df_line_details')
+							.where({DETAIL_ID: detail.DETAIL_ID})
+							.del()
+							.then(function(detailRes){
+								if(details.indexOf(detail)===details.length-1){
+									updateComment(comments, null).then(function(result){
+										if(result.status ==='success') resolve({status:'success'});
+										else if(result.status === 'failed') resolve({status:'failed'});
+									})
+								}
+							})
+						}
+					})
+				}
+			})
+		};
+
+		var updateComment = function(comments, lineId){
+			return new Promise(function(resolve, reject){
+				if(comments.length===0){
+					resolve({status:'success'})
+				}
+				else{
+					comments.forEach(function(comment){
+						if(comment.action==='edit'){
+							var updateComment = extend({},comment);
+							updateComment.LINE_ID = lineId;
+							delete updateComment.action;
+							//update comment
+							knex('sys_fa_df_comments')
+							.where({FA_COMMENT_ID: updateComment.FA_COMMENT_ID})
+							.update(updateComment)
+							.then(function(commentRes){
+								if(comments.indexOf(comment)===comments.length-1){
+									resolve({status:'success'})
+								}
+							})
+						}
+						else if(comment.action==='add'){
+							var addComment = extend({}, comment);
+							delete addComment.action;
+							addComment.LINE_ID = lineId;
+							//insert comment
+							knex('sys_fa_df_comments')
+							.insert(addComment)
+							.then(function(commentRes){
+								if(comments.indexOf(comment)===comments.length-1){
+									resolve({status:'success'})
+								}
+							})
+						}
+						else{
+							//delete comment
+							console.log('this is comment', comment);
+							knex('sys_fa_df_comments')
+							.where({FA_COMMENT_ID: comment.FA_COMMENT_ID})
+							.del()
+							.then(function(commentRes){
+								if(comments.indexOf(comment)===comments.length-1){
+									resolve({status:'success'})
+								}
+							})
+						}
+					})
+				}
+			})
+		}
+
+		updateHeader(req.body);
 	}
+
+	// postEdit: function(req,res){
+	// 	var editData = req.body;
+	// 	var header = extend({},req.body);
+	// 	delete header.sections;
+	// 	delete header.action;
+	// 	console.log('this is edit data', header);
+	// 	//edit header
+	// 	knex('sys_fa_df_headers')
+	// 	.where({FA_ID: header.FA_ID})
+	// 	.update(header)
+	// 	.then(function(headerRes){
+	// 		//update sections
+	// 		var sections = editData.sections;
+	// 		sections.forEach(function(section){
+	// 			var updateSection = extend({},section);
+	// 			if(updateSection.action==='edit'){
+	// 				//edit operation
+	// 				delete updateSection.action;
+	// 				delete updateSection.lines;
+	// 				knex('sys_fa_df_sections')
+	// 				.where({SECTION_ID: updateSection.SECTION_ID})
+	// 				.update(updateSection)
+	// 				.then(function(sectionRes){
+	// 					//update lines
+	// 					if(section.lines.length===0){
+	// 						if(editData.sections.indexOf(section)===editData.sections.length-1) res.json({status:'success'});
+	// 					}
+	// 					else{
+	// 						var lines = section.lines;
+	// 						//update lines
+	// 						lines.forEach(function(line){
+	// 							var updateLine = extend({},line);
+	// 							if(updateLine.action==='edit'){
+	// 								//edit line operation
+	// 								delete updateLine.details;
+	// 								delete updateLine.comments;
+	// 								delete updateLine.action;
+	// 								knex('sys_fa_df_lines')
+	// 								.where({LINE_ID: updateLine.LINE_ID})
+	// 								.update(updateLine)
+	// 								.then(function(lineRes){
+	// 									//update detail and comment
+	// 									if(line.details.length===0 && line.comments.length===0){
+	// 										if(section.lines.indexOf(line)===section.lines.length-1 && editData.sections.indexOf(section)===editData.sections.length-1) res.json({status:'success'});
+	// 									}
+	// 									else{
+	// 										if(line.details.length!==0){
+	// 											var details = line.details;
+	// 											var insertDetail = [];
+	// 											var deleteDetail = [];
+	// 											var editDetail = [];
+	// 											for(var i = 0; i<details.length; i++){
+	// 												if(details[i].action==='add'){
+	// 													delete details[i].action;
+	// 													details[i].LINE_ID = line.LINE_ID;
+	// 													insertDetail.push(details[i]);
+	// 												}
+	// 												else if(details[i].action==='edit'){
+	// 													delete details[i].action;
+	// 													editDetail.push(details[i]);
+	// 												}
+	// 												else {
+	// 													deleteDetail.push(details[i].DETAIL_ID)
+	// 												}
+	// 											}
+	// 											//edit existing details
+	// 											knex('sys_fa_df_line_details')
+	// 											.
+	// 										}
+	// 									}
+	// 								})
+	// 								.error(function(err){
+	// 									res.json(500,{status:'error', error:err});
+	// 								})
+	// 							}
+	// 							else if(updateLine.action==='add'){
+	// 								//insert line operation
+	// 							}
+	// 							else{
+	// 								//delete line operation
+	// 							}
+	// 						})
+	// 					}
+	// 				})
+	// 				.error(function(err){
+	// 					res.json(500,{status:'error', error:err});
+	// 				})
+	// 			}
+	// 			else if(updateSection.action = 'add'){
+	// 				//insert section operation
+	// 			}
+	// 			else{
+	// 				//delete section operation
+	// 			}
+	// 		})
+	// 	})
+	// 	.error(function(err){
+	// 		res.json(500,{status:'error', error:err});
+	// 	})
+	// 	res.end();
+	// }
 
 	// postGet: function(req,res){
 	// 	var getResult = {};

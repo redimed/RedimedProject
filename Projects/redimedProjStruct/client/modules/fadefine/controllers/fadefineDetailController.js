@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr){
+.controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
 
 	//init action
 	if($stateParams.action==='edit'){
@@ -12,6 +12,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	$scope.header = angular.copy(FaHeaderModel);
 	$scope.header.ISENABLE = 1;
 	$scope.header.FA_NAME = "Untitled Function Assessment Header";
+	$scope.header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 	$scope.header.sections = [];
 	//init section definition
 	var section_init = angular.copy(FaSectionModel);
@@ -92,6 +93,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		var newSection = angular.copy(section_init);
 		if($scope.isEdit === true) newSection.action = 'add';
 		newSection.SECTION_NAME = "Untitled Section";
+		newSection.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 		$scope.header.sections.push(newSection);
 	}
 
@@ -126,6 +128,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		var newLine = angular.copy(line_init);
 		if($scope.isEdit === true) newLine.action = 'add';
 		newLine.QUESTION = "Untitled line";
+		newLine.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 		section.lines.push(newLine);
 	}
 
@@ -152,6 +155,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		var newDetail = angular.copy(line_detail_init);
 		if($scope.isEdit === true) newDetail.action = 'add';
 		newDetail.QUESTION = "Untitled detail";
+		newDetail.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 		line.details.push(newDetail);
 	}
 
@@ -173,7 +177,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	$scope.removeComment = function(comment, line){
 		var indexToRemove = line.comments.indexOf(comment);
-		if($scope.isEdit === true) line.comments.splice(indexToRemove,1);
+		if($scope.isEdit === false) line.comments.splice(indexToRemove,1);
 		else{
 			if(comment.action==='add') line.comments.splice(indexToRemove,1);
 			else comment.action='delete';
@@ -331,7 +335,11 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	//EDIT DEFINITION
 	$scope.editDefinition = function(){
 		addOrder($scope.header).then(function(result){
-			
+			console.log(result);
+			FaDefineService.editFa(result).then(function(res){
+				if(res.status==='success') toastr.success('Edit successfully!','Success!');
+				else toastr.error('Edit failed!', 'Error!');
+			})
 		})
 	}
 
@@ -355,15 +363,34 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	var addOrder = function(header){
 		return new Promise(function(resolve, reject){
+			if($scope.isEdit===false) header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+			else {
+				if(header.Creation_date=== '') header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+				else header.Creation_date = moment(header.Creation_date).format('YYYY-MM-DD hh:mm:ss');
+				header.Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+			}
 			for(var i = 0; i<header.sections.length; i++){
 				header.sections[i].ORD = i+1;
+				if($scope.isEdit===false) header.sections[i].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+				else {
+					if(header.sections[i].Creation_date=== '') header.sections[i].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+					else header.sections[i].Creation_date = moment(header.sections[i].Creation_date).format('YYYY-MM-DD hh:mm:ss');
+					header.sections[i].Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+				}
 				if(header.sections[i].lines.length===0){
 					if(i===header.sections.length-1) resolve(header);
 					else continue;
 				}
 				else{
+
 					for(var j = 0; j < header.sections[i].lines.length; j++){
 						header.sections[i].lines[j].ORD = j+1;
+						if($scope.isEdit===false) header.sections[i].lines[j].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+						else {
+							if(header.sections[i].lines[j].Creation_date=== '') header.sections[i].lines[j].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+							else header.sections[i].lines[j].Creation_date = moment(header.sections[i].lines[j].Creation_date).format('YYYY-MM-DD hh:mm:ss');
+							header.sections[i].lines[j].Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+						}
 						if(header.sections[i].lines[j].details.length===0){
 							if(j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
 							else continue;
@@ -371,6 +398,13 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 						else{
 							for(var k = 0; k<header.sections[i].lines[j].details.length; k++){
 								header.sections[i].lines[j].details[k].ORD = k+1;
+								if($scope.isEdit===false) header.sections[i].lines[j].details[k].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+								else {
+									if(header.sections[i].lines[j].details[k].Creation_date=== '') header.sections[i].lines[j].details[k].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+									else header.sections[i].lines[j].details[k].Creation_date = moment(header.sections[i].lines[j].details[k].Creation_date).format('YYYY-MM-DD hh:mm:ss'); 
+									header.sections[i].lines[j].details[k].Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+									
+								}
 								if(k === header.sections[i].lines[j].details.length-1 && j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
 								else continue;
 							}
@@ -379,46 +413,5 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 				}
 			}
 		})
-	}
-
-	var getSeperate = function(processObj){
-		var header = {};
-		var sections = [];
-		var lines = [];
-		var details = [];
-		var comments = [];
-
-		//make tmpHeader value
-		var tmpHeader = angular.copy(processObj);
-		//get header
-		header = delete tmpHeader.sections;
-		
-		//get sections
-		for(var i = 0; i<processObj.sections.length; i++){
-			var tmpSection = angular.copy(processObj.sections[i]);
-			if(tmpSection.lines) delete tmpSection.lines;
-
-			sections.push(tmpSection);
-			//get lines
-			for(var j = 0; j<processObj.sections[i].lines.length; j++){
-				var tmpLine = angular.copy(processObj.sections[i].lines[j]);
-				var tmpLine2 = angular.copy(processObj.sections[i].lines[j]);
-				if(tmpLine.details) delete tmpLine.details;
-				if(tmpLine.comments) delete tmpLine.comments;
-				lines.push(tmpLine);
-				//get details and comments
-				details = details.concat(tmpLine2.details);
-				comments = comments.concat(tmpLine2.comments);
-			}
-		}
-
-		var postObj = {
-			header: header,
-			sections: sections,
-			lines: lines,
-			details: details,
-			comment: comments
-		}
-		return postObj;
 	}
 });
