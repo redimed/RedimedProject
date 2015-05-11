@@ -347,11 +347,8 @@ module.exports = {
 				.where({FA_ID: headerId})
 				.orderBy('ORD')
 				.then(function(sectionRes){
-					if(sectionRes.length===0) res.json(500,{status:'get sections error'});
-					else{
-						getResult.sections = sectionRes;
-						res.json({status:'success', data:getResult});
-					}
+					getResult.sections = sectionRes;
+					res.json({status:'success', data:getResult});
 				})
 				.error(function(err){
 					res.json(500,{status:'error'}) 

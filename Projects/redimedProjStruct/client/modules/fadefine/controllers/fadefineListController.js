@@ -43,8 +43,19 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
                             else toastr.error('Delete functional assessment definition failed','Delete failed!');
                         })
                     }
+                },
+                {
+                    class:'fa fa-files-o', title:'Clone to new definition',
+                    callback: function(item){
+                        $state.go('loggedIn.fadefine.detail',{action:'add', headerId: item.FA_ID});
+                    }
                 }
             ],
 		}
 	}
+
+
+    $scope.newDefine = function(){
+        $state.go('loggedIn.fadefine.detail',{action:'add', headerId:0})
+    }
 });

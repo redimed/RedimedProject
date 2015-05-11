@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
+.controller("FaDefineDetailController", function($scope, $stateParams, $state, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
 
 	//init action
 	if($stateParams.action==='edit'){
@@ -77,6 +77,74 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 										})
 										line.comments.forEach(function(comment){
 											comment.action = 'edit'
+										})
+									}
+								})
+							})
+						}
+					})
+				})
+			}
+		})
+	}
+	else if($stateParams.action==='add' && $stateParams.headerId!==0){
+		var getHeaderId = $stateParams.headerId;
+		FaDefineService.getHeaderAndSection(getHeaderId).then(function(headerAndSectionRes){
+			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
+			else{
+				$scope.header = headerAndSectionRes.data;
+				$scope.header.FA_ID = null;
+				$scope.header.Created_by = null;
+				$scope.header.Creation_date = null;
+				$scope.header.Last_updated_by = null; 
+				$scope.header.Last_update_date = null;
+				$scope.header.sections.forEach(function(section){
+					var sectionId = angular.copy(section.SECTION_ID);
+					section.SECTION_ID = null;
+					section.FA_ID = null;
+					section.Created_by = null;
+					section.Creation_date = null;
+					section.Last_updated_by = null; 
+					section.Last_update_date = null;
+					FaDefineService.getLines(sectionId, getHeaderId).then(function(lineRes){
+						if(lineRes.status==='error') {
+							$scope.header={};
+							toastr.error('Unexpected error', 'Error!');
+						}
+						else{
+							section.lines=lineRes.data;
+							section.lines.forEach(function(line){
+								var lineId = angular.copy(line.LINE_ID);
+								line.LINE_ID = null;
+								line.SECTION_ID = null;
+								line.FA_ID = null;
+								line.Created_by = null;
+								line.Creation_date = null;
+								line.Last_updated_by = null; 
+								line.Last_update_date = null;
+								FaDefineService.getDetailsAndComments(lineId).then(function(detailAndCommentRes){
+									if(detailAndCommentRes.status === 'error'){
+										$scope.header={};
+										toastr.error('Unexpected error', 'Error!');
+									}
+									else{
+										line.details = detailAndCommentRes.data.details;
+										line.comments = detailAndCommentRes.data.comments;
+										line.details.forEach(function(detail){
+											detail.DETAIL_ID = null;
+											detail.LINE_ID = null;
+											detail.Created_by = null;
+											detail.Creation_date = null;
+											detail.Last_updated_by = null; 
+											detail.Last_update_date = null;
+										})
+										line.comments.forEach(function(comment){
+											comment.FA_COMMENT_ID = null;
+											comment.LINE_ID = null;
+											comment.Created_by = null;
+											comment.Creation_date = null;
+											comment.Last_updated_by = null; 
+											comment.Last_update_date = null;
 										})
 									}
 								})
@@ -322,25 +390,38 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	//INSERT DEFINITION
 	$scope.addFaDefinition = function(){
-		addOrder($scope.header).then(function(result){
-			FaDefineService.insertFa($scope.header).then(function(res){
-				if(res.status==='success') toastr.success('New functional assessment definition added','Success!');
-				else toastr.error('Failed to add new functional assessment definition', 'Error!');
+		if($scope.header.sections.length===0) toastr.error('Functional Assessment must have at least one section','Error!');
+		else{
+			addOrder($scope.header).then(function(result){
+				FaDefineService.insertFa($scope.header).then(function(res){
+					if(res.status==='success') {
+						toastr.success('New functional assessment definition added','Success!');
+						$state.go('loggedIn.fadefine.list');
+					}
+					else toastr.error('Failed to add new functional assessment definition', 'Error!');
+				});
+			}, function(error){
+				console.log(error);
 			});
-		}, function(error){
-			console.log(error);
-		});
+		}
+		
 	}
 
 	//EDIT DEFINITION
 	$scope.editDefinition = function(){
-		addOrder($scope.header).then(function(result){
-			console.log(result);
-			FaDefineService.editFa(result).then(function(res){
-				if(res.status==='success') toastr.success('Edit successfully!','Success!');
-				else toastr.error('Edit failed!', 'Error!');
+		if($scope.header.sections.length===0) toastr.error('Functional Assessment must have at least one section','Error!');
+		else{
+			addOrder($scope.header).then(function(result){
+				console.log(result);
+				FaDefineService.editFa(result).then(function(res){
+					if(res.status==='success') {
+						toastr.success('Edit successfully!','Success!');
+						$state.go('loggedIn.fadefine.list');
+					}
+					else toastr.error('Edit failed!', 'Error!');
+				})
 			})
-		})
+		}
 	}
 
 	//GENERAL DEFINITION FUNCTION
