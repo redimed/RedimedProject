@@ -2,16 +2,19 @@
 	<h3>Notification List</h3>
 	<hr>
 	<span ng-repeat="list in alertCenter.list">
-		<h4 ng-if="list.alert.length > 0 || (list.IS_REFERRAL && list.outreferral_id === 'no')">
+		<h4 ng-if="list.alert.length > 0 || list.cal.length > 0">
 			{{list.First_name}} {{list.Sur_name}}
-			({{list.FROM_TIME}} - {{list.TO_TIME}})
 		</h4>
 		<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
 			<li>{{alert.name}}</li>
 		</ul>
-		<p ng-if="list.IS_REFERRAL">
-			<b ng-if="list.outreferral_id === 'no'">There is no referral. Please make referral</b>
+		<p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+			<span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'">
+				{{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+				There is no referral
+			</span>
 		</p>
+		
 	</span>
 </div>
 <div class="bv-arrow" ng-click="clickArrow()"></div>
@@ -64,7 +67,7 @@
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)"
-				ng-style="{'background-color': '{{col.SERVICE_COLOR}}'}">
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height ? col.height: '70px'}">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>

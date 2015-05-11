@@ -93,6 +93,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 				scope.appointment.list = [];
 
+				scope.alertCenter.load();
+
 				AppointmentModel.load(postData)
 				.then(function(response){
 					scope.doctor.headers = response.doctors;
@@ -275,6 +277,24 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 					var i = 0;
 					_.forEach(scope.appointment.list, function(list){
+						var check_all_doctor = true;
+						var j_temp = 0;
+						_.forEach(list.doctors, function(doctor){
+							var k_temp = 0;
+							_.forEach(doctor_array_temp, function(temp){
+								if(doctor.PATIENTS !== '###'){
+									var temp_doctor_array_left = doctor_array_temp[k_temp].left_temp;
+									temp_doctor_array_left = doctor_array_temp[k_temp].left-min_calendar;
+									if(temp_doctor_array_left !== 0){
+										check_all_doctor = false;
+									}
+
+								}
+								k_temp++;
+							})
+							j_temp++;
+						})
+
 						var j = 0;
 						_.forEach(list.doctors, function(doctor){
 							var k = 0;
@@ -283,10 +303,21 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									if(doctor.PATIENTS !== '###'){
 										doctor_array_temp[k].left_temp = doctor_array_temp[k].left-min_calendar;
 										doctor_array_temp[k].color = scope.appointment.list[i].doctors[j].SERVICE_COLOR;
+
+										if(doctor_array_temp[k].left_temp === 0){
+											if(!check_all_doctor)
+												scope.appointment.list[i].doctors[j].height = '68px';
+											else
+												scope.appointment.list[i].doctors[j].margin = 'yes';
+										}
 									}else{
 										if(doctor_array_temp[k].left_temp > 0){
 											scope.appointment.list[i].doctors[j].SERVICE_COLOR = doctor_array_temp[k].color;
 											doctor_array_temp[k].left_temp -= min_calendar;
+
+											if(doctor_array_temp[k].left_temp === 0){
+												scope.appointment.list[i].doctors[j].margin = 'yes';
+											}
 										}
 									}
 								}
@@ -621,7 +652,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						var flag = -1;
 						var i = 0;
 						_.forEach(scope.alertCenter.list, function(list){
-							if(list.CAL_ID === row.CAL_ID){
+							if(list.Patient_id === row.Patient_id){
 								flag = i;
 								return;
 							}
@@ -630,23 +661,54 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 						if(flag !== -1){
 							if(row.ALERT_ID){
-								var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
-								scope.alertCenter.list[flag].alert.push(object);
+								var alert_flag = true;
+								_.forEach(scope.alertCenter.list[flag].alert, function(alert){
+									if(alert.id === row.ALERT_ID){
+										alert_flag = false;
+									}
+								})
+
+								if(alert_flag){
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
+									scope.alertCenter.list[flag].alert.push(object);
+								}
+
+								var cal_flag = true;
+								var i = 0;
+								_.forEach(scope.alertCenter.list[flag].cal, function(cal){
+									if(cal.CAL_ID === row.CAL_ID){
+										cal_flag = false;
+									}
+								})
+
+								if(cal_flag){
+									scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+									if(row.outreferral_id){
+										var cal_length = scope.alertCenter.list[flag].cal.length;
+										scope.alertCenter.list[flag].cal[cal_length-1].OUTREFERRAL = 'yes';
+									}
+								}
+								/**/
 							}
 						}else{
-							var object = {Patient_id: row.Patient_id, IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], outreferral_id: 'no', FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME};
+							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
 
 							if(row.ALERT_ID){
 								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME});
 							}
 
-							if(row.outreferral_id)
-								object.outreferral_id = 'yes';
+							if(row.CAL_ID){
+								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+								if(row.outreferral_id)
+									object.cal[0].OUTREFERRAL = 'yes';
+							}
 
 							scope.alertCenter.list.push(object);
 						}
 
 					})
+
+					console.log(scope.alertCenter.list);
 				}, function(error){})
 			}
 
@@ -666,10 +728,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				load: function(){ loadAlertCenter(); },
 				list: [],
 				arrow: false
-			}
-
-			//INIT LOAD ALERT CENTER
-			scope.alertCenter.load();
+			}			
 
 			//INIT
 			scope.site.load();
