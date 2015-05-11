@@ -98,13 +98,7 @@ module.exports = {
 		kiss.exFileJSON(postData.site,"kisslog.txt");
 		//Lay danh sach cac site theo tuan
 		//tannv.dts@gmail.com
-		var tempListSite=postData.site;
 		var listSite=postData.site;
-		//4 tuan
-		var listSite=[null,null,null,null];
-		_.forEach(tempListSite, function(item) {
-			listSite[item.week_ord_of_month-1]=item;
-		});
 		var currentSiteIndex=-1;
 		function getSite()
 		{
@@ -131,27 +125,22 @@ module.exports = {
 			var currentDate=moment(new Date(postData.from_date)).add(i,'days');
 			if(currentDate.day()==day_of_Week_code)
 			{
-				var site=getSite();
-				if(site!==null)
+				var item={};
+				item.date=currentDate;
+				item.site=getSite();
+				//----------------------------
+				//Lay ra list time
+				var listTime=[];
+				var currentTime=moment( currentDate.format("YYYY/MM/DD")+" "+postData.from_time,"YYYY/MM/DD HH:mm");
+				var lastedTime=moment( currentDate.format("YYYY/MM/DD")+" "+postData.to_time,"YYYY/MM/DD HH:mm");
+				while(lastedTime.diff(currentTime,'minutes')>=0)
 				{
-					var item={};
-					item.date=currentDate;
-					item.site=site;
-					//----------------------------
-					//Lay ra list time
-					var listTime=[];
-					var currentTime=moment( currentDate.format("YYYY/MM/DD")+" "+postData.from_time,"YYYY/MM/DD HH:mm");
-					var lastedTime=moment( currentDate.format("YYYY/MM/DD")+" "+postData.to_time,"YYYY/MM/DD HH:mm");
-					while(lastedTime.diff(currentTime,'minutes')>=0)
-					{
-						listTime.push(currentTime.clone());
-						currentTime=currentTime.add(interval,"minutes");
-					}
-					item.listTime=listTime;
-					//----------------------------
-					listX.push(item);
+					listTime.push(currentTime.clone());
+					currentTime=currentTime.add(interval,"minutes");
 				}
-				
+				item.listTime=listTime;
+				//----------------------------
+				listX.push(item);
 			}
 		}
 
