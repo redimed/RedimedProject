@@ -13,6 +13,8 @@ angular.module('app.loggedIn.medifood.admin.controller',[])
         		{
         			var tempData=data.data;
         			$scope.listBooking={};
+
+                    $scope.listBookedFood={};
         			for(var i=0;i<tempData.length;i++)
         			{
         				var item=tempData[i];
@@ -34,6 +36,24 @@ angular.module('app.loggedIn.medifood.admin.controller',[])
         					$scope.listBooking[item.USER_ID].LIST_ITEMS.push(item);
         					$scope.listBooking[item.USER_ID].totalCost=$scope.listBooking[item.USER_ID].totalCost+item.COST;
         				}
+
+                        if(!$scope.listBookedFood[item.FOOD_ID])
+                        {
+                            $scope.listBookedFood[item.FOOD_ID]={
+                                FOOD_ID:item.FOOD_ID,
+                                NAME:item.NAME,
+                                COST:item.COST,
+                                totalCost:item.COST,
+                                quantity:1
+                            }
+                        }
+                        else
+                        {
+                            $scope.listBookedFood[item.FOOD_ID].totalCost=$scope.listBookedFood[item.FOOD_ID].totalCost+item.COST;
+                            $scope.listBookedFood[item.FOOD_ID].quantity=$scope.listBookedFood[item.FOOD_ID].quantity+1;
+                        }
+
+
         			}
         		}
         		else
