@@ -307,6 +307,13 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 info: info
             });
         };
+
+        TimeSheetService.CheckLeave = function(USER_ID) {
+            var CheckLeave = api.all("TimeSheet/post-check-leave");
+            return CheckLeave.post({
+                USER_ID: USER_ID
+            });
+        };
         //END LEAVE FORM
 
         return TimeSheetService;

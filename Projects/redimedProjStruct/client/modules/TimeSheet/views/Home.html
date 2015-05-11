@@ -12,22 +12,36 @@
                         <img src="/img/TimeSheet/formLeave.png" alt="Time Reporting System">
                         <span class="bold" style="font-size:14px;">Leave Management System</span></a>
                     <ul class="dropdown-menu dropup" role="menu" aria-labelledby="dLabel">
+                        <!-- LEAVE HISTORY -->
                         <li role="presentation">
-                            <a role="menuitem" ui-sref="loggedIn.LeaveHistory">
-                                <span class="bold text-info" style="font-size:14px;">My Leave History</span></a>
+                            <a role="menuitem" ui-sref="loggedIn.LeaveHistory" ng-if="(position==='Staff' || position==='Head of Dept.')">
+                                <span class="bold text-info" style="font-size:14px;">My Leave History</span>
+                            </a>
                         </li>
+                        <!-- END LEAVE HISTORY -->
+                        <!-- APPLY LEAVE -->
                         <li role="presentation">
-                            <a role="menuitem" ui-sref="loggedIn.CreateLeave">
+                            <a role="menuitem" ui-sref="loggedIn.CreateLeave" ng-if="(position==='Staff' || position==='Head of Dept.')">
                                 <span class="bold text-info" style="font-size:14px;">Apply for Leave
                                 </span>
                             </a>
                         </li>
+                        <!-- END APPLY -->
+                        <!-- APPROVE LEAVE -->
                         <li role="presentation">
-                            <a role="menuitem" ui-sref="loggedIn.ApproveLeave">
+                            <a role="menuitem" ui-sref="loggedIn.ApproveLeave" ng-if="(position==='Head of Dept.' || position==='Director')">
                                 <span class="bold text-info" style="font-size:14px;">Approve and Manage Leave
                                 </span>
                             </a>
                         </li>
+                        <!-- END APPROVE LEAVE -->
+                        <!-- REPORT LEAVE -->
+                        <li role="presentation">
+                            <a role="menuitem" ng-if="(position==='Head of Dept.' || position==='Director')" ng-click="reportOweLeave()">
+                                <span class="bold text-info" style="font-size:14px;">Report on Employee owe Leave</span>
+                            </a>
+                        </li>
+                        <!-- END REPORT LEAVE -->
                     </ul>
                 </div>
                 <!-- END DROPDOWN ACTION -->

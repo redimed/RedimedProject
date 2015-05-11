@@ -12,5 +12,5 @@ angular.module("app.loggedIn.TimeSheet.Controllers", [
     "app.loggedIn.TimeSheet.Report5.Controller",
     "app.loggedIn.TimeSheet.CreateLeave.Controller",
     "app.loggedIn.TimeSheet.HistoryLeave.Controller",
-    "app.loggedIn.TimeSheet.ApproveLeave.Controller"
+    "app.loggedIn.TimeSheet.ApproveLeave.Controller",
 ]);

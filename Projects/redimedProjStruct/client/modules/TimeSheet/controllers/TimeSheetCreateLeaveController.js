@@ -68,9 +68,9 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                             response.result[0] !== undefined && response.result[0] !== null) {
                             $scope.info = response.result[0];
                             $scope.info.standard = 1;
+                            $scope.info.application_date = new Date();
                         }
                         //employee
-                        $scope.info.application_date = new Date();
                     } else if (response.status === "error" || response.result.length === 0) {
                         $state.go("loggedIn.TimeSheetHome", null, {
                             "reload": true
@@ -110,10 +110,25 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             //END
         }
         $scope.clickSendServer = function(statusID, formLeave) {
+            $scope.isRequired = 1; //SET REQUIRED
+
+            //ERROR INPUT
             if (formLeave.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
-                $scope.isRequired = 1;
-            } else {
+            }
+            //END ERROR
+
+            //ERROR NOT SIGN TIME LEAVE
+            else if ($scope.info.time_leave_real === 0 ||
+                $scope.info.time_leave === undefined ||
+                $scope.info.time_leave === null ||
+                $scope.info.time_leave.length === 0) {
+                toastr.error("You must sign time leave!", "Error");
+            }
+            //END SIGN TIME LEAVE
+
+            //NOT ERROR INPUT
+            else {
                 $scope.info.statusID = statusID;
                 $scope.info.USER_ID = $cookieStore.get('userInfo').id;
                 if ($scope.isEdit === false) {
@@ -163,8 +178,9 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 }
 
             }
+            //END NOT ERROR
         };
-
+        //FUNCTION CHANGE TIME LEAVE
         $scope.changeTime = function() {
             var total_time = 0;
             angular.forEach($scope.info.infoTypeLeave, function(time, index) {
@@ -174,7 +190,9 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             $scope.info.time_leave = StaffService.convertFromFullToShow(total_time);
             $scope.info.time_leave_real = StaffService.convertShowToFull($scope.info.time_leave);
         };
+        //END CHANGE TIME LEAVE
 
+        // FUNCTION CHANGE STANDARD
         $scope.clickStandardChange = function(standardID) {
             if (standardID === 1) {
                 if ($scope.info.infoTypeLeave !== undefined && $scope.info.infoTypeLeave !== null &&
@@ -187,8 +205,11 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     //END CALL
                 }
             } else if (standardID === 0) {
-                if ($scope.info.infoTypeLeave !== undefined && $scope.info.infoTypeLeave !== null &&
-                    $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
+                if ($scope.info.infoTypeLeave !== undefined &&
+                    $scope.info.infoTypeLeave !== null &&
+                    $scope.info.infoTypeLeave[0] !== undefined &&
+                    $scope.info.infoTypeLeave[0] !== null &&
+                    $scope.info.infoTypeLeave[0].time_leave !== undefined &&
                     $scope.info.infoTypeLeave[0].time_leave.length === 4) {
                     $scope.info.infoTypeLeave[0].time_leave = '0' + $scope.info.infoTypeLeave[0].time_leave;
 
@@ -198,4 +219,51 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 }
             }
         };
+        //END CHANGE STANDARD
+
+        //FUNCTION CHECK LEAVE EXIST
+        $scope.checkLeaveExist = function() {
+            if ($scope.info.start_date !== undefined &&
+                $scope.info.start_date !== null &&
+                $scope.info.start_date.length !== 0 &&
+                $scope.info.finish_date !== undefined &&
+                $scope.info.finish_date !== null &&
+                $scope.info.finish_date.length !== 0) {
+                TimeSheetService.CheckLeave($cookieStore.get("userInfo").id).then(function(response) {
+                    if (response.status === "success") {
+                        var currentStartDate = moment(moment($scope.info.start_date).format("YYYY-MM-DD")).format("X");
+                        var currentFinishDate = moment(moment($scope.info.finish_date).format("YYYY-MM-DD")).format("X");
+                        var arrayTime = angular.copy(response.result);
+                        angular.forEach(arrayTime, function(timeRange, index) {
+                            var startDate = moment(moment(timeRange.start_date).format("YYYY-MM-DD")).format("X");
+                            var finishDate = moment(moment(timeRange.finish_date).format("YYYY-MM-DD")).format("X");
+                            if (currentStartDate >= startDate &&
+                                currentStartDate <= finishDate &&
+                                currentFinishDate <= finishDate &&
+                                currentFinishDate >= startDate) {
+                                swal({
+                                    title: "Time leave is exist!",
+                                    text: "Do you want view history!",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Yes",
+                                    closeOnConfirm: true
+                                }, function(isConfirm) {
+                                    if (isConfirm) {
+                                        $state.go("loggedIn.LeaveHistory", null, {
+                                            "reload": true
+                                        });
+                                    } else {
+                                        $scope.info.start_date = null;
+                                        $scope.info.finish_date = null;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        };
+        //END CHECK LEAVE
     });

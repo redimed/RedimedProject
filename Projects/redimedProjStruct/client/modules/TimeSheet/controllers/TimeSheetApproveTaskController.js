@@ -158,29 +158,71 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                         if (info.time_rest !== null && info.time_rest != 0.00 && info.time_rest !== "" && info.isApprove !== true) {
                             $scope.infoTaskWeek = "chooseApprove";
                         } else {
-                            //update approve
-                            TimeSheetService.ApproveTaskWeek(info).then(function(response) {
-                                if (response.status === "success") {
-                                    modalInstance.close();
-                                    $state.go("loggedIn.ApproveTask", null, {
-                                        "reload": true
-                                    });
-                                    toastr.success("Approve success!", "Success");
-                                } else if (response.status === "error") {
-                                    modalInstance.close();
-                                    $state.go("loggedIn.ApproveTask", null, {
-                                        "reload": true
-                                    });
-                                    toastr.error("Approve fail!", "Error");
-                                } else {
-                                    //catch exception
-                                    modalInstance.close();
-                                    $state.go("loggedIn.TimeSheetHome", null, {
-                                        "reload": true
-                                    });
-                                    toastr.error("Server not response!", "Error");
-                                }
-                            });
+                            if (info.forPermission === false) {
+                                //NOTIFICATION
+                                swal({
+                                    title: "Date leave not permisson!",
+                                    text: "Do you want approve this Timesheet!",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Yes",
+                                    closeOnConfirm: true
+
+                                }, function(isConfirm) {
+                                    //update approve
+                                    if (isConfirm) {
+                                        TimeSheetService.ApproveTaskWeek(info).then(function(response) {
+                                            if (response.status === "success") {
+                                                modalInstance.close();
+                                                $state.go("loggedIn.ApproveTask", null, {
+                                                    "reload": true
+                                                });
+                                                toastr.success("Approve success!", "Success");
+                                            } else if (response.status === "error") {
+                                                modalInstance.close();
+                                                $state.go("loggedIn.ApproveTask", null, {
+                                                    "reload": true
+                                                });
+                                                toastr.error("Approve fail!", "Error");
+                                            } else {
+                                                //catch exception
+                                                modalInstance.close();
+                                                $state.go("loggedIn.TimeSheetHome", null, {
+                                                    "reload": true
+                                                });
+                                                toastr.error("Server not response!", "Error");
+                                            }
+                                        });
+                                    }
+                                });
+                                //END 
+                            } else {
+                                //update approve
+                                TimeSheetService.ApproveTaskWeek(info).then(function(response) {
+                                    if (response.status === "success") {
+                                        modalInstance.close();
+                                        $state.go("loggedIn.ApproveTask", null, {
+                                            "reload": true
+                                        });
+                                        toastr.success("Approve success!", "Success");
+                                    } else if (response.status === "error") {
+                                        modalInstance.close();
+                                        $state.go("loggedIn.ApproveTask", null, {
+                                            "reload": true
+                                        });
+                                        toastr.error("Approve fail!", "Error");
+                                    } else {
+                                        //catch exception
+                                        modalInstance.close();
+                                        $state.go("loggedIn.TimeSheetHome", null, {
+                                            "reload": true
+                                        });
+                                        toastr.error("Server not response!", "Error");
+                                    }
+                                });
+                            }
+
                         }
                     };
                 },

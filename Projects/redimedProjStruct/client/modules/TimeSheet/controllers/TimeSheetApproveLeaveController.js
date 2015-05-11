@@ -1,5 +1,22 @@
 angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
     .controller("ApproveLeaveController", function($scope, MODE_ROW, $modal, toastr, $state, TimeSheetService, $cookieStore) {
+
+        //STATUS
+        $scope.listStatus = [{
+            code: 2,
+            name: "Awaiting for Approve"
+        }, {
+            code: 3,
+            name: "Approved"
+        }, {
+            code: 4,
+            name: "Rejected"
+        }, {
+            code: 5,
+            name: "Re-submitted"
+        }];
+        //END STATUS
+
         //FUNCTION SET PAGE
         $scope.setPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
@@ -19,7 +36,6 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
             TimeSheetService.LoadLeaveApprove($scope.searchObjectMap).then(function(response) {
                 if (response.status === "success") {
                     $scope.list = response;
-                    $scope.listStatus = response.listStatus;
                 } else if (response.status === "error") {
                     $state.go("loggedIn.TimeSheetHome", null, {
                         "reload": true

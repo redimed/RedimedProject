@@ -849,9 +849,13 @@ module.exports = {
     },
 
     ViewApproved: function(req, res) {
+        //DECLARATION
         var idTaskWeek = req.body.info;
+        // END DECLARATION
+
+        // QUERY 
         var strQuery = "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " +
-            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
+            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.user_id, " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
             "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
@@ -870,35 +874,86 @@ module.exports = {
             "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
             "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_activity.activity_id ORDER BY time_tasks.date";
+        // END QUERY
         db.sequelize.query(strQuery)
             .success(function(result) {
-                if (result === undefined || result === null || result.length === 0) {
-                    res.json({
-                        status: "success",
-                        result: [],
-                        resultActivity: []
-                    });
-                    return;
-                } else {
-                    db.sequelize.query(strActivity)
-                        .success(function(resultActivity) {
+                //CHECK LEAVE
+                var queryGetLeaveApprove = "SELECT hr_leave.start_date, hr_leave.finish_date " +
+                    "FROM hr_leave " +
+                    "WHERE hr_leave.user_id = :userId AND hr_leave.status_id = 3";
+                db.sequelize.query(queryGetLeaveApprove, null, {
+                        raw: true
+                    }, {
+                        userId: result[0].user_id
+                    })
+                    .success(function(resultLeaveApprove) {
+                        var forPermission = true;
+                        if (resultLeaveApprove !== undefined &&
+                            resultLeaveApprove !== null &&
+                            resultLeaveApprove.length !== 0) {
+                            //CHECK EXIST LEAVE
+                            for (var keyTimeSheet in result) {
+                                var checkExistLeave = false;
+                                var date = moment(moment(result[keyTimeSheet].date).format("YYYY-MM-DD")).format("X");
+                                for (var keyLeave in resultLeaveApprove) {
+                                    var startDate = moment(moment(resultLeaveApprove[keyLeave].start_date).format("YYYY-MM-DD")).format("X");
+                                    var finishDate = moment(moment(resultLeaveApprove[keyLeave].finish_date).format("YYYY-MM-DD")).format("X");
+                                    if ((result[keyTimeSheet].activity_id === 15 ||
+                                            result[keyTimeSheet].activity_id === 16) &&
+                                        date >= startDate &&
+                                        date <= finishDate) {
+                                        checkExistLeave = true;
+                                    }
+                                }
+                                if (checkExistLeave === false) {
+                                    forPermission = false;
+                                }
+                            }
+                            //END CHECK EXIST LEAVE
+                        } else {
+                            forPermission = false;
+                        }
+                        //GET TIME SHEET
+                        if (result === undefined || result === null || result.length === 0) {
                             res.json({
                                 status: "success",
-                                result: result,
-                                resultActivity: resultActivity
-                            });
-                            return;
-                        }).error(function(err) {
-                            console.log("*****ERROR:" + err + "*****");
-                            res.json({
-                                status: "error",
                                 result: [],
-                                resultActivity: []
+                                resultActivity: [],
+                                forPermission: forPermission
                             });
                             return;
-                        });
+                        } else {
+                            db.sequelize.query(strActivity)
+                                .success(function(resultActivity) {
+                                    res.json({
+                                        status: "success",
+                                        result: result,
+                                        resultActivity: resultActivity,
+                                        forPermission: forPermission
+                                    });
+                                    return;
+                                }).error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error",
+                                        result: [],
+                                        resultActivity: [],
+                                        forPermission: forPermission
+                                    });
+                                    return;
+                                });
 
-                }
+                        }
+                        //END GET TIME SHEET
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+                //END CHECK LEAVE
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -2297,12 +2352,14 @@ module.exports = {
         var leaveID = req.body.info.leaveID;
         var userID = req.body.info.userID;
         var dateUpdate = moment().format("YYYY-MM-DD hh:mm:ss");
-        var queryUpdateStatus = "UPDATE hr_leave SET hr_leave.status_id = :statusID, last_update_date = :dateUpdate " +
+        var queryUpdateStatus = "UPDATE hr_leave SET hr_leave.status_id = :statusID, status_id_first = :statusIdFirst, " +
+            "last_update_date = :dateUpdate " +
             "WHERE hr_leave.leave_id = :leaveID";
         db.sequelize.query(queryUpdateStatus, null, {
                 raw: true
             }, {
                 statusID: statusID,
+                statusIdFirst: statusID,
                 dateUpdate: dateUpdate,
                 leaveID: leaveID
             })
@@ -2578,7 +2635,8 @@ module.exports = {
                                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
                                         "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
                                         "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
-                                        " AND hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1" +
+                                        " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1) OR hr_leave.user_id IN " +
+                                        listUser + ")" +
                                         selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
                                 }
                                 db.sequelize.query(queryGetListLeave, null, {
@@ -2588,37 +2646,21 @@ module.exports = {
                                         offset: info.offset
                                     })
                                     .success(function(resultListLeave) {
-                                        var queryGetStatus = "SElECT time_task_status.task_status_id as code, time_task_status.name " +
-                                            "FROM time_task_status";
-                                        db.sequelize.query(queryGetStatus)
-                                            .success(function(resultGetStatus) {
-                                                if (searchStr === "" &&
-                                                    selectStr === "" &&
-                                                    resultListLeave.length === 0) {
-                                                    res.json({
-                                                        status: "success",
-                                                        result: null,
-                                                        listStatus: resultGetStatus
-                                                    });
-                                                    return;
-                                                } else {
-                                                    res.json({
-                                                        status: "success",
-                                                        result: resultListLeave,
-                                                        listStatus: resultGetStatus
-                                                    });
-                                                    return;
-                                                }
-                                            })
-                                            //ERROR
-                                            .error(function(err) {
-                                                console.log("*****ERROR:" + err + "*****");
-                                                res.json({
-                                                    status: "error"
-                                                });
-                                                return;
+                                        if (searchStr === "" &&
+                                            selectStr === "" &&
+                                            resultListLeave.length === 0) {
+                                            res.json({
+                                                status: "success",
+                                                result: null,
                                             });
-                                        //END ERROR
+                                            return;
+                                        } else {
+                                            res.json({
+                                                status: "success",
+                                                result: resultListLeave
+                                            });
+                                            return;
+                                        }
                                     })
                                     //ERROR
                                     .error(function(err) {
@@ -3006,6 +3048,7 @@ module.exports = {
             }, {
                 leave_id: info.leaveID
             })
+            //SUCCESS
             .success(function(result) {
 
                 //TRACKER LEAVE
@@ -3026,20 +3069,63 @@ module.exports = {
                 sendMailLeave(req, res, infoSendMail);
                 //END SEND MAIL
 
+                // GET STATUS SUCCESS REJECT
                 res.json({
                     status: "success"
                 });
                 return;
+                //END GET 
             })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
+            //END SUCCESS
+
+        //ERROR
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
             });
+            return;
+        });
+        //END ERROR
     },
     //END REJECT
+
+    //CHECK LEAVE EXIST
+    CheckLeave: function(req, res) {
+        // DECLARATION
+        var USER_ID = req.body.USER_ID;
+        var queryGetListTime =
+            "SElECT hr_leave.start_date, hr_leave.finish_date, hr_leave.leave_id " + //SELECT
+            "FROM hr_leave " + //FROM
+            "WHERE hr_leave.user_id = :userId"; //WHERE
+        //END DECLARATION
+
+        db.sequelize.query(queryGetListTime, null, {
+                raw: true
+            }, {
+                userId: USER_ID
+            })
+            //SUCCESS
+            .success(function(resultListTime) {
+                res.json({
+                    status: "success",
+                    result: resultListTime
+                });
+                return;
+            })
+            //END SUCCESS
+
+        //ERROR
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+            return;
+        });
+        //END ERROR
+    },
+    // END CHECK LEAVE
 };
 
 //FUNCTION SEND MAIL SUBMIT FIRST

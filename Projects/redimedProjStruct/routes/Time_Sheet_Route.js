@@ -72,4 +72,5 @@ app.post("/api/TimeSheet/post-update-leave", TimeSheet.UpdateLeave);
 app.post("/api/TimeSheet/post-list-leave", TimeSheet.LoadLeaveApprove);
 app.post("/api/TimeSheet/post-approve-leave", TimeSheet.ApproveLeave);
 app.post("/api/TimeSheet/post-reject-leave", TimeSheet.RejectLeave);
+app.post("/api/TimeSheet/post-check-leave", TimeSheet.CheckLeave);
 //END lEAVE

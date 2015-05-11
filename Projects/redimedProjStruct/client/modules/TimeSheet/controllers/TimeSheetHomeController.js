@@ -7,4 +7,8 @@ angular.module("app.loggedIn.TimeSheet.Home.Controller", [])
         if (localStorageService.get('position')) {
             $scope.position = localStorageService.get('position');
         }
+
+        $scope.reportOweLeave = function() {
+            console.log("REPORTS");
+        };
     });
