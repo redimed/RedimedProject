@@ -15,6 +15,21 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
                 {field: 'FA_ID', is_hide: true},
                 {field: 'TYPE', label: 'Type'},
                 {field: 'FA_NAME', label: 'Name'},
+                {label: 'Status', type:'status', 
+                    isEnable: function(item){
+                        return item.ISENABLE;
+                    },
+                    disableFn: function(item){
+                        FaDefineService.changeFaStt(0,item.FA_ID).then(function(res){
+                            if(res.status==='success') $scope.fa_panel.reload();
+                        })
+                    },
+                    enableFn: function(item){
+                        FaDefineService.changeFaStt(1,item.FA_ID).then(function(res){
+                            if(res.status==='success') $scope.fa_panel.reload();
+                        })
+                    }
+                }
             ],
 
             use_filters: true,

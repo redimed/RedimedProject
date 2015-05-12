@@ -59,6 +59,10 @@
                         <span ng-switch-when="button">
                             <button class="btn btn-sm blue-soft" ng-click="col.btnfn(item)" ng-disabled="col.disfn(item)==true">{{col.btnlabel}}</button>
                         </span>
+                        <span ng-switch-when="status">
+                            <button class="btn btn-sm blue-soft" ng-click="col.disableFn(item)" ng-show="col.isEnable(item)===1">Enabled</button>
+                            <button class="btn btn-sm red" ng-click="col.enableFn(item)" ng-show="col.isEnable(item)===0">Disabled</button>
+                        </span>
                         <span ng-switch-when="custom">{{col.fn(item)}}</span>
                         <span ng-switch-default>{{item[col.field]}}</span>
                     </span>

@@ -22,7 +22,7 @@ module.exports = {
         if(searchData.TYPE) whereClause.TYPE = "%"+searchData.TYPE+"%"
 
 		var sql = knex
-		.select('FA_ID','FA_NAME','TYPE','Creation_date')
+		.select('FA_ID','FA_NAME','TYPE','ISENABLE','Creation_date')
 		.from('sys_fa_df_headers')
 		.where('FA_NAME','like','%'+whereClause.FA_NAME+'%')
 		.andWhere('TYPE','like','%'+whereClause.TYPE+'%')
@@ -707,6 +707,21 @@ module.exports = {
 		}
 
 		updateHeader(req.body);
+	},
+
+	postChangeHeaderStt: function(req,res){
+		var stt = req.body.status;
+		var headerId = req.body.headerId;
+
+		knex('sys_fa_df_headers')
+		.where({FA_ID:headerId})
+		.update({ISENABLE: stt})
+		.then(function(result){
+			res.json({status:'success'});
+		})
+		.error(function(err){
+			res.json(500,{status:'error'});
+		})
 	}
 
 	// postEdit: function(req,res){

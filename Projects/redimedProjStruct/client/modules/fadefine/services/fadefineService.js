@@ -35,5 +35,13 @@ angular.module('app.loggedIn.fadefine.service',[])
         return editFaApi.post(postData);
     }
 
+    instanceService.changeFaStt = function(status, headerId){
+        var changeFaSttApi = v2_api.all('fa/change_header_stt');
+        return changeFaSttApi.post({
+            headerId: headerId,
+            status: status
+        })
+    }
+
     return instanceService;
 });
