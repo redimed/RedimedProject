@@ -48,8 +48,19 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					ConfigService.beforeError(scope.outreferral.errors);
 				})
 			}
+			
+			scope.$watch('doctorId', function(doctorId){
+				var postData = doctorId;
+				
+				OutreferralModel.DotorFromUserId(postData)
+				.then(function(response){
+					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
+					scope.referdoctor.name = response.data[0].NAME;
+				}, function(error){})
+			})
 			var load = function(){
 				var postData = scope.doctorId;
+				
 				OutreferralModel.DotorFromUserId(postData)
 				.then(function(response){
 					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
