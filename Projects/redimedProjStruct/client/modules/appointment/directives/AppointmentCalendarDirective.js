@@ -551,6 +551,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 														$scope.patientId = new_patient.Patient_id;
 														$scope.calId = col.CAL_ID;
 														$scope.success = false;
+														$scope.doctorId = col.DOCTOR_ID;
 
 														$scope.$watch('success', function(success){
 															if(success){

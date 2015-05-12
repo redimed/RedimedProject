@@ -9,6 +9,22 @@ var timeTableUtil=require('./timeTableUtilController');
 
 module.exports = {
 
+	postOne: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex('cln_appointment_calendar')
+			.where('CAL_ID', postData.CAL_ID)
+			.toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows[0]});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
+
 	alertCenter: function(req, res){
 		var postData = req.body.data;
 

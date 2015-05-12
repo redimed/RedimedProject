@@ -180,13 +180,13 @@
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success">
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
 		</outreferral-patient-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="referralSelect">
-	<div class="modal-body">	
+	<div class="modal-body">
 		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
 			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
 			permission="{edit: false, remove: false, add: true}">
