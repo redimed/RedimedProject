@@ -3003,6 +3003,7 @@ module.exports = {
                                                                                             }
 
                                                                                         } else {
+
                                                                                             //CHECK LEVEL 1
                                                                                             if (resultInfoLevel1 !== undefined &&
                                                                                                 resultInfoLevel1 !== null &&
