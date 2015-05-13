@@ -7,6 +7,9 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var db = require('../models');
+var kiss=require('./kissUtilsController');
+var rlobUtil=require('./rlobUtilsController');
+var rlobEmailController=require('./rlobEmailController');
 
 module.exports = {
     list: function(req,res){
@@ -308,62 +311,65 @@ module.exports = {
             }
         });
 
-        var mailOptions = {
-            from: 'Tan Nguyen ? <tannv.solution@gmail.com>', // sender address.  Must be the same as authenticated user if using Gmail.
-            to: femail, // receiver
-            subject:'Redimed New Password', // Subject line
-            html:
-            "	<p>Hi,</p>                                 "+
-            "    <p>                                                                                                 "+
-            "        New Password:"+ newpass+
-            "    </p>                                                                                                "+
+        var emailInfo={
+            subject:'',
+            senders:'',
+            recipients:'',
+            htmlBody:'',
+            textBody:''
+        };
 
-            "    <p>                                                                                                 "+
-            "        Should you have any questions please do not hesitate to contact Redilegal                       "+
-            "        on (08) 9230 0900 or redilegal@redimed.com.au                                                   "+
-            "    </p>                                                                                                "+
-            "    <p>                                                                                                 "+
-            "        Thank you                                                                                       "+
-            "    </p>   "
+        emailInfo.subject='Redimed New Password';
+        emailInfo.senders=rlobUtil.getMedicoLegalMailSender();
+        //emailInfo.senders="tannv.solution@gmail.com";
+        emailInfo.recipients=femail;
+        emailInfo.cc=rlobUtil.getMedicoLegalCC();
 
+        var template=
+            " <p>Hi,</p>                                                                                     "+
+            " <p>New Password: {{newPass}}</p>                                                                "+
+            " <p>                                                                                            "+
+            " Should you have any questions please do not hesitate to contact the Medico-Legal Department    "+
+            "  on (08) 9230 0900 or medicolegal@redimed.com.au                                               "+
+            " </p>                                                                                           "+
+            " <p>Thank you</p>                                                                               "+
+            " <p>Kind Regards,</p>                                                                           "+
+            " <p>Redimed Medico-Legal</p>                                                                    ";
+        var emailData={
+            newPass:newpass
         }
+        template=kiss.tokenBinding(template,emailData);
+        emailInfo.htmlBody=template;
 
-        db.User.find({where:{Contact_email : femail}},{raw:true})
-            .success(function(data){
-                if(data)
-                {
-                    db.User.update({
-                       password:byscrip
-                    },{Contact_email:femail}).success(function(data){
-
-                        transport.sendMail(mailOptions, function(error, response){  //callback
-                            if(error){
-                                console.log(error);
-                                res.json({status:"error"});
-                            }else{
-                                console.log("Message sent: " + response.message);
-                                res.json({status:"success"});
-                            }
-                            transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
-                        });
-
-
-                    }).error(function(err){
-                        res.json({status:'Error'});
-                    })
-                }
-                else
-                    res.json({status:'error'});
-
-            })
-            .error(function(err){
-                console.log(err);
-                res.json({status:'error'});
-            })
-
-        
-
+        var sql="SELECT * FROM users u WHERE u.`Contact_email`=?";
+        kiss.executeQuery(req,sql,[femail],function(rows){
+            if(rows.length>0)
+            {
+                var sql="UPDATE users SET `password`=? WHERE `Contact_email`=?";
+                kiss.executeQuery(req,sql,[byscrip,femail],function(result){
+                    if(result.affectedRows>0)
+                    {
+                        rlobEmailController.sendEmail(req,res,emailInfo);
+                        res.json({status:"success"});
+                    }
+                    else
+                    {
+                        kiss.exlog("forgotPassword","Khong co user nao duoc cap nhat");
+                        res.json({status:'fail'});
+                    }
+                })
+            }
+            else
+            {
+                kiss.exlog("forgotPassword","Khong co account nao phu hop voi email");
+                res.json({status:'fail'});
+            }
+        },function(err){
+            kiss.exlog("forgotPassword","Loi truy van lay thong tin user thong qua email",err);
+            res.json({status:'fail'});
+        });
     },
+
     checkEmail: function(req,res){
         var email = req.query.email;
 

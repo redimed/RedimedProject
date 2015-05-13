@@ -58,6 +58,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
+    "promise": "^7.0.1",
     "q": "^1.1.1",
     "randomstring": "^1.0.3",
     "rimraf": "^2.2.8",
@@ -73,7 +74,6 @@
     "util": "^0.10.3",
     "watchjs": "0.0.0",
     "winston": "^0.8.3",
-    "xml2js": "^0.4.4",
-    "promise": "~7.0.1"
+    "xml2js": "^0.4.4"
   }
 }
