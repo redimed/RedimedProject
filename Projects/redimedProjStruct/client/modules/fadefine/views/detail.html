@@ -110,21 +110,30 @@
 											</div>
 										</div>
 									<h3 class="form-section">General definition</h3>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText" ng-checked="line.IsCommentsText===1"/> Has comment text?
-											</label>
+										<div class="row">
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+														<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText" ng-checked="line.IsCommentsText===1"/> Has comment text?
+												</label>
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+														<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.LineType" ng-checked="line.LineType===1"/> Is in summary line?
+												</label>
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+														<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE" ng-checked="line.IS_SHOW_RANKING_TABLE===1"/> Is showing ranking table?
+												</label>
+											</div>
 										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.LineType" ng-checked="line.LineType===1"/> Is in summary line?
-											</label>
+									<h3 class="form-section">Image</h3>
+										<div class="row">
+											<div class="col-md-12 col-sm-12 col-xs-12">
+												<button class="btn btn-default" ng-click="openModal()"><i class="fa fa-file-image-o"></i> Select line image</button>
+											</div>
 										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE" ng-checked="line.IS_SHOW_RANKING_TABLE===1"/> Is showing ranking table?
-											</label>
-										</div>
+										
 								</accordion-group>
 								<accordion-group heading="Line detail questions">
 						    		<table class="table table-bordered table-hover">
@@ -144,7 +153,12 @@
 										<tbody>
 											<tr ng-repeat="detail in line.details" ng-hide="detail.action==='delete'">
 												<td width="20%">
-													<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
+													<div>
+														<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
+													</div>
+													<div>
+														<button class="btn btn-default" ng-click="openModal()"><i class="fa fa-file-image-o"></i> Select detail image</button>
+													</div>
 												</td>
 												<td>
 													<div class="col-md-7 col-xs-7 col-sm-7">

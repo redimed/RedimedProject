@@ -1361,3 +1361,21 @@ table.timetable-table td:last-child {
     top: 5%;
     right: 250px;
 }
+
+.image-container-div {
+    width:100%; 
+    height:100%; 
+    border:solid 1px #ddd;
+    cursor:pointer;
+    color: gray;
+}
+
+.image-container-div:hover {
+    border:solid 5px #D84A38;
+}
+
+
+.outer-div {
+    margin-top:10px; 
+    height:200px; 
+}

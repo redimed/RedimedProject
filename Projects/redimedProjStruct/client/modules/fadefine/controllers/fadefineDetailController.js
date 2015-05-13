@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, $stateParams, $state, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
+.controller("FaDefineDetailController", function($scope, $stateParams, $state, $modal, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
 
 	//init action
 	if($stateParams.action==='edit'){
@@ -495,4 +495,17 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			}
 		})
 	}
+
+	$scope.openModal = function(){
+        var modalInstance = $modal.open({
+          animation: true,
+          templateUrl: 'modules/fadefine/views/imageModal.html',
+          size: 'lg'
+          // resolve: {
+          //   items: function () {
+          //     return $scope.items;
+          //   }
+          // }
+        });
+    }
 });

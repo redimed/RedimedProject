@@ -82,4 +82,5 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
     $scope.newDefine = function(){
         $state.go('loggedIn.fadefine.detail',{action:'add', headerId:0})
     }
+
 });

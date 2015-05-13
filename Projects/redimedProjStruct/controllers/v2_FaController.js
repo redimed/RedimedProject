@@ -337,7 +337,7 @@ module.exports = {
 		.from('sys_fa_df_headers')
 		.where({FA_ID: headerId})
 		.then(function(headerRes){
-			if(headerRes.length===0) res.json(500,{status:'get header error', error:err});
+			if(headerRes.length===0) res.json(500,{status:'get header error'});
 			else{
 				getResult = headerRes[0];
 				//get sections
