@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         is_approve_first: DataTypes.INTEGER(11),
         is_approve_second: DataTypes.INTEGER(11),
         status_id_first: DataTypes.INTEGER(11),
+        is_reject: DataTypes.INTEGER(11),
         status_id_second: DataTypes.INTEGER(11),
         user_id: DataTypes.INTEGER(11),
         comments: DataTypes.STRING(500),

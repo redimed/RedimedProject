@@ -22,7 +22,7 @@
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
         <div class="caption" style="font-size:14px;font-weight:bold;">
-            <i class="glyphicon glyphicon-list"></i>List of Leaves
+            List of Leaves
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -57,6 +57,11 @@
                                     Status
                                 </div>
                             </th>
+                            <th style="width:150px;">
+                                <div class="th">
+                                    Person-In-Charge
+                                </div>
+                            </th>
                             <th>
                                 <div class="th">
                                     Reason for Leave
@@ -76,10 +81,11 @@
                             <td style="width:200px;">
                                 <select class="form-control input-sm" ng-options="stt.code as stt.name for stt in listStatus" ng-model="searchObjectMap.select[0]" ng-change="loadList()" style="font-size:14px;"></select>
                             </td>
+                            <td style="width:150px;"></td>
                             <td></td>
                         </tr>
                         <tr ng-show="list.result===null" style="font-size:14px;">
-                            <td colspan="4">
+                            <td colspan="5">
                                 <h4 class="custom-timesheet">There is no items</h4>
                             </td>
                         </tr>
@@ -88,13 +94,14 @@
                                 <span>{{((l.FirstName!==undefined && l.FirstName!==null)?l.FirstName:"") +" "+((l.LastName!==undefined && l.LastName!==null)?l.LastName:"")}}</span>
                             </td>
                             <td style="font-size:14px; text-align:left; width:200px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
-                            <td style="text-align:center;font-size:14px; width:150px;">
-                                <span>{{l.time_leave|customHours}}</span>
+                            <td style="text-align:right;font-size:14px; width:150px;">
+                                <span style="margin-right:55px;">{{l.time_leave|customHours}}</span>
                             </td>
-                            <td style="text-align:center;font-size:14px; width:200px;">
+                            <td style="text-align:left;font-size:14px; width:200px;">
                                 <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{(l.name==="Submitted")?"Awaiting for Approve": l.name}}</span>
                             </td>
+                            <td style="width:150px; font-size:14px;">{{l.person_charge}}</td>
                             <td style="text-align:left;font-size:14px;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
                             </td>
                         </tr>

@@ -124,6 +124,13 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 $scope.info.time_leave === null ||
                 $scope.info.time_leave.length === 0) {
                 toastr.error("You must sign time leave!", "Error");
+            } else if (($scope.info.time_leave_real !== undefined &&
+                    $scope.info.standard !== undefined &&
+                    (($scope.info.time_leave_real > 4560 &&
+                            $scope.info.standard === 1) ||
+                        ($scope.info.time_leave_real <= 4560 &&
+                            $scope.info.standard === 0)))) {
+                toastr.warning("Please make ensure that you have choosen the Type of Leave (Standard/Non-Standard).", "Warning");
             }
             //END SIGN TIME LEAVE
 
@@ -180,6 +187,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             }
             //END NOT ERROR
         };
+
         //FUNCTION CHANGE TIME LEAVE
         $scope.changeTime = function() {
             var total_time = 0;
@@ -189,6 +197,11 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             });
             $scope.info.time_leave = StaffService.convertFromFullToShow(total_time);
             $scope.info.time_leave_real = StaffService.convertShowToFull($scope.info.time_leave);
+            //SHOW __ 
+            if (total_time === 0) {
+                $scope.info.time_leave = null;
+            }
+            //END SHOW __
         };
         //END CHANGE TIME LEAVE
 

@@ -22,7 +22,7 @@
                         <!-- APPLY LEAVE -->
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.CreateLeave" ng-if="(position==='Staff' || position==='Head of Dept.')">
-                                <span class="bold text-info" style="font-size:14px;">Apply for Leave
+                                <span class="bold text-info" style="font-size:14px;">Apply a Leave Form
                                 </span>
                             </a>
                         </li>
@@ -35,13 +35,6 @@
                             </a>
                         </li>
                         <!-- END APPROVE LEAVE -->
-                        <!-- REPORT LEAVE -->
-                        <li role="presentation">
-                            <a role="menuitem" ng-if="(position==='Head of Dept.' || position==='Director')" ng-click="reportOweLeave()">
-                                <span class="bold text-info" style="font-size:14px;">Report on Employee owe Leave</span>
-                            </a>
-                        </li>
-                        <!-- END REPORT LEAVE -->
                     </ul>
                 </div>
                 <!-- END DROPDOWN ACTION -->
@@ -105,6 +98,13 @@
                                 <span class="bold text-info" style="font-size:14px;">Report on Item Numbers</span>
                             </a>
                         </li>
+                        <!-- REPORT LEAVE -->
+                        <li role="presentation">
+                            <a role="menuitem" ng-if="(position==='Head of Dept.' || position==='Director')" ng-click="reportOweLeave()">
+                                <span class="bold text-info" style="font-size:14px;">Report on Employee owe Leave</span>
+                            </a>
+                        </li>
+                        <!-- END REPORT LEAVE -->
                     </ul>
                 </div>
                 <!-- END DROPDOWN ACTION -->

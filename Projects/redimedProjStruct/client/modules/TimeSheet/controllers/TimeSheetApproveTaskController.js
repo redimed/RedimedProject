@@ -161,8 +161,8 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                             if (info.forPermission === false) {
                                 //NOTIFICATION
                                 swal({
-                                    title: "Date leave not permisson!",
-                                    text: "Do you want approve this Timesheet!",
+                                    title: "Warning!",
+                                    text: "Please noted that the Leave Form has not yet been submitted/approved. Do you want to approve this Timesheet?",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: "#DD6B55",

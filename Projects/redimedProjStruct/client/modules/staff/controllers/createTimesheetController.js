@@ -114,6 +114,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.info.time_in_lieuFull = sumInLieu;
         $scope.info.time_temp = sum;
         $scope.info.time_charge = StaffService.convertFromFullToShow(sum);
+        //SHOW __
+        if (sum === 0) {
+            $scope.info.time_charge = null;
+        }
+        //END SHOW __
     };
     //END FUNCTION TOTAL TIME CHARGE
 

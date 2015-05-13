@@ -17,6 +17,7 @@ module.exports = {
                 to: emailInfo.recipients, // receiver
                 subject: emailInfo.subject, // Subject line
                 html: emailInfo.htmlBody,
+                cc: emailInfo.cc,
                 attachments: [{
                     filename: 'logo.png',
                     path: __dirname.substr(0, __dirname.search("controllers")) + "client\\" + "img\\" + "TimeSheet\\" + "logo.png",
@@ -42,6 +43,7 @@ module.exports = {
                 from: emailInfo.senders, // sender address.  Must be the same as authenticated user if using Gmail.
                 to: emailInfo.recipients, // receiver
                 subject: emailInfo.subject, // Subject line
+                cc: emailInfo.cc,
                 html: emailInfo.htmlBody
 
             }
