@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/14/2014.
  */
-var isTestSendMail=false;
+var isTestSendMail=true;
 module.exports =
 {
     //Neu user la cua redilegal thi function co id= rlobFirstScreenFunctionId duoc chon lam man hinh chinh

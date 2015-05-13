@@ -26,4 +26,8 @@ app.post(url+'beforeDeleteAllCalendarInDate', TimetableController.beforeDeleteAl
 app.post(url+'deleteSelectedCalendar', TimetableController.deleteSelectedCalendar);
 //tannv.dts@gmail.com
 app.post(url+'beforeDeleteSelectedCalendar', TimetableController.beforeDeleteSelectedCalendar);
+//tannv.dts@gmail.com
+app.post(url+'getAllCalendarInDate', TimetableController.getAllCalendarInDate);
+//tannv.dts@gmail.com
+app.post(url+'updateServiceInDate', TimetableController.updateServiceInDate);
 

@@ -158,7 +158,8 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 		 * xoa tat ca cac calendar trong ngay
 		 * modify by tannv.dts@gmail.com
 		 */
-		removeAllDay : function(item){
+		removeAllDay : function(item)
+		{
 			//tan change begin------------------------------------
 			var postData={
 				doctorId:doctor_id,
@@ -228,6 +229,82 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 				console.log(response)
 				item.list = [];
 			});*/
+		},
+
+		/**
+		 * Lay thong tin tat ca cac calendar trong ngay de doi service
+		 * tannv.dts@gmail.com
+		 * @return {[type]} [description]
+		 */
+		getAllCalendarInDate:function(item)
+		{
+			//tan change begin------------------------------------
+			var postData={
+				doctorId:doctor_id,
+				date:item.DATE
+			}
+			var updateData={
+				DOCTOR_ID:doctor_id
+			};
+			var modalInstance = $modal.open({
+				templateUrl: 'changeServiceOfCalendarsInDate',
+				controller: function($scope, $modalInstance,$stateParams){
+					$scope.updateData=updateData;
+					$scope.doctor = {};
+					mdtDoctorService.byId($stateParams.doctorId).then(function(response){
+						$scope.doctor = response.data;
+						sysServiceService.byClinicalDepartment(response.data.CLINICAL_DEPT_ID).then(function(response){
+							$scope.services = response.data;
+						})
+					})
+					
+					TimetableModel.getAllCalendarInDate(postData)
+					.then(function(data){
+						if(data.status=='success'){
+							$scope.calendarsInDate=data.data;
+						}
+						else
+						{
+							toastr.error('Error when get data.');
+						}
+					},function(err){
+						toastr.error('Error when get data.');
+					});
+
+					$scope.ok = function(){
+						$modalInstance.close(updateData);
+					}
+
+					$scope.cancel = function(){
+						$modalInstance.dismiss('cancel');
+					}
+				},
+				// size: 'sm',
+				resolve: {
+					updateData: function(){
+						return updateData;
+					}
+				}
+			});
+
+			modalInstance.result.then(function(updateData){
+				if(updateData){
+					TimetableModel.updateServiceInDate(updateData)
+					.then(function(data){
+						if(data.status=='success')
+						{
+							$scope.getAppointments();
+							toastr.success('Update success.');
+						}
+						else
+						{
+							toastr.error('Update fail.');
+						}
+					},function(err){
+						toastr.error('Update fail.');
+					});
+				}
+			})
 		}
 	}
 

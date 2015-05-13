@@ -4,7 +4,6 @@ angular.module('app.loggedIn.timetable.dialogs.addSite', [])
 	var user_id = $cookieStore.get('userInfo').id;
 
 	var weeks = [
-		{code: 0, value: 'Weekly'},
 		{code: 1, value: 'Week 1'},
 		{code: 2, value: 'Week 2'},
 		{code: 3, value: 'Week 3'},
