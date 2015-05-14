@@ -3525,6 +3525,133 @@ module.exports = {
     LoadReportOweLeave: function(req, res) {
         var info = req.body.info;
         console.log(info);
+        var weekNoFrom = info.weekNoFrom;
+        var weekNoTo = info.weekNoTo - 1;
+        if (info !== undefined &&
+            info !== null &&
+            info.listEMP !== undefined &&
+            info.listEMP !== null &&
+            info.listEMP.length !== 0) {
+            var listUser = "";
+            info.listEMP.forEach(function(EMP, indexEMP) {
+                if (EMP !== undefined &&
+                    EMP !== null &&
+                    EMP.id !== undefined &&
+                    EMP.id !== null &&
+                    !isNaN(EMP.id)) {
+                    listUser += EMP.id + ", ";
+                }
+            });
+            if (listUser === "") {
+                listUser = "(-1)";
+            } else {
+                listUser = "(" + listUser.substring(0, listUser.length - 2) + ")";
+            }
+            var queryGetListDateEmployeeLeave =
+                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, " +
+                "hr_employee.Employee_ID, time_tasks.date, departments.departmentName " +
+                "FROM hr_employee " +
+                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+                "INNER JOIN time_tasks_week ON time_tasks_week.user_id = users.id " +
+                "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+                "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
+                "WHERE time_item_task.item_id IN (15, 16) AND time_tasks_week.week_no BETWEEN " +
+                weekNoFrom + " AND " + weekNoTo + " AND hr_employee.Employee_ID IN " + listUser;
+            db.sequelize.query(queryGetListDateEmployeeLeave)
+                .success(function(resultListDateEmployeeLeave) {
+                    var queryGetListDateEmployeeLeaveApproved =
+                        "SELECT DISTINCT hr_employee.Employee_ID, hr_leave.start_date, hr_leave.finish_date " +
+                        "FROM hr_employee " +
+                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                        "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+                        "INNER JOIN hr_leave_detail ON hr_leave_detail.leave_id = hr_leave.leave_id " +
+                        "WHERE hr_leave.status_id = 3 AND hr_employee.Employee_ID IN " + listUser;
+                    db.sequelize.query(queryGetListDateEmployeeLeaveApproved)
+                        .success(function(resultListDateEmployeeLeaveApproved) {
+                            if (resultListDateEmployeeLeave !== undefined &&
+                                resultListDateEmployeeLeave !== null &&
+                                resultListDateEmployeeLeave.length !== 0) {
+                                var listLeaveInsert = "";
+                                resultListDateEmployeeLeave.forEach(function(elemLeave, indexLeave) {
+                                    if (resultListDateEmployeeLeaveApproved !== undefined &&
+                                        resultListDateEmployeeLeaveApproved !== null &&
+                                        resultListDateEmployeeLeaveApproved.length !== 0) {
+                                        resultListDateEmployeeLeaveApproved.forEach(function(elemLeaveApproved, indexLeaveApproved) {
+                                            var dateLeave = moment(moment(elemLeave.date).format("YYYY-MM-DD")).format("X");
+                                            var startDate = moment(moment(elemLeaveApproved.start_date).format("YYYY-MM-DD")).format("X");
+                                            var finishDate = moment(moment(elemLeaveApproved.finish_date).format("YYYY-MM-DD")).format("X");
+                                            if (dateLeave >= startDate &&
+                                                dateLeave <= finishDate) {
+                                                resultListDateEmployeeLeave.splice(indexLeave, 1);
+                                            } else {
+                                                listLeaveInsert += "(" + info.USER_ID + ",'" + resultListDateEmployeeLeave[indexLeave].departmentName +
+                                                    "','" + resultListDateEmployeeLeave[indexLeave].FirstName + " " + resultListDateEmployeeLeave[indexLeave].LastName +
+                                                    "','" + moment(resultListDateEmployeeLeave[indexLeave].date).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                                    moment(info.weekFrom).format("YYYY-MM-DD HH:mm:ss") + "','" + moment(info.weekTo).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                                    moment().format("YYYY-MM-DD HH:mm:ss") + "'," + info.USER_ID + "), ";
+                                            }
+                                        });
+                                    } else {
+                                        listLeaveInsert += "(" + info.USER_ID + ",'" + resultListDateEmployeeLeave[indexLeave].departmentName +
+                                            "','" + resultListDateEmployeeLeave[indexLeave].FirstName + " " + resultListDateEmployeeLeave[indexLeave].LastName +
+                                            "','" + moment(resultListDateEmployeeLeave[indexLeave].date).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                            moment(info.weekFrom).format("YYYY-MM-DD HH:mm:ss") + "','" + moment(info.weekTo).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                            moment().format("YYYY-MM-DD HH:mm:ss") + "'," + info.USER_ID + "), ";
+                                    }
+                                });
+                                listLeaveInsert = listLeaveInsert.substring(0, listLeaveInsert.length - 2);
+                                var queryInsertReportLeave =
+                                    "INSERT INTO hr_leave_owe (user_id, department, employee, date_leave, from_date, to_date, creation_date, created_by) " +
+                                    "VALUES " + listLeaveInsert;
+                                var queryDeleteListReport = "DELETE FROM hr_leave_owe WHERE user_id = :userId";
+                                db.sequelize.query(queryDeleteListReport, null, {
+                                        raw: true
+                                    }, {
+                                        userId: info.USER_ID
+                                    })
+                                    .success(function(resultDel) {
+                                        db.sequelize.query(queryInsertReportLeave)
+                                            .success(function(resultInsertReportLeave) {
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                                return;
+                                            });
+                                    })
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error"
+                                        });
+                                        return;
+                                    });
+                            }
+
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error"
+                            });
+                            return;
+                        });
+                })
+                .error(function(err) {
+                    console.log("*****ERROR:" + err + "*****");
+                    res.json({
+                        status: "error"
+                    });
+                    return;
+                });
+        }
     },
     //END REPORT OWE LEAVE
 
