@@ -314,6 +314,41 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 USER_ID: USER_ID
             });
         };
+
+        TimeSheetService.LoadReportOweLeave = function(info) {
+            var LoadReportOweLeave = api.all("TimeSheet/post-owe-leave");
+            return LoadReportOweLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportTimeInLieu = function(info) {
+            var LoadReportTimeInLieu = api.all("TimeSheet/post-time-inlieu");
+            return LoadReportTimeInLieu.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportItemNumber = function(info) {
+            var LoadReportItemNumber = api.all("TimeSheet/post-item-number");
+            return LoadReportItemNumber.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportUtilizationRatioSumary = function(info) {
+            var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-summary");
+            return LoadReportUtilizationRatioSumary.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportUtilizationRatioDetail = function(info) {
+            var LoadReportUtilizationRatioDetail = api.all("TimeSheet/post-utilization-detail");
+            return LoadReportUtilizationRatioDetail.post({
+                info: info
+            });
+        };
         //END LEAVE FORM
 
         return TimeSheetService;

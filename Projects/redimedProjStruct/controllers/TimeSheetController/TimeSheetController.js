@@ -3520,6 +3520,41 @@ module.exports = {
         //END ERROR
     },
     // END CHECK LEAVE
+
+    // REPORT OWE LEAVE
+    LoadReportOweLeave: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT OWE LEAVE
+
+    //REPORT TIME IN LIEU
+    LoadReportTimeInLieu: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END TIME IN LIEU
+
+    //REPORT UTILIZATION RATIO DETAIL
+    LoadReportUtilizationRatioDetail: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT UTILIZITION RATIO DETAIL
+
+    //REPORT UTILIZATION RATIO SUMARY
+    LoadReportUtilizationRatioSumary: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT UTILIZITION RATIO SUMARY
+
+    //REPORT ITEM NUMBER
+    LoadReportItemNumber: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT ITEM NUMBER
 };
 
 //FUNCTION SEND MAIL SUBMIT FIRST

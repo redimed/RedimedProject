@@ -55,6 +55,11 @@ app.post("/api/TimeSheet/post-list-emp", TimeSheet.StepEmployee);
 app.post("/api/TimeSheet/post-list-deptRP", TimeSheet.LoadDeptReport);
 app.post("/api/TimeSheet/post-list-empRP", TimeSheet.LoadEmpReport);
 app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
+app.post("/api/TimeSheet/post-owe-leave", TimeSheet.LoadReportOweLeave);
+app.post("/api/TimeSheet/post-utilization-detail", TimeSheet.LoadReportUtilizationRatioDetail);
+app.post("/api/TimeSheet/post-utilization-sumary", TimeSheet.LoadReportUtilizationRatioSumary);
+app.post("/api/TimeSheet/post-time-inlieu", TimeSheet.LoadReportTimeInLieu);
+app.post("/api/TimeSheet/post-item-number", TimeSheet.LoadReportItemNumber);
 //END REPORT
 
 //SEND MAIL

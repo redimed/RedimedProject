@@ -72,6 +72,11 @@ angular.module("app.loggedIn.TimeSheet", [
                 templateUrl: "modules/TimeSheet/views/Report5.html",
                 controller: "Report5Controller"
             })
+            .state("loggedIn.Report6TimeSheet", {
+                url: "/Report6TimeSheet",
+                templateUrl: "modules/TimeSheet/views/Report6.html",
+                controller: "Report6Controller"
+            })
             //MODULE LEAVE FORM
             .state("loggedIn.CreateLeave", {
                 position: ["Staff", "Head of Dept."],
@@ -95,7 +100,7 @@ angular.module("app.loggedIn.TimeSheet", [
                 position: ["Head of Dept.", "Director"],
                 url: "/ReportOweLeave",
                 templateUrl: "modules/TimeSheet/views/ReportOweLeave.html",
-                controller: "ReportsOweLeave"
+                controller: "ReportOweLeave"
             });
         //END LEAVE
     });
