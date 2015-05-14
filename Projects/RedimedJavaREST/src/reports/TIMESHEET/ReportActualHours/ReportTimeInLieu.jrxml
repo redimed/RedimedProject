@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
+		<queryString>
+			<![CDATA[SELECT
+time_employee_reports1.employee,
+time_time_charge_reports1.time_ac1,
+time_time_charge_reports1.time_ac2,
+time_time_charge_reports1.time_ac3,
+time_time_charge_reports1.time_ac4,
+time_time_charge_reports1.time_ac5,
+time_time_charge_reports1.time_convert,
+time_time_charge_reports1.time_in_lieu,
+time_time_charge_reports1.time_charge_sum,
+time_time_charge_reports1.time_over,
+departments.departmentName
+FROM
+time_employee_reports1
+INNER JOIN time_time_charge_reports1 ON time_employee_reports1.employee_id = time_time_charge_reports1.employee_id
+INNER JOIN departments ON departments.departmentid = time_employee_reports1.departmentid]]>
+		</queryString>
+		<field name="employee" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac1" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac2" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac3" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac4" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac5" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_convert" class="java.lang.Float">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_in_lieu" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_charge_sum" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_over" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="departmentName" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="realPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT hr_employee.FirstName,hr_employee.LastName,hr_department.DEPT_NAME_department,time_in_lieu_detail_report.user_id,time_in_lieu_detail_report.Employee_id,time_in_lieu_detail_report.Department_id,time_in_lieu_detail_report.time_in_lieu_weeks,time_in_lieu_detail_report.start_date,time_in_lieu_detail_report.finish_date,time_in_lieu_detail_report.time_in_lieu_total,time_in_lieu_Dept,departments.departmentName
+FROM time_in_lieu_detail_report
+INNER JOIN hr_department ON time_in_lieu_detail_report.Department_id = hr_department.DEPT_ID_department
+INNER JOIN hr_employee   ON time_in_lieu_detail_report.Employee_id = hr_employee.Employee_ID
+INNER JOIN departments   ON departments.departmentid = hr_department.DEPT_ID_department]]>
+	</queryString>
+	<field name="FirstName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LastName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPT_NAME_department" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Employee_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Department_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_weeks" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="start_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="finish_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_total" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_Dept" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="departmentName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="DeptGroup">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<group name="Dept_NAME">
+		<groupExpression><![CDATA[$F{DEPT_NAME_department}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField>
+					<reportElement x="19" y="0" width="165" height="18" uuid="32de3a47-55c2-41dc-9050-f4b5eedbc7fa"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="11" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="29">
+				<staticText>
+					<reportElement x="19" y="3" width="104" height="19" forecolor="#6666FF" uuid="840ba116-9b57-4d2d-b618-f13c99bc689a"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Subtotal:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="140" y="3" width="67" height="19" uuid="2bb0023c-29d9-44e0-ad62-38053c9a4e1b">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{time_in_lieu_Dept}==null || $F{time_in_lieu_Dept}=="" || $F{time_in_lieu_Dept}==0)?"-":(($F{time_in_lieu_Dept}/60<10?"0"+($F{time_in_lieu_Dept}/60).intValue():($F{time_in_lieu_Dept}/60).intValue()))+":"+(($F{time_in_lieu_Dept}%60<10?"0"+$F{time_in_lieu_Dept}%60:$F{time_in_lieu_Dept}%60))]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="140" y="23" width="67" height="1" uuid="8fa38ba6-3eda-4048-853f-ba1fea76a3f9"/>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="140" y="2" width="67" height="1" uuid="1cb7e892-c412-4de0-8e71-1460fc19b5ce"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="169" splitType="Stretch">
+			<staticText>
+				<reportElement x="262" y="98" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="282" y="98" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{finish_date}.toString()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="802" height="68" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
+				<imageExpression><![CDATA[$P{realPath}+"logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="68" width="555" height="33" forecolor="#990000" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Report Time In Lieu]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="196" y="98" width="62" height="20" forecolor="#990000" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{start_date}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="148" width="115" height="20" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Employee]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="168" width="115" height="1" forecolor="#6666FF" uuid="552326e4-36ed-4080-8b08-31201cbb15b6"/>
+			</line>
+			<staticText>
+				<reportElement x="140" y="149" width="67" height="20" forecolor="#6666FF" uuid="9d114252-21dc-4ad2-9916-be1ccc332426"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Time In Lieu]]></text>
+			</staticText>
+			<line>
+				<reportElement x="140" y="168" width="67" height="1" forecolor="#6666FF" uuid="e847ff68-13b0-468c-b835-41cc456f52bd"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="23">
+			<textField>
+				<reportElement x="29" y="0" width="94" height="17" uuid="37236049-fb3f-4e2d-9ffd-7fe1c2b96d72"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FirstName}.toString()+" "+$F{LastName}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="67" height="17" uuid="51710a7e-6d79-4022-baaa-2e5eac148fbc">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_weeks}==null || $F{time_in_lieu_weeks}=="" || $F{time_in_lieu_weeks}==0)?"-":(($F{time_in_lieu_weeks}/60<10?"0"+($F{time_in_lieu_weeks}/60).intValue():($F{time_in_lieu_weeks}/60).intValue()))+":"+(($F{time_in_lieu_weeks}%60<10?"0"+$F{time_in_lieu_weeks}%60:$F{time_in_lieu_weeks}%60))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="140" y="1" width="67" height="19" uuid="75585557-9e0f-4570-a7f6-5e451c14e4e9">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="10" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_total}==null || $F{time_in_lieu_total}=="" || $F{time_in_lieu_total}==0)?"-":(($F{time_in_lieu_total}/60<10?"0"+($F{time_in_lieu_total}/60).intValue():($F{time_in_lieu_total}/60).intValue()))+":"+(($F{time_in_lieu_total}%60<10?"0"+$F{time_in_lieu_total}%60:$F{time_in_lieu_total}%60))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="1" width="104" height="19" forecolor="#6666FF" uuid="3061c2ac-32d3-4704-bf9e-a4a14460c695"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="140" y="20" width="67" height="1" uuid="77ea2e71-34c1-41b7-8b77-70fdad8f8167"/>
+				<graphicElement>
+					<pen lineWidth="2.75" lineStyle="Double" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -15,18 +15,36 @@
 <div class="panel panel-info">
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="fromID">From:
-                            <input type="text" id="fromID" datepicker-popup="dd/MM/yyyy" ng-model="info.FROM" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions" close-text="Close" max-date="info.TO||toDate">&nbsp;
-                            <label for="toID">To:
-                                <input type="text" id="fromID" datepicker-popup="dd/MM/yyyy" ng-model="info.TO" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions" close-text="Close" max-date="toDate" min-date="info.FROM">
-                            </label>
-                            <label>
-                    </div>
-                </div>
-            </div>
+            
+                
+                    
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">From</span>
+                                <input ng-model="dateweekfrom" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions1" max-date="toDate" close-text="Close" style="text-align:center;font-size:14px;font-weight:bold;color:blue;">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">To:</span>
+                                <input type="text" ng-model="dateweekto" class="form-control input-sm" id="fromID" datepicker-popup="dd/MM/yyyy" ng-model="dateweekto" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions" close-text="Close" max-date="toDate" min-date="dateweekfrom" style="text-align:center;font-size:14px;font-weight:bold;color:blue;">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div ng-dropdown-multiselect="" options="listDept" selected-model="listDepartment" extra-settings="listDeptset" checkboxes="true" translation-texts="translationDept" get-selected="GetEmpl(info)"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div ng-dropdown-multiselect="" options="listEmpl" selected-model="listEmployee" extra-settings="listEmplset" checkboxes="true" translation-texts="translationEmpl" get-selected="LoadEmpl(info)"></div>
+                        </div>
+  
+           
         </div>
     </div>
-    <!-- END INFO SYS -->
+    <div class="row">
+        <div class="col-md-12">
+            <a ui-sref="loggedIn.TimeSheetHome" class="btn btn-xs pull-right red" style="font-size:14px;">Cancel</a>
+            <a class="btn btn-xs pull-right green" ng-click="clickReview()" style="font-size:14px;" ng-disabled="dateweekfrom===null || dateweekfrom===undefined || dateweekfrom.length===0 || dateweekto===undefined || dateweekto===null ||dateweekto.length===0 || listDepartment.length===0 || listEmployee.length===0">Display</a>
+        </div>
+    </div>
+
+

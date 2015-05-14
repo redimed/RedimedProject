@@ -3126,6 +3126,247 @@ module.exports = {
         //END ERROR
     },
     // END CHECK LEAVE
+
+    //INSERT DATA INTO TIME_IN_LIEU_REPORT
+    InsertTimeinlieuReport: function(req,res){
+        var info = req.body.info;
+        var Weeknofrom  = info.Weeknofrom;
+        var Weeknoto    = info.Weeknoto;
+        var listEmpl    =  info.listEmpl;
+        var USER_ID     = info.USER_ID;
+        var WeekFrom    = moment(info.WeekFrom).format("YYYY-MM-DD");
+        var WeekTo      = moment(info.WeekTo).format("YYYY-MM-DD");
+        var listDept    = info.listDept;
+        var time_in_lieu_all = [];
+        var user_ids         = [];
+        var empl_ids         = [];
+        var dept_ids         = [];
+        var stringid         = "";
+        var flag = 0;
+        //STRING EMP
+        var stringEmp   = "";
+        for(var i=0;i<listEmpl.length;i++){
+            stringEmp   +=listEmpl[i].id+", ";
+        
+        };
+        stringEmp+=0;
+        //END
+        //STRING DEPT
+        var stringDept  = "";
+        for(var j = 0;j<listDept.length;j++){
+            stringDept += listDept[j].id+", ";
+        };
+        stringDept +=0;
+        //END
+        if(Weeknofrom==Weeknoto){
+        var sql           = "SELECT time_tasks_week.week_no,users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , hr_department.DEPT_ID_department, hr_department.DEPT_NAME_department, time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date "
+                            +"FROM hr_employee "
+                            +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
+                            +"INNER JOIN hr_department ON hr_employee.Dept_ID = hr_department.DEPT_ID_department "
+                            +"INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "
+                            +"WHERE hr_department.DEPT_ID_department IN (" + stringDept + ") AND time_tasks_week.week_no = '" + Weeknofrom + "' AND hr_employee.Employee_ID IN (" + stringEmp + ") ";
+            var sql_count = "SELECT DISTINCT time_tasks_week.week_no,users.id,hr_department.DEPT_ID_department,hr_employee.Employee_ID  "
+                            +"FROM hr_employee "
+                            +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
+                            +"INNER JOIN hr_department ON hr_employee.Dept_ID = hr_department.DEPT_ID_department "
+                            +"INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "
+                            +"WHERE hr_department.DEPT_ID_department IN (" + stringDept + ") AND time_tasks_week.week_no = '" + Weeknofrom + "' AND hr_employee.Employee_ID IN (" + stringEmp + ") ";
+        }
+        else{
+            var sql       = "SELECT time_tasks_week.week_no,users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , hr_department.DEPT_ID_department, hr_department.DEPT_NAME_department, time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date "
+                            +"FROM hr_employee "
+                            +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
+                            +"INNER JOIN hr_department ON hr_employee.Dept_ID = hr_department.DEPT_ID_department "
+                            +"INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "
+                            +"WHERE hr_department.DEPT_ID_department IN (" + stringDept + ") AND hr_employee.Employee_ID IN (" + stringEmp + ") AND time_tasks_week.week_no BETWEEN '" + Weeknofrom + "' AND '" + Weeknoto + "' ";
+            var sql_count = "SELECT DISTINCT time_tasks_week.week_no,users.id,hr_department.DEPT_ID_department,hr_employee.Employee_ID "
+                            +"FROM hr_employee "
+                            +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
+                            +"INNER JOIN hr_department ON hr_employee.Dept_ID = hr_department.DEPT_ID_department "
+                            +"INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "
+                            +"WHERE hr_department.DEPT_ID_department IN (" + stringDept + ") AND hr_employee.Employee_ID IN (" + stringEmp + ") AND time_tasks_week.week_no BETWEEN '" + Weeknofrom + "' AND '" + Weeknoto + "' ";
+        }
+
+        
+        var sql_delete_all_data ="DELETE FROM time_in_lieu_report";
+        db.sequelize.query(sql_delete_all_data)
+            .success(function(data_delete_all_data){
+
+                var sql_delete_detail_data = "DELETE FROM time_in_lieu_detail_report";
+                db.sequelize.query(sql_delete_detail_data)
+                    .success(function(data_delete_detail_data){
+
+                                  db.sequelize.query(sql)
+            .success(function(data){
+                res.json({'status':'success'});
+
+                for(var i =0;i< data.length;i++){
+                    db.time_in_lieu_report.create({
+                        FirstName       : data[i].FirstName,
+                        LastName        : data[i].LastName,
+                        Empl_id         : data[i].Employee_ID,
+                        Dept_id         : data[i].DEPT_ID_department,
+                        Dept_Name       : data[i].DEPT_NAME_department,
+                        time_in_lieu    : data[i].time_in_lieu,
+                        user_id         : data[i].id,
+                        start_date      : WeekFrom,
+                        finish_date     : WeekTo,
+                        weekno          : data[i].week_no
+                    })
+                    .success(function(data1){
+                        res.json({'status':'success'});
+                        flag+=1;
+                        if(flag==data.length){
+                            db.sequelize.query(sql_count)
+                                .success(function(data_count){
+                                    console.log(data_count)
+                                    user_ids[0]=data_count[0].id;
+                                    empl_ids[0]=data_count[0].Employee_ID;
+                                    dept_ids[0]=data_count[0].DEPT_ID_department;
+                                    for(var a = 0;a<data_count.length;a++){
+                                            
+                                                user_ids[a]=data_count[a].id;
+                                            
+                                                empl_ids[a]=data_count[a].Employee_ID;
+                                            
+                                                dept_ids[a]=data_count[a].DEPT_ID_department;
+                                    }     
+
+
+
+                                        //ktra neu trung id thi k them
+
+                                    // console.log(user_ids+"    asasdasdasdasdasdasdasd");
+                                    // console.log(empl_ids);
+                                    // console.log(dept_ids);
+                                    for(var j = 0;j<user_ids.length;j++){
+                                            stringid += user_ids[j]+", ";
+                                        };
+                                    stringid +=0;
+                                    console.log(stringid)
+                                    if(Weeknofrom!=Weeknoto){
+                                        var sql_sum_weeks = "SELECT user_id,Empl_id,Dept_id,SUM(time_in_lieu) AS 'total_sum' "
+                                                        +"FROM time_in_lieu_report "
+                                                        +"WHERE Dept_id IN(" +stringDept+ ") AND (weekno BETWEEN '" + Weeknofrom + "' AND '" + Weeknoto + "' ) "
+                                                        +"GROUP BY user_id,Dept_id";
+                                    }
+                                    else{
+                                        var sql_sum_weeks = "SELECT user_id,Dept_id,Empl_id,SUM(time_in_lieu) AS 'total_sum' "
+                                                        +"FROM time_in_lieu_report "
+                                                        +"WHERE Dept_id IN(" +stringDept+ ") AND (weekno = '" + Weeknoto + "' ) "
+                                                        +"GROUP BY user_id,Dept_id";
+                                    }
+                                    db.sequelize.query(sql_sum_weeks)
+                                        .success(function(data_sum_weeks){
+                                           //xoa du lieu ban dau ma co user_id = user_id truyen vao
+                                           var sql_checkdata = "DELETE FROM time_in_lieu_detail_report WHERE user_id IN ("+stringid+")";
+                                           db.sequelize.query(sql_checkdata)
+                                                .success(function(data_check){
+
+                                                    var sql_sum_dept = "SELECT Dept_id,SUM(time_in_lieu) AS'total_sum' "
+                                                                    +" FROM time_in_lieu_report WHERE Dept_id IN ( " +stringDept+ " ) GROUP BY Dept_id ";
+                                                    db.sequelize.query(sql_sum_dept)
+                                                        .success(function(data_sum_dept){
+
+                                                            console.log(data_sum_dept)
+
+                                                            var sql_sum_all = "SELECT SUM(time_in_lieu) AS'total' FROM time_in_lieu_report WHERE Dept_id IN (" +stringDept+ ")";
+                                                            db.sequelize.query(sql_sum_all)
+                                                                .success(function(data_sum_all){
+
+
+                                                                
+
+                                                                    for(var t=0;t<data_sum_weeks.length;t++){
+                                                                        db.time_in_lieu_detail_report.create({
+                                                                            user_id             : data_sum_weeks[t].user_id,
+                                                                            Employee_id         : data_sum_weeks[t].Empl_id,
+                                                                            Department_id       : data_sum_weeks[t].Dept_id,
+                                                                            start_date          : WeekFrom,
+                                                                            finish_date         : WeekTo,
+                                                                            time_in_lieu_weeks  : data_sum_weeks[t].total_sum,
+                                                                            time_in_lieu_total    : data_sum_all[0].total
+                                                                        })
+                                                                        .success(function(data_total){
+                                                                            res.json({'status':'success'});
+                                                                            //set time in lieu dept
+                                                                            for(var x =0;x<data_sum_weeks.length;x++){
+                                                                                for(y=0;y<data_sum_dept.length;y++){
+                                                                                     db.time_in_lieu_detail_report.update({
+                                                                                        time_in_lieu_Dept : data_sum_dept[y].total_sum
+                                                                                    },{Department_id : data_sum_dept[y].Dept_id })
+                                                                                     .success(function(total){
+                                                                                        res.json({'status':'success'});
+                                                                                     })
+                                                                                     .error(function(error){
+                                                                                        res.json(500,{'status':'error','message':error});
+                                                                                     })
+                                                                                }
+                                                                            }
+                                                                           
+                                                                            //end
+                                                                        })
+                                                                        .error(function(error){
+                                                                            res.json({'status':'error','message':error});
+                                                                        })
+                                                                    }
+
+                                                                })
+                                                                .error(function(error){
+                                                                    res.json(500,{'status':'error','message':error});
+                                                                })
+
+                                                        })
+                                                        .error(function(error){
+                                                            res.json(500,{'status':'error','message':error});
+                                                        })
+
+                                                    
+
+                                                })
+                                                .error(function(error){
+                                                    res.json({'status':'error','message':error});
+                                                })
+                                        })
+                                        .error(function(error){
+                                            res.json({'status':'error','message':error});
+                                        })
+                                })
+                                .error(function(error){
+                                    res.json({'status':'error','message':error});
+                                })
+                            
+                        }
+                    })
+                    .error(function(error){
+                        res.json({'status':'error','message':error});
+                    })
+                }
+                
+            })
+            .error(function(error){
+                res.json(500,{'status':'error','message':error});
+            })  
+
+                    })
+                    .error(function(error){
+                        res.json(500,{'status':'error','message':error});
+                    })
+
+            })
+            .error(function(error){
+                res.json(500,{'status':'error','message':error});
+            })
+        
+
+
+            
+
+       
+        
+    }
+    
+    //END INSERT
 };
 
 //FUNCTION SEND MAIL SUBMIT FIRST

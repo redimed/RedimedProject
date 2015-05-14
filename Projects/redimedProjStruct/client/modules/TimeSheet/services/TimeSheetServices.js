@@ -316,5 +316,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
         };
         //END LEAVE FORM
 
+        TimeSheetService.InsertTimeinlieuReport = function(info){
+            var Inserttimeinlieureport = api.all("TimeSheet/post-insert-timeinlieu-report");
+            return Inserttimeinlieureport.post({
+                    info: info
+            });
+        };
+
         return TimeSheetService;
     });
