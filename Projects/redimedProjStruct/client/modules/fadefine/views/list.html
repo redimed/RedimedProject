@@ -7,13 +7,13 @@
         </div>
         <div class="pull-right navbar-right">
             <!-- Single button -->
-              <button style="margin-right: 0;" type="button" class="btn btn-default green">
+              <button style="margin-right: 0;" type="button" class="btn btn-default green" ng-click="newDefine()">
                   <i class="fa fa-plus"></i>	New define
               </button>
         </div>
     </div>
 
     <div class="portlet-body">
-    	<my-data-table options="fa.options" numrows="10"></my-data-table>
+    	<my-data-table options="fa.options" numrows="10" rowclick="clickRow"></my-data-table>
     </div>
 </div>

@@ -57,7 +57,11 @@
                             <input ng-disabled="col.disabled" ng-model="item[col.field]" type="number" />
                         </span>
                         <span ng-switch-when="button">
-                            <button class="btn btn-sm blue-soft" ng-click="col.btnfn(item)" ng-disabled="col.disfn(item)==true">{{col.btnlabel}}</button>
+                            <button class="btn btn-sm blue-soft" ng-click="col.btnfn(item)" ng-disabled="col.disfn(item)==true"><i class="{{col.btnclass}}"></i> {{col.btnlabel}}</button>
+                        </span>
+                        <span ng-switch-when="status">
+                            <button class="btn btn-sm blue-soft" ng-click="col.disableFn(item)" ng-show="col.isEnable(item)===1"><i class="fa fa-check"></i> Enabled</button>
+                            <button class="btn btn-sm red" ng-click="col.enableFn(item)" ng-show="col.isEnable(item)===0"><i class="fa fa-times"></i> Disabled</button>
                         </span>
                         <span ng-switch-when="custom">{{col.fn(item)}}</span>
                         <span ng-switch-default>{{item[col.field]}}</span>

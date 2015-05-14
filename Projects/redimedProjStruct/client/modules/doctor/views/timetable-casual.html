@@ -33,7 +33,12 @@
             <div class="col-md-3" style="font-size: 14px;">
                 <b>Date:  </b>{{item.DATE  | date:'EEEE'}} - {{item.DATE | date:'dd/MM/yyyy'}}<br>
                 <button class="btn btn-sm" ng-click="timetable.add(item)">Add New</button>
-                <button ng-if="item.list.length > 0" class="btn btn-sm btn-danger" ng-click="timetable.removeAllDay(item)">Delete All</button>
+
+                <button ng-if="item.list.length > 0" class="btn btn-sm" ng-click="timetable.getAllCalendarInDate(item)">Change Service</button>
+
+                <button ng-if="item.list.length > 0" class="btn btn-sm btn-danger" ng-click="timetable.removeAllDay(item)" style="margin-top:5px;">Delete All</button>
+                
+                
             </div>
             <div  class="col-md-9">
                 <table class="table table-bordered">
@@ -171,6 +176,70 @@
         </div>
         <p ng-show="bookedList.length>0">Do you want to delete this booked appointment calendar?</p>
         <p ng-hide="bookedList.length>0">Do you want to delete this calendar?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="changeServiceOfCalendarsInDate">
+    <div class="modal-body">
+        <div>
+            <p>
+                Change Service
+            </p>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="FROM_TIME">From time</label>
+                    <select class="form-control" ng-model="updateData.FROM_TIME" id="FROM_TIME"
+                        ng-options="calendar.FROM_TIME as calendar.FROM_TIME_DISPLAY 
+                            for calendar in calendarsInDate">
+                        <option value="" selected disabled>From time</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="TO_TIME">To time</label>
+                    <select class="form-control" ng-model="updateData.TO_TIME" id="TO_TIME"
+                        ng-options="calendar.FROM_TIME as calendar.FROM_TIME_DISPLAY 
+                            for calendar in calendarsInDate">
+                        <option value="" selected disabled>To time</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="SERVICE_ID">Service</label>
+                    <select class="form-control" ng-model="updateData.SERVICE_ID" id="SERVICE_ID"
+                        ng-options="service.SERVICE_ID as service.SERVICE_NAME 
+                            for service in services">
+                        <option value="" selected disabled>Service</option>
+                    </select>
+                </div>
+            </form>
+            <!-- <table class="table">
+                <thead>
+                    <tr>
+                        <th>APPOINTMENT TIME</th>
+                        <th>SERVICE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="calendar in calendarsInDate">
+                        <td>{{calendar.FROM_TIME|date:'HH:mm dd-MM-yyyy'}}</td>
+                        <td>
+                            <select ng-model="calendar.SERVICE_ID"
+                      
+                                ng-options="service.SERVICE_ID as service.SERVICE_NAME 
+                                    for service in services">
+                                <option value="" selected disabled>Service</option>
+                            </select>
+                        
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>

@@ -9,8 +9,18 @@ angular.module("app.security.forgot.controller",[
             }
             else{
                 SecurityService.forgotPass($scope.email).then(function(data){
-                    toastr.success("Forgot Password Success", "Success");
-                    $state.go('loggedIn.home');
+                    if(data.status=='success')
+                    {
+                        toastr.success("Change Password Success", "Success");
+                        $state.go('loggedIn.home');
+                    }
+                    else
+                    {
+                        toastr.error("Change Password Fail", "Fail");
+                    }
+                    
+                },function(err){
+                    toastr.error("Change Password Fail", "Fail");
                 })
             }
 

@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
-.controller("FaDefineDetailController", function($scope, $stateParams, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr){
+.controller("FaDefineDetailController", function($scope, $stateParams, $state, $modal, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
 
 	//init action
 	if($stateParams.action==='edit'){
@@ -12,6 +12,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	$scope.header = angular.copy(FaHeaderModel);
 	$scope.header.ISENABLE = 1;
 	$scope.header.FA_NAME = "Untitled Function Assessment Header";
+	$scope.header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 	$scope.header.sections = [];
 	//init section definition
 	var section_init = angular.copy(FaSectionModel);
@@ -86,12 +87,81 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			}
 		})
 	}
+	else if($stateParams.action==='add' && $stateParams.headerId!==0){
+		var getHeaderId = $stateParams.headerId;
+		FaDefineService.getHeaderAndSection(getHeaderId).then(function(headerAndSectionRes){
+			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
+			else{
+				$scope.header = headerAndSectionRes.data;
+				$scope.header.FA_ID = null;
+				$scope.header.Created_by = null;
+				$scope.header.Creation_date = null;
+				$scope.header.Last_updated_by = null; 
+				$scope.header.Last_update_date = null;
+				$scope.header.sections.forEach(function(section){
+					var sectionId = angular.copy(section.SECTION_ID);
+					section.SECTION_ID = null;
+					section.FA_ID = null;
+					section.Created_by = null;
+					section.Creation_date = null;
+					section.Last_updated_by = null; 
+					section.Last_update_date = null;
+					FaDefineService.getLines(sectionId, getHeaderId).then(function(lineRes){
+						if(lineRes.status==='error') {
+							$scope.header={};
+							toastr.error('Unexpected error', 'Error!');
+						}
+						else{
+							section.lines=lineRes.data;
+							section.lines.forEach(function(line){
+								var lineId = angular.copy(line.LINE_ID);
+								line.LINE_ID = null;
+								line.SECTION_ID = null;
+								line.FA_ID = null;
+								line.Created_by = null;
+								line.Creation_date = null;
+								line.Last_updated_by = null; 
+								line.Last_update_date = null;
+								FaDefineService.getDetailsAndComments(lineId).then(function(detailAndCommentRes){
+									if(detailAndCommentRes.status === 'error'){
+										$scope.header={};
+										toastr.error('Unexpected error', 'Error!');
+									}
+									else{
+										line.details = detailAndCommentRes.data.details;
+										line.comments = detailAndCommentRes.data.comments;
+										line.details.forEach(function(detail){
+											detail.DETAIL_ID = null;
+											detail.LINE_ID = null;
+											detail.Created_by = null;
+											detail.Creation_date = null;
+											detail.Last_updated_by = null; 
+											detail.Last_update_date = null;
+										})
+										line.comments.forEach(function(comment){
+											comment.FA_COMMENT_ID = null;
+											comment.LINE_ID = null;
+											comment.Created_by = null;
+											comment.Creation_date = null;
+											comment.Last_updated_by = null; 
+											comment.Last_update_date = null;
+										})
+									}
+								})
+							})
+						}
+					})
+				})
+			}
+		})
+	}
 
 	//functions
 	$scope.addSection = function(){
 		var newSection = angular.copy(section_init);
 		if($scope.isEdit === true) newSection.action = 'add';
 		newSection.SECTION_NAME = "Untitled Section";
+		newSection.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 		$scope.header.sections.push(newSection);
 	}
 
@@ -126,6 +196,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		var newLine = angular.copy(line_init);
 		if($scope.isEdit === true) newLine.action = 'add';
 		newLine.QUESTION = "Untitled line";
+		newLine.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 		section.lines.push(newLine);
 	}
 
@@ -152,6 +223,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		var newDetail = angular.copy(line_detail_init);
 		if($scope.isEdit === true) newDetail.action = 'add';
 		newDetail.QUESTION = "Untitled detail";
+		newDetail.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 		line.details.push(newDetail);
 	}
 
@@ -173,7 +245,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	$scope.removeComment = function(comment, line){
 		var indexToRemove = line.comments.indexOf(comment);
-		if($scope.isEdit === true) line.comments.splice(indexToRemove,1);
+		if($scope.isEdit === false) line.comments.splice(indexToRemove,1);
 		else{
 			if(comment.action==='add') line.comments.splice(indexToRemove,1);
 			else comment.action='delete';
@@ -318,21 +390,38 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	//INSERT DEFINITION
 	$scope.addFaDefinition = function(){
-		addOrder($scope.header).then(function(result){
-			FaDefineService.insertFa($scope.header).then(function(res){
-				if(res.status==='success') toastr.success('New functional assessment definition added','Success!');
-				else toastr.error('Failed to add new functional assessment definition', 'Error!');
+		if($scope.header.sections.length===0) toastr.error('Functional Assessment must have at least one section','Error!');
+		else{
+			addOrder($scope.header).then(function(result){
+				FaDefineService.insertFa($scope.header).then(function(res){
+					if(res.status==='success') {
+						toastr.success('New functional assessment definition added','Success!');
+						$state.go('loggedIn.fadefine.list');
+					}
+					else toastr.error('Failed to add new functional assessment definition', 'Error!');
+				});
+			}, function(error){
+				console.log(error);
 			});
-		}, function(error){
-			console.log(error);
-		});
+		}
+		
 	}
 
 	//EDIT DEFINITION
 	$scope.editDefinition = function(){
-		addOrder($scope.header).then(function(result){
-			
-		})
+		if($scope.header.sections.length===0) toastr.error('Functional Assessment must have at least one section','Error!');
+		else{
+			addOrder($scope.header).then(function(result){
+				console.log(result);
+				FaDefineService.editFa(result).then(function(res){
+					if(res.status==='success') {
+						toastr.success('Edit successfully!','Success!');
+						$state.go('loggedIn.fadefine.list');
+					}
+					else toastr.error('Edit failed!', 'Error!');
+				})
+			})
+		}
 	}
 
 	//GENERAL DEFINITION FUNCTION
@@ -355,15 +444,34 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	var addOrder = function(header){
 		return new Promise(function(resolve, reject){
+			if($scope.isEdit===false) header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+			else {
+				if(header.Creation_date=== '') header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+				else header.Creation_date = moment(header.Creation_date).format('YYYY-MM-DD hh:mm:ss');
+				header.Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+			}
 			for(var i = 0; i<header.sections.length; i++){
 				header.sections[i].ORD = i+1;
+				if($scope.isEdit===false) header.sections[i].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+				else {
+					if(header.sections[i].Creation_date=== '') header.sections[i].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+					else header.sections[i].Creation_date = moment(header.sections[i].Creation_date).format('YYYY-MM-DD hh:mm:ss');
+					header.sections[i].Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+				}
 				if(header.sections[i].lines.length===0){
 					if(i===header.sections.length-1) resolve(header);
 					else continue;
 				}
 				else{
+
 					for(var j = 0; j < header.sections[i].lines.length; j++){
 						header.sections[i].lines[j].ORD = j+1;
+						if($scope.isEdit===false) header.sections[i].lines[j].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+						else {
+							if(header.sections[i].lines[j].Creation_date=== '') header.sections[i].lines[j].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+							else header.sections[i].lines[j].Creation_date = moment(header.sections[i].lines[j].Creation_date).format('YYYY-MM-DD hh:mm:ss');
+							header.sections[i].lines[j].Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+						}
 						if(header.sections[i].lines[j].details.length===0){
 							if(j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
 							else continue;
@@ -371,6 +479,13 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 						else{
 							for(var k = 0; k<header.sections[i].lines[j].details.length; k++){
 								header.sections[i].lines[j].details[k].ORD = k+1;
+								if($scope.isEdit===false) header.sections[i].lines[j].details[k].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+								else {
+									if(header.sections[i].lines[j].details[k].Creation_date=== '') header.sections[i].lines[j].details[k].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
+									else header.sections[i].lines[j].details[k].Creation_date = moment(header.sections[i].lines[j].details[k].Creation_date).format('YYYY-MM-DD hh:mm:ss'); 
+									header.sections[i].lines[j].details[k].Last_update_date = moment().format('YYYY-MM-DD hh:mm:ss');
+									
+								}
 								if(k === header.sections[i].lines[j].details.length-1 && j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
 								else continue;
 							}
@@ -381,44 +496,17 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		})
 	}
 
-	var getSeperate = function(processObj){
-		var header = {};
-		var sections = [];
-		var lines = [];
-		var details = [];
-		var comments = [];
-
-		//make tmpHeader value
-		var tmpHeader = angular.copy(processObj);
-		//get header
-		header = delete tmpHeader.sections;
-		
-		//get sections
-		for(var i = 0; i<processObj.sections.length; i++){
-			var tmpSection = angular.copy(processObj.sections[i]);
-			if(tmpSection.lines) delete tmpSection.lines;
-
-			sections.push(tmpSection);
-			//get lines
-			for(var j = 0; j<processObj.sections[i].lines.length; j++){
-				var tmpLine = angular.copy(processObj.sections[i].lines[j]);
-				var tmpLine2 = angular.copy(processObj.sections[i].lines[j]);
-				if(tmpLine.details) delete tmpLine.details;
-				if(tmpLine.comments) delete tmpLine.comments;
-				lines.push(tmpLine);
-				//get details and comments
-				details = details.concat(tmpLine2.details);
-				comments = comments.concat(tmpLine2.comments);
-			}
-		}
-
-		var postObj = {
-			header: header,
-			sections: sections,
-			lines: lines,
-			details: details,
-			comment: comments
-		}
-		return postObj;
-	}
+	$scope.openModal = function(){
+        var modalInstance = $modal.open({
+          animation: true,
+          templateUrl: 'modules/fadefine/views/imageModal.html',
+          controller: 'ImageDialogController',
+          size: 'lg'
+          // resolve: {
+          //   items: function () {
+          //     return $scope.items;
+          //   }
+          // }
+        });
+    }
 });

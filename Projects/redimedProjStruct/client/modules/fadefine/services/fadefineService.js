@@ -30,5 +30,23 @@ angular.module('app.loggedIn.fadefine.service',[])
         return getDetailsAndCommentsApi.post({lineId: lineId});
     }
 
+    instanceService.editFa = function(postData){
+        var editFaApi = v2_api.all('fa/edit');
+        return editFaApi.post(postData);
+    }
+
+    instanceService.changeFaStt = function(status, headerId){
+        var changeFaSttApi = v2_api.all('fa/change_header_stt');
+        return changeFaSttApi.post({
+            headerId: headerId,
+            status: status
+        })
+    }
+
+    instanceService.getImageFiles = function(){
+        var getImagesApi = v2_api.all('fa/get_images');
+        return getImagesApi.post();
+    }
+
     return instanceService;
 });

@@ -89,6 +89,20 @@ angular.module("app.loggedIn.timetable.model", [])
         var detailApi = appApi.all("beforeDeleteSelectedCalendar");
         return detailApi.post({calId: calId});   
     }
+
+    //tan add
+    instanceService.getAllCalendarInDate=function(data)
+    {
+        var detailApi = appApi.all("getAllCalendarInDate");
+        return detailApi.post({data: data});   
+    }
+
+    //tan add
+    instanceService.updateServiceInDate=function(data)
+    {
+        var detailApi = appApi.all("updateServiceInDate");
+        return detailApi.post({data: data});   
+    }
     
     return instanceService;
 })
