@@ -10,10 +10,6 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$scope.companyInfo = {};
 		$scope.problemArr = [];
 
-		$scope.isMeasure = false;
-		$scope.isScript = false;
-		$scope.isCalling = false;
-
 		$scope.consultInfo = {
 			patient_id: $scope.patient_id,
 			cal_id: $scope.cal_id,
@@ -30,6 +26,25 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$scope.callInfo = {
 			isCalling: null,
 			callUser: null
+		}
+
+		var newwin = null;
+		function popup(url) 
+		{
+			 params  = 'width='+screen.width;
+			 params += ', height='+screen.height;
+			 params += ', top=0, left=0';
+			 params += ', fullscreen=yes';
+
+		 	if ((newwin == null) || (newwin.closed))
+			{
+				newwin=window.open(url,'RedimedCallingWindow', params);
+				newwin.focus();
+			}
+
+			if(newwin != null && !newwin.closed)
+				window.open('','RedimedCallingWindow','');
+			return false;
 		}
 
 		var checkCallInfo = null;
@@ -247,15 +262,16 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		};
 
 		//==================================MAKE CALL============================
+		function cancelListenerHandler(){
+			console.log("Remove Success");
+		}
 		$scope.makeCall = function(user){
-			$scope.isCalling = true;
 
-			if(callModal.active())
-            	callModal.deactivate();
+		 	socket.removeListener('generateSessionSuccess', cancelListenerHandler());
 
-			UserService.getUserInfo(user.id).then(function(data){
-                data.img = "theme/assets/icon.png";
-	            callModal.activate({callUserInfo: data, callUser: user.id, isCaller: true, opentokInfo: null, streams: null});
+			socket.emit("generateSession",$scope.userInfo.id);
+			socket.on("generateSessionSuccess",function(opentokRoom){
+				popup($state.href('call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
 			})
 	    }
 

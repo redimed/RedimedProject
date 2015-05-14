@@ -64,11 +64,6 @@
             <i class="icon-home"></i>
             <span class="caption-subject uppercase">Company Information</span>
         </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="refreshList()" class="btn btn-icon-only btn-circle grey-cascade">
-             <i class="fa fa-refresh"></i>
-            </a>
-        </div>
     </div>
     <div class="portlet-body">
         <div class="row">
@@ -107,7 +102,7 @@
             </div>
             <div class="col-md-10 col-sm-10" >
                 <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
-                    <a ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
+                    <a ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
                         <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
                     </a>
                 </span>
@@ -677,3 +672,4 @@
         </div>
     </div>
 </div>  
+

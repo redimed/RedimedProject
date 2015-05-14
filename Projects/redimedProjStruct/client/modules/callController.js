@@ -3,15 +3,15 @@
  */
 angular.module("app.call.controller",[
 ])
-    .controller("callController", function($timeout,$scope,callModal,$document,$modalStack,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, callUserInfo, callUser, isCaller, opentokInfo){
+    .controller("callController", function($timeout,$scope,$document,$modalStack,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, $stateParams){
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
 
         var params = {};
 
-        var apiKey = null;
-        var sessionId = null;
-        var token = null;
+        var apiKey = $stateParams.apiKey;
+        var sessionId = $stateParams.sessionId;
+        var token = $stateParams.token;
 
         $scope.session = null;
 
@@ -19,14 +19,26 @@ angular.module("app.call.controller",[
         $scope.connections = OTSession.connections;
 
         $scope.userInfo = null;
-        $scope.callUserInfo = callUserInfo;
-        $scope.isCaller = isCaller;
+        $scope.callUserInfo = null;
+
+        $scope.patientId = ($stateParams.patientId != null || $stateParams.patientId != undefined) ?  $stateParams.patientId : null;
+        $scope.isCaller = ($stateParams.isCaller == 1 || $stateParams.isCaller == '1') ? true : false;
+
         $scope.isAccept = false;
+
+        UserService.getUserInfo($stateParams.callUser).then(function(data){
+            data.img = "theme/assets/icon.png";
+            $scope.callUserInfo = data;
+        })
+
+        $scope.$on('onUnload', function (e) {
+            audio.pause();
+            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+            disconnect();
+        });
 
         $scope.isAudioMuted = false;
         $scope.isVideoMuted = false;
-
-        $scope.isMinimize = false;
 
         $scope.sharingMyScreen = false;
         $scope.publishing = false;
@@ -74,105 +86,56 @@ angular.module("app.call.controller",[
         else
             $scope.userInfo = $cookieStore.get('userInfo');
 
-        $scope.isDrag = false;
-        $scope.maximizeWindow = function(){
-            $scope.isMinimize = !$scope.isMinimize;
-            $scope.isDrag = !$scope.isDrag;
-            if($scope.isMinimize)
-                $scope.showWhiteboard = false;
-        };
-
-        if($scope.isCaller)
-        {   
-            audio.loop = true;
-            audio.play();
-
-            socket.emit("generateSession",$scope.userInfo.id);
-
-            socket.on("generateSessionSuccess",function(opentokRoom){
-                if ($scope.session) {
-                    $scope.session.disconnect();
-                }
-
-                apiKey = opentokRoom.apiKey;
-                sessionId = opentokRoom.sessionId;
-                token = opentokRoom.token;
-
-                OTSession.init(apiKey, sessionId, token, function (err, session) {
-                    $scope.session = session;
-                    var connectDisconnect = function (connected) {
-                      $scope.$apply(function () {
-                          $scope.connected = connected;
-                          if (!connected) $scope.publishing = false;
-                      });
-                    };
-                    if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
-                    $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
-                    $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
-                    var whiteboardUpdated = function() {
-                        if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
-                          $scope.$apply(function() {
-                            $scope.whiteboardUnread = true;
-                            $scope.mouseMove = true; 
-                          });
-                        }
-                    };
-                    $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
-                    socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'call',sessionId: sessionId});
-                });
-                
-                $scope.publishing = true;
-                               
-            })
+        if ($scope.session) {
+            $scope.session.disconnect();
         }
-        else
-        {
-            if(opentokInfo != null)
+
+        OTSession.init(apiKey, sessionId, token, function (err, session) {
+            $scope.session = session;
+            var connectDisconnect = function (connected) {
+              $scope.$apply(function () {
+                  $scope.connected = connected;
+                  if (!connected) $scope.publishing = false;
+              });
+            };
+            if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+            $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+            $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+            var whiteboardUpdated = function() {
+                if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
+                  $scope.$apply(function() {
+                    $scope.whiteboardUnread = true;
+                    $scope.mouseMove = true; 
+                  });
+                }
+            };
+            $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
+            if($scope.isCaller)
             {
-                var info = opentokInfo;
-
-                apiKey = info.apiKey;
-                sessionId = info.sessionId;
-                token = info.token;
-
-                if ($scope.session) {
-                    $scope.session.disconnect();
-                }
-
-                OTSession.init(apiKey, sessionId, token, function (err, session) {
-                    $scope.session = session;
-                    var connectDisconnect = function (connected) {
-                      $scope.$apply(function () {
-                          $scope.connected = connected;
-                          if (!connected) $scope.publishing = false;
-                      });
-                    };
-                    if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
-                    $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
-                    $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
-                    
-                    var whiteboardUpdated = function() {
-                        if (!$scope.showWhiteboard && !$scope.whiteboardUnread) {
-                          $scope.$apply(function() {
-                            $scope.whiteboardUnread = true;
-                            $scope.mouseMove = true; 
-                          });
-                        }
-                    };
-                    $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
-                    
-                    socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'answer'});
-                });
-                $scope.publishing = true;
-                
+                audio.loop = true;
+                audio.play();
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
             }
+            else{
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
+            }
+        });
+        
+        $scope.publishing = true;
+
+        function cancelListenerHandler(){
+            console.log("Remove Success");
         }
+
+        socket.removeListener('messageReceived', cancelListenerHandler());
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
             {
                 audio.pause();
                 $scope.isAccept = true;
+
+                console.log($scope.streams);
 
                 if($scope.isCaller)
                     $cookieStore.put('callInfo',{isCalling: true, callUser: fromId})
@@ -181,37 +144,23 @@ angular.module("app.call.controller",[
             }
             if(message.type === 'ignore')
             {
-                audio.pause();
-                toastr.info(fromUser + " Has Ignored The Call!");
-                $modalStack.dismissAll();
-
-                $timeout(function(){
-                    if($scope.streams.length == 0)
-                        disconnect();
-                }, 1 * 1000);
+                if($scope.streams.length == 0)
+                {
+                    audio.pause();
+                    toastr.info(fromUser + " Has Ignored The Call!");
+                    disconnect();
+                }
+                else
+                {
+                    toastr.info(fromUser + " Has Ignored The Call!");
+                    $modalStack.dismissAll();
+                }
             }
             if(message.type === 'cancel')
             {
                 audio.pause();
                 toastr.info(fromUser + " Has Left The Call!");
-                $modalStack.dismissAll();
-
-                // $scope.$watch('connections',function(val){
-                //     console.log(val);
-                //     if(val.length == 1)
-                //         disconnect();
-                // })
-
-                // $scope.$apply(function(){
-                //     if($scope.connections.length == 1)
-                //         disconnect();
-                // })
-
-                $timeout(function(){
-                    if($scope.streams.length == 0)
-                        disconnect();
-                }, 1 * 1000);
-
+                disconnect();
             }
 
         })
@@ -226,27 +175,63 @@ angular.module("app.call.controller",[
 
         var disconnect = function() {
             if($scope.session != null)
-            {
                 $scope.session.disconnect();
-                $scope.session.on('sessionDisconnected', function () {
-                    callModal.deactivate();
-                });
-            }
-            else
-                callModal.deactivate();
 
             if(typeof $cookieStore.get("callInfo") !== undefined)
                 $cookieStore.remove("callInfo");
 
-            socket.removeAllListeners();
-            $state.go(toSt.toState.name,toSt.toParams,{reload: true});
-
+            window.close();
         }
+
+        var signalError = function (err) {
+              if (err) {
+                TB.error(err);
+              }
+            };
 
         $scope.cancelCall = function(){
             audio.pause();
-            socket.emit("sendMessage",$scope.userInfo.id,callUser,{type:'cancel'});
-            disconnect();
+            
+            swal({
+                title: "Are you sure want to cancel the call?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: true
+            }, function() {
+                if($scope.streams.length == 0)
+                {
+                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
+                    disconnect();
+                }
+                else
+                {
+                    UserService.getUserInfo($scope.userInfo.id).then(function(data){
+                        var signal = {
+                            type: 'cancelCall',
+                            data: data.user_name
+                        };
+                        OTSession.session.signal(signal, function(err){
+                            if (err)
+                                TB.error(err);
+                            else
+                                disconnect();
+                        });
+                    })
+                    
+                }
+            });
+        }
+
+        if (OTSession.session) 
+        {
+            OTSession.session.on({
+                'signal:cancel': function (event) {
+                    console.log(event);
+                    toastr.info(JSON.parse(event.data).username + " Has Left The Call!");
+                }
+            })
         }
 
         $scope.installScreenshareExtension = function () {
@@ -317,9 +302,12 @@ angular.module("app.call.controller",[
                             },
                             OTSession: function(){
                                 return OTSession;
+                            },
+                            patientId: function(){
+                                return $scope.patientId;
                             }
                         },
-                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession){
+                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession,patientId){
 
                             $scope.isMakeCall = false;
                             $scope.callUser = null;
@@ -336,7 +324,7 @@ angular.module("app.call.controller",[
                             $scope.callUser = function(u){
                                 $scope.isMakeCall = true;
                                 $scope.callUser = u;
-                                socket.emit("sendMessage",userInfo.id,u.id,{type:'call',sessionId: sessionId});
+                                socket.emit("sendMessage",userInfo.id,u.id,{type:'call',sessionId: sessionId, patientId: patientId});
                             }
 
                             $scope.cancelClick = function(){

@@ -8,10 +8,13 @@
  *  @License: Released under the MIT license (http://opensource.org/licenses/MIT)
 **/
 
-var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
-.directive('otWhiteboard', ['OTSession', '$window', function (OTSession, $window) {
+var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restangular','toastr'])
+.directive('otWhiteboard', ['OTSession', '$window','$http','Restangular','toastr', function (OTSession, $window, $http,Restangular,toastr) {
     return {
         restrict: 'E',
+        scope: {
+            patient:'=',
+        },
         template: '<canvas></canvas>' + 
 
             '<div class="OT_panel">' +
@@ -23,11 +26,16 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             '<input type="button" ng-click="erase()" ng-class="{OT_erase: true, OT_selected: erasing}"' +
             ' value="Eraser"></input>' +
 
-            '<input type="file" onchange="angular.element(this).scope().uploadImage(this.files)" class="OT_upload" value="Upload"></input>' +
+            // '<input type="file" onchange="angular.element(this).scope().uploadImage(this.files)" class="OT_upload" value="Upload"></input>' +
             
             '<input type="button" ng-click="capture()" class="OT_capture" value="{{captureText}}"></input>' +
 
-            '<input type="button" ng-click="clear()" class="OT_clear" value="Clear"></input>',
+            '<input type="button" ng-click="clear()" class="OT_clear" value="Clear"></input>' +
+            '</div>' +
+
+            '<div class="OT_explorer">' +
+            '<js-tree tree-data="scope" tree-model="treeArr" tree-events="dblclick:selectNodeCB"></js-tree>' +
+            '</div>',
 
         link: function (scope, element, attrs) {
             var canvas = element.context.querySelector("canvas"),
@@ -41,13 +49,52 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 batchUpdates = [],
                 iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
 
+            var host = location.hostname;
+            var port = location.port;
+            scope.treeArr = [];
+
             scope.colors = [{'background-color': 'black'},
                             {'background-color': 'blue'},
                             {'background-color': 'red'}];
-            scope.captureText = iOS ? 'Email' : 'Capture';
+            scope.captureText = "Share";
 
             canvas.width = attrs.width || element.width();
             canvas.height = attrs.height || element.height();
+
+            Restangular.one('api/consultation/draw/templates').get().then(function(rs){
+                if(rs.status == 'success')
+                {
+                    for(var i=0; i<rs.data.length;i++)
+                    {
+                        var node = rs.data[i];
+                        scope.treeArr.push({
+                                    "id": node.id,
+                                    "parent": node.parent == null ? '#' : node.parent,
+                                    "text": node.fileName,
+                                    "icon": node.isFolder == 1 ? 'fa fa-folder icon-state-warning' : 'fa fa-file icon-state-success'
+                                })
+                    }
+                }
+            })
+
+            scope.selectNodeCB = function(e){
+                var idArr = String(e.target.id).split('_');
+                var id = idArr[0];
+                if(id != null && typeof id !== 'undefined' && id != '')
+                {
+
+                    Restangular.one('api/consultation/draw/template',id).get().then(function(rs){
+                        if(rs.status == 'success')
+                        {
+                            var img = new Image;
+                            img.onload = function() {
+                                ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                            }
+                            img.src = rs.data;
+                        }
+                    })
+                }
+            }
             
             var clearCanvas = function () {
                 ctx.save();
@@ -98,13 +145,28 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             };
             
             scope.capture = function () {
-                if (iOS) {
-                    // On iOS you can put HTML in a mailto: link
-                    window.location.href = "mailto:?subject=Whiteboard&Body=<img src='" + canvas.toDataURL('image/png') + "'>";
-                } else {
-                    // We just open the image in a new window
-                    window.open(canvas.toDataURL('image/png'));
+                if(scope.patient != null)
+                {
+                    var imgData = canvas.toDataURL('image/png');
+
+                    var signalError = function (err) {
+                      if (err) {
+                        TB.error(err);
+                      }
+                    };
+                        
+                    Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, imgData: imgData}).then(function(rs){
+                        if(rs.status == 'success')
+                        {
+                            var signal = {
+                                type: 'shareImage',
+                                data: {id: rs.id}
+                            };
+                            OTSession.session.signal(signal, signalError);
+                        }
+                    })
                 }
+                
             };
 
             var draw = function (update) {

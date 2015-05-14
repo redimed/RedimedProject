@@ -34,6 +34,7 @@ angular.module("app", [
         'ngPDFViewer',
         'ngSanitize',
         'ngMap',
+        'ng-mfb',
         'btford.socket-io',
         'btford.modal',
         'dateRangePicker',
@@ -170,12 +171,7 @@ angular.module("app", [
         })
 
         .state('call', {
-            params: {
-                callUserInfo: null,
-                callUser: null,
-                isCaller: null,
-                opentokInfo: null
-            },
+            url: '/call/:apiKey/:sessionId/:token/:callUser/:isCaller/:patientId',
             views: {
                 "root": {
                     templateUrl: "common/views/call.html",
