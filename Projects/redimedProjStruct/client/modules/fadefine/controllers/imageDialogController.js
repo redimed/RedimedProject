@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.fadefine.imageDialog.controller',[])
-.controller('ImageDialogController', function($scope, $timeout, FileUploader, FaDefineService, toastr){
+.controller('ImageDialogController', function($scope, $timeout, $modalInstance, FileUploader, FaDefineService, toastr){
 	
 
 	var getImages = function(){
@@ -8,7 +8,7 @@ angular.module('app.loggedIn.fadefine.imageDialog.controller',[])
 				$scope.images = [];
 				result.files.forEach(function(file){
 					var image = {
-						realPath : './document/fa/images/'+file,
+						realPath : ".\\download\\documentImage\\"+file,
 						previewPath : 'https://'+location.host+'/document/fa/images/'+file
 					}
 					$scope.images.push(image);
@@ -75,4 +75,16 @@ angular.module('app.loggedIn.fadefine.imageDialog.controller',[])
             $('#image_upload').click();
         }, 100);
     };
+
+    $scope.chooseImage = function(image){
+    	$modalInstance.close(image);
+    };
+
+    $scope.chooseNoImg = function(){
+    	var noImg={
+    		realPath:null,
+    		previewPath:null
+    	}
+    	$modalInstance.close(noImg);
+    }
 })
