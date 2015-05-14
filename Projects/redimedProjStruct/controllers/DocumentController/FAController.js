@@ -73,18 +73,19 @@ module.exports = {
 
     checkRating : function(req,res){
         var gender = req.body.gender;
+        if(gender==='1') gender="Male";
+        else gender="Female";
         var age = req.body.age;
         var value = req.body.value;
         var id = req.body.id;
-        db.sequelize.query("SELECT r.`RATE`, r.`VALUE` FROM `sys_rankings` r WHERE r.`HEADER_ID`=? AND r.`FROM_AGE` <= ? AND" +
-            " r.`TO_AGE` >= ? AND r.`FROM_VALUE` <= ? AND r.`TO_VALUE` >= ? AND r.`GENDER` =  ?;",null,{raw:true},[id,age,age,value,value,gender])
+        db.sequelize.query("SELECT r.`RATE`, r.`VALUE` FROM `sys_rankings` r WHERE r.`HEADER_ID`=? AND (? BETWEEN r.`FROM_AGE` AND r.`TO_AGE`) AND (? BETWEEN r.`FROM_VALUE` AND r.`TO_VALUE`) AND r.`GENDER` =  ?;",null,{raw:true},[id,age,value,gender])
             .success(function(data){
                 if(data == null)
                 {
                     res.json({status:'fail'});
                 }else
                 {
-                    res.json(data);
+                    res.json({status:'success', data:data});
                 }
             })
             .error(function(err){

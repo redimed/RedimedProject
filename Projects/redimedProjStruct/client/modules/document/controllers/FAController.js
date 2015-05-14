@@ -173,9 +173,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                         val = $scope.infoD.VAL1_VALUE[idD];
                     }
                     DocumentService.checkRating(rating_id,age, gender, val).then(function(response){
-                        if(response['status'] != 'fail' && response.length > 0){
-                            $scope.infoL.RATING_VALUE1[idL] = response[0].VALUE;
-                            $scope.infoL.RATE1[idL] = response[0].RATE;
+                        console.log('this is response 1', response);
+                        if(response.status === 'success' && response.data.length > 0){
+                            console.log('this is response', response);
+                            $scope.infoL.RATING_VALUE1[idL] = response.data[0].VALUE;
+                            $scope.infoL.RATE1[idL] = response.data[0].RATE;
                             rateTotalFunction(idL);
                         }else
                         {
@@ -201,9 +203,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                         val = sum / avg;
                         $scope.infoL.SCORE2[idL] = val;
                         DocumentService.checkRating(rating_id,age, gender, val).then(function(response){
-                            if(response['status'] != 'fail' && response.length > 0){
-                                $scope.infoL.RATING_VALUE2[idL] = response[0].VALUE;
-                                $scope.infoL.RATE2[idL] = response[0].RATE;
+                            if(response.status === 'success' && response.data.length > 0){
+                                $scope.infoL.RATING_VALUE2[idL] = response.data[0].VALUE;
+                                $scope.infoL.RATE2[idL] = response.data[0].RATE;
                             }else
                             {
                                 $scope.infoL.RATING_VALUE2[idL]=null;
