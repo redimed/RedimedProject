@@ -2,6 +2,7 @@ var db = require("../models");
 var knex = require("../knex-connect.js");
 var moment = require('moment');
 var extend = require('util')._extend;
+var fs = require('fs');//Read js file for import into
 
 var Promise = require('promise');
 
@@ -722,6 +723,27 @@ module.exports = {
 		.error(function(err){
 			res.json(500,{status:'error'});
 		})
+	},
+
+	postGetImages: function(req,res){
+		fs.readdir('./download/documentImage', function(err, files){
+			if(err) res.json(500, {status:'error'});
+			else res.json({status:'success', files: files});
+		})
+	},
+
+	uploadUploadImage: function(req,res){
+		var targetPath = './download/documentImage/'+req.files.file.name;
+		var tmpPath = req.files.file.path;
+
+		fs.rename(tmpPath, targetPath, function(err){
+			if (err) throw err;
+			fs.unlink(tmpPath, function(){
+				if(err) res.json(500,{status:'upload failed'});
+				else res.json({status:'success'});
+			})
+		})
+
 	}
 
 	// postEdit: function(req,res){

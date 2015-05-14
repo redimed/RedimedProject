@@ -43,5 +43,10 @@ angular.module('app.loggedIn.fadefine.service',[])
         })
     }
 
+    instanceService.getImageFiles = function(){
+        var getImagesApi = v2_api.all('fa/get_images');
+        return getImagesApi.post();
+    }
+
     return instanceService;
 });

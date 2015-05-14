@@ -500,6 +500,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
         var modalInstance = $modal.open({
           animation: true,
           templateUrl: 'modules/fadefine/views/imageModal.html',
+          controller: 'ImageDialogController',
           size: 'lg'
           // resolve: {
           //   items: function () {

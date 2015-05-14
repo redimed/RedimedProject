@@ -17,32 +17,12 @@
 				</span>
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" >
+		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" ng-repeat="image in images">
 			<div class="image-container-div">
-				<img src="http://www.gettyimages.co.uk/CMS/StaticContent/1391099215267_hero2.jpg" alt="" style="width:100%; height: 100%; object-fit: contain;">
+				<img ng-src="{{image.previewPath}}" alt="" style="width:100%; height: 100%; object-fit: contain;">
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" >
-			<div class="image-container-div">
-				<img src="http://s15.postimg.org/4dgnma7d7/Untitled.png" alt="" style="width:100%; height: 100%; object-fit: contain;">
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" >
-			<div class="image-container-div">
-				<img src="http://i.stack.imgur.com/54OjC.png" alt="" style="width:100%; height: 100%; object-fit: contain;">
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" >
-			<div class="image-container-div">
-				<img src="http://i.stack.imgur.com/b2FHM.png" alt="" style="width:100%; height: 100%; object-fit: contain;">
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" >
-			<div class="image-container-div">
-				<img src="http://cjwainwright.co.uk/webdev/aspectratio/images/resizebehaviour.png" alt="" style="width:100%; height: 100%; object-fit: contain;">
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-4 col-xs-6 outer-div">
+		<div class="col-md-3 col-sm-4 col-xs-6 outer-div" ng-click="openUploader()">
 			<div class="image-container-div" style="display:table; text-align:center;">
 				<span style="display:table-cell; vertical-align: middle;">
 					<div><i class="fa fa-plus fa-5x"></i></div><br/>
@@ -61,8 +41,11 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<p>Upload progress:</p>
 			<div class="progress progress-sm" style="">
-				<div class="progress-bar progress-bar-info" role="progressbar" style="width: 75%;"></div>
+				<div class="progress-bar progress-bar-info" role="progressbar" style="width: {{info_upload.progress_percent}}%;"></div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+<input id="image_upload" ng-hide="true" type="file" nv-file-select uploader="uploader" />
