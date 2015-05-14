@@ -145,10 +145,13 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     {
                         sum = 0,
                         avg = 0;
-                        value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD];
+                        if(!value[idL]) value[idL]=[];
+                        // value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD];
+                        value[idL][idD]=$scope.infoD.VAL1_VALUE[idD];
                         for(var i in value[idL])
                         {
-                            sum = sum + value[idL][i][0] * 1;
+                            // sum = sum + value[idL][i][0] * 1;
+                            sum = sum + value[idL][i] * 1;
                             avg++;
                         }
                         val = sum / avg;
@@ -186,10 +189,13 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                         sum = 0;
                         avg = 0;
                         val = 0;
-                        value[idL][idD][1]=$scope.infoD.VAL2_VALUE[idD];
+                        if(!value[idL]) value[idL]=[];
+                        // value[idL][idD][1]=$scope.infoD.VAL2_VALUE[idD];
+                        value[idL][idD]=$scope.infoD.VAL2_VALUE[idD];
                         for(var i in value[idL])
                         {
-                            sum = sum + value[idL][i][1] * 1;
+                            // sum = sum + value[idL][i][1] * 1;
+                            sum = sum + value[idL][i] * 1;
                             avg++;
                         }
                         val = sum / avg;
