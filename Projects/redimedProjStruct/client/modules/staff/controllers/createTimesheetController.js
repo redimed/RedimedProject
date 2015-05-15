@@ -245,7 +245,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 $scope.tasks !== null &&
                 $scope.tasks.length !== 0 &&
                 $scope.tasks[0] !== undefined) {
-                $scope.dateWeekFrom = $filter('date')($scope.tasks[0].date, "dd-MM-yyyy");
+                $scope.dateWeekFrom = $filter('date')($scope.tasks[0].date, "dd/MM/yyyy");
             }
             //END SHOW
 

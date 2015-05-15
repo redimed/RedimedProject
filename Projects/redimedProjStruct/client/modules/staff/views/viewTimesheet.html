@@ -65,7 +65,7 @@
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result track by $index" style="cursor: pointer;font-size:14px; " ng-dblclick="view(l)">
-                        <td style="text-align:left;font-size:14px; width:200px;"><span class="text-info">{{l.start_date | date: "dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd-MM-yyyy"}}</span></td>
+                        <td style="text-align:left;font-size:14px; width:200px;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd/MM/yyyy"}}</span></td>
                         <td style="font-size:14px; text-align:center;width:150px;">{{getFortMatTimeCharge(l.time_charge)}}</td>
                         <td style="text-align:left;font-size:14px; width:200px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{l.name}}</td>

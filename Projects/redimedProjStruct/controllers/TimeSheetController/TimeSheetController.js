@@ -2374,7 +2374,8 @@ module.exports = {
                                                                             res.json({
                                                                                 status: "success",
                                                                                 result: result,
-                                                                                count: resultCount[0].COUNT
+                                                                                count: resultCount[0].COUNT,
+                                                                                resultStatus: resultStatus
                                                                             });
                                                                             return;
                                                                         })
@@ -2412,7 +2413,8 @@ module.exports = {
                                                                     res.json({
                                                                         status: "success",
                                                                         result: result,
-                                                                        count: resultCount[0].COUNT
+                                                                        count: resultCount[0].COUNT,
+                                                                        resultStatus:resultStatus
                                                                     });
                                                                     return;
                                                                     //END PROCESSING
@@ -2437,7 +2439,8 @@ module.exports = {
                                                 res.json({
                                                     status: "success",
                                                     result: result,
-                                                    count: resultCount[0].COUNT
+                                                    count: resultCount[0].COUNT,
+                                                    resultStatus: resultStatus
                                                 });
                                             }
                                         })

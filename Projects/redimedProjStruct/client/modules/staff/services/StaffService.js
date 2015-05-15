@@ -194,7 +194,7 @@ angular.module("app.loggedIn.staff.service", [])
                 var $input = $(input);
                 var date = $input.datepicker('getDate');
                 var firstDay = $input.datepicker("option", "firstDay");
-                $input.datepicker("option", "dateFormat", "dd-mm-yy");
+                $input.datepicker("option", "dateFormat", "dd/mm/yy");
                 $input.datepicker('option', 'firstDay', 1);
                 if (date !== null) {
                     var dayAdjustment = date.getDay() - firstDay;
