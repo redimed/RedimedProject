@@ -190,7 +190,8 @@
                 <a class="btn btn-xs yellow pull-right" ng-if="isEdit===false" ui-sref="loggedIn.TimeSheetHome" style="width:75px;">Cancel</a>
                 <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px;" ng-if="is_reject!==1">Submit</button>
                 <button class="btn btn-xs purple pull-right" ng-click="clickSendServer(5,formLeave)" style="width:75px; " ng-if="is_reject===1">Re-submit</button>
-                <button class="btn btn-xs green pull-right" ng-click="clickSendServer(1,formLeave)" style="width:75px;">Save</button>
+                <button class="btn btn-xs green pull-right" ng-click="clickSendServer(1,formLeave)" style="width:75px;" ng-if="status_id!==4">Save</button>
+                <button class="btn btn-xs green pull-right" ng-click="clickSendServer(4,formLeave)" style="width:75px;" ng-if="status_id===4">Save</button>
             </div>
         </div>
         <!-- END STANDARD REQUEST -->

@@ -24,6 +24,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     response.resultLeave[0] !== undefined && response.resultLeave[0] !== null) {
                     $scope.info = response.resultLeave[0];
                     $scope.is_reject = response.resultLeave[0].is_reject;
+                    $scope.status_id = response.resultLeave[0].status_id;
 
                     //convert time
                     $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
@@ -130,7 +131,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                             $scope.info.standard === 1) ||
                         ($scope.info.time_leave_real <= 4560 &&
                             $scope.info.standard === 0)))) {
-                toastr.warning("Please make ensure that you have choosen the Type of Leave (Standard/Non-Standard).", "Warning");
+                toastr.warning("Please make sure you have chosen the right type of Leave Form (Standard/Non-Standard).", "Warning");
             }
             //END SIGN TIME LEAVE
 

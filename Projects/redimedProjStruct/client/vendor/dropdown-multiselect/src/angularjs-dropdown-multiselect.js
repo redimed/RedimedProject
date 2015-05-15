@@ -21,12 +21,12 @@ directiveModule.directive('ngDropdownMultiselect', ['$filter', '$document', '$co
                 var checkboxes = attrs.checkboxes ? true : false;
                 var groups = attrs.groupBy ? true : false;
 
-                var template = '<div class="multiselect-parent input-group dropdown-multiselect" style="text-align:center; font-size:14px;font-weight:bold;">';
-                template += '<span class="input-group-addon">{{texts.nameAddon}}</span><button type="button" class="dropdown-toggle input-sm form-control" ng-class="settings.buttonClasses" style="text-align:center; font-size:14px;font-weight:bold;color:blue;" ng-click="toggleDropdown()">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
+                var template = '<div class="multiselect-parent input-group dropdown-multiselect" style="text-align:center; font-size:13px;font-weight:bold;">';
+                template += '<span class="input-group-addon">{{texts.nameAddon}}</span><button type="button" class="dropdown-toggle input-sm form-control" ng-class="settings.buttonClasses" style="text-align:center; font-size:13px;font-weight:bold;color:blue;" ng-click="toggleDropdown()">{{getButtonText()}}&nbsp;<span class="caret"></span></button>';
                 template += '<ul class="dropdown-menu dropdown-menu-form dropdown-menu-right" ng-style="{display: open ? \'block\' : \'none\', height : settings.scrollable ? settings.scrollableHeight : \'auto\' }" style="overflow: scroll" >';
                 template += '<li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0"><a data-ng-click="selectAll()"><input type="checkbox" class="checkboxInput" ng-model="checkALL" ng-checked="true" ng-if="checkAll==1"/><input type="checkbox" class="checkboxInput" ng-model="checkALL" ng-checked="false" ng-if="checkAll!=1"/>{{texts.checkAll}}</li>';
                 template += '<li ng-hide="(!settings.showCheckAll || settings.selectionLimit > 0) && !settings.showUncheckAll" class="divider"></li>';
-                template += '<li ng-show="settings.enableSearch"><div class="dropdown-header"><input type="text" class="form-control input-sm" style="width: 100%; font-size:14px;" data-ng-model="searchFilter" placeholder="{{texts.searchPlaceholder}}" /></li>';
+                template += '<li ng-show="settings.enableSearch"><div class="dropdown-header"><input type="text" class="form-control input-sm" style="width: 100%; font-size:13px;" data-ng-model="searchFilter" placeholder="{{texts.searchPlaceholder}}" /></li>';
 
                 if (groups) {
                     template += '<li ng-repeat-start="option in orderedItems | filter: searchFilter" ng-show="getPropertyForObject(option, settings.groupBy) !== getPropertyForObject(orderedItems[$index - 1], settings.groupBy)" role="presentation" class="dropdown-header">{{ getGroupTitle(getPropertyForObject(option, settings.groupBy)) }}</li>';

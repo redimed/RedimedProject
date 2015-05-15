@@ -10,19 +10,19 @@
                 <div class="dropdown">
                     <a class="inputBarA dropdown-toggle btn" data-toggle="dropdown" href="#">
                         <img src="/img/TimeSheet/formLeave.png" alt="Time Reporting System">
-                        <span class="bold" >Leave Management System</span></a>
+                        <span>Leave Management System</span></a>
                     <ul class="dropdown-menu dropup" role="menu" aria-labelledby="dLabel">
                         <!-- LEAVE HISTORY -->
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.LeaveHistory" ng-if="(position==='Staff' || position==='Head of Dept.')">
-                                <span class="bold text-info" >My Leave History</span>
+                                <span class="text-info">My Leave History</span>
                             </a>
                         </li>
                         <!-- END LEAVE HISTORY -->
                         <!-- APPLY LEAVE -->
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.CreateLeave" ng-if="(position==='Staff' || position==='Head of Dept.')">
-                                <span class="bold text-info" >Apply a Leave Form
+                                <span class="text-info">Apply a Leave Form
                                 </span>
                             </a>
                         </li>
@@ -30,7 +30,7 @@
                         <!-- APPROVE LEAVE -->
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.ApproveLeave" ng-if="(position==='Head of Dept.' || position==='Director')">
-                                <span class="bold text-info" >Approve and Manage Leave
+                                <span class="text-info">Approve and Manage Leave
                                 </span>
                             </a>
                         </li>
@@ -45,19 +45,19 @@
             <div class="col-md-12">
                 <a ui-sref="loggedIn.timesheet.view" class="btn" ng-disabled="(position!=='Staff' && position!=='Head of Dept.')">
                     <img src="/img/TimeSheet/history.png" alt="View History Timesheet">
-                    <label class="control-label bold" >View Timesheets History</label>
+                    <label class="control-label">View Timesheets History</label>
                 </a>
             </div>
             <div class="col-md-12">
                 <a ui-sref="loggedIn.timesheet.create" class="btn" ng-disabled="(position!=='Staff' && position!=='Director' && position!=='Head of Dept.')">
                     <img src="/img/TimeSheet/create.png" alt="Create New Timesheet">
-                    <label class="control-label bold" >Create New Timesheet</label>
+                    <label class="control-label">Create New Timesheet</label>
                 </a>
             </div>
             <div class="col-md-12">
                 <a ui-sref="loggedIn.ApproveTask" class="btn" ng-disabled="(position!=='Head of Dept.' && position!=='Director')">
                     <img src="/img/TimeSheet/approve.png" alt="Management And Approve Timesheet">
-                    <label class="control-label bold" >Approve and Manage Timesheets</label>
+                    <label class="control-label">Approve and Manage Timesheets</label>
                 </a>
             </div>
             <div class="col-md-12">
@@ -65,43 +65,43 @@
                 <div class="dropdown">
                     <a class="inputBarA dropdown-toggle btn" data-toggle="dropdown" href="#">
                         <img src="/img/TimeSheet/reports.png" alt="Time Reporting System">
-                        <span class="bold" >Utilization Time Reporting System</span></a>
+                        <span>Utilization Time Reporting System</span></a>
                     <ul class="dropdown-menu dropup" role="menu" aria-labelledby="dLabel">
                         <li role="presentation" ng-if="position!='Staff' && position!='Admin'">
                             <a role="menuitem" ui-sref="loggedIn.Report1TimeSheet">
-                                <span class="bold text-info" >Report on Time In Lieu</span></a>
+                                <span class="text-info">Report on Time In Lieu</span></a>
                         </li>
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.Report2TimeSheet">
-                                <span class="bold text-info" >Report on Utilization Ratio - View by Detail Activites
+                                <span class="text-info">Report on Utilization Ratio - View by Detail Activites
                                 </span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.Report2TimeSheet">
-                                <span class="bold text-info" >Report on Utilization Ratio - View by Summary Activites
+                                <span class="text-info">Report on Utilization Ratio - View by Summary Activites
                                 </span>
                             </a>
                         </li>
                         <li role="presentation" ng-if="!(position!=='Head of Dept.' && position!=='Director')">
                             <a role="menuitem" ui-sref="loggedIn.Report4TimeSheet">
-                                <span class="bold text-info" >Report on Actual Working Hours</span>
+                                <span class="text-info">Report on Actual Working Hours</span>
                             </a>
                         </li>
                         <li role="presentation" ng-if="!(position!=='Head of Dept.' && position!=='Director')">
                             <a role="menuitem" ui-sref="loggedIn.Report5TimeSheet">
-                                <span class="bold text-info" >Report on Actual Working Ratio</span>
+                                <span class="text-info">Report on Actual Working Ratio</span>
                             </a>
                         </li>
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.Report6TimeSheet">
-                                <span class="bold text-info" >Report on Item Numbers</span>
+                                <span class="text-info">Report on Item Numbers</span>
                             </a>
                         </li>
                         <!-- REPORT LEAVE -->
                         <li role="presentation">
                             <a role="menuitem" ui-sref="loggedIn.ReportOweLeave" ng-if="(position==='Head of Dept.' || position==='Director')">
-                                <span class="bold text-info" >Report on Employee owe Leave</span>
+                                <span class="text-info">Report on Employee owe Leave</span>
                             </a>
                         </li>
                         <!-- END REPORT LEAVE -->
@@ -112,7 +112,7 @@
             <div class="col-md-12">
                 <a ui-sref="loggedIn.AdminTimeSheet" class="btn" ng-disabled="position!='Admin'">
                     <img src="/img/TimeSheet/admin.png" alt="Administrator">
-                    <span class="bold">Administrator</span>
+                    <span>Administrator</span>
                 </a>
             </div>
         </div>

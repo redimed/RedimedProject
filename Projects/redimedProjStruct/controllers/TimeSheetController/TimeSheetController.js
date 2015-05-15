@@ -2414,7 +2414,7 @@ module.exports = {
                                                                         status: "success",
                                                                         result: result,
                                                                         count: resultCount[0].COUNT,
-                                                                        resultStatus:resultStatus
+                                                                        resultStatus: resultStatus
                                                                     });
                                                                     return;
                                                                     //END PROCESSING
@@ -2585,7 +2585,7 @@ module.exports = {
     LoadLeaveEdit: function(req, res) {
         var leaveID = req.body.leaveID;
         var queryLoadLeaveEdit =
-            "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, " +
+            "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, hr_leave.status_id, " +
             "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " +
             "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " +
             "FROM hr_leave " +
