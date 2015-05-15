@@ -358,7 +358,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 										doctor_array_temp[k].color = scope.appointment.list[i].doctors[j].SERVICE_COLOR;
 
 										if(doctor_array_temp[k].left_temp === 0){
-											scope.appointment.list[i].doctors[j].height = '68px';
+											scope.appointment.list[i].doctors[j].height = '38px';
 										}
 									}else{
 										if(doctor_array_temp[k].left_temp > 0){
@@ -366,7 +366,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 											doctor_array_temp[k].left_temp -= 15;
 
 											if(doctor_array_temp[k].left_temp === 0){
-												scope.appointment.list[i].doctors[j].height = '68px';
+												scope.appointment.list[i].doctors[j].height = '38px';
 											}
 										}
 									}
