@@ -23,21 +23,30 @@ module.exports = {
         var infoH = req.body.infoH;
         var infoD = req.body.infoD;
         var infoC = req.body.infoC;
+        var FA_ID = 11;
         var max;
 
-        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
-            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
+        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s where s.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
+            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l where l.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
                 db.sequelize.query("INSERT INTO `cln_fa_df_line_details` SELECT ?,?,d.* FROM `sys_fa_df_line_details` d",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
-                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
+                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h where h.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
                         db.sequelize.query("INSERT INTO `cln_fa_df_comments` SELECT ?,?,c.* FROM `sys_fa_df_comments` c",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
                             submitFA(res,infoH,infoL,infoD,infoC);
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
                         });
+                    }).error(function(err){
+                        res.json({status:'error'});
                     });
+                }).error(function(err){
+                    res.json({status:'error'});
                 });
+            }).error(function(err){
+                res.json({status:'error'});
             });
         }).error(function(err){
             res.json({status:'error'});
-            console.log(err);
         });
     },
 
@@ -177,6 +186,7 @@ var loadNewFA = function(res){
 };
 
 var submitFA = function(res,infoH,infoL,infoD,infoC){
+    console.log("run in here");
     sequelize.transaction(function(t) {
         db.HeaderFA.update({
             ENTITY_ID: infoH.ENTITY_ID ,

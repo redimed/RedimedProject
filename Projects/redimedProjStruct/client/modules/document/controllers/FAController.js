@@ -60,7 +60,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.total = {};
 
         var value={},
-            totalArr={},
+            totalArr=[],
             age = getAge($scope.patientInfo.DOB),
             gender = $scope.patientInfo.Sex,
             val = 0,
@@ -95,7 +95,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         var rateTotalFunction = function(id){
             rateTotal = [];
             dem= 0;
-            console.log(totalArr);
+            console.log('this is total array',$scope.infoL);
             for(var i in totalArr)
             {
                 total=0;
@@ -159,14 +159,16 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     }else if(type1 == 4)
                     {
                         var max = 0;
+                        if(!value[idL]) value[idL]=[];
+                        value[idL][idD]=$scope.infoD.VAL1_VALUE[idD];
                         for(var i in value[idL])
                         {
-                            if(i > max)
+                            if(value[idL][i] > max)
                             {
-                                max = i;
+                                max = value[idL][i];
                             }
                         }
-                        val =$scope.infoD.VAL1_VALUE[max];
+                        val = max;
                         $scope.infoL.SCORE1[idL] = val;
                     }else if(type1 == 6)
                     {
@@ -220,13 +222,14 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     if(type1 == 9)
                     {
                         var max = 0;
-                        value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD]*1;
-
+                        if(!value[idL]) value[idL] = [];
+                        // value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD]*1;
+                        value[idL][idD]=$scope.infoD.VAL1_VALUE[idD]*1;
                         for(var i in value[idL])
                         {
-                            if(value[idL][i][0] > max)
+                            if(value[idL][i] > max)
                             {
-                                max = value[idL][i][0];
+                                max = value[idL][i];
                             }
                         }
                         $scope.manage[idL] = max;
@@ -356,10 +359,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                     }
                                     if(dataD.LineTestRefer != null){
                                         if(!totalArr[dataD.LINE_ID]){
-                                            totalArr[dataD.LINE_ID] = {};
+                                            totalArr[dataD.LINE_ID] = [];
                                         }
                                         totalArr[dataD.LINE_ID][dataD.LineTestRefer] = dataD.VAL1_VALUE ;
                                         totalArr[dataD.LINE_ID]["rating"] =dataL.RATING_ID1;
+                                        console.log('those are total array', totalArr)
                                     }
                                 }
                             }
