@@ -55,6 +55,11 @@ app.post("/api/TimeSheet/post-list-emp", TimeSheet.StepEmployee);
 app.post("/api/TimeSheet/post-list-deptRP", TimeSheet.LoadDeptReport);
 app.post("/api/TimeSheet/post-list-empRP", TimeSheet.LoadEmpReport);
 app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
+app.post("/api/TimeSheet/post-owe-leave", TimeSheet.LoadReportOweLeave);
+app.post("/api/TimeSheet/post-utilization-detail", TimeSheet.LoadReportUtilizationRatioDetail);
+app.post("/api/TimeSheet/post-utilization-sumary", TimeSheet.LoadReportUtilizationRatioSumary);
+app.post("/api/TimeSheet/post-time-inlieu", TimeSheet.LoadReportTimeInLieu);
+app.post("/api/TimeSheet/post-item-number", TimeSheet.LoadReportItemNumber);
 //END REPORT
 
 //SEND MAIL
@@ -63,4 +68,14 @@ app.post("/api/TimeSheet/post-list-reports1", TimeSheet.LoadReports1);
 // LEAVE FORM
 app.post("/api/TimeSheet/post-info-employee", TimeSheet.LoadInfoEmployee);
 app.get("/api/TimeSheet/get-type-leave", TimeSheet.LoadTypeLeave);
+app.post("/api/TimeSheet/post-leave-form", TimeSheet.UpLeaveServer);
+app.post("/api/TimeSheet/post-history-leave", TimeSheet.LoadHistoryLeave);
+app.post("/api/TimeSheet/post-view-leave", TimeSheet.ViewLeave);
+app.post("/api/TimeSheet/post-submit-view", TimeSheet.SubmitOnViewLeave);
+app.post("/api/TimeSheet/post-load-edit", TimeSheet.LoadLeaveEdit);
+app.post("/api/TimeSheet/post-update-leave", TimeSheet.UpdateLeave);
+app.post("/api/TimeSheet/post-list-leave", TimeSheet.LoadLeaveApprove);
+app.post("/api/TimeSheet/post-approve-leave", TimeSheet.ApproveLeave);
+app.post("/api/TimeSheet/post-reject-leave", TimeSheet.RejectLeave);
+app.post("/api/TimeSheet/post-check-leave", TimeSheet.CheckLeave);
 //END lEAVE

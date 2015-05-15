@@ -1,3 +1,4 @@
+//LIBRARY
 var db = require("../../models");
 var FunctionSendMail = require("../../controllers/TimeSheetController/timeSheetEmailController.js");
 var sys_hierarchy_group = db.sys_hierarchy_group;
@@ -10,6 +11,10 @@ var Departments = db.Departments;
 var Location = db.timeLocation;
 var moment = require('moment');
 var CronJob = require('cron').CronJob;
+var chainer = new db.Sequelize.Utils.QueryChainer();
+var Q = require("q");
+//END LIBRARY
+
 module.exports = {
     //MODULE TREE
     LoadTreeTimeSheet: function(req, res) {
@@ -646,6 +651,7 @@ module.exports = {
         var strOrder = "ORDER BY ";
         var strSearch = " AND ";
         var strQuery = " AND ";
+
         //ORDER
         for (var key in searchObj.order) {
             if (searchObj.order[key] !== undefined && searchObj.order[key] !== null && searchObj.order[key] !== "") {
@@ -764,6 +770,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadOneDept: function(req, res) {
         var idDept = req.body.idDept;
         Departments.find({
@@ -845,15 +852,18 @@ module.exports = {
     },
 
     ViewApproved: function(req, res) {
+        //DECLARATION
         var idTaskWeek = req.body.info;
+        // END DECLARATION
+        // QUERY 
         var strQuery = "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " +
-            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
+            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.user_id, " +
             "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
             "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
-            "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
             "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date ORDER BY time_tasks.date";
         var strActivity = "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " +
@@ -863,38 +873,89 @@ module.exports = {
             "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
             "INNER JOIN users ON time_tasks_week.user_id = users.id " +
-            "INNER JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
+            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
             "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_activity.activity_id ORDER BY time_tasks.date";
+        // END QUERY
         db.sequelize.query(strQuery)
             .success(function(result) {
-                if (result === undefined || result === null || result.length === 0) {
-                    res.json({
-                        status: "success",
-                        result: [],
-                        resultActivity: []
-                    });
-                    return;
-                } else {
-                    db.sequelize.query(strActivity)
-                        .success(function(resultActivity) {
+                //CHECK LEAVE
+                var queryGetLeaveApprove = "SELECT hr_leave.start_date, hr_leave.finish_date " +
+                    "FROM hr_leave " +
+                    "WHERE hr_leave.user_id = :userId AND hr_leave.status_id = 3";
+                db.sequelize.query(queryGetLeaveApprove, null, {
+                        raw: true
+                    }, {
+                        userId: result[0].user_id
+                    })
+                    .success(function(resultLeaveApprove) {
+                        var forPermission = true;
+                        if (resultLeaveApprove !== undefined &&
+                            resultLeaveApprove !== null &&
+                            resultLeaveApprove.length !== 0) {
+                            //CHECK EXIST LEAVE
+                            for (var keyTimeSheet in result) {
+                                var checkExistLeave = false;
+                                var date = moment(moment(result[keyTimeSheet].date).format("YYYY-MM-DD")).format("X");
+                                for (var keyLeave in resultLeaveApprove) {
+                                    var startDate = moment(moment(resultLeaveApprove[keyLeave].start_date).format("YYYY-MM-DD")).format("X");
+                                    var finishDate = moment(moment(resultLeaveApprove[keyLeave].finish_date).format("YYYY-MM-DD")).format("X");
+                                    if ((result[keyTimeSheet].activity_id === 15 ||
+                                            result[keyTimeSheet].activity_id === 16) &&
+                                        date >= startDate &&
+                                        date <= finishDate) {
+                                        checkExistLeave = true;
+                                    }
+                                }
+                                if (checkExistLeave === false) {
+                                    forPermission = false;
+                                }
+                            }
+                            //END CHECK EXIST LEAVE
+                        } else {
+                            forPermission = false;
+                        }
+                        //GET TIME SHEET
+                        if (result === undefined || result === null || result.length === 0) {
                             res.json({
                                 status: "success",
-                                result: result,
-                                resultActivity: resultActivity
-                            });
-                            return;
-                        }).error(function(err) {
-                            console.log("*****ERROR:" + err + "*****");
-                            res.json({
-                                status: "error",
                                 result: [],
-                                resultActivity: []
+                                resultActivity: [],
+                                forPermission: forPermission
                             });
                             return;
-                        });
+                        } else {
+                            db.sequelize.query(strActivity)
+                                .success(function(resultActivity) {
+                                    res.json({
+                                        status: "success",
+                                        result: result,
+                                        resultActivity: resultActivity,
+                                        forPermission: forPermission
+                                    });
+                                    return;
+                                }).error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error",
+                                        result: [],
+                                        resultActivity: [],
+                                        forPermission: forPermission
+                                    });
+                                    return;
+                                });
 
-                }
+                        }
+                        //END GET TIME SHEET
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+                //END CHECK LEAVE
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -1037,10 +1098,6 @@ module.exports = {
                 "hr_employee.LastName like '%" + searchObj.name['nameEmployee'] + "%')";
         }
 
-        //search Employee
-
-        //end search Employee
-
         //search
         for (var keySearch in searchObj.data) {
             if (searchObj.data[keySearch] !== undefined &&
@@ -1060,6 +1117,7 @@ module.exports = {
             }
         }
         //end select
+
         if (strSearch.length === 5) {
             strSearch = "";
         } else {
@@ -1458,6 +1516,7 @@ module.exports = {
                             idTaskWeek: info.idTaskWeek,
                             date: info.date
                         };
+
                         //CALL FUNCTION TRACKER
                         TracKerTimeSheet(tracKer);
                         //END
@@ -1675,6 +1734,7 @@ module.exports = {
         if (strListDeptID !== "") {
             strListDeptID = strListDeptID.substring(0, strListDeptID.length - 2);
         } else strListDeptID = -1;
+
         // SELECT DEPT
         var queryDept = "SELECT DISTINCT COUNT(hr_employee.Employee_ID) AS CountEmp, departments.departmentName, departments.departmentid FROM departments " +
             "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
@@ -1974,7 +2034,7 @@ module.exports = {
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to complete and submit your timesheet. ' +
                                             'Failure to submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                                            '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System</label><br/><br/><br/>' +
                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
@@ -2057,9 +2117,1954 @@ module.exports = {
                 });
                 return;
             });
-    }
+    },
+    UpLeaveServer: function(req, res) {
+        var info = req.body.info;
+        db.HrLeave.create({
+                application_date: info.application_date,
+                start_date: info.start_date,
+                finish_date: info.finish_date,
+                work_date: info.work_date,
+                standard: info.standard,
+                time_leave: info.time_leave_real,
+                reason_leave: info.reason_leave,
+                is_approve_first: 1,
+                user_id: info.USER_ID,
+                status_id: info.statusID,
+                status_id_first: info.statusID,
+                created_by: info.USER_ID
+            })
+            .success(function(result) {
+                if (result !== undefined && result !== null &&
+                    result !== undefined && result !== null &&
+                    result.dataValues !== undefined && result.dataValues !== null &&
+                    result.dataValues.leave_id !== undefined && result.dataValues.leave_id !== null) {
+                    for (var i = 0; i < info.infoTypeLeave.length; i++) {
+                        chainer.add(db.HrLeaveDetail.create({
+                            leave_id: result.dataValues.leave_id,
+                            leave_type_id: info.infoTypeLeave[i].leave_type_id,
+                            time_leave: info.infoTypeLeave[i].time_leave_real,
+                            type_other: i === 4 ? info.infoTypeLeave[i].type_other : null,
+                            reason_leave: info.infoTypeLeave[i].reason_leave,
+                            created_by: info.USER_ID
+                        }));
+                    }
+                }
+                chainer.runSerially()
+                    .success(function(resultAll) {
+                        //SAVE TRACKER - SEND MAIL
+                        if (info.statusID === 2 || info.statusID === 5) {
+
+                            //TRACKER
+                            var trackerInfo = {};
+
+                            if (result !== undefined && result !== null &&
+                                result !== undefined && result !== null &&
+                                result.dataValues !== undefined && result.dataValues !== null &&
+                                result.dataValues.leave_id !== undefined && result.dataValues.leave_id !== null) {
+                                trackerInfo.leaveID = result.dataValues.leave_id;
+                            }
+                            trackerInfo.creationDate = moment().format("YYYY-MM-DD h:mm:ss");
+                            trackerInfo.userID = info.USER_ID;
+                            trackerInfo.statusID = info.statusID;
+                            TracKerLeave(trackerInfo);
+                            //END TRACKER
+
+                            //CALL SEND MAIL
+                            var sendMailInfo = {
+                                userID: trackerInfo.userID,
+                                dateSubmit: trackerInfo.creationDate
+                            };
+                            sendMailSubmitLeave(req, res, sendMailInfo);
+                            // END CALL
+
+                        }
+                        //END TRACKER - SEND MAIL
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+
+    // HISTORY LEAVE
+    LoadHistoryLeave: function(req, res) {
+        var searchObj = req.body.searchObj;
+        //select
+        var paramSelect = " AND ";
+        for (var key in searchObj.select) {
+            if (searchObj.select[key] !== undefined && searchObj.select[key] !== null && searchObj.select[key] !== "") {
+                paramSelect += key + " = " + searchObj.select[key] + ", ";
+            }
+        }
+        if (paramSelect.length !== 5) {
+            paramSelect = paramSelect.substring(0, paramSelect.length - 2);
+        } else {
+            paramSelect = "";
+        }
+        //end select
+        var queryGetAllMyLeave =
+            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.start_date, time_task_status.name, " +
+            "hr_leave.finish_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, hr_leave.is_approve_first, " +
+            "hr_leave.is_approve_second, hr_leave.comments, " +
+            "hr_leave.reason_leave, hr_leave.leave_id, hr_leave.application_date FROM hr_employee " +
+            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
+            "WHERE hr_leave.user_id = ? " + paramSelect + " ORDER BY hr_leave.start_date DESC LIMIT ? OFFSET ?";
+
+        var queryCountAllMyLeave =
+            "SELECT COUNT(*) as COUNT FROM hr_employee " +
+            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
+            "WHERE hr_leave.user_id = ? " + paramSelect + " LIMIT ? OFFSET ?";
+
+        var queryStatus = "SELECT time_task_status.task_status_id, time_task_status.name FROM time_task_status";
+
+        db.sequelize.query(queryGetAllMyLeave, null, {
+                raw: true
+            }, [
+                searchObj.USER_ID,
+                searchObj.limit,
+                searchObj.offset
+            ])
+            .success(function(result) {
+                db.sequelize.query(queryStatus)
+                    .success(function(resultStatus) {
+                        db.sequelize.query(queryCountAllMyLeave, null, {
+                                raw: true
+                            }, [
+                                searchObj.USER_ID,
+                                searchObj.limit,
+                                searchObj.offset
+                            ])
+                            .success(function(resultCount) {
+                                if (result.length === 0 &&
+                                    paramSelect === "") {
+                                    res.json({
+                                        status: "success",
+                                        result: null,
+                                        count: 0,
+                                        resultStatus: resultStatus
+                                    });
+                                } else if (result !== undefined &&
+                                    result !== null &&
+                                    result.length !== 0) {
+                                    //GET INFO LEVEL 1
+
+                                    //GET LIST LEAVE ID
+                                    var listLeaveId = "";
+                                    result.forEach(function(element, index) {
+                                        listLeaveId += element.leave_id + ", ";
+                                    });
+                                    if (listLeaveId === "") {
+                                        listLeaveId = "(-1)";
+                                    } else {
+                                        listLeaveId = "(" + listLeaveId.substring(0, listLeaveId.length - 2) + ")";
+                                    }
+                                    //END LEAVE ID
+
+                                    var queryGetNodeIdLevel1 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
+                                        "FROM hr_leave " +
+                                        "INNER JOIN users ON hr_leave.user_id = users.id " +
+                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND hr_leave.leave_id IN " + listLeaveId;
+                                    db.sequelize.query(queryGetNodeIdLevel1)
+                                        .success(function(resultNodeIdLevel1) {
+                                            if (resultNodeIdLevel1 !== undefined &&
+                                                resultNodeIdLevel1 !== null &&
+                                                resultNodeIdLevel1.length !== 0) {
+                                                var listNodeLevel1 = "";
+                                                resultNodeIdLevel1.forEach(function(elemLevel2, indexLevel2) {
+                                                    listNodeLevel1 += elemLevel2.TO_NODE_ID + ", ";
+                                                });
+                                                if (listNodeLevel1 === "") {
+                                                    listNodeLevel1 = "(-1)";
+                                                } else {
+                                                    listNodeLevel1 = "(" + listNodeLevel1.substring(0, listNodeLevel1.length - 2) + ")";
+                                                }
+                                                var queryGetNodeIdLevel2 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
+                                                    "FROM sys_hierarchy_nodes " +
+                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
+                                                db.sequelize.query(queryGetNodeIdLevel2)
+                                                    .success(function(resultNodeLevel2) {
+                                                        //GET INFO LEVEL 1 AND LEVEL 2
+                                                        var queryGetInfoLevel1 =
+                                                            "SElECT hr_employee.FirstName, hr_employee.LastName " +
+                                                            "FROM hr_employee " +
+                                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                                            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
+                                                        db.sequelize.query(queryGetInfoLevel1)
+                                                            .success(function(resultInfoLevel1) {
+                                                                if (resultNodeLevel2 !== undefined &&
+                                                                    resultNodeLevel2 !== null &&
+                                                                    resultNodeLevel2.length !== 0) {
+                                                                    var listNodeLevel2 = "";
+                                                                    resultNodeLevel2.forEach(function(elemLevel2, indexLevel2) {
+                                                                        listNodeLevel2 += elemLevel2.TO_NODE_ID + ", ";
+                                                                    });
+                                                                    if (listNodeLevel2 === "") {
+                                                                        listNodeLevel2 = "(-1)";
+                                                                    } else {
+                                                                        listNodeLevel2 = "(" + listNodeLevel2.substring(0, listNodeLevel2.length - 2) + ")";
+                                                                    }
+                                                                    var queryGetInfoLevel2 =
+                                                                        "SElECT hr_employee.FirstName, hr_employee.LastName " +
+                                                                        "FROM hr_employee " +
+                                                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel2;
+                                                                    db.sequelize.query(queryGetInfoLevel2)
+                                                                        .success(function(resultInfoLevel2) {
+                                                                            //PROCESSING FOREACH
+                                                                            result.forEach(function(elemResult, indexResult) {
+                                                                                if (elemResult.status_id === 1 || elemResult.status_id === 4) {
+                                                                                    result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
+                                                                                } else if ((elemResult.status_id === 2 || elemResult.status_id === 5) &&
+                                                                                    elemResult.is_approve_first === 1 &&
+                                                                                    elemResult.is_approve_second === 0) {
+                                                                                    if (resultInfoLevel1 !== undefined &&
+                                                                                        resultInfoLevel1 !== null &&
+                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                        result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                    }
+
+                                                                                } else {
+                                                                                    //CHECK LEVEL 2
+                                                                                    if (resultInfoLevel2 !== undefined &&
+                                                                                        resultInfoLevel2 !== null &&
+                                                                                        resultInfoLevel2.length !== 0) {
+                                                                                        result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
+                                                                                    } else if (resultInfoLevel1 !== undefined &&
+                                                                                        resultInfoLevel1 !== null &&
+                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                        result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                    }
+                                                                                    //END LEVEL 2
+
+                                                                                }
+                                                                            });
+                                                                            //END PROCESSING
+                                                                            res.json({
+                                                                                status: "success",
+                                                                                result: result,
+                                                                                count: resultCount[0].COUNT,
+                                                                                resultStatus: resultStatus
+                                                                            });
+                                                                            return;
+                                                                        })
+                                                                        .error(function(err) {
+                                                                            console.log("*****ERROR:" + err + "*****");
+                                                                            res.json({
+                                                                                status: "error"
+                                                                            });
+                                                                        });
+                                                                } else {
+                                                                    //PROCESSING FOREACH
+                                                                    result.forEach(function(elemResult, indexResult) {
+                                                                        if (elemResult.status_id === 1 || elemResult.status_id === 4) {
+                                                                            result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
+                                                                        } else if ((elemResult.status_id === 2 || elemResult.status_id === 5) &&
+                                                                            elemResult.is_approve_first === 0 &&
+                                                                            elemResult.is_approve_second === 1) {
+                                                                            if (resultInfoLevel1 !== undefined &&
+                                                                                resultInfoLevel1 !== null &&
+                                                                                resultInfoLevel1.length !== 0) {
+                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                            }
+
+                                                                        } else {
+                                                                            //CHECK LEVEL 1
+                                                                            if (resultInfoLevel1 !== undefined &&
+                                                                                resultInfoLevel1 !== null &&
+                                                                                resultInfoLevel1.length !== 0) {
+                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                            }
+                                                                            //END LEVEL 1
+
+                                                                        }
+                                                                    });
+                                                                    res.json({
+                                                                        status: "success",
+                                                                        result: result,
+                                                                        count: resultCount[0].COUNT,
+                                                                        resultStatus: resultStatus
+                                                                    });
+                                                                    return;
+                                                                    //END PROCESSING
+                                                                }
+
+                                                            })
+                                                            .error(function(err) {
+                                                                console.log("*****ERROR:" + err + "*****");
+                                                                res.json({
+                                                                    status: "error"
+                                                                });
+                                                            });
+                                                        //END GET INFO LEVEL 1 AND 2
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "error"
+                                                        });
+                                                    });
+                                            } else {
+                                                res.json({
+                                                    status: "success",
+                                                    result: result,
+                                                    count: resultCount[0].COUNT,
+                                                    resultStatus: resultStatus
+                                                });
+                                            }
+                                        })
+                                        .error(function(err) {
+                                            console.log("*****ERROR:" + err + "*****");
+                                            res.json({
+                                                status: "error"
+                                            });
+                                        });
+                                    //END
+
+                                } else if (result.length === 0 && paramSelect !== "") {
+                                    res.json({
+                                        status: "success",
+                                        result: [],
+                                        count: 0,
+                                        resultStatus: resultStatus
+                                    });
+                                    return;
+                                }
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "error",
+                                    result: null,
+                                    count: 0,
+                                    resultStatus: resultStatus
+                                });
+                                return;
+                            });
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: null,
+                            count: 0,
+                            resultStatus: resultStatus
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    // END HISTORY
+
+    // VIEW LEAVE
+    ViewLeave: function(req, res) {
+        var leave_id = req.body.leave_id;
+        var queryView =
+            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, hr_leave.is_reject, " +
+            "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " +
+            "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " +
+            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " +
+            "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, time_task_status.task_status_id " +
+            "FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
+            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
+            "WHERE hr_leave.leave_id = :leave_id";
+        db.sequelize.query(queryView, null, {
+                raw: true
+            }, {
+                leave_id: leave_id
+            })
+            .success(function(result) {
+                res.json({
+                    status: "success",
+                    result: result
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+                return;
+            });
+    },
+    //END LEAVE
+
+    // SUBMIT ON VIEW LEAVE
+    SubmitOnViewLeave: function(req, res) {
+        var trackerInfo = req.body.info;
+        var statusID = req.body.info.statusID;
+        var leaveID = req.body.info.leaveID;
+        var userID = req.body.info.userID;
+        var dateUpdate = moment().format("YYYY-MM-DD hh:mm:ss");
+        var queryUpdateStatus =
+            "UPDATE hr_leave SET hr_leave.status_id = :statusID, status_id_first = :statusIdFirst, " +
+            "last_update_date = :dateUpdate " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        db.sequelize.query(queryUpdateStatus, null, {
+                raw: true
+            }, {
+                statusID: statusID,
+                statusIdFirst: statusID,
+                dateUpdate: dateUpdate,
+                leaveID: leaveID
+            })
+            .success(function(result) {
+                //CALL TRACKER
+                trackerInfo.creationDate = moment().format("YYYY-MM-DD h:mm:ss");
+                TracKerLeave(trackerInfo);
+                //END TRACKER
+
+                //CALL SEND MAIL
+                var sendMailInfo = {
+                    userID: trackerInfo.userID,
+                    dateSubmit: trackerInfo.creationDate
+                };
+                sendMailSubmitLeave(req, res, sendMailInfo);
+                // END CALL
+
+                res.json({
+                    status: "success"
+                });
+                return;
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    //END SUBMIT ON VIEW
+
+    //LOAD LEAVE EDIT
+    LoadLeaveEdit: function(req, res) {
+        var leaveID = req.body.leaveID;
+        var queryLoadLeaveEdit =
+            "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, hr_leave.status_id, " +
+            "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " +
+            "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " +
+            "FROM hr_leave " +
+            "INNER JOIN users ON users.id = hr_leave.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        var queryLoadLeaveDetailEdit =
+            "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " +
+            "hr_leave_detail.reason_leave, " +
+            "hr_leave_detail.type_other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " +
+            "FROM hr_employee " +
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
+            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        db.sequelize.query(queryLoadLeaveEdit, null, {
+                raw: true
+            }, {
+                leaveID: leaveID
+            })
+            .success(function(resultLeave) {
+                db.sequelize.query(queryLoadLeaveDetailEdit, null, {
+                        raw: true
+                    }, {
+                        leaveID: leaveID
+                    })
+                    .success(function(resultLeaveDetail) {
+                        res.json({
+                            status: "success",
+                            resultLeave: resultLeave,
+                            resultLeaveDetail: resultLeaveDetail
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            resultLeave: [],
+                            resultLeaveDetail: []
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    resultLeave: [],
+                    resultLeaveDetail: []
+                });
+                return;
+            });
+    },
+    //END LOAD EDIT
+
+    //UPDATE
+    UpdateLeave: function(req, res) {
+        var info = req.body.info;
+        db.HrLeave.update({
+                application_date: info.application_date,
+                start_date: info.start_date,
+                finish_date: info.finish_date,
+                work_date: info.work_date,
+                standard: info.standard,
+                time_leave: info.time_leave_real,
+                reason_leave: info.reason_leave,
+                is_approve_first: 1,
+                is_approve_second: 0,
+                status_id: info.statusID,
+                status_id_first: info.statusID,
+                status_id_second: null,
+                user_id: info.USER_ID,
+                last_updated_by: info.USER_ID
+            }, {
+                leave_id: info.leave_id
+            })
+            .success(function(result) {
+                for (var i = 0; i < info.infoTypeLeave.length; i++) {
+                    chainer.add(db.HrLeaveDetail.update({
+                        time_leave: info.infoTypeLeave[i].time_leave_real,
+                        reason_leave: info.infoTypeLeave[i].reason_leave,
+                        last_updated_by: info.USER_ID,
+                        type_other: i === 4 ? info.infoTypeLeave[i].type_other : null
+                    }, {
+                        leave_detail_id: info.infoTypeLeave[i].leave_detail_id
+                    }));
+                }
+                chainer.runSerially()
+                    .success(function(resultAll) {
+                        if (info.statusID === 2 || info.statusID === 5) {
+                            //TRACKER LEAVE
+                            var trackerInfo = {
+                                statusID: info.statusID,
+                                leaveID: info.leave_id,
+                                creationDate: moment().format("YYYY-MM-DD h:mm:ss"),
+                                userID: info.USER_ID
+                            };
+                            TracKerLeave(trackerInfo);
+                            //END TRACKER
+
+                            //CALL SEND MAIL
+                            var sendMailInfo = {
+                                userID: trackerInfo.userID,
+                                dateSubmit: trackerInfo.creationDate
+                            };
+                            sendMailSubmitLeave(req, res, sendMailInfo);
+                            // END CALL
+
+                        }
+                        res.json({
+                            status: "success"
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
+            });
+    },
+    //END UPDATE
+
+    //LIST LEAVE APPROVE
+    LoadLeaveApprove: function(req, res) {
+        var info = req.body.info;
+        var searchStr = " AND (",
+            orderStr = " ORDER BY ",
+            selectStr = " AND ";
+        //search
+        if (info.search[0] !== undefined &&
+            info.search[0] !== null &&
+            info.search[0] !== '' &&
+            info.search[0] !== ' ') {
+            searchStr += "hr_employee.FirstName like '%" + info.search[0] +
+                "%' OR hr_employee.LastName like '%" + info.search[0] + "%') ";
+        } else {
+            searchStr = "";
+        }
+        //end search
+
+        //order
+        if (info.order[0] !== undefined &&
+            info.order[0] !== null &&
+            info.order[0] !== '' &&
+            info.order[0] !== ' ') {
+            orderStr += "hr_leave.start_date " + info.order[0];
+        } else {
+            orderStr = "";
+        }
+        //end order
+
+        //sellect
+        if (info.select[0] !== undefined &&
+            info.select[0] !== null &&
+            info.select[0] !== '' &&
+            info.select[0] !== ' ') {
+            selectStr += "time_task_status.task_status_id = " + info.select[0];
+        } else {
+            selectStr = "";
+        }
+        //end select
+
+        var queryGetDept =
+            "SELECT DISTINCT sys_hierarchies_users.DEPARTMENT_CODE_ID, sys_hierarchy_nodes.NODE_CODE, sys_hierarchy_nodes.NODE_ID " + //SELECT
+            "FROM sys_hierarchies_users " + //FROM
+            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+            "WHERE sys_hierarchies_users.USER_ID = :userID"; //WHERE
+
+        db.sequelize.query(queryGetDept, null, { //GET DEPARTMENT CODE, NODE CODE OF USER
+                raw: true
+            }, {
+                userID: info.USER_ID
+            })
+            .success(function(resultDept) {
+                if (resultDept !== undefined &&
+                    resultDept !== null &&
+                    resultDept[0] !== undefined &&
+                    resultDept[0] !== null) {
+                    var DEPARTMENT_CODE_ID = resultDept[0].DEPARTMENT_CODE_ID;
+                    var NODE_CODE = resultDept[0].NODE_CODE;
+                    var NODE_ID = resultDept[0].NODE_ID;
+                    var queryGetListLeave = "";
+                    var queryCountListLeave = "";
+                    var queryGetUserSubordinate =
+                        "SELECT DISTINCT sys_hierarchies_users.USER_ID " + //SELECT
+                        "FROM sys_hierarchies_users " + //FROM
+                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //INNER JOIN
+                        "WHERE sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                    db.sequelize.query(queryGetUserSubordinate, null, {
+                            raw: true
+                        }, {
+                            nodeId: NODE_ID,
+                            deptId: DEPARTMENT_CODE_ID
+                        })
+                        .success(function(resultSubordinate) {
+                            var listUser = "";
+                            if (resultSubordinate !== undefined &&
+                                resultSubordinate !== null &&
+                                resultSubordinate.length !== 0) {
+                                for (var i = 0; i < resultSubordinate.length; i++) {
+                                    listUser += resultSubordinate[i].USER_ID + ", ";
+                                }
+                                if (listUser !== "") {
+                                    listUser = listUser.substring(0, listUser.length - 2);
+                                    listUser = "(" + listUser + ")";
+                                } else {
+                                    listUser = "(-1)";
+                                }
+                            }
+                            if (NODE_CODE === "Head of Dept." || NODE_CODE === "Director") {
+
+                                if (NODE_CODE === "Head of Dept.") {
+                                    queryGetListLeave =
+                                        "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
+                                        "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
+                                        "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
+                                        "hr_leave.status_id_first as task_status_id, time_task_status.name " + //SElECT
+                                        "FROM hr_employee " + //FROM
+                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                        "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
+                                        "WHERE hr_leave.status_id != 1 AND hr_leave.user_id IN " + listUser +
+                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                    queryCountListLeave =
+                                        "SELECT COUNT(*) " + //SElECT
+                                        "FROM hr_employee " + //FROM
+                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                        "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id_first " + //INNER JOIN
+                                        "WHERE hr_leave.status_id != 1 AND hr_leave.user_id IN " + listUser +
+                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                } else if (NODE_CODE === "Director") {
+                                    queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
+                                        "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
+                                        "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
+                                        "time_task_status.task_status_id, time_task_status.name " + //SElECT
+                                        "FROM hr_employee " + //FROM
+                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                        "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
+                                        " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND hr_leave.standard = 0) OR hr_leave.user_id IN " +
+                                        listUser + ") AND hr_leave.status_id!=1 " +
+                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                    queryCountListLeave = "SELECT COUNT(*) " + //SElECT
+                                        "FROM hr_employee " + //FROM
+                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
+                                        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
+                                        "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
+                                        " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND hr_leave.standard = 0) OR hr_leave.user_id IN " +
+                                        listUser + ") AND hr_leave.status_id!=1 " +
+                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                }
+                                db.sequelize.query(queryGetListLeave, null, {
+                                        raw: true
+                                    }, {
+                                        limit: info.limit,
+                                        offset: info.offset
+                                    })
+                                    .success(function(result) {
+                                        db.sequelize.query(queryCountListLeave, null, {
+                                                raw: true
+                                            }, {
+                                                limit: info.limit,
+                                                offset: info.offset
+                                            })
+                                            .success(function(resultCount) {
+                                                if (searchStr === "" &&
+                                                    selectStr === "" &&
+                                                    result.length === 0) {
+                                                    res.json({
+                                                        status: "success",
+                                                        result: null
+                                                    });
+                                                    return;
+                                                } else {
+                                                    //GET INFO LEVEL 1
+
+                                                    //GET LIST LEAVE ID
+                                                    var listLeaveId = "";
+                                                    result.forEach(function(element, index) {
+                                                        listLeaveId += element.leave_id + ", ";
+                                                    });
+                                                    if (listLeaveId === "") {
+                                                        listLeaveId = "(-1)";
+                                                    } else {
+                                                        listLeaveId = "(" + listLeaveId.substring(0, listLeaveId.length - 2) + ")";
+                                                    }
+                                                    //END LEAVE ID
+
+                                                    var queryGetNodeIdLevel1 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
+                                                        "FROM hr_leave " +
+                                                        "INNER JOIN users ON hr_leave.user_id = users.id " +
+                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND hr_leave.leave_id IN " + listLeaveId;
+                                                    db.sequelize.query(queryGetNodeIdLevel1)
+                                                        .success(function(resultNodeIdLevel1) {
+                                                            if (resultNodeIdLevel1 !== undefined &&
+                                                                resultNodeIdLevel1 !== null &&
+                                                                resultNodeIdLevel1.length !== 0) {
+                                                                var listNodeLevel1 = "";
+                                                                resultNodeIdLevel1.forEach(function(elemLevel2, indexLevel2) {
+                                                                    listNodeLevel1 += elemLevel2.TO_NODE_ID + ", ";
+                                                                });
+                                                                if (listNodeLevel1 === "") {
+                                                                    listNodeLevel1 = "(-1)";
+                                                                } else {
+                                                                    listNodeLevel1 = "(" + listNodeLevel1.substring(0, listNodeLevel1.length - 2) + ")";
+                                                                }
+                                                                var queryGetNodeIdLevel2 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
+                                                                    "FROM sys_hierarchy_nodes " +
+                                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
+                                                                db.sequelize.query(queryGetNodeIdLevel2)
+                                                                    .success(function(resultNodeLevel2) {
+                                                                        //GET INFO LEVEL 1 AND LEVEL 2
+                                                                        var queryGetInfoLevel1 =
+                                                                            "SElECT hr_employee.FirstName, hr_employee.LastName " +
+                                                                            "FROM hr_employee " +
+                                                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                                                            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
+                                                                        db.sequelize.query(queryGetInfoLevel1)
+                                                                            .success(function(resultInfoLevel1) {
+                                                                                if (resultNodeLevel2 !== undefined &&
+                                                                                    resultNodeLevel2 !== null &&
+                                                                                    resultNodeLevel2.length !== 0) {
+                                                                                    var listNodeLevel2 = "";
+                                                                                    resultNodeLevel2.forEach(function(elemLevel2, indexLevel2) {
+                                                                                        listNodeLevel2 += elemLevel2.TO_NODE_ID + ", ";
+                                                                                    });
+                                                                                    if (listNodeLevel2 === "") {
+                                                                                        listNodeLevel2 = "(-1)";
+                                                                                    } else {
+                                                                                        listNodeLevel2 = "(" + listNodeLevel2.substring(0, listNodeLevel2.length - 2) + ")";
+                                                                                    }
+                                                                                    var queryGetInfoLevel2 =
+                                                                                        "SElECT hr_employee.FirstName, hr_employee.LastName " +
+                                                                                        "FROM hr_employee " +
+                                                                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel2;
+                                                                                    db.sequelize.query(queryGetInfoLevel2)
+                                                                                        .success(function(resultInfoLevel2) {
+                                                                                            //PROCESSING FOREACH
+                                                                                            result.forEach(function(elemResult, indexResult) {
+                                                                                                if (elemResult.status_id === 1 || elemResult.status_id === 4) {
+                                                                                                    result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
+                                                                                                } else if ((elemResult.status_id === 2 || elemResult.status_id === 5) &&
+                                                                                                    elemResult.is_approve_first === 1 &&
+                                                                                                    elemResult.is_approve_second === 0) {
+                                                                                                    if (resultInfoLevel1 !== undefined &&
+                                                                                                        resultInfoLevel1 !== null &&
+                                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                                        result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                                    }
+
+                                                                                                } else {
+                                                                                                    //CHECK LEVEL 2
+                                                                                                    if (resultInfoLevel2 !== undefined &&
+                                                                                                        resultInfoLevel2 !== null &&
+                                                                                                        resultInfoLevel2.length !== 0) {
+                                                                                                        result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
+                                                                                                    } else if (resultInfoLevel1 !== undefined &&
+                                                                                                        resultInfoLevel1 !== null &&
+                                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                                        result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                                    }
+                                                                                                    //END LEVEL 2
+
+                                                                                                }
+                                                                                            });
+                                                                                            //END PROCESSING
+                                                                                            res.json({
+                                                                                                status: "success",
+                                                                                                result: result,
+                                                                                                count: resultCount[0].COUNT
+                                                                                            });
+                                                                                            return;
+                                                                                        })
+                                                                                        .error(function(err) {
+                                                                                            console.log("*****ERROR:" + err + "*****");
+                                                                                            res.json({
+                                                                                                status: "error"
+                                                                                            });
+                                                                                        });
+                                                                                } else {
+                                                                                    //PROCESSING FOREACH
+                                                                                    result.forEach(function(elemResult, indexResult) {
+                                                                                        if (elemResult.status_id === 1 || elemResult.status_id === 4) {
+                                                                                            result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
+                                                                                        } else if ((elemResult.status_id === 2 || elemResult.status_id === 5) &&
+                                                                                            elemResult.is_approve_first === 0 &&
+                                                                                            elemResult.is_approve_second === 1) {
+                                                                                            if (resultInfoLevel1 !== undefined &&
+                                                                                                resultInfoLevel1 !== null &&
+                                                                                                resultInfoLevel1.length !== 0) {
+                                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                            }
+
+                                                                                        } else {
+
+                                                                                            //CHECK LEVEL 1
+                                                                                            if (resultInfoLevel1 !== undefined &&
+                                                                                                resultInfoLevel1 !== null &&
+                                                                                                resultInfoLevel1.length !== 0) {
+                                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                            }
+                                                                                            //END LEVEL 1
+
+                                                                                        }
+                                                                                    });
+                                                                                    res.json({
+                                                                                        status: "success",
+                                                                                        result: result,
+                                                                                        count: resultCount[0].COUNT
+                                                                                    });
+                                                                                    return;
+                                                                                    //END PROCESSING
+                                                                                }
+
+                                                                            })
+                                                                            .error(function(err) {
+                                                                                console.log("*****ERROR:" + err + "*****");
+                                                                                res.json({
+                                                                                    status: "error"
+                                                                                });
+                                                                            });
+                                                                        //END GET INFO LEVEL 1 AND 2
+                                                                    })
+                                                                    .error(function(err) {
+                                                                        console.log("*****ERROR:" + err + "*****");
+                                                                        res.json({
+                                                                            status: "error"
+                                                                        });
+                                                                    });
+                                                            } else {
+                                                                res.json({
+                                                                    status: "success",
+                                                                    result: result,
+                                                                    count: resultCount[0].COUNT
+                                                                });
+                                                            }
+                                                        })
+                                                        .error(function(err) {
+                                                            console.log("*****ERROR:" + err + "*****");
+                                                            res.json({
+                                                                status: "error"
+                                                            });
+                                                        });
+                                                    //END
+
+                                                }
+
+                                                //END ERROR
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                                return;
+                                            });
+
+                                    })
+                                    //ERROR
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error"
+                                        });
+                                        return;
+                                    });
+                                //END ERROR
+
+                            }
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                result: []
+                            });
+                        });
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+            });
+
+    },
+    //END LIST APPROVE
+
+    // APPROVE LEAVE
+    ApproveLeave: function(req, res) {
+        var info = req.body.info;
+        var dateApprove = moment().format('YYYY-MM-DD h:mm:ss');
+        var infoTracKer = {
+            leaveID: info.leaveID,
+            statusID: 3,
+            userID: info.userID,
+            creationDate: moment().format("YYYY-MM-DD h:mm:ss")
+        };
+        var queryGetInfoLeave = "SELECT hr_leave.leave_id, hr_leave.standard, hr_leave.is_approve_first, " +
+            "hr_leave.is_approve_second, hr_leave.status_id_first, hr_leave.status_id_second " +
+            "FROM hr_leave " +
+            "WHERE hr_leave.leave_id = :leaveID";
+        db.sequelize.query(queryGetInfoLeave, null, {
+                raw: true
+            }, {
+                leaveID: info.leaveID
+            })
+            .success(function(resultInfoLeave) {
+                if (resultInfoLeave !== undefined &&
+                    resultInfoLeave !== null &&
+                    resultInfoLeave[0] !== undefined &&
+                    resultInfoLeave[0] !== null) {
+                    //CHECK STANDARD
+                    if (resultInfoLeave[0].standard === 0) {
+                        if (resultInfoLeave[0].is_approve_first === 0 &&
+                            resultInfoLeave[0].is_approve_second === 1) {
+
+                            //APPROVE COMPLETE
+                            db.HrLeave.update({
+                                    status_id: 3,
+                                    status_id_first: 3,
+                                    status_id_second: 3,
+                                    date_approve: dateApprove
+                                }, {
+                                    leave_id: info.leaveID
+                                })
+                                .success(function(result) {
+
+                                    //TRACKER LEAVE
+                                    TracKerLeave(infoTracKer);
+                                    //END TRACKER
+
+                                    //SEND MAIL
+                                    sendMailInfo = {
+                                        leaveID: info.leaveID,
+                                        status: 3
+                                    };
+                                    sendMailLeave(req, res, sendMailInfo);
+                                    //END SEND MAIL
+
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "success"
+                                    });
+                                    return;
+                                });
+                            //END APPROVE
+                        } else if (resultInfoLeave[0].is_approve_first === 1 &&
+                            resultInfoLeave[0].is_approve_second === 0) {
+                            var queryCheckHeadOfDept = "SElECT sys_hierarchy_nodes.NODE_ID " +
+                                "FROM sys_hierarchy_nodes " +
+                                "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                "WHERE sys_hierarchies_users.USER_ID = :userID";
+                            db.sequelize.query(queryCheckHeadOfDept, null, {
+                                    raw: true
+                                }, {
+                                    userID: info.userID
+                                })
+                                .success(function(resultCheckHeadOfDept) {
+                                    if (resultCheckHeadOfDept !== undefined &&
+                                        resultCheckHeadOfDept !== null &&
+                                        resultCheckHeadOfDept.length !== 0 &&
+                                        resultCheckHeadOfDept[0] !== undefined &&
+                                        resultCheckHeadOfDept[0] !== null &&
+                                        !isNaN(resultCheckHeadOfDept[0].NODE_ID)) {
+                                        //APPROVE FIRST AND WAITTING SECOND
+                                        db.HrLeave.update({
+                                                is_approve_first: 0,
+                                                is_approve_second: 1,
+                                                status_id_first: 3
+                                            }, {
+                                                leave_id: info.leaveID
+                                            })
+                                            .success(function(result) {
+
+                                                //TRACKER LEAVE
+                                                TracKerLeave(infoTracKer);
+                                                //END TRACKER
+
+                                                //SEND MAIL
+
+                                                //GET NODE_ID DIRECTOR
+                                                var queryGetNodeID = "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " +
+                                                    "FROM sys_hierarchy_nodes " +
+                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
+                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+                                                    "WHERE sys_hierarchies_users.USER_ID = :userID AND sys_hierarchy_group.GROUP_TYPE = 'Time Sheet'";
+                                                db.sequelize.query(queryGetNodeID, null, {
+                                                        raw: true
+                                                    }, {
+                                                        userID: info.userID
+                                                    })
+                                                    .success(function(resultNodeId) {
+                                                        if (resultNodeId !== undefined &&
+                                                            resultNodeId !== null &&
+                                                            resultNodeId.length !== 0 &&
+                                                            resultNodeId[0] !== undefined &&
+                                                            resultNodeId[0] !== null &&
+                                                            !isNaN(resultNodeId[0].NODE_ID)) {
+                                                            var queryGetNodeIdManage =
+                                                                "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " +
+                                                                "FROM sys_hierarchy_nodes " +
+                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                "WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                            db.sequelize.query(queryGetNodeIdManage, null, {
+                                                                    raw: true
+                                                                }, {
+                                                                    nodeId: resultNodeId[0].NODE_ID
+                                                                })
+                                                                .success(function(resultNodeIdManage) {
+                                                                    if (resultNodeIdManage !== undefined &&
+                                                                        resultNodeIdManage !== null &&
+                                                                        resultNodeIdManage.length !== 0 &&
+                                                                        resultNodeIdManage[0] !== undefined &&
+                                                                        resultNodeIdManage[0] !== null &&
+                                                                        !isNaN(resultNodeIdManage[0].NODE_ID)) {
+                                                                        //GET INFOMATION MANAGE
+                                                                        var queryGetInfoManage =
+                                                                            "SELECT sys_hierarchies_users.USER_ID " +
+                                                                            "FROM sys_hierarchies_users " +
+                                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
+                                                                            "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                        db.sequelize.query(queryGetInfoManage, null, {
+                                                                                raw: true
+                                                                            }, {
+                                                                                nodeId: resultNodeIdManage[0].NODE_ID
+                                                                            })
+                                                                            .success(function(resultInfoManage) {
+                                                                                //NOTIFICATION SUBMIT LEAVE
+                                                                                if (resultInfoManage !== undefined &&
+                                                                                    resultInfoManage !== null &&
+                                                                                    resultInfoManage.length !== 0 &&
+                                                                                    resultInfoManage[0] !== undefined &&
+                                                                                    resultInfoManage[0] !== null &&
+                                                                                    resultInfoManage[0].length !== 0) {
+                                                                                    //SEND MAIL
+                                                                                    var sendMailInfo = {
+                                                                                        userId: resultInfoManage[0].USER_ID,
+                                                                                        dateSubmit: new Date(),
+                                                                                        leaveID: info.leaveID
+                                                                                    };
+                                                                                    sendMailSubmitLeaveAgain(req, res, sendMailInfo);
+                                                                                    //END SEND MAIL
+                                                                                }
+                                                                            })
+                                                                            .error(function(err) {
+                                                                                console.log("*****ERROR:" + err + "*****");
+                                                                                res.json({
+                                                                                    status: "error"
+                                                                                });
+                                                                            });
+                                                                        //END GET
+                                                                    } else {
+                                                                        //NOTIFICATION APPROVE FOR EMPLOYEE
+                                                                        //SEND MAIL
+                                                                        sendMailInfo = {
+                                                                            leaveID: info.leaveID,
+                                                                            status: 3
+                                                                        };
+                                                                        sendMailLeave(req, res, sendMailInfo);
+                                                                        //END SEND MAIL
+                                                                    }
+                                                                })
+                                                                .error(function(err) {
+                                                                    console.log("*****ERRROR:" + err + "*****");
+                                                                    res.json({
+                                                                        status: "error"
+                                                                    });
+                                                                });
+                                                        } else {
+                                                            res.json({
+                                                                status: "error"
+                                                            });
+                                                            return;
+                                                        }
+                                                    })
+                                                    .error(function(err) {
+                                                        console.log("*****ERROR:" + err + "*****");
+                                                        res.json({
+                                                            status: "error"
+                                                        });
+                                                        return;
+                                                    });
+                                                //END
+
+                                                //END SEND MAIL
+
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                                return;
+                                            });
+                                        //END APPROVE FIRST
+                                    } else {
+                                        //APPROVE COMPLETE
+                                        db.HrLeave.update({
+                                                status_id: 3,
+                                                is_approve_first: 0,
+                                                is_approve_second: 1,
+                                                status_id_first: 3,
+                                                status_id_second: 3,
+                                                date_approve: dateApprove
+                                            }, {
+                                                leave_id: info.leaveID
+                                            })
+                                            .success(function(result) {
+
+                                                //TRACKER LEAVE
+                                                TracKerLeave(infoTracKer);
+                                                //END TRACKER
+
+                                                //SEND MAIL
+                                                sendMailInfo = {
+                                                    leaveID: info.leaveID,
+                                                    status: 3
+                                                };
+                                                sendMailLeave(req, res, sendMailInfo);
+                                                //END SEND MAIL
+
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            });
+                                        //END APPROVE
+                                    }
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error"
+                                    });
+                                    return;
+                                });
+                        }
+
+                    } else if (resultInfoLeave[0].standard === 1) {
+                        //APPROVE COMPLETE
+                        db.HrLeave.update({
+                                status_id: 3,
+                                is_approve_first: 0,
+                                is_approve_second: 1,
+                                status_id_first: 3,
+                                status_id_second: 3,
+                                date_approve: dateApprove
+                            }, {
+                                leave_id: info.leaveID
+                            })
+                            .success(function(result) {
+
+                                //TRACKER LEAVE
+                                TracKerLeave(infoTracKer);
+                                //END TRACKER
+
+                                //SEND MAIL
+                                sendMailInfo = {
+                                    leaveID: info.leaveID,
+                                    status: 3
+                                };
+                                sendMailLeave(req, res, sendMailInfo);
+                                //END SEND MAIL
+
+                                res.json({
+                                    status: "success"
+                                });
+                                return;
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "success"
+                                });
+                                return;
+                            });
+                        //end approve
+                    }
+                    //end
+                } else {
+                    res.json({
+                        status: "error"
+                    });
+                    return;
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: []
+                });
+            });
+    },
+    //END APPROVE
+
+    //REJECT LEAVE
+    RejectLeave: function(req, res) {
+        var info = req.body.info;
+        db.HrLeave.update({
+                status_id: 4,
+                is_approve_first: 1,
+                is_approve_second: 0,
+                status_id_first: 4,
+                status_id_second: null,
+                comments: info.comments,
+                is_reject: 1
+
+            }, {
+                leave_id: info.leaveID
+            })
+            //SUCCESS
+            .success(function(result) {
+
+                //TRACKER LEAVE
+                var infoTracKer = {
+                    leaveID: info.leaveID,
+                    userID: info.userID,
+                    creationDate: moment().format("YYYY-MM-DD h:mm:ss"),
+                    statusID: 4
+                };
+                TracKerLeave(infoTracKer);
+                //END TRACKER
+
+                //SEND MAIL
+                var infoSendMail = {
+                    status: 4,
+                    leaveID: info.leaveID,
+                    userID: info.userID
+                };
+                sendMailLeave(req, res, infoSendMail);
+                //END SEND MAIL
+
+                // GET STATUS SUCCESS REJECT
+                res.json({
+                    status: "success"
+                });
+                return;
+                //END GET 
+            })
+            //END SUCCESS
+
+        //ERROR
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+            return;
+        });
+        //END ERROR
+    },
+    //END REJECT
+
+    //CHECK LEAVE EXIST
+    CheckLeave: function(req, res) {
+        // DECLARATION
+        var USER_ID = req.body.USER_ID;
+        var queryGetListTime =
+            "SElECT hr_leave.start_date, hr_leave.finish_date, hr_leave.leave_id " + //SELECT
+            "FROM hr_leave " + //FROM
+            "WHERE hr_leave.user_id = :userId"; //WHERE
+        //END DECLARATION
+
+        db.sequelize.query(queryGetListTime, null, {
+                raw: true
+            }, {
+                userId: USER_ID
+            })
+            //SUCCESS
+            .success(function(resultListTime) {
+                res.json({
+                    status: "success",
+                    result: resultListTime
+                });
+                return;
+            })
+            //END SUCCESS
+
+        //ERROR
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+            return;
+        });
+        //END ERROR
+    },
+    // END CHECK LEAVE
+
+    // REPORT OWE LEAVE
+    LoadReportOweLeave: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+        var weekNoFrom = info.weekNoFrom;
+        var weekNoTo = info.weekNoTo - 1;
+        if (info !== undefined &&
+            info !== null &&
+            info.listEMP !== undefined &&
+            info.listEMP !== null &&
+            info.listEMP.length !== 0) {
+            var listUser = "";
+            info.listEMP.forEach(function(EMP, indexEMP) {
+                if (EMP !== undefined &&
+                    EMP !== null &&
+                    EMP.id !== undefined &&
+                    EMP.id !== null &&
+                    !isNaN(EMP.id)) {
+                    listUser += EMP.id + ", ";
+                }
+            });
+            if (listUser === "") {
+                listUser = "(-1)";
+            } else {
+                listUser = "(" + listUser.substring(0, listUser.length - 2) + ")";
+            }
+            var queryGetListDateEmployeeLeave =
+                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, " +
+                "hr_employee.Employee_ID, time_tasks.date, departments.departmentName " +
+                "FROM hr_employee " +
+                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+                "INNER JOIN time_tasks_week ON time_tasks_week.user_id = users.id " +
+                "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+                "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
+                "WHERE time_item_task.item_id IN (15, 16) AND time_tasks_week.week_no BETWEEN " +
+                weekNoFrom + " AND " + weekNoTo + " AND hr_employee.Employee_ID IN " + listUser;
+            db.sequelize.query(queryGetListDateEmployeeLeave)
+                .success(function(resultListDateEmployeeLeave) {
+                    var queryGetListDateEmployeeLeaveApproved =
+                        "SELECT DISTINCT hr_employee.Employee_ID, hr_leave.start_date, hr_leave.finish_date " +
+                        "FROM hr_employee " +
+                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                        "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+                        "INNER JOIN hr_leave_detail ON hr_leave_detail.leave_id = hr_leave.leave_id " +
+                        "WHERE hr_leave.status_id = 3 AND hr_employee.Employee_ID IN " + listUser;
+                    db.sequelize.query(queryGetListDateEmployeeLeaveApproved)
+                        .success(function(resultListDateEmployeeLeaveApproved) {
+                            if (resultListDateEmployeeLeave !== undefined &&
+                                resultListDateEmployeeLeave !== null &&
+                                resultListDateEmployeeLeave.length !== 0) {
+                                var listLeaveInsert = "";
+                                resultListDateEmployeeLeave.forEach(function(elemLeave, indexLeave) {
+                                    if (resultListDateEmployeeLeaveApproved !== undefined &&
+                                        resultListDateEmployeeLeaveApproved !== null &&
+                                        resultListDateEmployeeLeaveApproved.length !== 0) {
+                                        resultListDateEmployeeLeaveApproved.forEach(function(elemLeaveApproved, indexLeaveApproved) {
+                                            var dateLeave = moment(moment(elemLeave.date).format("YYYY-MM-DD")).format("X");
+                                            var startDate = moment(moment(elemLeaveApproved.start_date).format("YYYY-MM-DD")).format("X");
+                                            var finishDate = moment(moment(elemLeaveApproved.finish_date).format("YYYY-MM-DD")).format("X");
+                                            if (dateLeave >= startDate &&
+                                                dateLeave <= finishDate) {
+                                                resultListDateEmployeeLeave.splice(indexLeave, 1);
+                                            } else {
+                                                listLeaveInsert += "(" + info.USER_ID + ",'" + resultListDateEmployeeLeave[indexLeave].departmentName +
+                                                    "','" + resultListDateEmployeeLeave[indexLeave].FirstName + " " + resultListDateEmployeeLeave[indexLeave].LastName +
+                                                    "','" + moment(resultListDateEmployeeLeave[indexLeave].date).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                                    moment(info.weekFrom).format("YYYY-MM-DD HH:mm:ss") + "','" + moment(info.weekTo).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                                    moment().format("YYYY-MM-DD HH:mm:ss") + "'," + info.USER_ID + "), ";
+                                            }
+                                        });
+                                    } else {
+                                        listLeaveInsert += "(" + info.USER_ID + ",'" + resultListDateEmployeeLeave[indexLeave].departmentName +
+                                            "','" + resultListDateEmployeeLeave[indexLeave].FirstName + " " + resultListDateEmployeeLeave[indexLeave].LastName +
+                                            "','" + moment(resultListDateEmployeeLeave[indexLeave].date).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                            moment(info.weekFrom).format("YYYY-MM-DD HH:mm:ss") + "','" + moment(info.weekTo).format("YYYY-MM-DD HH:mm:ss") + "','" +
+                                            moment().format("YYYY-MM-DD HH:mm:ss") + "'," + info.USER_ID + "), ";
+                                    }
+                                });
+                                listLeaveInsert = listLeaveInsert.substring(0, listLeaveInsert.length - 2);
+                                var queryInsertReportLeave =
+                                    "INSERT INTO hr_leave_owe (user_id, department, employee, date_leave, from_date, to_date, creation_date, created_by) " +
+                                    "VALUES " + listLeaveInsert;
+                                var queryDeleteListReport = "DELETE FROM hr_leave_owe WHERE user_id = :userId";
+                                db.sequelize.query(queryDeleteListReport, null, {
+                                        raw: true
+                                    }, {
+                                        userId: info.USER_ID
+                                    })
+                                    .success(function(resultDel) {
+                                        db.sequelize.query(queryInsertReportLeave)
+                                            .success(function(resultInsertReportLeave) {
+                                                res.json({
+                                                    status: "success"
+                                                });
+                                                return;
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                                return;
+                                            });
+                                    })
+                                    .error(function(err) {
+                                        console.log("*****ERROR:" + err + "*****");
+                                        res.json({
+                                            status: "error"
+                                        });
+                                        return;
+                                    });
+                            }
+
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error"
+                            });
+                            return;
+                        });
+                })
+                .error(function(err) {
+                    console.log("*****ERROR:" + err + "*****");
+                    res.json({
+                        status: "error"
+                    });
+                    return;
+                });
+        }
+    },
+    //END REPORT OWE LEAVE
+
+    //REPORT TIME IN LIEU
+    LoadReportTimeInLieu: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END TIME IN LIEU
+
+    //REPORT UTILIZATION RATIO DETAIL
+    LoadReportUtilizationRatioDetail: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT UTILIZITION RATIO DETAIL
+
+    //REPORT UTILIZATION RATIO SUMARY
+    LoadReportUtilizationRatioSumary: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT UTILIZITION RATIO SUMARY
+
+    //REPORT ITEM NUMBER
+    LoadReportItemNumber: function(req, res) {
+        var info = req.body.info;
+        console.log(info);
+    },
+    //END REPORT ITEM NUMBER
+};
+
+//FUNCTION SEND MAIL SUBMIT FIRST
+var sendMailSubmitLeave = function(req, res, info) {
+    var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
+    var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
+    //GET INFOMATION MANAGE AND EMPLOYEE
+    var queryGetInfoEmployee = "SELECT hr_employee.FirstName, hr_employee.LastName, sys_hierarchy_nodes.NODE_ID " +
+        "FROM hr_employee " +
+        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+        "WHERE users.id = :userID";
+    db.sequelize.query(queryGetInfoEmployee, null, {
+            raw: true
+        }, {
+            userID: info.userID
+        })
+        .success(function(resultInfoEmployee) {
+            if (resultInfoEmployee !== undefined &&
+                resultInfoEmployee !== null &&
+                resultInfoEmployee.length !== 0 &&
+                resultInfoEmployee[0] !== undefined &&
+                resultInfoEmployee[0] !== null &&
+                !(isNaN(resultInfoEmployee[0].NODE_ID))) {
+                var queryGetInfoManage = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                    "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                    "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
+                    "WHERE sys_hierarchy_nodes.NODE_ID = :nodeID";
+                db.sequelize.query(queryGetInfoManage, null, {
+                        raw: true
+                    }, {
+                        nodeID: resultInfoEmployee[0].NODE_ID
+                    })
+                    .success(function(resultInfoManage) {
+                        if (resultInfoManage !== undefined &&
+                            resultInfoManage !== null &&
+                            resultInfoManage.length !== 0 &&
+                            resultInfoManage[0] !== undefined &&
+                            resultInfoManage[0] !== null &&
+                            resultInfoManage[0].Email !== undefined &&
+                            resultInfoManage[0].Email !== null &&
+                            resultInfoManage[0].Email.length !== 0) {
+                            //SEND EMAIL TO MANAGE
+                            mailOptions = {
+                                senders: 'TimeSheet',
+                                recipients: resultInfoManage[0].Email,
+                                subject: 'Notification of Submitted Leave(s)',
+                                htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultInfoManage[0].FirstName + ' ' + resultInfoManage[0].LastName + ',</label></b><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a Leave Form from <b>' + resultInfoEmployee[0].FirstName + ' ' + resultInfoEmployee[0].LastName + '</b> on <b>' + DATE_OF_WEEK + ', ' +
+                                    DATE_SUBMIT + '.</b><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the e-Timesheet System to review and approve/reject the leave.<br/><br/><br/>' +
+                                    'Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
+                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
+                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                    '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                    'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                                    '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                            };
+
+                            // CALL SEND MAIL
+                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                            // END CALL
+
+                            // END SEND EMAIL
+                        }
+                    })
+                    .error(function(err) {
+                        cosole.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+        });
+    //END GET INFORMATION
+};
+//END SEND MAIL SUBMIT FIRST
+
+//FUNCTION SEND MAIL SUBMIT SECOND
+var sendMailSubmitLeaveAgain = function(req, res, info) {
+    var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
+    var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
+    var queryGetNodeIdUserApproveFirst =
+        "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID " +
+        "FROM hr_employee " +
+        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+        "WHERE sys_hierarchies_users.USER_ID = :userId";
+    db.sequelize.query(queryGetNodeIdUserApproveFirst, null, {
+            raw: true
+        }, {
+            userId: info.userId
+        })
+        .success(function(resultNodeInUserApproveFirst) {
+            if (resultNodeInUserApproveFirst !== undefined &&
+                resultNodeInUserApproveFirst !== null &&
+                resultNodeInUserApproveFirst.length !== 0) {
+                var queryGetInfoUserApproveSecond =
+                    "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                    "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                    "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                    "WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
+                db.sequelize.query(queryGetInfoUserApproveSecond, null, {
+                        raw: true
+                    }, {
+                        nodeId: resultNodeInUserApproveFirst[0].TO_NODE_ID
+                    })
+                    .success(function(resultInfoUserApproveSecond) {
+                        if (resultInfoUserApproveSecond !== undefined &&
+                            resultInfoUserApproveSecond !== null &&
+                            resultInfoUserApproveSecond.length !== 0) {
+                            var queryGetInfoEmployee =
+                                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
+                                "FROM hr_employee " +
+                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                "INNER JOIN sys_hierarchy_group on sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+                                "WHERE hr_leave.leave_id = :leaveID AND sys_hierarchy_group.GROUP_TYPE='Time Sheet'";
+                            db.sequelize.query(queryGetInfoEmployee, null, {
+                                    raw: true
+                                }, {
+                                    leaveID: info.leaveID
+                                })
+                                .success(function(resultInfoEmployee) {
+                                    if (resultInfoEmployee !== undefined &&
+                                        resultInfoEmployee !== null &&
+                                        resultInfoEmployee.length !== 0) {
+                                        for (var keyManageSecond in resultInfoUserApproveSecond) {
+                                            var mailOptions = {
+                                                senders: 'TimeSheet',
+                                                recipients: resultInfoUserApproveSecond[keyManageSecond].Email,
+                                                subject: 'Notification of Submitted Leave(s)',
+                                                htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultInfoUserApproveSecond[keyManageSecond].FirstName + ' ' + resultInfoUserApproveSecond[keyManageSecond].LastName + ',</label></b><br/><br/><br/>' +
+                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a notice that you has been submitted a leave from <b>' + resultInfoEmployee[0].FirstName + ' ' + resultInfoEmployee[0].LastName + '</b> on <b>' + DATE_OF_WEEK + ', ' +
+                                                    DATE_SUBMIT + '.</b><br/><br/><br/>' +
+                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the e-Timesheet System to review and approve/reject the leave.<br/><br/><br/>' +
+                                                    'Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
+                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
+                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
+                                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                                                    '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                                                    'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                                                    '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                            };
+
+                                            // CALL SEND MAIL
+                                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                                            // END CALL
+                                        }
+                                    } else {
+                                        console.log("*****ERROR:NOT FOUND INFOMATION EMPLOYEE TO SEND EMAIL*****");
+                                        return;
+                                    }
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error"
+                                    });
+                                    return;
+                                });
+
+                        }
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+            } else {
+                res.json({
+                    status: "error"
+                });
+                return;
+            }
+
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+            return;
+        });
+};
+//END SEND MAIL SUBMIT SECOND
+
+//SEND MAIL REJECT LEAVE
+var sendMailLeave = function(req, res, info) {
+    var mailOptions = {};
+    var queryGetInfoEmployee =
+        "SELECT hr_employee.FirstName, hr_employee.TITLE, hr_employee.Email, hr_employee.LastName, hr_leave.start_date, hr_leave.finish_date, hr_leave.user_id " +
+        "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+        "INNER JOIN hr_leave ON users.id = hr_leave.user_id " +
+        "WHERE hr_leave.leave_id = :leaveID";
+    db.sequelize.query(queryGetInfoEmployee, null, {
+            raw: true
+        }, {
+            leaveID: info.leaveID
+        })
+        .success(function(result) {
+            var start_date = "";
+            var end_date = "";
+            if (result[0] !== undefined && result[0] !== null) {
+                start_date = moment(result[0].start_date).format('DD/MM/YYYY');
+                finish_date = moment(result[0].finish_date).format('DD/MM/YYYY');
+            }
+            if (info.status === 4) {
+                mailOptions = {
+                    senders: 'TimeSheet',
+                    recipients: result[0].Email,
+                    subject: 'Notification of Rejected Leave(s)',
+                    htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' + start_date + '–' + finish_date + ') has been rejected.<br/><br/><br/> Please log into the e-Timesheet System to correct and re-submit your leave. ' +
+                        'Failure to re-submit your leave may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your leave in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond' +
+                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                        '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                        '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                        'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                        '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                };
+                queryGetPositionUserReject =
+                    "SELECT hr_employee.TITLE " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                    "WHERE users.id = :userId";
+                db.sequelize.query(queryGetPositionUserReject, null, {
+                        raw: true
+                    }, {
+                        userId: info.userID
+                    })
+                    .success(function(resultPosition) {
+                        if (resultPosition !== undefined &&
+                            resultPosition !== null &&
+                            resultPosition.length !== 0 &&
+                            resultPosition[0] !== undefined &&
+                            resultPosition[0] !== null &&
+                            resultPosition[0].TITLE === "Director" &&
+                            result[0].TITLE === "Staff") {
+                            var queryGetNodeIdManage =
+                                "SELECT sys_hierarchy_nodes.TO_NODE_ID " +
+                                "FROM sys_hierarchy_nodes " +
+                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchies_users.USER_ID = :userId";
+                            db.sequelize.query(queryGetNodeIdManage, null, {
+                                    raw: true
+                                }, {
+                                    userId: result[0].user_id
+                                })
+                                .success(function(resultNodeIdManage) {
+                                    if (resultNodeIdManage !== undefined &&
+                                        resultNodeIdManage !== null &&
+                                        resultNodeIdManage.length !== 0) {
+                                        var queryGetEmailTeamLeader =
+                                            "SElECT hr_employee.Email " +
+                                            "FROM hr_employee " +
+                                            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
+                                            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.TO_NODE_ID " +
+                                            "WHERE sys_hierarchies_users.NODE_ID = :nodeId";
+                                        db.sequelize.query(queryGetEmailTeamLeader, null, {
+                                                raw: true
+                                            }, {
+                                                nodeId: resultNodeIdManage[0].TO_NODE_ID
+                                            })
+                                            .success(function(resultEmailTeamLeader) {
+                                                if (resultEmailTeamLeader !== undefined &&
+                                                    resultEmailTeamLeader !== null &&
+                                                    resultEmailTeamLeader.length !== 0 &&
+                                                    resultEmailTeamLeader[0] !== undefined &&
+                                                    resultEmailTeamLeader[0] !== null) {
+                                                    mailOptions.cc = resultEmailTeamLeader[0].Email;
+                                                }
+                                                //CALL SEND MAIL
+                                                FunctionSendMail.sendEmail(req, res, mailOptions);
+                                                // END CALL
+                                            })
+                                            .error(function(err) {
+                                                console.log("*****ERROR:" + err + "*****");
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                                return;
+                                            });
+                                    }
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error"
+                                    });
+                                    return;
+                                });
+                        } else {
+                            //CALL SEND MAIL
+                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                            // END CALL
+                        }
+
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
+
+                // END REJECT
+
+            } else if (info.status === 3) {
+                //IS APPROVE
+                mailOptions = {
+                    senders: 'TimeSheet',
+                    recipients: result[0].Email,
+                    subject: 'Notification of Approved Leave(s)',
+                    htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' +
+                        result[0].FirstName + ' ' + result[0].LastName +
+                        '</b></label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' +
+                        start_date + '–' + finish_date + ') has been approved.</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label</i>' +
+                        '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
+                        '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
+                        '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
+                        'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
+                        '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                };
+                // END APPROVE
+
+                //CALL SEND MAIL
+                FunctionSendMail.sendEmail(req, res, mailOptions);
+                // END CALL
+            }
+        })
+        .error(function(err) {
+            console.log("*****ERROR:" + err + "*****");
+            res.json({
+                status: "error"
+            });
+            return;
+
+        });
 
 };
+//END SEND  MAIL
 
 //FUNCTION GET WEEKNO
 var getWeekNo = function() {
@@ -2072,7 +4077,7 @@ var getWeekNo = function() {
 };
 //END
 
-// FUNCTION TRACKER
+// FUNCTION TRACKER TIMESHEET
 var TracKerTimeSheet = function(info) {
     var arrayAction = {
         1: "Save",
@@ -2092,7 +4097,36 @@ var TracKerTimeSheet = function(info) {
             console.log("*****ERROR:" + err + "*****");
         });
 };
-//END
+//END TRACKER TIMESHEET
+
+//FUNCTION TRACKER LEAVE
+var TracKerLeave = function(info) {
+    var arrayAction = {
+        1: "Save",
+        2: "Submit",
+        3: "Approve",
+        4: "Reject",
+        5: "Resubmit"
+    };
+    var nameAction = arrayAction[info.statusID];
+    var queryTracKer = "INSERT INTO leave_tracker (action_name, leave_id, user_id, creation_date) " +
+        "VALUES(:nameAction, :leaveID, :userID, :creationDate)";
+    db.sequelize.query(queryTracKer, null, {
+            "reload": true
+        }, {
+            nameAction: nameAction,
+            leaveID: info.leaveID,
+            userID: info.userID,
+            creationDate: info.creationDate
+        })
+        .success(function(resultTracKer) {
+            console.log("***** SAVE TRACKER SUCCESS *****");
+        })
+        .error(function(error) {
+            console.log("***** SAVE TRACKER ERROR *****");
+        });
+};
+//END TRACKER
 
 
 //FUNCTION GET FORMAT TIME_CHARGE
@@ -2160,7 +4194,7 @@ var SendMailTimeSheet = function(req, res, info) {
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected.<br/><br/><br/> Please log into the Timesheet System to correct and re-submit your timesheet. ' +
                         'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login<label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au<label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond' +
@@ -2171,6 +4205,7 @@ var SendMailTimeSheet = function(req, res, info) {
                         '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                 };
                 // END APPROVE
+
                 //CALL SEND MAIL
                 FunctionSendMail.sendEmail(req, res, mailOptions);
                 // END CALL
@@ -2186,7 +4221,7 @@ var SendMailTimeSheet = function(req, res, info) {
                         '</b></label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' +
                         start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
-                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
+                        '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label</i>' +
@@ -2205,7 +4240,7 @@ var SendMailTimeSheet = function(req, res, info) {
         })
         .error(function(err) {
             console.log("*****ERROR:" + err + "*****");
-            res.josn({
+            res.json({
                 status: "error"
             });
             return;

@@ -1090,7 +1090,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered {
     border-top: 1.5px solid #ddd;
     border-bottom: 1.5px solid #ddd;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .table-dynamic .table-bordered thead th {
@@ -1104,7 +1104,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered thead th>.th {
     position: relative;
     padding: 4px 4px 4px 4px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .table-dynamic .table-bordered tbody tr {
@@ -1196,6 +1196,7 @@ table.timetable-table td:last-child {
     border-top: 1.5px solid #ddd;
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .odd {

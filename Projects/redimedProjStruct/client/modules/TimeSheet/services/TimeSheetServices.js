@@ -244,6 +244,111 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             var LoadTypeLeave = api.one("TimeSheet/get-type-leave");
             return LoadTypeLeave.get({});
         };
+
+        TimeSheetService.UpLeaveServer = function(info) {
+            var UpLeaveServer = api.all("TimeSheet/post-leave-form");
+            return UpLeaveServer.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadHistoryLeave = function(searchObj) {
+            var LoadHistoryLeave = api.all("TimeSheet/post-history-leave");
+            return LoadHistoryLeave.post({
+                searchObj: searchObj
+            });
+        };
+
+        TimeSheetService.ViewLeave = function(idLeave) {
+            var ViewLeave = api.all("TimeSheet/post-view-leave");
+            return ViewLeave.post({
+                leave_id: idLeave
+            });
+        };
+
+        TimeSheetService.SubmitOnViewLeave = function(info) {
+            var SubmitOnViewLeave = api.all("TimeSheet/post-submit-view");
+            return SubmitOnViewLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadLeaveEdit = function(leaveID) {
+            var LoadLeaveEdit = api.all("TimeSheet/post-load-edit");
+            return LoadLeaveEdit.post({
+                leaveID: leaveID
+            });
+        };
+
+        TimeSheetService.UpdateLeave = function(info) {
+            var UpdateLeave = api.all("TimeSheet/post-update-leave");
+            return UpdateLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadLeaveApprove = function(info) {
+            var LoadLeaveApprove = api.all("TimeSheet/post-list-leave");
+            return LoadLeaveApprove.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.ApproveLeave = function(info) {
+            var ApproveLeave = api.all("TimeSheet/post-approve-leave");
+            return ApproveLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.RejectLeave = function(info) {
+            var RejectLeave = api.all("TimeSheet/post-reject-leave");
+            return RejectLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.CheckLeave = function(USER_ID) {
+            var CheckLeave = api.all("TimeSheet/post-check-leave");
+            return CheckLeave.post({
+                USER_ID: USER_ID
+            });
+        };
+
+        TimeSheetService.LoadReportOweLeave = function(info) {
+            var LoadReportOweLeave = api.all("TimeSheet/post-owe-leave");
+            return LoadReportOweLeave.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportTimeInLieu = function(info) {
+            var LoadReportTimeInLieu = api.all("TimeSheet/post-time-inlieu");
+            return LoadReportTimeInLieu.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportItemNumber = function(info) {
+            var LoadReportItemNumber = api.all("TimeSheet/post-item-number");
+            return LoadReportItemNumber.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportUtilizationRatioSumary = function(info) {
+            var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-summary");
+            return LoadReportUtilizationRatioSumary.post({
+                info: info
+            });
+        };
+
+        TimeSheetService.LoadReportUtilizationRatioDetail = function(info) {
+            var LoadReportUtilizationRatioDetail = api.all("TimeSheet/post-utilization-detail");
+            return LoadReportUtilizationRatioDetail.post({
+                info: info
+            });
+        };
         //END LEAVE FORM
 
         return TimeSheetService;

@@ -25,6 +25,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                 toastr.error("Loading fail!", "Error");
                             } else if (response.status === "success") {
                                 scope.list = response;
+                                scope.info.forPermission = scope.list.forPermission;
                                 angular.forEach(scope.list.result, function(timeDate, indexD) {
                                     scope.list.result[indexD].AC = [];
                                     angular.forEach(scope.list.resultActivity, function(timeAC, indexAC) {

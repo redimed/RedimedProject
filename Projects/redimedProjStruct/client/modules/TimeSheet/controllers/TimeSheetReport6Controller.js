@@ -1,5 +1,6 @@
-angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
-    .controller("Report3Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
+angular.module("app.loggedIn.TimeSheet.Report6.Controller", [])
+    .controller("Report6Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
+        
         // POPUP Date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -68,7 +69,7 @@ angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
                 info.weekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                TimeSheetService.LoadReportUtilizationRatioSumnary(info).then(function(response) {
+                TimeSheetService.LoadReportItemNumber(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;

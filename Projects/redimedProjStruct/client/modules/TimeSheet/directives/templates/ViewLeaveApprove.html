@@ -1,0 +1,83 @@
+<div class="panel-body">
+    <form method="POST" class="grid-form" name="ViewLeave">
+        <!-- MAIN INFO -->
+        <fieldset>
+            <legend>View Leave</legend>
+            <!-- INFORMATION -->
+            <div data-row-span="12">
+                <div data-field-span="3" style="font-size:13px;">
+                    Employee: &nbsp;<span class="text-info" style="font-size:13px;">{{employee_name}}</span>
+                </div>
+                <div data-field-span="3">
+                    <span style="font-size:13px;">Application Date:&nbsp;</span><span class="text-info" style="font-size:13px;">{{list.result[0].application_date | date: "dd/MM/yyyy"}}</span>
+                </div>
+                <div data-field-span="3" style="font-size:13px;">
+                    Time Leave: &nbsp;<span class="text-info" style="font-size:13px;">{{list.result[0].start_date| date: "dd/MM/yyyy"}} </span>&nbsp;to <span class="text-info" style="font-size:13px;">{{list.result[0].finish_date| date: "dd/MM/yyyy"}}</span>
+                </div>
+                <div data-field-span="3">
+                    <span style="font-size:13px;">Return to Work Date:&nbsp;</span><span class='text-info' style="font-size: 13px;">{{list.result[0].work_date | date: "dd/MM/yyyy"}}</span>
+                </div>
+            </div>
+            <!-- END INFORMATION -->
+            <!-- TABLE TASK OF WEEK-->
+            <div data-row-span="12" style="font-size:13px;">
+                <div class="panel-body table-dynamic">
+                    <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                    </center>
+                    <table class="responsive table table-bordered" ng-show="!list.loading">
+                        <thead ng-show="list.result!==null">
+                            <tr>
+                                <th style="width:40%;">
+                                    <div class="th">
+                                        Leave Type
+                                    </div>
+                                </th>
+                                <th style="width:10%;">
+                                    <div class="th">
+                                        Hours Taken
+                                    </div>
+                                </th>
+                                <th style="width:50%;">
+                                    <div class="th">
+                                        Reason for Leave
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-hide="(l.sumDATE===0 && l.activity_id !==18)">
+                                <td style="text-align:left;font-size:13px; width:40%;"><span>{{((l.leave_name!==undefined && l.leave_name!==null && l.leave_name!=="")?l.leave_name:"")}}</span>&nbsp;<span class="text-info">{{(l.type_other!==undefined && l.type_other!==null && l.type_other!=="")?l.type_other:""}}</span></td>
+                                <td ng-if="(l.time_leave!==undefined && l.time_leave!==0)" style="font-size:13px; text-align:right; width:10%;"><span style="margin-right:40px;">{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</span></td>
+                                <td ng-if="!(l.time_leave!==undefined && l.time_leave!==0)" style="font-size:13px; text-align:center; width:10%;"><span>{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</span></td>
+                                <td style="font-size:13px; width:50%;">{{(l.reason_leave!==undefined && l.reason_leave!==null && l.reason_leave!=='')?(l.reason_leave):""}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12" style="font-size:13px;">
+                <span class="bold" style="font-size:13px;">Note:</span><span style="font-size:13px;"> if unsure of the correct leave to apply for, please speak with HR for clarification before approving any requests.
+            </div>
+            <div class="col-md-12" style="margin-top:5px; font-size:13px;">
+                <span>Total Leave Hours:<span class="text-info bold" style="margin-left:15px;">{{list.result[0].time_leave_all | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Status:&nbsp;<span ng-class="{'reject':list.result[0].status==='Rejected','submited':list.result[0].status==='Submitted', 'approved':list.result[0].status==='Approved', 'pending':list.result[0].status==='Awaiting for Submit',
+                            're-submitted':list.result[0].status==='Re-submitted'}">{{(list.result[0].status==="Submitted")?"Awaiting for Approve":list.result[0].status}}</span></span>
+            </div>
+            <!-- END TABLE TASK OF WEEK -->
+            <!-- SHOW REJECT -->
+            <div data-row-span="12" ng-if="info.isReject===true">
+                <div class="col-md-12">
+                    <label>Comments(*)</label>
+                    <textarea id="commentsID" name="comments" ng-model="info.comments" style="font-size:13px;" ng-required="true" custom-tr="info.comments" custom-fr="ViewLeave.comments" ng-disabled="statusID===4"></textarea>
+                </div>
+            </div>
+            <!-- END REJECT -->
+        </fieldset>
+        <!-- BUTTON -->
+        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
+        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs blue" ng-click="onApprove({return: info})" ng-if="statusID===2 || statusID===5" ng-disabled="info.isReject===true">Approve</a>
+        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs red" ng-click="onReject({return: info})" ng-if="statusID===2 || statusID===5" ng-disabled="info.isReject===true && ViewLeave.comments.$error.required===true">Reject</a>
+        <!-- END BUTTON -->
+        <!-- END MAIN INFO -->
+    </form>
+</div>
