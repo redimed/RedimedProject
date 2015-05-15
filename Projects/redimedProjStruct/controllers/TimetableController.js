@@ -123,7 +123,7 @@ module.exports = {
 		//Sap xep lai danh sach tuan
 		//tannv.dts@gmail.com
 		postData.site=_.sortBy(postData.site, 'week_ord_of_month');
-		kiss.exFileJSON(postData.site,"kisslog.txt");
+		//kiss.exFileJSON(postData.site,"kisslog.txt");
 		//Lay danh sach cac site theo tuan
 		//tannv.dts@gmail.com
 		var tempListSite=postData.site;
