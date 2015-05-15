@@ -47,7 +47,19 @@ module.exports = {
 	 */
 	beforeGenerateCalendar:function(req,res)
 	{
-		var postData = req.body.data;
+		var postData = kiss.checkData(req.body.data)?req.body.data:{};
+		if(!kiss.checkListData(postData.from_time,postData.to_time,postData.appt_interval,postData.doctor_id))
+		{
+			kiss.exlog("beforeGenerateCalendar","Loi data truyen den",postData);
+			res.status(500).json({status:'fail'});
+			return;
+		}
+		//Dieu chinh theo yeu cau Emma Raphael
+		//voi yeu cau to_time la luc ket thuc lam viec
+		//tannv.dts@gmail.com
+		postData.to_time=moment(postData.to_time,'HH:mm').subtract(postData.appt_interval,'minutes').format("HH:mm");
+		//------------------------------------------------------------------------------------------------------
+
 		var fromTimeInit=postData.from_time;//tan add, day la phien lam viec dau tien co the
 		var toTimeInit=postData.to_date;//tan add, day la phien lam viec cuoi cung co the
 		var from_time=postData.from_time;
@@ -82,7 +94,22 @@ module.exports = {
 	},
 
 	postCreateTimetable: function(req, res){
-		var postData = req.body.data;
+		var postData = kiss.checkData(req.body.data)?req.body.data:{};
+
+		if(!kiss.checkListData(postData.from_time,postData.to_time,postData.doctor_id,
+			postData.day_of_Week_code,postData.appt_interval,postData.service_id,
+			postData.clinical_dept_id,postData.site))
+		{
+			kiss.exlog("postCreateTimetable","Loi data truyen den");
+			res.status(500).json({status:'fail'});
+			return;
+		}
+		//Dieu chinh theo yeu cau Emma Raphael
+		//voi yeu cau to_time la luc ket thuc lam viec
+		//tannv.dts@gmail.com
+		postData.to_time=moment(postData.to_time,'HH:mm').subtract(postData.appt_interval,'minutes').format("HH:mm");
+		//------------------------------------------------------------------------------------------------------
+		
 		//tan modify
 		var doctorId=postData.doctor_id;
 		var day_of_Week_code=postData.day_of_Week_code;
