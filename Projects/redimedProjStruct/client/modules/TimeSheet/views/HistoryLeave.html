@@ -2,18 +2,18 @@
     <ul class="page-breadcrumb">
         <li>
             <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
             <a ui-sref="loggedIn.TimeSheetHome">
-                <span style="font-size:15px;font-weight:bold;">Leave Management System</span>
+                <span>Leave Management System</span>
             </a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
             <a ui-sref="loggedIn.CreateLeave">
-                <span style="font-size:15px;font-weight:bold;">My Leave History</span>
+                <span>My Leave History</span>
             </a>
             <i class="fa fa-angle-right"></i>
         </li>
@@ -21,7 +21,7 @@
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <div class="caption" style="font-size:14px;font-weight:bold;">
+        <div class="caption">
             List of Leaves
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -67,32 +67,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)" style="font-size:14px;">
+                        <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                             <td style="width:200px;">
                             </td>
                             <td style="width:150px;">
                             </td>
                             <td style="width:200px;">
-                                <select class="form-control input-sm" ng-options="stt.task_status_id as stt.name for stt in listStatus" ng-model="searchObjectMap.select['hr_leave.status_id']" ng-change="loadList()" style="font-size:14px;"></select>
+                                <select class="form-control input-sm" ng-options="stt.task_status_id as stt.name for stt in listStatus" ng-model="searchObjectMap.select['hr_leave.status_id']" ng-change="loadList()"></select>
                             </td>
                             <td style="width:150px;"></td>
                             <td style="width:150px;">
                             </td>
                             <td></td>
                         </tr>
-                        <tr ng-show="list.result===null" style="font-size:14px;">
+                        <tr ng-show="list.result===null">
                             <td colspan="5">
                                 <h4 class="custom-timesheet">There is no items</h4>
                             </td>
                         </tr>
-                        <tr ng-repeat="l in list.result" style="cursor: pointer;font-size:14px; " ng-dblclick="view(l.leave_id)">
-                            <td style="text-align:left;font-size:14px; width:200px;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd/MM/yyyy"}}</span></td>
-                            <td style="font-size:14px; text-align:right; width:150px;"><span style="margin-right:55px;">{{l.time_leave| customHours}}</span></td>
-                            <td style="text-align:left;font-size:14px; width:200px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
+                        <tr ng-repeat="l in list.result" style="cursor: pointer;" ng-dblclick="view(l.leave_id)">
+                            <td style="text-align:left;width:200px;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd/MM/yyyy"}}</span></td>
+                            <td style="text-align:right; width:150px;"><span style="margin-right:55px;">{{l.time_leave| customHours}}</span></td>
+                            <td style="text-align:left;width:200px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{l.name}}</td>
-                            <td style="font-size:14px; text-align:left; width:150px;">{{l.person_charge}}</td>
-                             <td style="text-align:left;font-size:14px; width:150px;"><span class="text-info">{{l.application_date | date: "dd/MM/yyyy"}}</span></td>
-                            <td style="text-align:left;font-size:14px;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
+                            <td style="text-align:left; width:150px;">{{l.person_charge}}</td>
+                             <td style="text-align:left;width:150px;"><span class="text-info">{{l.application_date | date: "dd/MM/yyyy"}}</span></td>
+                            <td style="text-align:left;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
                             </td>
                         </tr>
                     </tbody>
@@ -102,11 +102,11 @@
                         <div class="col-ms-6 page-num-info ">
                             <div class="col-md-4 col-sm-5 ">
                                 <div class="input-group ">
-                                    <span class="custom-timesheet" style="font-size:14px;">Total: {{count}}</span>
-                                    <span class="custom-timesheet" style="font-size:14px;">Show</span>
-                                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;font-size:14px;">
+                                    <span class="custom-timesheet">Total: {{count}}</span>
+                                    <span class="custom-timesheet">Show</span>
+                                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
                                     </select>
-                                    <span class="custom-timesheet" style="font-size:14px;">entries per page</span>
+                                    <span class="custom-timesheet">entries per page</span>
                                 </div>
                             </div>
                             <div class="col-ms-6 text-right pagination-container ">
