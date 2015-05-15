@@ -2358,11 +2358,12 @@ module.exports = {
                                                                                     //CHECK LEVEL 2
                                                                                     if (resultInfoLevel2 !== undefined &&
                                                                                         resultInfoLevel2 !== null &&
-                                                                                        resultInfoLevel2.length !== 0) {
+                                                                                        resultInfoLevel2.length !== 0 &&
+                                                                                        result[indexResult].status_id !== 3) {
                                                                                         result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
-                                                                                    } else if (resultInfoLevel1 !== undefined &&
-                                                                                        resultInfoLevel1 !== null &&
-                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                    } else if ((resultInfoLevel1 !== undefined &&
+                                                                                            resultInfoLevel1 !== null &&
+                                                                                            resultInfoLevel1.length !== 0) || result[indexResult].status_id === 3) {
                                                                                         result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                                     }
                                                                                     //END LEVEL 2
@@ -2965,11 +2966,13 @@ module.exports = {
                                                                                                     //CHECK LEVEL 2
                                                                                                     if (resultInfoLevel2 !== undefined &&
                                                                                                         resultInfoLevel2 !== null &&
-                                                                                                        resultInfoLevel2.length !== 0) {
+                                                                                                        resultInfoLevel2.length !== 0 &&
+                                                                                                        result[indexResult].status_id !== 3) {
                                                                                                         result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
-                                                                                                    } else if (resultInfoLevel1 !== undefined &&
+                                                                                                    } else if ((resultInfoLevel1 !== undefined &&
                                                                                                         resultInfoLevel1 !== null &&
-                                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                                        resultInfoLevel1.length !== 0)||
+                                                                                                        result[indexResult].status_id === 3) {
                                                                                                         result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                                                     }
                                                                                                     //END LEVEL 2
