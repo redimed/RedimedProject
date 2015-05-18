@@ -47,9 +47,9 @@ angular.module('app.loggedIn.document.services', [])
             return updateFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
         }
 
-        documentService.checkFA = function(PatientID, calID){
+        documentService.checkFA = function(PatientID, calID, FA_ID){
             var checkFA = api.all("document/checkFA");
-            return checkFA.post({PatientID:PatientID, calID:calID});
+            return checkFA.post({PatientID:PatientID, calID:calID, fa_id: FA_ID});
         }
 
         documentService.checkRating = function(id,age, gender, val){

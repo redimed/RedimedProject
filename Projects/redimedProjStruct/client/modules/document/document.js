@@ -67,7 +67,7 @@ angular.module("app.loggedIn.document", [
             })
 
             .state("loggedIn.FA", {
-                url: "/FA/:patient_id/:cal_id",
+                url: "/FA/:patient_id/:cal_id/:fa_id",
 
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'

@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor.paperless.controller", [])
 
-.controller("DoctorPaperlessController", function($scope, $state, DocumentService, PatientService, $stateParams, localStorageService){
+.controller("DoctorPaperlessController", function($scope, $state, $modal, DocumentService, PatientService, $stateParams, localStorageService){
 	var patient_id = $scope.patient_id = $stateParams.patient_id;
 	var cal_id = $scope.cal_id = $stateParams.cal_id;
 
@@ -15,6 +15,14 @@ angular.module("app.loggedIn.doctor.paperless.controller", [])
 		var params = {patient_id: patient_id, cal_id: cal_id};
 		var str_state = 'loggedIn.' + $scope.tab
 		$state.go(str_state, params);
+	}
+
+	$scope.faNewClick = function(){
+		var modalInstance = $modal.open({
+			animation:true,
+			templateUrl:'modules/doctor/views/fachooseModal.html',
+			controller:'FaChooseController'
+		})	
 	}
 
 	$scope.OptionGorgonMA = DocumentService.optionGorgonMA(patient_id);
