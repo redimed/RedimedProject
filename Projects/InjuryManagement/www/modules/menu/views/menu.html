@@ -19,7 +19,7 @@
         </a>
 
         <h3 id="profile-name" style="color: #fff7eb; font-weight: 200; text-shadow: 0 0 3px #fff7eb;">{{userName}}</h3>
-        <button class="button button-positive" ng-click="readNFC()">Read NFC Tag</button>
+        <!--<button class="button button-positive" ng-click="readNFC()">Read NFC Tag</button>-->
       </div>
 
       <ion-list ng-repeat="menu in Injurymenu">
@@ -31,27 +31,27 @@
     </div>
   </ion-side-menu>
 
-  <ion-side-menu side="right" class="bg-menu-right">
-    <label class="item item-input">
-      <i class="icon ion-search placeholder-icon" style="padding-right: 29px;"></i>
-      <input type="search" placeholder="Search">
-    </label>
-    <ion-content class="has-header" style="padding-top: 5px; top: 70px;">
-      <ion-refresher on-refresh="doRefreshListUserOnline()">
-      </ion-refresher>
-      <ul class="list">
-        <li class="item item-button-right" ng-repeat="contact in contacts" ng-hide="contact.username == userName">
-          <i class="icon ion-record" style="color: green; position: absolute; top: 45px; left: 50px;"></i>
-          <div ng-class="{'img-image-name-phone':contact}" ng-style={"background-color":contact.background} style="border-radius: 5px;">
-            {{ contact.letter }}
-          </div>
-          <span style="position: absolute; left: 70px; top: 35px;">
-            {{ contact.username }}
-          </span>
-          <button class="button button-icon icon ion-ios7-telephone" ng-click="makeCall(contact.id)" menu-close>
-          </button>
-        </li>
-      </ul>
-    </ion-content>
-  </ion-side-menu>
+  <!--<ion-side-menu side="right" class="bg-menu-right">-->
+    <!--<label class="item item-input">-->
+      <!--<i class="icon ion-search placeholder-icon" style="padding-right: 29px;"></i>-->
+      <!--<input type="search" placeholder="Search">-->
+    <!--</label>-->
+    <!--<ion-content class="has-header" style="padding-top: 5px; top: 70px;">-->
+      <!--<ion-refresher on-refresh="doRefreshListUserOnline()">-->
+      <!--</ion-refresher>-->
+      <!--<ul class="list">-->
+        <!--<li class="item item-button-right" ng-repeat="contact in contacts" ng-hide="contact.username == userName">-->
+          <!--<i class="icon ion-record" style="color: green; position: absolute; top: 45px; left: 50px;"></i>-->
+          <!--<div ng-class="{'img-image-name-phone':contact}" ng-style={"background-color":contact.background} style="border-radius: 5px;">-->
+            <!--{{ contact.letter }}-->
+          <!--</div>-->
+          <!--<span style="position: absolute; left: 70px; top: 35px;">-->
+            <!--{{ contact.username }}-->
+          <!--</span>-->
+          <!--<button class="button button-icon icon ion-ios7-telephone" ng-click="makeCall(contact.id)" menu-close>-->
+          <!--</button>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</ion-content>-->
+  <!--</ion-side-menu>-->
 </ion-side-menus>

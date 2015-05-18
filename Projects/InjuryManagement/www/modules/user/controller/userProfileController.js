@@ -1,5 +1,6 @@
 angular.module('starter.user.controller',[])
-    .controller('userProfileController',function($scope, UserService, $http, localStorageService, OnlineBookingService, $state, $ionicPopup) {
+    .controller('userProfileController',function($scope, UserService, $http,
+                                                 localStorageService, OnlineBookingService, $state, $ionicPopup) {
         var userInfo = null;
         var companyInfo = null;
 
@@ -31,7 +32,6 @@ angular.module('starter.user.controller',[])
             $scope.detail = {
                 id: userInfo.id,
                 img: null,
-
                 Booking_Person: userInfo.Booking_Person,
                 Contact_number: userInfo.Contact_number,
                 Contact_email: userInfo.Contact_email
@@ -42,8 +42,6 @@ angular.module('starter.user.controller',[])
         UserService.getUserInfo(userInfo.id).then(function(data){
             $scope.detail.img = data.img;
         })
-
-
 
         UserService.getCompany().then(function(data){
             $scope.companyList = data;
@@ -78,11 +76,11 @@ angular.module('starter.user.controller',[])
             }
         }
 
+        console.log($scope.detail);
 
-        $scope.updateUserProfile  = function(userForm){
-
+        $scope.updateUserProfile = function(userForm){
             UserService.updateProfile($scope.detail).then(function(data){
-                if(data.status === 'success')
+                if(data.status.toLowerCase() === 'success')
                 {
                     $scope.popupMessage = { message: "Your profile is saved!" };
                     $ionicPopup.show({
@@ -105,8 +103,8 @@ angular.module('starter.user.controller',[])
                     });
                 }
             })
+        };
 
-        }
         $scope.changePass = function(){
             $scope.submittedChangePass = true;
             if(typeof $scope.info.newPass !== 'undefined' || typeof $scope.info.passConfirm !== 'undefined') {

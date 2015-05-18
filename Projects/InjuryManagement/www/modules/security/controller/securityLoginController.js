@@ -58,6 +58,8 @@ angular.module('starter.security.login.controller',[])
             }
         }
 
+        signaling.removeListener('isError');
+
         signaling.on('isError', function () {
             $ionicLoading.hide();
             document.addEventListener("deviceready", function() {
@@ -68,14 +70,15 @@ angular.module('starter.security.login.controller',[])
                 templateUrl: 'modules/popup/PopUpConfirm.html',
                 scope: $scope,
                 buttons: [
-                    { text: 'Cancel' },
                     {
                         text: '<span>Yes, push out!</span>',
                         type: 'button button-assertive',
                         onTap: function(e) {
                             signaling.emit('forceLogin', $scope.modelUser.username);
                         }
-                    }
+                    },
+                    { text: 'Cancel' }
+
                 ]
             })
             //$scope.popupMessage = {message: "Can't login. Because account is using!"};
@@ -130,10 +133,7 @@ angular.module('starter.security.login.controller',[])
                         });
                     }
                 });
-                //$ionicPopup.alert({
-                //    title: "Can't Login",
-                //    template: 'Invalid Username or fPassasdfasdfword!'
-                //})
+
             });
         }
 
@@ -157,15 +157,12 @@ angular.module('starter.security.login.controller',[])
                 showDelay: 0
             });
             SecurityService.login($scope.modelUser).then(function(response) {
-                // signaling.emit('login_successful', response.userInfo.id, response.userInfo.user_name);
                 signaling.emit('updateSocketLogin', response.userInfo.user_name);
                 signaling.on('login_success',function(){
                     UserService.detail().then(function(response) {
 
                         if(typeof response.userInfo !== 'undefined')
                             localStorageService.set("userInfo", response.userInfo);
-
-
 
                         if(typeof response.companyInfo !== 'undefined')
                             localStorageService.set("companyInfo", response.companyInfo);
