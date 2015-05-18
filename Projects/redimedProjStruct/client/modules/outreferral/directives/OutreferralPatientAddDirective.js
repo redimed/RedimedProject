@@ -6,7 +6,8 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 		scope:{
 			patientId: '=',
 			calId: '=',
-			success: '='
+			success: '=',
+			doctorId: '='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientAdd.html',
 		link: function(scope, elem, attrs){
@@ -47,15 +48,24 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					ConfigService.beforeError(scope.outreferral.errors);
 				})
 			}
+			
+			scope.$watch('doctorId', function(doctorId){
+				var postData = doctorId;
+				
+				OutreferralModel.DotorFromUserId(postData)
+				.then(function(response){
+					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
+					scope.referdoctor.name = response.data[0].NAME;
+				}, function(error){})
+			})
 			var load = function(){
-				var postData = user_id;
-				if (user_type == 4) {
-					OutreferralModel.DotorFromUserId(postData)
-					.then(function(response){
-						scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
-						scope.referdoctor.name = response.data[0].NAME;
-					}, function(error){})
-				};
+				var postData = scope.doctorId;
+				
+				OutreferralModel.DotorFromUserId(postData)
+				.then(function(response){
+					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
+					scope.referdoctor.name = response.data[0].NAME;
+				}, function(error){})
 			}
 			var outdoctorSelect = function(){
 				$modal.open({

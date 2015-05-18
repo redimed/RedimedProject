@@ -3,7 +3,7 @@
 		<!-- PAGINATION -->
 		<pagination boundary-links="true" total-items="company.count" ng-model="company.search.page" 
 	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-	        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="setPage(company.search.page)">
+	        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="company.setPage(company.search.page)">
 	    </pagination>
 		<!-- END PAGINATION -->
 		<table class="mdt-table table-hover ">

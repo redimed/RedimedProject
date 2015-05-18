@@ -45,6 +45,7 @@ angular.module('app.loggedIn.rlob.redilegalUsersListController.controller',[])
                 {
                     $scope.usersList = data.data.list;
                     $scope.searchInfo.totalItems=data.data.totalItems;
+                    console.log($scope.usersList);
                 }
                 else
                 {

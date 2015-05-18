@@ -762,9 +762,9 @@ angular.module('app.config', [])
         if (typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 
-        var year = dateTime.getFullYear();
-        var month = dateTime.getMonth() + 1;
-        var date = dateTime.getDate();
+        var year = dateTime.getUTCFullYear();
+        var month = dateTime.getUTCMonth() + 1;
+        var date = dateTime.getUTCDate();
 
         if (month < 10) {
             month = "0" + month;
@@ -783,9 +783,9 @@ angular.module('app.config', [])
         if (typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 
-        var year = dateTime.getFullYear();
-        var month = dateTime.getMonth() + 1;
-        var date = dateTime.getDate();
+        var year = dateTime.getUTCFullYear();
+        var month = dateTime.getUTCMonth() + 1;
+        var date = dateTime.getUTCDate();
 
         if (month < 10) {
             month = "0" + month;
@@ -804,19 +804,20 @@ angular.module('app.config', [])
         if (typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 
-        var year = dateTime.getFullYear();
-        var month = dateTime.getMonth() + 1;
-        var date = dateTime.getDate();
 
-        var seconds = dateTime.getSeconds();
+        var year = dateTime.getUTCFullYear();
+        var month = dateTime.getUTCMonth() + 1;
+        var date = dateTime.getUTCDate();
+
+        var seconds = dateTime.getUTCSeconds();
 
         seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-        var minutes = dateTime.getMinutes();
+        var minutes = dateTime.getUTCMinutes();
 
         minutes = (minutes < 10) ? "0" + minutes : minutes;
 
-        var hours = dateTime.getHours();
+        var hours = dateTime.getUTCHours();
 
         hours = (hours < 10) ? "0" + hours : hours;
 

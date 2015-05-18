@@ -118,6 +118,9 @@ module.exports = function(sequelize, DataTypes){
                  mdtInvoiceHeader.belongsTo(models.Department, { 
                 	as: 'Department', foreignKey: 'DEPT_ID'
                 });
+                 mdtInvoiceHeader.belongsTo(models.Appointment,{
+                 	as: 'Appointment', foreignKey: 'cal_id'
+                 });
             },
             
         },

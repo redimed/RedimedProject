@@ -5,6 +5,13 @@ angular.module('app.loggedIn.timetable.directives.calendar',[])
 		restrict: 'EA',
 		templateUrl: 'modules/timetable/directives/templates/calendar.html',
 		link: function(scope, elem, attrs){
+			scope.weekDisplay={
+				0:'Weekly',
+				1:'Week 1',
+				2:'Week 2',
+				3:'Week 3',
+				4:'Week 4'
+			}
 			var load = function(){
 				TimetableModel.list({doctor_id: $stateParams.doctorId}).then(function(response){
 					scope.timetable.list = response.data;

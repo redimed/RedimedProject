@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,callModal,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,$stateParams,ConsultationService,PatientService,UserService){
+	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
@@ -9,10 +9,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		$scope.patientInfo = {};
 		$scope.companyInfo = {};
 		$scope.problemArr = [];
-
-		$scope.isMeasure = false;
-		$scope.isScript = false;
-		$scope.isCalling = false;
+		$scope.isConsult = true;
 
 		$scope.consultInfo = {
 			patient_id: $scope.patient_id,
@@ -32,36 +29,24 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			callUser: null
 		}
 
-		var checkCallInfo = null;
+		var newwin = null;
+		function popup(url) 
+		{
+			 params  = 'width='+screen.width;
+			 params += ', height='+screen.height;
+			 params += ', top=0, left=0';
+			 params += ', fullscreen=yes';
 
-		$interval.cancel(checkCallInfo);
-
-		checkCallInfo = $interval(function(){
-			refresh($scope.patient_id);
-
-			if(callModal.active())
+		 	if ((newwin == null) || (newwin.closed))
 			{
-				if(typeof $cookieStore.get('callInfo') !== 'undefined')
-					$scope.callInfo = $cookieStore.get('callInfo');
+				newwin=window.open(url,'RedimedCallingWindow', params);
+				newwin.focus();
 			}
-			else
-			{
-				if(typeof $cookieStore.get('callInfo') !== 'undefined')
-				{
-					$scope.callInfo = {
-						isCalling: null,
-						callUser: null
-					};
-					$cookieStore.remove("callInfo");
-					
-				}
-			}
-			
-		},1 * 1000);
 
-	    $scope.refreshList = function(){
-	    	refresh($scope.patient_id);
-	    }
+			if(newwin != null && !newwin.closed)
+				window.open('','RedimedCallingWindow','');
+			return false;
+		}
 
 	    refresh($scope.patient_id);
 
@@ -231,31 +216,17 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 	        $state.go(from.fromState.name,params);
 		};
 
-		$scope.submitClick = function(){
-			for(var i=0 ; i< $scope.consultInfo.measurements.length ; i++)
-			{
-				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
-				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
-			}
-
-			ConsultationService.submitConsult($scope.consultInfo).then(function(res){
-				if(res.status == 'success')
-					toastr.success("Submit Consultation Success!");
-				else
-					toastr.success("Submit Consultation Failed!");
-			})
-		};
-
 		//==================================MAKE CALL============================
+		function cancelListenerHandler(){
+			console.log("Remove Success");
+		}
 		$scope.makeCall = function(user){
-			$scope.isCalling = true;
 
-			if(callModal.active())
-            	callModal.deactivate();
+		 	socket.removeListener('generateSessionSuccess', cancelListenerHandler());
 
-			UserService.getUserInfo(user.id).then(function(data){
-                data.img = "theme/assets/icon.png";
-	            callModal.activate({callUserInfo: data, callUser: user.id, isCaller: true, opentokInfo: null, streams: null});
+			socket.emit("generateSession",$scope.userInfo.id);
+			socket.on("generateSessionSuccess",function(opentokRoom){
+				popup($state.href('call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
 			})
 	    }
 
@@ -280,6 +251,238 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		      }
 		    }
 		  };
+
+
+	  	// ======================================ITEM SHEET========================================
+	  	var arrGetBy = $filter('arrGetBy');
+        $scope.appointment = {CAL_ID: $scope.cal_id, Patient_id:  $scope.patient_id};
+
+        $scope.items_search_panel = {};
+        $scope.deptItems =  null; // DEPT ITEM LIST
+        $scope.apptItems = []; //APPT ITEM LIST
+        $scope.extraItems = [];
+
+        var isInDeptItems = function(item_id) {
+        	if($scope.deptItems.length > 0)
+        	{
+	            for(var i= 0, len = $scope.deptItems.length; i < len; ++i){
+	                var cat = $scope.deptItems[i];
+	                 for(var j= 0, len2 = cat.items.length; j < len2; ++j){
+	                    var t_item = cat.items[j];
+	                     if(item_id == t_item.ITEM_ID) {
+	                         return t_item;
+	                    }
+	                }
+	            }
+            }
+            return false;
+
+        }
+
+        // INIT INVOICE
+        PatientService.initInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+        // END INIT INVOICE 
+
+        ReceptionistService.apptDetail( $scope.appointment.CAL_ID)
+        //  GET APPOINTMENT DETAIL
+        .then(function(response){
+            if(response.status === 'success') {
+                delete response.data.Patient_id;
+                angular.extend($scope.appointment, response.data);
+
+                return PatientService.getDeptItems($scope.appointment.CLINICAL_DEPT_ID);
+            }
+        })
+        // GET ITEMS OF DEPARTMENT
+        .then(function(response){
+            if(response.status === 'success') {
+                $scope.deptItems = response.data.filter(function(item){
+                    return item.clnDeptItemList.ISENABLE;
+                });
+				
+                return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);
+            }
+        })
+        // GET ITEMS OF APPT AND GET ONLY EXTRA ITEM
+        .then(function(response){
+            if(response.status==='success'){
+                $scope.apptItems = response.data;
+                var item_id_list = [];
+		 		angular.forEach($scope.deptItems, function(cat, key) {
+                    angular.forEach(cat.items, function(item, key) {
+                        // SET DEFAULT VALUE 4 ITEM
+                        item.PRICE = 0; 
+                        item.TIME_SPENT = 0;
+                        item.QUANTITY = 1;
+                        // END SET DEFAULT VALUE 4 ITEM
+                        item_id_list.push(item.ITEM_ID);
+                    });
+                });
+                // ID LIST DEPT 
+                
+                angular.forEach($scope.apptItems, function(item){
+                    var t_item = isInDeptItems(item.ITEM_ID);
+			        if(!!t_item) {
+                        // price, quantity, time_spent 
+                        t_item.QUANTITY = item.QUANTITY;
+                        t_item.TIME_SPENT = item.TIME_SPENT;
+                        t_item.PRICE = item.PRICE;
+                        t_item.checked = item.is_enable === 1 ? '1' : '0';
+                        t_item.inserted = (t_item.checked === '1');
+                    } else { // IN EXTRA ITEMS
+                        $scope.extraItems.push(item);
+                        item_id_list.push(item.ITEM_ID);
+                        item.checked = item.is_enable === 1 ? '1' : '0';
+                        item.inserted = (item.checked === '1');
+                    }
+                });
+                return ReceptionistService.itemFeeAppt($scope.appointment.SERVICE_ID, item_id_list);
+            }
+        })
+        // GET FEE OF ITEM 
+        .then( function( response ){
+	     if(!response || !response.list) return; 
+	 		var list_fee = response.list;
+	 		angular.forEach($scope.deptItems, function(cat, key) {
+	 			angular.forEach(cat.items, function(item, key) {
+	 				var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
+	 				if(t_item && t_item.SCHEDULE_FEE > 0) {
+	 					item.PRICE = t_item.SCHEDULE_FEE;
+	 					item.disable_fee = true;
+	 				}
+	 			});
+			});
+            angular.forEach($scope.extraItems, function(item, key) {
+                var t_item = arrGetBy(list_fee, 'CLN_ITEM_ID', item.ITEM_ID);
+	 				if(t_item && t_item.SCHEDULE_FEE > 0) {
+	 					item.PRICE = t_item.SCHEDULE_FEE;
+	 					item.disable_fee = true;
+	 				}
+            });
+
+         });
+
+        /*
+        *   ITEM SEARCH
+        */
+        $scope.itemOptions = {
+            click:function(item){
+                if(item.type == 'dept_item' || item.type == 'extra_item')
+                    return;
+                
+                $scope.extraItems.push(item);
+                // SET DEFAULT VALUE 4 ITEM
+                item.QUANTITY = 1;
+                item.TIME_SPENT = 0;
+                item.checked = '1';
+                // END SET DEFAULT VALUE 4 ITEM
+                ReceptionistService.itemFeeAppt($scope.appointment.SERVICE_ID,[item.ITEM_ID]).then(function(response){
+                    if(response.list.length > 0) {
+                        item.PRICE = response.list[0].SCHEDULE_FEE
+                        item.disable_fee = true;
+                    } else {
+                         item.PRICE = 0;
+                        item.disable_fee = false;
+                    }
+                });
+            },
+            class:function(item){
+                // CHECK EXIST IN DEPT_ITEMS    
+                
+                if(!!isInDeptItems(item.ITEM_ID)) {
+                    item.type = 'dept_item';
+                    return 'danger';
+                }
+                
+                // CHECK EXIST IN EXTRA_ITEMS
+                
+                var t_item = arrGetBy($scope.extraItems, 'ITEM_ID', item.ITEM_ID);
+                if(t_item) {
+                    item.type = 'extra_item';
+                    return 'info';
+                }       
+            },
+            options:{
+                api:'api/erm/v2/items/search',
+                method:'post',
+                scope: $scope.items_search_panel,
+                columns: [
+                    {field: 'ITEM_ID', is_hide: true},
+                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+                    {field: 'ITEM_NAME', label: 'Item Name'},    
+            ],
+                use_filters:true,
+                filters:{
+                    ITEM_CODE: {type: 'text'},
+                    ITEM_NAME: {type: 'text'},
+                }
+            }
+        }
+        
+        $scope.itemSearch = {
+            is_show: false,
+            open: function(){
+                this.is_show=true;
+            },
+            close:function(){
+                this.is_show = false;
+            }
+        }
+        
+        $scope.submitClick = function(){
+        	for(var i=0 ; i< $scope.consultInfo.measurements.length ; i++)
+			{
+				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
+				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
+			}
+
+        	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
+				if(res.status == 'success')
+				{
+				 	toastr.success('Submit Consultation Success!');
+					var insertArr = []; 
+            
+		            var fnInsertArr = function(item) {
+		                 var t = {
+		                    CLN_ITEM_ID: item.ITEM_ID,
+		                    Patient_id: $scope.appointment.Patient_id,
+		                    cal_id: $scope.appointment.CAL_ID,
+		                    PRICE: item.PRICE,
+		                    TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
+		                    QUANTITY: item.QUANTITY,
+		                    is_enable: item.checked == '1' ? 1 : 0
+		                }
+		                insertArr.push(t);
+		            }
+		            
+		            if($scope.deptItems)
+		            {
+	            		angular.forEach($scope.deptItems, function(cat, key) {
+			                angular.forEach(cat.items, fnInsertArr);
+			            });
+		            }
+		            
+		            if($scope.extraItems)
+		            {
+		            	angular.forEach($scope.extraItems, fnInsertArr);
+		            }
+		            
+		            PatientService.saveItemSheet(insertArr).then(function(response){
+		                console.log(response);
+		                if(response.status === 'success'){
+		                   	toastr.success('Save Item Success!');
+		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+		                }
+		                else{
+		                    toastr.error('Save Item Failed!');
+		                }
+		            });
+				}
+				else
+					toastr.success("Submit Consultation Failed!");
+			})
+
+        }
 	})
 
 	.directive('dropzone', function () {

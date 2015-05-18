@@ -18,6 +18,14 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}//end views
 		})
+	.state('loggedIn.company.addCompanyNotFollow', {
+			url: '/addCompany',
+			views: {
+				'@loggedIn': {
+					templateUrl: 'modules/company/views/addCompanyNotFollow.html'
+				}
+			}//end views
+		})
 	.state('loggedIn.company.addParent',{
 			url:'/addParent',
 			views:{

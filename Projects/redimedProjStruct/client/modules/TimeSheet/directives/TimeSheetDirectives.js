@@ -11,5 +11,7 @@ angular.module("app.loggedIn.TimeSheet.Directives", [
     "app.loggedIn.TimeSheet.Digits.Directive",
     "app.loggedIn.TimeSheet.StepEmployee.Directive",
     "app.loggedIn.TimeSheet.ActivityDetail.Directive",
-    "angularjs-dropdown-multiselect"
+    "angularjs-dropdown-multiselect",
+    "app.loggedIn.TimeSheet.ViewLeave.Directive",
+    "app.loggedIn.TimeSheet.ApproveLeave.Directive"
 ]);

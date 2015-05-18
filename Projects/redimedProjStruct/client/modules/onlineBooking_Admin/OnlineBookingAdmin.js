@@ -30,19 +30,19 @@ angular.module('app.loggedIn.booking.admin',[
             })
 
             .state('loggedIn.admin_company_new',{
-                url:'/admin/booking/company/new',
+                url:'/admin/booking/company/new/:id',
                 templateUrl: 'modules/onlineBooking_Admin/views/addNewCompany.html',
                 controller:'AdminNewCompanyController'
             })
 
-            .state('loggedIn.admin_subCompany_new',{
-                url:'/admin/booking/company/:id/new',
-                templateUrl: 'modules/onlineBooking_Admin/views/addNewCompany.html',
-                controller:'AdminNewCompanyController'
-            })
+            // .state('loggedIn.admin_subCompany_new',{
+            //     url:'/admin/booking/company/:id/new',
+            //     templateUrl: 'modules/onlineBooking_Admin/views/addNewCompany.html',
+            //     controller:'AdminNewCompanyController'
+            // })
 
             .state('loggedIn.admin_company_edit',{
-                url:'/admin/booking/company/:id',
+                url:'/admin/booking/company/edit/:fatherId/:subId',
                 templateUrl:'modules/onlineBooking_Admin/views/addNewCompany.html',
                 controller:'AdminEditCompanyController'
             })

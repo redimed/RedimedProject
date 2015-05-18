@@ -2,13 +2,13 @@
     <ul class="page-breadcrumb">
         <li>
             <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
             <a ui-sref="loggedIn.TimeSheetGroupUser">
-                <span ng-hide='isEdit' style="font-size:15px;font-weight:bold;">Create New Timesheet</span>
-                <span ng-hide='!isEdit' style="font-size:15px;font-weight:bold;">Edit Timesheet</span>
+                <span ng-hide='isEdit'>Create New Timesheet</span>
+                <span ng-hide='!isEdit'>Edit Timesheet</span>
             </a>
             <i class="fa fa-angle-right"></i>
         </li>
@@ -16,16 +16,15 @@
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <div class="caption" style="font-size:15px; font-weight:bold;">
-            <i class="fa fa-cogs"></i>
+        <div class="caption">
             <span ng-hide='isEdit'>Create New Timesheet</span>
             <span ng-hide='!isEdit'>Edit Timesheet</span>
         </div>
         <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="checkTimeInLieu()" style="margin-top:10px;font-size:14px;">Check Time in Lieu</a>
         <a class="btn pull-right btn-xs">
-            <label for="weekFrom" style="color:white;margin-top:9px;font-size:14px;">Week From</label>
-            <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black; font-weight:bold; font-size:14px;" />
-            <input ng-disabled='isEdit' ng-show='isEdit' type="text" name="dob" ng-model="dateStart" datepicker-popup="dd-MM-yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="font-size:14px;color:black; font-weight:bold;font-family: 'inherit';" />
+            <label for="weekFrom" style="color:white;margin-top:9px;font-weight:bold;">Week From</label>
+            <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black; font-weight:bold;" />
+            <input ng-disabled='isEdit' ng-show='isEdit' type="text" name="dob" ng-model="dateStart" datepicker-popup="dd-MM-yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="color:black; font-weight:bold;font-family: 'inherit';" />
         </a>
     </div>
     <div class="portlet-body">
@@ -91,17 +90,17 @@
                         <td style="vertical-align: middle; width:130px;">{{task.date | date : 'EEE, dd MMM yyyy'}}
                         </td>
                         <td style="width:200;">
-                            <select style="font-size: 14px" ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
+                            <select ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
                                 <option value="">--Select Activity--</option>
                             </select>
                         </td>
                         <td style="width:200px;">
-                            <select style="font-size: 14px" ng-disabled='task.activity_id ===5' ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
+                            <select ng-disabled='task.activity_id ===5' ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
                                 <option value="">--Select Location--</option>
                             </select>
                         </td>
                         <td style="width:200px;">
-                            <select style="font-size: 14px" ng-disabled='task.activity_id === 5' ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
+                            <select ng-disabled='task.activity_id === 5' ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
                                 <option value="">--Select Department--</option>
                             </select>
                         </td>
@@ -110,11 +109,11 @@
                             ) && task.activity_id===1)" ng-click="chooseItem(task)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
                         </td>
                         <td style="text-align: center;width:100px;">
-                            <input ng-if="!(task.time_charge>=10000)" type="text" ng-model="task.time_charge" ui-mask="99:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center; font-size:14px;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
-                            <input ng-if="task.time_charge>=10000" type="text" ng-model="task.time_charge" ui-mask="999:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center; font-size:14px;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
+                            <input ng-if="!(task.time_charge>=10000)" type="text" ng-model="task.time_charge" ui-mask="99:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
+                            <input ng-if="task.time_charge>=10000" type="text" ng-model="task.time_charge" ui-mask="999:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
                         </td>
                         <td>
-                            <input style="font-size:14px;" type="text" class="form-control input-sm" ng-model="task.task" />
+                            <input type="text" class="form-control input-sm" ng-model="task.task" />
                         </td>
                     </tr>
                     <tr>
@@ -122,8 +121,8 @@
                             <label class="bold pull-right" style="margin-top:5px;">Total Worked Hours: </label>
                         </td>
                         <td style="width:100px;">
-                            <input ng-if="!(info.time_charge>=10000)" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="{{info.time_charge>=10000?'999:99':'99:99'}}" style="text-align:center; font-weight:bold;font-size:14px;" />
-                            <input ng-if="info.time_charge>=10000" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="999:99" style="text-align:center; font-weight:bold;font-size:14px;" />
+                            <input ng-if="!(info.time_charge>=10000)" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="{{info.time_charge>=10000?'999:99':'99:99'}}" style="text-align:center; font-weight:bold;" />
+                            <input ng-if="info.time_charge>=10000" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="999:99" style="text-align:center; font-weight:bold;" />
                         </td>
                         <td colspan="2">
                         </td>
@@ -134,13 +133,13 @@
                 <!-- BUTTON -->
                 <!-- BUTTON WHEN ADDNEW -->
                 <!-- BUTTON WHEN EDIT -->
-                <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.TimeSheetHome" style="width:70px;font-size:14px;">Cancel</a>
+                <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.TimeSheetHome" style="width:70px;margin-right:-8px;">Cancel</a>
                 <!-- END EDIT-->
-                <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheet.view" style="width:70px;font-size:14px;">Cancel</a>
-                <a class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2)" style="width:70px;font-size:14px;">Submit</a>
-                <a class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5)" style="width:70px;font-size:14px;">Re-submit</a>
-                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4)" style="width:70px;font-size:14px;">Save</a>
-                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="addAllTask(1)" style="width:70px;font-size:14px;">Save</a>
+                <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheet.view" style="width:70px;margin-right:-8px;">Cancel</a>
+                <a class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2)" style="width:70px;">Submit</a>
+                <a class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5)" style="width:70px;">Re-submit</a>
+                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4)" style="width:70px;">Save</a>
+                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="addAllTask(1)" style="width:70px;">Save</a>
                 <!-- END ADDNEW-->
                 <!-- END -->
             </footer>

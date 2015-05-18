@@ -82,7 +82,6 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
                 }
             });
 
-
         })
 
         $scope.showSubCompany = function(b){
@@ -128,25 +127,29 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         }
 
         $scope.editCompany = function(b){
-            $state.go('loggedIn.admin_company_edit',{id: b.id});
+            $state.go('loggedIn.admin_company_edit',{fatherId: b.id},{reload:true});
         }
 
         $scope.addSubCompany = function(){
 
-            $state.go('loggedIn.admin_subCompany_new',{id:$scope.selectedId})
+            $state.go('loggedIn.admin_company_new',{id:$scope.selectedId},{reload:true})
         }
 
         $scope.editSubCompany = function(a){
-            $state.go('loggedIn.admin_company_edit',{id: a.id});
+            $state.go('loggedIn.admin_company_edit',{fatherId:$scope.selectedId,subId: a.id},{reload:true});
+        }
+
+        $scope.viewPatient = function(a){
+            $state.go('loggedIn.patient.appointment',{patient_id:a.Patient_id,cal_id:1},{reload:true});
         }
 
     })
 
-.controller('AdminNewCompanyController',function($scope,$state,$stateParams,toastr,$cookieStore,OnlineBookingAdminService){
+.controller('AdminNewCompanyController',function($scope,$state,ngTableParams,$stateParams,toastr,$cookieStore,OnlineBookingAdminService){
     $scope.isEdit = false;
-        var comId;
-        if($stateParams.id !== null || $stateParams.id !== '' || typeof $stateParams.id !== 'undefined')
-            comId = $stateParams.id;
+    var comId = null;
+    if($stateParams.id !== null || $stateParams.id !== '' || typeof $stateParams.id !== 'undefined')
+        comId = $stateParams.id;
 
     $scope.info = {
         companyName:null,
@@ -201,11 +204,93 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
     }
 })
 
-.controller('AdminEditCompanyController',function($scope,$state,$stateParams,OnlineBookingService,toastr,$cookieStore,OnlineBookingAdminService){
+.controller('AdminEditCompanyController',function($scope,$filter,ngTableParams,$state,$stateParams,OnlineBookingService,toastr,$cookieStore,OnlineBookingAdminService){
     $scope.isEdit = true;
+    $scope.fatherId = ($stateParams.fatherId != null || $stateParams.fatherId != undefined) ? $stateParams.fatherId : null;
+    $scope.subId = ($stateParams.subId != null || $stateParams.subId != undefined) ? $stateParams.subId : null;
+    $scope.patientData = [];
+    $scope.data1 = [];
+
+    $scope.tableParams2 = new ngTableParams({
+        page: 1,            // show first page
+        count: 10           // count per page
+    }, {
+        total: $scope.data1.length, // length of data
+        getData: function($defer, params) {
+            var filteredData = params.filter() ?
+                $filter('filter')($scope.data1, params.filter()) :
+                $scope.data1;
+
+            var orderedData = params.sorting() ?
+                $filter('orderBy')(filteredData, params.orderBy()) :
+                $scope.data1;
+
+            params.total(orderedData.length);
+            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        }
+    });
+
+    $scope.tableParams3 = new ngTableParams({
+        page: 1,            // show first page
+        count: 10           // count per page
+    }, {
+        total: $scope.patientData.length, // length of data
+        getData: function($defer, params) {
+            var filteredData = params.filter() ?
+                $filter('filter')($scope.patientData, params.filter()) :
+                $scope.patientData;
+
+            var orderedData = params.sorting() ?
+                $filter('orderBy')(filteredData, params.orderBy()) :
+                $scope.patientData;
+
+            params.total(orderedData.length);
+            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+        }
+    });
+
+    OnlineBookingAdminService.getCompanyList().then(function(data){
+         for(var i=0 ; i<data.length; i++){
+            if(data[i].father_id == $scope.fatherId){
+                $scope.data1.push(data[i]);
+            }
+        }
+        $scope.tableParams2.reload();
+    })
+
+    OnlineBookingAdminService.getCompanyPatients($scope.fatherId == null ? $scope.subId : $scope.fatherId).then(function(rs){
+        if(rs.status == 'success')
+        {
+            $scope.patientData = rs.data;
+            for(var i=0; i<$scope.patientData.length; i++)
+            {
+                var nameArr = [];
+                nameArr.push($scope.patientData[i].Title);
+                nameArr.push($scope.patientData[i].First_name);
+                nameArr.push($scope.patientData[i].Sur_name);
+                nameArr.push($scope.patientData[i].Middle_name);
+
+                $scope.patientData[i].fullName = nameArr.join(' ');
+            }
+            $scope.tableParams3.reload();
+        }
+
+    })
+
+    $scope.addSubCompany = function(){
+        $state.go('loggedIn.admin_company_new',{id:$scope.fatherId},{reload:true})
+    }
+
+    $scope.editSubCompany = function(a){
+        $state.go('loggedIn.admin_company_edit',{fatherId:$scope.fatherId,subId: a.id},{reload:true});
+    }
+
+    $scope.viewPatient = function(a){
+        $state.go('loggedIn.patient.appointment',{patient_id:a.Patient_id,cal_id:1},{reload:true});
+    }
 
     $scope.info = {
-        id: $stateParams.id,
+        id: $scope.fatherId == null ? $scope.subId : $scope.fatherId,
         companyName:null,
         industry:null,
         addr:null,
@@ -226,11 +311,9 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
         phone: null
     };
 
-
-
-    OnlineBookingAdminService.getCompanyInfo($stateParams.id).then(function(data){
+    OnlineBookingAdminService.getCompanyInfo($scope.fatherId == null ? $scope.subId : $scope.fatherId).then(function(data){
         $scope.info = {
-            id: $stateParams.id,
+            id: $scope.fatherId == null ? $scope.subId : $scope.fatherId,
             companyName: data.Company_name,
             industry:data.Industry,
             addr:data.Addr,

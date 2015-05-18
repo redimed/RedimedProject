@@ -200,7 +200,7 @@ module.exports = {
                 treatment_plan: info.treatment,
                 diagnosis: info.diagnosis
             })
-            .success(function(){
+            .success(function(data){
                 if(info.scripts.length > 0)
                 {
                     for(var i=0; i<info.scripts.length;i++)
@@ -241,7 +241,7 @@ module.exports = {
                 }
 
                 chainer.runSerially().success(function(){
-                    res.json({status:'success'});
+                    res.json({status:'success',rs:data});
                 }).error(function(err){
                     res.json({status:'error'});
                     console.log(err);

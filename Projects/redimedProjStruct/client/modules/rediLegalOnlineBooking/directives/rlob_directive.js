@@ -1430,7 +1430,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 groupName:'@'
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_admin_local_notification_template.html',
-            controller: function ($scope,rlobService,$cookieStore,$window,Mailto)
+            controller: function ($scope,rlobService,$cookieStore,$window,Mailto,$q)
             {
                 $scope.listBookingNotification=[];
                 $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
@@ -1737,22 +1737,106 @@ angular.module("app.loggedIn.rlob.directive", [])
                 //$scope.bookingStatusChangedFlag =0;
                 $scope.rlob_change_status=function(assId,bookingId,bookingType,status)
                 {
-                    rlobService.changeBookingStatus(bookingId,status)
-                        .then(function(data){
-                            if(data.status=='success')
+                    if ($scope.selectedBooking.STATUS == $scope.bookingStatus.cancel) {
+                        rlobService.selectAppointment($scope.selectedBooking.CAL_ID).then(function(data){
+                            if (data.data.NOTES === null) 
                             {
-                                $scope.selectedBooking.STATUS=status;
-                                if(!$scope.bookingStatusChangedFlag)
-                                    $scope.bookingStatusChangedFlag=0;
-                                $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
-                                var refId=bookingId;
-                                rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                                rlobService.undoCancelBooking($scope.selectedBooking.CAL_ID,$scope.selectedBooking.PATIENT_ID).then(function(data){
+                                    if (data.status == 'success') {
+                                        rlobService.changeBookingStatus(bookingId,status)
+                                        .then(function(data){
+                                            if(data.status=='success')
+                                            {
+                                                $scope.selectedBooking.STATUS=status;
+                                                if(!$scope.bookingStatusChangedFlag)
+                                                    $scope.bookingStatusChangedFlag=0;
+                                                $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
+                                                var refId=bookingId;
+                                                rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Change booking status success.");
+                                            }
+                                            else
+                                            {
+                                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change booking status fail.");
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change booking status fail.");
+                                    };
+                                });
                             }
                             else
                             {
-
-                            }
+                                rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change booking status fail.");
+                            };
                         });
+                    }
+                    else
+                    {
+
+                        if (status == $scope.bookingStatus.cancel) 
+                        {
+                            rlobService.cancelBooking($scope.selectedBooking.CAL_ID,$scope.selectedBooking.PATIENT_ID).then(function(data){
+                                if (data.status == 'success') {
+                                    rlobService.changeBookingStatus(bookingId,status).then(function(data){
+                                        if(data.status=='success')
+                                        {
+                                            $scope.selectedBooking.STATUS=status;
+                                            if(!$scope.bookingStatusChangedFlag)
+                                                $scope.bookingStatusChangedFlag=0;
+                                            $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
+                                            var refId=bookingId;
+                                            rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Change booking status success.");
+                                        }
+                                        else
+                                        {
+                                            rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change booking status fail.");
+                                        };
+                                    });
+                                }else{
+                                    rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change booking status fail.");
+                                };
+                            });
+                        }
+                        else
+                        {
+                             rlobService.changeBookingStatus(bookingId,status).then(function(data){
+                                if(data.status=='success')
+                                {
+                                    $scope.selectedBooking.STATUS=status;
+                                    if(!$scope.bookingStatusChangedFlag)
+                                        $scope.bookingStatusChangedFlag=0;
+                                    $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
+                                    var refId=bookingId;
+                                    rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                                    rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.success,"Change booking status success.");
+                                }else{
+                                    rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Change booking status fail.");
+                                }
+                            });
+                        };
+                    };
+
+
+                    // rlobService.changeBookingStatus(bookingId,status)
+                    // .then(function(data){
+                    //     if(data.status=='success')
+                    //     {
+                    //         $scope.selectedBooking.STATUS=status;
+                    //         if(!$scope.bookingStatusChangedFlag)
+                    //             $scope.bookingStatusChangedFlag=0;
+                    //         $scope.bookingStatusChangedFlag = $scope.bookingStatusChangedFlag +1;
+                    //         var refId=bookingId;
+                    //         rlobService.add_notification(assId,refId,bookingType,rlobConstant.bellType.changeStatus,rlobConstant.notificationType.bell,status);
+                    //     }
+                    //     else
+                    //     {
+
+                    //     }
+                    // });
 
                 };
 

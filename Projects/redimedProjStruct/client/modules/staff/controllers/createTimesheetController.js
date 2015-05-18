@@ -114,6 +114,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.info.time_in_lieuFull = sumInLieu;
         $scope.info.time_temp = sum;
         $scope.info.time_charge = StaffService.convertFromFullToShow(sum);
+        //SHOW __
+        if (sum === 0) {
+            $scope.info.time_charge = null;
+        }
+        //END SHOW __
     };
     //END FUNCTION TOTAL TIME CHARGE
 
@@ -240,7 +245,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 $scope.tasks !== null &&
                 $scope.tasks.length !== 0 &&
                 $scope.tasks[0] !== undefined) {
-                $scope.dateWeekFrom = $filter('date')($scope.tasks[0].date, "dd-MM-yyyy");
+                $scope.dateWeekFrom = $filter('date')($scope.tasks[0].date, "dd/MM/yyyy");
             }
             //END SHOW
 

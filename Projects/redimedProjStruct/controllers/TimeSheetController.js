@@ -69,37 +69,38 @@ module.exports = {
                                 console.log(err);
                             });
 
-                        chainer.runSerially().success(function(result) {
-                            if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
-                                //TRACKER
-                                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                                var idTaskWeek = result[0].dataValues.tasks_week_id;
-                                var tracKer = {
-                                    statusID: info.statusID,
-                                    USER_ID: info.userID,
-                                    idTaskWeek: idTaskWeek,
-                                    date: info.date
-                                };
-                                //CALL FUNCTION TRACKER
-                                TracKerTimeSheet(tracKer);
-                                //END
-                                //END TRACKER
+                        chainer.runSerially()
+                            .success(function(result) {
+                                if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
+                                    //TRACKER
+                                    info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                    var idTaskWeek = result[0].dataValues.tasks_week_id;
+                                    var tracKer = {
+                                        statusID: info.statusID,
+                                        USER_ID: info.userID,
+                                        idTaskWeek: idTaskWeek,
+                                        date: info.date
+                                    };
+                                    //CALL FUNCTION TRACKER
+                                    TracKerTimeSheet(tracKer);
+                                    //END
+                                    //END TRACKER
 
-                                //FUNCTION SEND MAIL
-                                if (info.statusID === 2) {
-                                    SendMailSubmit(req, res, info);
+                                    //FUNCTION SEND MAIL
+                                    if (info.statusID === 2) {
+                                        SendMailSubmit(req, res, info);
+                                    }
+                                    //END SEND MAIL
                                 }
-                                //END SEND MAIL
-                            }
-                            res.json({
-                                status: 'success'
+                                res.json({
+                                    status: 'success'
+                                });
+                            }).error(function(err) {
+                                res.json({
+                                    status: 'error'
+                                });
+                                console.log(err);
                             });
-                        }).error(function(err) {
-                            res.json({
-                                status: 'error'
-                            });
-                            console.log(err);
-                        });
                     })
                     .error(function(err) {
                         res.json({
@@ -598,10 +599,10 @@ module.exports = {
                 "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
                 "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
                 "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
-                "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id`" +
+                "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id` " +
                 "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
                 "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = i.item_id " +
-                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 AND (t.time_charge!=0 OR t.activity_id=18) ORDER BY t.`tasks_id`", null, {
+                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 ORDER BY t.`tasks_id`", null, {
                     raw: true
                 }, [idWeek])
             .success(function(data) {
@@ -929,9 +930,11 @@ var SendMailSubmit = function(req, res, info) {
                                                                     '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
                                                             };
                                                             // END APPROVE
+
                                                             //CALL SEND MAIL
                                                             FunctionSendMail.sendEmail(req, res, mailOptions);
                                                             // END CALL
+
                                                             // END SEND
                                                         }
                                                     })

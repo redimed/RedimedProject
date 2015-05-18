@@ -10,7 +10,7 @@
        </div>
    </div>  
     <div class="portlet-body">
-    	<my-data-table options="invoiceOption" rowclass="invoiceClass" numrows="50"></my_data-table>
+    	<my-data-table options="invoiceOption" rowclick="invoiceClick" rowclass="invoiceClass" numrows="50"></my_data-table>
     </div>
 </div>
 
@@ -23,6 +23,6 @@
         </button>
     </div>
     <div class="clearfix" style="margin-bottom: 10px"></div>
-    <invoice-add options="options" patient="patient_id" params="invoiceParams" onsuccess="addFormInvoice.success" />
+    <invoice-add options="options" patient="patient_id" calendar="cal_id" params="invoiceParams" onsuccess="addFormInvoice.success" />
 </div>
 <!--END POPUP FORM ADD INVOICE -->
