@@ -38,7 +38,7 @@
                 ng-dblclick="$emit('changeScreenSize');">
                 <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeScreenSize');"></button>
             </ot-publisher>
-            <ot-whiteboard ng-show="showWhiteboard"
+            <!-- <ot-whiteboard ng-show="showWhiteboard"
                     patient="patientId"
                     ng-if="connected"
                     width="1280"
@@ -46,17 +46,25 @@
                     color="black"
                     lineWidth="5"
                     class="OT_big">
-            </ot-whiteboard>
+            </ot-whiteboard> -->
+
+            <medical-device ng-show="showBluetooth"
+                    ng-if="connected"
+                    class="OT_big"
+                    call-session="session">
+            </medical-device>
         </ot-layout>
-        
         <div id="facePublisher"
             ng-if="publishing">
             <ot-publisher id="facePublisher"
+                ng-dblclick="$emit('changeScreenSize');"
                 props="facePublisherProps"
                 mute-video="isVideoMuted"
                 mute-audio="isAudioMuted">
             </ot-publisher>
         </div>
+        
+
     </div>
 
     <div id="statusMessages">
@@ -67,8 +75,8 @@
         </div>
     </div>
 
-    <nav mfb-menu position="br" effect="zoomin" label="Menu"
-         active-icon="icon ion-close-round" resting-icon="icon ion-navicon-round "
+    <nav mfb-menu position="br" effect="zoomin" label="Features"
+         active-icon="icon ion-close-round" resting-icon="icon ion-cube "
          toggling-method="click">
         
         <button mfb-button 
@@ -77,19 +85,23 @@
                 icon="icon ion-android-laptop" 
                 label="Share Screen"></button>
         <button mfb-button 
-                ng-click="addPeople()"
-                icon="icon ion-person-add" 
-                label="Add User"></button>
-        <button mfb-button 
                 ng-click="toggleWhiteboard()"
                 icon="icon ion-images" 
                 label="Drawings"></button>
+        <button mfb-button 
+                ng-click="toggleBluetooth()"
+                icon="icon ion-bluetooth" 
+                label="Medical Devices"></button>
     </nav>
 
-    <nav mfb-menu position="bl" effect="zoomin" label="Control"
-         active-icon="icon ion-gear-b" resting-icon="icon ion-gear-a"
+    <nav mfb-menu position="bl" effect="zoomin" label="Menu"
+         active-icon="icon ion-close-round" resting-icon="icon ion-navicon-round"
          toggling-method="click">
-
+        
+        <button mfb-button 
+                ng-click="addPeople()"
+                icon="icon ion-person-add" 
+                label="Add User"></button>
         <button mfb-button 
                 ng-if="!isVideoMuted"
                 ng-click="muteVideo()"

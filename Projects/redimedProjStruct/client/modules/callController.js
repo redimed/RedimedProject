@@ -50,6 +50,7 @@ angular.module("app.call.controller",[
         $scope.selectingScreenSource = false;
         $scope.promptToInstall = false;
         $scope.showWhiteboard = false;
+        $scope.showBluetooth = false;
         $scope.whiteboardUnread = false;
 
         OT.registerScreenSharingExtension('chrome', 'pkakgggplhfilfbailbaibljfpalofjn');
@@ -109,7 +110,15 @@ angular.module("app.call.controller",[
                   });
                 }
             };
+            var deviceUpdated = function() {
+                if (!$scope.showBluetooth) {
+                  $scope.$apply(function() {
+                    $scope.mouseMove = true; 
+                  });
+                }
+            };
             $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
+            $scope.$on('medicalDeviceUpdate', deviceUpdated);
             if($scope.isCaller)
             {
                 audio.loop = true;
@@ -242,16 +251,45 @@ angular.module("app.call.controller",[
               });
         };
 
-        $scope.toggleWhiteboard = function() {
-            $scope.showWhiteboard = !$scope.showWhiteboard;
-            if($scope.showWhiteboard)
-                $scope.isDrag = false;
+        var newwin = null;
+        function popup(url) 
+        {
+             params  = 'width='+screen.width;
+             params += ', height='+screen.height;
+             params += ', top=0, left=0';
+             params += ', fullscreen=yes';
 
-            $scope.whiteboardUnread = false;
+            if ((newwin == null) || (newwin.closed))
+            {
+                newwin=window.open(url,'RedimedWhiteboard', params);
+                newwin.focus();
+            }
+
+            if(newwin != null && !newwin.closed)
+                window.open('','RedimedWhiteboard','');
+            return false;
+        }
+
+        $scope.toggleWhiteboard = function() {
+            // $scope.showWhiteboard = !$scope.showWhiteboard;
+            // if($scope.showWhiteboard)
+            //     $scope.isDrag = false;
+
+            // $scope.whiteboardUnread = false;
+            // setTimeout(function() {
+            //   $scope.$emit('otLayout');
+            // }, 10);
+
+            popup($state.href('whiteboard',{apiKey:apiKey,sessionId:sessionId,token: token,patientId:$scope.patientId}));
+        };
+
+        $scope.toggleBluetooth = function(){
+            $scope.showBluetooth = !$scope.showBluetooth;
+
             setTimeout(function() {
               $scope.$emit('otLayout');
             }, 10);
-        };
+        }
         
         $scope.toggleShareScreen = function() {
             if($scope.connected)
@@ -278,8 +316,6 @@ angular.module("app.call.controller",[
                 }
             }
         };
-
-        $scope.isCallGroup = false;
 
         $scope.addPeople = function(){
             if($scope.isCaller && !$scope.isAccept)
@@ -407,3 +443,127 @@ angular.module("app.call.controller",[
           disconnect();
         });
     })
+
+    .controller("whiteboardController",function($scope,OTSession,$stateParams,$window){
+        var apiKey = $stateParams.apiKey;
+        var sessionId = $stateParams.sessionId;
+        var token = $stateParams.token;
+        $scope.patientId = $stateParams.patientId;
+        $scope.mouseMove = false;
+        $scope.connected = false;
+        $scope.session = null;
+
+        if ($scope.session) {
+            $scope.session.disconnect();
+        }
+
+        OTSession.init(apiKey, sessionId, token, function (err, session) {
+            $scope.session = session;
+            var connectDisconnect = function (connected) {
+              $scope.$apply(function () {
+                  $scope.connected = connected;
+              });
+            };
+            if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+            $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
+            $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
+            var whiteboardUpdated = function() {
+              $scope.$apply(function() {
+                $scope.mouseMove = true; 
+              });
+            };
+            $scope.$on('otWhiteboardUpdate', whiteboardUpdated);
+        });
+
+        var mouseMoveTimeout;
+        var mouseMoved = function (event) {
+            if (!$scope.mouseMove) {
+                $scope.$apply(function () {
+                    $scope.mouseMove = true;
+                });
+            }
+            if (mouseMoveTimeout) {
+                clearTimeout(mouseMoveTimeout);
+            }
+            mouseMoveTimeout = setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.mouseMove = false;
+                });
+            }, 5000);
+        };
+        $window.addEventListener("mousemove", mouseMoved);
+        $window.addEventListener("touchstart", mouseMoved);
+    })
+
+    .directive('medicalDevice', function(OTSession,$window,Restangular,socket){
+        return {
+            restrict: 'E',
+            scope: {
+                callSession: '='
+            },
+            templateUrl: 'common/views/medicalDevice.html',
+            link: function(scope, element, attrs){
+                scope.onlineDevice = null;
+                scope.onlineData = null;
+                scope.session = null;
+
+                if(scope.callSession)
+                    scope.session = scope.callSession;
+                else
+                    scope.session = OTSession.session;
+
+                var signalError = function (err) {
+                  if (err) {
+                    TB.error(err);
+                  }
+                  else
+                    console.log("success");
+                };
+
+                scope.onlineDevice = "Pulse Oximeter";
+                scope.onlineData = {"sys":150,"dia":100,"bpm":86,"mmHg":119};
+
+                socket.on('getMeasureData',function(rs){
+                    if(rs.info){
+                        var data = angular.copy(rs.info);
+                        delete data['deviceType'];
+                        delete data['rawData'];
+
+                        scope.$apply(function(){
+                            scope.onlineDevice = rs.info.deviceType;
+                            scope.onlineData = data;
+                        })
+
+                        var signal = {
+                            type: 'bluetooth_data',
+                            data: rs.info
+                        };
+                        scope.session.signal(signal, signalError);
+                    }
+                })
+
+                if (scope.session) {
+                    scope.session.on({
+                        'signal:bluetooth_data': function (event) {
+                            if (event.from.connectionId !== scope.session.connection.connectionId) {
+                                var info = event.data;
+                                if(info)
+                                {
+                                    var rs = angular.copy(info);
+                                    delete rs['deviceType'];
+                                    delete rs['rawData'];
+
+                                    scope.$apply(function(){
+                                        scope.onlineDevice = info.deviceType;
+                                        scope.onlineData = rs;
+                                    })
+
+                                }
+                                scope.$emit('medicalDeviceUpdate');
+                            }
+                        }
+                    });
+                }
+            }
+        };
+    });

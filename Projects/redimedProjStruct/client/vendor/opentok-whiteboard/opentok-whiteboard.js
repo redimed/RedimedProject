@@ -14,6 +14,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
         restrict: 'E',
         scope: {
             patient:'=',
+            callSession: '='
         },
         template: '<canvas></canvas>' + 
 
@@ -49,6 +50,13 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 batchUpdates = [],
                 iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
 
+
+            scope.session = null;
+            if(scope.callSession)
+                scope.session = scope.callSession;
+            else
+                scope.session = OTSession.session;
+
             var host = location.hostname;
             var port = location.port;
             scope.treeArr = [];
@@ -77,6 +85,14 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 }
             })
 
+            var signalError = function (err) {
+              if (err) {
+                TB.error(err);
+              }
+              else
+                console.log("success");
+            };
+
             scope.selectNodeCB = function(e){
                 var idArr = String(e.target.id).split('_');
                 var id = idArr[0];
@@ -89,10 +105,16 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                             var img = new Image;
                             img.onload = function() {
                                 ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
-                            }
+                            };
                             img.src = rs.data;
                         }
                     })
+
+                    var signal = {
+                        type: 'otWhiteboard_image',
+                        data: {imgId: id}
+                    };
+                    scope.session.signal(signal, signalError);
                 }
             }
             
@@ -131,8 +153,8 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
             
             scope.clear = function () {
                 clearCanvas();
-                if (OTSession.session) {
-                    OTSession.session.signal({
+                if (scope.session) {
+                    scope.session.signal({
                         type: 'otWhiteboard_clear'
                     });
                 }
@@ -148,12 +170,6 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 if(scope.patient != null)
                 {
                     var imgData = canvas.toDataURL('image/png');
-
-                    var signalError = function (err) {
-                      if (err) {
-                        TB.error(err);
-                      }
-                    };
                         
                     Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, imgData: imgData}).then(function(rs){
                         if(rs.status == 'success')
@@ -162,7 +178,8 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                                 type: 'shareImage',
                                 data: {id: rs.id}
                             };
-                            OTSession.session.signal(signal, signalError);
+                            scope.session.signal(signal, signalError);
+
                         }
                     })
                 }
@@ -195,11 +212,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 // We send data in small chunks so that they fit in a signal
                 // Each packet is maximum ~250 chars, we can fit 8192/250 ~= 32 updates per signal
                 var dataCopy = data.slice();
-                var signalError = function (err) {
-                  if (err) {
-                    TB.error(err);
-                  }
-                };
+             
                 while(dataCopy.length) {
                     var dataChunk = dataCopy.splice(0, Math.min(dataCopy.length, 32));
                     var signal = {
@@ -207,13 +220,13 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                         data: JSON.stringify(dataChunk)
                     };
                     if (toConnection) signal.to = toConnection;
-                    OTSession.session.signal(signal, signalError);
+                    scope.session.signal(signal, signalError);
                 }
             };
             
             var updateTimeout;
             var sendUpdate = function (update) {
-                if (OTSession.session) {
+                if (scope.session) {
                     batchUpdates.push(update);
                     if (!updateTimeout) {
                         updateTimeout = setTimeout(function () {
@@ -256,8 +269,8 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 case 'touchmove':
                     if (client.dragging) {
                         var update = {
-                            id: OTSession.session && OTSession.session.connection &&
-                                OTSession.session.connection.connectionId,
+                            id: scope.session && scope.session.connection &&
+                                scope.session.connection.connectionId,
                             fromX: client.lastX,
                             fromY: client.lastY,
                             toX: x,
@@ -279,10 +292,10 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 }
             });
             
-            if (OTSession.session) {
-                OTSession.session.on({
+            if (scope.session) {
+                scope.session.on({
                     'signal:otWhiteboard_update': function (event) {
-                        if (event.from.connectionId !== OTSession.session.connection.connectionId) {
+                        if (event.from.connectionId !== scope.session.connection.connectionId) {
                             drawUpdates(JSON.parse(event.data));
                             scope.$emit('otWhiteboardUpdate');
                         }
@@ -297,13 +310,28 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                         }
                     },
                     'signal:otWhiteboard_clear': function (event) {
-                        if (event.from.connectionId !== OTSession.session.connection.connectionId) {
+                        if (event.from.connectionId !== scope.session.connection.connectionId) {
                             clearCanvas();
+                        }
+                    },
+                    'signal:otWhiteboard_image': function(event) {
+                        if (event.from.connectionId !== scope.session.connection.connectionId) {
+                        Restangular.one('api/consultation/draw/template',event.data.imgId).get().then(function(rs){
+                                if(rs.status == 'success')
+                                {
+                                    var img = new Image;
+                                    img.onload = function() {
+                                        ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                                    };
+                                    img.src = rs.data;
+                                    scope.$emit('otWhiteboardUpdate');
+                                }
+                            })
                         }
                     },
                     connectionCreated: function (event) {
                         if (drawHistory.length > 0 && event.connection.connectionId !==
-                                OTSession.session.connection.connectionId) {
+                                scope.session.connection.connectionId) {
                             batchSignal('otWhiteboard_history', drawHistory, event.connection);
                         }
                     }

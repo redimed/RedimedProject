@@ -180,6 +180,16 @@ angular.module("app", [
             }
         })
 
+        .state('whiteboard',{
+            url: '/whiteboard/:apiKey/:sessionId/:token/:patientId',
+            views: {
+                "root": {
+                    templateUrl: "common/views/whiteboard.html",
+                    controller: 'whiteboardController'
+                }
+            }
+        })
+
 
         /* END */
     })

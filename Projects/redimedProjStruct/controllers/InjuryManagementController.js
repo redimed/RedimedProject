@@ -160,10 +160,6 @@ module.exports = {
         var injury_part = req.body.injury_part;
         var description = req.body.description;
 
-         console.log("=========================Injury ID:",injury_id);
-          console.log("=========================injury_part:",injury_part);
-          console.log("=========================description:",description);
-
         if(typeof injury_id !== 'undefined')
         {
               var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
