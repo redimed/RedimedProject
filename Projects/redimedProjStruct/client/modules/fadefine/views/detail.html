@@ -130,7 +130,8 @@
 									<h3 class="form-section">Image</h3>
 										<div class="row">
 											<div class="col-md-12 col-sm-12 col-xs-12">
-												<button class="btn btn-default" ng-click="openModal()"><i class="fa fa-file-image-o"></i> Select line image</button>
+												<button class="btn btn-default" ng-click="openModal(line)"><i class="fa fa-file-image-o"></i> Select line image</button>
+												<img ng-src="{{line.previewPath}}" style="width: 10%; heigth: 10%;" ng-show="line.PICTURE !== null"/>
 											</div>
 										</div>
 										
@@ -157,7 +158,8 @@
 														<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
 													</div>
 													<div>
-														<button class="btn btn-default" ng-click="openModal()"><i class="fa fa-file-image-o"></i> Select detail image</button>
+														<button class="btn btn-default" ng-click="openModal(detail)"><i class="fa fa-file-image-o"></i> Select detail image</button><br/>
+														<img ng-src="{{detail.previewPath}}" style="width: 50%; heigth: 50%;" ng-show="detail.PICTURE !== null"/>
 													</div>
 												</td>
 												<td>

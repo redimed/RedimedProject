@@ -106,15 +106,15 @@ angular.module("app.loggedIn.staff.service", [])
 
     //thanh
     service.convertShowToFull = function(time_charge) {
-        if (time_charge !== undefined && time_charge !== null) {
+        if (time_charge !== undefined && time_charge !== null && !(isNaN(time_charge)) && time_charge !== 0 && time_charge.length !== 0) {
             var hours = 0;
             var minutes = 0;
             if (time_charge.length < 5) {
-                minutes = parseInt(time_charge.toString().substr(2, 2));
                 hours = parseInt(time_charge.toString().substr(0, 2));
+                minutes = parseInt(time_charge.toString().substr(2, 2));
             } else {
-                minutes = parseInt(time_charge.toString().substr(3, 2));
                 hours = parseInt(time_charge.toString().substr(0, 3));
+                minutes = parseInt(time_charge.toString().substr(3, 2));
             }
             return (parseInt(hours * 60) + parseInt(minutes));
         } else {
@@ -194,7 +194,7 @@ angular.module("app.loggedIn.staff.service", [])
                 var $input = $(input);
                 var date = $input.datepicker('getDate');
                 var firstDay = $input.datepicker("option", "firstDay");
-                $input.datepicker("option", "dateFormat", "dd-mm-yy");
+                $input.datepicker("option", "dateFormat", "dd/mm/yy");
                 $input.datepicker('option', 'firstDay', 1);
                 if (date !== null) {
                     var dayAdjustment = date.getDay() - firstDay;

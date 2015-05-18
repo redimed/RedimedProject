@@ -63,6 +63,11 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 							section.lines=lineRes.data;
 							//get details and comment of lines
 							section.lines.forEach(function(line){
+								if(line.PICTURE!==null){
+									var strarr = line.PICTURE.split("\\");
+									var fileName = strarr[strarr.length-1];
+									line.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
+								} 
 								line.action = 'edit';
 								FaDefineService.getDetailsAndComments(line.LINE_ID).then(function(detailAndCommentRes){
 									if(detailAndCommentRes.status === 'error'){
@@ -74,6 +79,11 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 										line.comments = detailAndCommentRes.data.comments;
 										line.details.forEach(function(detail){
 											detail.action = 'edit';
+											if(line.PICTURE!==null){
+												var strarr = detail.PICTURE.split("\\");
+												var fileName = strarr[strarr.length-1];
+												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
+											} 
 										})
 										line.comments.forEach(function(comment){
 											comment.action = 'edit'
@@ -122,6 +132,11 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 								line.Creation_date = null;
 								line.Last_updated_by = null; 
 								line.Last_update_date = null;
+								if(line.PICTURE!==null){
+									var strarr = line.PICTURE.split("\\");
+									var fileName = strarr[strarr.length-1];
+									line.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
+								} 
 								FaDefineService.getDetailsAndComments(lineId).then(function(detailAndCommentRes){
 									if(detailAndCommentRes.status === 'error'){
 										$scope.header={};
@@ -137,6 +152,11 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 											detail.Creation_date = null;
 											detail.Last_updated_by = null; 
 											detail.Last_update_date = null;
+											if(line.PICTURE!==null){
+												var strarr = detail.PICTURE.split("\\");
+												var fileName = strarr[strarr.length-1];
+												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
+											}
 										})
 										line.comments.forEach(function(comment){
 											comment.FA_COMMENT_ID = null;
@@ -466,6 +486,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 					for(var j = 0; j < header.sections[i].lines.length; j++){
 						header.sections[i].lines[j].ORD = j+1;
+						if(header.sections[i].lines[j].previewPath) delete header.sections[i].lines[j].previewPath;
 						if($scope.isEdit===false) header.sections[i].lines[j].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 						else {
 							if(header.sections[i].lines[j].Creation_date=== '') header.sections[i].lines[j].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
@@ -476,9 +497,11 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 							if(j === header.sections[i].lines.length - 1 && i === header.sections.length-1) resolve(header);
 							else continue;
 						}
+
 						else{
 							for(var k = 0; k<header.sections[i].lines[j].details.length; k++){
 								header.sections[i].lines[j].details[k].ORD = k+1;
+								if(header.sections[i].lines[j].details[k].previewPath) delete header.sections[i].lines[j].details[k].previewPath;
 								if($scope.isEdit===false) header.sections[i].lines[j].details[k].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 								else {
 									if(header.sections[i].lines[j].details[k].Creation_date=== '') header.sections[i].lines[j].details[k].Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
@@ -496,7 +519,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		})
 	}
 
-	$scope.openModal = function(){
+	$scope.openModal = function(data){
         var modalInstance = $modal.open({
           animation: true,
           templateUrl: 'modules/fadefine/views/imageModal.html',
@@ -508,5 +531,13 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
           //   }
           // }
         });
+
+        modalInstance.result.then(function (selectedImg) {
+	    	data.PICTURE = selectedImg.realPath;
+	    	if(selectedImg.previewPath && selectedImg.previewPath!==null && selectedImg.previewPath!=="") data.previewPath = selectedImg.previewPath;
+	    	else delete data.previewPath;
+	    });
     }
+
+
 });

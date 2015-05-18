@@ -23,21 +23,30 @@ module.exports = {
         var infoH = req.body.infoH;
         var infoD = req.body.infoD;
         var infoC = req.body.infoC;
+        var FA_ID = 11;
         var max;
 
-        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
-            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
+        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s where s.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
+            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l where l.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
                 db.sequelize.query("INSERT INTO `cln_fa_df_line_details` SELECT ?,?,d.* FROM `sys_fa_df_line_details` d",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
-                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
+                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h where h.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
                         db.sequelize.query("INSERT INTO `cln_fa_df_comments` SELECT ?,?,c.* FROM `sys_fa_df_comments` c",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
                             submitFA(res,infoH,infoL,infoD,infoC);
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
                         });
+                    }).error(function(err){
+                        res.json({status:'error'});
                     });
+                }).error(function(err){
+                    res.json({status:'error'});
                 });
+            }).error(function(err){
+                res.json({status:'error'});
             });
         }).error(function(err){
             res.json({status:'error'});
-            console.log(err);
         });
     },
 
@@ -73,18 +82,19 @@ module.exports = {
 
     checkRating : function(req,res){
         var gender = req.body.gender;
+        if(gender==='1') gender="Male";
+        else gender="Female";
         var age = req.body.age;
         var value = req.body.value;
         var id = req.body.id;
-        db.sequelize.query("SELECT r.`RATE`, r.`VALUE` FROM `sys_rankings` r WHERE r.`HEADER_ID`=? AND r.`FROM_AGE` <= ? AND" +
-            " r.`TO_AGE` >= ? AND r.`FROM_VALUE` <= ? AND r.`TO_VALUE` >= ? AND r.`GENDER` =  ?;",null,{raw:true},[id,age,age,value,value,gender])
+        db.sequelize.query("SELECT r.`RATE`, r.`VALUE` FROM `sys_rankings` r WHERE r.`HEADER_ID`=? AND (? BETWEEN r.`FROM_AGE` AND r.`TO_AGE`) AND (? BETWEEN r.`FROM_VALUE` AND r.`TO_VALUE`) AND r.`GENDER` =  ?;",null,{raw:true},[id,age,value,gender])
             .success(function(data){
                 if(data == null)
                 {
                     res.json({status:'fail'});
                 }else
                 {
-                    res.json(data);
+                    res.json({status:'success', data:data});
                 }
             })
             .error(function(err){
@@ -176,6 +186,7 @@ var loadNewFA = function(res){
 };
 
 var submitFA = function(res,infoH,infoL,infoD,infoC){
+    console.log("run in here");
     sequelize.transaction(function(t) {
         db.HeaderFA.update({
             ENTITY_ID: infoH.ENTITY_ID ,

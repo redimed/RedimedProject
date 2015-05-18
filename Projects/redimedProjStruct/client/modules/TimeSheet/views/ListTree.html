@@ -3,23 +3,23 @@
     <ul class="page-breadcrumb">
         <li>
             <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px; font-weight:bold;">e-Timesheets</a>
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.AdminTimeSheet" style="font-size:15px; font-weight:bold;">Administrator</a>
+            <a ui-sref="loggedIn.AdminTimeSheet">Administrator</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.TimeSheetGroupUser" style="font-size:15px; font-weight:bold;">Trees</a>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">Trees</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn btn-xs blue pull-right" style="margin-top:10px; font-size:14px;" ui-sref="loggedIn.ListFunction">Define tree</a>
-        <div class="caption" style="font-size:14px; font-weight:bold;">
+        <a class="btn btn-xs blue pull-right" style="margin-top:10px;" ui-sref="loggedIn.ListFunction">Define tree</a>
+        <div class="caption">
             <i class="fa fa-cogs"></i>List of tree
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
@@ -63,14 +63,14 @@
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
-                        <td colspan="4 " style="font-size:14px;">
+                        <td colspan="4 ">
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="goToListNode(l.GROUP_ID)">
-                        <td class="btn btn-xs" style="text-align:left; font-size:14px;">{{l.GROUP_NAME || " " }}</td>
-                        <td class="btn btn-xs" style="text-align:left; font-size:14px;">{{(l.DECRIPTION === "" || l.DECRIPTION === null)?"Not Decription":l.DECRIPTION}}</td>
-                        <td class="btn btn-xs" style="text-align:left; font-size:14px;">{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.GROUP_NAME || " " }}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{(l.DECRIPTION === "" || l.DECRIPTION === null)?"Not Decription":l.DECRIPTION}}</td>
+                        <td class="btn btn-xs" style="text-align:left;">{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -78,11 +78,11 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                            <span class="bold custom-timesheet" style="font-size:14px;">Total: {{list.count}}</span>
-                            <span class="custom-timesheet" style="font-size:14px;">Show</span>
+                            <span class="bold custom-timesheet">Total: {{list.count}}</span>
+                            <span class="custom-timesheet">Show</span>
                             <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
                             </select>
-                            <span class="custom-timesheet" style="font-size:14px;">entries per page</span>
+                            <span class="custom-timesheet">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>

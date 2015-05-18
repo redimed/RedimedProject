@@ -2,19 +2,19 @@
     <ul class="page-breadcrumb">
         <li>
             <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.TimeSheetHome" style="font-size:15px;font-weight:bold;">e-Timesheets</a>
+            <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.TimeSheetGroupUser" style="font-size:15px;font-weight:bold;">Approve and Manage Timesheets</a>
+            <a ui-sref="loggedIn.TimeSheetGroupUser">Approve and Manage Timesheets</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <div class="caption" style="font-size:14px;font-weight:bold;">
-            <i class="fa fa-cogs"></i>List of Timesheets
+        <div class="caption">
+            List of Timesheets
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
@@ -25,26 +25,26 @@
             <table class="responsive table table-bordered" ng-show="!list.loading">
                 <thead ng-show="list.result!==null">
                     <tr>
-                        <th>
-                            <div class="th" style="width:100px;">
+                        <th style="width:200px;">
+                            <div class="th">
                                 Employee
                             </div>
                         </th>
-                        <th>
-                            <div class="th" style="width:150px;">
+                        <th style="width:200px;">
+                            <div class="th">
                                 <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
                             </span>
                                 <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
                             </span> For The Week
                             </div>
                         </th>
-                        <th>
-                            <div class="th" style="width:200px;">
+                        <th style="width:150px;">
+                            <div class="th">
                                 Total Worked Hours
                             </div>
                         </th>
-                        <th>
-                            <div class="th" style="width:150px;">
+                        <th style="width:200px;">
+                            <div class="th">
                                 Status
                             </div>
                         </th>
@@ -57,37 +57,37 @@
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <td style="width:100px;">
-                            <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="loadList()" style="font-size:14px;">
+                        <td style="width:200px;">
+                            <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="loadList()">
                         </td>
-                        <td style="width:150px;"></td>
                         <td style="width:200px;"></td>
-                        <td style="width:150px;">
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="loadList()" style="font-size:14px;">
+                        <td style="width:150px;"></td>
+                        <td style="width:200px;">
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="loadList()">
                             </select>
                         </td>
                         <td></td>
                     </tr>
                     <tr ng-show="list.result===null">
-                        <td colspan="5 " style="font-size:14px;">
+                        <td colspan="5 ">
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; font-size:14px;" ng-dblclick="viewTask(l.task_week_id)">
-                        <td style="text-align:left;font-size:14px;width:100px;">
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer;" ng-dblclick="viewTask(l.task_week_id)">
+                        <td style="text-align:left;width:200px;">
                             {{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}
                         </td>
-                        <td style="text-align:left;font-size:14px;width:150px;">
-                            <span class="text-info">{{l.start_date|date:"dd-MM-yyyy"}}</span> to <span class="text-info">{{l.end_date|date:"dd-MM-yyyy"}}</span>
+                        <td style="text-align:left;width:200px;">
+                            <span class="text-info">{{l.start_date|date:"dd/MM/yyyy"}}</span> to <span class="text-info">{{l.end_date|date:"dd/MM/yyyy"}}</span>
                         </td>
-                        <td style="font-size:14px;width:200px; text-align:center;">
+                        <td style="width:150px; text-align:center;">
                             {{l.time_charge | customHours}}
                         </td>
-                        <td style="text-align:left;font-size:14px;width:150px;">
+                        <td style="text-align:left;width:200px;">
                             <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{(l.name===null || l.name===" ")?" ":(l.name==='Submitted'?"Awaiting for Approve":l.name)}}</span>
                         </td>
-                        <td style="text-align:left;font-size:14px;">
+                        <td style="text-align:left;">
                             {{(l.comments===null||l.comments==="")?"":l.comments}}
                         </td>
                     </tr>
@@ -98,11 +98,11 @@
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
                             <div class="input-group ">
-                                <span class="custom-timesheet " style="font-size:14px;">Total: {{list.count}}</span>
-                                <span class="custom-timesheet " style="font-size:14px;">Show</span>
-                                <select class="custom-timesheet " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px; font-size:14px;">
+                                <span class="custom-timesheet ">Total: {{list.count}}</span>
+                                <span class="custom-timesheet ">Show</span>
+                                <select class="custom-timesheet " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
                                 </select>
-                                <span class="custom-timesheet " style="font-size:14px;">entries per page</span>
+                                <span class="custom-timesheet ">entries per page</span>
                             </div>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
