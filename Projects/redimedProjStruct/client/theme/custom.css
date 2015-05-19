@@ -1294,7 +1294,7 @@ table.timetable-table td:last-child {
 }
 
 .appointment .appointment-block-time {
-    width: 100px;
+    width: 40px;
 }
 
 .appointment .appointment-block {
