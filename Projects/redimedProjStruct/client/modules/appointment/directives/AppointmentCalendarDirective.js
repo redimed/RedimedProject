@@ -309,6 +309,18 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						var diff = scope.differentTimeHours(begin_from_time, begin_to_time);
 
 						scope.appointment.new_list.push(scope.appointment.list[i]);
+
+						var new_list_length = scope.appointment.new_list.length;
+						var j = 0;
+						_.forEach(scope.appointment.new_list[new_list_length-1].doctors, function(doctor){
+							if(typeof doctor.CAL_ID !== 'undefined'){
+								for(var line = 0; line < j; line++)
+									scope.appointment.new_list[new_list_length-1].doctors[line].border = 'yes';
+								return;
+							}
+							j++;
+						})
+
 						for(var diff_i = 15; diff_i <= diff-15; diff_i+=15){
 							var from_time = scope.extendMinutes(scope.appointment.list[i].FROM_TIME, diff_i);
 							begin_from_time = from_time;
@@ -317,6 +329,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var doc_i = 0;
 							_.forEach(temp_doctors, function(doctor){
 								temp_doctors[doc_i].PATIENTS = '###';
+								temp_doctors[doc_i].border = 'no';
 								doc_i++;
 							})
 
@@ -331,23 +344,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 					var i = 0;
 					_.forEach(scope.appointment.list, function(list){
-						/*var check_all_doctor = true;
-						var j_temp = 0;
-						_.forEach(list.doctors, function(doctor){
-							var k_temp = 0;
-							_.forEach(doctor_array_temp, function(temp){
-								if(doctor.PATIENTS !== '###'){
-									var temp_doctor_array_left = doctor_array_temp[k_temp].left_temp;
-									temp_doctor_array_left = doctor_array_temp[k_temp].left-min_calendar;
-									if(temp_doctor_array_left !== 0){
-										check_all_doctor = false;
-									}
-								}
-								k_temp++;
-							})
-							j_temp++;
-						})*/
-
 						var j = 0;
 						_.forEach(list.doctors, function(doctor){
 							var k = 0;

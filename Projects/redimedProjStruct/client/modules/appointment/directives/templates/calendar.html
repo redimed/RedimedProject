@@ -2,16 +2,19 @@
 	<h3>Notification List</h3>
 	<hr>
 	<span ng-repeat="list in alertCenter.list">
-		<h4 ng-if="(list.IS_REFERRAL && list.outreferral_id === 'no')">
+		<h4 ng-if="list.alert.length > 0 || list.cal.length > 0">
 			{{list.First_name}} {{list.Sur_name}}
-			({{list.FROM_TIME}} - {{list.TO_TIME}})
 		</h4>
-		<!--<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+		<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
 			<li>{{alert.name}}</li>
-		</ul>-->
-		<p ng-if="list.IS_REFERRAL">
-			<b ng-if="list.outreferral_id === 'no'">There is no referral. Please make referral</b>
+		</ul>
+		<p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+			<span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'">
+				{{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+				There is no referral
+			</span>
 		</p>
+		
 	</span>
 </div>
 <div class="bv-arrow" ng-click="clickArrow()"></div>
@@ -64,12 +67,12 @@
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)"
-				ng-style="{'background-color': '{{col.SERVICE_COLOR}}'}">
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height ? col.height: '30px', 'border-top': col.border === 'yes' ? '1px dotted #37424A': '0px'}">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
 				<span ng-if="col.PATIENTS === '###'">
-					{{col.PATIENTS}}
+					
 				</span>
 				<span ng-if="col.PATIENTS === 'ok'">
 					<span ng-repeat="patient in col.patients">
@@ -105,13 +108,13 @@
 <!-- END RIGHT CLICK DROPDOWN MENU -->
 
 <script type="text/ng-template" id="appointmentAdd">
-	<div class="modal-body">	
+	<div class="modal-body">
 		<appointment-add params="appointment" patient="patient" options="options"></appointment-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="patientAdd">
-	<div style="background-color: rgb(23, 20, 76)!important;" class="modal-body">
+	<div class="modal-body">
 		<patient-detail options="options" params="params" onsuccess="onsuccess" patient="onsuccess"></patient-detail>
 	</div>
 </script>
@@ -177,13 +180,13 @@
 
 <script type="text/ng-template" id="referralAdd">
 	<div class="modal-body">	
-		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success">
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
 		</outreferral-patient-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="referralSelect">
-	<div class="modal-body">	
+	<div class="modal-body">
 		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
 			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
 			permission="{edit: false, remove: false, add: true}">
