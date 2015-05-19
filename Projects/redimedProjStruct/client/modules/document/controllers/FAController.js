@@ -428,7 +428,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }else
             {
                 if (insert == true) {
-                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
+                    console.log($scope.infoH);
+                    console.log($scope.infoL);
+                    console.log($scope.infoD);
+                    console.log($scope.infoC);
+                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC,FA_ID).then(function(response){
                         if(response['status'] === 'success') {
                             toastr.success("Successfully","Success");
                             $state.go('loggedIn.FA', null, {'reload': true});
