@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by tannv.dts@gmail.com on 9/29/2014.
  */
 
@@ -1430,7 +1430,7 @@ angular.module("app.loggedIn.rlob.directive", [])
                 groupName:'@'
             },
             templateUrl: 'modules/rediLegalOnlineBooking/directives/rlob_admin_local_notification_template.html',
-            controller: function ($scope,rlobService,$cookieStore,$window,Mailto)
+            controller: function ($scope,rlobService,$cookieStore,$window,Mailto,$q)
             {
                 $scope.listBookingNotification=[];
                 $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;
