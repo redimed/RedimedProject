@@ -39,7 +39,7 @@ var clientDir = path.join(__dirname, 'client');
 var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 var documentImage = path.join(__dirname, 'download/documentImage/');
 
-app.set('port', process.env.PORT || 443);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.enable('trust proxy');
@@ -186,9 +186,9 @@ db.sequelize
         if (err) {
             throw err[0];
         } else {
-            http.createServer(httpApp).listen(httpApp.get('port'), function() {
-                console.log('Express HTTP server listening on port ' + httpApp.get('port'));
-            });
+            // http.createServer(httpApp).listen(httpApp.get('port'), function() {
+            //     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
+            // });
              
             httpsServer.listen(app.get('port'), function() {
                 console.log('Express HTTPS server listening on port ' + app.get('port'));
