@@ -55,6 +55,9 @@ module.exports = {
 
 	postFaChooseSearch: function(req,res){
 		var postData = req.body;
+		console.log('this is postData', postData);
+		var patient_id = postData.search.patient_id;
+		var cal_id = postData.search.cal_id;
 
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
@@ -73,6 +76,15 @@ module.exports = {
 		.from('sys_fa_df_headers')
 		.where('FA_NAME','like','%'+whereClause.FA_NAME+'%')
 		.andWhere('TYPE','like','%'+whereClause.TYPE+'%')
+		.whereNotIn( 'FA_ID',
+			knex
+			.select('FA_ID')
+			.from('cln_fa_df_headers')
+			.where({
+				PATIENT_ID: patient_id,
+				CAL_ID: cal_id
+			})
+		)
 		.orderBy('FA_ID','desc')
 		.limit(limit)
 		.offset(offset)
@@ -82,6 +94,15 @@ module.exports = {
 		.count("FA_ID as count")
 		.where('FA_NAME','like','%'+whereClause.FA_NAME+'%')
 		.andWhere('TYPE','like','%'+whereClause.TYPE+'%')
+		.whereNotIn( 'FA_ID',
+			knex
+			.select('FA_ID')
+			.from('cln_fa_df_headers')
+			.where({
+				PATIENT_ID: patient_id,
+				CAL_ID: cal_id
+			})
+		)
 		.toString();
 
 		db.sequelize.query(sql)
