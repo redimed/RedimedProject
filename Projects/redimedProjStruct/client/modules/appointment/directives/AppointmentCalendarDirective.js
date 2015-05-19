@@ -313,11 +313,11 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						var new_list_length = scope.appointment.new_list.length;
 						var j = 0;
 						_.forEach(scope.appointment.new_list[new_list_length-1].doctors, function(doctor){
-							if(typeof doctor.CAL_ID !== 'undefined'){
-								for(var line = 0; line < j; line++)
-									scope.appointment.new_list[new_list_length-1].doctors[line].border = 'yes';
-								return;
-							}
+							//if(typeof doctor.CAL_ID !== 'undefined'){
+								//for(var line = 0; line < j; line++)
+									scope.appointment.new_list[new_list_length-1].doctors[j].border = 'yes';
+								//return;
+							//}
 							j++;
 						})
 
@@ -329,7 +329,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var doc_i = 0;
 							_.forEach(temp_doctors, function(doctor){
 								temp_doctors[doc_i].PATIENTS = '###';
-								temp_doctors[doc_i].border = 'no';
+								//temp_doctors[doc_i].border = 'no';
 								doc_i++;
 							})
 
