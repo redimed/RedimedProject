@@ -1,0 +1,26 @@
+<div style="width: 100%; height: 100%"> 
+    <div style="text-align: center;">
+        <label style="font-size: 50px;font-weight: bold;color:rgb(255, 184, 0);font-family: sans-serif;">
+            ONLINE DATA
+        </label>
+    </div>
+	<div style="text-align: center;" ng-if="onlineDevice">
+        <label style="font-size: 40px;font-weight: bold;">
+            {{onlineDevice}}
+        </label>
+    </div>
+    <br/>
+    <br/>
+    <div ng-if="onlineData">;
+        <table width="100%">
+            <tr style="text-align: center;" ng-repeat = "(key,val) in onlineData">
+                <td style="width: 50%">
+                    <span style="font-size: 70px; font-weight: lighter; color:rgb(255, 184, 0)">{{key | uppercase}}</span>
+                </td>
+                <td style="width: 50%">
+                    <span style="font-size: 70px; font-weight: bold; color: #0AF903">{{val | uppercase}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div> 

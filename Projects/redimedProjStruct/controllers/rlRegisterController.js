@@ -353,6 +353,7 @@ module.exports =
             company_id:updateInfo.company_id,
             COMPANY_STATE:updateInfo.COMPANY_STATE,
             IS_ACCESS_REPORTS_ONLINE:updateInfo.IS_ACCESS_REPORTS_ONLINE,
+            IS_MEDICO_LEGAL_MASTER:updateInfo.IS_MEDICO_LEGAL_MASTER,
             HAVE_BELL:updateInfo.HAVE_BELL,
             HAVE_LETTER:updateInfo.HAVE_LETTER,
             HAVE_CALENDAR:updateInfo.HAVE_CALENDAR,

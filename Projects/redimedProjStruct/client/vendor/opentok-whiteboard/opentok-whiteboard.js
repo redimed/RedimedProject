@@ -8,10 +8,14 @@
  *  @License: Released under the MIT license (http://opensource.org/licenses/MIT)
 **/
 
-var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
-.directive('otWhiteboard', ['OTSession', '$window', function (OTSession, $window) {
+var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restangular','toastr'])
+.directive('otWhiteboard', ['OTSession', '$window','$http','Restangular','toastr', function (OTSession, $window, $http,Restangular,toastr) {
     return {
         restrict: 'E',
+        scope: {
+            patient:'=',
+            callSession: '='
+        },
         template: '<canvas></canvas>' + 
 
             '<div class="OT_panel">' +
@@ -23,11 +27,16 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             '<input type="button" ng-click="erase()" ng-class="{OT_erase: true, OT_selected: erasing}"' +
             ' value="Eraser"></input>' +
 
-            '<input type="file" onchange="angular.element(this).scope().uploadImage(this.files)" class="OT_upload" value="Upload"></input>' +
+            // '<input type="file" onchange="angular.element(this).scope().uploadImage(this.files)" class="OT_upload" value="Upload"></input>' +
             
             '<input type="button" ng-click="capture()" class="OT_capture" value="{{captureText}}"></input>' +
 
-            '<input type="button" ng-click="clear()" class="OT_clear" value="Clear"></input>',
+            '<input type="button" ng-click="clear()" class="OT_clear" value="Clear"></input>' +
+            '</div>' +
+
+            '<div class="OT_explorer">' +
+            '<js-tree tree-data="scope" tree-model="treeArr" tree-events="dblclick:selectNodeCB"></js-tree>' +
+            '</div>',
 
         link: function (scope, element, attrs) {
             var canvas = element.context.querySelector("canvas"),
@@ -41,13 +50,73 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 batchUpdates = [],
                 iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
 
+
+            scope.session = null;
+            if(scope.callSession)
+                scope.session = scope.callSession;
+            else
+                scope.session = OTSession.session;
+
+            var host = location.hostname;
+            var port = location.port;
+            scope.treeArr = [];
+
             scope.colors = [{'background-color': 'black'},
                             {'background-color': 'blue'},
                             {'background-color': 'red'}];
-            scope.captureText = iOS ? 'Email' : 'Capture';
+            scope.captureText = "Share";
 
             canvas.width = attrs.width || element.width();
             canvas.height = attrs.height || element.height();
+
+            Restangular.one('api/consultation/draw/templates').get().then(function(rs){
+                if(rs.status == 'success')
+                {
+                    for(var i=0; i<rs.data.length;i++)
+                    {
+                        var node = rs.data[i];
+                        scope.treeArr.push({
+                                    "id": node.id,
+                                    "parent": node.parent == null ? '#' : node.parent,
+                                    "text": node.fileName,
+                                    "icon": node.isFolder == 1 ? 'fa fa-folder icon-state-warning' : 'fa fa-file icon-state-success'
+                                })
+                    }
+                }
+            })
+
+            var signalError = function (err) {
+              if (err) {
+                TB.error(err);
+              }
+              else
+                console.log("success");
+            };
+
+            scope.selectNodeCB = function(e){
+                var idArr = String(e.target.id).split('_');
+                var id = idArr[0];
+                if(id != null && typeof id !== 'undefined' && id != '')
+                {
+
+                    Restangular.one('api/consultation/draw/template',id).get().then(function(rs){
+                        if(rs.status == 'success')
+                        {
+                            var img = new Image;
+                            img.onload = function() {
+                                ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                            };
+                            img.src = rs.data;
+                        }
+                    })
+
+                    var signal = {
+                        type: 'otWhiteboard_image',
+                        data: {imgId: id}
+                    };
+                    scope.session.signal(signal, signalError);
+                }
+            }
             
             var clearCanvas = function () {
                 ctx.save();
@@ -84,8 +153,8 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             
             scope.clear = function () {
                 clearCanvas();
-                if (OTSession.session) {
-                    OTSession.session.signal({
+                if (scope.session) {
+                    scope.session.signal({
                         type: 'otWhiteboard_clear'
                     });
                 }
@@ -98,13 +167,23 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
             };
             
             scope.capture = function () {
-                if (iOS) {
-                    // On iOS you can put HTML in a mailto: link
-                    window.location.href = "mailto:?subject=Whiteboard&Body=<img src='" + canvas.toDataURL('image/png') + "'>";
-                } else {
-                    // We just open the image in a new window
-                    window.open(canvas.toDataURL('image/png'));
+                if(scope.patient != null)
+                {
+                    var imgData = canvas.toDataURL('image/png');
+                        
+                    Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, imgData: imgData}).then(function(rs){
+                        if(rs.status == 'success')
+                        {
+                            var signal = {
+                                type: 'shareImage',
+                                data: {id: rs.id}
+                            };
+                            scope.session.signal(signal, signalError);
+
+                        }
+                    })
                 }
+                
             };
 
             var draw = function (update) {
@@ -133,11 +212,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 // We send data in small chunks so that they fit in a signal
                 // Each packet is maximum ~250 chars, we can fit 8192/250 ~= 32 updates per signal
                 var dataCopy = data.slice();
-                var signalError = function (err) {
-                  if (err) {
-                    TB.error(err);
-                  }
-                };
+             
                 while(dataCopy.length) {
                     var dataChunk = dataCopy.splice(0, Math.min(dataCopy.length, 32));
                     var signal = {
@@ -145,13 +220,13 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                         data: JSON.stringify(dataChunk)
                     };
                     if (toConnection) signal.to = toConnection;
-                    OTSession.session.signal(signal, signalError);
+                    scope.session.signal(signal, signalError);
                 }
             };
             
             var updateTimeout;
             var sendUpdate = function (update) {
-                if (OTSession.session) {
+                if (scope.session) {
                     batchUpdates.push(update);
                     if (!updateTimeout) {
                         updateTimeout = setTimeout(function () {
@@ -194,8 +269,8 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 case 'touchmove':
                     if (client.dragging) {
                         var update = {
-                            id: OTSession.session && OTSession.session.connection &&
-                                OTSession.session.connection.connectionId,
+                            id: scope.session && scope.session.connection &&
+                                scope.session.connection.connectionId,
                             fromX: client.lastX,
                             fromY: client.lastY,
                             toX: x,
@@ -217,10 +292,10 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                 }
             });
             
-            if (OTSession.session) {
-                OTSession.session.on({
+            if (scope.session) {
+                scope.session.on({
                     'signal:otWhiteboard_update': function (event) {
-                        if (event.from.connectionId !== OTSession.session.connection.connectionId) {
+                        if (event.from.connectionId !== scope.session.connection.connectionId) {
                             drawUpdates(JSON.parse(event.data));
                             scope.$emit('otWhiteboardUpdate');
                         }
@@ -235,13 +310,28 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok'])
                         }
                     },
                     'signal:otWhiteboard_clear': function (event) {
-                        if (event.from.connectionId !== OTSession.session.connection.connectionId) {
+                        if (event.from.connectionId !== scope.session.connection.connectionId) {
                             clearCanvas();
+                        }
+                    },
+                    'signal:otWhiteboard_image': function(event) {
+                        if (event.from.connectionId !== scope.session.connection.connectionId) {
+                        Restangular.one('api/consultation/draw/template',event.data.imgId).get().then(function(rs){
+                                if(rs.status == 'success')
+                                {
+                                    var img = new Image;
+                                    img.onload = function() {
+                                        ctx.drawImage(img, (canvas.width - img.width) / 2, (canvas.height - img.height) / 2);
+                                    };
+                                    img.src = rs.data;
+                                    scope.$emit('otWhiteboardUpdate');
+                                }
+                            })
                         }
                     },
                     connectionCreated: function (event) {
                         if (drawHistory.length > 0 && event.connection.connectionId !==
-                                OTSession.session.connection.connectionId) {
+                                scope.session.connection.connectionId) {
                             batchSignal('otWhiteboard_history', drawHistory, event.connection);
                         }
                     }

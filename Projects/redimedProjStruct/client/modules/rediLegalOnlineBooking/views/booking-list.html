@@ -77,6 +77,11 @@
                             <rlob-order-by field-name="DOCUMENT_STATUS" startup-direct="NO_SORT" rlob-model="searchInfo.orderBy" ng-click="sortBy()" current-field-sort="currentFieldSort" ></rlob-order-by>
                         </th>
 
+                        <th ng-show="loginInfo.IS_MEDICO_LEGAL_MASTER==1">
+                            Assignment by
+                            
+                        </th>
+
                         <th>
                             
                         </th>
@@ -124,6 +129,10 @@
                                 <option value="">--Select All--</option>
                             </select>
                         </td>
+
+                         <td ng-show="loginInfo.IS_MEDICO_LEGAL_MASTER==1">
+                           
+                        </td>
                         <td>
                             <button type="button" class="btn btn-primary" ng-click="reset();">Reset</button>
                         </td>
@@ -140,6 +149,7 @@
                         <td>{{l.Rl_TYPE_NAME}}</td>
                         <td>{{l.STATUS}}</td>
                         <td>{{documentStatusDisplay[l.DOCUMENT_STATUS]}}</td>
+                        <td ng-show="loginInfo.IS_MEDICO_LEGAL_MASTER==1">{{l.ASS_USER_NAME}}</td>
                         <td>
                             <!--action-->
                             <div  class="btn-group dropdown pull-right pull-right"  ng-click="clickActionMenu(l.BOOKING_ID);">

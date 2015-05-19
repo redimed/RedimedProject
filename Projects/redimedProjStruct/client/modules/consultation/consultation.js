@@ -20,6 +20,6 @@ angular.module("app.loggedIn.consult", [
                 }
             }
         })
-        
+
            
     })

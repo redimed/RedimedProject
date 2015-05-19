@@ -23,21 +23,30 @@ module.exports = {
         var infoH = req.body.infoH;
         var infoD = req.body.infoD;
         var infoC = req.body.infoC;
+        var FA_ID = 11;
         var max;
 
-        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
-            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
+        db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s where s.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
+            db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l where l.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
                 db.sequelize.query("INSERT INTO `cln_fa_df_line_details` SELECT ?,?,d.* FROM `sys_fa_df_line_details` d",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
-                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
+                    db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM  `sys_fa_df_headers` h where h.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
                         db.sequelize.query("INSERT INTO `cln_fa_df_comments` SELECT ?,?,c.* FROM `sys_fa_df_comments` c",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID]).success(function(){
                             submitFA(res,infoH,infoL,infoD,infoC);
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
                         });
+                    }).error(function(err){
+                        res.json({status:'error'});
                     });
+                }).error(function(err){
+                    res.json({status:'error'});
                 });
+            }).error(function(err){
+                res.json({status:'error'});
             });
         }).error(function(err){
             res.json({status:'error'});
-            console.log(err);
         });
     },
 
@@ -55,14 +64,15 @@ module.exports = {
     checkFA: function(req,res){
         var Patient_Id = req.body.PatientID;
         var CalId = req.body.calID;
-        db.HeaderFA.find({where:{PATIENT_ID:Patient_Id,CAL_ID : CalId}})
+        var FA_ID = req.body.fa_id;
+        db.HeaderFA.find({where:{PATIENT_ID:Patient_Id,CAL_ID : CalId, FA_ID: FA_ID}})
             .success(function(data){
                 if(data == null)
                 {
-                    loadNewFA(res);
+                    loadNewFA(res, FA_ID);
                 }else
                 {
-                    loadFA(res,Patient_Id,CalId);
+                    loadFA(res,Patient_Id,CalId, FA_ID);
                 }
             })
             .error(function(err){
@@ -73,18 +83,19 @@ module.exports = {
 
     checkRating : function(req,res){
         var gender = req.body.gender;
+        if(gender==='1') gender="Male";
+        else gender="Female";
         var age = req.body.age;
         var value = req.body.value;
         var id = req.body.id;
-        db.sequelize.query("SELECT r.`RATE`, r.`VALUE` FROM `sys_rankings` r WHERE r.`HEADER_ID`=? AND r.`FROM_AGE` <= ? AND" +
-            " r.`TO_AGE` >= ? AND r.`FROM_VALUE` <= ? AND r.`TO_VALUE` >= ? AND r.`GENDER` =  ?;",null,{raw:true},[id,age,age,value,value,gender])
+        db.sequelize.query("SELECT r.`RATE`, r.`VALUE` FROM `sys_rankings` r WHERE r.`HEADER_ID`=? AND (? BETWEEN r.`FROM_AGE` AND r.`TO_AGE`) AND (? BETWEEN r.`FROM_VALUE` AND r.`TO_VALUE`) AND r.`GENDER` =  ?;",null,{raw:true},[id,age,value,gender])
             .success(function(data){
                 if(data == null)
                 {
                     res.json({status:'fail'});
                 }else
                 {
-                    res.json(data);
+                    res.json({status:'success', data:data});
                 }
             })
             .error(function(err){
@@ -135,28 +146,34 @@ var loadFA = function(res,idP, idC){
             })})
 };
 
-var loadNewFA = function(res){
+var loadNewFA = function(res, fa_id){
     var data = [];
     sequelize.transaction(function(t) {
-        db.sysHeaderFA.findAll({where : {ISENABLE : 1}},{transaction: t})
+        db.sysHeaderFA.findAll({where : {ISENABLE : 1, FA_ID: fa_id}},{transaction: t})
             .success(function(dataH){
-                db.sysSectionFA.findAll({where : {ISENABLE : 1}, order : 'ORD'},{transaction: t})
+                db.sysSectionFA.findAll({where : {ISENABLE : 1, FA_ID: fa_id}, order : 'ORD'},{transaction: t})
                     .success(function(dataS){
-                        db.sysLineFA.findAll({where : {ISENABLE : 1}, order : 'ORD'},{transaction: t})
+                        var sectionID_arr = [];
+                        for(var k=0; k<dataS.length; k++){
+                            sectionID_arr.push(dataS[k].SECTION_ID);
+                        }
+                        db.sysLineFA.findAll({where : {ISENABLE : 1, FA_ID:fa_id, SECTION_ID:{in:sectionID_arr}}, order : 'ORD'},{transaction: t})
                             .success(function(dataL){
+                                var lineID_arr=[];
                                 for(var i=0; i<dataL.length; i++) {
                                     if (dataL[i].PICTURE != null) {
                                         dataL[i].PICTURE = base64Image(dataL[i].PICTURE);
                                     }
+                                    lineID_arr.push(dataL[i].LINE_ID);
                                 }
-                                db.sysDetailFA.findAll({where : {ISENABLE : 1}, order : 'ORD'},{transaction: t})
+                                db.sysDetailFA.findAll({where : {ISENABLE : 1, LINE_ID:{in:lineID_arr}}, order : 'ORD'},{transaction: t})
                                     .success(function(dataD){
                                         for(var i=0; i<dataD.length; i++) {
                                             if (dataD[i].PICTURE != null) {
                                                 dataD[i].PICTURE = base64Image(dataD[i].PICTURE);
                                             }
                                         }
-                                        db.sysCommentFA.findAll({where : {ISENABLE : 1}},{transaction: t})
+                                        db.sysCommentFA.findAll({where : {ISENABLE : 1,LINE_ID:{in:lineID_arr}}},{transaction: t})
                                             .success(function(dataC){
                                                 t.commit().success(function() {
                                                     data = [{"Header": dataH, "Section" : dataS,"Line": dataL,"Detail" : dataD,"Comment" : dataC}];
@@ -176,6 +193,7 @@ var loadNewFA = function(res){
 };
 
 var submitFA = function(res,infoH,infoL,infoD,infoC){
+    console.log("run in here");
     sequelize.transaction(function(t) {
         db.HeaderFA.update({
             ENTITY_ID: infoH.ENTITY_ID ,

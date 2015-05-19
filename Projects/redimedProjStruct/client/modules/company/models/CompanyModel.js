@@ -18,6 +18,10 @@ angular.module("app.loggedIn.company.models", [])
         var instanceApi = mainApi.all('add');
         return instanceApi.post({data: data});
     }
+    instanceService.addCompanyNotFollow = function(data){
+        var instanceApi = mainApi.all('addCompanyNotFollow');
+        return instanceApi.post({data: data});
+    }
     instanceService.listParent = function(data){
         var instanceApi = mainApi.all('listParent');
         return instanceApi.post({data: data});

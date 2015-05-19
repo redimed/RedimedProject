@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.company.directives.listNotFollow', [])
 
-.directive('listCompanyNotfollow', function(CompanyModel, $filter,$state){
+.directive('listCompanyNotfollow', function(CompanyModel, $filter,$state,$stateParams){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/listNotFollowPatient.html',
@@ -8,7 +8,8 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 			options: '=',
 			limit: '@',
 			onRowClick: '&',
-			listId:'='
+			listId:'=',
+			actionCenter:'='
 		},
 	    link: function(scope, elem, attrs){
 			var setPage = function(page){

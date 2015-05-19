@@ -37,6 +37,7 @@ var httpsServer = https.createServer(ssl_options,app);
 
 var clientDir = path.join(__dirname, 'client');
 var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
+var documentImage = path.join(__dirname, 'download/documentImage/');
 
 app.set('port', process.env.PORT || 443);
 app.set('views', path.join(__dirname, 'views'));
@@ -72,6 +73,7 @@ app.get('/',function(req, res) {
 
 
 app.use('/img/patient/avt', express.static(uploadedFile));
+app.use('/document/fa/images', express.static(documentImage));
 /**
  * K Library
  */

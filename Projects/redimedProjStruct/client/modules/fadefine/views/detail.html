@@ -3,13 +3,16 @@
 <form name="wafirstform" novalidate>
 		<!-- This is for header -->
 		<div class="row" align="center">
-			<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="col-md-10 col-sm-10 col-xs-10">
 				<input type="text" style="font-size: 18pt; font-weight: bolder; text-align: center;" class="form-control" value="Untitled Functional Assessment Header" ng-model="header.FA_NAME"/>
+			</div>
+			<div class="col-md-2 col-sm-2 col-xs-2">
+				<input type="text" style="font-size: 18pt; font-weight: bolder; text-align: center;" class="form-control" value="Untitled Functional Assessment Header" placeholder="FA Type" ng-model="header.TYPE"/>
 			</div>
 		</div>
 
 	    <!-- This is for sections -->
-	    <div ng-repeat="section in header.sections">
+	    <div ng-repeat="section in header.sections" ng-hide="section.action==='delete'">
 	    	<!-- <div ng-drop="true"  class="seperate-section">
 		    	
 		    </div> -->
@@ -31,7 +34,7 @@
 				</div>
 				<div class="portlet-body">
 					<!-- This is for lines -->
-					<div ng-drop="true" class="portlet box blue-hoki" ng-repeat="line in section.lines">
+					<div ng-drop="true" class="portlet box blue-hoki" ng-repeat="line in section.lines" ng-hide="line.action==='delete'">
 						<div class="portlet-title">
 							<div class="caption" style="width:50%;">
 								<input color="white" class="form-control" type="text" value="Untitled line" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:12pt;" width="100%" ng-model="line.QUESTION">
@@ -107,21 +110,31 @@
 											</div>
 										</div>
 									<h3 class="form-section">General definition</h3>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText" ng-checked="line.IsCommentsText===1"/> Has comment text?
-											</label>
+										<div class="row">
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+														<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IsCommentsText" ng-checked="line.IsCommentsText===1"/> Has comment text?
+												</label>
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+														<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.LineType" ng-checked="line.LineType===1"/> Is in summary line?
+												</label>
+											</div>
+											<div class="col-md-4 col-sm-4 col-xs-4">
+												<label>
+														<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE" ng-checked="line.IS_SHOW_RANKING_TABLE===1"/> Is showing ranking table?
+												</label>
+											</div>
 										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.LineType" ng-checked="line.LineType===1"/> Is in summary line?
-											</label>
+									<h3 class="form-section">Image</h3>
+										<div class="row">
+											<div class="col-md-12 col-sm-12 col-xs-12">
+												<button class="btn btn-default" ng-click="openModal(line)"><i class="fa fa-file-image-o"></i> Select line image</button>
+												<img ng-src="{{line.previewPath}}" style="width: 10%; heigth: 10%;" ng-show="line.PICTURE !== null"/>
+											</div>
 										</div>
-										<div class="col-md-4 col-sm-4 col-xs-4">
-											<label>
-													<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="line.IS_SHOW_RANKING_TABLE" ng-checked="line.IS_SHOW_RANKING_TABLE===1"/> Is showing ranking table?
-											</label>
-										</div>
+										
 								</accordion-group>
 								<accordion-group heading="Line detail questions">
 						    		<table class="table table-bordered table-hover">
@@ -139,9 +152,15 @@
 										</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="detail in line.details">
+											<tr ng-repeat="detail in line.details" ng-hide="detail.action==='delete'">
 												<td width="20%">
-													<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
+													<div>
+														<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
+													</div>
+													<div>
+														<button class="btn btn-default" ng-click="openModal(detail)"><i class="fa fa-file-image-o"></i> Select detail image</button><br/>
+														<img ng-src="{{detail.previewPath}}" style="width: 50%; heigth: 50%;" ng-show="detail.PICTURE !== null"/>
+													</div>
 												</td>
 												<td>
 													<div class="col-md-7 col-xs-7 col-sm-7">
@@ -219,7 +238,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="comment in line.comments">
+											<tr ng-repeat="comment in line.comments" ng-hide="comment.action==='delete'">
 												<td>
 													<input type="text" class="form-control" value="Comment name 1" ng-model="comment.NAME"/>
 												</td>
@@ -256,7 +275,8 @@
 				
 			</div>
 			<div class="col-md-2 col-sm-2 col-xs-2">
-				<button type="button" class="btn green btn-lg" ng-click="addFaDefinition()"><i class="fa fa-plus"></i> Add definition</button>
+				<button type="button" class="btn green btn-lg" ng-click="addFaDefinition()" ng-show="isEdit===false"><i class="fa fa-plus"></i> Add definition</button>
+				<button type="button" class="btn green btn-lg" ng-click="editDefinition()" ng-show="isEdit===true"><i class="fa fa-pencil"></i> Edit definition</button>
 			</div>
 		</div>
 </form>

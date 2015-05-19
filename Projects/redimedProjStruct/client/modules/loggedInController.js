@@ -2,12 +2,11 @@ angular.module("app.loggedIn.controller",[
 ])
 
 
-.controller("callDialogController",function($scope,callModal, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom){
+.controller("callDialogController",function($scope,callModal, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
         audio.play();
-
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type == 'cancel')
             {
@@ -40,7 +39,26 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-            callModal.activate({callUserInfo: userInfo, callUser: userInfo.id, isCaller: false, opentokInfo: opentokRoom});
+            popup($state.href("call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+        }
+
+        var newwin = null;
+        function popup(url) 
+        {
+             params  = 'width='+screen.width;
+             params += ', height='+screen.height;
+             params += ', top=0, left=0';
+             params += ', fullscreen=yes';
+
+            if ((newwin == null) || (newwin.closed))
+            {
+                newwin=window.open(url,'RedimedCallingWindow', params);
+                newwin.focus();
+            }
+
+            if(newwin != null && !newwin.closed)
+                window.open('','RedimedCallingWindow','');
+            return false;
         }
 
     })
@@ -75,11 +93,15 @@ angular.module("app.loggedIn.controller",[
         socket.removeAllListeners();
     })
 
+    function cancelListenerHandler(){
+        console.log("Remove Success");
+    }
+
+    socket.removeListener('messageReceived', cancelListenerHandler());
+
     socket.on("messageReceived",function(fromId,fromUser,message){
-        console.log("=====receive message=====",message);
         if(message.type == 'call')
         {
-            
             UserService.getUserInfo(fromId).then(function(data){
                 if(data)
                 {
@@ -114,6 +136,9 @@ angular.module("app.loggedIn.controller",[
                                             token: message.token
                                         }
                                     return opentokRoom;
+                                },
+                                patientId: function(){
+                                    return message.patientId;
                                 }
                             },
                             backdrop: 'static',

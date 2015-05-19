@@ -16,5 +16,6 @@ angular.module('app.loggedIn.company.include',[
 	'app.loggedIn.company.services',
 	'app.loggedIn.company.directives.listNotFollow',
 	'app.loggedIn.company.controllers.listNotFollow',
-	'app.loggedIn.company.dialog.listNoFollow'
+	'app.loggedIn.company.dialog.listNoFollow',
+	'app.loggedIn.company.directives.addCompanyNotFollow'
 ])

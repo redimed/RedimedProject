@@ -2,7 +2,9 @@ angular.module('starter.bluetooth.mainBlueController',[])
 
     .controller('mainBlueController', function($scope, localStorageService, $http, BluetoothServices, $ionicLoading, $ionicPopup, signaling) {
 
-        $scope.isLoad = true;
+        document.addEventListener("deviceready", function() {
+            bluetooth.enable();
+        })
         $scope.checkdataReviceStatus = false;
         $scope.disableList = false;
 
@@ -169,13 +171,29 @@ angular.module('starter.bluetooth.mainBlueController',[])
         }
 
         function onErrorConn(result) {
+            $scope.isLoad = false;
             if(result.code == 9) {
                 $scope.popupMessage = { message: "Connection error, please check your devices!" };
                 $ionicPopup.show({
                     templateUrl: "modules/popup/PopUpError.html",
-                    scope: $scope
+                    scope: $scope,
+                    buttons : [
+                        {
+                            text: "Ok"
+                        }
+                    ]
                 });
-                $scope.isLoad = false;
+            } else if(result.code == 0) {
+                $scope.popupMessage = { message: "Connection error, please pair device before use" };
+                $ionicPopup.show({
+                    templateUrl: "modules/popup/PopUpError.html",
+                    scope: $scope,
+                    buttons : [
+                        {
+                            text: "Ok"
+                        }
+                    ]
+                });
             }
             console.log('Connection Error ', result);
         }

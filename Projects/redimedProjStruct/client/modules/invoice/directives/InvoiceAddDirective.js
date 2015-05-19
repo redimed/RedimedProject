@@ -8,6 +8,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			options: '=',
 			params: '=',
 			patient: '=',
+			calendar: '=',
 			onsuccess: '='
 		},
 		templateUrl: 'modules/invoice/directives/templates/add.html',
@@ -50,7 +51,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 					})
 
 					// LOAD CLAIM 
-					$scope.patientClaim.options.search.Patient_id = item.Patient_id;
+					// $scope.patientClaim.options.search.Patient_id = item.Patient_id;
 			 		$scope.patientClaimPanel.reload();
 				}
 			}
@@ -115,8 +116,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 	                    {field: 'Insurer'} ,
 	                    {field: 'insurer_site', is_hide: true}
 	                ],
-	                not_load: true,
-	                search: {}
+	                not_load: false,
+	                search: {Patient_id: $scope.patient}
 	            },   
 			}
 
@@ -196,7 +197,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
             	})
 			}
 
-
+			if($scope.calendar) 
+				$scope.InvoiceMap.cal_id = $scope.calendar;
 
 			/*
 			*	FUNCTION 

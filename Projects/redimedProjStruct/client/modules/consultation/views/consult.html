@@ -1,27 +1,6 @@
 <style>
-    .consult-modal-window .modal-dialog {
-      width: 900px;
-    }
-    
     a {
         text-decoration: inherit;
-    }
-
-     .prog-wrapper{
-        position: relative !important;
-        margin:20px auto !important;
-        font-size: 40px !important;
-    }
-
-    .prog{
-        position: absolute !important;
-        width: 100% !important;
-        height: 100% !important;
-        line-height: 6em !important;
-        font-size:33px !important;
-        text-align: center !important;
-        color: #bbb !important;
-        font-weight: 100 !important;
     }
 </style>
 <h3 class="page-title">Consultation</h3>
@@ -45,7 +24,7 @@
         </li> 
     </ul>
 </div>
-<div class="row">
+ <div class="row">
     <div class="col-md-6 col-sm-6">
         <a  href="javascript:;" style="width: 120px" ng-click="backClick()" class="btn btn-circle purple-plum pull-right btn-md">
             <i class="glyphicon glyphicon-backward"></i> &nbsp; Back
@@ -53,7 +32,7 @@
     </div>
     <div class="col-md-6 col-sm-6">
         <a href="javascript:;" ng-click="submitClick()" style="width: 120px" class="btn btn-circle btn-info pull-left btn-md">
-            <i class="fa fa-check"></i> &nbsp; Submit
+               <i class="glyphicon glyphicon-ok"></i> &nbsp; Submit
         </a>
     </div>
 </div>
@@ -63,11 +42,6 @@
         <div class="caption ">
             <i class="icon-home"></i>
             <span class="caption-subject uppercase">Company Information</span>
-        </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="refreshList()" class="btn btn-icon-only btn-circle grey-cascade">
-             <i class="fa fa-refresh"></i>
-            </a>
         </div>
     </div>
     <div class="portlet-body">
@@ -107,7 +81,7 @@
             </div>
             <div class="col-md-10 col-sm-10" >
                 <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
-                    <a ng-class="{disabled : startCall}" ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
+                    <a ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
                         <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
                     </a>
                 </span>
@@ -215,14 +189,19 @@
                     Scripts
                 </a>
             </li>
-            <li>
+           <!--  <li>
                 <a href="index.html#tab_1_4" data-toggle="tab">
                     Drawings / Sharing
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="index.html#tab_1_5" data-toggle="tab">
                     Medical Devices
+                </a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_6" data-toggle="tab">
+                    Item Sheet
                 </a>
             </li>
         </ul>
@@ -536,7 +515,7 @@
                     </table>
                 </div>
             </div>
-            <div class="tab-pane" id="tab_1_4">
+            <!-- <div class="tab-pane" id="tab_1_4">
                 <div ng-if="callInfo.isCalling"  class='row'>
                     <div class="col-md-12 col-sm-12">
                         <div dropzone="dropzoneConfig" class="dropzone"></div>
@@ -555,125 +534,163 @@
                         </consult-drawing>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="tab-pane" id="tab_1_5">
-                <div ng-controller="BluetoothController" class="tabbable-custom nav-justified">
-                    <ul class="nav nav-tabs nav-justified">
-                        <li class="active">
-                            <a href="bluetooth.html#tab_1_1_1" data-toggle="tab">
-                                <i class="fa fa-history"></i> &nbsp;&nbsp;&nbsp;
-                                Medical History</a>
-                        </li>
-                        <li>
-                            <a href="bluetooth.html#tab_1_1_2" data-toggle="tab">
-                                <i class="fa fa-database"></i>&nbsp;&nbsp;&nbsp;
-                                Online Data</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1_1_1">
-                            <div class="row">
-                                <div ng-click="showHistory(device)" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
-                                    <a href="javascript:;" style="margin-bottom: 20 !important"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
-                                        <div class="visual">
-                                            <i class="{{device.icon}}"></i>
-                                        </div>
-                                        <div class="details">
-                                            <div class="number" style="font-size: 26px;">
-                                                {{device.device_name}}
-                                            </div>
-                                        </div>
-                                    </a>
+                <div ng-controller="BluetoothController">
+                    <div class="row">
+                        <div ng-click="showHistory(device)" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
+                            <a href="javascript:;" style="margin-bottom: 20 !important"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
+                                <div class="visual">
+                                    <i class="{{device.icon}}"></i>
                                 </div>
-                            </div>
-                            <div ng-if="currDevice"  class="portlet blue-chambray box">
-                                <div class="portlet-title">
-                                    <div class="caption ">
-                                        <i class="icon-list"></i>
-                                        <span class="caption-subject uppercase">Device: {{currDevice}}</span>
+                                <div class="details">
+                                    <div class="number" style="font-size: 26px;">
+                                        {{device.device_name}}
                                     </div>
                                 </div>
-                                <div class="portlet-body">
-                                    <div ng-if="haveData" class="row" style="text-align: center;">
-                                        <span>
-                                            <label style="font-weight: bold;">Measure data from</label>
-                                            &nbsp;&nbsp;
-                                            <input style="cursor: pointer;" type="text" callback="changeHistory(historyDates)" date-range-picker ng-model="historyDates"/>
-                                            <!-- &nbsp;&nbsp;
-                                            <a href="javascript:;"  ng-click="changeHistory(historyDates)" class="btn btn-circle btn-icon-only blue">
-                                                <i class="fa fa-refresh"></i>
-                                            </a> -->
-                                        </span>
-                                    </div>
-                                    <flot ng-if="haveData" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
-                                    <br ng-if="haveData"/>
-                                    <div ng-if="!haveData" class="row" style="text-align: center;">
-                                        <span style="font-size: 20px; font-style: italic; font-weight: bold;"> 
-                                            Empty Data
-                                        </span>
-                                    </div>
-                                    <div ng-if="haveData" class="table-scrollable" id="content">
-                                        <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
-                                            <tr ng-repeat="f in $data track by $index ">
-                                                <td style="text-align:center" width="30%;" data-title="'Patient Name'">
-                                                    <label>{{f.FullName}}</label>
-                                                </td>
-                                                <td style="text-align:center" width="20%;" data-title="'Measure Date'" sortable="'measure_date'" >
-                                                    <label>{{f.measure_date | date:'dd/MM/yyyy - hh:mm a'}}</label>
-                                                </td>
-                                                <td style="text-align:center" width="30%" data-title="'Measure Data'" >
-                                                    <label ng-repeat="(key,val) in f.jsonData">
-                                                        {{key | uppercase}}:{{val}} 
-                                                        &nbsp;&nbsp;
-                                                    </label>
-                                                </td>
-                                                <td style="text-align:center" width="20%" data-title="'Notes'" >
-                                                    <label></label>
-                                                    <a onaftersave="updateMeasure(f)" href="#" editable-text="f.notes">
-                                                        {{ f.notes || 'Empty' }}
-                                                    </a>
-                                                </td>
-                                            </tr>
-
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                            </a>
                         </div>
-                        <div class="tab-pane" id="tab_1_1_2">
-                            <div class="row">
-                                <div class="row" style="text-align: center;">
-                                    <label style="font-size: 30px;font-weight: bold;">
-                                        {{onlineDevice  }}
-                                    </label>
-                                </div>
-                                <div class="row" >
-                                    <div ng-repeat = "(key,val) in onlineData" style="text-align: center;" class="col-md-6">
-                                        <div class="prog-wrapper" style="font-size: 33px;">
-                                            <div class="prog">{{val == null || val == '' ? 0 : val}}</div>
-                                            <div
-                                                round-progress
-                                                max="100"
-                                                current="{{val == null || val == '' ? 0 : val}}"
-                                                color="#F2404E"
-                                                bgcolor="#eaeaea"
-                                                radius="100"
-                                                stroke="15"
-                                                semi="true"
-                                                rounded="true"
-                                                iterations="50"
-                                                animation="easeOutCubic"></div>
-                                        </div>
-                                        <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">{{key | uppercase}}</span>
-                                    </div>
-                                    
-                                </div>
+                    </div>
+                    <div ng-if="currDevice"  class="portlet blue-chambray box">
+                        <div class="portlet-title">
+                            <div class="caption ">
+                                <i class="icon-list"></i>
+                                <span class="caption-subject uppercase">Device: {{currDevice}}</span>
                             </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div ng-if="haveData" class="row" style="text-align: center;">
+                                <span>
+                                    <label style="font-weight: bold;">Measure data from</label>
+                                    &nbsp;&nbsp;
+                                    <input style="cursor: pointer;" type="text" callback="changeHistory(historyDates)" date-range-picker ng-model="historyDates"/>
+                                </span>
+                            </div>
+                            <flot ng-if="haveData" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
+                            <br ng-if="haveData"/>
+                            <div ng-if="!haveData" class="row" style="text-align: center;">
+                                <span style="font-size: 20px; font-style: italic; font-weight: bold;"> 
+                                    Empty Data
+                                </span>
+                            </div>
+                            <div ng-if="haveData" class="table-scrollable" id="content">
+                                <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
+                                    <tr ng-repeat="f in $data track by $index ">
+                                        <td style="text-align:center" width="30%;" data-title="'Patient Name'">
+                                            <label>{{f.FullName}}</label>
+                                        </td>
+                                        <td style="text-align:center" width="20%;" data-title="'Measure Date'" sortable="'measure_date'" >
+                                            <label>{{f.measure_date | date:'dd/MM/yyyy - hh:mm a'}}</label>
+                                        </td>
+                                        <td style="text-align:center" width="30%" data-title="'Measure Data'" >
+                                            <label ng-repeat="(key,val) in f.jsonData">
+                                                {{key | uppercase}}:{{val}} 
+                                                &nbsp;&nbsp;
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" width="20%" data-title="'Notes'" >
+                                            <label></label>
+                                            <a onaftersave="updateMeasure(f)" href="#" editable-text="f.notes">
+                                                {{ f.notes || 'Empty' }}
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab_1_6">
+               <div class="portlet box red">
+                   <div class="portlet-title">
+                       <div class="caption">
+                           <i class="fa fa-medkit"></i> Item Sheet
+                        </div>
+                        <div class="pull-right navbar-right">
+                    
+                            <!-- Single button -->
+                            <div class="btn-group" dropdown>
+
+                              <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
+                                    More <span class="caret"></span>
+                              </button>
+
+                              <ul class="dropdown-menu" role="menu">
+                                <!-- <li><a ui-sref="loggedIn.doctor.items.add"><i class="fa fa-plus"></i> New Item </a></li> -->
+                                <li><a ng-click="itemSearch.open()"><i class="fa fa-search"></i> Search Item</a></li>
+                                
+                              </ul>
+                            </div>
+                        </div>
+                   </div>
+                   
+                    <div class="portlet-body">
+                        <div class="table-scrollable">
+                        
+                            <table class="table table-bordered items-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa fa-check-square-o"></i></th>
+                                        <th>ITEM CODE</th>
+                                        <th>ITEM NAME</th>
+                                        <th width="10%">QUANITY</th>
+                                        <th width="10%">TIME SPENT</th>
+                                        <th width="10%">PRICE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat-start="cat in deptItems" class="item-label">
+                                        <td colspan="6" style="text-transform: uppercase;" class="text-center bold"> {{cat.POPULAR_NAME}} </td>
+                                    </tr>
+                                    <tr ng-repeat-end ng-repeat="item in cat.items" 
+                                                ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')} ">
+                                        <td>
+                                            <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                                        </td>
+                                        <td>{{item.ITEM_CODE}}</td>
+                                        <td>{{item.ITEM_NAME}}</td>
+                                                <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
+                                        <td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT"></td>
+                                        <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
+                                    </tr>
+                                            
+                                            
+                        
+                                            <tr ng-show="extraItems.length > 0" class="item-label">
+                                        <td colspan="6" style="text-transform: uppercase;" class="text-center bold"> EXTRA ITEMS </td>
+                                    </tr>
+                                            <tr ng-repeat="item in extraItems" 
+                                                ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')}">
+                                        <td>
+                                            <input class="form-control"  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
+                                        </td>
+                                        <td>{{item.ITEM_CODE}}</td>
+                                        <td>{{item.ITEM_NAME}}</td>
+                                                <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
+                                        <td><input type="number" min="1" class="form-control" ng-model="item.TIME_SPENT"></td>
+                                        <td><input type="number" ng-disabled="item.disable_fee" min="0" class="form-control" ng-model="item.PRICE"></td>
+                                    </tr>
+                        
+                                        
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>  
+</div> 
+
+<div class="mdt-search" style="display: block;" ng-if="itemSearch.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="itemSearch.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <my-data-table options="itemOptions.options" rowclass="itemOptions.class" rowclick="itemOptions.click"></my-data-table>
+</div>
+
+

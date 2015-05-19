@@ -9,13 +9,14 @@ angular.module("starter.menu.controller",[])
         var userInfo= localStorageService.get("userInfo");
         var notificationLS = localStorageService.get("notificationLS");
         $scope.Injurymenu = [];
-        $scope.user = userInfo.Booking_Person;
+        //$scope.user = userInfo.Booking_Person;
         $scope.userName = userInfo.user_name;
         $scope.selectedMenu = null;
         var mediaSource = null;
         var lat = 0;
         var long = 0;
         var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
+        var stopInterval;
 
         var src = "/android_asset/www/receive_phone.mp3";
         var media = null;
@@ -27,13 +28,6 @@ angular.module("starter.menu.controller",[])
             //     media.pause();
             //}
         };
-        var stopInterval;
-
-        if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
-        {
-            getLocation();
-            stopInterval = $interval(function () { getLocation()}, 10 * 1000);
-        }
 
 
         signaling.on('online', function (userlist) {
@@ -101,7 +95,6 @@ angular.module("starter.menu.controller",[])
                 templateUrl: 'modules/popup/PopUpConfirm.html',
                 scope: $scope,
                 buttons : [
-                    { text: "Cancel" },
                     {
                         text: "Yes, I do!",
                         type: 'button button-assertive',
@@ -123,31 +116,10 @@ angular.module("starter.menu.controller",[])
                                 $ionicLoading.hide();
                             })
                         }
-                    }
+                    },
+                    { text: "Cancel" }
                 ]
             })
-            //$ionicPopup.confirm({
-            //    template: 'Are you sure you want to log out?'
-            //}).then(function(result){
-            //    if(result){
-            //        signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
-            //        $ionicLoading.show({
-            //            template: "<div class='icon ion-ios7-reloading'></div>"+
-            //            "<br />"+
-            //            "<span>Logout...</span>",
-            //            animation: 'fade-in',
-            //            showBackdrop: true,
-            //            maxWidth: 200,
-            //            showDelay: 0
-            //        });
-            //        signaling.on('logoutSuccess', function(){
-            //            signaling.removeAllListeners();
-            //            localStorageService.clearAll();
-            //            $state.go("security.login", null, {reload: true});
-            //            $ionicLoading.hide();
-            //        })
-            //    }
-            //})
         }
 
         $scope.readNFC = function() {
@@ -219,9 +191,8 @@ angular.module("starter.menu.controller",[])
         function getLocation() {
             if(localStorageService.get("userInfo")) {
                 if(localStorageService.get("userInfo").UserType.user_type == 'Driver') {
-                    var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: false};
-                    $cordovaGeolocation.getCurrentPosition(posOptions)
-                        .then(function (position) {
+                    var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: true};
+                    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
                             var driverLocation = [];
 
                             lat = position.coords.latitude
@@ -236,7 +207,9 @@ angular.module("starter.menu.controller",[])
                             });
                             signaling.emit('location', driverLocation);
                         }, function (err) {
-                            //console.log(JSON.stringify(err));
+                            $interval.cancel(stopInterval);
+                            stopInterval = undefined;
+                            alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
                         });
                 }
             }
@@ -258,7 +231,6 @@ angular.module("starter.menu.controller",[])
                 $scope.$broadcast('scroll.refreshComplete');
             });
         }
-
         getListUserOnline();
 
         $scope.infoState = function() {
@@ -345,6 +317,14 @@ angular.module("starter.menu.controller",[])
                     }
                 }
             });
+            if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
+            {
+                getLocation();
+                if(stopInterval != undefined) {
+                    stopInterval = $interval(function () { getLocation()}, 10 * 1000);
+                }
+            }
         });
+
 
     })

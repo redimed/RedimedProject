@@ -83,6 +83,9 @@ angular.module('starter.phoneCall.controller',[])
                         width: '100%',
                         height: '100%'
                     });
+                },
+                'shareImage' : function(event) {
+                    getImage(event.data);
                 }
             });
             session.connect($scope.tokenID, function (error) {
@@ -98,7 +101,6 @@ angular.module('starter.phoneCall.controller',[])
                     });
                 }
             });
-
             //OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
             //    $scope.session = session;
             //    var connectDisconnect = function (connected) {
@@ -153,7 +155,15 @@ angular.module('starter.phoneCall.controller',[])
                             height: 198
                         });
                         TB.updateViews();
+                    },
+                    'signal:shareImage': function(event) {
+                        console.log(event);
+                        getImage(JSON.parse(event.data).id);
+                    },
+                    'signal:cancelCall': function(event) {
+                        console.log(event.data);
                     }
+
                 });
                 session.connect($scope.tokenID, function (error) {
                     if (error) {
@@ -165,7 +175,6 @@ angular.module('starter.phoneCall.controller',[])
                         localStorageService.set('callUser', $stateParams.callUser);
                     }
                 });
-
                 //openTok angular
                 //OTSession.init($scope.apiKey, $scope.sessionID, $scope.tokenID, function (err, session) {
                 //    $scope.session = session;
@@ -232,6 +241,9 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.medicalDeviceToggle = function() {
+            document.addEventListener("deviceready", function() {
+                bluetooth.enable();
+            })
             $scope.blueTooth = !$scope.blueTooth;
             $scope.isImage= false;
             if($scope.blueTooth) {
@@ -277,7 +289,13 @@ angular.module('starter.phoneCall.controller',[])
             screen.unlockOrientation();
             publisher.destroy();
             session.disconnect();
-            $scope.subscriber = null;
+            //$scope.subscriber = null;
+            //var signal = {
+            //    type: 'cancelCall',
+            //    data: localStorageService.get('userInfo').username
+            //}
+            //session.signal(signal, function(err) {
+            //})
             signaling.emit('sendMessage', localStorageService.get('userInfo').id, $stateParams.callUser, {type: 'cancel'});
             $state.go(from.fromState.name, params, {location: "replace"}, {reload: true});
             if (offMedia) {
@@ -292,6 +310,7 @@ angular.module('starter.phoneCall.controller',[])
         });
 
         function onMessageReceive (fromId, fromUsername, message) {
+            console.log(message.type);
             switch (message.type) {
                 case 'answer':
                     media.pause();
@@ -307,10 +326,10 @@ angular.module('starter.phoneCall.controller',[])
                 case 'cancel':
                     screen.unlockOrientation();
                     publisher.destroy();
-                    session.disconnect();
+                    //session.disconnect();
                     $state.go(from.fromState.name,params,{location: "replace"}, {reload: true});
                     localStorageService.remove('callUser');
-                    window.plugins.insomnia.allowSleepAgain()
+                    //window.plugins.insomnia.allowSleepAgain()
                     break;
             }
         }
@@ -319,6 +338,7 @@ angular.module('starter.phoneCall.controller',[])
             $scope.isFileShare = false;
             phoneCallService.getImageShareScreen(id).then(function(result) {
                 if(result.status.toLowerCase() == 'success'){
+                    console.log(result.data);
                     $scope.imgObj.push({
                         id: $scope.idImgShareScreen++,
                         src: result.data
