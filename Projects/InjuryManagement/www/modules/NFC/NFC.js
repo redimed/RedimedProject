@@ -10,11 +10,8 @@ angular.module('starter.NFC',[
                     'menuContent':{
                         templateUrl:"modules/NFC/views/readNFC.html",
                         controller:"readNFCController"
-
                     }
                 }
             })
-
-
     })
 

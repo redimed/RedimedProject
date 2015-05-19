@@ -1325,8 +1325,12 @@ form i.icon.error {
     margin: auto;
     margin-top: 4px;
 }
-
-
+#inputSearch:focus {
+    border-bottom: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
 
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=url]:focus, input[type=date]:focus, input[type=tel]:focus, input[type=number]:focus, input[type=search]:focus, textarea:focus.materialize-textarea {
     border-bottom: 1px solid #26a69a;
@@ -2098,3 +2102,12 @@ ion-scroll[direction=y] {
 .color-fff {
     color: #ffffff !important;
 }
+
+.active-li {
+    border-bottom: 1px solid #ee6e73;
+    margin-right: 39px;
+    width: 0px;
+    -webkit-transition: 0.5s ease;
+    transition: 0.5s ease;
+}
+

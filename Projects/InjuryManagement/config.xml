@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.injurymanagement949685" version="1.1.18" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Injury Management</name>
+
   <description>&#xD;
     An Ionic Framework and Cordova project.&#xD;
   </description>
+
   <author href="https://testapp.redimed.com.au">&#xD;
     Injury Management Redimed&#xD;
   </author>
+
   <content src="index.html"/>
-  <access origin="*"/>
+
+  <access origin="https://testapp.redimed.com.au"/>
+
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -19,11 +24,6 @@
   </feature>
   <feature name="http://api.phonegap.com/1.0/camera" />
   <feature name="http://api.phonegap.com/1.0/file" />
-  <icon src="www/img/app-icons/android/mipmap-hdpi/ic_launcher.png" width="72" height="72" />
-  <icon src="www/img/app-icons/android/mipmap-mdpi/ic_launcher.png" width="48" height="48" />
-  <icon src="www/img/app-icons/android/mipmap-xdpi/ic_launcher.png" width="96" height="96" />
-  <icon src="www/img/app-icons/android/mipmap-xxdpi/ic_launcher.png" width="144" height="144" />
-  <icon src="www/img/app-icons/android/mipmap-xxxdpi/ic_launcher.png" width="192" height="192" />
   <feature name="Media">
     <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
   </feature>
@@ -33,4 +33,34 @@
   <feature name="Insomnia">
     <param name="android-package" value="nl.xservices.plugins.Insomnia" />
   </feature>
+
+  <!--ANDROID CONFIG ICON APPLICATION-->
+  <platform name="android">
+    <icon src="www/img/app-icons/android/res/drawable-hdpi/appicon.png" density="hdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-mdpi/appicon.png" density="mdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-xhdpi/appicon.png" density="xhdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-xxhdpi/appicon.png" density="xxhdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-xxxhdpi/appicon.png" density="xxxhdpi" />
+  </platform>
+
+  <!--ANDROID CONFIG SplashScreen APPLICATION-->
+  <platform name="android">
+    <splash src="www/img/screen/android/images/res-long-land-hdpi/default.png" density="land-hdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-ldpi/default.png" density="land-ldpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-mdpi/default.png" density="land-mdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-xhdpi/default.png" density="land-xhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-xxhdpi/default.png" density="land-xxhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-xxxhdpi/default.png" density="land-xxxhdpi"/>
+
+    <splash src="www/img/screen/android/images/res-long-port-hdpi/default.png" density="port-hdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-ldpi/default.png" density="port-ldpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-mdpi/default.png" density="port-mdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-xhdpi/default.png" density="port-xhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-xxhdpi/default.png" density="port-xxhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-xxxhdpi/default.png" density="port-xxxhdpi"/>
+  </platform>
+  <preference name="SplashScreen" value="screen" />
+  <preference name="SplashScreenDelay" value="3000" />
+
+
 </widget>

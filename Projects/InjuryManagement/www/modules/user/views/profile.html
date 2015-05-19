@@ -13,7 +13,7 @@
       <ion-list>
         <label class="item item-input label-custom-field">
           <span class="input-label">User Name</span>
-          <input type="text" ng-model="info.username">
+          <input type="text" ng-model="info.username" disabled>
         </label>
 
         <label class="item item-input label-custom-field">
@@ -33,7 +33,7 @@
 
         <label class="item item-input label-custom-field">
           <span class="input-label">Phone</span>
-          <input type="text" ng-model="detail.Contact_number" />
+          <input type="tel" maxlength="11" ng-model="detail.Contact_number" />
         </label>
 
         <label class="item item-input label-custom-field">

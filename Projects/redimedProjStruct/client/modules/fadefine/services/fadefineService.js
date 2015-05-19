@@ -48,5 +48,10 @@ angular.module('app.loggedIn.fadefine.service',[])
         return getImagesApi.post();
     }
 
+    // instanceService.faChooseSearch = function(){
+    //     var faChooseSearchApi = v2_api.all('fa/fa_choose_search');
+    //     return faChooseSearchApi.post();
+    // }
+
     return instanceService;
 });

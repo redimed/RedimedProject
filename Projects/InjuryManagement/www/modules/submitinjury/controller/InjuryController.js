@@ -2,7 +2,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
     .controller('InjuryController', function($scope, $state, $filter, $stateParams,
                                              InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
-                                             $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate, $cordovaGeolocation,
+                                             $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate,
                                              $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $document, $ionicSideMenuDelegate,
                                              $cordovaDialogs, $ionicPlatform, $cordovaFileTransfer){
 
@@ -107,7 +107,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 templateUrl: "modules/popup/PopUpConfirm.html",
                 scope: $scope,
                 buttons: [
-                    { text: "Cancel" } ,
+
                     {
                         text: "Ok",
                         type: 'button button-assertive',
@@ -127,7 +127,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
                             $scope.iconErrorMail = false;
                             //$scope.isShow = !$scope.isShow;
                         }
-                    }
+                    },
+                    { text: "Cancel" }
                 ]
             });
         }
@@ -280,31 +281,13 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     if (typeof params !== 'undefined') {
                         InjuryServices.uploadImg(params.injury_id, params.injury_part, params.description);
                         console.log("Upload success " + result);
-                        $scope.statusUpload = true;
                     }
                 }, function(err) {
                     console.log(err);
                     console.log("Upload Failed " + err);
+                    return;
                 }, function (progress) {
                 });
-            if($scope.statusUpload) {
-                $scope.popupMessage = { message: "Success insert injury!" };
-                $ionicPopup.show({
-                    templateUrl: "modules/popup/PopUpSuccess.html",
-                    scope: $scope,
-                    buttons: [
-                        {
-                            text: "Ok",
-                            onTap: function(e) {
-                                $scope.imgURI = [];
-                                resetField();
-                                $scope.statusUpload = false;
-                                $state.go('app.injury.info', {reload: true});
-                            }
-                        }
-                    ]
-                });
-            }
         }
 
 
@@ -390,10 +373,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
                         templateUrl: "modules/popup/PopUpError.html",
                         scope: $scope
                     })
-                    //var alertPopup = $ionicPopup.alert({
-                    //    title: "Error",
-                    //    template: ''
-                    //});
                 }
                 else
                 {
@@ -406,30 +385,15 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     else
                     {
                         $scope.gender = {};
+                        $scope.popUpemergency = true;
+                        $scope.popupMessage = { message:"You need take photo. Are you sure you want go to model?" };
                         var confirmPopup = $ionicPopup.show({
-                            title: 'You need take photo',
-                            subTitle: 'Are you sure you want go to model?',
+                            templateUrl: "modules/popup/PopUpConfirm.html",
                             scope: $scope,
-                            template :
-                            '<div>' +
-                            '<ul>' +
-                            '<li class="item item-checkbox" style="width: 140px; float:left" >' +
-                            '<label class="checkbox">' +
-                            '<input type="radio" ng-model="gender.sex" value="man" name="gioitinh">' +
-                            '</label>Man' +
-                            '</li>' +
-
-                            '<li class="item item-checkbox" style="width: 140px; float:left">' +
-                            '<label class="checkbox">' +
-                            '<input type="radio" ng-model="gender.sex" value="woman" name="gioitinh">' +
-                            '</label>Female' +
-                            '</li>' +
-                            '</ul>' +
-                            '</div>',
                             buttons:
                                 [
-                                    {   text: '<b>OK</b>',
-                                        type: 'button-positive',
+                                    {   text: "Ok",
+                                        type: "button button-assertive",
                                         onTap: function(e) {
                                             if (!$scope.gender.sex) {
                                                 e.preventDefault();
@@ -437,17 +401,21 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                             } else {
                                                 return $scope.gender.sex;
                                             }
+                                            $scope.popUpemergency = false;
                                         }
                                     },
-                                    { text: '<b>Cancel</b>' },
+                                    {
+                                        text: "Cancel",
+                                        onTap: function(e) {
+                                            $scope.popUpemergency = false;
+                                        }
+                                    },
                                 ]
                         });
                         confirmPopup.then(function (res) {
                             if (res) {
-                                // $scope.takePicture();
                                 $state.go('app.model',{linkGender:$scope.gender.sex});
                                 InjuryServices.getInjuryInfo.Worker = $scope.worker;
-
                             }
                         });
                     }
@@ -475,32 +443,20 @@ angular.module('starter.injury.controller', ['ngCordova'])
                             scope: $scope,
                             buttons: [
                                 {
-                                    text: "Cancel",
-                                    onTap: function(e) {
-                                        NonEmergency();
-                                    }
-                                },
-                                {
                                     text: "Yes, I do",
                                     type: "button button-assertive",
                                     onTap: function(e) {
                                         $scope.takePicture();
                                     }
+                                },
+                                {
+                                    text: "Cancel",
+                                    onTap: function(e) {
+                                        NonEmergency();
+                                    }
                                 }
                             ]
                         });
-                        //var confirmPopup = $ionicPopup.confirm({
-                        //    title: 'You need take photo',
-                        //    template: 'Are you sure you want to take photo?'
-                        //});
-                        //confirmPopup.then(function (res) {
-                        //    if (res) {
-                        //        $scope.takePicture();
-                        //    }
-                        //    else {
-                        //        NonEmergency();
-                        //    }
-                        //});
                     }
                 }
             }
@@ -547,6 +503,21 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                 uploadFile(serverUpload, $scope.items[part][i].sourceImg, params);
                             }
                         }
+                        $scope.popupMessage = { message: "Success insert injury!" };
+                        $ionicPopup.show({
+                            templateUrl: "modules/popup/PopUpSuccess.html",
+                            scope: $scope,
+                            buttons: [
+                                {
+                                    text: "Ok",
+                                    onTap: function(e) {
+                                        $scope.imgURI = [];
+                                        resetField();
+                                        $state.go('app.injury.info', {reload: true});
+                                    }
+                                }
+                            ]
+                        });
                     }
                     else {
                         $ionicLoading.hide();
@@ -588,23 +559,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
         initForm();
 
-        $scope.tabs = [{
-            title: 'Information',
-            url: 'info.html'
-        }, {
-            title: 'Injury',
-            url: 'iDesc.html'
-        }];
-
-        $scope.currentTab = 'info.html';
-
-        $scope.onClickTab = function (tab) {
-            $scope.currentTab = tab.url;
-        }
-
-        $scope.isActiveTab = function(tabUrl) {
-            return tabUrl == $scope.currentTab;
-        };
         $scope.ad = {};
         $scope.sc = {showAddress: function(ad){
 
@@ -924,25 +878,35 @@ angular.module('starter.injury.controller', ['ngCordova'])
         };
     })
 
-    .directive("tabmari", function( $state){
+    .directive('tabmari', function() {
         return {
-            restrict: "A",
-            replace: "true",
-            scope:{
-
-            },
-            link: function(scope, element, attrs){
-                var id = "#"+attrs.id;
-                $(document).ready(function(){
-                    $('ul.tabs').tabs();
-                });
-                $(document).ready(function(){
-                    $('ul.tabs').tabs('select_tab', 'tab_id');
-                });
-
+            restrict: 'A',
+            link: function(scope, elm, attrs) {
+                var jqueryElm = $(elm[0]);
+                $(jqueryElm).tabs()
             }
-        }
+        };
     })
+    //
+    //.directive("tabmari", function( $state){
+    //    return {
+    //        restrict: "A",
+    //        replace: "true",
+    //        scope:{
+    //
+    //        },
+    //        link: function(scope, element, attrs){
+    //            var id = "#"+attrs.id;
+    //            $(document).ready(function(){
+    //                $('ul.tabs').tabs();
+    //            });
+    //            $(document).ready(function(){
+    //                $('ul.tabs').tabs('select_tab', 'tab_id');
+    //            });
+    //
+    //        }
+    //    }
+    //})
 
     .directive("diModal", function( $state){
         return {
@@ -953,11 +917,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
             },
             link: function(scope, element, attrs){
                 var id = "#"+attrs.id;
-
-
-
-
-
             }
         }
     })

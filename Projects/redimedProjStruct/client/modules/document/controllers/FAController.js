@@ -47,6 +47,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         var Patient_ID = $scope.patientInfo.Patient_id;
         //var CalID = -1;//$scope.apptInfo.CAL_ID;
         var CalID =  $stateParams.cal_id;
+        var FA_ID = $stateParams.fa_id;
         $scope.listFA = [];
         $scope.infoH = {};
         $scope.infoL = {};
@@ -241,7 +242,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.infoH ={
             PATIENT_ID: Patient_ID,
             CAL_ID : CalID,
-            FA_ID: null,
+            FA_ID: FA_ID,
             ENTITY_ID: null,
             FA_TYPE: null,
             FA_NAME : null,
@@ -302,7 +303,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
         }
         var insert = true;
-        DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
+        DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID, $scope.infoH.FA_ID).then(function(response){
+            console.log(response);
             if(response['status'] === 'new')
             {
                 $scope.isNew = true;
@@ -426,7 +428,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }else
             {
                 if (insert == true) {
-                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
+                    console.log($scope.infoH);
+                    console.log($scope.infoL);
+                    console.log($scope.infoD);
+                    console.log($scope.infoC);
+                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC,FA_ID).then(function(response){
                         if(response['status'] === 'success') {
                             toastr.success("Successfully","Success");
                             $state.go('loggedIn.FA', null, {'reload': true});
