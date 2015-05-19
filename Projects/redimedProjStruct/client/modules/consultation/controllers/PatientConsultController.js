@@ -48,16 +48,17 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			return false;
 		}
 
-	    refresh($scope.patient_id);
-
-	    function refresh(patientId){
+		function refresh(patientId){
 	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
 				if(rs.status.toLowerCase() == 'success' && rs.info)
-				{
 					$scope.companyInfo = rs.info;
-				}
 			})
 	    }
+
+		$interval(function(){
+			refresh($scope.patient_id);
+		},1 * 1000);
+
 
 		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
