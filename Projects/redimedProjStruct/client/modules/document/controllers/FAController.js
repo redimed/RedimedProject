@@ -94,9 +94,10 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         };
 
         var rateTotalFunction = function(id){
+            console.log('this is id', id);
             rateTotal = [];
             dem= 0;
-            console.log('this is total array',$scope.infoL);
+            console.log('this is total array',totalArr);
             for(var i in totalArr)
             {
                 total=0;
@@ -181,6 +182,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                             console.log('this is response', response);
                             $scope.infoL.RATING_VALUE1[idL] = response.data[0].VALUE;
                             $scope.infoL.RATE1[idL] = response.data[0].RATE;
+                            console.log('this is response', response);
                             rateTotalFunction(idL);
                         }else
                         {
@@ -365,7 +367,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                         }
                                         totalArr[dataD.LINE_ID][dataD.LineTestRefer] = dataD.VAL1_VALUE ;
                                         totalArr[dataD.LINE_ID]["rating"] =dataL.RATING_ID1;
-                                        console.log('those are total array', totalArr)
+                                        rateTotalFunction(dataD.LINE_ID);
                                     }
                                 }
                             }
