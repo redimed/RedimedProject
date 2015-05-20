@@ -507,13 +507,14 @@ angular.module('app.config', [])
             {code:"bottle", label:"bottle"}
         ])
     .constant("SCORE_TYPE", [
-            {id:3,label:'Average score'},
-            {id:4,label:'Rating & Heart Rate'},
-            {id:6,label:'Rating'},
-            {id:8,label:'Overall Rating'},
-            {id:7,label:'Capacity Rating'},
-            {id:9,label:'Weight Rating'},
-            {id:5,label:'Rating & Score'},
+            {id:3,label:'Auto Average score and Normal Range'},
+            {id:10,label:'Auto Max score and Rating'},
+            {id:4,label:'Auto Recovery Heart Rate Rating'},
+            {id:6,label:'Auto Simple Rating'},
+            {id:8,label:'Manual Checkbox Rating (Excellent/Good/Fair/Poor)'},
+            {id:7,label:'Manual Checkbox Rating (Able/Partial/Unable'},
+            {id:9,label:'Auto Max Weight Managed and Manual Checkbox Rating(Able/Partial/Unable)'},
+            {id:5,label:'Summary Rating and Score'},
         ])
     .constant("COMMENT_TYPE", [
             {id:1,label:'Checkbox'},

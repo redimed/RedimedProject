@@ -138,7 +138,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
         };
 
-        $scope.mathScore = function(idD, idL, score1, rating1, score2, rating2, type1, type2, rating_id){
+        $scope.mathScore = function(idD, idL, score1, rating1, score2, rating2, type1, type2, rating_id, lineQuestion){
             if(score1 == 1)
             {
                 if(rating1 == 1)
@@ -158,8 +158,9 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                         }
                         val = sum / avg;
                         $scope.infoL.SCORE1[idL] = val;
-                    }else if(type1 == 4)
-                    {
+                    }
+                    else if(type1 == 10){
+                        console.log('this is idL', value[idL]);
                         var max = 0;
                         if(!value[idL]) value[idL]=[];
                         value[idL][idD]=$scope.infoD.VAL1_VALUE[idD];
@@ -172,8 +173,13 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                         }
                         val = max;
                         $scope.infoL.SCORE1[idL] = val;
-                    }else if(type1 == 6)
-                    {
+                    }
+                    else if(type1 == 4){
+                        if(lineQuestion==='Recovery 1 min'){
+                            val = $scope.infoD.VAL1_VALUE[idD];
+                        }
+                    }
+                    else if(type1 == 6){
                         val = $scope.infoD.VAL1_VALUE[idD];
                     }
                     DocumentService.checkRating(rating_id,age, gender, val).then(function(response){
