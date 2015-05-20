@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
-    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService) {
+    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -49,6 +49,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         TimeSheetService.LoadItemCode(scope.searchObjectMap).then(function(response) {
                             if (response.status === "success") {
                                 scope.list = response;
+
                                 //set isShow
                                 angular.forEach(scope.list.result, function(value, index) {
                                     scope.list.result[index].status = false;
@@ -195,7 +196,58 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             }
                         });
                     };
+
+                    //ATTECHMENT
+
+                    //END ATTECHMENT
                 });
+
+                //SET VALUE DEFAULT FILE UPLOAD
+                scope.uploader = new FileUploader({
+                    url: "/api/TimeSheet/post-upload-file",
+                    method: "POST",
+                    autoUpload: true,
+                    formData: [{
+                        userId: $cookieStore.get("userInfo").id
+                    }],
+                    isHTML5: true,
+                    isUploading: true
+                });
+
+                //FILETER LIMIT FILE UPLOAD
+                scope.uploader.filters.push({
+                    name: "customFilter",
+                    fn: function(item /*{File|FileLikeObject}*/ , options) {
+                        return this.queue.length < 5;
+                    }
+                });
+                //END FILTER LIMIT FILE UPLOAD
+
+                //FUNCTION REMOVE ITEM
+                scope.removeItem = function(index) {
+                    swal({
+                        title: "Are you sure detele this file!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        closeOnConfirm: true
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            //CALL FUNCTION UPLOAD FILE
+                            scope.uploader.removeFromQueue(index);
+                            //END CALL FUNCTION UPLOAD FILE
+                        }
+                    });
+                };
+                //END FUNCTION REMOVE ITEM
+
+                //SOME CALLBACKS UPLOAD FILE
+                //END SOME CALLBACKS UPLOAD FILE
+                scope.uploader.onSuccessItem = function(fileItem, response, status, header) {
+                    console.log("HOAN THANH");
+                };
+                //END SET VALUE DEFAULT FILE UPLOAD
 
             },
             templateUrl: "modules/TimeSheet/directives/templates/ActivityDetail.html"

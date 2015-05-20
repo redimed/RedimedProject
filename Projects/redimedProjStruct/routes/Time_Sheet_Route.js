@@ -1,4 +1,5 @@
 var TimeSheet = require("./controllers/TimeSheetController/TimeSheetController");
+var TimeSheetUploadController = require("./controllers/TimeSheetController/TimeSheetUploadController");
 
 //MANAGE USER -DEPT
 app.post("/api/TimeSheet/post-list-tree", TimeSheet.LoadTreeTimeSheet);
@@ -67,7 +68,6 @@ app.post("/api/TimeSheet/post-item-number", TimeSheet.LoadReportItemNumber);
 
 // LEAVE FORM
 app.post("/api/TimeSheet/post-info-employee", TimeSheet.LoadInfoEmployee);
-app.get("/api/TimeSheet/get-type-leave", TimeSheet.LoadTypeLeave);
 app.post("/api/TimeSheet/post-leave-form", TimeSheet.UpLeaveServer);
 app.post("/api/TimeSheet/post-history-leave", TimeSheet.LoadHistoryLeave);
 app.post("/api/TimeSheet/post-view-leave", TimeSheet.ViewLeave);
@@ -79,3 +79,8 @@ app.post("/api/TimeSheet/post-approve-leave", TimeSheet.ApproveLeave);
 app.post("/api/TimeSheet/post-reject-leave", TimeSheet.RejectLeave);
 app.post("/api/TimeSheet/post-check-leave", TimeSheet.CheckLeave);
 //END lEAVE
+
+//UPLOAD FILE TIMESHEET
+var multipartMiddleware = multipart();
+app.post("/api/TimeSheet/post-upload-file", multipartMiddleware, TimeSheetUploadController.UploadFile);
+//END UPLOAD FILE TIMESHEET

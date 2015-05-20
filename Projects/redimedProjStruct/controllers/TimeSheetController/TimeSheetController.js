@@ -901,7 +901,10 @@ module.exports = {
                                     var startDate = moment(moment(resultLeaveApprove[keyLeave].start_date).format("YYYY-MM-DD")).format("X");
                                     var finishDate = moment(moment(resultLeaveApprove[keyLeave].finish_date).format("YYYY-MM-DD")).format("X");
                                     if ((result[keyTimeSheet].activity_id === 15 ||
-                                            result[keyTimeSheet].activity_id === 16) &&
+                                            result[keyTimeSheet].activity_id === 16 ||
+                                            result[keyTimeSheet].activity_id === 17 ||
+                                            result[keyTimeSheet].activity_id === 19 ||
+                                            result[keyTimeSheet].activity_id === 25) &&
                                         date >= startDate &&
                                         date <= finishDate) {
                                         checkExistLeave = true;
@@ -2085,12 +2088,24 @@ module.exports = {
         db.sequelize.query(queryGetInfoUser, null, {
                 raw: true
             }, [USER_ID])
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
+            .success(function(resultEmployee) {
+                var queryGetTypeLeave = "SELECT hr_leave_type.leave_name, hr_leave_type.leave_type_id FROM hr_leave_type";
+                db.sequelize.query(queryGetTypeLeave)
+                    .success(function(resultTypeLeave) {
+                        res.json({
+                            status: "success",
+                            resultEmployee: resultEmployee,
+                            resultTypeLeave: resultTypeLeave
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                        return;
+                    });
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -2100,24 +2115,7 @@ module.exports = {
                 return;
             });
     },
-    LoadTypeLeave: function(req, res) {
-        var queryGetTypeLeave = "SELECT hr_leave_type.leave_name, hr_leave_type.leave_type_id FROM hr_leave_type";
-        db.sequelize.query(queryGetTypeLeave)
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
+
     UpLeaveServer: function(req, res) {
         var info = req.body.info;
         db.HrLeave.create({
@@ -2359,11 +2357,12 @@ module.exports = {
                                                                                     if (resultInfoLevel2 !== undefined &&
                                                                                         resultInfoLevel2 !== null &&
                                                                                         resultInfoLevel2.length !== 0 &&
-                                                                                        result[indexResult].status_id !== 3) {
+                                                                                        result[indexResult].standard === 0) {
                                                                                         result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
-                                                                                    } else if ((resultInfoLevel1 !== undefined &&
-                                                                                            resultInfoLevel1 !== null &&
-                                                                                            resultInfoLevel1.length !== 0) || result[indexResult].status_id === 3) {
+                                                                                    } else if (resultInfoLevel1 !== undefined &&
+                                                                                        resultInfoLevel1 !== null &&
+                                                                                        resultInfoLevel1.length !== 0 &&
+                                                                                        result[indexResult].standard === 1) {
                                                                                         result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                                     }
                                                                                     //END LEVEL 2
@@ -2723,6 +2722,7 @@ module.exports = {
 
     //LIST LEAVE APPROVE
     LoadLeaveApprove: function(req, res) {
+        var deferred = Q.defer();
         var info = req.body.info;
         var searchStr = " AND (",
             orderStr = " ORDER BY ",
@@ -2783,7 +2783,7 @@ module.exports = {
                     var queryGetListLeave = "";
                     var queryCountListLeave = "";
                     var queryGetUserSubordinate =
-                        "SELECT DISTINCT sys_hierarchies_users.USER_ID " + //SELECT
+                        "SELECT DISTINCT sys_hierarchies_users.USER_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
                         "FROM sys_hierarchies_users " + //FROM
                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //INNER JOIN
                         "WHERE sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
@@ -2813,7 +2813,7 @@ module.exports = {
                                 if (NODE_CODE === "Head of Dept.") {
                                     queryGetListLeave =
                                         "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
-                                        "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
+                                        "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, hr_leave.standard, " + //SELECT
                                         "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
                                         "hr_leave.status_id_first as task_status_id, time_task_status.name " + //SElECT
                                         "FROM hr_employee " + //FROM
@@ -2832,7 +2832,7 @@ module.exports = {
                                         selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
                                 } else if (NODE_CODE === "Director") {
                                     queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
-                                        "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
+                                        "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, hr_leave.standard, " + //SELECT
                                         "hr_leave.leave_id, hr_leave.time_leave, hr_leave.reason_leave, hr_leave.start_date, hr_leave.finish_date, " + //SELECT
                                         "time_task_status.task_status_id, time_task_status.name " + //SElECT
                                         "FROM hr_employee " + //FROM
@@ -2874,194 +2874,176 @@ module.exports = {
                                                     });
                                                     return;
                                                 } else {
-                                                    //GET INFO LEVEL 1
-
-                                                    //GET LIST LEAVE ID
-                                                    var listLeaveId = "";
-                                                    result.forEach(function(element, index) {
-                                                        listLeaveId += element.leave_id + ", ";
-                                                    });
-                                                    if (listLeaveId === "") {
-                                                        listLeaveId = "(-1)";
-                                                    } else {
-                                                        listLeaveId = "(" + listLeaveId.substring(0, listLeaveId.length - 2) + ")";
-                                                    }
-                                                    //END LEAVE ID
-
-                                                    var queryGetNodeIdLevel1 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
-                                                        "FROM hr_leave " +
-                                                        "INNER JOIN users ON hr_leave.user_id = users.id " +
-                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND hr_leave.leave_id IN " + listLeaveId;
-                                                    db.sequelize.query(queryGetNodeIdLevel1)
-                                                        .success(function(resultNodeIdLevel1) {
-                                                            if (resultNodeIdLevel1 !== undefined &&
-                                                                resultNodeIdLevel1 !== null &&
-                                                                resultNodeIdLevel1.length !== 0) {
-                                                                var listNodeLevel1 = "";
-                                                                resultNodeIdLevel1.forEach(function(elemLevel2, indexLevel2) {
-                                                                    listNodeLevel1 += elemLevel2.TO_NODE_ID + ", ";
-                                                                });
-                                                                if (listNodeLevel1 === "") {
-                                                                    listNodeLevel1 = "(-1)";
-                                                                } else {
-                                                                    listNodeLevel1 = "(" + listNodeLevel1.substring(0, listNodeLevel1.length - 2) + ")";
-                                                                }
-                                                                var queryGetNodeIdLevel2 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
-                                                                    "FROM sys_hierarchy_nodes " +
-                                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
-                                                                db.sequelize.query(queryGetNodeIdLevel2)
-                                                                    .success(function(resultNodeLevel2) {
-                                                                        //GET INFO LEVEL 1 AND LEVEL 2
-                                                                        var queryGetInfoLevel1 =
-                                                                            "SElECT hr_employee.FirstName, hr_employee.LastName " +
-                                                                            "FROM hr_employee " +
-                                                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                                                            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
-                                                                        db.sequelize.query(queryGetInfoLevel1)
-                                                                            .success(function(resultInfoLevel1) {
-                                                                                if (resultNodeLevel2 !== undefined &&
-                                                                                    resultNodeLevel2 !== null &&
-                                                                                    resultNodeLevel2.length !== 0) {
-                                                                                    var listNodeLevel2 = "";
-                                                                                    resultNodeLevel2.forEach(function(elemLevel2, indexLevel2) {
-                                                                                        listNodeLevel2 += elemLevel2.TO_NODE_ID + ", ";
-                                                                                    });
-                                                                                    if (listNodeLevel2 === "") {
-                                                                                        listNodeLevel2 = "(-1)";
-                                                                                    } else {
-                                                                                        listNodeLevel2 = "(" + listNodeLevel2.substring(0, listNodeLevel2.length - 2) + ")";
-                                                                                    }
-                                                                                    var queryGetInfoLevel2 =
-                                                                                        "SElECT hr_employee.FirstName, hr_employee.LastName " +
+                                                    //PROMISE
+                                                    var promise_chain = Q.fcall(function() {});
+                                                    //END ERROR
+                                                    result.forEach(function(elemResult, indexResult) {
+                                                        var promise_link = function() {
+                                                            var deferred = Q.defer();
+                                                            //GET PERSON-IN-CHARGE
+                                                            var queryGetNodeLevel1 =
+                                                                "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
+                                                                "FROM sys_hierarchy_nodes " +
+                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+                                                                "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " +
+                                                                "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
+                                                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                            db.sequelize.query(queryGetNodeLevel1, null, {
+                                                                    raw: true
+                                                                }, {
+                                                                    leaveId: result[indexResult].leave_id,
+                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID
+                                                                })
+                                                                .success(function(resultNodeLevel1) {
+                                                                    var queryGetNodeLevel2 =
+                                                                        "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
+                                                                        "FROM sys_hierarchy_nodes " +
+                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
+                                                                        "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " +
+                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
+                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                    db.sequelize.query(queryGetNodeLevel2, null, {
+                                                                            raw: true
+                                                                        }, {
+                                                                            nodeId: (resultNodeLevel1 !== undefined &&
+                                                                                resultNodeLevel1 !== null &&
+                                                                                resultNodeLevel1[0] !== undefined &&
+                                                                                resultNodeLevel1[0] !== null &&
+                                                                                !isNaN(resultNodeLevel1[0].TO_NODE_ID) ? resultNodeLevel1[0].TO_NODE_ID : -1)
+                                                                        })
+                                                                        .success(function(resultNodeLevel2) {
+                                                                            var getInfoLevel1 =
+                                                                                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName " +
+                                                                                "FROM hr_employee " +
+                                                                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
+                                                                                "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
+                                                                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
+                                                                                "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                            db.sequelize.query(getInfoLevel1, null, {
+                                                                                    raw: true
+                                                                                }, {
+                                                                                    nodeId: (resultNodeLevel1 !== undefined &&
+                                                                                        resultNodeLevel1 !== null &&
+                                                                                        resultNodeLevel1[0] !== undefined &&
+                                                                                        resultNodeLevel1[0] !== null &&
+                                                                                        !isNaN(resultNodeLevel1[0].TO_NODE_ID) ? resultNodeLevel1[0].TO_NODE_ID : -1)
+                                                                                })
+                                                                                .success(function(resultInfoLevel1) {
+                                                                                    var getInfoLevel2 =
+                                                                                        "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName " +
                                                                                         "FROM hr_employee " +
                                                                                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
                                                                                         "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
                                                                                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel2;
-                                                                                    db.sequelize.query(queryGetInfoLevel2)
+                                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
+                                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                                    db.sequelize.query(getInfoLevel2, null, {
+                                                                                            raw: true
+                                                                                        }, {
+                                                                                            nodeId: (resultNodeLevel2 !== undefined &&
+                                                                                                resultNodeLevel2 !== null &&
+                                                                                                resultNodeLevel2[0] !== undefined &&
+                                                                                                resultNodeLevel2[0] !== null &&
+                                                                                                !isNaN(resultNodeLevel2[0].TO_NODE_ID) ? resultNodeLevel2[0].TO_NODE_ID : -1)
+                                                                                        })
                                                                                         .success(function(resultInfoLevel2) {
-                                                                                            //PROCESSING FOREACH
-                                                                                            result.forEach(function(elemResult, indexResult) {
-                                                                                                if (elemResult.status_id === 1 || elemResult.status_id === 4) {
-                                                                                                    result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
-                                                                                                } else if ((elemResult.status_id === 2 || elemResult.status_id === 5) &&
-                                                                                                    elemResult.is_approve_first === 1 &&
-                                                                                                    elemResult.is_approve_second === 0) {
+                                                                                            if ((result[indexResult].status_id === 2 ||
+                                                                                                    result[indexResult].status_id === 5) &&
+                                                                                                result[indexResult].standard === 1) {
+                                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                            } else if ((result[indexResult].status_id === 2 ||
+                                                                                                    result[indexResult].status_id === 5) &&
+                                                                                                result[indexResult].standard === 0 &&
+                                                                                                result[indexResult].is_approve_first === 1 &&
+                                                                                                result[indexResult].is_approve_second === 0) {
+                                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                            } else if ((result[indexResult].status_id === 2 ||
+                                                                                                    result[indexResult].status_id === 5) &&
+                                                                                                result[indexResult].standard === 0 &&
+                                                                                                result[indexResult].is_approve_first === 0 &&
+                                                                                                result[indexResult].is_approve_second === 1) {
+                                                                                                result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
+                                                                                            } else if (elemResult.status_id === 3 &&
+                                                                                                elemResult.standard === 0) {
+                                                                                                //CHECK LEVEL 2
+                                                                                                if (resultInfoLevel2 !== undefined &&
+                                                                                                    resultInfoLevel2 !== null &&
+                                                                                                    resultInfoLevel2[0] !== undefined &&
+                                                                                                    resultInfoLevel2[0] !== null &&
+                                                                                                    resultInfoLevel2[0].length !== 0) {
+                                                                                                    result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
+                                                                                                } else {
                                                                                                     if (resultInfoLevel1 !== undefined &&
                                                                                                         resultInfoLevel1 !== null &&
-                                                                                                        resultInfoLevel1.length !== 0) {
+                                                                                                        resultInfoLevel1[0] !== undefined &&
+                                                                                                        resultInfoLevel1[0] !== null &&
+                                                                                                        resultInfoLevel1[0].length !== 0) {
                                                                                                         result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                                                     }
-
-                                                                                                } else {
-                                                                                                    //CHECK LEVEL 2
-                                                                                                    if (resultInfoLevel2 !== undefined &&
-                                                                                                        resultInfoLevel2 !== null &&
-                                                                                                        resultInfoLevel2.length !== 0 &&
-                                                                                                        result[indexResult].status_id !== 3) {
-                                                                                                        result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
-                                                                                                    } else if ((resultInfoLevel1 !== undefined &&
-                                                                                                        resultInfoLevel1 !== null &&
-                                                                                                        resultInfoLevel1.length !== 0)||
-                                                                                                        result[indexResult].status_id === 3) {
-                                                                                                        result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
-                                                                                                    }
-                                                                                                    //END LEVEL 2
-
                                                                                                 }
-                                                                                            });
-                                                                                            //END PROCESSING
-                                                                                            res.json({
-                                                                                                status: "success",
-                                                                                                result: result,
-                                                                                                count: resultCount[0].COUNT
-                                                                                            });
-                                                                                            return;
+                                                                                                //END CHECK
+                                                                                            } else if (elemResult.status_id === 3 &&
+                                                                                                elemResult.standard === 1) {
+                                                                                                //LEVEL 1
+                                                                                                if (resultInfoLevel1 !== undefined &&
+                                                                                                    resultInfoLevel1 !== null &&
+                                                                                                    resultInfoLevel1[0] !== undefined &&
+                                                                                                    resultInfoLevel1[0] !== null &&
+                                                                                                    resultInfoLevel1[0].length !== 0) {
+                                                                                                    result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
+                                                                                                }
+                                                                                                //END LEVEL 1
+                                                                                            }
+                                                                                            deferred.resolve(resultInfoLevel2);
                                                                                         })
                                                                                         .error(function(err) {
                                                                                             console.log("*****ERROR:" + err + "*****");
                                                                                             res.json({
                                                                                                 status: "error"
                                                                                             });
+                                                                                            return;
                                                                                         });
-                                                                                } else {
-                                                                                    //PROCESSING FOREACH
-                                                                                    result.forEach(function(elemResult, indexResult) {
-                                                                                        if (elemResult.status_id === 1 || elemResult.status_id === 4) {
-                                                                                            result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
-                                                                                        } else if ((elemResult.status_id === 2 || elemResult.status_id === 5) &&
-                                                                                            elemResult.is_approve_first === 0 &&
-                                                                                            elemResult.is_approve_second === 1) {
-                                                                                            if (resultInfoLevel1 !== undefined &&
-                                                                                                resultInfoLevel1 !== null &&
-                                                                                                resultInfoLevel1.length !== 0) {
-                                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
-                                                                                            }
-
-                                                                                        } else {
-
-                                                                                            //CHECK LEVEL 1
-                                                                                            if (resultInfoLevel1 !== undefined &&
-                                                                                                resultInfoLevel1 !== null &&
-                                                                                                resultInfoLevel1.length !== 0) {
-                                                                                                result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
-                                                                                            }
-                                                                                            //END LEVEL 1
-
-                                                                                        }
-                                                                                    });
+                                                                                })
+                                                                                .error(function(err) {
+                                                                                    console.log("*****ERROR:" + err + "*****");
                                                                                     res.json({
-                                                                                        status: "success",
-                                                                                        result: result,
-                                                                                        count: resultCount[0].COUNT
+                                                                                        status: "error"
                                                                                     });
                                                                                     return;
-                                                                                    //END PROCESSING
-                                                                                }
-
-                                                                            })
-                                                                            .error(function(err) {
-                                                                                console.log("*****ERROR:" + err + "*****");
-                                                                                res.json({
-                                                                                    status: "error"
                                                                                 });
+                                                                        })
+                                                                        .error(function(err) {
+                                                                            console.log("*****ERROR:" + err + "*****");
+                                                                            res.json({
+                                                                                status: "error"
                                                                             });
-                                                                        //END GET INFO LEVEL 1 AND 2
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR:" + err + "*****");
-                                                                        res.json({
-                                                                            status: "error"
+                                                                            return;
                                                                         });
+
+                                                                })
+                                                                .error(function(err) {
+                                                                    console.log("*****ERROR:" + err + "*****");
+                                                                    res.json({
+                                                                        status: "error"
                                                                     });
-                                                            } else {
-                                                                res.json({
-                                                                    status: "success",
-                                                                    result: result,
-                                                                    count: resultCount[0].COUNT
+                                                                    return;
                                                                 });
-                                                            }
-                                                        })
-                                                        .error(function(err) {
-                                                            console.log("*****ERROR:" + err + "*****");
-                                                            res.json({
-                                                                status: "error"
-                                                            });
+                                                            // END GET PERSON-IN-CHARGE
+                                                            return deferred.promise;
+                                                        };
+                                                        promise_chain = promise_chain.then(promise_link);
+                                                    });
+                                                    promise_chain.then(function() {
+                                                        res.json({
+                                                            status: "success",
+                                                            result: result,
+                                                            count: resultCount[0].COUNT
                                                         });
-                                                    //END
+                                                    });
 
                                                 }
-
-                                                //END ERROR
                                             })
                                             .error(function(err) {
                                                 console.log("*****ERROR:" + err + "*****");

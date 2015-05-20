@@ -124,10 +124,27 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHANGE ACTIVITY
     $scope.ChangeActivity = function(activity_id, index) {
+        //DEFAULT VALUE
         $scope.tasks[index].time_charge = null;
         $scope.tasks[index].time_temp = null;
         $scope.tasks[index].item = [];
         $scope.tasks[index].task = null;
+        //END DEFAULT VALUE
+
+        //CHECK DEFAULT WEEKEND
+        if (activity_id === 5) {
+            var item = {};
+            item.isAction = 'insert';
+            item.time_temp = 0;
+            item.totalUnits = 0;
+            item.ratio = 0;
+            item.time_charge = '0000';
+            item.ITEM_ID = 18;
+            item.ITEM_NAME = "Weekend Leave";
+            $scope.tasks[index].item.push(item);
+        }
+        //END CHECK DEFAULT WEEKEND
+
         //SET TIME CHARGE-INLIEU
         $scope.changeTimeCharge();
         //END
@@ -146,6 +163,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //FUNCTION GET WEEK NUMBER
 
     //GET TIM IN LIEU
+
     // GET TIME IN LIEU TO CHECK SUBMIT
     var toDate = new Date();
     var weekNo = $scope.getWeekNumber(toDate);
@@ -167,6 +185,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
     });
     //END
+
     //END
 
     //FUNCTION CHECK TASK WEEK

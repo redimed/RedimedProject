@@ -42,4 +42,14 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
                 });
             } else return "";
         };
+    })
+    .filter('readMoreUpload', function() {
+        return function(input) {
+            if (input !== undefined && input !== null && input !== "") {
+                return ({
+                    check: input.length > 15,
+                    value: input.substring(0, 10) + "..." + input.substr(input.length - 5, input.length - 1)
+                });
+            } else return "";
+        };
     });

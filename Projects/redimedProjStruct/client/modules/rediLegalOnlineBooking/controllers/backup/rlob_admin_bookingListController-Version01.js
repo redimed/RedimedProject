@@ -412,7 +412,6 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             $window.location.href = "/api/download/lob/document/"+fileId;
         }
 
-        //---------------------------------------------------------------
         //HANDLE UPLOAD FILES
         //Upload File
         var uploader = $scope.uploader = new FileUploader({
