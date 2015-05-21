@@ -33,8 +33,20 @@ angular.module('app.loggedIn.allergy',[
     		}
     	}
     })
+
+    //tan frame:
+    // .state("loggedIn.patient.allergy.list",{
+    //     url:'/:patient_id/allergy',
+    //     views:{
+    //         'main-content':{
+    //             templateUrl:"modules/allergies/views/list.html",
+    //             controller:"AllergyListController"
+    //         }
+    //     }
+    // })
+    //tan add
     .state("loggedIn.patient.allergy.list",{
-        url:'/:patient_id/allergy',
+        url:'/allergy',
         views:{
             'main-content':{
                 templateUrl:"modules/allergies/views/list.html",

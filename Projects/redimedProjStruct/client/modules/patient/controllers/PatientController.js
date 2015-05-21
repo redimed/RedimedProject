@@ -20,79 +20,90 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.apptdoc.controller",
     "app.loggedIn.patient.checkin.controller"
 ])
-.controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams) {
-    $scope.patientID = $stateParams.patientID;
-    console.log($stateParams);
+.controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams,mdtAppointmentService) {
+    $scope.patient_id = $stateParams.patient_id;
+    $scope.cal_id = $stateParams.cal_id;
 
 
     $scope.patient_detail_modules = [
         {'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
-            'state': 'loggedIn.patient.detail({patient_id:' + $stateParams.patientID + '})'},
+            'state': 'loggedIn.patient.detail'},
         {'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 0', 'icon': 'fa fa-building',
-            'state': 'loggedIn.company({patientId:' + $stateParams.patientID + '})'},
+            'state': 'loggedIn.company({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
-            'state': 'loggedIn.patient.claim.list({patientId:' + $stateParams.patientID + ', calId:'+$stateParams.cal_id+'})'},
+            'state': 'loggedIn.patient.claim.list'},
         {'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
-            'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patientID + ', calId:'+$stateParams.cal_id+'})'},
+            'state': 'loggedIn.patient.alert.list'},
         {'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patientID + ', calId:'+$stateParams.cal_id+'})'},  
+            'state': 'loggedIn.patient.outreferral.list'},  
         {'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
-            'state': 'loggedIn.im.list({patient_id:' + $stateParams.patientID + '})'},
+            'state': 'loggedIn.im.list({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',
-            'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patientID + '})'},
+            'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},
         {'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
-            'state': 'loggedIn.consult.patient({patient_id:' + $stateParams.patientID + ', cal_id:' +$stateParams.cal_id+ '})'},    
+            'state': 'loggedIn.consult.patient({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
         {'name':'Problem List', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
-            'state':'loggedIn.patient.problem.list({patient_id:'+$stateParams.patientID+'})'},
+            'state':'loggedIn.patient.problem.list'},
         {'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
-            'state':'loggedIn.patient.allergy.list({patient_id:'+$stateParams.patientID+'})'},
+            'state':'loggedIn.patient.allergy.list'},
 
     ];
 
     $scope.patient_apt_modules = [
         // {'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
-        //     'state': 'loggedIn.receptionist.appointment.detail({patient_id:' + $stateParams.patientID + ', cal_id:' + $stateParams.cal_id + '})'},
+        //     'state': 'loggedIn.receptionist.appointment.detail({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
          {'name': 'ItemSheet', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
-            'state': 'loggedIn.patient.itemsheet({patient_id:' + $stateParams.patientID + ', cal_id:' + $stateParams.cal_id + '})'},
+            'state': 'loggedIn.patient.itemsheet'},
         {'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patientID + ', cal_id:' + $stateParams.cal_id + '})'},
+            'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
         {'name': 'Workcover', 'icon': 'fa fa-paper-plane-o', 'color': 'green-soft', 'desc': 'Has: 0',
-            'state': 'loggedIn.patient.workcover({patient_id:' + $stateParams.patientID + ', cal_id: '+  $stateParams.cal_id +'})'},
+            'state': 'loggedIn.patient.workcover'},
         {'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
-            'state': 'loggedIn.patient.script.list({patient_id:' + $stateParams.patientID + ', cal_id:' +$stateParams.cal_id+ '})'},
+            'state': 'loggedIn.patient.script.list'},
         {'name': 'Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
-            'state': 'loggedIn.patient.referral.list({patient_id:' + $stateParams.patientID + ', cal_id:' +$stateParams.cal_id+ '})'},
+            'state': 'loggedIn.patient.referral.list'},
         {'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.invoices({patient_id:' + $stateParams.patientID + ', cal_id:' +$stateParams.cal_id+ '})'},    
+            'state': 'loggedIn.patient.invoices'},    
         {'name': 'Appointment List', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.appt({patient_id:' + $stateParams.patientID + ', cal_id:' +$stateParams.cal_id+ '})'},
+            'state': 'loggedIn.patient.appt'},
         {'name': 'Documents', 'icon': 'fa fa-file-text', 'color': 'purple-soft', 'desc': 'Total: 0',
-            'state': 'loggedIn.patient.apptdoc({patient_id:' + $stateParams.patientID + ', cal_id:' +$stateParams.cal_id+ '})'},
+            'state': 'loggedIn.patient.apptdoc'},
        {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
-            'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patientID + '})'},
+            'state': 'loggedIn.patient.recall'},
     ];
     //get patient info
     $scope.current_patient = {};
-
-    PatientService.mdtById($scope.patientID).then(function (response) {
-        $scope.current_patient = response.data;
-        console.log(response.data);
-        for (var key in $scope.current_patient) {
-            if ($scope.current_patient[key]) {
-                if (key.indexOf("is") != -1 || key.indexOf("Is") != -1)
-                    $scope.current_patient[key] = $scope.current_patient[key].toString();
-                if (key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
-                    $scope.current_patient[key] = new Date($scope.current_patient[key]);
+    $scope.getPatientInfo = function(){
+        PatientService.mdtById($scope.patient_id).then(function (response) {
+            $scope.current_patient = response.data;
+            $scope.current_patient.company = response.company;
+            for (var key in $scope.current_patient) {
+                if ($scope.current_patient[key]) {
+                    if (key.indexOf("is") != -1 || key.indexOf("Is") != -1)
+                        $scope.current_patient[key] = $scope.current_patient[key].toString();
+                    if (key.indexOf("_date") != -1 || key.indexOf("DOB") != -1 || key.indexOf("Exp") != -1)
+                        $scope.current_patient[key] = new Date($scope.current_patient[key]);
+                }
             }
-        }
 
-        $scope.current_patient.Title = parseInt($scope.current_patient.Title);
-    });
-    
+            $scope.current_patient.Title = parseInt($scope.current_patient.Title);
+            console.log($scope.current_patient);
+        });
+    }
+    $scope.getPatientInfo();
     // get appointments
     
+    mdtAppointmentService.byId($scope.cal_id).then(function(response){
+        if(response.status == 'error'){
+            toastr.error('Error Get Detail', 'Error');
+        }else{
+            console.log(response);
+            ConfigService.system_service_by_clinical(response.data.CLINICAL_DEPT_ID).then(function(response){
+                console.log(response);
+            })
+        }
+    })
 
-    
     // FOR VIEW LIST
     $scope.searchObject = {
         doctor_id: 0,
