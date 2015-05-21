@@ -1657,9 +1657,9 @@ table.timetable-table td:last-child {
     top: 19px;
 }
 .un_page_panel {
-  margin-left: -20px;
-  margin-right: -20px;
-  margin-top: -25px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: -25px;
 }
 .un_main_nav_item{
     font-weight: bold;
@@ -1714,10 +1714,6 @@ table.timetable-table td:last-child {
 }
 
 /*Dinh nghia cac mau sac duoc su dung--end*/
-
-.un_page_panel{
-    /*border:1px solid black;*/
-}
 
 /*-----------------------------------------
 Header panel begin*/
