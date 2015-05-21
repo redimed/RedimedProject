@@ -1,143 +1,141 @@
-<link href="common/views/call.css" rel="stylesheet" type="text/css" />
-<style>
-    .invite-modal-window .modal{
-      z-index: 99999 !important;
-    }
 
-</style>
-<div draggable drag="isDrag" ng-class="{'btf-modal-big' : !isMinimize , 'btf-modal-small':isMinimize}">
-  <div class="modal-content">
-    <div style="background-color:#16181A; border-bottom: 1px solid #16181A !important;" class="modal-header">
-        <div class="row"> 
-          <div class="col-md-12 col-sm-12">
-              <div class="pull-left">
-                <a id="btnMinimize" ng-class="{disabled : isCaller && !isAccept}" href="javascript:;" ng-click="maximizeWindow()" class="btn btn-icon-only btn-circle blue-steel">
-                  <i class="fa fa-minus"></i>
-                </a>
-              </div>
-              <!-- <div style="text-align: center;">
-                  <div class="calling-title" style="font-size: 25px !important;">
-                   People : {{connections.length}}
-                  </div>
-              </div> -->
+<link href="common/views/call.css" rel="stylesheet" type="text/css" />
+
+<div ng-class="{'mouse-move': mouseMove}">
+
+    <div ng-if="isCaller && !isAccept">
+      <div class="row-fluid" >
+        <div class="span4 offset4 text-center">
+          <div class="calling-title">Calling <span style="color: red;">{{callUserInfo.user_name}}</span>...</div>
+        </div>
+      </div>
+
+      <div class="row-fluid" style="margin-top: 10%;">
+        <div class="span4 offset4 text-center">
+          <div class="skype">
+            <div class="content-img">
+              <img width="100%" height="100%" class="img-circle" ng-src="{{callUserInfo.img}}" alt="">
+            </div>
           </div>
         </div>
-    </div>
-    <div style="background-color:#16181A;" class="modal-body" ng-class="{'modal-body-big':!isMinimize , 'modal-body-small':isMinimize}">
-      <div ng-class="{'mouse-move': mouseMove}">
-
-          <div ng-show="isCaller && !isAccept">
-            <div class="row-fluid" >
-              <div class="span4 offset4 text-center">
-                <div class="calling-title">Calling <span style="color: red;">{{callUserInfo.user_name}}</span>...</div>
-              </div>
-            </div>
-
-            <div class="row-fluid" style="margin-top: 7%;">
-              <div class="span4 offset4 text-center">
-                <div class="skype">
-                  <div class="content-img">
-                    <img width="100%" height="100%" class="img-circle" ng-src="{{callUserInfo.img}}" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id='session' ng-class="{'session-connected': connected}">
-              <ot-layout props="{animate:true,bigFixedRatio:true}">
-                  <ot-subscriber id="myDiv" ng-repeat="stream in streams | filter:notMine" 
-                      stream="stream" 
-                      ng-hide="stream.name == 'screen' && isMinimize"
-                      props="{style: {nameDisplayMode: 'off'}, width:'100%', height:'100%'}" 
-                       ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large , 'subscriber-small' : isMinimize}" 
-                      ng-dblclick="$emit('changeSize')">
-                          <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeSize');"></button>
-                  </ot-subscriber>
-                  <ot-publisher id="screenPublisher"
-                      ng-if="sharingMyScreen"
-                      ng-hide="isMinimize"
-                      props='screenPublisherProps'
-                      ng-class="{OT_big: screenBig}" 
-                      ng-dblclick="$emit('changeScreenSize');">
-                      <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeScreenSize');"></button>
-                  </ot-publisher>
-                  <ot-whiteboard ng-show="showWhiteboard"
-                          ng-if="connected"
-                          width="1280"
-                          height="960"
-                          color="black"
-                          lineWidth="5"
-                          class="OT_big">
-                  </ot-whiteboard>
-              </ot-layout>
-              
-              <div draggable drag="!isMinimize" id="facePublisher"
-                  ng-hide="isMinimize"
-                  ng-if="publishing">
-                  <ot-publisher id="facePublisher"
-                      props="facePublisherProps"
-                      mute-video="isVideoMuted"
-                      mute-audio="isAudioMuted">
-                  </ot-publisher>
-              </div>
-          </div>
-
-          <div ng-hide="isMinimize" id="statusMessages">
-              <div style="border-radius: 50px !important;" id="screenShareFailed" class="statusMessage" ng-if="screenShareFailed">Screen Share Failed {{screenShareFailed}}</div>
-              <div style="border-radius: 50px !important;" ng-if="promptToInstall"  id="installScreenshareExtension" class="statusMessage">You need a Chrome extension to share your screen. <a href="javascript:;" sync-click="installScreenshareExtension()">Install Screensharing Extension</a>. Once you have installed refresh your browser and click the share screen button again.</div>
-              <div style="border-radius: 50px !important;"  id="screenShareUnsupported" class="statusMessage" ng-if="!screenShareSupported">
-                  Screen Sharing currently requires Google Chrome on Desktop.
-              </div>
-          </div>
       </div>
-      <br/>
-      <br/>
-      
     </div>
-    <div ng-hide="isMinimize" style="background-color:#16181A; border-top: 1px solid #16181A !important; z-index: 999999 !important" class="modal-footer">
-          <div class="button-group-navigation" target="_blank" style="text-align: center;">
-              <li>
-                <a ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" class="btn-bottom-menu" ng-class="{active : sharingMyScreen}" ng-click="toggleShareScreen()" href="javascript:;">
-                  <i class="icon ion-android-laptop"></i>
-                </a>
-              </li>
-              <li>
-                <a class="btn-bottom-menu" ng-class="{active : !isVideoMuted}" href="javascript:;" ng-click="muteVideo()">
-                  <i class="icon ion-android-camera"></i>
-                </a>
-              </li>
-              <li>
-                <a class="btn-bottom-menu" href="javascript:;" ng-click="cancelCall()">
-                  <i class="icon ion-power"></i>
-                </a>
-              </li>
-              <li>
-                <a class="btn-bottom-menu" ng-class="{active : !isAudioMuted}" ng-click="muteAudio()" href="javascript:;">
-                  <i class="icon ion-android-microphone"></i>
-                </a>
-              </li>
-              <li>
-                <a ng-click="addPeople()" class="btn-bottom-menu" href="javascript:;">
-                  <i class="icon ion-person-add"></i>
-                </a>
-              </li>
-              <!-- <li>
-                <a ng-click="toggleWhiteboard()" class="btn-bottom-menu" href="javascript:;">
-                  <i class="icon ion-person"></i>
-                </a>
-              </li> -->
-            </div>
-      </div>
 
-    
-  </div>
+    <div id='session' ng-class="{'session-connected': connected}">
+        <ot-layout props="{animate:true,bigFixedRatio:true}">
+            <ot-subscriber id="myDiv" ng-repeat="stream in streams" 
+                stream="stream" 
+                ng-hide="stream.name == 'screen'"
+                props="{style: {nameDisplayMode: 'off'}, width:'100%', height:'100%'}" 
+                 ng-class="{'OT_big': (stream.oth_large == undefined && stream.name == 'screen') || stream.oth_large}" 
+                ng-dblclick="$emit('changeSize')">
+                    <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeSize');"></button>
+            </ot-subscriber>
+            <ot-publisher id="screenPublisher"
+                ng-if="sharingMyScreen"
+                props='screenPublisherProps'
+                ng-class="{OT_big: screenBig}" 
+                ng-dblclick="$emit('changeScreenSize');">
+                <button class="resize-btn ion-arrow-expand" ng-click="$emit('changeScreenSize');"></button>
+            </ot-publisher>
+            <!-- <ot-whiteboard ng-show="showWhiteboard"
+                    patient="patientId"
+                    ng-if="connected"
+                    width="1280"
+                    height="960"
+                    color="black"
+                    lineWidth="5"
+                    class="OT_big">
+            </ot-whiteboard> -->
+
+            <medical-device ng-show="showBluetooth"
+                    ng-if="connected"
+                    class="OT_big"
+                    call-session="session">
+            </medical-device>
+        </ot-layout>
+        <div id="facePublisher"
+            ng-if="publishing">
+            <ot-publisher id="facePublisher"
+                ng-dblclick="$emit('changeScreenSize');"
+                props="facePublisherProps"
+                mute-video="isVideoMuted"
+                mute-audio="isAudioMuted">
+            </ot-publisher>
+        </div>
+        
+
+    </div>
+
+    <div id="statusMessages">
+        <div style="border-radius: 50px !important;" id="screenShareFailed" class="statusMessage" ng-if="screenShareFailed">Screen Share Failed {{screenShareFailed}}</div>
+        <div style="border-radius: 50px !important;" ng-if="promptToInstall"  id="installScreenshareExtension" class="statusMessage">You need a Chrome extension to share your screen. <a href="javascript:;" sync-click="installScreenshareExtension()">Install Screensharing Extension</a>. Once you have installed refresh your browser and click the share screen button again.</div>
+        <div style="border-radius: 50px !important;"  id="screenShareUnsupported" class="statusMessage" ng-if="!screenShareSupported">
+            Screen Sharing currently requires Google Chrome on Desktop.
+        </div>
+    </div>
+
+    <nav mfb-menu position="br" effect="zoomin" label="Features"
+         active-icon="icon ion-close-round" resting-icon="icon ion-cube "
+         toggling-method="click">
+        
+        <button mfb-button 
+                ng-click="toggleShareScreen()"
+                ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" 
+                icon="icon ion-android-laptop" 
+                label="Share Screen"></button>
+        <button mfb-button 
+                ng-click="toggleWhiteboard()"
+                icon="icon ion-images" 
+                label="Drawings"></button>
+        <button mfb-button 
+                ng-click="toggleBluetooth()"
+                icon="icon ion-bluetooth" 
+                label="Medical Devices"></button>
+    </nav>
+
+    <nav mfb-menu position="bl" effect="zoomin" label="Menu"
+         active-icon="icon ion-close-round" resting-icon="icon ion-navicon-round"
+         toggling-method="click">
+        
+        <button mfb-button 
+                ng-click="addPeople()"
+                icon="icon ion-person-add" 
+                label="Add User"></button>
+        <button mfb-button 
+                ng-if="!isVideoMuted"
+                ng-click="muteVideo()"
+                icon="icon ion-eye" 
+                label="Mute Video"></button>
+        <button mfb-button 
+                ng-if="isVideoMuted"
+                ng-click="muteVideo()"
+                icon="icon ion-eye-disabled" 
+                label="Mute Video"></button>
+        <button mfb-button 
+                ng-if="!isAudioMuted"
+                ng-click="muteAudio()"
+                icon="icon ion-android-microphone"
+                label="Mute Audio"></button>
+        <button mfb-button 
+                ng-if="isAudioMuted"
+                ng-click="muteAudio()"
+                icon="ion-android-microphone-off" 
+                label="Mute Audio"></button>
+        <button mfb-button 
+                ng-click="cancelCall()"
+                icon="icon ion-power" 
+                label="Cancel Call"></button>
+
+    </nav>
+
+
+
 </div>
 <script>
-    $('#btnMinimize').click(function(){
-        $('#myDiv').dblclick();
-    })
+    document.body.style.backgroundColor = "#3A3537";
 </script>
+
 
 
 

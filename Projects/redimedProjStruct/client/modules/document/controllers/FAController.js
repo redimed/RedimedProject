@@ -47,6 +47,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         var Patient_ID = $scope.patientInfo.Patient_id;
         //var CalID = -1;//$scope.apptInfo.CAL_ID;
         var CalID =  $stateParams.cal_id;
+        var FA_ID = $stateParams.fa_id;
         $scope.listFA = [];
         $scope.infoH = {};
         $scope.infoL = {};
@@ -60,7 +61,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.total = {};
 
         var value={},
-            totalArr={},
+            totalArr=[],
             age = getAge($scope.patientInfo.DOB),
             gender = $scope.patientInfo.Sex,
             val = 0,
@@ -93,9 +94,10 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         };
 
         var rateTotalFunction = function(id){
+            console.log('this is id', id);
             rateTotal = [];
             dem= 0;
-            console.log(totalArr);
+            console.log('this is total array',totalArr);
             for(var i in totalArr)
             {
                 total=0;
@@ -136,7 +138,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
         };
 
-        $scope.mathScore = function(idD, idL, score1, rating1, score2, rating2, type1, type2, rating_id){
+        $scope.mathScore = function(idD, idL, score1, rating1, score2, rating2, type1, type2, rating_id, lineQuestion){
             if(score1 == 1)
             {
                 if(rating1 == 1)
@@ -145,34 +147,48 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     {
                         sum = 0,
                         avg = 0;
-                        value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD];
+                        if(!value[idL]) value[idL]=[];
+                        // value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD];
+                        value[idL][idD]=$scope.infoD.VAL1_VALUE[idD];
                         for(var i in value[idL])
                         {
-                            sum = sum + value[idL][i][0] * 1;
+                            // sum = sum + value[idL][i][0] * 1;
+                            sum = sum + value[idL][i] * 1;
                             avg++;
                         }
                         val = sum / avg;
                         $scope.infoL.SCORE1[idL] = val;
-                    }else if(type1 == 4)
-                    {
+                    }
+                    else if(type1 == 10){
+                        console.log('this is idL', value[idL]);
                         var max = 0;
+                        if(!value[idL]) value[idL]=[];
+                        value[idL][idD]=$scope.infoD.VAL1_VALUE[idD];
                         for(var i in value[idL])
                         {
-                            if(i > max)
+                            if(value[idL][i] > max)
                             {
-                                max = i;
+                                max = value[idL][i];
                             }
                         }
-                        val =$scope.infoD.VAL1_VALUE[max];
+                        val = max;
                         $scope.infoL.SCORE1[idL] = val;
-                    }else if(type1 == 6)
-                    {
+                    }
+                    else if(type1 == 4){
+                        if(lineQuestion==='Recovery 1 min'){
+                            val = $scope.infoD.VAL1_VALUE[idD];
+                        }
+                    }
+                    else if(type1 == 6){
                         val = $scope.infoD.VAL1_VALUE[idD];
                     }
                     DocumentService.checkRating(rating_id,age, gender, val).then(function(response){
-                        if(response['status'] != 'fail' && response.length > 0){
-                            $scope.infoL.RATING_VALUE1[idL] = response[0].VALUE;
-                            $scope.infoL.RATE1[idL] = response[0].RATE;
+                        console.log('this is response 1', response);
+                        if(response.status === 'success' && response.data.length > 0){
+                            console.log('this is response', response);
+                            $scope.infoL.RATING_VALUE1[idL] = response.data[0].VALUE;
+                            $scope.infoL.RATE1[idL] = response.data[0].RATE;
+                            console.log('this is response', response);
                             rateTotalFunction(idL);
                         }else
                         {
@@ -186,18 +202,21 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                         sum = 0;
                         avg = 0;
                         val = 0;
-                        value[idL][idD][1]=$scope.infoD.VAL2_VALUE[idD];
+                        if(!value[idL]) value[idL]=[];
+                        // value[idL][idD][1]=$scope.infoD.VAL2_VALUE[idD];
+                        value[idL][idD]=$scope.infoD.VAL2_VALUE[idD];
                         for(var i in value[idL])
                         {
-                            sum = sum + value[idL][i][1] * 1;
+                            // sum = sum + value[idL][i][1] * 1;
+                            sum = sum + value[idL][i] * 1;
                             avg++;
                         }
                         val = sum / avg;
                         $scope.infoL.SCORE2[idL] = val;
                         DocumentService.checkRating(rating_id,age, gender, val).then(function(response){
-                            if(response['status'] != 'fail' && response.length > 0){
-                                $scope.infoL.RATING_VALUE2[idL] = response[0].VALUE;
-                                $scope.infoL.RATE2[idL] = response[0].RATE;
+                            if(response.status === 'success' && response.data.length > 0){
+                                $scope.infoL.RATING_VALUE2[idL] = response.data[0].VALUE;
+                                $scope.infoL.RATE2[idL] = response.data[0].RATE;
                             }else
                             {
                                 $scope.infoL.RATING_VALUE2[idL]=null;
@@ -212,13 +231,14 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                     if(type1 == 9)
                     {
                         var max = 0;
-                        value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD]*1;
-
+                        if(!value[idL]) value[idL] = [];
+                        // value[idL][idD][0]=$scope.infoD.VAL1_VALUE[idD]*1;
+                        value[idL][idD]=$scope.infoD.VAL1_VALUE[idD]*1;
                         for(var i in value[idL])
                         {
-                            if(value[idL][i][0] > max)
+                            if(value[idL][i] > max)
                             {
-                                max = value[idL][i][0];
+                                max = value[idL][i];
                             }
                         }
                         $scope.manage[idL] = max;
@@ -230,7 +250,7 @@ angular.module('app.loggedIn.document.FA.controllers',[])
         $scope.infoH ={
             PATIENT_ID: Patient_ID,
             CAL_ID : CalID,
-            FA_ID: null,
+            FA_ID: FA_ID,
             ENTITY_ID: null,
             FA_TYPE: null,
             FA_NAME : null,
@@ -291,7 +311,8 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }
         }
         var insert = true;
-        DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID).then(function(response){
+        DocumentService.checkFA($scope.infoH.PATIENT_ID,$scope.infoH.CAL_ID, $scope.infoH.FA_ID).then(function(response){
+            console.log(response);
             if(response['status'] === 'new')
             {
                 $scope.isNew = true;
@@ -348,10 +369,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
                                     }
                                     if(dataD.LineTestRefer != null){
                                         if(!totalArr[dataD.LINE_ID]){
-                                            totalArr[dataD.LINE_ID] = {};
+                                            totalArr[dataD.LINE_ID] = [];
                                         }
                                         totalArr[dataD.LINE_ID][dataD.LineTestRefer] = dataD.VAL1_VALUE ;
                                         totalArr[dataD.LINE_ID]["rating"] =dataL.RATING_ID1;
+                                        rateTotalFunction(dataD.LINE_ID);
                                     }
                                 }
                             }
@@ -414,7 +436,11 @@ angular.module('app.loggedIn.document.FA.controllers',[])
             }else
             {
                 if (insert == true) {
-                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC).then(function(response){
+                    console.log($scope.infoH);
+                    console.log($scope.infoL);
+                    console.log($scope.infoD);
+                    console.log($scope.infoC);
+                    DocumentService.insertFA($scope.infoH,$scope.infoL,$scope.infoD,$scope.infoC,FA_ID).then(function(response){
                         if(response['status'] === 'success') {
                             toastr.success("Successfully","Success");
                             $state.go('loggedIn.FA', null, {'reload': true});

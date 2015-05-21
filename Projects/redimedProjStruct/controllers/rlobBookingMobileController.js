@@ -25,8 +25,9 @@ module.exports =
         var LONGITUDE=kiss.checkData(req.body.info.LONGITUDE)?req.body.info.LONGITUDE:null;
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
         var CAL_ID=kiss.checkData(req.body.info.CAL_ID)?req.body.info.CAL_ID:null;
+        var BookingType=kiss.checkData(req.body.info.BookingType)?req.body.info.BookingType:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID,BookingType))
         {
             kiss.exlog('insertNonEmergency',"Loi data truyen den");
             res.json({status:'fail'});
@@ -43,6 +44,7 @@ module.exports =
             TYPE_NAME:TYPE_NAME,
             INJURY:INJURY,
             CAL_ID:CAL_ID,
+            BookingType:BookingType,
             CREATION_DATE:currentDate
         }
 

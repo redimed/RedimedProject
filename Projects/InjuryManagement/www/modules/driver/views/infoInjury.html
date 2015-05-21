@@ -7,125 +7,103 @@
     </ion-nav-buttons>
     <ion-content style="background-color: #F7F7F7 !important;">
         <div class="text-center">
-            <!-- <div ng-style={"background-color":lstPatient.background} class="img-responsive img-circle img-infoInjury">
-                <span>
-                    {{ lstPatient.letter }}
-                </span>
+            <div class="portlet light">
+                <div id="map-canvas" data-tap-disabled="true" driver-map ll="ll"    class="col-md-12"  style="height: 300px; width: 100%"></div>
+                <div class="clearfix"></div>
             </div>
-            <span class="name-info-injury">
-                {{worker.Title}}<span ng-show="worker.Title != null">.</span>{{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}
-            </span> -->
-           
-                <div class="portlet light">    
-                      <div id="map-canvas" data-tap-disabled="true" driver-map ll="ll"    class="col-md-12"  style="height: 300px; width: 100%"></div>
-                    <div class="clearfix"></div>
-                </div>
-
-
         </div>
+        <div id="Infomation" class="col s12">
 
-       <!--  <div class="row">
-            <div class="col s12">
-              <ul class="tabs" tabmari>
-                <li class="tab col s6"><a class="active" href="#Infomation">Infomation</a></li>
-                <li class="tab col s6"><a  href="#Injury">Injury</a></li>
-              </ul>
-            </div>
-           
-          
-          </div> -->
-           <div id="Infomation" class="col s12">
-
-                    <div class="row customrow">
-                        <label class=" item .col text-left padding-right" style="border:none; border-radius: 5px !important">
+            <div class="row customrow">
+                <label class=" item .col text-left padding-right" style="border:none; border-radius: 5px !important">
                             <span>
                                  <i class="fa fa-user margin-right-10"></i> Name</span>
-                        </label>
-                        <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
                               <span >
                                     {{worker.Title}}<span ng-show="worker.Title != null">.</span>{{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}
                             </span>
-                        </label>
-                    </div>
-                 <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                </label>
+            </div>
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                              <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
                         <span>
                            {{worker.DOB | date:'yyyy-MM-dd'}}
                         </span>
-                    </label>
-                </div>
+                </label>
+            </div>
 
-                <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
-                            <img src="img/gender.ico" width="20px" height="20px" class="margin-right-10"/> Gender
+                            <i class="icon ion-transgender margin-right-10"></i> Gender
                         </span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
-                        <span>{{worker.Sex}}</span>
-                    </label>
-                </div>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{worker.Sex}}</span>
+                </label>
+            </div>
 
-                <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="fa fa-mobile-phone margin-right-10"></i> Mobile</span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
-                        <span>{{worker.Mobile}}</span>
-                    </label>
-                </div>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{worker.Mobile}}</span>
+                </label>
+            </div>
 
-                <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="fa fa-envelope-o margin-right-10"></i> Email</span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
-                        <span>{{worker.Email}}</span>
-                    </label>
-                </div>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{worker.Email}}</span>
+                </label>
+            </div>
 
-                <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
                         <span>
                             <i class="icon ion-ios7-location-outline margin-right-10" style="font-size: 20px;"></i> Address</span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
-                        <span>{{worker.Address1}}</span>
-                    </label>
-                </div>
-             
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{worker.Address1}}</span>
+                </label>
             </div>
-                <div id="Injury" class="col s12">
-                        <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
-                        <span>
-                            <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
-                        <span>{{worker.injury_description}}</span>
-                    </label>
-                </div>
-
-                <div class="row customrow">
-                    <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
-                        <span>
-                            <i class="fa fa-calendar-o margin-right-10"></i> Date</span>
-                    </label>
-                    <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
-                        <span>{{worker.injury_date | date:'yyyy-MM-dd'}}</span>
-                    </label>
-                </div>
-            </div>
-               
 
         </div>
-      
+        <div id="Injury" class="col s12">
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                        <span>
+                            <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{worker.injury_description}}</span>
+                </label>
+            </div>
+
+            <div class="row customrow">
+                <label class=" item col-xs-6 text-left padding-right" style="border:none; border-radius: 2px !important">
+                        <span>
+                            <i class="fa fa-calendar-o margin-right-10"></i> Date</span>
+                </label>
+                <label class=" item col-xs-6 text-left padding-left" style="border:none; border-radius: 2px !important">
+                    <span>{{worker.injury_date | date:'yyyy-MM-dd'}}</span>
+                </label>
+            </div>
+        </div>
+
+
+        </div>
+
         <div class="row">
             <div class="col col-50 col-offset-25 padding-bottom">
                 <button class="button button-block bg-btn-custom" geo="geo" ng-show="worker.STATUS.toLowerCase() == 'new'" ng-click="pickUp(worker.injury_id)">

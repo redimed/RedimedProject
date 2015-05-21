@@ -1,5 +1,5 @@
 <form name="FAForm" ng-submit="submitFA(FAForm)" accessible-form method="post" novalidate>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12 ">
         <button type="submit"
                 ng-disabled="!infoChanged()"
@@ -11,7 +11,7 @@
         </a>
         <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
     </div>
-</div>
+</div> -->
 <div ng-repeat="header in listFA">
 <div class="caption">
     <div class="row">
@@ -59,7 +59,7 @@
                         <input name="value1" type="text" ng-model="infoD.VAL1_VALUE[detail.detail_id]"  class="form-control">
                     </div>
                     <div ng-if="detail.val1Validate == 1">
-                        <input name="value1" type="text"  ng-pattern="/^[0-9]+$/" ng-model="infoD.VAL1_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id1)"  class="form-control">
+                        <input name="value1" type="text"  ng-pattern="/^[0-9]+$/" ng-model="infoD.VAL1_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id1, detail.detail_name)"  class="form-control">
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                         <input name="value2"  type="text" ng-model="infoD.VAL2_VALUE[detail.detail_id]" class="form-control">
                     </div>
                     <div ng-if="detail.val2Validate == 1">
-                        <input name="value2" ng-pattern="/^[0-9]+$/" type="text" ng-model="infoD.VAL2_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id2)" class="form-control">
+                        <input name="value2" ng-pattern="/^[0-9]+$/" type="text" ng-model="infoD.VAL2_VALUE[detail.detail_id]" ng-change="mathScore(detail.detail_id,line.line_id,line.line_isscore1,line.line_israting1,line.line_isscore2,line.line_israting2,line.score_type1,line.score_type2,line.rating_id2, detail.detail_name)" class="form-control">
                     </div>
                 </div>
             </div>
@@ -190,10 +190,39 @@
                 <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
                     <div class="col-md-3 col-lg-2 col-sm-3">
                         <label  style="margin-top: 5px" class="pull-right" >Score(AVG)</label>
-                    </div>
+                    </div>  
                     <div class="col-md-2 col-sm-3">
                         <input type="text" readonly ng-model="infoL.SCORE2[line.line_id]" class="form-control">
                     </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <div class="col-md-3 col-lg-2 col-sm-3">
+                    <label  style="margin-top: 5px" class="pull-right" >Normal Range</label>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <input type="text" ng-model="infoL.RATE1[line.line_id]" readonly class="form-control">
+                    <div ng-model="infoL.RATING_VALUE1[line.line_id]"></div>
+                </div>
+                <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
+                    <div class="col-md-3 col-lg-2 col-sm-3">
+                        <label  style="margin-top: 5px" class="pull-right" >Normal Range</label>
+                    </div>
+                    <div class="col-md-2 col-sm-3">
+                        <input type="text" readonly ng-model="infoL.RATE2[line.line_id]" class="form-control">
+                        <div ng-model="infoL.RATING_VALUE2[line.line_id]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="line.score_type1 == 10">
+            <div class="row" style="margin-top: 15px">
+                <div class="col-md-3 col-lg-2 col-sm-3">
+                    <label  style="margin-top: 5px" class="pull-right" >Best of 3 trials</label>
+                </div>
+                <div class="col-md-2 col-sm-3">
+                    <input type="text" ng-model="infoL.SCORE1[line.line_id]" readonly class="form-control">
                 </div>
             </div>
             <div class="row" style="margin-top: 15px">
@@ -204,17 +233,9 @@
                     <input type="text" ng-model="infoL.RATE1[line.line_id]" readonly class="form-control">
                     <div ng-model="infoL.RATING_VALUE1[line.line_id]"></div>
                 </div>
-                <div ng-if="line.line_isscore2 == 1 && line.line_israting2 == 1 && line.score_type2 == 3">
-                    <div class="col-md-3 col-lg-2 col-sm-3">
-                        <label  style="margin-top: 5px" class="pull-right" >Rating</label>
-                    </div>
-                    <div class="col-md-2 col-sm-3">
-                        <input type="text" readonly ng-model="infoL.RATE2[line.line_id]" class="form-control">
-                        <div ng-model="infoL.RATING_VALUE2[line.line_id]"></div>
-                    </div>
-                </div>
             </div>
         </div>
+
         <div ng-if="line.score_type1 == 4">
             <div class="row" style="margin-top: 15px">
                 <div class="col-md-1 col-sm-1">
@@ -613,6 +634,20 @@
 
     </div>
 </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 ">
+        <button type="submit"
+                ng-disabled="!infoChanged()"
+                class="btn green pull-right">{{isNew?"Add New":"Update"}}
+        </button>
+        <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{infoH.FA_ID}}/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}"
+           ng-disabled="isNew " target="_blank"
+           class="btn btn-primary blue pull-right">Print PDF
+        </a>
+        <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a>
+    </div>
 </div>
 </form>
 

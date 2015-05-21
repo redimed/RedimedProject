@@ -8,3 +8,18 @@
     <h2>Are you sure?</h2>
     <span>{{popupMessage.message}}</span>
 </div>
+<div ng-if="popUpemergency">
+    <ul>
+        <li class="item item-checkbox" style="width: 140px; float:left" >
+            <label class="checkbox">
+                <input type="radio" ng-model="gender.sex" value="man" name="gioitinh">
+            </label>Male
+        </li>
+
+        <li class="item item-checkbox" style="width: 140px; float:left">
+            <label class="checkbox">
+                <input type="radio" ng-model="gender.sex" value="woman" name="gioitinh">
+            </label> Female
+        </li>
+    </ul>
+</div>

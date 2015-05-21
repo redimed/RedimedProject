@@ -12,35 +12,71 @@
 	<button ng-show="dataCenter.SESSION_STATUS!='CLOSED'" type="button" class="btn btn-danger" ng-click="changeSessionStatus('CLOSED');">Close Session</button>
 	<button type="button" class="btn btn-info" ng-click="refresh();">Refresh</button>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Username</th>
-				<th>Name</th>
-				<th>Items</th>
-				<th>Total</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="(key,item) in listBooking">
-				<td>{{item.user_name}}</td>
-				<td>{{item.Booking_Person}}</td>
-				<td>
-					<table>
-						<tr ng-repeat="(key,detail) in item.LIST_ITEMS">
-							<td>{{detail.NAME}}:</td>
-							<td style="padding-left:10px">{{detail.COST}}</td>
-						</tr>
-					</table>
-				</td>
-				<td>
-					{{item.totalCost}}
-				</td>
-			</tr>
-		</tbody>
-	</table>
 
-	<h4 class="medifood_session_cash">SESSION CASH: {{totalCashSession}}</h4>
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="panel panel-success">
+				<div class="panel-heading">Users booking</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Username</th>
+							<th>Name</th>
+							<th>Items</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(key,item) in listBooking">
+							<td>{{item.user_name}}</td>
+							<td>{{item.Booking_Person}}</td>
+							<td>
+								<table>
+									<tr ng-repeat="(key,detail) in item.LIST_ITEMS">
+										<td>{{detail.NAME}}:</td>
+										<td style="padding-left:10px">{{detail.COST}}</td>
+									</tr>
+								</table>
+							</td>
+							<td>
+								{{item.totalCost}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">Foods list</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Quantity</th>
+							<th>Unit price</th>
+							<th>Total cost</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(key,item) in listBookedFood">
+							<td>{{item.NAME}}</td>
+							<td>{{item.quantity}}</td>
+							<td>{{item.COST}}</td>
+							<td>{{item.totalCost}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr/>
+				<h4 class="medifood_session_cash">SESSION CASH: {{totalCashSession}}</h4>
+			</div>
+		</div>
+	</div>
+
+	
+
+	
 	
 </div>
 

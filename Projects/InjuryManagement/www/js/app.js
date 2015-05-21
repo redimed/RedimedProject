@@ -117,10 +117,6 @@ angular.module('starter', ['ionic',
             {
                 $ionicSideMenuDelegate.canDragContent(true);
             }
-            if( $state.is("app.mainBluetooth")) {
-                window.bluetooth.enable();
-            }
-
             if($state.is("app.phoneCall")) {
                 screen.lockOrientation('landscape');
             }

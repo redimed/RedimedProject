@@ -8,6 +8,20 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
+			scope.extendMinutes = function(hour, minute){
+				hour = scope.convertToSeconds(hour);
+				var seconds = hour+minute*60;
+
+				var sec_num = parseInt(seconds, 10); // don't forget the second param
+			    var hours   = Math.floor(sec_num / 3600);
+			    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+
+			    if (hours   < 10) {hours   = "0"+hours;}
+			    if (minutes < 10) {minutes = "0"+minutes;}
+			    var time    = hours+':'+minutes;
+			    return time;
+			}
+
 			scope.convertToSeconds = function(time){
 				var hour = parseInt(time.substring(0, 2));
 			    var minute = parseInt(time.substring(3));
@@ -16,10 +30,14 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			}
 
 			scope.differentTimeHours = function(hourOne, hourSecond){
-				hourOne = scope.convertToSeconds(hourOne);
-				hourSecond = scope.convertToSeconds(hourSecond);
+				if(hourSecond !== 0){
+					hourOne = scope.convertToSeconds(hourOne);
+					hourSecond = scope.convertToSeconds(hourSecond);
 
-				return (hourSecond-hourOne)/60;
+					return (hourSecond-hourOne)/60;
+				}else{
+					return 0;
+				}
 			}
 
 			scope.showDropdown = function(patient, col){
@@ -92,6 +110,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
 
 				scope.appointment.list = [];
+
+				scope.alertCenter.load();
 
 				AppointmentModel.load(postData)
 				.then(function(response){
@@ -272,6 +292,55 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							scope.appointment.list.push(object);
 						}
 					}) // end forEach
+					
+					scope.appointment.new_list = [];
+
+					var i = 0;
+					if(scope.appointment.list.length > 0){
+						var begin_from_time = scope.appointment.list[0].FROM_TIME;
+					}
+
+					_.forEach(scope.appointment.list, function(list){
+						if(typeof scope.appointment.list[i+1] !== 'undefined')
+							var begin_to_time = scope.appointment.list[i+1].FROM_TIME;
+						else
+							var begin_to_time = scope.extendMinutes(begin_from_time, 45);
+
+						var diff = scope.differentTimeHours(begin_from_time, begin_to_time);
+
+						scope.appointment.new_list.push(scope.appointment.list[i]);
+
+						var new_list_length = scope.appointment.new_list.length;
+						var j = 0;
+						_.forEach(scope.appointment.new_list[new_list_length-1].doctors, function(doctor){
+							//if(typeof doctor.CAL_ID !== 'undefined'){
+								//for(var line = 0; line < j; line++)
+									scope.appointment.new_list[new_list_length-1].doctors[j].border = 'yes';
+								//return;
+							//}
+							j++;
+						})
+
+						for(var diff_i = 15; diff_i <= diff-15; diff_i+=15){
+							var from_time = scope.extendMinutes(scope.appointment.list[i].FROM_TIME, diff_i);
+							begin_from_time = from_time;
+							var temp_doctors = angular.copy(scope.appointment.list[i].doctors);
+
+							var doc_i = 0;
+							_.forEach(temp_doctors, function(doctor){
+								temp_doctors[doc_i].PATIENTS = '###';
+								//temp_doctors[doc_i].border = 'no';
+								doc_i++;
+							})
+
+							scope.appointment.new_list.push({FROM_TIME: from_time, doctors: temp_doctors});
+						}
+
+						begin_from_time = scope.extendMinutes(begin_from_time, 15);
+						i++;
+					})
+					
+					scope.appointment.list = angular.copy(scope.appointment.new_list);
 
 					var i = 0;
 					_.forEach(scope.appointment.list, function(list){
@@ -281,12 +350,20 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							_.forEach(doctor_array_temp, function(temp){
 								if(doctor.DOCTOR_ID === temp.DOCTOR_ID){
 									if(doctor.PATIENTS !== '###'){
-										doctor_array_temp[k].left_temp = doctor_array_temp[k].left-min_calendar;
+										doctor_array_temp[k].left_temp = doctor_array_temp[k].left-15;
 										doctor_array_temp[k].color = scope.appointment.list[i].doctors[j].SERVICE_COLOR;
+
+										if(doctor_array_temp[k].left_temp === 0){
+											scope.appointment.list[i].doctors[j].height = '28px';
+										}
 									}else{
 										if(doctor_array_temp[k].left_temp > 0){
 											scope.appointment.list[i].doctors[j].SERVICE_COLOR = doctor_array_temp[k].color;
-											doctor_array_temp[k].left_temp -= min_calendar;
+											doctor_array_temp[k].left_temp -= 15;
+
+											if(doctor_array_temp[k].left_temp === 0){
+												scope.appointment.list[i].doctors[j].height = '28px';
+											}
 										}
 									}
 								}
@@ -520,6 +597,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 														$scope.patientId = new_patient.Patient_id;
 														$scope.calId = col.CAL_ID;
 														$scope.success = false;
+														$scope.doctorId = col.DOCTOR_ID;
 
 														$scope.$watch('success', function(success){
 															if(success){
@@ -621,7 +699,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						var flag = -1;
 						var i = 0;
 						_.forEach(scope.alertCenter.list, function(list){
-							if(list.CAL_ID === row.CAL_ID){
+							if(list.Patient_id === row.Patient_id){
 								flag = i;
 								return;
 							}
@@ -630,18 +708,47 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 						if(flag !== -1){
 							if(row.ALERT_ID){
-								var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
-								scope.alertCenter.list[flag].alert.push(object);
+								var alert_flag = true;
+								_.forEach(scope.alertCenter.list[flag].alert, function(alert){
+									if(alert.id === row.ALERT_ID){
+										alert_flag = false;
+									}
+								})
+
+								if(alert_flag){
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
+									scope.alertCenter.list[flag].alert.push(object);
+								}
+
+								var cal_flag = true;
+								var i = 0;
+								_.forEach(scope.alertCenter.list[flag].cal, function(cal){
+									if(cal.CAL_ID === row.CAL_ID){
+										cal_flag = false;
+									}
+								})
+
+								if(cal_flag){
+									scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+									if(row.outreferral_id){
+										var cal_length = scope.alertCenter.list[flag].cal.length;
+										scope.alertCenter.list[flag].cal[cal_length-1].OUTREFERRAL = 'yes';
+									}
+								}
+								/**/
 							}
 						}else{
-							var object = {Patient_id: row.Patient_id, IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], outreferral_id: 'no', FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME};
+							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
 
 							if(row.ALERT_ID){
 								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME});
 							}
 
-							if(row.outreferral_id)
-								object.outreferral_id = 'yes';
+							if(row.CAL_ID){
+								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+								if(row.outreferral_id)
+									object.cal[0].OUTREFERRAL = 'yes';
+							}
 
 							scope.alertCenter.list.push(object);
 						}
@@ -666,10 +773,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				load: function(){ loadAlertCenter(); },
 				list: [],
 				arrow: false
-			}
-
-			//INIT LOAD ALERT CENTER
-			scope.alertCenter.load();
+			}			
 
 			//INIT
 			scope.site.load();

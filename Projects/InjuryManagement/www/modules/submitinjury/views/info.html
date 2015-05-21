@@ -1,14 +1,14 @@
 <ion-view title="Submit Injury">
     <ion-nav-buttons side="left">
         <a menu-toggle="left" class="button button-icon icon ion-navicon" style="color:#fff"></a>
-        <a ui-sref="app.injury.mapCompany" class="button button-icon icon" style="color:#fff">
-            <i class="fa fa-map-marker"></i>
-        </a>
+        <!--<a ui-sref="app.injury.mapCompany" class="button button-icon icon" style="color:#fff">-->
+            <!--<i class="fa fa-map-marker"></i>-->
+        <!--</a>-->
     </ion-nav-buttons>
 
-    <ion-nav-buttons side="right">
-        <a menu-toggle="right" class="button button-icon icon ion-android-contacts" style="color:#fff"></a>
-    </ion-nav-buttons>
+    <!--<ion-nav-buttons side="right">-->
+        <!--<a menu-toggle="right" class="button button-icon icon ion-android-contacts" style="color:#fff"></a>-->
+    <!--</ion-nav-buttons>-->
 
     <form name="info" novalidate>
         <ion-content class="padding">
@@ -29,7 +29,6 @@
                                name="First_name" ng-disabled="worker.Patient_id != -1 && temp1.First_name"
                                ng-maxlength=30  ng-class="{'has-error':isSubmit && info.First_name.$invalid}"
                                ng-pattern="/^[\w&.-]+$/" />
-
                     </label>
 
                     <small class="error"

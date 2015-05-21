@@ -1090,7 +1090,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered {
     border-top: 1.5px solid #ddd;
     border-bottom: 1.5px solid #ddd;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .table-dynamic .table-bordered thead th {
@@ -1104,7 +1104,7 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered thead th>.th {
     position: relative;
     padding: 4px 4px 4px 4px;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .table-dynamic .table-bordered tbody tr {
@@ -1196,6 +1196,7 @@ table.timetable-table td:last-child {
     border-top: 1.5px solid #ddd;
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .odd {
@@ -1293,14 +1294,14 @@ table.timetable-table td:last-child {
 }
 
 .appointment .appointment-block-time {
-    width: 100px;
+    width: 40px;
 }
 
 .appointment .appointment-block {
     vertical-align: top;
     width: 150px;
     font-size: 11px;
-    height: 70px;
+    height: 30px;
     margin-right: 3px;
     padding: 5px 0px 0px 5px;
     color: white;
@@ -1361,3 +1362,319 @@ table.timetable-table td:last-child {
     top: 5%;
     right: 250px;
 }
+
+/*Minh Hikari custom css. DO NOT DELETE. Especially CHIEN :v*/
+.image-container-div {
+    width:100%; 
+    height:100%; 
+    border:solid 1px #ddd;
+    cursor:pointer;
+    color: gray;
+}
+
+.image-container-div:hover {
+    border:solid 5px #D84A38;
+}
+
+
+.outer-div {
+    margin-top:10px; 
+    height:200px; 
+}
+/*End Minh Hikari custom css. DO NOT DELETE. Especially CHIEN :v*/
+
+/*Phan Qu?c Chiên tang dong :v*/
+.un-background{
+    background-color: rgb(37, 33, 34)!important;
+    position: relative;
+    margin-top: 30px;
+
+}
+.un-bg-black{
+    background-color: rgb(96, 95, 95)!important;
+    /*height: 390px;*/
+}
+.un-title-label{
+    position: absolute;
+    top: -27px;
+    color: white;
+    background: rgb(39, 36, 37)!important;
+    border-top-left-radius: 26px !important;
+    border-top-right-radius: 26px !important;
+    padding: 7px 25px 10px 25px;
+    text-transform: uppercase;
+    border-top: 1px solid;
+}
+.un-button-add-img{
+    background: url('../theme/assets/icon-2_03.png') no-repeat;
+}
+.un-chose-img{
+    width: 45px;
+    position: absolute;
+    right: 25px;
+    bottom: 10px;
+}
+.un-form{
+    padding-top: 15px;
+}
+.un-bg-black-label{
+    color: white;
+    background: rgb(49, 50, 50);
+    padding: 5px 15px 5px 15px;
+}
+.un-label-form{
+    color: rgb(186, 186, 185)!important;
+    background: rgb(49, 50, 50)!important;
+    margin-bottom: 0px;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+.un-label-form-1{
+    color: rgb(112, 112, 111)!important;
+    background: rgb(204, 204, 203)!important;
+    margin-bottom: 0px;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+.un-label-form-2{
+    color: rgb(201, 201, 200)!important;
+    background: rgb(78, 79, 78)!important;
+    margin-bottom: 0px;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+.un-label-form-3{
+    color: rgb(252, 252, 252)!important;
+    background: rgb(153, 153, 153)!important;
+    margin-bottom: 0px;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+.un-form-left{
+    padding-right: 0px;
+    padding-top: 10px;
+}
+.un-form-right{
+    padding-right: 0;
+    padding-left: 0;
+    padding-top: 10px;
+}
+.un-form-add{
+    padding-left: 0px;
+    padding-right: 0px;
+    border-left: 5px solid rgb(37, 33, 34);
+    /*height: 100%;*/
+    background: rgb(153, 153, 153);
+}
+.un-from-add-div{
+    background-color: rgb(153, 153, 153)!important;
+    padding-right: 0;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.un-input-custom{
+    height: 20px;
+}
+.un-input-custom-1{
+    height: 20px;
+    border: 2px solid rgb(196, 196, 196)!important;
+}
+.un-img-sex{
+    width: 65px;
+    margin-left: 0px;
+    padding-top: 5px;
+}
+.un-icon-down{
+    position: relative;
+    top: 20px;
+    font-size: 18px;
+}
+.un-bg-xanh{
+    background: rgb(11, 14, 47)!important;
+    margin-top: 3px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.un-checkbox{
+    height: 25px;
+    background: rgb(11, 14, 47) !important;
+    color: white !important;
+    border: 1px solid white !important;
+    padding: 2px 50px 0px 16px !important;
+}
+.un-checkbox::after{
+    height: 13px !important;
+    right: 15px !important;
+    width: 13px !important;
+}
+.un-checkbox::before{
+    height: 5px !important;
+    right: 19px !important;
+    top: 9px !important;
+    width: 5px !important;
+}
+.un-select{
+    background: rgb(11, 14, 47);
+    color: white;
+    border: 1px solid;
+    width: 100%;
+    height: 25px;
+    padding: 0px 10px;
+}
+.un-select:hover{
+    border: 1px solid white;
+    color: white;
+}
+.un-select:focus{
+    border: 1px solid white;
+    color: white;
+}
+.un-select-company{
+    margin-left: -5px;
+    background: white;
+    text-align: left;
+    padding-left: 15px;
+    height: 25px;
+    padding: 0 10px;
+}
+.un-icon-select{
+    width: 25px;
+    height: 21px;
+    background: rgb(11, 14, 47);
+    padding: 3px 6px;
+    color: white;
+    position: absolute;
+    right: 22px;
+    top: 2px;
+}
+.un-bg-trang{
+    background: white;
+    margin-top: 5px;
+    padding: 10px 0px 5px 0px;
+}
+.un-label-white{
+    background: rgb(96, 95, 95)!important;
+    color: white;
+    padding: 5px 15px 5px 15px;
+    margin-left: 15px;
+}
+.un-form-white-p{
+    padding-right: 0;
+}
+.un-form-white-p2{
+    padding-right: 0;
+    padding-left: 0;
+}
+.un-form-white-p3{
+    padding-right: 5px;
+    padding-left: 0px;
+}
+.un-img-avartar{
+    background: white;
+    border: 2px solid white;
+}
+.un-canvas canvas{
+    width: 100% !important;
+    height: 100% !important;
+    border: 2px solid white;
+}
+.un-label-xam{
+    color: white;
+    background: rgb(102, 102, 102)!important;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+.un-label-xam-1{
+    color: black;
+    background: rgb(204, 204, 203)!important;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+.un-form-bg-xam{
+    margin-top: 15px;
+    background: rgb(60, 61, 61)!important;
+    margin-left: 0;
+    margin-right: 0;
+}
+.un-div-p-l-r-0{
+    padding-right: 0;
+    padding-left: 0;
+}
+.un-div-p-r-0{
+    padding-right: 0;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+.un-div-p-r-30{
+    padding-right: 30px;
+}
+.un-div-p-r-5{
+    padding-right: 5px;
+}
+.un-label-c-white{
+    color: white;
+    /*padding-top: 10px;*/
+}
+.un-height-img{
+    height: 285px;
+}
+.un-div-l-r-15{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+.un-submit{
+    color: white;
+    border-radius: 20px !important;
+    border: 3px solid white;
+    background: rgb(102, 102, 102) !important;
+}
+.un-submit:hover{
+    color: white !important;
+}
+.un-select-p{
+    padding: 0 0 0 2px !important;
+}
+.un-select-p-5{
+    padding: 0px 0px 0px 7px !important;
+}
+.un-div-p-10{
+    padding-right: 10px !important;
+}
+.un-label-isenable{
+    padding: 0 !important;
+    background: white !important;
+}
+.un-label-isenable::after{
+    height: 13px !important;
+    right: 12px !important;
+    top: 2px !important;
+    width: 13px !important;
+} 
+.un-label-isenable::before{
+    height: 5px !important;
+    right: 16px !important;
+    top: 6px !important;
+    width: 5px !important;
+}
+.un-label-whidth-85{
+    width: 85px !important;
+}
+.un-label-whidth-97{
+    width: 97px !important;
+}
+.un-label-whidth-130{
+    width: 130px !important;
+}
+.ui-detail-config{
+    background: rgb(23, 20, 76);
+    margin-top: -20px;
+}
+.un-select-sex{
+    width: 20px;
+    position: relative;
+    top: 19px;
+}
+/*Phan Quoc Chien Material 

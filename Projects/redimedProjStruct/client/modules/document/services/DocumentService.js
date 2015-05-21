@@ -37,9 +37,9 @@ angular.module('app.loggedIn.document.services', [])
             Begin
          */
 
-        documentService.insertFA = function(infoH,infoL,infoD,infoC){
+        documentService.insertFA = function(infoH,infoL,infoD,infoC, fa_id){
             var insertFA = api.all("document/insertFA");
-            return insertFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
+            return insertFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC,fa_id:fa_id});
         }
 
         documentService.updateFA = function(infoH,infoL,infoD,infoC){
@@ -47,9 +47,9 @@ angular.module('app.loggedIn.document.services', [])
             return updateFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
         }
 
-        documentService.checkFA = function(PatientID, calID){
+        documentService.checkFA = function(PatientID, calID, FA_ID){
             var checkFA = api.all("document/checkFA");
-            return checkFA.post({PatientID:PatientID, calID:calID});
+            return checkFA.post({PatientID:PatientID, calID:calID, fa_id: FA_ID});
         }
 
         documentService.checkRating = function(id,age, gender, val){
@@ -644,6 +644,7 @@ angular.module('app.loggedIn.document.services', [])
                 columns: [
                     {field: 'CAL_ID' , is_hide: true },
                     {field: 'FA_ID' , is_hide: true },
+                    {field: 'FA_NAME', label:'Name'},
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
                     }},
@@ -653,7 +654,7 @@ angular.module('app.loggedIn.document.services', [])
                 use_actions: true,
                 actions: [
                     { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
-                        $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID})
+                        $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID, fa_id: item.FA_ID})
                     } }
                 ]
             };

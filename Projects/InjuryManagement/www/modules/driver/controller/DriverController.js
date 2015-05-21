@@ -1,23 +1,16 @@
 angular.module('starter.driver.controller',[])
 
     .controller('DriverController', function ($scope, $state, DriverServices, localStorageService, $timeout, $ionicLoading,
-                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window, $stateParams, $ionicModal) {
+                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window) {
 
         $scope.he = $window.innerHeight - 50 +'px';
         $scope.geo = {};
         $scope.ll = {};
         $scope.lstPatient = {};
-
-
-
         $timeout(function() {
-             $scope.worker = localStorageService.get('worker');
+            $scope.worker = localStorageService.get('worker');
             $ionicLoading.hide();
         }, 1000);
-       
-        
-
-
         if(DriverServices.notifi !== undefined ){
             alert(JSON.stringify(DriverServices.notifi));
             $scope.ll.lat=DriverServices.notifi.payload.lat;
@@ -43,26 +36,9 @@ angular.module('starter.driver.controller',[])
             return tabUrl == $scope.currentTab;
         };
 
-        //INIT WHEN NOTIFICATION DETAIL_INJURY
-        // $timeout(function () {
-        //     $ionicLoading.show({
-        //         template: "<div class='icon ion-ios7-reloading'></div>"+
-        //         "<br />"+
-        //         "<span>Waiting...</span>",
-        //         animation: 'fade-in',
-        //         showBackdrop: true,
-        //         maxWidth: 200,
-        //         showDelay: 0
-        //     });
-        //     $scope.idPatient = localStorageService.get("idpatient_notice");
-        //     DriverServices.getPatientID($scope.idPatient).then(function (result){
-        //         if(result.status.toLocaleLowerCase() == "success")
-        //         {
-        //             $scope.worker = result.data[0];
-        //             $ionicLoading.hide()
-        //         }
-        //     })
-        // }, 500);
+        $scope.clearInput = function() {
+
+        }
 
         //INIT LIST PATIENT
         function init() {
@@ -72,7 +48,6 @@ angular.module('starter.driver.controller',[])
 
                     $scope.lstPatient = result.data;
                     for(var i = 0 ; i < $scope.lstPatient.length; i++) {
-                        //alert(result.data[i].STATUS);
                         $scope.lstPatient[i].background = colors[Math.floor(Math.random() * colors.length)];
                         $scope.lstPatient[i].letter = String($scope.lstPatient[i].First_name).substr(0,1).toUpperCase();
                     }
@@ -96,12 +71,6 @@ angular.module('starter.driver.controller',[])
         };
 
         $scope.selectPatient = function (injuryID){
-            // DriverServices.getPatientID(injuryID).then(function (result){
-            //     if(typeof result !== 'undefined'){
-            //         localStorageService.set('worker',result.data[0])
-                   
-            //     }
-            // });
             $ionicLoading.show({
                 template: "<div class='icon ion-ios7-reloading'></div>"+
                 "<br />"+
@@ -111,7 +80,7 @@ angular.module('starter.driver.controller',[])
                 maxWidth: 200,
                 showDelay: 0
             });
-             $state.go('app.driver.detailInjury',{injuryID:injuryID},{reload:true});
+            $state.go('app.driver.detailInjury',{injuryID:injuryID},{reload:true});
         };
 
         $scope.pickUp = function(injuryID) {
@@ -153,7 +122,7 @@ angular.module('starter.driver.controller',[])
         $scope.injuryID = {};
     })
 
-    .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading,$timeout){
+    .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading){
         return {
             restrict: "A",
             replace: "true",
@@ -203,7 +172,7 @@ angular.module('starter.driver.controller',[])
                         maxWidth: 200,
                         showDelay: 0
                     });
-                   
+
                     GMaps.geolocate({
                         success: function(position) {
                             map.setCenter(position.coords.latitude, position.coords.longitude);
@@ -212,16 +181,13 @@ angular.module('starter.driver.controller',[])
                                 lng: position.coords.longitude,
                                 icon:'img/icon/ambulance.png'
                             });
-                          
+
                             angular.forEach(scope.lstPatient,function(item){
                                 if(item.latitude !== null && item.longitude !== null && item.cal_id == null && item.STATUS.toLowerCase() !== 'done'){
                                     if(item.STATUS.toLowerCase() == 'new'){
                                         map.addMarker({
                                             lat: item.latitude,
                                             lng: item.longitude,
-                                            // infoWindow: {
-                                            //     content: JSON.stringify(item)
-                                            // },
                                             click: function(){
                                                 scope.add({injuryID:item.injury_id});
                                             }
@@ -271,7 +237,6 @@ angular.module('starter.driver.controller',[])
                     events:{
                         click: function(){
                             getInjury();
-
                         }
                     }
                 });
@@ -286,7 +251,6 @@ angular.module('starter.driver.controller',[])
             replace: "true",
             scope:{
                 ll:'='
-               
             },
             link: function(scope, element, attrs){
                 var map = "";
@@ -295,7 +259,7 @@ angular.module('starter.driver.controller',[])
                 scope.ll.duration = 0;
                 scope.ll.distance = 0;
                 var createMap = function(){
-                     map = new GMaps({
+                    map = new GMaps({
                         el: id,
                         lat: -32.280625,
                         lng: 115.736246,
@@ -310,23 +274,22 @@ angular.module('starter.driver.controller',[])
                         overviewMapControl: false
                     });
 
-                     DriverServices.getPatientID($stateParams.injuryID).then(function (result){
-                         
-                        scope.worker = result.data[0];
-                        
-                        if(scope.worker !== undefined){
-                             
-                            localStorageService.set('worker',result.data[0])
-                          
+                    DriverServices.getPatientID($stateParams.injuryID).then(function (result){
 
-                              var location =  function(){
+                        scope.worker = result.data[0];
+
+                        if(scope.worker !== undefined){
+
+                            localStorageService.set('worker',result.data[0])
+
+
+                            var location =  function(){
                                 map.removeMarkers();
 
                                 map.addMarker({
                                     lat: scope.worker.latitude,
                                     lng: scope.worker.longitude,
                                     icon:'img/icon/waitingMaker.png'
-
                                 });
 
                                 GMaps.geolocate({
@@ -352,10 +315,8 @@ angular.module('starter.driver.controller',[])
                                             destination: [scope.worker.latitude, scope.worker.longitude],
                                             travelMode: 'driving',
                                             step: function(e) {
-
                                                 scope.ll.duration = parseInt(scope.ll.duration) + parseInt(e.duration.value);
                                                 scope.ll.distance = parseInt(scope.ll.distance) + parseInt(e.distance.value);
-                                                console.log(e)
                                             }
                                         });
                                     },
@@ -367,12 +328,6 @@ angular.module('starter.driver.controller',[])
                                     }
                                 });
                             };
-
-                            // scope.$watch('lstPatient',function(newval,oldval){
-                            //     if(newval!== null){
-                            //         location();
-                            //     }
-                            // });
 
                             map.addControl({
                                 position:'RIGHT_CENTER',
@@ -388,78 +343,10 @@ angular.module('starter.driver.controller',[])
 
                             location();
                         }
-                });
+                    });
                 };
                 createMap();
-                
-                
-               
-
-              
-
             }
         }
     });
 
-//.directive('drawCircle', function($timeout, $parse) {
-//    return {
-//        restrict: 'E',
-//        replace:true,
-//        scope:{
-//            letter: '=',
-//            background:'=',
-//            width:'=',
-//            height:'=',
-//            font:'=',
-//            num:'@'
-//        },
-//        template:'<div id="dCircle_{{num}}">{{letter}}</div>',
-//        link: function(scope, element, attrs) {
-//            var circle = angular.element(document.getElementById('dCircle_{{num}}'));
-//            //Draw Circle
-//            circle.css('background',scope.background);
-//            circle.css('width',scope.width);
-//            circle.css('height',scope.height);
-//            circle.css('border-radius','50%');
-//            circle.css('text-align','center');
-//            circle.css('vertical-align','middle');
-//            circle.css('display','table-cell');
-//            circle.css('color','white');
-//            circle.css('font-size',scope.font);
-//            circle.css('font-weight','lighter');
-//        }
-//    }
-//})
-
-
-//DIRECTIVE CANVAS CUSTOM
-//.directive('drawImage', function () {
-//    return {
-//        restrict: 'E',
-//        replace: true,
-//        scope:{
-//            color:'=',
-//            letter:'=',
-//            radius:'=',
-//            font:'='
-//        },
-//        template: "<canvas id='myCanvas' />",
-//        link: function(scope, element, attr){
-//            scope.canvas = element[0];
-//            scope.ctx = scope.canvas.getContext('2d');
-//            scope.textCtx = scope.canvas.getContext("2d");
-//            scope.centerX = scope.canvas.width / 2;
-//            scope.centerY = scope.canvas.height / 2;
-//            scope.radius = scope.radius;
-//            scope.ctx.beginPath();
-//            scope.ctx.arc(scope.centerX, scope.centerY, scope.radius, 0, 2 * Math.PI, false);
-//            scope.ctx.fillStyle = scope.color;
-//            scope.ctx.fill();
-//            scope.textCtx.fillStyle = "white";
-//            scope.textCtx.font = scope.font;
-//            scope.textCtx.textAlign="center";
-//            scope.textCtx.textBaseline = "middle";
-//            scope.textCtx.fillText(scope.letter,scope.centerX, scope.centerY);
-//        }
-//    };
-//})

@@ -22,7 +22,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.admin_company" href="javascript:;">Companies</a>
+            <a ui-sref="loggedIn.admin_company" href="javascript:;">Company List</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -31,153 +31,269 @@
         </li>
     </ul>
 </div>
-<form name="companyForm" ng-submit="submitCompany(companyForm)" method="post" novalidate>
-<div class="portlet grey-cascade box">
-    <div class="portlet-title">
-        <div class="caption ">
-            <span class="caption-subject uppercase">Company Details</span>
-        </div>
-        <div class="actions">
-            <button type="submit" class="btn btn-primary btn-md">Submit</button>
-        </div>
+
+<div  class="portlet light ">
+    <div class="portlet-title tabbable-line">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="index.html#tab_1_1" data-toggle="tab">
+                    Company Details
+                </a>
+            </li>
+            <li ng-if="isEdit && !subId">
+                <a href="index.html#tab_1_2" data-toggle="tab">
+                    Sub Companies
+                </a>
+            </li>
+            <li ng-if="isEdit && !subId">
+                <a href="index.html#tab_1_3" data-toggle="tab">
+                    Patient List
+                </a>
+            </li>
+        </ul>
     </div>
     <div class="portlet-body">
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.name.$invalid}">
-                    <label class="bold">Company Name<span class="required">
-                                                        * </span>:</label>
-                    <input required ng-model="info.companyName" name="name" class="form-control"  />
-                </div>
-                <span ng-show="showClickedValidation && companyForm.name.$invalid" for="name" class="help-block">Company Name is required.</span>
-                <span ng-show="isExist" for="name" class="help-block">Company Name is already exists.</span>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_1_1">
+                <form name="companyForm" ng-submit="submitCompany(companyForm)" method="post" novalidate>
+                    <div class="portlet grey-cascade box">
+                        <div class="portlet-title">
+                            <div class="caption ">
+                                <span class="caption-subject uppercase">Company Details</span>
+                            </div>
+                            <div class="actions">
+                                <button type="submit" class="btn btn-primary btn-md">Submit</button>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.name.$invalid}">
+                                        <label class="bold">Company Name<span class="required">
+                                                                            * </span>:</label>
+                                        <input required ng-model="info.companyName" name="name" class="form-control"  />
+                                    </div>
+                                    <span ng-show="showClickedValidation && companyForm.name.$invalid" for="name" class="help-block">Company Name is required.</span>
+                                    <span ng-show="isExist" for="name" class="help-block">Company Name is already exists.</span>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.industry.$invalid}">
+                                        <label class="bold">Industry<span class="required">
+                                                                            * </span>:</label>
+                                        <input type="text" required ng-model="info.industry" name="industry" class="form-control" />
+                                    </div>
+                                    <span ng-show="showClickedValidation && companyForm.industry.$invalid" for="industry" class="help-block">Industry is required.</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.addr.$invalid}">
+                                        <label class="bold">Address<span class="required">
+                                                                            * </span>:</label>
+                                        <input required ng-model="info.addr" name="addr" class="form-control"  />
+                                    </div>
+                                    <span ng-show="showClickedValidation && companyForm.addr.$invalid" for="addr" class="help-block">Company Address is required.</span>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <div class="form-group" >
+                                        <label class="bold">Post Code:</label>
+                                        <input type="text" ng-model="info.postCode" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" >
+                                        <label class="bold">State:</label>
+                                        <input ng-model="info.state" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <div class="form-group" >
+                                        <label class="bold">Country:</label>
+                                        <input type="text" ng-model="info.country" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" >
+                                        <label class="bold">Description:</label>
+                                        <input ng-model="info.description" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <div class="form-group" >
+                                        <label class="bold">PO Number:</label>
+                                        <input type="text" ng-model="info.poNum" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" >
+                                        <label class="bold">Invoice Email:</label>
+                                        <input type="email" ng-model="info.invoiceEmail" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <div class="form-group" >
+                                        <label class="bold">Result Email:</label>
+                                        <input type="email" ng-model="info.resultEmail" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" >
+                                        <label class="bold">Report Email:</label>
+                                        <input type="email" ng-model="info.reportEmail" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                   <div class="form-group" >
+                                        <label class="bold">Contact Number:</label>
+                                        <input ng-model="info.phone" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group" >
+                                        <label class="bold">Status:</label>
+                                        <select class="form-control" ng-model="info.status">
+                                            <option value="">--Select Status--</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Confirmed">Confirmed</option>
+                                            <option value="Reschedule">Reschedule</option>
+                                            <option value="Cancel">Cancel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="checkbox" ng-model="info.isProject" ng-true-value="1" ng-false-value="0" /> Is Project?
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="checkbox" ng-model="info.isPO" ng-true-value="1" ng-false-value="0" /> Is Required PO?
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="checkbox" ng-model="info.isExtra" ng-true-value="1" ng-false-value="0" /> Is Extra Field?
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="checkbox" ng-model="info.isInvoice" ng-true-value="1" ng-false-value="0" /> Is Invoice Email?
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <input type="checkbox" ng-model="info.isResult" ng-true-value="1" ng-false-value="0" />Contact Email In Result?
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="col-md-6 col-sm-6">
-               <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.industry.$invalid}">
-                    <label class="bold">Industry<span class="required">
-                                                        * </span>:</label>
-                    <input type="text" required ng-model="info.industry" name="industry" class="form-control" />
+            <div ng-if="isEdit && !subId" class="tab-pane" id="tab_1_2">
+                <a href="javascript:;" ng-click="addSubCompany()" class="btn green-jungle btn-block">
+                    <i class="fa fa-plus"></i> Add Sub Company
+                </a>
+                <div class="table-scrollable">
+                    <table ng-table="tableParams2" show-filter="true"  class="table table-striped table-hover table-bordered table-responsive">
+                        <tr style="white-space: nowrap" align="center" ng-repeat="a in $data" >
+                            <td data-title="'Company Name'" sortable="'Company_name'" filter="{ 'Company_name': 'text' }">
+                                <a href="javascript:;" ng-click="editSubCompany(a)">{{a.Company_name}}</a>
+                            </td>
+                            <td data-title="'Industry'" filter="{ 'Industry': 'text' }">
+                                <label>{{a.Industry}}</label>
+                            </td>
+                            <td  data-title="'Address'" filter="{ 'Addr': 'text' }">
+                                <label >{{a.Addr}}</label>
+                            </td>
+                            <td data-title="'Post Code'" >
+                                <label>{{a.postcode}}</label>
+                            </td>
+                            <td data-title="'State'" filter="{ 'State': 'text' }">
+                                <label>{{a.State}}</label>
+                            </td>
+                            <td data-title="'Country'"  filter="{ 'Country': 'text' }">
+                                <label>{{a.country}}</label>
+                            </td>
+                            <td data-title="'Description'" >
+                                <label>{{a.Description}}</label>
+                            </td>
+                            <td data-title="'PO Number'"  >
+                                <label>{{a.PO_number}}</label>
+                            </td>
+                            <td data-title="'Invoice Email'" >
+                                <label>{{a.invoice_email}}</label>
+                            </td>
+                            <td data-title="'Result Email'"  >
+                                <label>{{a.result_email}}</label>
+                            </td>
+                            <td data-title="'Is Project'"  >
+                                <input type="checkbox" disabled checked ng-if="a.isProject == 1" />
+                                <input type="checkbox" disabled ng-if="a.isProject != 1"/>
+                            </td>
+
+                        </tr>
+
+                    </table>
                 </div>
-                <span ng-show="showClickedValidation && companyForm.industry.$invalid" for="industry" class="help-block">Industry is required.</span>
+            </div>
+            <div ng-if="isEdit && !subId" class="tab-pane" id="tab_1_3">
+               <div class="table-scrollable">
+                    <table ng-table="tableParams3" show-filter="true"  class="table table-striped table-hover table-bordered table-responsive">
+                        <tr style="white-space: nowrap" align="center" ng-repeat="a in $data" >
+                            <td data-title="'Name'" sortable="'fullName'" filter="{ 'fullName': 'text' }">
+                               <a href="javascript:;" ng-click="viewPatient(a)">{{a.fullName}}</a>
+                            </td>
+                            <td data-title="'Address'" filter="{ 'Address1': 'text' }">
+                                <label>{{a.Address1}}</label>
+                            </td>
+                            <td  data-title="'DOB'" >
+                                <label >{{a.DOB | date:'dd/MM/yyyy'}}</label>
+                            </td>
+                            <td data-title="'Sex'" >
+                                <label>{{a.Sex}}</label>
+                            </td>
+                            <td data-title="'Home Phone'" filter="{ 'Home_phone': 'text' }">
+                                <label>{{a.Home_phone}}</label>
+                            </td>
+                            <td data-title="'Phone'" filter="{ 'Mobile': 'text' }">
+                                <label>{{a.Mobile}}</label>
+                            </td>
+                            <td data-title="'Email'"  filter="{ 'Email': 'text' }">
+                                <label>{{a.Email}}</label>
+                            </td>
+                            <td data-title="'State'" >
+                                <label>{{a.State}}</label>
+                            </td>
+                            <td data-title="'Country'"  >
+                                <label>{{a.Country}}</label>
+                            </td>
+                            <td data-title="'Enable'"  >
+                                <input type="checkbox" disabled checked ng-if="a.Isenable == 1" />
+                                <input type="checkbox" disabled ng-if="a.Isenable != 1"/>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" ng-class="{'has-error':showClickedValidation && companyForm.addr.$invalid}">
-                    <label class="bold">Address<span class="required">
-                                                        * </span>:</label>
-                    <input required ng-model="info.addr" name="addr" class="form-control"  />
-                </div>
-                <span ng-show="showClickedValidation && companyForm.addr.$invalid" for="addr" class="help-block">Company Address is required.</span>
-            </div>
-            <div class="col-md-6 col-sm-6">
-               <div class="form-group" >
-                    <label class="bold">Post Code:</label>
-                    <input type="text" ng-model="info.postCode" class="form-control" />
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" >
-                    <label class="bold">State:</label>
-                    <input ng-model="info.state" class="form-control"  />
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-               <div class="form-group" >
-                    <label class="bold">Country:</label>
-                    <input type="text" ng-model="info.country" class="form-control" />
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" >
-                    <label class="bold">Description:</label>
-                    <input ng-model="info.description" class="form-control"  />
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-               <div class="form-group" >
-                    <label class="bold">PO Number:</label>
-                    <input type="text" ng-model="info.poNum" class="form-control" />
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" >
-                    <label class="bold">Invoice Email:</label>
-                    <input type="email" ng-model="info.invoiceEmail" class="form-control"  />
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-               <div class="form-group" >
-                    <label class="bold">Result Email:</label>
-                    <input type="email" ng-model="info.resultEmail" class="form-control" />
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" >
-                    <label class="bold">Report Email:</label>
-                    <input type="email" ng-model="info.reportEmail" class="form-control"  />
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-               <div class="form-group" >
-                    <label class="bold">Contact Number:</label>
-                    <input ng-model="info.phone" class="form-control" />
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="form-group" >
-                    <label class="bold">Status:</label>
-                    <select class="form-control" ng-model="info.status">
-                        <option value="">--Select Status--</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Reschedule">Reschedule</option>
-                        <option value="Cancel">Cancel</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <input type="checkbox" ng-model="info.isProject" ng-true-value="1" ng-false-value="0" /> Is Project?
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <input type="checkbox" ng-model="info.isPO" ng-true-value="1" ng-false-value="0" /> Is Required PO?
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <input type="checkbox" ng-model="info.isExtra" ng-true-value="1" ng-false-value="0" /> Is Extra Field?
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <input type="checkbox" ng-model="info.isInvoice" ng-true-value="1" ng-false-value="0" /> Is Invoice Email?
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <input type="checkbox" ng-model="info.isResult" ng-true-value="1" ng-false-value="0" />Contact Email In Result?
-            </div>
-        </div>
-
-        
     </div>
-</div>
-</form>
+</div>  
 
 
