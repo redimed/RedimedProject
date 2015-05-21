@@ -22,7 +22,7 @@ angular.module("app.loggedIn.patient.controller", [
 ])
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams) {
     $scope.patientID = $stateParams.patientID;
-    console.log($scope.patientID);
+    console.log($stateParams);
 
 
     $scope.patient_detail_modules = [
@@ -71,6 +71,7 @@ angular.module("app.loggedIn.patient.controller", [
        {'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
             'state': 'loggedIn.patient.recall({patient_id:' + $stateParams.patientID + '})'},
     ];
+    //get patient info
     $scope.current_patient = {};
 
     PatientService.mdtById($scope.patientID).then(function (response) {
@@ -87,6 +88,11 @@ angular.module("app.loggedIn.patient.controller", [
 
         $scope.current_patient.Title = parseInt($scope.current_patient.Title);
     });
+    
+    // get appointments
+    
+
+    
     // FOR VIEW LIST
     $scope.searchObject = {
         doctor_id: 0,
