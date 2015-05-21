@@ -2,7 +2,7 @@ angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.controller",
     "app.loggedIn.patient.services",
     "app.loggedIn.patient.directives",
-
+    "app.loggedIn.patient.listall.controller",
     "app.loggedIn.patient.claim"
 ])
 
@@ -10,8 +10,7 @@ angular.module("app.loggedIn.patient", [
     $stateProvider
 
     .state("loggedIn.patient", {
-        url: "/patient",
-        abstract: true,
+        url: "/patient/:patientID",
         templateUrl: "modules/patient/views/structure.html",
         controller: "PatientController"
     })
@@ -144,14 +143,10 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.listall", {
-        url:'/all',
-        views:{
-            "main-content":{
-                templateUrl:'modules/patient/views/allpatients.html',
-                controller:'PatientListAllController'
-            }
-        }
+    .state("loggedIn.listall", {
+        url:'/allPatients',
+        templateUrl: "modules/patient/views/allpatients.html",
+        controller: "PatientListAllController"
     })
     .state("loggedIn.patient.checkin",{
         url:'/checkin',
