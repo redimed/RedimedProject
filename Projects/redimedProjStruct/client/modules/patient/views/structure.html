@@ -1,3 +1,78 @@
+<style>
+	
+	.un_main_nav_item_dropdown{
+	    list-style:none;
+	    font-weight:bold;
+	    margin-bottom:10px;
+	    float:left; /* Clear floats */
+	    width:100%;
+	    /* Bring the nav above everything else--uncomment if needed.
+	    position:relative;
+	    z-index:5;
+	    */
+	}
+	.un_main_nav_item_dropdown li{
+	    float:left;
+	    margin-right:10px;
+	    position:relative;
+	}
+	.un_main_nav_item_dropdown a{
+	    display:block;
+	    padding:5px;
+	    text-decoration:none;
+
+
+	}
+	.un_main_nav_item_dropdown a:hover{
+	    /*color:#fff;*/
+	    /*background:#6b0c36;*/
+	    text-decoration:underline;
+	}
+
+	/*--- DROPDOWN ---*/
+	.un_main_nav_item_dropdown ul{
+	    background:#fff; 
+	    list-style:none;
+	    position:absolute;
+	    left:-9999px; 
+	    z-index: 99999;/*tan add*/
+	}
+	.un_main_nav_item_dropdown ul li{
+	    padding-top:1px; 
+	    float:none;
+	}
+	.un_main_nav_item_dropdown ul a{
+	    white-space:nowrap; 
+
+	}
+	.un_main_nav_item_dropdown li:hover ul{ 
+	    left:0; 
+	}
+
+	.un_main_nav_item_dropdown li ul li a{ 
+	    background: -webkit-linear-gradient(#DADADA, #FFFFFF);
+	    background: -o-linear-gradient(#DADADA, #FFFFFF);
+	    background: -moz-linear-gradient(#DADADA, #FFFFFF);
+	    background: linear-gradient(#DADADA, #FFFFFF);
+	    color:black;
+	    text-decoration:underline;
+	}
+
+	.un_main_nav_item_dropdown li:hover a{ 
+	    color:black;
+	}
+
+	.un_main_nav_item_dropdown li:hover ul a{ 
+	    text-decoration:none;
+	}
+	.un_main_nav_item_dropdown li:hover ul li a:hover{ 
+	    background: -webkit-linear-gradient(#9F9F9F, #262626); 
+	    background: -o-linear-gradient(#9F9F9F, #262626); 
+	    background: -moz-linear-gradient(#9F9F9F, #262626); 
+	    background: linear-gradient(#9F9F9F, #262626);
+	    color:white;
+	}
+</style>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="un_page_panel">
@@ -25,6 +100,35 @@
 			<div class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
+
+			<div class="un_main_nav_item">
+				<ul class="un_main_nav_item_dropdown">
+				    <li>
+				        <a href="#">Product</a>
+				        <ul style="list-style-type: none;">
+				            <li><a href="#">Small product (one)</a></li>
+
+				            <li><a href="#">Small product (two)</a></li>
+				            <li><a href="#">Small product (three)</a></li>
+				            <li><a href="#">Small product (four)</a></li>
+
+				            <li><a href="#">Big product (five)</a></li>
+				            <li><a href="#">Big product (six)</a></li>
+				            <li><a href="#">Big product (seven)</a></li>
+
+				            <li><a href="#">Big product (eight)</a></li>
+				            <li><a href="#">Enormous product (nine)</a></li>
+				            <li><a href="#">Enormous product (ten)</a></li>
+
+				            <li><a href="#">Enormous product (eleven)</a></li>
+				        </ul>
+				    </li>
+
+				</ul>
+			</div>
+
+
+
 
 		</div>
 	</div>
