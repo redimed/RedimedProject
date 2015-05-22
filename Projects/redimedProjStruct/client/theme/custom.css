@@ -1612,6 +1612,7 @@ table.timetable-table td:last-child {
     border-radius: 20px !important;
     border: 3px solid white;
     background: rgb(102, 102, 102) !important;
+    margin-bottom: 10px;
 }
 .un-submit:hover{
     color: white !important;
@@ -2233,7 +2234,28 @@ label{
 .un_main_nav_item_dropdown li:hover ul a{ 
     text-decoration:none;
 }
-.page-content-wrapper .page-content {
-    background: rgb(24, 22, 78);
-
+.un-header-left{
+    position: relative;
+}
+.un-header-right{
+}
+.un-img-header{
+    margin-top: -65px
+}
+.un-btn-header{
+    top: 8px;
+    left: 8;
+}
+.un-header-top-menu{
+    position: absolute;
+    right: 0;
+    top: 0px;
+}
+.un-header-logo-img{
+    height: 30px;
+    position: relative;
+    top: 8;
+    left: 4%;
+    width: 200px;
+}
 /*TAN NAV ITEM DROPDOWN END*/
