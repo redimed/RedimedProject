@@ -80,8 +80,6 @@ angular.module("app.security.login.controller",[
                         $cookieStore.put("userInfo", response.userInfo);
                         $cookieStore.put("isRemember",$scope.modelUser.isRemember);
 
-                        localStorageService.set("userInfo",  response.userInfo);
-
                         if (typeof response.companyInfo !== 'undefined')
                             $cookieStore.put("companyInfo", response.companyInfo);
 
