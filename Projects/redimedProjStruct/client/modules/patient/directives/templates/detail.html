@@ -130,11 +130,16 @@
                                                 </span>
                                             </span> -->
                                             <!-- ERROR -->
-                                        </div>                        
+                                        </div>   
                                         <div>
                                             <label class="un-label-form un-label-whidth-85">Middle name</label>
                                             <input type="text" id="mname" name="mname" ng-model="modelObjectMap.Middle_name" class="form-control un-input-custom" float-label />
                                         </div>
+                                        <div>
+                                            <label class="un-label-form un-label-whidth-97">Known as</label>
+                                            <input type="text" id="knownas" 
+                                                name="knownas" ng-model="modelObjectMap.Known_as" class="form-control un-input-custom" float-label />
+                                        </div>  
                                         <div class="form-group">
                                             <select class="un-select-sex" ng-model="modelObjectMap.Sex">
                                                 <option value="0" selected>Male</option>
@@ -146,11 +151,6 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 un-form-right">
-                                        <div>
-                                            <label class="un-label-form un-label-whidth-97">Known as</label>
-                                            <input type="text" id="knownas" 
-                                                name="knownas" ng-model="modelObjectMap.Known_as" class="form-control un-input-custom" float-label />
-                                        </div>
                                         <div ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
                                             <label class="un-label-form un-label-whidth-97">Date of Birth *</label>
                                             <input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
@@ -198,6 +198,11 @@
                                                 </span>
                                             </span> -->
                                             <!-- ERROR -->
+                                        </div>
+                                        <div>
+                                            <label class="un-label-form un-label-whidth-97">Occupation</label>
+                                            <input type="text" name="occupation" ng-model="modelObjectMap.Occupation"
+                                                class="form-control un-input-custom" id="occupation" float-label>
                                         </div>
                                     </div>
                                 </div>

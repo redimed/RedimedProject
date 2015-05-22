@@ -2,7 +2,7 @@ angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.controller",
     "app.loggedIn.patient.services",
     "app.loggedIn.patient.directives",
-
+    "app.loggedIn.patient.listall.controller",
     "app.loggedIn.patient.claim"
 ])
 
@@ -10,8 +10,7 @@ angular.module("app.loggedIn.patient", [
     $stateProvider
 
     .state("loggedIn.patient", {
-        url: "/patient",
-        abstract: true,
+        url: "/patient/:patient_id/:cal_id",
         templateUrl: "modules/patient/views/structure.html",
         controller: "PatientController"
     })
@@ -27,7 +26,7 @@ angular.module("app.loggedIn.patient", [
     })
 
     .state("loggedIn.patient.appointment", {
-        url: '/appointment/:patient_id/:cal_id',
+        url: '/appointment',
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/appointment.html",
@@ -36,7 +35,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
     .state("loggedIn.patient.detail", {
-        url: "/:patient_id/detail",
+        url: "/detail",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/detail.html",
@@ -55,7 +54,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
     .state("loggedIn.patient.invoices", {
-        url: "/:patient_id/invoices/:cal_id",
+        url: "/invoices",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/invoices.html",
@@ -64,7 +63,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
      .state("loggedIn.patient.recall", {
-        url: "/:patient_id/recall",
+        url: "/recall",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/recall.html",
@@ -73,7 +72,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
     .state("loggedIn.patient.appt", {
-        url: "/:patient_id/appt/:cal_id",
+        url: "/appt",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/appt.html",
@@ -82,7 +81,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
     .state("loggedIn.patient.companies", {
-        url: "/:patient_id/companies",
+        url: "/companies",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/companies.html",
@@ -91,7 +90,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
     .state("loggedIn.patient.workcover", {
-        url: "/:patient_id/workcover/:cal_id",
+        url: "/workcover",
         views: {
             "main-content": {
                 templateUrl: "modules/patient/views/workcover.html",
@@ -127,7 +126,7 @@ angular.module("app.loggedIn.patient", [
         }
     })*/
     .state("loggedIn.patient.itemsheet",{
-        url:"/appointment/:patient_id/:cal_id/itemsheet",
+        url:"/appointment/itemsheet",
         views: {
             "main-content":{
                 templateUrl: "modules/patient/views/itemsheet.html",
@@ -136,7 +135,7 @@ angular.module("app.loggedIn.patient", [
         }
     })
     .state("loggedIn.patient.apptdoc", {
-        url:'/appointment/:patient_id/:cal_id/document',
+        url:'/appointment/document',
         views:{
             "main-content":{
                 templateUrl:'modules/patient/views/apptdoc.html',
@@ -144,14 +143,10 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.listall", {
-        url:'/all',
-        views:{
-            "main-content":{
-                templateUrl:'modules/patient/views/allpatients.html',
-                controller:'PatientListAllController'
-            }
-        }
+    .state("loggedIn.listall", {
+        url:'/allPatients',
+        templateUrl: "modules/patient/views/allpatients.html",
+        controller: "PatientListAllController"
     })
     .state("loggedIn.patient.checkin",{
         url:'/checkin',

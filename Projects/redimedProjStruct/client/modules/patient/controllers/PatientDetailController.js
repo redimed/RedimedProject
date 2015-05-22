@@ -5,7 +5,11 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 	$scope.current_patient = {};
 		
 	
-
+	$scope.actionCenter={
+		runWhenFinish:function(){
+    		$scope.getPatientInfo();
+		}
+	}
 	//PARAMS
 	$scope.params = {
 		permission: {

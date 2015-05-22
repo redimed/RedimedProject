@@ -15,8 +15,20 @@ angular.module('app.loggedIn.referral', [
                 }
             })
         
+        //tan frame
+        // .state("loggedIn.patient.referral.list",{
+        //     url:'/:patient_id/referral/:cal_id',
+        //     views:{
+        //         'main-content':{
+        //             templateUrl:"modules/referral/views/referral-list.html",
+        //             controller:"ReferralListController"
+        //         }
+        //     }
+        // })
+        //
+        //tan add
         .state("loggedIn.patient.referral.list",{
-            url:'/:patient_id/referral/:cal_id',
+            url:'/referral',
             views:{
                 'main-content':{
                     templateUrl:"modules/referral/views/referral-list.html",
