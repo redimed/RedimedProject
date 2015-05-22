@@ -51,6 +51,9 @@ module.exports = function(sequelize, DataTypes){
                 mdtAppointment.belongsTo( models.SysServices, { 
                     as: 'Service', foreignKey: 'SERVICE_ID'
                 });
+                mdtAppointment.belongsTo(models.mdtRedimedsites,{
+                	as: 'Site',foreignKey:'SITE_ID'
+                })
 			}
 		}// end association
 	});

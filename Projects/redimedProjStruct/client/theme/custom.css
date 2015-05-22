@@ -1499,9 +1499,12 @@ table.timetable-table td:last-child {
     border: 2px solid rgb(196, 196, 196)!important;
 }
 .un-img-sex{
-    width: 65px;
+    width: 50px;
     margin-left: 0px;
     padding-top: 5px;
+    position: relative;
+    position: absolute;
+    bottom: -10px;
 }
 .un-icon-down{
     position: relative;
@@ -1649,6 +1652,7 @@ table.timetable-table td:last-child {
     border-radius: 20px !important;
     border: 3px solid white;
     background: rgb(102, 102, 102) !important;
+    margin-bottom: 10px;
 }
 .un-submit:hover{
     color: white !important;
@@ -1694,10 +1698,8 @@ table.timetable-table td:last-child {
 .un-select-sex{
     width: 20px;
     position: relative;
-    top: 19px;
+    top: 18px;
 }
-/*Phan Quoc Chien Material
-/* Dung chung */
 .un_page_panel {
     margin-left: -20px;
     margin-right: -20px;
@@ -1806,7 +1808,7 @@ nav bar begin*/
 
 .un_main_nav_panel {
     background: rgb(6, 4, 44);
-    height: 53px;
+    /*height: 53px;*/ /*TANNV.DTS COMMENT*/
     float: right;
     width: 100%;
 }
@@ -1816,7 +1818,9 @@ nav bar begin*/
     background: -o-linear-gradient(#DADADA, #FFFFFF);
     background: -moz-linear-gradient(#DADADA, #FFFFFF);
     background: linear-gradient(#DADADA, #FFFFFF);
-    height: 40px;
+    float:right;/*TANNV.DTS@GMAIL.COM ADD*/
+    width: 100%;
+    /*height: 40px;*/ /*TANNV.DTS@GMAIL.COM COMMENT*/
 }
 
 
@@ -2201,4 +2205,97 @@ label{
     color:rgb(224, 224, 224);
 }
 /**group black panel end*/
-/* end */
+
+
+/*TAN NAV ITEM DROPDOWN BEGIN*/
+.un_main_nav_item_dropdown{
+    list-style:none;
+    padding-left:0;
+    font-weight:bold;
+    float:left; 
+    width:100%;
+}
+.un_main_nav_item_dropdown li{
+    float:left;
+    position:relative;
+}
+.un_main_nav_item_dropdown a{
+    display:block;
+    text-decoration:none;
+}
+
+.un_main_nav_item_dropdown ul li a{
+    padding:5px;
+}
+
+/*--- DROPDOWN ---*/
+.un_main_nav_item_dropdown ul{
+    background:#fff; 
+    list-style:none;
+    padding-left:0;
+    position:absolute;
+    left:-9999px; /*an di neu chua hover*/
+}
+.un_main_nav_item_dropdown ul li{
+    float:none;
+}
+.un_main_nav_item_dropdown ul a{
+    white-space:nowrap; 
+
+}
+.un_main_nav_item_dropdown li:hover ul{ 
+    left:-20; /*hien menu ra*/
+    z-index: 99999;/*tan add*/
+
+}
+
+.un_main_nav_item_dropdown ul li a{ 
+    background: -webkit-linear-gradient(#DADADA, #FFFFFF);
+    background: -o-linear-gradient(#DADADA, #FFFFFF);
+    background: -moz-linear-gradient(#DADADA, #FFFFFF);
+    background: linear-gradient(#DADADA, #FFFFFF);
+    /*background:#DADADA;*/
+    color:black;
+    text-decoration:underline;
+}
+
+.un_main_nav_item_dropdown ul li a:hover{ 
+    background: -webkit-linear-gradient(#9F9F9F, #262626); 
+    background: -o-linear-gradient(#9F9F9F, #262626); 
+    background: -moz-linear-gradient(#9F9F9F, #262626); 
+    background: linear-gradient(#9F9F9F, #262626);
+    color:white;
+}
+
+.un_main_nav_item_dropdown li:hover a{ 
+    color:black;
+}
+
+.un_main_nav_item_dropdown li:hover ul a{ 
+    text-decoration:none;
+}
+.un-header-left{
+    position: relative;
+}
+.un-header-right{
+}
+.un-img-header{
+    margin-top: -65px
+}
+.un-btn-header{
+    top: 8px;
+    left: 8;
+}
+.un-header-top-menu{
+    position: absolute;
+    right: 0;
+    top: 0px;
+}
+.un-header-logo-img{
+    height: 30px;
+    position: relative;
+    top: 8;
+    left: 4%;
+    width: 200px;
+}
+/*TAN NAV ITEM DROPDOWN END*/

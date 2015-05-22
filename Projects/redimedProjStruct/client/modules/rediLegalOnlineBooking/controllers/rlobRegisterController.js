@@ -18,7 +18,7 @@ angular.module('app.rlobRegister.controller',[])
                 }).then(function(){
                     if(checkuser.length >0){
                         $scope.showClickedValidation = true;
-                        toastr.error("Username da Ton Tai", "Error");
+                        toastr.error("Username already exists", "Error");
                     }else{
                         $scope.user.fname = $scope.user.fname.charAt(0).toUpperCase() + $scope.user.fname.substr(1);
                         $scope.user.lname = $scope.user.lname.charAt(0).toUpperCase() + $scope.user.lname.substr(1);

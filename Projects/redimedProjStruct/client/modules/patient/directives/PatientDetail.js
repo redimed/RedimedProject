@@ -9,7 +9,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			isClose: "@",
 			patient: "=",
 			params: "=",
-			onsuccess: '='
+			onsuccess: '=',
+			actionCenter:'='// chua ham runWhenFinish();
 		},
 		templateUrl: "modules/patient/directives/templates/detail.html",
 		link: function(scope, element, attrs){
@@ -235,6 +236,8 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 
 			// ACTION
 			var clickAction = function(){
+				
+
 				scope.isSubmit = true;
 
 				//ACCORDION
@@ -261,12 +264,17 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 					else postData.avatar = "";
 					if(scope.params.permission.edit === true){
 						PatientService.mdtEdit(postData).then(function(response){
-							 if (response.status != 'success') {
+							if (response.status != 'success') {
 	                            toastr.error("Cannot Update!", "Error");
 	                            return;
 	                        }
 	                        toastr.success('Updated Patient Successfully !!!', "Success");
-
+	                        //phanquocchien check submit success
+	                        if(scope.actionCenter && scope.actionCenter.runWhenFinish)
+							{
+								scope.actionCenter.runWhenFinish();
+							}
+							//end
 	                        initObject();
 
 	                        if(scope.isClose){
@@ -300,7 +308,7 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 		                        scope.patient.Patient_id = data.data.Patient_id;
 		                        //end return
 	                        }
-
+	                        
 	                        initObject();
 
 	                        if(scope.isClose){
