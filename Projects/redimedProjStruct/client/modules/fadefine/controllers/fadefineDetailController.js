@@ -79,7 +79,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 										line.comments = detailAndCommentRes.data.comments;
 										line.details.forEach(function(detail){
 											detail.action = 'edit';
-											if(line.PICTURE!==null){
+											if(detail.PICTURE!==null){
 												var strarr = detail.PICTURE.split("\\");
 												var fileName = strarr[strarr.length-1];
 												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
@@ -152,7 +152,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 											detail.Creation_date = null;
 											detail.Last_updated_by = null; 
 											detail.Last_update_date = null;
-											if(line.PICTURE!==null){
+											if(detail.PICTURE!==null){
 												var strarr = detail.PICTURE.split("\\");
 												var fileName = strarr[strarr.length-1];
 												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
