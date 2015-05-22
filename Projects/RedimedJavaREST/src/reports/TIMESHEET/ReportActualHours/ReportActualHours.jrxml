@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -64,124 +64,95 @@ INNER JOIN departments ON departments.departmentid = time_employee_reports1.depa
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT DISTINCT
-time_employee_reports1.time_ac1_dept,
-time_employee_reports1.time_ac2_dept,
-time_employee_reports1.time_ac3_dept,
-time_employee_reports1.time_ac4_dept,
-time_employee_reports1.time_ac5_dept,
-time_employee_reports1.total_dept,
-time_employee_reports1.time_in_lieu_dept,
-time_employee_reports1.overtime_dept,
-time_employee_reports1.time_ac1_all,
-time_employee_reports1.time_ac2_all,
-time_employee_reports1.time_ac3_all,
-time_employee_reports1.time_ac4_all,
-time_employee_reports1.time_ac5_all,
-time_employee_reports1.time_in_lieu_all,
-time_employee_reports1.overtime_all,
-time_employee_reports1.total_all,
-time_employee_reports1.employee,
-time_employee_reports1.from_date,
-time_employee_reports1.to_date,
-time_time_charge_reports1.time_ac1,
-time_time_charge_reports1.time_ac2,
-time_time_charge_reports1.time_ac3,
-time_time_charge_reports1.time_ac4,
-time_time_charge_reports1.time_ac5,
-time_time_charge_reports1.time_in_lieu,
-time_time_charge_reports1.time_charge_sum,
-time_time_charge_reports1.time_over,
-departments.departmentName
-FROM
-time_employee_reports1
-INNER JOIN time_time_charge_reports1 ON time_employee_reports1.employee_id = time_time_charge_reports1.employee_id
-INNER JOIN departments ON departments.departmentid = time_employee_reports1.departmentid
-WHERE time_employee_reports1.user_id=$P{id}
-ORDER BY time_time_charge_reports1.employee_id]]>
+		<![CDATA[SELECT time_activity_report.Employee_id,
+time_activity_report.Department_id,time_activity_report.time_charge_1,
+time_activity_report.time_charge_2,time_activity_report.time_charge_3,
+time_activity_report.time_charge_4,time_activity_report.time_charge_5,
+time_activity_report.time_charge_1_Dept,time_activity_report.time_charge_2_Dept,
+time_activity_report.time_charge_3_Dept,time_activity_report.time_charge_4_Dept,
+time_activity_report.time_charge_5_Dept,time_activity_report.time_charge_1_all,
+time_activity_report.time_charge_2_all,time_activity_report.time_charge_3_all,
+time_activity_report.time_charge_4_all,time_activity_report.time_charge_5_all,
+time_activity_report.time_charge_week,time_activity_report.time_charge_week_Dept,
+time_activity_report.time_charge_all,time_activity_report.from_date,
+time_activity_report.to_date,departments.departmentName,hr_employee.FirstName,hr_employee.LastName
+FROM time_activity_report
+INNER JOIN hr_employee ON hr_employee.Employee_ID = time_activity_report.Employee_id
+INNER JOIN departments ON departments.departmentid = time_activity_report.Department_id]]>
 	</queryString>
-	<field name="time_ac1_dept" class="java.lang.Integer">
+	<field name="Employee_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac2_dept" class="java.lang.Integer">
+	<field name="Department_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac3_dept" class="java.lang.Integer">
+	<field name="time_charge_1" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac4_dept" class="java.lang.Integer">
+	<field name="time_charge_2" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac5_dept" class="java.lang.Integer">
+	<field name="time_charge_3" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_dept" class="java.lang.Integer">
+	<field name="time_charge_4" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_in_lieu_dept" class="java.lang.Integer">
+	<field name="time_charge_5" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="overtime_dept" class="java.lang.Integer">
+	<field name="time_charge_1_Dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac1_all" class="java.lang.Integer">
+	<field name="time_charge_2_Dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac2_all" class="java.lang.Integer">
+	<field name="time_charge_3_Dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac3_all" class="java.lang.Integer">
+	<field name="time_charge_4_Dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac4_all" class="java.lang.Integer">
+	<field name="time_charge_5_Dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac5_all" class="java.lang.Integer">
+	<field name="time_charge_1_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_in_lieu_all" class="java.lang.Integer">
+	<field name="time_charge_2_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="overtime_all" class="java.lang.Integer">
+	<field name="time_charge_3_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_all" class="java.lang.Integer">
+	<field name="time_charge_4_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="employee" class="java.lang.String">
+	<field name="time_charge_5_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="from_date" class="java.sql.Timestamp">
+	<field name="time_charge_week" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="to_date" class="java.sql.Timestamp">
+	<field name="time_charge_week_Dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac1" class="java.lang.Integer">
+	<field name="time_charge_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac2" class="java.lang.Integer">
+	<field name="from_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_ac3" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="time_ac4" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="time_ac5" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="time_in_lieu" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="time_charge_sum" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="time_over" class="java.lang.Integer">
+	<field name="to_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="departmentName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FirstName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LastName" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<group name="DeptGroup">

@@ -3849,7 +3849,596 @@ module.exports = {
     //REPORT UTILIZATION RATIO DETAIL
     LoadReportUtilizationRatioDetail: function(req, res) {
         var info = req.body.info;
-        console.log(info);
+        //console.log(info);
+        var stringEMP ="";
+        var stringDept="";
+        var stringWeek="";
+        var stringItem="";
+        var flag1 = 0;
+        var flag2 = 0;
+        var flag3 = 0;
+        var flag4 = 0;
+        var flag5 = 0;
+        var flag6 = 0;
+        var time_charge_1_all = 0;
+        var time_charge_2_all = 0;
+        var time_charge_3_all = 0;
+        var time_charge_4_all = 0;
+        var time_charge_5_all = 0;
+        var time_charge_all   = 0;
+        for(var i = 0;i<info.listEMP.length;i++){
+            stringEMP+=info.listEMP[i].id+ ", ";
+        }
+        stringEMP+=0;
+        for(var j = 0;j<info.listDept.length;j++){
+            stringDept+=info.listDept[j].id+", ";
+        }
+        stringDept+=0;
+        //DELETE DATA IN TABLE
+        var sql_delete_time_activity_table = "DELETE from time_activity_table ";
+        var sql_delete_time_activity_detail_table = "DELETE from time_activity_detail_table ";
+        var sql_delete_time_activity_report = "DELETE from time_activity_report ";
+        db.sequelize.query(sql_delete_time_activity_report)
+            .success(function(data_delete3){
+
+                db.sequelize.query(sql_delete_time_activity_detail_table)
+                .success(function(data_delete1){
+                    db.sequelize.query(sql_delete_time_activity_table)
+                        .success(function(data_delete2){
+            //END DELETE
+                            var sql_get_data_time_activity_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id "
+                                            +"FROM hr_employee "
+                                            +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
+                                            +"INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid "
+                                            +"INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "
+                                            +"WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( "+stringDept+" ) AND (time_tasks_week.week_no BETWEEN "+info.weekNoFrom+" AND "+info.weekNoTo+" ) AND hr_employee.Employee_ID IN ( "+stringEMP+" )";
+                            db.sequelize.query(sql_get_data_time_activity_table)
+                                .success(function(data_time_activity_table){
+                                    //console.log(data_time_activity_table)
+                                    //INSERT time_activity_table
+                                    for(var i = 0;i< data_time_activity_table.length;i++){
+                                        db.time_activity_table.create({
+                                            user_id            : data_time_activity_table[i].id,
+                                            task_week_id       : data_time_activity_table[i].task_week_id,
+                                            Employee_id        : data_time_activity_table[i].Employee_ID,
+                                            Department_id      : data_time_activity_table[i].departmentid,
+                                            FirstName          : data_time_activity_table[i].FirstName,
+                                            LastName           : data_time_activity_table[i].LastName,
+                                            Department_name    : data_time_activity_table[i].departmentName,
+                                            weekno             : data_time_activity_table[i].week_no,
+                                            time_charge_week   : data_time_activity_table[i].time_charge,
+                                            from_date          : info.weekFrom,
+                                            to_date            : info.weekTo
+                                        })
+                                        .success(function(data_insert1){
+                                            flag1++;
+                                            if(flag1==data_time_activity_table.length){
+                                                //GET DETAIL DATA
+                                                var sql_get_data_time_activity_detail_table ="SELECT time_activity_table.task_week_id,time_tasks.tasks_id,"
+                                                                                                +"time_activity_table.user_id,time_activity_table.Employee_id,"
+                                                                                                +"time_activity_table.Department_id,time_tasks.activity_id,"
+                                                                                                +"time_tasks.time_charge,time_activity_table.time_charge_week,"
+                                                                                                +"time_activity_table.weekno,time_activity_table.from_date,time_activity_table.to_date "
+                                                                                                +"FROM time_tasks "
+                                                                                                +"INNER JOIN time_activity_table ON time_activity_table.task_week_id = time_tasks.tasks_week_id ";
+                                                db.sequelize.query(sql_get_data_time_activity_detail_table)
+                                                    .success(function(data_time_activity_detail_table){
+                                                        //console.log(data_time_activity_detail_table)
+                                                        for(var j = 0;j<data_time_activity_detail_table.length;j++){
+                                                            //INSERT time_activity_detail_table
+                                                            db.time_activity_detail_table.create({
+                                                                task_week_id      : data_time_activity_detail_table[j].task_week_id,
+                                                                tasks_id          : data_time_activity_detail_table[j].tasks_id,
+                                                                user_id           : data_time_activity_detail_table[j].user_id,
+                                                                Employee_id       : data_time_activity_detail_table[j].Employee_id,
+                                                                Department_id     : data_time_activity_detail_table[j].Department_id,
+                                                                activity_id       : data_time_activity_detail_table[j].activity_id,
+                                                                time_charge       : data_time_activity_detail_table[j].time_charge,
+                                                                time_charge_week  : data_time_activity_detail_table[j].time_charge_week,
+                                                                weekno            : data_time_activity_detail_table[j].weekno,
+                                                                from_date         : data_time_activity_detail_table[j].from_date,
+                                                                to_date           : data_time_activity_detail_table[j].to_date
+                                                            })
+                                                            .success(function(data_insert2){
+                                                                flag2++;
+                                                                if(flag2==data_time_activity_detail_table.length){
+                                                                    var sql_get_data_time_activity_report ="SELECT user_id,task_week_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS 'time_charge_by_activity_id',time_charge_week,weekno,from_date,to_date "
+                                                                                                            +"FROM time_activity_detail_table "
+                                                                                                            +"WHERE Employee_id IN("+stringEMP+") AND Department_id in ("+stringDept+") "
+                                                                                                            +"GROUP BY Department_id,activity_id ";
+
+                                                                    var sql_get_data_total                ="SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', "
+                                                                                                           + "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', "
+                                                                                                           + "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', "
+                                                                                                           + "SUM(time_charge_week) AS 'time_charge_week_Dept' "
+                                                                                                           + "from time_activity_report "
+                                                                                                           + "WHERE Department_id in ("+stringDept+") "
+                                                                                                           + "GROUP BY Department_id";
+                                                                    db.sequelize.query(sql_get_data_time_activity_report)
+                                                                        .success(function(data_get_data_time_activity_report){
+                                                                            //console.log(data_get_data_time_activity_report)
+                                                                            for(var a =0;a<data_time_activity_table.length;a++){
+                                                                                db.time_activity_report.create({
+                                                                                    user_id           : data_time_activity_table[a].id,
+                                                                                    Employee_id       : data_time_activity_table[a].Employee_ID,
+                                                                                    Department_id     : data_time_activity_table[a].departmentid,
+                                                                                    time_charge_week  : data_time_activity_table[a].time_charge,
+                                                                                    weekno            : data_time_activity_table[a].week_no,
+                                                                                    from_date         : info.weekFrom,
+                                                                                    to_date           : info.weekTo
+                                                                                })
+                                                                                .success(function(data_insert3){
+                                                                                    flag3++;
+                                                                                    if(flag3==data_time_activity_table.length){
+                                                                                        
+                                                                                        for(var b = 0;b <data_get_data_time_activity_report.length;b++){
+                                                                                                if(data_get_data_time_activity_report[b].activity_id==1){
+                                                                                                    db.time_activity_report.update({
+                                                                                                        time_charge_1 : data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                    },{
+                                                                                                        Employee_id: data_get_data_time_activity_report[b].Employee_id , Department_id: data_get_data_time_activity_report[b].Department_id
+                                                                                                    })
+                                                                                                    .success(function(data_success){
+                                                                                                        
+                                                                                                        flag4++;
+                                                                                                        if(flag4==data_get_data_time_activity_report.length){
+                                                                                                            db.sequelize.query(sql_get_data_total)
+                                                                                                                .success(function(data_total){
+                                                                                                                    for(var f = 0 ;f<data_total.length;f++){
+                                                                                                                        time_charge_1_all+=data_total[f].time_charge_1_Dept;
+                                                                                                                        time_charge_2_all+=data_total[f].time_charge_2_Dept;
+                                                                                                                        time_charge_3_all+=data_total[f].time_charge_3_Dept;
+                                                                                                                        time_charge_4_all+=data_total[f].time_charge_4_Dept;
+                                                                                                                        time_charge_5_all+=data_total[f].time_charge_5_Dept;
+                                                                                                                        time_charge_all+=data_total[f].time_charge_week_Dept;
+                                                                                                                    }
+                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                        db.time_activity_report.update({
+                                                                                                                            time_charge_1_Dept    : data_total[c].time_charge_1_Dept,
+                                                                                                                            time_charge_1_all     : time_charge_1_all,
+                                                                                                                            time_charge_2_Dept    : data_total[c].time_charge_2_Dept,
+                                                                                                                            time_charge_2_all     : time_charge_2_all,
+                                                                                                                            time_charge_3_Dept    : data_total[c].time_charge_3_Dept,
+                                                                                                                            time_charge_3_all     : time_charge_3_all,
+                                                                                                                            time_charge_4_Dept    : data_total[c].time_charge_4_Dept,
+                                                                                                                            time_charge_4_all     : time_charge_4_all,
+                                                                                                                            time_charge_5_Dept    : data_total[c].time_charge_5_Dept,
+                                                                                                                            time_charge_5_all     : time_charge_5_all,
+                                                                                                                            time_charge_week_Dept : data_total[c].time_charge_week_Dept,
+                                                                                                                            time_charge_all       : time_charge_all
+                                                                                                                        },{
+                                                                                                                            Department_id: data_total[c].Department_id
+                                                                                                                        })
+                                                                                                                        .success(function(data_success1){
+                                                                                                                            
+                                                                                                                            flag5++;
+                                                                                                                            if(flag5==data_time_activity_table.length){
+                                                                                                                                //success
+                                                                                                                                console.log("success")
+                                                                                                                            }
+                                                                                                                        })
+                                                                                                                        .error(function(err){
+                                                                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                                                                            res.json({
+                                                                                                                                status:"error"
+                                                                                                                            });
+                                                                                                                            return;
+                                                                                                                        })
+                                                                                                                    }
+                                                                                                                })
+                                                                                                        }
+                                                                                                        
+                                                                                                        
+                                                                                                    })
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR :"+err+" *****");
+                                                                                                        res.json({
+                                                                                                            status:"error"
+                                                                                                        });
+                                                                                                        return;
+                                                                                                    })
+                                                                                                }
+                                                                                                else if(data_get_data_time_activity_report[b].activity_id==2){
+                                                                                                     db.time_activity_report.update({
+                                                                                                        time_charge_2 : data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                    },{
+                                                                                                        Employee_id: data_get_data_time_activity_report[b].Employee_id , Department_id: data_get_data_time_activity_report[b].Department_id
+                                                                                                    })
+                                                                                                    .success(function(data_success){
+                                                                                                        
+                                                                                                        flag4++;
+                                                                                                        if(flag4==data_get_data_time_activity_report.length){
+                                                                                                            db.sequelize.query(sql_get_data_total)
+                                                                                                                .success(function(data_total){
+                                                                                                                    for(var f = 0 ;f<data_total.length;f++){
+                                                                                                                        time_charge_1_all+=data_total[f].time_charge_1_Dept;
+                                                                                                                        time_charge_2_all+=data_total[f].time_charge_2_Dept;
+                                                                                                                        time_charge_3_all+=data_total[f].time_charge_3_Dept;
+                                                                                                                        time_charge_4_all+=data_total[f].time_charge_4_Dept;
+                                                                                                                        time_charge_5_all+=data_total[f].time_charge_5_Dept;
+                                                                                                                        time_charge_all+=data_total[f].time_charge_week_Dept;
+                                                                                                                    }
+                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                        db.time_activity_report.update({
+                                                                                                                            time_charge_1_Dept    : data_total[c].time_charge_1_Dept,
+                                                                                                                            time_charge_1_all     : time_charge_1_all,
+                                                                                                                            time_charge_2_Dept    : data_total[c].time_charge_2_Dept,
+                                                                                                                            time_charge_2_all     : time_charge_2_all,
+                                                                                                                            time_charge_3_Dept    : data_total[c].time_charge_3_Dept,
+                                                                                                                            time_charge_3_all     : time_charge_3_all,
+                                                                                                                            time_charge_4_Dept    : data_total[c].time_charge_4_Dept,
+                                                                                                                            time_charge_4_all     : time_charge_4_all,
+                                                                                                                            time_charge_5_Dept    : data_total[c].time_charge_5_Dept,
+                                                                                                                            time_charge_5_all     : time_charge_5_all,
+                                                                                                                            time_charge_week_Dept : data_total[c].time_charge_week_Dept,
+                                                                                                                            time_charge_all       : time_charge_all
+                                                                                                                        },{
+                                                                                                                            Department_id: data_total[c].Department_id
+                                                                                                                        })
+                                                                                                                        .success(function(data_success1){
+                                                                                                                            
+                                                                                                                            flag5++;
+                                                                                                                            if(flag5==data_time_activity_table.length){
+                                                                                                                                //success
+                                                                                                                                console.log("success")
+                                                                                                                            }
+                                                                                                                        })
+                                                                                                                        .error(function(err){
+                                                                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                                                                            res.json({
+                                                                                                                                status:"error"
+                                                                                                                            });
+                                                                                                                            return;
+                                                                                                                        })
+                                                                                                                    }
+                                                                                                                })
+                                                                                                        }
+                                                                                                        
+                                                                                                    })
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR :"+err+" *****");
+                                                                                                        res.json({
+                                                                                                            status:"error"
+                                                                                                        });
+                                                                                                        return;
+                                                                                                    })
+                                                                                                }
+                                                                                                else if(data_get_data_time_activity_report[b].activity_id==3){
+                                                                                                     db.time_activity_report.update({
+                                                                                                        time_charge_3 : data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                    },{
+                                                                                                        Employee_id: data_get_data_time_activity_report[b].Employee_id , Department_id: data_get_data_time_activity_report[b].Department_id
+                                                                                                    })
+                                                                                                    .success(function(data_success){
+                                                                                                        
+                                                                                                        flag4++;
+                                                                                                        if(flag4==data_get_data_time_activity_report.length){
+                                                                                                            db.sequelize.query(sql_get_data_total)
+                                                                                                                .success(function(data_total){
+                                                                                                                    for(var f = 0 ;f<data_total.length;f++){
+                                                                                                                        time_charge_1_all+=data_total[f].time_charge_1_Dept;
+                                                                                                                        time_charge_2_all+=data_total[f].time_charge_2_Dept;
+                                                                                                                        time_charge_3_all+=data_total[f].time_charge_3_Dept;
+                                                                                                                        time_charge_4_all+=data_total[f].time_charge_4_Dept;
+                                                                                                                        time_charge_5_all+=data_total[f].time_charge_5_Dept;
+                                                                                                                        time_charge_all+=data_total[f].time_charge_week_Dept;
+                                                                                                                    }
+                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                        db.time_activity_report.update({
+                                                                                                                            time_charge_1_Dept    : data_total[c].time_charge_1_Dept,
+                                                                                                                            time_charge_1_all     : time_charge_1_all,
+                                                                                                                            time_charge_2_Dept    : data_total[c].time_charge_2_Dept,
+                                                                                                                            time_charge_2_all     : time_charge_2_all,
+                                                                                                                            time_charge_3_Dept    : data_total[c].time_charge_3_Dept,
+                                                                                                                            time_charge_3_all     : time_charge_3_all,
+                                                                                                                            time_charge_4_Dept    : data_total[c].time_charge_4_Dept,
+                                                                                                                            time_charge_4_all     : time_charge_4_all,
+                                                                                                                            time_charge_5_Dept    : data_total[c].time_charge_5_Dept,
+                                                                                                                            time_charge_5_all     : time_charge_5_all,
+                                                                                                                            time_charge_week_Dept : data_total[c].time_charge_week_Dept,
+                                                                                                                            time_charge_all       : time_charge_all
+                                                                                                                        },{
+                                                                                                                            Department_id: data_total[c].Department_id
+                                                                                                                        })
+                                                                                                                        .success(function(data_success1){
+                                                                                                                            
+                                                                                                                            flag5++;
+                                                                                                                            if(flag5==data_time_activity_table.length){
+                                                                                                                                //success
+                                                                                                                                console.log("success")
+                                                                                                                            }
+                                                                                                                        })
+                                                                                                                        .error(function(err){
+                                                                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                                                                            res.json({
+                                                                                                                                status:"error"
+                                                                                                                            });
+                                                                                                                            return;
+                                                                                                                        })
+                                                                                                                    }
+                                                                                                                })
+                                                                                                        }
+                                                                                                        
+                                                                                                    })
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR :"+err+" *****");
+                                                                                                        res.json({
+                                                                                                            status:"error"
+                                                                                                        });
+                                                                                                        return;
+                                                                                                    })
+                                                                                                }
+                                                                                                else if(data_get_data_time_activity_report[b].activity_id==4){
+                                                                                                     db.time_activity_report.update({
+                                                                                                        time_charge_4 : data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                    },{
+                                                                                                        Employee_id: data_get_data_time_activity_report[b].Employee_id , Department_id: data_get_data_time_activity_report[b].Department_id
+                                                                                                    })
+                                                                                                    .success(function(data_success){
+                                                                                                        
+                                                                                                        flag4++;
+                                                                                                        if(flag4==data_get_data_time_activity_report.length){
+                                                                                                            db.sequelize.query(sql_get_data_total)
+                                                                                                                .success(function(data_total){
+                                                                                                                   for(var f = 0 ;f<data_total.length;f++){
+                                                                                                                        time_charge_1_all+=data_total[f].time_charge_1_Dept;
+                                                                                                                        time_charge_2_all+=data_total[f].time_charge_2_Dept;
+                                                                                                                        time_charge_3_all+=data_total[f].time_charge_3_Dept;
+                                                                                                                        time_charge_4_all+=data_total[f].time_charge_4_Dept;
+                                                                                                                        time_charge_5_all+=data_total[f].time_charge_5_Dept;
+                                                                                                                        time_charge_all+=data_total[f].time_charge_week_Dept;
+                                                                                                                    }
+                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                        db.time_activity_report.update({
+                                                                                                                            time_charge_1_Dept    : data_total[c].time_charge_1_Dept,
+                                                                                                                            time_charge_1_all     : time_charge_1_all,
+                                                                                                                            time_charge_2_Dept    : data_total[c].time_charge_2_Dept,
+                                                                                                                            time_charge_2_all     : time_charge_2_all,
+                                                                                                                            time_charge_3_Dept    : data_total[c].time_charge_3_Dept,
+                                                                                                                            time_charge_3_all     : time_charge_3_all,
+                                                                                                                            time_charge_4_Dept    : data_total[c].time_charge_4_Dept,
+                                                                                                                            time_charge_4_all     : time_charge_4_all,
+                                                                                                                            time_charge_5_Dept    : data_total[c].time_charge_5_Dept,
+                                                                                                                            time_charge_5_all     : time_charge_5_all,
+                                                                                                                            time_charge_week_Dept : data_total[c].time_charge_week_Dept,
+                                                                                                                            time_charge_all       : time_charge_all
+                                                                                                                        },{
+                                                                                                                            Department_id: data_total[c].Department_id
+                                                                                                                        })
+                                                                                                                        .success(function(data_success1){
+                                                                                                                            
+                                                                                                                            flag5++;
+                                                                                                                            if(flag5==data_time_activity_table.length){
+                                                                                                                                //success
+                                                                                                                                console.log("success")
+                                                                                                                            }
+                                                                                                                        })
+                                                                                                                        .error(function(err){
+                                                                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                                                                            res.json({
+                                                                                                                                status:"error"
+                                                                                                                            });
+                                                                                                                            return;
+                                                                                                                        })
+                                                                                                                    }
+                                                                                                                })
+                                                                                                        }
+                                                                                                        
+                                                                                                    })
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR :"+err+" *****");
+                                                                                                        res.json({
+                                                                                                            status:"error"
+                                                                                                        });
+                                                                                                        return;
+                                                                                                    })
+                                                                                                }
+                                                                                                else if(data_get_data_time_activity_report[b].activity_id==5){
+                                                                                                     db.time_activity_report.update({
+                                                                                                        time_charge_5 : data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                    },{
+                                                                                                        Employee_id: data_get_data_time_activity_report[b].Employee_id , Department_id: data_get_data_time_activity_report[b].Department_id
+                                                                                                    })
+                                                                                                    .success(function(data_success){
+                                                                                                        
+                                                                                                        flag4++;
+                                                                                                        if(flag4==data_get_data_time_activity_report.length){
+                                                                                                            db.sequelize.query(sql_get_data_total)
+                                                                                                                .success(function(data_total){
+                                                                                                                    for(var f = 0 ;f<data_total.length;f++){
+                                                                                                                        time_charge_1_all+=data_total[f].time_charge_1_Dept;
+                                                                                                                        time_charge_2_all+=data_total[f].time_charge_2_Dept;
+                                                                                                                        time_charge_3_all+=data_total[f].time_charge_3_Dept;
+                                                                                                                        time_charge_4_all+=data_total[f].time_charge_4_Dept;
+                                                                                                                        time_charge_5_all+=data_total[f].time_charge_5_Dept;
+                                                                                                                        time_charge_all+=data_total[f].time_charge_week_Dept;
+                                                                                                                    }
+                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                        db.time_activity_report.update({
+                                                                                                                            time_charge_1_Dept    : data_total[c].time_charge_1_Dept,
+                                                                                                                            time_charge_1_all     : time_charge_1_all,
+                                                                                                                            time_charge_2_Dept    : data_total[c].time_charge_2_Dept,
+                                                                                                                            time_charge_2_all     : time_charge_2_all,
+                                                                                                                            time_charge_3_Dept    : data_total[c].time_charge_3_Dept,
+                                                                                                                            time_charge_3_all     : time_charge_3_all,
+                                                                                                                            time_charge_4_Dept    : data_total[c].time_charge_4_Dept,
+                                                                                                                            time_charge_4_all     : time_charge_4_all,
+                                                                                                                            time_charge_5_Dept    : data_total[c].time_charge_5_Dept,
+                                                                                                                            time_charge_5_all     : time_charge_5_all,
+                                                                                                                            time_charge_week_Dept : data_total[c].time_charge_week_Dept,
+                                                                                                                            time_charge_all       : time_charge_all
+                                                                                                                        },{
+                                                                                                                            Department_id: data_total[c].Department_id
+                                                                                                                        })
+                                                                                                                        .success(function(data_success1){
+                                                                                                                            
+                                                                                                                            flag5++;
+                                                                                                                            if(flag5==data_time_activity_table.length){
+                                                                                                                                //success
+                                                                                                                                console.log("success")
+                                                                                                                            }
+                                                                                                                        })
+                                                                                                                        .error(function(err){
+                                                                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                                                                            res.json({
+                                                                                                                                status:"error"
+                                                                                                                            });
+                                                                                                                            return;
+                                                                                                                        })
+                                                                                                                    }
+                                                                                                                })
+                                                                                                        }
+                                                                                                        
+                                                                                                    })
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR :"+err+" *****");
+                                                                                                        res.json({
+                                                                                                            status:"error"
+                                                                                                        });
+                                                                                                        return;
+                                                                                                    })
+                                                                                                }
+                                                                                                else{
+                                                                                                    flag4++;
+                                                                                                    if(flag4==data_get_data_time_activity_report.length){
+                                                                                                            db.sequelize.query(sql_get_data_total)
+                                                                                                                .success(function(data_total){
+                                                                                                                    for(var f = 0 ;f<data_total.length;f++){
+                                                                                                                        time_charge_1_all+=data_total[f].time_charge_1_Dept;
+                                                                                                                        time_charge_2_all+=data_total[f].time_charge_2_Dept;
+                                                                                                                        time_charge_3_all+=data_total[f].time_charge_3_Dept;
+                                                                                                                        time_charge_4_all+=data_total[f].time_charge_4_Dept;
+                                                                                                                        time_charge_5_all+=data_total[f].time_charge_5_Dept;
+                                                                                                                        time_charge_all+=data_total[f].time_charge_week_Dept;
+                                                                                                                    }
+                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                        db.time_activity_report.update({
+                                                                                                                            time_charge_1_Dept    : data_total[c].time_charge_1_Dept,
+                                                                                                                            time_charge_1_all     : time_charge_1_all,
+                                                                                                                            time_charge_2_Dept    : data_total[c].time_charge_2_Dept,
+                                                                                                                            time_charge_2_all     : time_charge_2_all,
+                                                                                                                            time_charge_3_Dept    : data_total[c].time_charge_3_Dept,
+                                                                                                                            time_charge_3_all     : time_charge_3_all,
+                                                                                                                            time_charge_4_Dept    : data_total[c].time_charge_4_Dept,
+                                                                                                                            time_charge_4_all     : time_charge_4_all,
+                                                                                                                            time_charge_5_Dept    : data_total[c].time_charge_5_Dept,
+                                                                                                                            time_charge_5_all     : time_charge_5_all,
+                                                                                                                            time_charge_week_Dept : data_total[c].time_charge_week_Dept,
+                                                                                                                            time_charge_all       : time_charge_all
+                                                                                                                        },{
+                                                                                                                            Department_id: data_total[c].Department_id
+                                                                                                                        })
+                                                                                                                        .success(function(data_success1){
+                                                                                                                            
+                                                                                                                            flag5++;
+                                                                                                                            if(flag5==data_time_activity_table.length){
+                                                                                                                                //success
+                                                                                                                                console.log("success")
+                                                                                                                            }
+                                                                                                                        })
+                                                                                                                        .error(function(err){
+                                                                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                                                                            res.json({
+                                                                                                                                status:"error"
+                                                                                                                            });
+                                                                                                                            return;
+                                                                                                                        })
+                                                                                                                    }
+                                                                                                                })
+                                                                                                                .error(function(err){
+                                                                                                                    console.log("*****ERROR: "+err+"*****");
+                                                                                                                    res.json({
+                                                                                                                        status:"error"
+                                                                                                                    });
+                                                                                                                    return;
+                                                                                                                })
+                                                                                                        }
+                                                                                                }
+
+                                                                                        }
+
+
+                                                                                    }
+                                                                                })
+                                                                                .error(function(err){
+                                                                                    console.log("*****ERROR: "+err+" *****");
+                                                                                    res.json({
+                                                                                        status:"error"
+                                                                                    });
+                                                                                    return;
+                                                                                })
+                                                                            }
+                                                                        })
+                                                                        .error(function(err){
+                                                                            console.log("*****ERROR: "+err+" *****");
+                                                                            res.json({
+                                                                                status:"error"
+                                                                            });
+                                                                            return;
+                                                                        })
+                                                                }
+                                                            })
+                                                            .error(function(err){
+                                                                console.log("*****ERROR: "+err+" *****");
+                                                                res.json({
+                                                                    status:"error"
+                                                                });
+                                                                return;
+                                                            })
+                                                        }
+                                                    })
+                                                    .error(function(err){
+                                                        console.log("*****ERROR: "+err+" *****");
+                                                        res.json({
+                                                            status:"error"
+                                                        });
+                                                        return;
+                                                    })
+                                                //END GET
+                                            }
+                                        })
+                                        .error(function(err){
+                                            console.log("*****ERROR: "+err+" *****");
+                                            res.json({
+                                                status:"error"
+                                            });
+                                            return;
+                                        })
+                                    }
+                                })
+                                .error(function(err){
+                                    console.log("*****ERROR: "+err+" *****");
+                                    res.json({
+                                        status:"error"
+                                    });
+                                    return;
+                                })
+                        })
+                        .error(function(err){
+                            console.log("*****ERROR: "+err+" *****");
+                            res.json({
+                                status:"error"
+                            });
+                            return;
+                        })
+                })
+                .error(function(err){
+                    console.log("*****ERROR: "+err+" *****");
+                    res.json({
+                        status:"error"
+                    });
+                    return;
+                })
+
+            })
+            .error(function(err){
+                console.log("*****ERROR: "+err+"*****");
+                res.json({
+                    status:"error"
+                });
+                return;
+            })
+        //
     },
     //END REPORT UTILIZITION RATIO DETAIL
 
@@ -3857,13 +4446,14 @@ module.exports = {
     LoadReportUtilizationRatioSumary: function(req, res) {
         var info = req.body.info;
         console.log(info);
+        console.log("GOGO");
     },
     //END REPORT UTILIZITION RATIO SUMARY
 
     //REPORT ITEM NUMBER
     LoadReportItemNumber: function(req, res) {
         var info = req.body.info;
-        console.log(info);
+        //console.log(info);
         //CHUYEN LIST EMPL VA LIST DEPT THANH CHUOI STRING
         var stringEMP ="";
         var stringDept="";
