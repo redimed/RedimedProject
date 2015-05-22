@@ -20,33 +20,26 @@
 	</div> -->
 	<div class="un_main_nav_panel">
 		<div class="un_main_nav_bar">
-			<div class="un_main_nav_item" ng-repeat="module in patient_detail_modules">
+			<div ng-if="module.wrap==0" class="un_main_nav_item" ng-repeat="module in patient_detail_modules">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
-			<div class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
+			<div ng-if="module.wrap==0" class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
 
 			<div class="un_main_nav_item">
 				<ul class="un_main_nav_item_dropdown">
 				    <li>
-				        <a href="#">Product</a>
+				        <a>More<i class="fa fa-chevron-down"></i></a>
 				        <ul style="list-style-type: none;">
-				            <li><a href="#">Small product (one)</a></li>
+				            <li ng-if="module.wrap==1" ng-repeat="module in patient_detail_modules">
+				            	<a ui-sref="{{module.state}}">{{module.name}}</a>
+				            </li>
 
-				            <li><a href="#">Small product (two)</a></li>
-				            <li><a href="#">Small product (three)</a></li>
-				            <li><a href="#">Small product (four)</a></li>
+				            <li ng-if="module.wrap==1" ng-repeat="module in patient_apt_modules">
+				            	<a ui-sref="{{module.state}}">{{module.name}}</a>
+				            </li>
 
-				            <li><a href="#">Big product (five)</a></li>
-				            <li><a href="#">Big product (six)</a></li>
-				            <li><a href="#">Big product (seven)</a></li>
-
-				            <li><a href="#">Big product (eight)</a></li>
-				            <li><a href="#">Enormous product (nine)</a></li>
-				            <li><a href="#">Enormous product (ten)</a></li>
-
-				            <li><a href="#">Enormous product (eleven)</a></li>
 				        </ul>
 				    </li>
 
