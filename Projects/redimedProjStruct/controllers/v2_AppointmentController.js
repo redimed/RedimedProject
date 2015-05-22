@@ -19,6 +19,10 @@ module.exports = {
 				{
 					model: db.SysServices, as: 'Service'
 				},
+				{
+					model: db.mdtRedimedsites, as: 'Site',
+					attributes:['Site_name']
+				}
 			]
 		}).success(function(appt){
 			if(!appt) {

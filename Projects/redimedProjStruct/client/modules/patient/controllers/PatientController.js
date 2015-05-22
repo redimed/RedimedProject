@@ -97,10 +97,8 @@ angular.module("app.loggedIn.patient.controller", [
         if(response.status == 'error'){
             toastr.error('Error Get Detail', 'Error');
         }else{
-            console.log(response);
-            ConfigService.system_service_by_clinical(response.data.CLINICAL_DEPT_ID).then(function(response){
-                console.log(response);
-            })
+            $scope.current_patient.Site_name=response.data.site.Site_name;
+            $scope.current_patient.FROM_TIME=response.data.FROM_TIME;
         }
     })
 

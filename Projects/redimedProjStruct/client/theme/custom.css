@@ -2213,6 +2213,7 @@ label{
     background: -o-linear-gradient(#DADADA, #FFFFFF);
     background: -moz-linear-gradient(#DADADA, #FFFFFF);
     background: linear-gradient(#DADADA, #FFFFFF);
+    /*background:#DADADA;*/
     color:black;
     text-decoration:underline;
 }
