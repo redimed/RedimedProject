@@ -272,7 +272,7 @@ angular.module("app", [
     $rootScope.$on("$locationChangeSuccess", function(event, current, previous) {
 
         if (current === previous) {
-            if ($cookieStore.get("userInfo")) {
+            if (localStorageService.get("userInfo")) {
                 socket.emit("reconnected", $cookieStore.get("userInfo").id);
             }
         }
@@ -301,7 +301,7 @@ angular.module("app", [
             toParams: toParams
         });
        
-        if (!$cookieStore.get("userInfo")) {
+        if (!localStorageService.get("userInfo")) {
             socket.removeAllListeners();
             socket.emit('lostCookie');
             if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister" && toState.name!=='security.rlobSponsor' && toState.name!=='security.rlobSponsor.emergency' && toState.name!=='security.rlobSponsor.nonemergency') {
@@ -316,9 +316,9 @@ angular.module("app", [
     });
     $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
         //LOAD ROLE ON TREEAPPROVE
-        if ($cookieStore.get("userInfo") &&
-            $cookieStore.get("userInfo").id) {
-            TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
+        if (localStorageService.get("userInfo") &&
+            localStorageService.get("userInfo").id) {
+            TimeSheetService.LoadRole(localStorageService.get("userInfo").id).then(function(response) {
                 if (response.status === "error") {
                     $state.go("loggedIn.home", null, {
                         "reload": true

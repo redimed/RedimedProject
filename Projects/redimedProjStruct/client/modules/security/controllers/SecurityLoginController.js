@@ -1,6 +1,6 @@
 angular.module("app.security.login.controller",[
 ])
-    .controller("SecurityLoginController", function ($scope, $state,$modal, $cookieStore, SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
+    .controller("SecurityLoginController", function ($scope, $state,$modal, $cookieStore,localStorageService ,SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
         $scope.showClickedValidation = false;
 
         $scope.isLogging = false;
@@ -79,6 +79,8 @@ angular.module("app.security.login.controller",[
                 if (typeof response.userInfo !== 'undefined') {
                         $cookieStore.put("userInfo", response.userInfo);
                         $cookieStore.put("isRemember",$scope.modelUser.isRemember);
+
+                        localStorageService.set("userInfo",  response.userInfo);
 
                         if (typeof response.companyInfo !== 'undefined')
                             $cookieStore.put("companyInfo", response.companyInfo);
