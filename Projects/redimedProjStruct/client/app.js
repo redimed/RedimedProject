@@ -219,13 +219,13 @@ angular.module("app", [
         socket.removeAllListeners();
     })
 
-    var checkInterval;
+    // var checkInterval;
 
-    checkInterval = $interval(function() {
-        if ($cookieStore.get("userInfo") != null || typeof $cookieStore.get("userInfo") !== 'undefined') {
-            socket.emit("checkApp", $cookieStore.get("userInfo").id)
-        }
-    }, 5000);
+    // checkInterval = $interval(function() {
+    //     if ($cookieStore.get("userInfo") != null || typeof $cookieStore.get("userInfo") !== 'undefined') {
+    //         socket.emit("checkApp", $cookieStore.get("userInfo").id)
+    //     }
+    // }, 5000);
 
 
     // socket.on("isLoggedIn",function(){

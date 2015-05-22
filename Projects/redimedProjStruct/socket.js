@@ -57,10 +57,6 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
-            console.log("===========From: "+currUser);
-            console.log("===========To: "+contactUser);
-            console.log("===========Message: "+JSON.stringify(message));
-            
             db.User.find({where:{id: currUser}},{raw:true})
                 .success(function(currentUser){
                     if(currentUser)
