@@ -1281,7 +1281,9 @@ table.timetable-table td:last-child {
     background-color: #2BEABB;
 }
 
-.appointment {}
+.appointment {
+    overflow: auto;
+}
 
 .appointment .appointment-row {
     display: block;
@@ -1308,28 +1310,27 @@ table.timetable-table td:last-child {
     padding-bottom: 7px;
     font-weight: bold;
     margin-right: 7px;
-    border-top: 2px solid rgb(96, 99, 94);
+    border-top: 1px solid rgb(96, 99, 94);
 }
 
 .appointment .appointment-block {
     vertical-align: top;
-    width: 300px;
+    width: 200px;
     font-size: 12px;
     height: 35px;
     line-height: 25px;
-    margin-right: 5px;
-    padding: 5px 0px 0px 5px;
     color: white;
+    margin-right: 7px;
 }
 
 .appointment .appointment-block-header {
-    width: 300px;
+    width: 200px;
     margin-right: 7px;
     font-weight: bold;
 }
 
 .appointment .appointment-block a {
-    color: #000000;
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -1364,8 +1365,9 @@ table.timetable-table td:last-child {
     top: 0;
     min-height: 100%;
     width: 250px;
-    color: white;
-    background-color: #3D4A53;
+    color: #000000;
+    /*background-color: #3D4A53;*/
+    background-color: #ffffff;
     z-index: 888;
 }
 .bv-arrow {

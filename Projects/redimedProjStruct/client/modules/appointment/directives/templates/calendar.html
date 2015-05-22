@@ -72,15 +72,15 @@
 			<div class="appointment-block-times" style="background: rgb(96, 99, 94)">
 				<label style="color: #ffffff; font-weight: bold;">Times</label>
 			</div>
-			<div class="appointment-block-header" ng-repeat="doctor in doctor.headers" style="background: #ffffff;">
-					<label style="color: #ffffff; margin-bottom: 0; padding-top: 10px; padding-bottom: 15px; padding-left: 40px; padding-right: 40px; font-weight: bold; background: rgb(96, 99, 94)">{{doctor.NAME}}</label>
+			<div class="appointment-block-header" ng-repeat="doctor in doctor.headers">
+					<label style="color: #ffffff; margin-bottom: 0; padding-top: 10px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; font-weight: bold; background: rgb(96, 99, 94)">{{doctor.NAME}}</label>
 			</div>
 		</div>
 		<div class="appointment-row" ng-repeat="app in appointment.list">
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)"
-				ng-style="{'background-color': '#ffffff', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height ? '35px': '35px', 'border-top': col.border === 'yes' ? '2px solid rgb(96, 99, 94)': '0px'}">
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height ? '35px': '35px', 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
