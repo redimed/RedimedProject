@@ -1368,6 +1368,7 @@ table.timetable-table td:last-child {
     color: #000000;
     /*background-color: #3D4A53;*/
     background-color: #ffffff;
+    border: 1px solid rgb(173, 188, 86);
     z-index: 888;
 }
 .bv-arrow {
@@ -1376,7 +1377,7 @@ table.timetable-table td:last-child {
     border-top: 30px solid transparent;
     border-bottom: 30px solid transparent; 
     z-index: 888;
-    border-right:30px solid #1C2D5C;
+    border-right:30px solid rgb(188, 186, 186);
     position: absolute;
     top: 5%;
     right: 250px;
@@ -2201,4 +2202,86 @@ label{
     color:rgb(224, 224, 224);
 }
 /**group black panel end*/
+/* button */
+.un_red_button{
+    color: #ffffff;
+    font-weight: bold;
+    border: 2px solid #ffffff;
+    padding: 8 15px;
+    background-color: rgb(180, 30, 71)!important;
+    box-shadow: 3px 3px 3px #888;
+}
+.un_blue_button{
+    color: #ffffff;
+    font-weight: bold;
+    border: 2px solid #ffffff;
+    padding: 8 15px;
+    background-color: rgb(16, 37, 112);
+    box-shadow: 3px 3px 3px #888;
+}
+/* end button */
+/* background input */
+.row{
+    margin-top: 20px;
+}
+input{
+    background-color: blue;
+}
+.un_label{
+    color: #ffffff;
+    width: 130px;
+    font-weight: bold;
+    padding-top: -5px;
+    padding-bottom: 5px;
+    background-color: rgb(103, 104, 104)!important;
+    margin-bottom: 0;
+    text-align: center;
+}
+.un_back_input{
+    border: 0 !important;
+    color: #ffffff;
+    background-color: rgb(181, 181, 182)!important;
+}
+.un_table_first{
+    width: 97%;
+    float: left;
+}
+.un_table_first th{
+    color: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.un_table_first span{
+    background-color: rgb(97, 95, 96)!important;
+    padding: 10px 50px;
+}
+.un_table_first td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 2px solid rgb(136, 130, 140) !important;
+}
+.un_table_last{
+    width: 97%;
+    float: right;
+}
+.un_table_last th{
+    color: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.un_table_last span{
+    background-color: rgb(97, 95, 96)!important;
+    padding: 10px 50px;
+}
+.un_table_last td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 2px solid rgb(136, 130, 140) !important;
+}
+.row_pagi{
+    text-align: right;
+}
+/* end background input */
 /* end */
