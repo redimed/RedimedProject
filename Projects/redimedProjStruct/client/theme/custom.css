@@ -1767,7 +1767,7 @@ nav bar begin*/
 
 .un_main_nav_panel {
     background: rgb(6, 4, 44);
-    height: 53px;
+    /*height: 53px;*/ /*TANNV.DTS COMMENT*/
     float: right;
     width: 100%;
 }
@@ -1777,7 +1777,8 @@ nav bar begin*/
     background: -o-linear-gradient(#DADADA, #FFFFFF);
     background: -moz-linear-gradient(#DADADA, #FFFFFF);
     background: linear-gradient(#DADADA, #FFFFFF);
-    height: 40px;
+    float:right;/*TANNV.DTS@GMAIL.COM ADD*/
+    /*height: 40px;*/ /*TANNV.DTS@GMAIL.COM COMMENT*/
 }
 
 
@@ -2162,3 +2163,82 @@ label{
     color:rgb(224, 224, 224);
 }
 /**group black panel end*/
+
+
+/*TAN NAV ITEM DROPDOWN BEGIN*/
+.un_main_nav_item_dropdown{
+    list-style:none;
+    font-weight:bold;
+    margin-bottom:10px;
+    float:left; /* Clear floats */
+    width:100%;
+    /* Bring the nav above everything else--uncomment if needed.
+    position:relative;
+    z-index:5;
+    */
+}
+.un_main_nav_item_dropdown li{
+    float:left;
+    margin-right:10px;
+    position:relative;
+}
+.un_main_nav_item_dropdown a{
+    display:block;
+    padding:5px;
+    text-decoration:none;
+
+
+}
+.un_main_nav_item_dropdown a:hover{
+    /*color:#fff;*/
+    /*background:#6b0c36;*/
+    text-decoration:underline;
+}
+
+/*--- DROPDOWN ---*/
+.un_main_nav_item_dropdown ul{
+    background:#fff; 
+    list-style:none;
+    position:absolute;
+    left:-9999px; 
+    z-index: 99999;/*tan add*/
+}
+.un_main_nav_item_dropdown ul li{
+    padding-top:1px; 
+    float:none;
+}
+.un_main_nav_item_dropdown ul a{
+    white-space:nowrap; 
+
+}
+.un_main_nav_item_dropdown li:hover ul{ 
+    left:0; 
+}
+
+.un_main_nav_item_dropdown li ul li a{ 
+    background: -webkit-linear-gradient(#DADADA, #FFFFFF);
+    background: -o-linear-gradient(#DADADA, #FFFFFF);
+    background: -moz-linear-gradient(#DADADA, #FFFFFF);
+    background: linear-gradient(#DADADA, #FFFFFF);
+    color:black;
+    text-decoration:underline;
+}
+
+.un_main_nav_item_dropdown li:hover a{ 
+    color:black;
+}
+
+.un_main_nav_item_dropdown li:hover ul a{ 
+    text-decoration:none;
+}
+.un_main_nav_item_dropdown li:hover ul li a:hover{ 
+    background: -webkit-linear-gradient(#9F9F9F, #262626); 
+    background: -o-linear-gradient(#9F9F9F, #262626); 
+    background: -moz-linear-gradient(#9F9F9F, #262626); 
+    background: linear-gradient(#9F9F9F, #262626);
+    color:white;
+}
+.page-content-wrapper .page-content {
+    background: rgb(24, 22, 78);
+}
+/*TAN NAV ITEM DROPDOWN END*/
