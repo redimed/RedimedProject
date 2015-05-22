@@ -9,12 +9,36 @@
     <meta content="" name="description" />
     <meta content="" name="author" />
     <meta name="google-site-verification" content="0EVyYxb_iIwz7w53LZz0rxIpLFB0g7-TxfwN851SqNg" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    
     <link href="theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendor/please-wait/build/please-wait.css" rel="stylesheet">
+    <link href="lib/splash-screen.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <!-- ROOT -->
+    <div ui-view="root"></div>
+    <!-- END ROOT VIEW -->
+    <script src="vendor/please-wait/build/please-wait.js"></script>
+    <script type="text/javascript">
+      window.loading_screen = window.pleaseWait({
+        logo: "theme/assets/logo.png",
+        backgroundClass: 'loadingBackground',
+        loadingHtml: "<div class='loadingBackground'><p class='loading-message'>Please Wait For Loading!</p><div class='sk-spinner sk-spinner-wave'><div class='sk-rect1'></div><div class='sk-rect2'></div><div class='sk-rect3'></div><div class='sk-rect4'></div><div class='sk-rect5'></div></div></div>"
+      });
+
+    </script>
+
+    
     <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/jquery-ui/ui/jquery-ui.js"></script>
     <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="vendor/angular/angular.js"></script>
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    
     <script src="vendor/angular-bindonce/bindonce.js"></script>
     <script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
     <script src="vendor/moment-range/lib/moment-range.js"></script>
@@ -989,12 +1013,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/script/directives/ScriptEditDirective.js"></script>
     <!--END SCRIPT-->
     <!-- ------------------------------------------------------ END VUONG TEAM -------------------------------------------- -->
-</head>
-
-<body>
-    <!-- ROOT -->
-    <div ui-view="root"></div>
-    <!-- END ROOT VIEW -->
 </body>
 
 </html>

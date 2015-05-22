@@ -288,6 +288,8 @@ angular.module("app", [
 
         $modalStack.dismissAll();
 
+        window.loading_screen.finish();
+
         var locationHref = location.href;
         if (locationHref.indexOf('fromMobile=true') != -1) {
             e.preventDefault();
@@ -361,3 +363,5 @@ angular.module("app", [
         //END LOAD ROLE ON TREEAPPROVE
     });
 });
+
+
