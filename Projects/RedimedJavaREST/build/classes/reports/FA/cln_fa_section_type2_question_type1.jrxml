@@ -3,18 +3,12 @@
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="CAL_ID_PARAM" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<parameter name="PATIENT_ID_PARAM" class="java.lang.String"/>
+	<parameter name="CAL_ID_PARAM" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["F:\\work_f2\\branches\\TeleHealth_Tan\\Tan_Nguyen\\Pre-Employment Reports\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="LINE_ID_PARAM" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<parameter name="LINE_ID_PARAM" class="java.lang.String"/>
 	<parameter name="DIR_PATH" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT
@@ -44,7 +38,7 @@
 	line.`RATING_ID1`,
 	line.`IS_SHOW_RANKING_TABLE`
 FROM 	`cln_fa_df_lines` line
-WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR line.`SCORE_TYPE1`=4)
+WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR line.`SCORE_TYPE1`=4 OR line.`SCORE_TYPE1`=10)
 	AND
 	line.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
 	AND

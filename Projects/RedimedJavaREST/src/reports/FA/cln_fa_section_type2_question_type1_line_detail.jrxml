@@ -50,7 +50,7 @@
 	LINE.PICTURE AS LINE_PICTURE
 FROM 	`cln_fa_df_lines` line INNER JOIN `cln_fa_df_line_details` detail ON line.`LINE_ID`=detail.`LINE_ID` AND line.PATIENT_ID=detail.PATIENT_ID AND line.CAL_ID=detail.CAL_ID
 	INNER JOIN `cln_patients` patient ON line.`PATIENT_ID`=patient.`Patient_id`
-WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR line.`SCORE_TYPE1`=4)
+WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR line.`SCORE_TYPE1`=4 OR line.`SCORE_TYPE1` = 10)
 	AND
 	line.`PATIENT_ID`=$P{PANTIENT_ID_PARAM}
 	AND
@@ -63,7 +63,7 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 	<field name="LINE_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="PICTURE" class="java.lang.Object">
+	<field name="PICTURE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
@@ -143,7 +143,7 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 	<field name="VAL2_VALUE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="LINE_PICTURE" class="java.lang.Object"/>
+	<field name="LINE_PICTURE" class="java.lang.String"/>
 	<group name="LINE_GROUP">
 		<groupExpression><![CDATA[$F{LINE_ID}]]></groupExpression>
 		<groupHeader>
@@ -278,7 +278,9 @@ WHERE 	(line.`SCORE_TYPE1`=1 OR line.`SCORE_TYPE1`=2 OR line.`SCORE_TYPE1`=3 OR 
 					</textElement>
 					<textFieldExpression><![CDATA[($F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==1)?"MIN"
 :($F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==2)?"MAX"
-:($F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==3)?"AVERAGE":"SCORE"]]></textFieldExpression>
+:($F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==3)?"AVERAGE"
+:($F{SCORE_TYPE1}!=null && $F{SCORE_TYPE1}==10)?"BEST OF TRIALS":"SCORE"
+]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="60" width="65" height="15" isRemoveLineWhenBlank="true" uuid="1ba62c5b-860b-497c-979f-f335a2c99bfe"/>
