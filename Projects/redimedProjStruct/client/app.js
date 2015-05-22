@@ -70,7 +70,12 @@ angular.module("app", [
             'reconnection delay': 2000,
             'max reconnection attempts': 10000,
             'force new connection': false,
-            'secure': true
+            'secure': true,
+            'transports': ['websocket'
+                , 'flashsocket'
+                , 'htmlfile'
+                , 'xhr-polling'
+                , 'jsonp-polling']
         });
 
         var socketFactory = socketFactory({
