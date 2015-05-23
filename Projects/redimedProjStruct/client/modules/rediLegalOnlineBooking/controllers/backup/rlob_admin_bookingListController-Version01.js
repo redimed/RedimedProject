@@ -488,7 +488,7 @@ angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
             })
                 .success(function(data) {
                     if(data.status=='success')
-                    {
+                    {   
 
                         $scope.selectedBooking=data.data;
                         uploader.formData[0]={};

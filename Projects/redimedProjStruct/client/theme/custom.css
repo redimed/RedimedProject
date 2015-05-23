@@ -1020,7 +1020,7 @@ table.timetable-table td:last-child {
 /*css custom by thanh*/
 
 .custom-timesheet {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .submited {
@@ -1253,21 +1253,6 @@ table.timetable-table td:last-child {
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up.active,
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-down.active {
     color: #31c0be;
-}
-/*custom input file*/
-/*end custom input file*/
-
-input.upload-file-timesheet {
-    content: '';
-    background-attachment: '';
-    opacity: 0;
-    position: absolute;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    border: none;
-    margin-top: -20px;
-    margin-left: -30px;
 }
 /*end tr chevron*/
 /*end css custom by thanh*/

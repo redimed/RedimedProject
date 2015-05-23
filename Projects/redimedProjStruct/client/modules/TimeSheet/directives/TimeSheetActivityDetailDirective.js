@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
-    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore) {
+    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -213,6 +213,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     isHTML5: true,
                     isUploading: true
                 });
+                //END SET VALUE DEFAULT FILE UPLOAD
 
                 //FILETER LIMIT FILE UPLOAD
                 scope.uploader.filters.push({
@@ -243,12 +244,114 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 //END FUNCTION REMOVE ITEM
 
                 //SOME CALLBACKS UPLOAD FILE
-                //END SOME CALLBACKS UPLOAD FILE
-                scope.uploader.onSuccessItem = function(fileItem, response, status, header) {
-                    console.log("HOAN THANH");
-                };
-                //END SET VALUE DEFAULT FILE UPLOAD
+                scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
+                    //CHECK FILTER
+                    if (filter) {
+                        swal({
+                            title: "Limit 5 file to upload!",
+                            type: "warning",
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes",
+                            closeOnConfirm: true
+                        });
+                    }
+                    //END FILTER
 
+                    //ERR
+                    else {
+                        toastr.error("Upload file " + item.name + " fail!", "Error");
+                    }
+                    //END ERR
+                };
+                scope.uploader.onAfterAddingAll = function(addedFileItems) {
+                    //OPEN PROGRESS BAR
+                    scope.uploadSuccess = false;
+                    //END OPEN PROGRESS BAR
+
+                    //FIND AND SET CURRENT INDEX OF TASK
+                    angular.forEach(scope.items, function(value, index) {
+                        if (value.ITEM_ID === scope.currentTaskId) {
+                            scope.currentTaskIndex = index;
+                        }
+                    });
+
+                    if (scope.currentTaskIndex !== undefined &&
+                        scope.currentTaskIndex !== null) {
+                        //FIND FIRST FILE UPLOADING
+                        var isFind = false;
+                        angular.forEach(scope.uploader.queue, function(value, index) {
+                            //SET CODE TASK ON LIST FILE
+                            if (value.isUploaded === false) {
+                                scope.uploader.queue[index].file.code_task = scope.currentTaskId;
+                            }
+                            //END SET
+                            if (value.isUploaded === false && isFind === false) {
+                                //SET INDEX FILES FOR TASK
+                                scope.items[scope.currentTaskIndex].indexFileProgressing = index;
+                                //END SET
+                                isFind = true;
+                            }
+                            //SET INDEX FILE ON LIST
+                            //END SET
+                        });
+                        //END FIND
+                    }
+                    //END SET
+                };
+                scope.uploader.onAfterAddingFile = function(fileItem) {
+                    //DO NOTHING
+                };
+                scope.uploader.onBeforeUploadItem = function(item) {
+                    //DO NOTHING
+                };
+                scope.uploader.onProgressItem = function(fileItem, progress) {
+                    scope.progress = progress;
+                };
+                scope.uploader.onProgressAll = function(progress) {
+                    //DO NOTHING 
+                };
+                scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                    //FIND FIRST FILE UPLOADING
+                    var isFind = false;
+                    angular.forEach(scope.uploader.queue, function(value, index) {
+                        if (value.isUploaded === false && isFind === false) {
+                            //SET INDEX FILES FOR TASK
+                            scope.items[scope.currentTaskIndex].indexFileProgressing = index;
+                            //END SET
+                            isFind = true;
+                        }
+                    });
+                    if (isFind === false) {
+                        scope.uploadSuccess = true;
+                    }
+                    //END FIND
+                };
+                //END SOME CALLBACKS UPLOAD FILE
+                //FUNCTION GET STYLE WHEN UPLOAD
+                scope.getStyleUpload = function() {
+                    if (scope.uploader.queue.length !== 0) {
+                        return {
+                            width: 'auto'
+                        };
+                    } else {
+                        return {
+                            width: '15px'
+                        };
+                    }
+                };
+                //END FUNCTON GET STYLE WHEN UPLOAD
+
+                //CALL CLICK SHOW FILE
+                scope.clickShowFile = function(indexTask) {
+                    $timeout(function() {
+                        document.getElementById('uploadTimesheet').click();
+                        scope.clicked = true;
+                        //SET CURRENT TASK
+                        scope.currentTaskId = indexTask;
+                        //END SET
+                    }, 0);
+                };
+                //END SHOW FILE
             },
             templateUrl: "modules/TimeSheet/directives/templates/ActivityDetail.html"
         };

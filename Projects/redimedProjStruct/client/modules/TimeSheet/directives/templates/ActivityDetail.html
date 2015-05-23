@@ -52,7 +52,7 @@
                                         Tasks / Items
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;">
+                                <th style="background-color:#26a69a; width:300px;">
                                     <div class="th">
                                         Description
                                     </div>
@@ -67,14 +67,13 @@
                                         Actual Unit
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:15px;">
-                                    <div class="th">
-                                        Attechments
-                                    </div>
-                                </th>
-                                <th style="background-color:#26a69a;width:500px;">
+                                <th style="background-color:#26a69a;width:300px;">
                                     <div class="th">
                                         Comments
+                                    </div>
+                                </th>
+                                <th style="background-color:#26a69a; width:15px;">
+                                    <div class="th">
                                     </div>
                                 </th>
                                 <th style="background-color:#26a69a;width:15px;">
@@ -84,10 +83,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-class-odd="'odd'" style="cursor: pointer; font-size:13px;" ng-repeat="item in items">
+                            <tr ng-class-odd="'odd'" style="cursor: pointer; font-size:13px;" ng-repeat="(indexItem,item) in items">
                                 <td ng-show="item.show===true" class="btn btn-xs" style="width:100px;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
                                 <!-- MORE -->
-                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
+                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:300px;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
                                     <div ng-show="item.show===true" ng-if="item.status===false">
                                         {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
                                     </div>
@@ -107,54 +106,92 @@
                                 <td ng-show="item.show===true" style="text-align:center;width:120px;">
                                         <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" style="font-size:13px;border:1px solid #ccc;text-align:center;height:25px;" id="ratioID" only-digits ng-disabled="true" ng-disabled="item.ITEM_ID===18">
                                 </td>
-                                <td ng-show="item.show===true" style="text-align:center;">
-                                    <i class="glyphicon glyphicon-paperclip" style="font-size:13px;"> 
-                                        <input type="file" class="upload-file-timesheet" nv-file-select uploader="uploader" multiple/>
-                                    </i>
-                                    <div ng-repeat="(indexItem,item) in uploader.queue">
-                                    <label class="form-control input-sm" style="margin-top:5px; text-align:left; height: 20px;">
-                                        <!-- WHEN FILE NAME TOO LONG -->
-                                        <label ng-if="(item.file.name | readMoreUpload).check===true" style="margin-top:-8px; text-align:left;">{{(item.file.name | readMoreUpload).value}}</label>
+                                <td ng-show="item.show===true" style="text-align:center; width:300px;">
+                                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:25px;" id="commentID">
+                                </td>
+                                <td ng-show="item.show===true" ng-style="getStyleUpload()" style="text-align:center;">
+                                    <!-- CUSTOM PROGRESS UPLOAD FILE -->
+                                    <!-- INPUT FILE -->
+                                        <a ng-click="clickShowFile(item.ITEM_ID)">
+                                        <i class="glyphicon glyphicon-paperclip"> 
+                                        </i>
+                                        </a>
+                                        <div style='height: 0px;width: 0px; overflow:hidden;'>
+                                        <input type="file" id="uploadTimesheet" nv-file-select uploader="uploader" multiple filters="customFilter"/>
+                                        </div>
+                                    <!-- END INPUT FILE -->
+
+                                     <!-- FOR ON LIST FILE -->
+                                     <div ng-repeat="(indexItemFile, itemFile) in uploader.queue">
+                                        <!-- SHOW FILE THIS ITEM -->
+                                        <div ng-if="item.ITEM_ID===itemFile.file.code_task" style="1px solid #dcdcdc;background-color: #F5F5F5;height:20px; width: auto;" class="col-md-12">
+                                            <!-- SHOW FILE NAME -->
+                                            <div class="col-md-4" style="width:125px;">
+                                                <a href="www.google.com" target="_blank">
+                                                <!-- WHEN FILE NAME TOO LONG -->
+                                        <label class="control-label" ng-if="(itemFile.file.name | readMoreUpload).check===true" title="{{itemFile.file.name}}">{{(itemFile.file.name | readMoreUpload).value}}
+                                        </label>
                                         <!-- END FILE NAME TOO LONG -->
                                         <!-- WHEN FILE NAME NORMAL -->
-                                        <label ng-if="(item.file.name | readMoreUpload).check===false" style="margin-top:-8px; text-align:left;">{{item.file.name}}</label>
-                                        <!-- END FILE NAME MORMAL -->
-                                        <a style="margin-top:-5px;color:black;float:right;"><i class="glyphicon glyphicon-remove" style="font-size:10px;" ng-click="removeItem(indexItem)"></i></a>
-                                        </label>
+                                        <label class="control-label" ng-if="(itemFile.file.name | readMoreUpload).check===false" title="{{itemFile.file.name}}">{{itemFile.file.name}}
+                                                                                </label>
+                                                                            </a>
                                     </div>
-                                </td>
-                <td ng-show="item.show===true" style="text-align:center;width:500px;">
-                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:25px;" id="commentID">
-                </td>
-                <td ng-show="item.show===true" style="text-align:center;width:15px;">
-                    <a ng-click="deleteItem($index)">
-                        <i class="fa fa-trash pointer"></i>
-                    </a>
-                </td>
-                </tr>
-                <!-- temp row-->
-                <tr ng-show="isShow===true">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="width:15px;">&nbsp;</td>
-                </tr>
-                <td colspan="6 ">
-                    <a class="btn btn-xs" style="color:#26a69a;font-size:13px;font-weight:bold;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a>
-                </td>
-                <!-- end temp row -->
-                </tbody>
-                </table>
-                <div class="col-md-12">
-                    <a class="btn yellow pull-right btn-xs" style="margin-right:-13px;width:70px;font-size:13px;" ng-click="onCancel({return: true})">Cancel</a>
-                    <button class="btn pull-right btn-xs green" style="margin-right:5px;width:70px;font-size:13px;" ng-click="onSave({return: items,formValid:formItemCode})" ng-disabled="(items===undefined||items.length===0)">Save</button>
+                                    <!-- END FILE NAME MORMAL -->
+                                    <!-- END SHOW FILE NAME -->
+                                    <!-- SHOW PROGRESS BAR -->
+                                    <div class="col-md-4" ng-if="uploadSuccess!==true && 
+                                    item.ITEM_ID===itemFile.file.code_task &&
+                                    item.indexFileProgressing===indexItemFile &&
+                                    currentTaskIndex===indexItem">
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:100px;">
+                                            <div class="progress-bar progress-bar-success" ng-style="{width:progress+'%'}">
+                                                <span>{{progress+'%'}}</span>
                 </div>
-                <!-- END ITEM BEEN SELECTED -->
-                <!-- TABLE ITEM-->
-                <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
-                </center> <span class="bold" style="margin-left:3px;font-size:13px;">List of Tasks / Items<span>
+            </div>
+</div>
+<!-- END SHOW PROGRESS BAR -->
+<!-- BUTTON DELETE FILE -->
+<div class="col-md-2" style="width:auto;">
+    <a style="color:black;text-align:right;"><i class="glyphicon glyphicon-remove" ng-click="removeItem(indexItemFile)" style="margin-top:2px;"></i>
+    </a>
+</div>
+<!-- END BUTTON DELETE FILE -->
+</div>
+<!-- END SHOW -->
+</div>
+<!-- END FOR  -->
+<!-- END CUSTOM PROGRESS UPLOAD FILE -->
+</td>
+<td ng-show="item.show===true" style="text-align:center;width:15px;">
+    <a ng-click="deleteItem($index)">
+        <i class="fa fa-trash pointer"></i>
+    </a>
+</td>
+</tr>
+<!-- temp row-->
+<tr ng-show="isShow===true">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="width:15px;">&nbsp;</td>
+</tr>
+<td colspan="6 ">
+    <a class="btn btn-xs" style="color:#26a69a;font-size:13px;font-weight:bold;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a>
+</td>
+<!-- end temp row -->
+</tbody>
+</table>
+<div class="col-md-12">
+    <a class="btn yellow pull-right btn-xs" style="margin-right:-13px;width:70px;font-size:13px;" ng-click="onCancel({return: true})">Cancel</a>
+    <button class="btn pull-right btn-xs green" style="margin-right:5px;width:70px;font-size:13px;" ng-click="onSave({return: items,formValid:formItemCode, upload: uploader})" ng-disabled="(items===undefined||items.length===0)">Save</button>
+</div>
+<!-- END ITEM BEEN SELECTED -->
+<!-- TABLE ITEM-->
+<center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+</center> <span class="bold" style="margin-left:3px;font-size:13px;">List of Tasks / Items<span>
                      <a ng-click="reset()"><i class="fa fa-refresh"></i></a>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
@@ -186,19 +223,19 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <span class="bold custom-timesheet">Total: {{list.count}}</span>
-                    <span class="custom-timesheet">Show</span>
-                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
-                    </select>
-                    <span class="custom-timesheet">entries per page</span>
-                </div>
-                <div class="col-ms-6 text-right pagination-container ">
-                    <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
-                    <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
-                </div>
-            </div>
-            </footer>
-            <!-- END TABLE ITEM -->
-        </fieldset>
-        <!-- END MAIN INFO -->
-    </form>
+<span class="custom-timesheet">Show</span>
+<select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
+</select>
+<span class="custom-timesheet">entries per page</span>
+</div>
+<div class="col-ms-6 text-right pagination-container ">
+    <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+    <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+</div>
+</div>
+</footer>
+<!-- END TABLE ITEM -->
+</fieldset>
+<!-- END MAIN INFO -->
+</form>
 </div>

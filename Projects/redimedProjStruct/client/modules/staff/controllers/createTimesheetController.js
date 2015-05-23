@@ -647,7 +647,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     //end click cancel
 
                     //click save
-                    $scope.clickSave = function(info, formValid) {
+                    $scope.clickSave = function(info, formValid, upload) {
                         if (formValid.$invalid === true) {
                             toastr.warning("Please Input All Required Information!", "Error");
                         } else {
@@ -658,7 +658,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             }
                             modalInstanceAC.close({
                                 type: "ok",
-                                value: info
+                                value: info,
+                                valueUpload: upload
                             });
                         }
                     };
@@ -691,6 +692,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         task.time_charge = null;
                         $scope.changeTimeCharge();
                     }
+                    //PROCESSING FOR UPLOAD FILE
+                    $scope.info.uploader = obj.valueUpload.queue; //INPUT FILE CAN NOT COPY BY ANGULAR.COPY
+                    //END
                 }
             });
             //END
