@@ -342,7 +342,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Item Namea]]></text>
+				<text><![CDATA[Item Names]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="234" y="148" width="81" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
