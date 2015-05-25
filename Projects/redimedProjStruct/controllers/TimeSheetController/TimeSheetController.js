@@ -3647,8 +3647,9 @@ module.exports = {
                                                                             .success(function(data_total_all){
                                                                                 db.sequelize.query(sql_get_total_Dept)
                                                                                     .success(function(data_total_Dept){
-                                                                                        for(var t = 0;t < listleave.length; t++){
-                                                                                            for(var u = 0;u < data_total_Dept.length; u++){
+                 
+                                                                                        for(var u = 0;u < data_total_Dept.length; u++){
+                                                                                            for(var t = 0;t < listleave.length; t++){
                                                                                                 db.hr_leave_owe.update({
                                                                                                     total_all   : data_total_all[0].total_all,
                                                                                                     total_Dept  : data_total_Dept[u].total_Dept
@@ -3945,6 +3946,7 @@ module.exports = {
                                                                                                                                                                 flag4++;
                                                                                                                                                                 if(flag4==data_time_in_lieu_week_Dept.length){
                                                                                                                                                                    res.json({status:"success"});
+                                                                                                                                                                   return;
                                                                                                                                                                 }
                                                                                                                                                             })
                                                                                                                                                             .error(function(err){
