@@ -337,7 +337,7 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
         };
 
         TimeSheetService.LoadReportUtilizationRatioSumary = function(info) {
-            var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-summary");
+            var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-sumary");
             return LoadReportUtilizationRatioSumary.post({
                 info: info
             });
