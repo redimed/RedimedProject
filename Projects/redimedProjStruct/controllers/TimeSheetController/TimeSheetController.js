@@ -5034,7 +5034,7 @@ module.exports = {
     //REPORT UTILIZATION RATIO SUMARY
     LoadReportUtilizationRatioSumary: function(req, res) {
         var info = req.body.info;
-        //console.log(info);
+        console.log(info);
         var stringEMP ="";
         var stringDept="";
         for(var i = 0;i<info.listEMP.length;i++){
