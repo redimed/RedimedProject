@@ -55,6 +55,51 @@ public class DocumentService {
         try {
         	HashMap params = new HashMap();
         	
+        	//OwLeave
+        	if(report.equalsIgnoreCase("timeSheetOweLeave"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/Report_hr_leave_owe.jasper", params, "ReportOweLeave.pdf");
+        	}
+        	
+        	//TimeinLieu
+        	if(report.equalsIgnoreCase("timeSheetTimeInLieu"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportTimeInLieu.jasper", params, "ReportTimeinLieu.pdf");
+        	}
+        	
+        	//Report on Utilization Ratio - View by Detail Activites
+        	if(report.equalsIgnoreCase("timeSheetDetailActivities"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportActivity.jasper", params, "ReportDetailActivities.pdf");
+        	}
+        	
+        	//Report on Utilization Ratio - View by Summary Activities
+        	if(report.equalsIgnoreCase("timeSheetSummaryActivities"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportSummary.jasper", params, "ReportSummaryActivities.pdf");
+        	}
+        	
+        	//Report on Item Numbers
+        	if(report.equalsIgnoreCase("timeSheetItemNumbers"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/TIMESHEET/ReportActualHours/");
+        		
+        		return downloadReport("/reports/TIMESHEET/ReportActualHours/ReportItemNumbers.jasper", params, "ReportItemNumbers.pdf");
+        	}
+        	
         	if(report.equalsIgnoreCase("timeSheetActualHours"))
         	{
         		params.put("id", id);
