@@ -2300,3 +2300,49 @@ label{
     width: 200px;
 }
 /*TAN NAV ITEM DROPDOWN END*/
+
+/*giang css  */
+.un-giang-padding-left-bottom{
+    padding-top: 50;
+    padding-bottom: 50;
+}
+
+.un-btn-Xam-right-header{
+    background: #808285;
+    color: black;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75);
+    position: relative;
+    bottom: 10;
+}
+.un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot{
+    padding: 5px 10px 5px 10px;
+    background: white;
+    margin-right: 5;
+    margin-bottom: 3;
+}
+.un-label-title{
+    width: 20%;
+    height: 6%;
+    text-align: center;
+    font-size: 18;
+    color: white;
+    background-color: #808285;
+    text-align: center;
+}
+.un_body_panel_1{
+    float: right;
+    width: 100%;   
+}
+.un-button-giang {
+  margin-right: 0;
+  border-radius: 20px !important;
+  border: 3px solid white;
+  padding: 5px 10px 5px 10px;
+   box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75); 
+  outline: none;
+}
+
+/*giang css end*/

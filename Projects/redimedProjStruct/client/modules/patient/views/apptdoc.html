@@ -1,44 +1,54 @@
-<h1>Appointment Documents</h1>
 
-<div class="portlet box green ng-scope">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-medkit"></i> Documents
-        </div>
-        <div class="pull-right navbar-right">
-            <!-- Single button -->
-              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="openUploader()">
-                  <i class="fa fa-upload"></i>   Upload documents
-              </button>
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="table-scrollable table-scrollable-borderless" ng-if="uploader.queue.length> 0">
-          <table class="table table-hover table-light">
-            <thead>
-              <tr class="uppercase">
-                <th width="50%">Name</th>
-                <th ng-show="uploader.isHTML5" class="">Size</th>
-                <th ng-show="uploader.isHTML5" class="">Progress</th>
-                <th>Actions</th>
+<div class="un_body_content_left_bottom_right un-giang-padding-left-bottom" style="width:100%">
+
+  <div style="width:90%; margin-left: auto; margin-right: auto;">
+      <label class="un-label-header un-bgWhite" style="width: 12%; text-align: center; height: 2%; padding-bottom: 3%; font-size: 17px;background-color: #808285; color:white"><b>Document</b></label>
+      <button class="un-button-giang un-btn-Xam-right-header" style=" margin-left: 77%; width: 10%; height: 5%; font-size: 15px; color:white" ng-click="openUploader()" >
+                Upload Documents
+      </button>
+      <div class="un-div-content un-bgXam-colBlack">
+        <div class="un-padding-15" style="background-color: #F8F8FF">
+          <div class="row">
+            
+        <div ng-if="uploader.queue.length> 0">
+          <table style="width:90%; margin-left: 5%">
+              <tr style="color: white">
+                <td width="30%">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Name</b></div>
+                </td>
+                <td width="30%" ng-show="uploader.isHTML5" class="">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Size</b></div>
+                </td>
+                <td width="20%" ng-show="uploader.isHTML5" class="">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Progress</b></div>
+                </td>
+                <td width="20%">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Actions</b></div>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <!-- ngRepeat: item in uploader.queue --><tr ng-repeat="item in uploader.queue" class="ng-scope">
-                <td>{{item.file.name}}</td>
-                <td ng-show="uploader.isHTML5" nowrap="" class="ng-binding">{{item.file.size/1024/1024 | number:2}} MB</td>
-                <td ng-show="uploader.isHTML5" class="">
-                  <div class="progress progress-sm" style="margin-bottom: 0;">
-                    <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 0%;"></div>
+              <tr ng-repeat="item in uploader.queue" class="ng-scope"><!-- ngRepeat: item in uploader.queue -->
+                <td width="30%">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">{{item.file.name}}</div>
+                </td>
+                <td width="30%" ng-show="uploader.isHTML5" nowrap="" class="ng-binding">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">{{item.file.size/1024/1024 | number:2}} MB</div>
+                </td>
+                <td width="30%" ng-show="uploader.isHTML5" class="">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">
+                    <div class="progress progress-sm" style="margin-bottom: 0;">
+                      <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 0%;"></div>
+                      </div>
+                    </div>
                   </div>
                 </td>
-                <td nowrap="">
-                  <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                  <span class="glyphicon glyphicon-trash"></span> Remove
-                  </button>
+                <td width="30%" nowrap="">
+                  <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                    <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                  </div>
                 </td>
               </tr><!-- end ngRepeat: item in uploader.queue -->
-            </tbody>
           </table>
         </div>
 
@@ -56,11 +66,15 @@
         </div>
 
 
-       	<my-data-table options="docs.options" rowclass="docs.class" numrows="10"></my-data-table>
-    	<div class="clearfix"></div>
+        <my-data-table options="docs.options" rowclass="docs.class" numrows="10"></my-data-table>
+      <div class="clearfix"></div>
     </div>
-</div>
-
+          </div>
+        </div>
+      
+  </div>
+                  
+                </div>
 
 
 
