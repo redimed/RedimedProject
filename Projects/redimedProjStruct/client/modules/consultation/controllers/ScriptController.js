@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.consult.script.controller",[])
+angular.module("app.loggedIn.patient.consult.scriptController",[])
 	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, script){
 		$scope.scriptInfo = {
 			medication: null,

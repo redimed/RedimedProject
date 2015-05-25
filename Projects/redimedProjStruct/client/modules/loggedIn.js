@@ -74,10 +74,7 @@ angular.module("app.loggedIn", [
     //MODULE TIMESHEET
     'app.loggedIn.TimeSheet',
     //END MODULE TIMESHEET
-
-    //MODULE CONSULTATION
-    'app.loggedIn.consult',
-
+    
     'app.loggedIn.claim',
 
     'app.loggedIn.timetable',

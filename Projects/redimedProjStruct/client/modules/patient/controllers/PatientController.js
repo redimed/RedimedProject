@@ -41,7 +41,7 @@ angular.module("app.loggedIn.patient.controller", [
         {wrap:0,'name': 'Medical Measure', 'icon': 'fa fa-stethoscope', 'color': 'red-soft', 'desc': '',
             'state': 'loggedIn.im.bluetooth({patient_id:' + $stateParams.patient_id + '})'},
         {wrap:0,'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
-            'state': 'loggedIn.consult.patient({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
+            'state': 'loggedIn.patient.consult({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
         {wrap:1,'name':'Problem List', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.problem.list'},
         {wrap:1,'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 

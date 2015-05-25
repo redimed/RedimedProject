@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.consult.measurement.controller",[])
+angular.module("app.loggedIn.patient.consult.measurementController",[])
 	.controller("MeasurementController",function($scope,$filter,$state,$modal,toastr,$modalInstance,$stateParams, measure){
 		$scope.today = $filter('date')(new Date(),'dd/MM/yyyy');
 

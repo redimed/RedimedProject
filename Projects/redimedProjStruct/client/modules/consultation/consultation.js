@@ -1,22 +1,19 @@
-angular.module("app.loggedIn.consult", [
-    "app.loggedIn.consult.controller",
-    "app.loggedIn.consult.services",
-	"app.loggedIn.consult.directives",
+angular.module("app.loggedIn.patient.consult", [
+    "app.loggedIn.patient.consult.controller",
+    "app.loggedIn.patient.consult.measurementController",
+    "app.loggedIn.patient.consult.scriptController",
+    "app.loggedIn.patient.consult.itemsheetController",
+    "app.loggedIn.patient.consult.services",
+	"app.loggedIn.patient.consult.directives",
 ]).config(function ($stateProvider) {
     $stateProvider
-        // STRUCTURE
-        .state("loggedIn.consult", {
-            abstract: true,
-            templateUrl: "modules/consultation/views/structure.html",
-            controller: "ConsultController"
-        })
 
-        .state("loggedIn.consult.patient",{
-            url: "/online/consult/:patient_id/:cal_id",
+        .state("loggedIn.patient.consult",{
+            url: '/consult',
             views: {
-                "main-content":{
-                    templateUrl: "modules/consultation/views/consult.html",
-                    controller: "PatientConsultController"
+                "main-content": {
+                    templateUrl: 'modules/consultation/views/consult.html',
+                    controller: 'PatientConsultController'
                 }
             }
         })

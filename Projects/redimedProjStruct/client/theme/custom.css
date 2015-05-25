@@ -1652,7 +1652,7 @@ table.timetable-table td:last-child {
     color: white;
     border-radius: 20px !important;
     border: 3px solid white;
-    background: rgb(102, 102, 102) !important;
+    background: rgb(102, 102, 102);
     margin-bottom: 10px;
 }
 .un-submit:hover{
@@ -2300,3 +2300,82 @@ label{
     width: 200px;
 }
 /*TAN NAV ITEM DROPDOWN END*/
+
+
+/* TAB BAR */
+
+.un-tabs {
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.un-tabs li {
+  float: left;
+  margin: 0 .5em 0 0;
+}
+
+.un-tabs a {
+  position: relative;
+  background: #ddd;
+  background-image: linear-gradient(to bottom, #fff, #ddd);  
+  padding: .7em 3.5em;
+  float: left;
+  text-decoration: none;
+  color: #444;
+  text-shadow: 0 1px 0 rgba(255,255,255,.8);
+  border-radius: 5px 0 0 0;
+  box-shadow: 0 2px 2px rgba(0,0,0,.4);
+}
+
+.un-tabs a:hover,
+.un-tabs a:hover::after,
+.un-tabs a:focus,
+.un-tabs a:focus::after {
+  background: #fff;
+}
+
+.un-tabs a:focus {
+  outline: 0;
+}
+
+.un-tabs a::after {
+  content:'';
+  position:absolute;
+  z-index: 1;
+  top: 0;
+  right: -.5em;  
+  bottom: 0;
+  width: 1em;
+  background: #ddd;
+  background-image: linear-gradient(to bottom, #fff, #ddd);  
+  box-shadow: 2px 2px 2px rgba(0,0,0,.4);
+  transform: skew(10deg);
+  border-radius: 0 5px 0 0;  
+
+}
+
+.un-tabs .active a,
+.un-tabs .active a::after {
+  background: #fff;
+  z-index: 3;
+}
+
+.un-tabs-content {
+  background: #B0B0B0;
+  padding: 2em;
+  position: relative;
+  z-index: 2; 
+  border-radius: 0px 5px 5px 5px !important;
+  box-shadow: 0 -2px 3px -2px rgba(0, 0, 0, .5);
+}
+
+.un-tabs-content .un-tab-content {
+    display: none;
+}
+
+.un-tabs-content .active {
+    display: inherit;
+}
