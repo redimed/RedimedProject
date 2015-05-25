@@ -3547,6 +3547,8 @@ module.exports = {
         }
         stringDept+=0;
 
+        var sql_get_total_all  = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = "+info.USER_ID;
+        var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = "+info.USER_ID+" GROUP BY department ";
         var sql_get_data_hr_leave_owe_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge,time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id "
                                         +"FROM hr_employee "
                                         +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
@@ -3640,9 +3642,7 @@ module.exports = {
                                                                 .success(function(data_insert2){
                                                                     flag2++;
                                                                     if(flag2==listleave.length)
-                                                                        var sql_get_total_all  = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = "+info.USER_ID;
-
-                                                                        var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = "+info.USER_ID+" GROUP BY department ";
+                                                                        
                                                                         db.sequelize.query(sql_get_total_all)
                                                                             .success(function(data_total_all){
                                                                                 db.sequelize.query(sql_get_total_Dept)
