@@ -83,7 +83,7 @@ $F{SCORE_TYPE1}==4)]]></printWhenExpression>
 					<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!=null
 &&
 ($F{SCORE_TYPE1}==1 || $F{SCORE_TYPE1}==2 || $F{SCORE_TYPE1}==3 ||
-$F{SCORE_TYPE1}==4)]]></printWhenExpression>
+$F{SCORE_TYPE1}==4 || $F{SCORE_TYPE1}==10)]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="DIR_PATH">
 					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
