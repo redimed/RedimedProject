@@ -50,9 +50,9 @@
 
 	<!--CLINICAL_DETAILS-->
 	<div class="col-md-8 col-sm-8 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label for="clinical_details">Clinical details</label>
-            <textarea style="resize:none;"  type="text" placeholder="Clinical details" name="clinical_details" ng-model="modelObjectMap.CLINICAL_DETAILS" class="form-control" id="clinical_details" float-label></textarea>
+            <textarea style="resize:none;"  type="text" placeholder="Clinical details" name="clinical_details" ng-model="modelObjectMap.CLINICAL_DETAILS" class="form-control" id="clinical_details"></textarea>
 		</span>	</div>
 	<!--CLINICAL_DETAILS-->
 
@@ -67,9 +67,9 @@
 	<div class="break-row"></div>
 	<!--REQUESTING_PRACTITIONER-->
 	<div class="col-md-8 col-sm-8 col-xs-12">
-		<span class="field">
-			<label for="requesting_practitioner">Requesting practitioner</label>
-            <textarea style="resize:none;" placeholder="Requesting practitioner" name="requesting_practitioner" ng-model="modelObjectMap.REQUESTING_PRACTITIONER" class="form-control" id="requesting_practitioner" float-label></textarea>
+		<span class="field extend-field">
+			<label for="requesting_practitioner" style="width: 150px;">Requesting practitioner</label>
+            <textarea style="resize:none;" placeholder="Requesting practitioner" name="requesting_practitioner" ng-model="modelObjectMap.REQUESTING_PRACTITIONER" class="form-control" id="requesting_practitioner"></textarea>
 		</span>	</div>
 	<!--REQUESTING_PRACTITIONER-->
 
@@ -134,19 +134,17 @@
     <div class="break-row"></div>
 	<!--APPOINTMENT_DATE-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label for="appointment_date">Appointment date</label>
-			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Appointment date" name="appointment_date" ng-model="modelObjectMap.APPOINTMENT_DATE" class="form-control" id="appointment_date" float-label>
+			<input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Appointment date" name="appointment_date" ng-model="modelObjectMap.APPOINTMENT_DATE" class="form-control" id="appointment_date">
 		</span>	</div>
 	<!--APPOINTMENT_DATE-->
 	
 		<div class="clearfix"></div>
         <!-- ACTION -->
         <div class="col-sm-4 col-xs-6">
-            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
-                <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
-                <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
-                {{mode.text}}
+            <button class="btn un-submit" ng-click="clickAction({type: mode.type})">
+                Save
             </button>
         </div>
 

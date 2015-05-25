@@ -1,14 +1,15 @@
-<h3 class="page-title"> Invoices </h3>
+<!--<h3 class="page-title"> Invoices </h3>-->
 
-<div class="portlet box red">
-    <div class="portlet-title">
-		<div class="caption">
+<div class="portlet box" style="position: relative; margin-top: 32px;">
+    <button class="btn btn-default btn-fix" ng-click="addFormInvoice.open()"><i class="fa fa-plus"></i> Add invoice</button>
+    <label class="un-title-label" style="top: -38px;">Invoices</label>
+		<!--<div class="caption">
            <i class="fa fa-money"></i> <b> Invoices List </b>
         </div>
          <div class="pull-right">
        		<button class="btn btn-default" ng-click="addFormInvoice.open()"><i class="fa fa-plus"></i> Add invoice</button>
        </div>
-   </div>  
+   </div>-->
     <div class="portlet-body">
     	<my-data-table options="invoiceOption" rowclick="invoiceClick" rowclass="invoiceClass" numrows="50"></my_data-table>
     </div>

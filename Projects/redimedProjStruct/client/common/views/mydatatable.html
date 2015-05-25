@@ -1,9 +1,4 @@
 <div ng-if="!static">
-    <div ng-if="!options.not_paging" class="pull-left">
-        <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
-                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="ajaxGetData()"
-                    items-per-page="page_data.itemPerPage" max-size="page_data.maxSize"></pagination>
-    </div>
     <!--<div class="pull-right">
         <strong>Total Items</strong> : {{page_data.totalItems}} - 
         <strong>Item per page</strong> :
@@ -11,7 +6,6 @@
                 ng-change="ajaxGetData()">
         </select>
     </div>-->
-    <div class="clearfix"></div>
     <table class="mdt-table table table-bordered table-hover">
         <thead>
             <tr>
@@ -84,7 +78,7 @@
                  <!-- ACTION -->
                 <td ng-if="options.use_actions">
                     <div  ng-if="options.action_show ?  options.action_show(item) : true" class="btn-group" dropdown>
-                        <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle" ng-disabled="disabled">
+                        <button style="margin-right: 0;" type="button" class="btn un-submit btn-sm dropdown-toggle" ng-disabled="disabled">
                             More <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -119,7 +113,7 @@
                 <!-- ACTION -->
                 <td ng-if="options.use_actions">
                     <div ng-if="options.action_show ?  options.action_show(item) : true" class="btn-group" dropdown>
-                        <button style="margin-right: 0;" type="button" class="btn btn-sm blue-soft dropdown-toggle">
+                        <button style="margin-right: 0;" type="button" class="btn un-submit dropdown-toggle">
                             More <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -133,6 +127,13 @@
             </tr>
         </tbody>
     </table>
+    <div class="clearfix"></div>
+    <br/><br/>
+    <div ng-if="!options.not_paging" class="pull-right" style="margin-top: 10px;">
+        <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
+                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="ajaxGetData()"
+                    items-per-page="page_data.itemPerPage" max-size="page_data.maxSize"></pagination>
+    </div>
 </div>
 
 
