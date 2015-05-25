@@ -3654,7 +3654,10 @@ module.exports = {
                                                                                                     department  : data_total_Dept[u].department
                                                                                                 })
                                                                                                 .success(function(success){
-                                                                                                    //console.log("SUCCESS")
+                                                                                                    res.json({
+                                                                                                        status:"success"
+                                                                                                    });
+                                                                                                    return;
                                                                                                 })
                                                                                                 .error(function(err){
                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4290,7 +4293,10 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    console.log("success")
+                                                                                                                                                    res.json({
+                                                                                                                                                        status:"success"
+                                                                                                                                                    });
+                                                                                                                                                    return;
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4407,7 +4413,10 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    console.log("success")
+                                                                                                                                                    res.json({
+                                                                                                                                                        status:"success"
+                                                                                                                                                    });
+                                                                                                                                                    return;
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4524,7 +4533,10 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    console.log("success")
+                                                                                                                                                    res.json({
+                                                                                                                                                        status:"success"
+                                                                                                                                                    });
+                                                                                                                                                    return;
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4639,7 +4651,10 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    console.log("success")
+                                                                                                                                                    res.json({
+                                                                                                                                                        status:"success"
+                                                                                                                                                    });
+                                                                                                                                                    return;
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4754,7 +4769,10 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    console.log("success")
+                                                                                                                                                    res.json({
+                                                                                                                                                        status:"success"
+                                                                                                                                                    });
+                                                                                                                                                    return;
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4860,7 +4878,10 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    console.log("success")
+                                                                                                                                                    res.json({
+                                                                                                                                                        status:"success"
+                                                                                                                                                    });
+                                                                                                                                                    return;
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -5159,7 +5180,10 @@ module.exports = {
                                                                                                                                                                 user_id       : info.USER_ID
                                                                                                                                                             })
                                                                                                                                                             .success(function(success){
-                                                                                                                                                                console.log("SUCCESS")
+                                                                                                                                                                res.json({
+                                                                                                                                                                    status:"success"
+                                                                                                                                                                });
+                                                                                                                                                                return;
                                                                                                                                                             })
                                                                                                                                                             .error(function(err){
                                                                                                                                                                 console.log("*****ERROR: "+err+" *****");
@@ -5501,7 +5525,10 @@ module.exports = {
                                                                                                                                                                                                                             user_id : info.USER_ID
                                                                                                                                                                                                                         })
                                                                                                                                                                                                                         .success(function(success){
-                                                                                                                                                                                                                            console.log("success")
+                                                                                                                                                                                                                            res.json({
+                                                                                                                                                                                                                                        status:"success"
+                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                return;
                                                                                                                                                                                                                         })
                                                                                                                                                                                                                         .error(function(err){
                                                                                                                                                                                                                                 console.log("*****ERROR:"+err+"*****");
