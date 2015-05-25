@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
-	<property name="ireport.zoom" value="1.6105100000000012"/>
+	<property name="ireport.zoom" value="1.9487171000000019"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -342,7 +342,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Item Name]]></text>
+				<text><![CDATA[Item Namea]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="234" y="148" width="81" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
@@ -406,7 +406,9 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			</textField>
 			<textField>
 				<reportElement x="345" y="0" width="45" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
 			</textField>
 			<line>
