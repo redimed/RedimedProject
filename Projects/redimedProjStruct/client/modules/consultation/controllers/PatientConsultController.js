@@ -95,7 +95,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/measureModal.html',
-					windowClass: "consult-modal-window",
+					size:'lg',
 					controller: "MeasurementController",
 					resolve:{
 						measure:function(){
@@ -114,7 +114,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/measureModal.html',
-					windowClass: "consult-modal-window",
+					size:'lg',
 					controller: "MeasurementController",
 					resolve:{
 						measure: function(){

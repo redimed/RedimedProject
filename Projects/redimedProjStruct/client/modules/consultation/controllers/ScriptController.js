@@ -17,7 +17,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 
 		$scope.medications = [];
 		$scope.selectedMedication = null;
-		$scope.checkMedication = false;
+		$scope.checkMedication = true;
 
 		ConsultationService.searchScript({medicine_name: ''}).then(function(rs){
 			$scope.medications = rs.list;
@@ -44,16 +44,16 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		$scope.$watch('selectedMedication',function(val){
 			if(typeof val !== 'undefined' && val != null)
 			{
-				$scope.checkMedication = true;
+				// $scope.checkMedication = true;
 				var medicine = val.originalObject;
 
-				$scope.scriptInfo.medicine_name = medicine.medicine_name;
+				$scope.scriptInfo.medication = medicine.medicine_name;
 				$scope.scriptInfo.qty = 1;
 			}
-			else
-			{
-				$scope.checkMedication = false;
-			}
+			// else
+			// {
+			// 	$scope.checkMedication = false;
+			// }
 		})
 
 	})

@@ -1,20 +1,17 @@
 /**
  * Created by meditech on 23/09/2014.
  */
-angular.module("app.loggedIn.im",[
-    "app.loggedIn.im.controller",
-    "app.loggedIn.im.services"
+angular.module("app.loggedIn.patient.injuryManagement",[
+    "app.loggedIn.patient.injuryManagement.map.controller",
+    "app.loggedIn.patient.injuryManagement.detail.controller",
+    "app.loggedIn.patient.injuryManagement.list.controller",
+    "app.loggedIn.patient.injuryManagement.bluetooth.controller",
+    "app.loggedIn.patient.injuryManagement.services"
 ])
 .config(function($stateProvider){
     $stateProvider
 
-        .state("loggedIn.im", {
-            abstract: true,
-            templateUrl: "modules/injuryManagement/views/structure.html",
-            controller: "InjuryManagementController"
-        })
-
-        .state("loggedIn.im.map",{
+        .state("loggedIn.patient.im_Map",{
             url: "/im/maps",
             views: {
                 "main-content":{
@@ -25,8 +22,8 @@ angular.module("app.loggedIn.im",[
 
         })
 
-        .state('loggedIn.im.list',{
-            url:"/im/list/:patient_id",
+        .state('loggedIn.patient.im_List',{
+            url:"/im/list",
             views:{
                 "main-content":{
                     templateUrl:"modules/injuryManagement/views/injuryList.html",
@@ -35,8 +32,8 @@ angular.module("app.loggedIn.im",[
             }
         })
 
-        .state('loggedIn.im.bluetooth',{
-            url:"/im/bluetooth/:patient_id",
+        .state('loggedIn.patient.im_Bluetooth',{
+            url:"/im/bluetooth",
             views:{
                 "main-content":{
                     templateUrl:"modules/injuryManagement/views/bluetooth.html",
@@ -45,7 +42,7 @@ angular.module("app.loggedIn.im",[
             }
         })
 
-        .state("loggedIn.im.detail",{
+        .state("loggedIn.patient.im_Detail",{
             url:"/im/details/:id",
             views:{
                 "main-content":{

@@ -1443,8 +1443,8 @@ table.timetable-table td:last-child {
     padding: 5px 15px 5px 15px;
 }
 .un-label-form{
-    color: rgb(186, 186, 185)!important;
-    background: rgb(49, 50, 50)!important;
+    color: rgb(186, 186, 185);
+    background: rgb(49, 50, 50);
     margin-bottom: 0px;
     padding: 0px 10px 0px 10px;
     font-size: 12px;
@@ -2328,6 +2328,10 @@ label{
   text-shadow: 0 1px 0 rgba(255,255,255,.8);
   border-radius: 5px 0 0 0;
   box-shadow: 0 2px 2px rgba(0,0,0,.4);
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 15px;
+  
 }
 
 .un-tabs a:hover,
@@ -2359,7 +2363,11 @@ label{
 
 .un-tabs .active a,
 .un-tabs .active a::after {
-  background: #fff;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 15px;
+  color: #fff;
+  background: #B0B0B0;
   z-index: 3;
 }
 
@@ -2378,4 +2386,16 @@ label{
 
 .un-tabs-content .active {
     display: inherit;
+}
+
+.un-large-button{
+    color: white;
+    border-radius: 25px !important;
+    border: 3px solid white;
+    background: rgb(102, 102, 102);
+    margin-bottom: 10px;
+    width: 200px;
+    height: 50px;
+    padding: 14px 14px !important;
+    font-weight: bold;
 }

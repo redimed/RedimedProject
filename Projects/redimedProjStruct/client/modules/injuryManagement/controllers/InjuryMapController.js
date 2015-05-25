@@ -1,8 +1,8 @@
 /**
  * Created by Luan Nguyen on 1/11/2015.
  */
-angular.module("app.loggedIn.im.map.controller",[])
-    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket){
+angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
+    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket,$interval){
         $scope.injuryMarker = [];
         $scope.driverMarker = [];
         $scope.driverListTemp = [];
@@ -153,7 +153,7 @@ angular.module("app.loggedIn.im.map.controller",[])
         })
 
         $scope.showDetails = function(id){
-            $state.go('loggedIn.im.detail',{id:id});
+            $state.go('loggedIn.patient.im_Detail',{id:id});
         }
 
         $scope.allocateDriver = function(injury){
@@ -176,9 +176,10 @@ angular.module("app.loggedIn.im.map.controller",[])
             getOnlineDriver();
         }
 
-        $scope.refreshList = function(){
+    
+        $interval(function(){
             refreshList();
-        }
+        },10 * 1000);
 
         setInterval(refreshMap,60 * 1000);
         setInterval(getOnlineDriver,60 * 1000);
@@ -228,9 +229,7 @@ angular.module("app.loggedIn.im.map.controller",[])
             $scope.search.patient = "";
             $scope.search.driver = "";
             $scope.search.dateRange = null;
-
-            $scope.injuryList = [];
-            $scope.injuryListTemp = [];
+            
             InjuryManagementService.getInjuryList().then(function(rs) {
                 if (rs.status == 'success') {
                     for(var j=0;j<rs.data.length;j++){
@@ -240,7 +239,17 @@ angular.module("app.loggedIn.im.map.controller",[])
                     }
                     $scope.injuryListTemp = rs.data;
 
-                    $scope.injuryList = $scope.injuryListTemp;
+                    if($scope.injuryList.length == 0)
+                        $scope.injuryList = $scope.injuryListTemp;
+                    else
+                    {
+                        var arr = [];
+                        arr = _.difference($scope.injuryList, $scope.injuryListTemp);
+                        if(arr.length > 0)
+                            $scope.injuryList = $scope.injuryListTemp;
+                    }
+
+                    
                 }
             })
         }

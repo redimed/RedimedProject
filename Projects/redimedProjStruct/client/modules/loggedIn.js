@@ -64,7 +64,6 @@ angular.module("app.loggedIn", [
     /*END AUTO CREATE*/
     'app.loggedIn.timetable',
 
-    'app.loggedIn.im',
     "app.loggedIn.staff",
 
     // MODULE TREEAPPROVE
@@ -86,7 +85,7 @@ angular.module("app.loggedIn", [
     'app.loggedIn.company',
     'app.loggedIn.alert',
     'app.loggedIn.outreferral',
-    'app.loggedIn.problem',
+    // 'app.loggedIn.problem',
     'app.loggedIn.fadefine'
 ])
 

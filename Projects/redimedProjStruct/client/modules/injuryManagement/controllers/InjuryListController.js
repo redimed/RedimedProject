@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.im.list.controller",[])
+angular.module("app.loggedIn.patient.injuryManagement.list.controller",[])
     .controller("InjuryListController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket,$stateParams,$cookieStore){
     	$scope.patient_id = $stateParams.patient_id;
     	$scope.search = {
@@ -26,7 +26,7 @@ angular.module("app.loggedIn.im.list.controller",[])
         }
 
         $scope.showDetails = function(id){
-            $state.go('loggedIn.im.detail',{id:id});
+            $state.go('loggedIn.patient.im_Detail',{id:id});
         }
 
          $scope.searchInjury = function(s){

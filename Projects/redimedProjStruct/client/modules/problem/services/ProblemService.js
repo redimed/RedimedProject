@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.problem.service',[])
+angular.module('app.loggedIn.patient.problem.service',[])
 
 .factory("ProblemService", function(Restangular, ConfigService, $state){
 	var instanceService = {};

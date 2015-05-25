@@ -34,12 +34,20 @@
                     <div class="col-lg-12 col-md-12 un-form-white-p">
                         <label class="un-label-form-3 un-label-whidth-130">Online Users</label>
                         <br/>
-                        <br/>
-                        <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
+                        <table cellspacing="0" border="0">
+                            <tr>
+                                <td ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
+                                    <a ng-click="makeCall(u)" href="javascript:;" class="btn" style="color: white;" ng-class="(companyInfo.users.length % $index) == 0 ? 'red' : 'blue'">
+                                        <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                       <!--  <span ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
                             <a ng-click="makeCall(u)" href="javascript:;" class="btn btn-circle btn-sm green" >
                                 <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
                             </a>
-                        </span>
+                        </span> -->
                     </div>
                 </div>
             </div>
@@ -199,7 +207,7 @@
         <div class="row">
             
             <div class="col-md-5 col-sm-5">
-                <label class="un-label-form un-label-whidth-130">Problems</label>
+                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Problems</label>
                 <select class="form-control un-input-custom un-select-p" 
                         ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
                         ng-model="consultInfo.problem_id" float-label>
@@ -281,7 +289,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group" >
-                    <label class="un-label-form un-label-whidth-130">History</label>
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
                     <textarea ng-model="consultInfo.history" 
                         class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                 </div>
@@ -291,7 +299,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group" >
-                    <label class="un-label-form un-label-whidth-130">Examination</label>
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
                     <textarea ng-model="consultInfo.examination" 
                         class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                 </div>
@@ -301,7 +309,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group" >
-                    <label class="un-label-form un-label-whidth-130">Treatment/Plan</label>
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
                     <textarea ng-model="consultInfo.treatment" 
                         class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                 </div>
@@ -311,7 +319,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="form-group" >
-                    <label class="un-label-form un-label-whidth-130">Diagnosis</label>
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
                     <textarea ng-model="consultInfo.diagnosis" 
                         class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                 </div>
@@ -372,7 +380,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="bold" align="center" ng-if="consultInfo.measurements.length > 0" ng-repeat="m in consultInfo.measurements">
+                    <tr style="background-color: white;" class="bold" align="center" ng-if="consultInfo.measurements.length > 0" ng-repeat="m in consultInfo.measurements">
                         <td style="vertical-align: middle">
                             {{m.measure_date | date:'dd/MM/yyyy'}}
                         </td>
@@ -441,11 +449,6 @@
                         </th>
                         <th>
                             <div class="th">
-                                <span style="color: white;">Price ($)</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
                                 <span style="color: white;">Action</span>
                             </div>
                         </th>
@@ -463,7 +466,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
+                    <tr style="background-color: white;" class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
                         <td style="vertical-align: middle">
                             {{m.medication}}
                         </td>
@@ -482,9 +485,6 @@
                         <td style="vertical-align: middle">
                             {{m.frequency}}
                         </td>
-                        <td style="vertical-align: middle">
-                            {{m.price}}
-                        </td>
                         <td align="center">
                             <a ng-click="scriptAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
                                 <i class="fa fa-edit"></i>
@@ -501,8 +501,8 @@
     <div class="un-tab-content" id="tab_1_4">
         <div ng-controller="BluetoothController">
             <div class="row">
-                <div ng-click="showHistory(device)" class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
-                    <a href="javascript:;" style="margin-bottom: 20 !important"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
+                <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
+                    <!-- <a href="javascript:;" style="margin-bottom: 20 !important"  class="dashboard-stat dashboard-stat-light {{device.color}}" style="text-decoration: none;">
                         <div class="visual">
                             <i class="{{device.icon}}"></i>
                         </div>
@@ -511,13 +511,16 @@
                                 {{device.device_name}}
                             </div>
                         </div>
+                    </a> -->
+
+                    <a  style="text-decoration: none;" ng-click="showHistory(device)" class="btn btn-info un-large-button" href="javascript:;">
+                        {{device.device_name}}
                     </a>
                 </div>
             </div>
             <div ng-if="currDevice"  class="portlet blue-chambray box">
                 <div class="portlet-title">
                     <div class="caption ">
-                        <i class="icon-list"></i>
                         <span class="caption-subject uppercase">Device: {{currDevice}}</span>
                     </div>
                 </div>
