@@ -449,13 +449,17 @@ module.exports = {
 	},
 
 	getAllShopPost:function(req, res) {
+		var records = req.body.records;
+		
+
 		var sql = "SELECT * FROM `ph_shops_post` sp " +
 					   "INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
 					   "INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
-					   "ORDER BY po.`post_id` DESC";
-		db.sequelize.query(sql, null, {raw:true})
+					   "ORDER BY po.`post_id` DESC " +
+					   "LIMIT ?,? ";
+		db.sequelize.query(sql, null, {raw:true}, [records,5])
 			.success(function(rows){
-				console.log("---------------success", rows);
+				console.log("---------------records", rows);
 				res.json({status:'success', data:rows});
 			})
 			.error(function(err){
