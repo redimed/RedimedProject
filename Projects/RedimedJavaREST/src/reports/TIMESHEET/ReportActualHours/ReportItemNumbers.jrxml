@@ -160,7 +160,8 @@ FROM item_code_report1
 INNER JOIN hr_employee ON hr_employee.Employee_ID = item_code_report1.Employee_id
 INNER JOIN departments ON departments.departmentid = item_code_report1.Department_id
 INNER JOIN time_item_code ON time_item_code.ITEM_ID =
-item_code_report1.item_id]]>
+item_code_report1.item_id
+WHERE item_code_report1.user_id =$P{id}]]>
 	</queryString>
 	<field name="FirstName" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -248,7 +249,7 @@ item_code_report1.item_id]]>
 				<textField>
 					<reportElement x="335" y="1" width="45" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA["100%"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="114" y="21" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
@@ -320,7 +321,7 @@ item_code_report1.item_id]]>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Report Item Numbers]]></text>
+				<text><![CDATA[ Report on Item Numbers ]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="196" y="100" width="62" height="20" forecolor="#990000" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
@@ -411,7 +412,7 @@ item_code_report1.item_id]]>
 			<textField>
 				<reportElement x="335" y="0" width="45" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["100%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="114" y="21" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>

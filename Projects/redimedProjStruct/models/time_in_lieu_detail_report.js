@@ -16,6 +16,7 @@ module.exports = function(sequelize,DataTypes){
         time_in_lieu_week_Dept:DataTypes.INTEGER(11),
         time_in_lieu_week_total:DataTypes.INTEGER(11),
         Creation_date : DataTypes.DATE ,
+        Creation_by : DataTypes.INTEGER(11),
         Last_updated_by : DataTypes.INTEGER(11) ,
         Last_update_date : DataTypes.DATE
     },{

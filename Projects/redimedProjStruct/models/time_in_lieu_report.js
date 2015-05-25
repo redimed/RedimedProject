@@ -14,6 +14,7 @@ module.exports = function(sequelize,DataTypes){
         from_date :DataTypes.DATE,
         to_date:DataTypes.DATE,
         Creation_date : DataTypes.DATE ,
+        Creation_by : DataTypes.INTEGER(11),
         Last_updated_by : DataTypes.INTEGER(11) ,
         Last_update_date : DataTypes.DATE
     },{

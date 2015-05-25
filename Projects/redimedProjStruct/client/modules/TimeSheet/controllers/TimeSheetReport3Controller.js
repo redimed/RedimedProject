@@ -68,7 +68,7 @@ angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
                 info.weekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                TimeSheetService.LoadReportUtilizationRatioSumnary(info).then(function(response) {
+                TimeSheetService.LoadReportUtilizationRatioSumary(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;

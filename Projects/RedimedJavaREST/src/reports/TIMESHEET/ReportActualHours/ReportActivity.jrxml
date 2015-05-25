@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="1.6105100000000012"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -140,6 +140,23 @@ FROM item_code_report1]]>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT time_activity_report.Employee_id,
+time_activity_report.per_1,
+time_activity_report.per_2,
+time_activity_report.per_3,
+time_activity_report.per_4,
+time_activity_report.per_5,
+time_activity_report.per_1_Dept,
+time_activity_report.per_2_Dept,
+time_activity_report.per_3_Dept,
+time_activity_report.per_4_Dept,
+time_activity_report.per_5_Dept,
+time_activity_report.per_1_all,
+time_activity_report.per_2_all,
+time_activity_report.per_3_all,
+time_activity_report.per_4_all,
+time_activity_report.per_5_all,
+time_activity_report.per_week,
+time_activity_report.per_week_Dept,
 time_activity_report.Department_id,time_activity_report.time_charge_1,
 time_activity_report.time_charge_2,time_activity_report.time_charge_3,
 time_activity_report.time_charge_4,time_activity_report.time_charge_5,
@@ -153,9 +170,61 @@ time_activity_report.time_charge_all,time_activity_report.from_date,
 time_activity_report.to_date,departments.departmentName,hr_employee.FirstName,hr_employee.LastName
 FROM time_activity_report
 INNER JOIN hr_employee ON hr_employee.Employee_ID = time_activity_report.Employee_id
-INNER JOIN departments ON departments.departmentid = time_activity_report.Department_id]]>
+INNER JOIN departments ON departments.departmentid = time_activity_report.Department_id
+WHERE time_activity_report.user_id=$P{id}]]>
 	</queryString>
 	<field name="Employee_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_1" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_2" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_3" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_4" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_5" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_1_Dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_2_Dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_3_Dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_4_Dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_5_Dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_1_all" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_2_all" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_3_all" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_4_all" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_5_all" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_week" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="per_week_Dept" class="java.lang.Float">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Department_id" class="java.lang.Integer">
@@ -256,89 +325,119 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 					<text><![CDATA[ Subtotal:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="124" y="1" width="60" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
+					<reportElement x="124" y="1" width="43" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[($F{time_charge_1_Dept}==null || $F{time_charge_1_Dept}=="" || $F{time_charge_1_Dept}==0)?"-":(($F{time_charge_1_Dept}/60<10?"0"+($F{time_charge_1_Dept}/60).intValue():($F{time_charge_1_Dept}/60).intValue()))+":"+(($F{time_charge_1_Dept}%60<10?"0"+$F{time_charge_1_Dept}%60:$F{time_charge_1_Dept}%60))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="194" y="2" width="60" height="19" uuid="9660f367-7060-40e5-94d3-8b560fbe3441"/>
+					<reportElement x="219" y="1" width="43" height="19" uuid="9660f367-7060-40e5-94d3-8b560fbe3441"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[($F{time_charge_2_Dept}==null || $F{time_charge_2_Dept}=="" || $F{time_charge_2_Dept}==0)?"-":(($F{time_charge_2_Dept}/60<10?"0"+($F{time_charge_2_Dept}/60).intValue():($F{time_charge_2_Dept}/60).intValue()))+":"+(($F{time_charge_2_Dept}%60<10?"0"+$F{time_charge_2_Dept}%60:$F{time_charge_2_Dept}%60))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="264" y="1" width="60" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
+					<reportElement x="314" y="1" width="43" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[($F{time_charge_3_Dept}==null || $F{time_charge_3_Dept}=="" || $F{time_charge_3_Dept}==0)?"-":(($F{time_charge_3_Dept}/60<10?"0"+($F{time_charge_3_Dept}/60).intValue():($F{time_charge_3_Dept}/60).intValue()))+":"+(($F{time_charge_3_Dept}%60<10?"0"+$F{time_charge_3_Dept}%60:$F{time_charge_3_Dept}%60))]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="124" y="21" width="60" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
+					<reportElement x="124" y="21" width="85" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="194" y="21" width="60" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
+					<reportElement x="219" y="21" width="85" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="264" y="21" width="60" height="1" uuid="3ffc12b7-1b37-4923-bfae-fb6de43b1040"/>
+					<reportElement x="314" y="21" width="85" height="1" uuid="3ffc12b7-1b37-4923-bfae-fb6de43b1040"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="124" y="0" width="60" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
+					<reportElement x="124" y="0" width="85" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
 				</line>
 				<line>
-					<reportElement x="194" y="0" width="60" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
+					<reportElement x="219" y="0" width="85" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
 				</line>
 				<line>
-					<reportElement x="264" y="0" width="60" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
+					<reportElement x="314" y="0" width="85" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
 				</line>
 				<textField>
-					<reportElement x="404" y="1" width="60" height="19" uuid="e5be124c-c7a9-4074-9111-056d005c16ba"/>
+					<reportElement x="409" y="1" width="43" height="19" uuid="e5be124c-c7a9-4074-9111-056d005c16ba"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[($F{time_charge_4_Dept}==null || $F{time_charge_4_Dept}=="" || $F{time_charge_4_Dept}==0)?"-":(($F{time_charge_4_Dept}/60<10?"0"+($F{time_charge_4_Dept}/60).intValue():($F{time_charge_4_Dept}/60).intValue()))+":"+(($F{time_charge_4_Dept}%60<10?"0"+$F{time_charge_4_Dept}%60:$F{time_charge_4_Dept}%60))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="504" y="1" width="43" height="19" uuid="25a636e9-38de-4014-b9db-b72ba0bc1f83"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[($F{time_charge_5_Dept}==null || $F{time_charge_5_Dept}=="" || $F{time_charge_5_Dept}==0)?"-":(($F{time_charge_5_Dept}/60<10?"0"+($F{time_charge_5_Dept}/60).intValue():($F{time_charge_5_Dept}/60).intValue()))+":"+(($F{time_charge_5_Dept}%60<10?"0"+$F{time_charge_5_Dept}%60:$F{time_charge_5_Dept}%60))]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="474" y="1" width="60" height="19" uuid="25a636e9-38de-4014-b9db-b72ba0bc1f83"/>
+					<reportElement x="599" y="1" width="43" height="19" uuid="25245525-d6d1-4716-a26a-34be476189e0"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[($F{time_charge_week_Dept}==null || $F{time_charge_week_Dept}=="" || $F{time_charge_week_Dept}==0)?"-":(($F{time_charge_week_Dept}/60<10?"0"+($F{time_charge_week_Dept}/60).intValue():($F{time_charge_week_Dept}/60).intValue()))+":"+(($F{time_charge_week_Dept}%60<10?"0"+$F{time_charge_week_Dept}%60:$F{time_charge_week_Dept}%60))]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement x="409" y="21" width="85" height="1" uuid="a3e80af6-8de3-491d-b16b-86d83aa99888"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="504" y="21" width="85" height="1" uuid="eb1960dd-0517-478a-9b50-e728209df19e"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="599" y="21" width="85" height="1" uuid="3373c187-444e-45d0-9f3e-c53d9b51b141"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="409" y="0" width="85" height="1" uuid="7f924d7a-dcca-4e3a-8b47-8d0de4fb3451"/>
+				</line>
+				<line>
+					<reportElement x="504" y="0" width="85" height="1" uuid="5f52b875-2de6-4c68-81a2-61dbcf9fcd07"/>
+				</line>
+				<line>
+					<reportElement x="599" y="0" width="85" height="1" uuid="b6db59f0-971d-43f7-bee0-d20938dbd48f"/>
+				</line>
 				<textField>
-					<reportElement x="334" y="1" width="60" height="19" uuid="25245525-d6d1-4716-a26a-34be476189e0"/>
+					<reportElement x="166" y="1" width="43" height="19" uuid="229de54c-7035-4312-9ce5-5999f9a18490"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA[($F{time_charge_4_Dept}==null || $F{time_charge_4_Dept}=="" || $F{time_charge_4_Dept}==0)?"-":(($F{time_charge_4_Dept}/60<10?"0"+($F{time_charge_4_Dept}/60).intValue():($F{time_charge_4_Dept}/60).intValue()))+":"+(($F{time_charge_4_Dept}%60<10?"0"+$F{time_charge_4_Dept}%60:$F{time_charge_4_Dept}%60))]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+$F{per_1_Dept}+"%)"]]></textFieldExpression>
 				</textField>
-				<line>
-					<reportElement x="334" y="21" width="60" height="1" uuid="a3e80af6-8de3-491d-b16b-86d83aa99888"/>
-					<graphicElement>
-						<pen lineWidth="2.5" lineStyle="Double"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement x="404" y="21" width="60" height="1" uuid="eb1960dd-0517-478a-9b50-e728209df19e"/>
-					<graphicElement>
-						<pen lineWidth="2.5" lineStyle="Double"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement x="474" y="21" width="60" height="1" uuid="3373c187-444e-45d0-9f3e-c53d9b51b141"/>
-					<graphicElement>
-						<pen lineWidth="2.5" lineStyle="Double"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement x="334" y="0" width="60" height="1" uuid="7f924d7a-dcca-4e3a-8b47-8d0de4fb3451"/>
-				</line>
-				<line>
-					<reportElement x="404" y="0" width="60" height="1" uuid="5f52b875-2de6-4c68-81a2-61dbcf9fcd07"/>
-				</line>
-				<line>
-					<reportElement x="474" y="0" width="60" height="1" uuid="b6db59f0-971d-43f7-bee0-d20938dbd48f"/>
-				</line>
+				<textField>
+					<reportElement x="261" y="1" width="43" height="19" uuid="1b4e9048-813c-4788-a2b1-c7c5186166d3"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["("+$F{per_2_Dept}+"%)"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="356" y="1" width="43" height="19" uuid="cafcb037-5f7d-4da4-a8b4-fd92db23fc69"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["("+$F{per_3_Dept}+"%)"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="451" y="1" width="43" height="19" uuid="f0380eb9-6709-4607-aa26-4c1e2b946b5c"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["("+$F{per_4_Dept}+"%)"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="546" y="1" width="43" height="19" uuid="615f4555-1e72-4ac2-8c9e-8b13f6566709"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["("+$F{per_5_Dept}+"%)"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="641" y="1" width="43" height="19" uuid="ad1cdbd9-e2ad-407c-9067-b455ccf52656"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["(~100%)"]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -354,14 +453,14 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 	<title>
 		<band height="169" splitType="Stretch">
 			<staticText>
-				<reportElement x="261" y="100" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
+				<reportElement x="384" y="100" width="15" height="20" forecolor="#990000" uuid="30bbc271-46df-4f69-96e1-3b2b5940a80d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[To]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="279" y="100" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
+				<reportElement x="402" y="100" width="63" height="20" forecolor="#990000" uuid="bd278359-b518-4ba9-a021-cd9559af4d3d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -372,14 +471,14 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 				<imageExpression><![CDATA[$P{realPath}+"logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="0" y="68" width="555" height="33" forecolor="#990000" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
+				<reportElement x="0" y="68" width="802" height="33" forecolor="#990000" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Report Activities ]]></text>
+				<text><![CDATA[ Report on Utilization Ratio - View by Detail Activites]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="196" y="100" width="62" height="20" forecolor="#990000" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
+				<reportElement x="319" y="100" width="62" height="20" forecolor="#990000" uuid="b911a25b-deca-4740-83b3-b5773441aac1"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -393,67 +492,67 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 				<text><![CDATA[Employee Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="148" width="60" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
+				<reportElement x="124" y="148" width="85" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[ac 1]]></text>
+				<text><![CDATA[Billable]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="194" y="148" width="60" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
+				<reportElement x="219" y="148" width="85" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[ac 2]]></text>
+				<text><![CDATA[Administration]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="264" y="148" width="60" height="20" forecolor="#6666FF" uuid="15ff9fa9-9aaf-4d9c-9ff9-dad9bbc81c6b"/>
+				<reportElement x="314" y="148" width="85" height="20" forecolor="#6666FF" uuid="15ff9fa9-9aaf-4d9c-9ff9-dad9bbc81c6b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[ac 3]]></text>
+				<text><![CDATA[Training]]></text>
 			</staticText>
 			<line>
 				<reportElement x="14" y="168" width="100" height="1" forecolor="#6666FF" uuid="a52c6240-62f1-4117-a9d9-cc1f7f0001bc"/>
 			</line>
 			<line>
-				<reportElement x="124" y="168" width="60" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
+				<reportElement x="124" y="168" width="85" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
 			</line>
 			<line>
-				<reportElement x="194" y="168" width="60" height="1" forecolor="#6666FF" uuid="d21cbf72-6fad-46ce-a343-53c1b088e481"/>
+				<reportElement x="219" y="168" width="85" height="1" forecolor="#6666FF" uuid="d21cbf72-6fad-46ce-a343-53c1b088e481"/>
 			</line>
 			<line>
-				<reportElement x="264" y="168" width="60" height="1" forecolor="#6666FF" uuid="4ba9cae4-7680-4f46-828b-c81e8e511a2d"/>
+				<reportElement x="314" y="168" width="85" height="1" forecolor="#6666FF" uuid="4ba9cae4-7680-4f46-828b-c81e8e511a2d"/>
 			</line>
 			<staticText>
-				<reportElement x="334" y="148" width="60" height="20" forecolor="#6666FF" uuid="92a5f4d5-bbde-4de5-b922-68d03d2269d6"/>
+				<reportElement x="409" y="148" width="85" height="20" forecolor="#6666FF" uuid="92a5f4d5-bbde-4de5-b922-68d03d2269d6"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[ac 4]]></text>
+				<text><![CDATA[Development ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="404" y="148" width="60" height="20" forecolor="#6666FF" uuid="50e343cc-7982-4927-932a-7780e92655ff"/>
+				<reportElement x="504" y="148" width="85" height="20" forecolor="#6666FF" uuid="50e343cc-7982-4927-932a-7780e92655ff"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[ac 5]]></text>
+				<text><![CDATA[Non-charged]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="474" y="148" width="60" height="20" forecolor="#6666FF" uuid="334cd6fb-1262-4037-ab83-8e014d420d46"/>
+				<reportElement x="599" y="148" width="85" height="20" forecolor="#6666FF" uuid="334cd6fb-1262-4037-ab83-8e014d420d46"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[total ac]]></text>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 			<line>
-				<reportElement x="334" y="168" width="60" height="1" forecolor="#6666FF" uuid="5217d5ee-e2d8-4d76-9013-f68d07f4a697"/>
+				<reportElement x="409" y="168" width="85" height="1" forecolor="#6666FF" uuid="5217d5ee-e2d8-4d76-9013-f68d07f4a697"/>
 			</line>
 			<line>
-				<reportElement x="404" y="168" width="60" height="1" forecolor="#6666FF" uuid="aa53dd46-130b-4480-9be7-00a54ff3dbfd"/>
+				<reportElement x="504" y="168" width="85" height="1" forecolor="#6666FF" uuid="aa53dd46-130b-4480-9be7-00a54ff3dbfd"/>
 			</line>
 			<line>
-				<reportElement x="474" y="168" width="60" height="1" forecolor="#6666FF" uuid="2e72dbc3-2a3d-4fc6-af3f-5abe50d77829"/>
+				<reportElement x="599" y="168" width="85" height="1" forecolor="#6666FF" uuid="2e72dbc3-2a3d-4fc6-af3f-5abe50d77829"/>
 			</line>
 		</band>
 	</title>
@@ -463,32 +562,32 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 	<detail>
 		<band height="18">
 			<textField>
-				<reportElement x="124" y="0" width="60" height="17" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
+				<reportElement x="124" y="0" width="43" height="17" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_1}==null || $F{time_charge_1}=="" || $F{time_charge_1}==0)?"-":(($F{time_charge_1}/60<10?"0"+($F{time_charge_1}/60).intValue():($F{time_charge_1}/60).intValue()))+":"+(($F{time_charge_1}%60<10?"0"+$F{time_charge_1}%60:$F{time_charge_1}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="194" y="0" width="60" height="17" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
+				<reportElement x="219" y="0" width="43" height="17" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_2}==null || $F{time_charge_2}=="" || $F{time_charge_2}==0)?"-":(($F{time_charge_2}/60<10?"0"+($F{time_charge_2}/60).intValue():($F{time_charge_2}/60).intValue()))+":"+(($F{time_charge_2}%60<10?"0"+$F{time_charge_2}%60:$F{time_charge_2}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="264" y="0" width="60" height="17" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
+				<reportElement x="314" y="0" width="43" height="17" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_3}==null || $F{time_charge_3}=="" || $F{time_charge_3}==0)?"-":(($F{time_charge_3}/60<10?"0"+($F{time_charge_3}/60).intValue():($F{time_charge_3}/60).intValue()))+":"+(($F{time_charge_3}%60<10?"0"+$F{time_charge_3}%60:$F{time_charge_3}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="334" y="0" width="60" height="17" uuid="058127c1-2676-4b0c-a424-a6eb97c8e84d"/>
+				<reportElement x="409" y="0" width="43" height="17" uuid="058127c1-2676-4b0c-a424-a6eb97c8e84d"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_4}==null || $F{time_charge_4}=="" || $F{time_charge_4}==0)?"-":(($F{time_charge_4}/60<10?"0"+($F{time_charge_4}/60).intValue():($F{time_charge_4}/60).intValue()))+":"+(($F{time_charge_4}%60<10?"0"+$F{time_charge_4}%60:$F{time_charge_4}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="404" y="0" width="60" height="17" uuid="821b4d8e-63a3-4d19-abd0-c9867527ee50"/>
+				<reportElement x="504" y="0" width="43" height="17" uuid="821b4d8e-63a3-4d19-abd0-c9867527ee50"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_5}==null || $F{time_charge_5}=="" || $F{time_charge_5}==0)?"-":(($F{time_charge_5}/60<10?"0"+($F{time_charge_5}/60).intValue():($F{time_charge_5}/60).intValue()))+":"+(($F{time_charge_5}%60<10?"0"+$F{time_charge_5}%60:$F{time_charge_5}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="474" y="0" width="60" height="17" uuid="080602c2-043b-41cc-bed6-567dac31023f"/>
+				<reportElement x="599" y="0" width="43" height="17" uuid="080602c2-043b-41cc-bed6-567dac31023f"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_week}==null || $F{time_charge_week}=="" || $F{time_charge_week}==0)?"-":(($F{time_charge_week}/60<10?"0"+($F{time_charge_week}/60).intValue():($F{time_charge_week}/60).intValue()))+":"+(($F{time_charge_week}%60<10?"0"+$F{time_charge_week}%60:$F{time_charge_week}%60))]]></textFieldExpression>
 			</textField>
@@ -496,6 +595,36 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 				<reportElement x="14" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="0" width="43" height="17" uuid="cc0aa104-06e1-454a-905e-e8e5725f576c"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_1}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="43" height="17" uuid="62932326-a25d-4e51-b53e-eee5b6a7e2aa"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_2}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="0" width="43" height="17" uuid="bd0166be-1fe4-4641-8008-bc94046c3486"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_3}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="43" height="17" uuid="3648d182-d4ec-4e7c-abdb-8a2da176f194"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_4}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="546" y="0" width="43" height="17" uuid="b1cda802-2241-4c26-8c61-0aeebea15e15"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_5}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="641" y="0" width="43" height="17" uuid="b7e49f46-df27-4566-b94c-12e328077cec"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(~100%)"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -505,34 +634,34 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 	<summary>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="124" y="0" width="60" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
+				<reportElement x="124" y="0" width="43" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_1_all}==null || $F{time_charge_1_all}=="" || $F{time_charge_1_all}==0)?"-":(($F{time_charge_1_all}/60<10?"0"+($F{time_charge_1_all}/60).intValue():($F{time_charge_1_all}/60).intValue()))+":"+(($F{time_charge_1_all}%60<10?"0"+$F{time_charge_1_all}%60:$F{time_charge_1_all}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="194" y="0" width="60" height="20" uuid="758d276c-9521-4e1b-846f-ee4c9eb14497"/>
+				<reportElement x="219" y="0" width="43" height="20" uuid="758d276c-9521-4e1b-846f-ee4c9eb14497"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_2_all}==null || $F{time_charge_2_all}=="" || $F{time_charge_2_all}==0)?"-":(($F{time_charge_2_all}/60<10?"0"+($F{time_charge_2_all}/60).intValue():($F{time_charge_2_all}/60).intValue()))+":"+(($F{time_charge_2_all}%60<10?"0"+$F{time_charge_2_all}%60:$F{time_charge_2_all}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="264" y="0" width="60" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
+				<reportElement x="314" y="0" width="43" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_3_all}==null || $F{time_charge_3_all}=="" || $F{time_charge_3_all}==0)?"-":(($F{time_charge_3_all}/60<10?"0"+($F{time_charge_3_all}/60).intValue():($F{time_charge_3_all}/60).intValue()))+":"+(($F{time_charge_3_all}%60<10?"0"+$F{time_charge_3_all}%60:$F{time_charge_3_all}%60))]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="124" y="21" width="60" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
+				<reportElement x="124" y="21" width="85" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="194" y="21" width="60" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
+				<reportElement x="219" y="21" width="85" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="264" y="21" width="60" height="1" uuid="cf18d92c-9864-49a4-a952-f4ec409d60a1"/>
+				<reportElement x="314" y="21" width="85" height="1" uuid="cf18d92c-9864-49a4-a952-f4ec409d60a1"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
@@ -545,38 +674,68 @@ INNER JOIN departments ON departments.departmentid = time_activity_report.Depart
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="474" y="0" width="60" height="20" uuid="87f0ce09-b406-4ee7-8419-d422b9523ab3"/>
+				<reportElement x="409" y="0" width="43" height="20" uuid="87f0ce09-b406-4ee7-8419-d422b9523ab3"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_charge_all}==null || $F{time_charge_all}=="" || $F{time_charge_all}==0)?"-":(($F{time_charge_all}/60<10?"0"+($F{time_charge_all}/60).intValue():($F{time_charge_all}/60).intValue()))+":"+(($F{time_charge_all}%60<10?"0"+$F{time_charge_all}%60:$F{time_charge_all}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_charge_4_all}==null || $F{time_charge_4_all}=="" || $F{time_charge_4_all}==0)?"-":(($F{time_charge_4_all}/60<10?"0"+($F{time_charge_4_all}/60).intValue():($F{time_charge_4_all}/60).intValue()))+":"+(($F{time_charge_4_all}%60<10?"0"+$F{time_charge_4_all}%60:$F{time_charge_4_all}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="404" y="0" width="60" height="20" uuid="b164ea66-d075-4b5f-b666-f9ece8db99de"/>
+				<reportElement x="504" y="0" width="43" height="20" uuid="b164ea66-d075-4b5f-b666-f9ece8db99de"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_5_all}==null || $F{time_charge_5_all}=="" || $F{time_charge_5_all}==0)?"-":(($F{time_charge_5_all}/60<10?"0"+($F{time_charge_5_all}/60).intValue():($F{time_charge_5_all}/60).intValue()))+":"+(($F{time_charge_5_all}%60<10?"0"+$F{time_charge_5_all}%60:$F{time_charge_5_all}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="334" y="0" width="60" height="20" uuid="fa673fd5-e92e-48dd-892f-321acd80321e"/>
+				<reportElement x="599" y="0" width="43" height="20" uuid="fa673fd5-e92e-48dd-892f-321acd80321e"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_charge_4_all}==null || $F{time_charge_4_all}=="" || $F{time_charge_4_all}==0)?"-":(($F{time_charge_4_all}/60<10?"0"+($F{time_charge_4_all}/60).intValue():($F{time_charge_4_all}/60).intValue()))+":"+(($F{time_charge_4_all}%60<10?"0"+$F{time_charge_4_all}%60:$F{time_charge_4_all}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{time_charge_all}==null || $F{time_charge_all}=="" || $F{time_charge_all}==0)?"-":(($F{time_charge_all}/60<10?"0"+($F{time_charge_all}/60).intValue():($F{time_charge_all}/60).intValue()))+":"+(($F{time_charge_all}%60<10?"0"+$F{time_charge_all}%60:$F{time_charge_all}%60))]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="334" y="21" width="60" height="1" uuid="f8a2b0b0-801e-4c68-8a37-43e65b8b118a"/>
+				<reportElement x="409" y="21" width="85" height="1" uuid="f8a2b0b0-801e-4c68-8a37-43e65b8b118a"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="404" y="21" width="60" height="1" uuid="61db73cd-0214-4e69-8d3b-57e389d50f4a"/>
+				<reportElement x="504" y="21" width="85" height="1" uuid="61db73cd-0214-4e69-8d3b-57e389d50f4a"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="474" y="21" width="60" height="1" uuid="e2f7e74e-e739-4e9b-b0a6-bad69e8910ef"/>
+				<reportElement x="599" y="21" width="85" height="1" uuid="e2f7e74e-e739-4e9b-b0a6-bad69e8910ef"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="166" y="0" width="43" height="20" uuid="fb166b6e-e816-45b2-b237-44ac89c1b789"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_1_all}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="43" height="20" uuid="f603e455-a999-4016-9fe2-83208ec7e27f"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_2_all}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="0" width="43" height="20" uuid="281c75a2-53ac-464e-bd58-4a6492a5f1ae"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_3_all}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="43" height="20" uuid="249d69d5-803e-4997-8f2f-4a79eb5a2d0b"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_4_all}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="546" y="0" width="43" height="20" uuid="a84fafb0-45f4-468a-943e-a01c1ecfe964"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["("+$F{per_5_all}+"%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="641" y="0" width="43" height="20" uuid="4ebbd2c2-f9b8-4dae-a952-f86bb24143cc"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["(~100%)"]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
