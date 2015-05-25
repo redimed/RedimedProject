@@ -3658,7 +3658,7 @@ module.exports = {
                                                                                                 })
                                                                                                 .success(function(success){
                                                                                                     flag4++;
-                                                                                                    if(flag3==listleave.length&&flag4==data_total_Dept.length){
+                                                                                                    if(flag3==data_total_Dept.length&&flag4==listleave.length){
                                                                                                         res.json({
                                                                                                             status:"success"
                                                                                                         });
@@ -5195,8 +5195,7 @@ module.exports = {
                                                                                                                                             user_id       : info.USER_ID
                                                                                                                                         })
                                                                                                                                         .success(function(data_success2){
-                                                                                                                                            //console.log("SUCCESS")
-                                                                                                                                            //SUCCESS.
+                                                                                                                                            
                                                                                                                                             flag8++;
                                                                                                                                             if(flag8==data_time_activity_summary_table.length&&flag7==data_detail_time_activity_summary_report2.length){
                                                                                                                                                 var sql_get_per ="SELECT * FROM time_activity_summary_report ORDER BY Department_id,activity_id  ";
