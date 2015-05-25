@@ -1,9 +1,4 @@
 <div ng-if="!static">
-    <div ng-if="!options.not_paging" class="pull-left">
-        <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
-                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="ajaxGetData()"
-                    items-per-page="page_data.itemPerPage" max-size="page_data.maxSize"></pagination>
-    </div>
     <!--<div class="pull-right">
         <strong>Total Items</strong> : {{page_data.totalItems}} - 
         <strong>Item per page</strong> :
@@ -11,7 +6,6 @@
                 ng-change="ajaxGetData()">
         </select>
     </div>-->
-    <div class="clearfix"></div>
     <table class="mdt-table table table-bordered table-hover">
         <thead>
             <tr>
@@ -133,6 +127,13 @@
             </tr>
         </tbody>
     </table>
+    <div class="clearfix"></div>
+    <br/><br/>
+    <div ng-if="!options.not_paging" class="pull-right" style="margin-top: 10px;">
+        <pagination boundary-links="true" total-items="page_data.totalItems" ng-model="page_data.currentPage" 
+                    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="ajaxGetData()"
+                    items-per-page="page_data.itemPerPage" max-size="page_data.maxSize"></pagination>
+    </div>
 </div>
 
 

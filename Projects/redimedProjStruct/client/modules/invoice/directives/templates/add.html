@@ -1,26 +1,24 @@
-<div class="portlet box red">
-	<div class="portlet-title">
-	    <div class="caption">
-	        <i class="fa fa-medkit"></i> Invoice Detail
-	    </div>
+<div class="portlet box">
+	<!--<div class="portlet-title">
 	    <div class="pull-right navbar-right">
             <button ng-click="clickAction()" class="btn btn-default"><i class="fa fa-save"></i> Save </button>
         </div>
-	</div>
+	</div>-->
 	<div class="portlet-body">
 <div class="row" style="margin-top: 15px;">
 
 <form name="patientForm" novalidate>
 	<!--Patient_id-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label>Patient</label>	
 			<div>
 				<input disabled type="text" placeholder="Patient" class="form-control" 
 					ng-model="InvoiceMap.patient.full_name" float-label>
 			</div>
-			<div style="position: absolute;right: 0;top: 0px;">
-				<button  style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="patientSearch.open()">
+			<div style="position: absolute;right: 0;bottom: 0px;">
+				<button  style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" 
+					ng-click="patientSearch.open()">
 					<i class="fa fa-search"></i>
 				</button>
 			</div>
@@ -30,29 +28,30 @@
 
 	<!--Company_id-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="company_id">Company</label>
-			<input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" class="form-control"float-label>
+		<span class="field extend-field">
+			<label>Company</label>
+			<input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" 
+				class="form-control">
 		</span>	
 	</div>
 	<!--Company_id-->
 
 	<!--Insurer_id-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label>Insurer</label>
-			<input type="text" disabled placeholder="Insurer" ng-model="InvoiceMap.insurer.insurer_name" class="form-control"  float-label>
+			<input type="text" disabled placeholder="Insurer" ng-model="InvoiceMap.insurer.insurer_name" class="form-control">
 		</span>	
 	</div>
 	<!--Insurer_id-->
 
 	<!--SERVICE_ID-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label>Service</label>
 			<select class="form-control" name="SERVICE_ID" id="SERVICE_ID"
 				ng-model="InvoiceMap.SERVICE_ID"
-				ng-options="item.SERVICE_ID as item.SERVICE_NAME for item in opt_services" float-label>
+				ng-options="item.SERVICE_ID as item.SERVICE_NAME for item in opt_services">
 			</select>
 		</span>	
 	</div>
@@ -62,11 +61,11 @@
 
 	<!--SITE_ID-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label>Site</label>
 			<select class="form-control" name="SITE_ID"
 				ng-model="InvoiceMap.SITE_ID"
-				ng-options="item.id as item.Site_name for item in options.redimedsites"  float-label>
+				ng-options="item.id as item.Site_name for item in options.redimedsites">
 			</select>
 		</span>	
 	</div>
@@ -74,12 +73,12 @@
 
 	<!--DEPT_ID-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label>Department</label>
 
 			<select disabled class="form-control" name="DEPT_ID" id="DEPT_ID"
 				ng-model="InvoiceMap.DEPT_ID"
-				ng-options="item.CLINICAL_DEPT_ID as item.CLINICAL_DEPT_NAME for item in options.departments" float-label>
+				ng-options="item.CLINICAL_DEPT_ID as item.CLINICAL_DEPT_NAME for item in options.departments">
 			</select>
 		</span>	
 	</div>
@@ -87,13 +86,13 @@
 
 	<!--DOCTOR_ID-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label>Doctor</label>
 			<div>
-				<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control"  float-label>
+				<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control">
 			</div>
-			<div style="position: absolute;right: 0;top: 0px;">
-				<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="doctorSearch.open()">
+			<div style="position: absolute;right: 0;bottom: 0px;">
+				<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="doctorSearch.open()">
 					<i class="fa fa-search"></i>
 				</button>
 			</div>
@@ -105,11 +104,11 @@
 
 	<!--STATUS-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<span class="field extend-field">
 			<label for="STATUS">Status</label>
 			<select class="form-control" name="STATUS" id="STATUS"
 				ng-model="InvoiceMap.STATUS"
-				ng-options="item.code as item.label for item in options.invoice_status" float-label>
+				ng-options="item.code as item.label for item in options.invoice_status">
 			</select>
 		</span>	
 	</div>
@@ -122,13 +121,14 @@
 				<i class="fa fa-search"></i> Choose Claim
 			</span>
 		</button> -->
-		<span class="field">
+		<span class="field extend-field">
+			<label>Claim</label>
 			<input ng-if="!InvoiceMap.claim_id" disabled type="text" value="No Claim" class="form-control" placeholder=".input-large">
 			
 			<input ng-if="InvoiceMap.claim_id" disabled type="text" ng-model="InvoiceMap.claim.Injury_name" class="form-control">
 
-			<div style="position: absolute;top: 0;right: 0;" dropdown="">
-				<button style="margin-right: 0px;height: 32px;" type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">Claim <i class="fa fa-angle-down"></i></button>
+			<div style="position: absolute;bottom: 0;right: 0;" dropdown="">
+				<button style="margin-right: 0px;height: 32px;" type="button" class="btn dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">Claim <i class="fa fa-angle-down"></i></button>
 				<ul class="dropdown-menu" role="menu">
 					<li><a ng-click="patientClaim.open()"><i class="fa fa-search"></i> Choose Claim </a></li>
 					<li><a><i class="fa fa-times"></i> Remove Claim</a></li>
@@ -137,7 +137,10 @@
 		</span>
 	</div>
 	<!--claim_id-->
-	<div class="break-row"></div>
+	
+	<div class="col-md-12">
+		<button ng-click="clickAction()" class="btn un-submit"><i class="fa fa-save"></i> Save </button>
+	</div>
 
 	</form>
 </div>
