@@ -3535,6 +3535,8 @@ module.exports = {
         var date;
         var flag1 = 0;
         var flag2 = 0;
+        var flag3 = 0;
+        var flag4 = 0;
         var listleave = [];
         for(var i = 0;i<info.listEMP.length;i++){
             stringEMP+=info.listEMP[i].id+ ", ";
@@ -3638,7 +3640,7 @@ module.exports = {
                                                                 .success(function(data_insert2){
                                                                     flag2++;
                                                                     if(flag2==listleave.length)
-                                                                        var sql_get_total_all  = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = "+info.USER_ID+" ";
+                                                                        var sql_get_total_all  = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = "+info.USER_ID;
 
                                                                         var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = "+info.USER_ID+" GROUP BY department ";
                                                                         db.sequelize.query(sql_get_total_all)
@@ -3654,10 +3656,13 @@ module.exports = {
                                                                                                     department  : data_total_Dept[u].department
                                                                                                 })
                                                                                                 .success(function(success){
-                                                                                                    res.json({
-                                                                                                        status:"success"
-                                                                                                    });
-                                                                                                    return;
+                                                                                                    flag4++;
+                                                                                                    if(flag3==listleave.length&&flag4==data_total_Dept.length){
+                                                                                                        res.json({
+                                                                                                            status:"success"
+                                                                                                        });
+                                                                                                        return;
+                                                                                                    }
                                                                                                 })
                                                                                                 .error(function(err){
                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -3667,6 +3672,7 @@ module.exports = {
                                                                                                     return;
                                                                                                 })
                                                                                             }
+                                                                                            flag3++;
                                                                                         }
                                                                                     })
                                                                                     .error(function(err){
@@ -3774,6 +3780,7 @@ module.exports = {
         var flag1=0;
         var flag2=0;
         var flag3=0;
+        var flag4=0;
         var time_in_lieu_remain_Dept =0;
         var time_in_lieu_remain_total =0;
         var time_in_lieu_used_Dept =0;
@@ -3935,7 +3942,10 @@ module.exports = {
                                                                                                                                                             user_id       : info.USER_ID
                                                                                                                                                         })
                                                                                                                                                             .success(function(data_finish){
-                                                                                                                                                                res.json({status:"success"});
+                                                                                                                                                                flag4++;
+                                                                                                                                                                if(flag4==data_time_in_lieu_week_Dept.length){
+                                                                                                                                                                   res.json({status:"success"});
+                                                                                                                                                                }
                                                                                                                                                             })
                                                                                                                                                             .error(function(err){
                                                                                                                                                                 console.log("*****ERROR:"+err+"*****");
@@ -4293,10 +4303,13 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    res.json({
-                                                                                                                                                        status:"success"
-                                                                                                                                                    });
-                                                                                                                                                    return;
+                                                                                                                                                    flag6++;
+                                                                                                                                                    if(flag6==totals.length){
+                                                                                                                                                        res.json({
+                                                                                                                                                            status:"success"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    }
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4413,10 +4426,13 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    res.json({
-                                                                                                                                                        status:"success"
-                                                                                                                                                    });
-                                                                                                                                                    return;
+                                                                                                                                                    flag6++;
+                                                                                                                                                    if(flag6==totals.length){
+                                                                                                                                                        res.json({
+                                                                                                                                                            status:"success"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    }
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4533,10 +4549,13 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    res.json({
-                                                                                                                                                        status:"success"
-                                                                                                                                                    });
-                                                                                                                                                    return;
+                                                                                                                                                    flag6++;
+                                                                                                                                                    if(flag6==totals.length){
+                                                                                                                                                        res.json({
+                                                                                                                                                            status:"success"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    }
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4651,10 +4670,13 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    res.json({
-                                                                                                                                                        status:"success"
-                                                                                                                                                    });
-                                                                                                                                                    return;
+                                                                                                                                                    flag6++;
+                                                                                                                                                    if(flag6==totals.length){
+                                                                                                                                                        res.json({
+                                                                                                                                                            status:"success"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    }
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4769,10 +4791,13 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    res.json({
-                                                                                                                                                        status:"success"
-                                                                                                                                                    });
-                                                                                                                                                    return;
+                                                                                                                                                    flag6++;
+                                                                                                                                                    if(flag6==totals.length){
+                                                                                                                                                        res.json({
+                                                                                                                                                            status:"success"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    }
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -4878,10 +4903,13 @@ module.exports = {
                                                                                                                                                     user_id      : info.USER_ID
                                                                                                                                                 })
                                                                                                                                                 .success(function(success){
-                                                                                                                                                    res.json({
-                                                                                                                                                        status:"success"
-                                                                                                                                                    });
-                                                                                                                                                    return;
+                                                                                                                                                    flag6++;
+                                                                                                                                                    if(flag6==totals.length){
+                                                                                                                                                        res.json({
+                                                                                                                                                            status:"success"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    }
                                                                                                                                                 })
                                                                                                                                                 .error(function(err){
                                                                                                                                                     console.log("*****ERROR: "+err+" *****");
@@ -5024,6 +5052,7 @@ module.exports = {
         var flag6 = 0;
         var flag7 = 0;
         var flag8 = 0;
+        var flag9 = 0;
         //DELETE ALL TABLE
         var sql_delete_time_activity_summary_table        =" DELETE FROM time_activity_summary_table WHERE user_id="+info.USER_ID+" ";
         var sql_delete_time_activity_summary_detail_table =" DELETE FROM time_activity_summary_detail_table WHERE user_id="+info.USER_ID+" ";
@@ -5180,10 +5209,13 @@ module.exports = {
                                                                                                                                                                 user_id       : info.USER_ID
                                                                                                                                                             })
                                                                                                                                                             .success(function(success){
-                                                                                                                                                                res.json({
-                                                                                                                                                                    status:"success"
-                                                                                                                                                                });
-                                                                                                                                                                return;
+                                                                                                                                                                flag9++;
+                                                                                                                                                                if(flag9==data_per.length){
+                                                                                                                                                                    res.json({
+                                                                                                                                                                        status:"success"
+                                                                                                                                                                    });
+                                                                                                                                                                    return;
+                                                                                                                                                                }
                                                                                                                                                             })
                                                                                                                                                             .error(function(err){
                                                                                                                                                                 console.log("*****ERROR: "+err+" *****");
@@ -5349,6 +5381,7 @@ module.exports = {
         var flag5=0;
         var flag6=0;
         var flag7=0;
+        var flag8=0;
         var data_average = [];
         //XU LY TAI DAY
             //1.
@@ -5525,10 +5558,13 @@ module.exports = {
                                                                                                                                                                                                                             user_id : info.USER_ID
                                                                                                                                                                                                                         })
                                                                                                                                                                                                                         .success(function(success){
-                                                                                                                                                                                                                            res.json({
-                                                                                                                                                                                                                                        status:"success"
-                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                return;
+                                                                                                                                                                                                                            flag8++;
+                                                                                                                                                                                                                            if(flag7==data_get_time_charge_Dept.length&&flag8==data_get_time_charge.length){
+                                                                                                                                                                                                                                res.json({
+                                                                                                                                                                                                                                            status:"success"
+                                                                                                                                                                                                                                    });
+                                                                                                                                                                                                                                    return;
+                                                                                                                                                                                                                            }
                                                                                                                                                                                                                         })
                                                                                                                                                                                                                         .error(function(err){
                                                                                                                                                                                                                                 console.log("*****ERROR:"+err+"*****");
@@ -5541,6 +5577,7 @@ module.exports = {
                                                                                                   
                                                                                                                                                                                                                     }
                                                                                                                                                                                                                 }
+                                                                                                                                                                                                                flag7++;
                                                                                                                                                                                                             }
                                                     
                                                                                                                                                                                                         })
