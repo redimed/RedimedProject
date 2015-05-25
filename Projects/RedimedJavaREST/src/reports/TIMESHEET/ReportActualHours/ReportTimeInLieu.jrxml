@@ -292,7 +292,7 @@ WHERE  time_in_lieu_detail_report.user_id =$P{id}]]>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="54" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
+				<reportElement x="19" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
 			</textField>

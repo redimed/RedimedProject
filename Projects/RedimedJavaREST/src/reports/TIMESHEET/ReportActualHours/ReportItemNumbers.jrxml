@@ -237,46 +237,46 @@ WHERE item_code_report1.user_id =$P{id}]]>
 					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="154" y="1" width="60" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
+					<reportElement x="164" y="0" width="60" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[$F{total_items_Dept}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="235" y="2" width="70" height="19" uuid="9660f367-7060-40e5-94d3-8b560fbe3441"/>
+					<reportElement x="245" y="2" width="70" height="19" uuid="9660f367-7060-40e5-94d3-8b560fbe3441"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[$F{total_numbers_Dept}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="335" y="1" width="45" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
+					<reportElement x="345" y="1" width="45" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="114" y="21" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
+					<reportElement x="124" y="21" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="224" y="21" width="81" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
+					<reportElement x="234" y="21" width="81" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="315" y="21" width="65" height="1" uuid="3ffc12b7-1b37-4923-bfae-fb6de43b1040"/>
+					<reportElement x="325" y="21" width="65" height="1" uuid="3ffc12b7-1b37-4923-bfae-fb6de43b1040"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="114" y="0" width="100" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
+					<reportElement x="124" y="0" width="100" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
 				</line>
 				<line>
-					<reportElement x="224" y="0" width="81" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
+					<reportElement x="234" y="0" width="81" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
 				</line>
 				<line>
-					<reportElement x="315" y="0" width="65" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
+					<reportElement x="325" y="0" width="65" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
 				</line>
 			</band>
 		</groupFooter>
@@ -286,7 +286,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 		<groupHeader>
 			<band height="17">
 				<textField>
-					<reportElement x="39" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
+					<reportElement x="19" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
 					<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
 				</textField>
@@ -338,21 +338,21 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<text><![CDATA[Employee Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="148" width="90" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
+				<reportElement x="124" y="148" width="100" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Item Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="224" y="148" width="81" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
+				<reportElement x="234" y="148" width="81" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Total numbers]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="315" y="148" width="65" height="20" forecolor="#6666FF" uuid="15ff9fa9-9aaf-4d9c-9ff9-dad9bbc81c6b"/>
+				<reportElement x="325" y="148" width="65" height="20" forecolor="#6666FF" uuid="15ff9fa9-9aaf-4d9c-9ff9-dad9bbc81c6b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
@@ -362,13 +362,13 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<reportElement x="14" y="168" width="100" height="1" forecolor="#6666FF" uuid="a52c6240-62f1-4117-a9d9-cc1f7f0001bc"/>
 			</line>
 			<line>
-				<reportElement x="124" y="168" width="90" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
+				<reportElement x="124" y="168" width="100" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
 			</line>
 			<line>
-				<reportElement x="224" y="168" width="81" height="1" forecolor="#6666FF" uuid="d21cbf72-6fad-46ce-a343-53c1b088e481"/>
+				<reportElement x="234" y="168" width="81" height="1" forecolor="#6666FF" uuid="d21cbf72-6fad-46ce-a343-53c1b088e481"/>
 			</line>
 			<line>
-				<reportElement x="315" y="168" width="65" height="1" forecolor="#6666FF" uuid="4ba9cae4-7680-4f46-828b-c81e8e511a2d"/>
+				<reportElement x="325" y="168" width="65" height="1" forecolor="#6666FF" uuid="4ba9cae4-7680-4f46-828b-c81e8e511a2d"/>
 			</line>
 		</band>
 	</title>
@@ -378,17 +378,17 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<detail>
 		<band height="18">
 			<textField>
-				<reportElement x="114" y="1" width="100" height="17" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
+				<reportElement x="124" y="0" width="100" height="17" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="235" y="1" width="70" height="17" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
+				<reportElement x="245" y="0" width="70" height="17" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{total_numbers}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="335" y="0" width="45" height="17" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
+				<reportElement x="345" y="0" width="45" height="17" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{time_charge_average}+"%"]]></textFieldExpression>
 			</textField>
@@ -400,34 +400,29 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<summary>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="154" y="0" width="60" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{total_items}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="235" y="0" width="70" height="20" uuid="758d276c-9521-4e1b-846f-ee4c9eb14497"/>
+				<reportElement x="245" y="0" width="70" height="20" uuid="758d276c-9521-4e1b-846f-ee4c9eb14497"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{total_numbers_all}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="335" y="0" width="45" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
+				<reportElement x="345" y="0" width="45" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="114" y="21" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
+				<reportElement x="124" y="21" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="224" y="21" width="81" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
+				<reportElement x="234" y="21" width="81" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="315" y="21" width="65" height="1" uuid="cf18d92c-9864-49a4-a952-f4ec409d60a1"/>
+				<reportElement x="325" y="21" width="65" height="1" uuid="cf18d92c-9864-49a4-a952-f4ec409d60a1"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
@@ -439,6 +434,11 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="164" y="0" width="60" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{total_items}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
