@@ -3764,7 +3764,7 @@ module.exports = {
     //REPORT TIME IN LIEU
     LoadReportTimeInLieu: function(req, res) {
         var info = req.body.info;
-        console.log(info);
+        //console.log(info);
         //CHUYEN LIST EMPL VA LIST DEPT THANH CHUOI STRING
         var stringEMP ="";
         var stringDept="";
@@ -3901,7 +3901,7 @@ module.exports = {
 
                                                                                     })
                                                                                     .success(function(data_time_in_lieu_detail_report){
-                                                                                        res.json({status:"success"});
+                                                                                        
                                                                                         flag3++;
                                                                                         //4. ADD SUM by DEPT_ID, SUM ALL
                                                                                         if(flag3==data_time_in_lieu_detail_data.length){
@@ -3928,7 +3928,7 @@ module.exports = {
                                                                                                                                     var sql_time_in_lieu_week_total="SELECT SUM(time_in_lieu_week_all) AS 'time_in_lieu_week_total' ,Employee_id,Department_id FROM time_in_lieu_detail_report WHERE user_id ="+info.USER_ID+" ";
                                                                                                                                     db.sequelize.query(sql_time_in_lieu_week_total)
                                                                                                                                         .success(function(data_time_in_lieu_week_total){
-                                                                                                                                            console.log(data_time_in_lieu_week_total)
+                                                                                                                                            //console.log(data_time_in_lieu_week_total)
                                                                                                                                             for(var l = 0;l<data_time_in_lieu_week_Dept.length;l++){
                                                                                                                                                     
                                                                                                                                                         db.time_in_lieu_detail_report.update({
@@ -4277,7 +4277,7 @@ module.exports = {
                                                                                                                                 flag5++;
                                                                                                                                 if(flag5==data_time_activity_table.length){
                                                                                                                                     //success
-                                                                                                                                    console.log("success")
+                                                                                                                                    //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
                                                                                                                                         .success(function(totals){
                                                                                                                                             for(var g = 0; g< totals.length; g++){
@@ -4400,7 +4400,7 @@ module.exports = {
                                                                                                                                 flag5++;
                                                                                                                                 if(flag5==data_time_activity_table.length){
                                                                                                                                     //success
-                                                                                                                                    console.log("success")
+                                                                                                                                    //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
                                                                                                                                         .success(function(totals){
                                                                                                                                             for(var g = 0; g< totals.length; g++){
@@ -4523,7 +4523,7 @@ module.exports = {
                                                                                                                                 flag5++;
                                                                                                                                 if(flag5==data_time_activity_table.length){
                                                                                                                                     //success
-                                                                                                                                    console.log("success")
+                                                                                                                                   // console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
                                                                                                                                         .success(function(totals){
                                                                                                                                             for(var g = 0; g< totals.length; g++){
@@ -4644,7 +4644,7 @@ module.exports = {
                                                                                                                                 flag5++;
                                                                                                                                 if(flag5==data_time_activity_table.length){
                                                                                                                                     //success
-                                                                                                                                    console.log("success")
+                                                                                                                                    //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
                                                                                                                                         .success(function(totals){
                                                                                                                                             for(var g = 0; g< totals.length; g++){
@@ -4765,7 +4765,7 @@ module.exports = {
                                                                                                                                 flag5++;
                                                                                                                                 if(flag5==data_time_activity_table.length){
                                                                                                                                     //success
-                                                                                                                                    console.log("success")
+                                                                                                                                    //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
                                                                                                                                         .success(function(totals){
                                                                                                                                             for(var g = 0; g< totals.length; g++){
@@ -4877,7 +4877,7 @@ module.exports = {
                                                                                                                                 flag5++;
                                                                                                                                 if(flag5==data_time_activity_table.length){
                                                                                                                                     //success
-                                                                                                                                    console.log("success")
+                                                                                                                                   //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
                                                                                                                                         .success(function(totals){
                                                                                                                                             for(var g = 0; g< totals.length; g++){

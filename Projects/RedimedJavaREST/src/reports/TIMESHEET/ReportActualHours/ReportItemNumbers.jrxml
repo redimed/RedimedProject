@@ -219,7 +219,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 		<groupHeader>
 			<band height="23">
 				<textField>
-					<reportElement x="29" y="0" width="100" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
+					<reportElement x="14" y="0" width="100" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
 					<textElement>
 						<font size="11" isBold="true"/>
 					</textElement>
@@ -234,7 +234,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 					<textElement textAlignment="Left" verticalAlignment="Bottom">
 						<font size="11" isBold="true" isItalic="false" isUnderline="false"/>
 					</textElement>
-					<text><![CDATA[ Subtotal:]]></text>
+					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="154" y="1" width="60" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>

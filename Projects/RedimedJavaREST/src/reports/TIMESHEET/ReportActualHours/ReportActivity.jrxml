@@ -307,7 +307,7 @@ WHERE time_activity_report.user_id=$P{id}]]>
 		<groupHeader>
 			<band height="23">
 				<textField>
-					<reportElement x="29" y="0" width="100" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
+					<reportElement x="14" y="0" width="100" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
 					<textElement>
 						<font size="11" isBold="true"/>
 					</textElement>
@@ -322,7 +322,7 @@ WHERE time_activity_report.user_id=$P{id}]]>
 					<textElement textAlignment="Left" verticalAlignment="Bottom">
 						<font size="11" isBold="true" isItalic="false" isUnderline="false"/>
 					</textElement>
-					<text><![CDATA[ Subtotal:]]></text>
+					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="124" y="1" width="43" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
@@ -592,7 +592,7 @@ WHERE time_activity_report.user_id=$P{id}]]>
 				<textFieldExpression><![CDATA[($F{time_charge_week}==null || $F{time_charge_week}=="" || $F{time_charge_week}==0)?"-":(($F{time_charge_week}/60<10?"0"+($F{time_charge_week}/60).intValue():($F{time_charge_week}/60).intValue()))+":"+(($F{time_charge_week}%60<10?"0"+$F{time_charge_week}%60:$F{time_charge_week}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="14" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
+				<reportElement x="20" y="0" width="100" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
 			</textField>
