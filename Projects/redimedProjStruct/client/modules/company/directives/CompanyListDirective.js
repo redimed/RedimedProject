@@ -78,6 +78,25 @@ angular.module('app.loggedIn.company.directives.list', [])
 				// $state.go('loggedIn.company.add');//tan comment
 				$state.go('loggedIn.patient.company.add');//tan add
 			}
+
+			scope.addClick1=function()
+			{
+				var modalInstance = $modal.open({
+			      templateUrl: 'modules/company/views/add.html',
+			      controller: 'CompanyAddController',
+			      size :'lg',
+			      resolve: {
+			      		insurerArray: function(){
+			      			return scope.company.listTemp;
+			      		}
+			      }
+			    })
+			    .result.then(function(row){
+					
+					
+				})
+			}
+			
 			var onSearch = function(option){
 				switch(option.field){
 					case 'Company_name':

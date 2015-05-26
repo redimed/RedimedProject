@@ -6,7 +6,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		templateUrl: 'modules/company/directives/templates/add.html',
 		scope: {
 			options: '=',
-			onRowClick: '&'
+			onRowClick: '&',
+			actionCenter:'='//tannv.dts@gmail.com add
 		},
 		link: function(scope, elem, attrs)
 		{
@@ -139,6 +140,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 		  				toastr.success('Add Company Successfully');
 		  				// $state.go('loggedIn.company');//tan comment
 		  				$state.go('loggedIn.patient.company');//tan add
+		  				scope.actionCenter.closeModal();
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);
@@ -160,7 +162,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 
 		    scope.cancel=function()
 		    {
-		    	$state.go('loggedIn.patient.company');
+		    	scope.actionCenter.closeModal();
 		    }
 		}//end link
 		

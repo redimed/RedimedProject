@@ -1420,7 +1420,7 @@ table.timetable-table td:last-child {
     position: absolute;
     top: -27px;
     color: white;
-    background: rgb(39, 36, 37)!important;
+    background: #2C2A2B!important;
     border-top-left-radius: 26px !important;
     border-top-right-radius: 26px !important;
     padding: 7px 25px 10px 25px;
@@ -2496,7 +2496,7 @@ label{
 
 /*mau cho label tren panel*/
 .un_tn_panel_label_color_black{
-    background: rgb(39, 36, 37)!important;
+    background: #2C2A2B!important;
     color: white;
 }
 
@@ -2527,7 +2527,7 @@ label{
     
 }
 /*kieu ke khung cho table*/
-.un_tn_table_border_black th,td{
+.un_tn_table_border_black th, .un_tn_table_border_black td{
     border:1px solid #2B2B2B!important; 
 }
 
@@ -2661,6 +2661,24 @@ label{
     -moz-transform:scale(1.5) rotate(45deg);
     transform:scale(1.5) rotate(45deg);
     z-index:10
+}
+
+
+.un_tn_panel_modal_label{
+    position: absolute;
+    top: -27px;
+    left:0px;
+    height:27px;
+    border-top-left-radius: 26px !important;
+    border-top-right-radius: 26px !important;
+    padding: 3px 25px 10px 25px;
+    text-transform: uppercase;
+    border-top: 1px solid;
+}
+.un_tn_panel_modal_action{
+    position: absolute;
+    top: 25;
+    left: 0;
 }
 /*---------------------------------------------*/
 /*---------------------------------------------*/
