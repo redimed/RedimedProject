@@ -52,7 +52,7 @@
                                         Tasks / Items
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;">
+                                <th style="background-color:#26a69a; width:300px;">
                                     <div class="th">
                                         Description
                                     </div>
@@ -82,7 +82,7 @@
                             <tr ng-class-odd="'odd'" style="cursor: pointer; " ng-repeat="item in items">
                                 <td ng-show="item.show===true" class="btn btn-xs" style="width:100px;">{{item.ITEM_ID}}</td>
                                 <!-- MORE -->
-                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
+                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:300px;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
                                     <div ng-show="item.show===true" ng-if="item.status===false">
                                         {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
                                     </div>

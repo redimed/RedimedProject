@@ -43,6 +43,8 @@ module.exports = {
                                             "time_charge": allTask[task].time_temp
                                         })
                                     )
+
+                                    //INSERT ITEM
                                     if (allTask[task].item.length > 0) {
                                         for (var i = 0; i < allTask[task].item.length; i++) {
                                             var a = allTask[task].item[i];
@@ -57,8 +59,26 @@ module.exports = {
                                                 })
                                             )
 
+                                            //INSERT FILE
+                                            if (a.fileUpload !== undefined &&
+                                                a.fileUpload.length > 0) {
+
+                                                for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
+                                                    chainer.add(
+                                                        db.time_item_file.create({
+                                                            task_id: tId,
+                                                            item_id: a.ITEM_ID,
+                                                            file_id: a.fileUpload[keyFile].file_id,
+                                                            created_by: info.userID
+                                                        })
+                                                    )
+                                                }
+                                            }
+                                            //END INSERT
+
                                         }
                                     }
+                                    //END INSERT
                                 }
 
                             })
@@ -142,7 +162,6 @@ module.exports = {
                         )
 
                         var taskId = allTask[i].tasks_id;
-
                         if (allTask[i].item.length > 0) {
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
@@ -157,18 +176,53 @@ module.exports = {
                                             comment: a.comment,
                                         })
                                     )
+
+                                    //PROCESS FILE
+                                    if (a.fileUpload !== undefined &&
+                                        a.fileUpload.length > 0) {
+                                        for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
+                                            if (a.fileUpload[keyFile].isAction === "insert") {
+                                                chainer.add(
+                                                    db.time_item_file.create({
+                                                        task_id: taskId,
+                                                        item_id: a.ITEM_ID,
+                                                        file_id: a.fileUpload[keyFile].file_id,
+                                                        created_by: info.userID
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                    //END
                                 } else if (a.isAction == 'update') {
                                     chainer.add(
-                                        db.TimeItemTask.update({
-                                            units: a.totalUnits,
-                                            ratio: a.ratio,
-                                            time_charge: a.time_temp,
-                                            comment: a.comment
-                                        }, {
-                                            task_id: taskId,
-                                            item_id: a.ITEM_ID
-                                        })
-                                    )
+                                            db.TimeItemTask.update({
+                                                units: a.totalUnits,
+                                                ratio: a.ratio,
+                                                time_charge: a.time_temp,
+                                                comment: a.comment
+                                            }, {
+                                                task_id: taskId,
+                                                item_id: a.ITEM_ID
+                                            })
+                                        )
+                                        //PROCESS FILE
+                                    if (a.fileUpload !== undefined &&
+                                        a.fileUpload.length > 0) {
+                                        for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
+                                            if (a.fileUpload[keyFile].isAction === "insert") {
+                                                chainer.add(
+                                                    db.time_item_file.create({
+                                                        task_id: taskId,
+                                                        item_id: a.ITEM_ID,
+                                                        file_id: a.fileUpload[keyFile].file_id,
+                                                        created_by: info.userID
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                    //END
                                 } else if (a.isAction == 'delete') {
                                     chainer.add(
                                         db.TimeItemTask.update({
@@ -183,7 +237,6 @@ module.exports = {
                         }
 
                     } else if (allTask[i].isAction == 'insert') {
-
                         chainer.add(
                             db.timeTasks.create({
                                 tasks_id: tId,
@@ -198,21 +251,36 @@ module.exports = {
                             })
                         )
 
-
-
                         if (allTask[i].item.length > 0) {
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
                                 chainer.add(
-                                    db.TimeItemTask.create({
-                                        task_id: tId,
-                                        item_id: a.ITEM_ID,
-                                        units: a.totalUnits,
-                                        ratio: a.ratio,
-                                        time_charge: a.time_temp,
-                                        comment: a.comment
-                                    })
-                                )
+                                        db.TimeItemTask.create({
+                                            task_id: tId,
+                                            item_id: a.ITEM_ID,
+                                            units: a.totalUnits,
+                                            ratio: a.ratio,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment
+                                        })
+                                    )
+                                    //PROCESS FILE
+                                if (a.fileUpload !== undefined &&
+                                    a.fileUpload.length > 0) {
+                                    for (var keyFileL = 0; keyFileL < a.fileUpload.length; keyFileL++) {
+                                        if (a.fileUpload[keyFileL].isAction === "insert") {
+                                            chainer.add(
+                                                db.time_item_file.create({
+                                                    task_id: tId,
+                                                    item_id: a.ITEM_ID,
+                                                    file_id: a.fileUpload[keyFileL].file_id,
+                                                    created_by: info.userID
+                                                })
+                                            )
+                                        }
+                                    }
+                                }
+                                //END
 
                             }
                         }
@@ -228,6 +296,31 @@ module.exports = {
 
                         var taskId = allTask[i].tasks_id;
 
+                        //DELETE
+                        if (allTask[i].FileUploader !== undefined &&
+                            allTask[i].fileUpload.length > 0) {
+                            //DELETE TIME_TASK_FILE
+                            chainer.add(
+                                    db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
+                                        raw: true
+                                    }, {
+                                        fileId: allTask[i].fileUpload[keyFileS].file_id
+                                    })
+                                )
+                                //END
+
+                            //DELETE TIME_ITEM_FILE
+                            chainer.add(
+                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId", null, {
+                                        raw: true
+                                    }, {
+                                        taskId: taskId,
+                                        itemId: allTask[i].fileUpload[keyFileS].item_id
+                                    })
+                                )
+                                //END
+                        }
+                        //END
                         if (allTask[i].item.length > 0) {
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
@@ -496,7 +589,8 @@ module.exports = {
                     });
                     return false;
                 } else {
-                    db.sequelize.query("SELECT time_tasks_week.task_status_id, time_tasks_week.after_status_id, t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
+                    db.sequelize.query("SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
+                            "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
                             "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
                             "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
                             " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
@@ -505,26 +599,46 @@ module.exports = {
                                 raw: true
                             }, [info])
                         .success(function(item) {
-                            if (item === null || item.length === 0) {
-                                console.log("Not found item in table");
-                                res.json({
-                                    status: 'fail'
+                            db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
+                                    "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
+                                    "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
+                                    "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                                    "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                                    "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
+                                    "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
+                                    " WHERE " +
+                                    "t.`tasks_week_id` = ?", null, {
+                                        raw: true
+                                    }, [info])
+                                .success(function(file) {
+                                    if (item === null || item.length === 0) {
+                                        console.log("Not found item in table");
+                                        res.json({
+                                            status: 'fail'
+                                        });
+                                        return false;
+                                    } else {
+                                        res.json({
+                                            status: 'success',
+                                            data: tasks,
+                                            item: item,
+                                            file: file
+                                        });
+                                    }
+                                })
+                                .error(function(err) {
+                                    res.json({
+                                        status: 'error'
+                                    });
+                                    console.log(err);
                                 });
-                                return false;
-                            } else {
-                                res.json({
-                                    status: 'success',
-                                    data: tasks,
-                                    item: item
-                                });
-                            }
                         })
                         .error(function(err) {
                             res.json({
                                 status: 'error'
                             });
                             console.log(err);
-                        })
+                        });
                 }
             })
             .error(function(err) {
@@ -532,7 +646,7 @@ module.exports = {
                     status: 'error'
                 });
                 console.log(err);
-            })
+            });
     },
 
     checkFirstTaskWeek: function(req, res) {
@@ -606,18 +720,39 @@ module.exports = {
                     raw: true
                 }, [idWeek])
             .success(function(data) {
-                if (data === null || data.length === 0) {
-                    console.log("Not found tasks in table");
-                    res.json({
-                        status: 'fail'
+                db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
+                        "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
+                        "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
+                        "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                        "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                        "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
+                        "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
+                        " WHERE " +
+                        "t.`tasks_week_id` = ?", null, {
+                            raw: true
+                        }, [idWeek])
+                    .success(function(file) {
+                        if (data === null || data.length === 0) {
+                            console.log("Not found tasks in table");
+                            res.json({
+                                status: 'fail'
+                            });
+                            return false;
+                        } else {
+                            res.json({
+                                status: 'success',
+                                data: data,
+                                file: file
+                            });
+                        }
+                    })
+                    .error(function(err) {
+                        res.json({
+                            status: 'error'
+                        });
+                        console.log(err);
                     });
-                    return false;
-                } else {
-                    res.json({
-                        status: 'success',
-                        data: data
-                    });
-                }
+
             })
             .error(function(err) {
                 res.json({

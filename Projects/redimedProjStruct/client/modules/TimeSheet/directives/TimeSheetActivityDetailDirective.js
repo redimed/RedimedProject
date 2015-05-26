@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
-    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService) {
+    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -29,6 +29,12 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         });
                         //END
                         scope.ACTIVITY_ID = newModel.activity_id;
+
+                        //PUSH TASK ID
+                        if (newModel.taskIndex !== undefined) {
+                            scope.taskIndex = newModel.taskIndex;
+                        }
+                        //END
                     }
                     //FUNCTION SETPAGE
                     scope.setPage = function() {
@@ -49,6 +55,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         TimeSheetService.LoadItemCode(scope.searchObjectMap).then(function(response) {
                             if (response.status === "success") {
                                 scope.list = response;
+
                                 //set isShow
                                 angular.forEach(scope.list.result, function(value, index) {
                                     scope.list.result[index].status = false;
@@ -195,8 +202,220 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             }
                         });
                     };
+
+                    //ATTECHMENT
+
+                    //END ATTECHMENT
                 });
 
+                //SET VALUE DEFAULT FILE UPLOAD
+                scope.uploader = new FileUploader({
+                    url: "/api/TimeSheet/post-upload-file",
+                    method: "POST",
+                    autoUpload: true,
+                    formData: [{
+                        userId: $cookieStore.get("userInfo").id
+                    }],
+                    isHTML5: true,
+                    isUploading: true
+                });
+                //END SET VALUE DEFAULT FILE UPLOAD
+
+                //FILETER LIMIT FILE UPLOAD
+                scope.uploader.filters.push({
+                    name: "customFilter",
+                    fn: function(item /*{File|FileLikeObject}*/ , options) {
+                        return this.queue.length < 5;
+                    }
+                });
+                //END FILTER LIMIT FILE UPLOAD
+
+                //FUNCTION REMOVE ITEM
+                scope.removeItem = function(indexItem, indexFile, fileId) {
+                    swal({
+                        title: "Are you sure detele this file!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        closeOnConfirm: true
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            angular.forEach(scope.uploader.queue, function(value, index) {
+                                if (value.file_id === fileId) {
+                                    scope.uploader.removeFromQueue(index);
+                                }
+                            });
+                            scope.items[indexItem].fileUpload.splice(indexFile, 1);
+                            //DELETE FROM DATABASE
+                            TimeSheetService.DeleteFile(fileId).then(function(response) {
+                                //DO NOTHING
+                            });
+                        }
+                    });
+                };
+                //END FUNCTION REMOVE ITEM
+
+                //SOME CALLBACKS UPLOAD FILE
+                scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
+                    //CHECK FILTER
+                    if (filter) {
+                        swal({
+                            title: "Limit 5 file to upload!",
+                            type: "warning",
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes",
+                            closeOnConfirm: true
+                        });
+                    }
+                    //END FILTER
+
+                    //ERR
+                    else {
+                        toastr.error("Upload file " + item.name + " fail!", "Error");
+                    }
+                    //END ERR
+                };
+                scope.uploader.onAfterAddingAll = function(addedFileItems) {
+                    //SET TASK INDEX
+                    angular.forEach(scope.items, function(value, index) {
+                        if (value.taskIndex === undefined) {
+                            scope.items[index].taskIndex = scope.taskIndex;
+                        }
+                    });
+                    //END SET
+                    if (scope.uploader.queue.length > 0) {
+                        //SET ITEM ID AND INDEX ITEM FOR NEW FILE UPLOAD
+                        angular.forEach(scope.uploader.queue, function(value, index) {
+                            if (value.taskIndex === undefined ||
+                                value.itemId === undefined) {
+                                scope.uploader.queue[index].taskIndex = scope.taskIndex;
+                                scope.uploader.queue[index].itemId = scope.currentItemId;
+                            }
+                        });
+                        //END SET
+
+                        //FIND FIRST FILE UPLOADING
+                        var isFound = false;
+                        angular.forEach(scope.uploader.queue, function(value, index) {
+                            if ((value.isUploading === true || value.isUploaded === false) &&
+                                isFound === false) {
+                                isFound = true;
+                                scope.progressTaskIndex = value.taskIndex;
+                                scope.progressItemId = value.itemId;
+                                //OPEN PROGRESS BAR
+                                scope.isUploading = true;
+                                //END OPEN PROGRESS BAR
+                            }
+                        });
+                        if (isFound === false) {
+                            scope.isUploading = false;
+                        }
+                        //END FIND
+                    }
+                };
+                scope.uploader.onAfterAddingFile = function(fileItem) {
+                    //DO NOTHING
+                };
+                scope.uploader.onBeforeUploadItem = function(item) {
+                    //DO NOTHING
+                };
+                scope.uploader.onProgressItem = function(fileItem, progress) {
+                    scope.progress = progress;
+                };
+                scope.uploader.onProgressAll = function(progress) {
+                    //DO NOTHING 
+                };
+                scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                    //FIND FIRST FILE UPLOADING
+                    var isFound = false;
+                    angular.forEach(scope.uploader.queue, function(value, index) {
+                        //NEXT FILE
+                        if ((value.isUploading === true || value.isUploaded === false) &&
+                            isFound === false) {
+                            isFound = true;
+                            scope.progressTaskIndex = value.taskIndex;
+                            scope.progressItemId = value.itemId;
+                            //OPEN PROGRESS BAR
+                            scope.isUploading = true;
+                            //END OPEN PROGRESS BAR
+                        }
+                        //END
+                    });
+                    //SET STATUS FOR FILE
+                    scope.uploader.queue[scope.uploader.getIndexOfItem(fileItem)].file_id = response.file_id;
+                    //END SET
+                    if (isFound === false) {
+                        scope.isUploading = false;
+                    }
+                    //END FIND
+
+                    // PUSH FILE TO ARRAY FILE ON ITEMS
+                    angular.forEach(scope.items, function(valueItem, indexItem) {
+                        if (scope.items[indexItem].fileUpload === undefined) {
+                            scope.items[indexItem].fileUpload = [];
+                        }
+                        angular.forEach(scope.uploader.queue, function(valueFile, indexFile) {
+                            if (valueItem.taskIndex === valueFile.taskIndex &&
+                                valueItem.ITEM_ID === valueFile.itemId &&
+                                valueFile.file_id !== undefined) {
+                                var isFound2 = false;
+                                angular.forEach(scope.items[indexItem].fileUpload, function(valueCheck, indexCheck) {
+                                    if (valueCheck.file_id === valueFile.file_id) {
+                                        isFound2 = true;
+                                    }
+                                });
+                                if (isFound2 === false) {
+                                    scope.items[indexItem].fileUpload.push({
+                                        file_name: valueFile.file.name,
+                                        file_id: valueFile.file_id,
+                                        isAction: "insert"
+                                    });
+                                }
+
+                            }
+                        });
+                    });
+                    //END PUSH
+                };
+                //END SOME CALLBACKS UPLOAD FILE
+                //FUNCTION GET STYLE WHEN UPLOAD
+                scope.getStyleUpload = function() {
+                    if (scope.uploader.queue.length !== 0) {
+                        var check = false;
+                        angular.forEach(scope.uploader.queue, function(value, index) {
+                            if (value.isUploading === true) {
+                                check = true;
+                            }
+                        });
+                        if (check === true) {
+                            return {
+                                width: "250px"
+                            };
+                        } else {
+                            return {
+                                width: "15px"
+                            };
+                        }
+                    } else {
+                        return {
+                            width: '15px'
+                        };
+                    }
+                };
+                //END FUNCTON GET STYLE WHEN UPLOAD
+
+                //CALL CLICK SHOW FILE
+                scope.clickShowFile = function(itemIndex, itemId) {
+                    $timeout(function() {
+                        document.getElementById('uploadTimesheet').click();
+                        scope.clicked = true;
+                        //SET CURRENT TASK
+                        scope.currentItemId = itemId;
+                        //END SET
+                    }, 0);
+                };
+                //END SHOW FILE
             },
             templateUrl: "modules/TimeSheet/directives/templates/ActivityDetail.html"
         };

@@ -44,6 +44,7 @@
     "moment": "^2.9.0",
     "morgan": "~1.0.0",
     "msexcel-builder": "0.0.2",
+    "mv": "^2.0.3",
     "mysql": "^2.5.0",
     "node-gcm": "^0.9.12",
     "node-rest-client": "^1.4.4",
