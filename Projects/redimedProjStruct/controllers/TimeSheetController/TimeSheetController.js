@@ -4175,7 +4175,11 @@ module.exports = {
                                                                                                 +"FROM time_tasks "
                                                                                                 +"INNER JOIN time_activity_table ON time_activity_table.task_week_id = time_tasks.tasks_week_id "
                                                                                                 +"WHERE time_activity_table.user_id="+info.USER_ID+" ";
-                                                db.sequelize.query(sql_get_data_time_activity_detail_table)
+                                                var sql_count_line = "SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table ";
+                                                db.sequelize.query(sql_count_line)
+                                                    .success(function(data_line_count){
+
+                                                        db.sequelize.query(sql_get_data_time_activity_detail_table)
                                                     .success(function(data_time_activity_detail_table){
                                                         //console.log(data_time_activity_detail_table)
                                                         for(var j = 0;j<data_time_activity_detail_table.length;j++){
@@ -4215,20 +4219,20 @@ module.exports = {
                                                                     db.sequelize.query(sql_get_data_time_activity_report)
                                                                         .success(function(data_get_data_time_activity_report){
                                                                             //console.log(data_get_data_time_activity_report)
-                                                                            for(var a =0;a<data_time_activity_table.length;a++){
+                                                                            for(var a =0;a<data_line_count.length;a++){
                                                                                 db.time_activity_report.create({
                                                                                     user_id           : info.USER_ID,
-                                                                                    Employee_id       : data_time_activity_table[a].Employee_ID,
-                                                                                    Department_id     : data_time_activity_table[a].departmentid,
-                                                                                    time_charge_week  : data_time_activity_table[a].time_charge,
-                                                                                    weekno            : data_time_activity_table[a].week_no,
+                                                                                    Employee_id       : data_line_count[a].Employee_id,
+                                                                                    Department_id     : data_line_count[a].Department_id,
+                                                                                    time_charge_week  : data_line_count[a].time_charge_week,
+                                                                                    //weekno            : data_line_count[a].week_no,
                                                                                     from_date         : info.weekFrom,
                                                                                     to_date           : info.weekTo,
                                                                                     Creation_by       : info.USER_ID
                                                                                 })
                                                                                 .success(function(data_insert3){
                                                                                     flag3++;
-                                                                                    if(flag3==data_time_activity_table.length){
+                                                                                    if(flag3==data_line_count.length){
                                                                                         
                                                                                         for(var b = 0;b <data_get_data_time_activity_report.length;b++){
                                                                                                 if(data_get_data_time_activity_report[b].activity_id==1){
@@ -4253,7 +4257,7 @@ module.exports = {
                                                                                                                         time_charge_5_all+=data_total[f].time_charge_5_Dept;
                                                                                                                         time_charge_all+=data_total[f].time_charge_week_Dept;
                                                                                                                     }
-                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                    for(var c = 0;c < data_line_count.length;c++){
                                                                                                                         for(var m = 0; m<data_total.length;m++){
                                                                                                                             db.time_activity_report.update({
                                                                                                                                 time_charge_1_Dept    : data_total[m].time_charge_1_Dept,
@@ -4275,7 +4279,7 @@ module.exports = {
                                                                                                                             .success(function(data_success1){
                                                                                                                                 
                                                                                                                                 flag5++;
-                                                                                                                                if(flag5==data_time_activity_table.length){
+                                                                                                                                if(flag5==data_line_count.length){
                                                                                                                                     //success
                                                                                                                                     //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
@@ -4376,7 +4380,7 @@ module.exports = {
                                                                                                                         time_charge_5_all+=data_total[f].time_charge_5_Dept;
                                                                                                                         time_charge_all+=data_total[f].time_charge_week_Dept;
                                                                                                                     }
-                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                    for(var c = 0;c < data_line_count.length;c++){
                                                                                                                         for(var m = 0; m<data_total.length;m++){
                                                                                                                             db.time_activity_report.update({
                                                                                                                                 time_charge_1_Dept    : data_total[m].time_charge_1_Dept,
@@ -4398,7 +4402,7 @@ module.exports = {
                                                                                                                             .success(function(data_success1){
                                                                                                                                 
                                                                                                                                 flag5++;
-                                                                                                                                if(flag5==data_time_activity_table.length){
+                                                                                                                                if(flag5==data_line_count.length){
                                                                                                                                     //success
                                                                                                                                     //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
@@ -4499,7 +4503,7 @@ module.exports = {
                                                                                                                         time_charge_5_all+=data_total[f].time_charge_5_Dept;
                                                                                                                         time_charge_all+=data_total[f].time_charge_week_Dept;
                                                                                                                     }
-                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                    for(var c = 0;c < data_line_count.length;c++){
                                                                                                                         for(var m = 0; m<data_total.length;m++){
                                                                                                                             db.time_activity_report.update({
                                                                                                                                 time_charge_1_Dept    : data_total[m].time_charge_1_Dept,
@@ -4521,7 +4525,7 @@ module.exports = {
                                                                                                                             .success(function(data_success1){
                                                                                                                                 
                                                                                                                                 flag5++;
-                                                                                                                                if(flag5==data_time_activity_table.length){
+                                                                                                                                if(flag5==data_line_count.length){
                                                                                                                                     //success
                                                                                                                                    // console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
@@ -4620,7 +4624,7 @@ module.exports = {
                                                                                                                         time_charge_5_all+=data_total[f].time_charge_5_Dept;
                                                                                                                         time_charge_all+=data_total[f].time_charge_week_Dept;
                                                                                                                     }
-                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                    for(var c = 0;c < data_line_count.length;c++){
                                                                                                                         for(var m = 0; m<data_total.length;m++){
                                                                                                                             db.time_activity_report.update({
                                                                                                                                 time_charge_1_Dept    : data_total[m].time_charge_1_Dept,
@@ -4642,7 +4646,7 @@ module.exports = {
                                                                                                                             .success(function(data_success1){
                                                                                                                                 
                                                                                                                                 flag5++;
-                                                                                                                                if(flag5==data_time_activity_table.length){
+                                                                                                                                if(flag5==data_line_count.length){
                                                                                                                                     //success
                                                                                                                                     //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
@@ -4741,7 +4745,7 @@ module.exports = {
                                                                                                                         time_charge_5_all+=data_total[f].time_charge_5_Dept;
                                                                                                                         time_charge_all+=data_total[f].time_charge_week_Dept;
                                                                                                                     }
-                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                    for(var c = 0;c < data_line_count.length;c++){
                                                                                                                         for(var m = 0; m<data_total.length;m++){
                                                                                                                             db.time_activity_report.update({
                                                                                                                                 time_charge_1_Dept    : data_total[m].time_charge_1_Dept,
@@ -4763,7 +4767,7 @@ module.exports = {
                                                                                                                             .success(function(data_success1){
                                                                                                                                 
                                                                                                                                 flag5++;
-                                                                                                                                if(flag5==data_time_activity_table.length){
+                                                                                                                                if(flag5==data_line_count.length){
                                                                                                                                     //success
                                                                                                                                     //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
@@ -4853,7 +4857,7 @@ module.exports = {
                                                                                                                         time_charge_5_all+=data_total[f].time_charge_5_Dept;
                                                                                                                         time_charge_all+=data_total[f].time_charge_week_Dept;
                                                                                                                     }
-                                                                                                                    for(var c = 0;c < data_time_activity_table.length;c++){
+                                                                                                                    for(var c = 0;c < data_line_count.length;c++){
                                                                                                                         for(var m = 0; m<data_total.length;m++){
                                                                                                                             db.time_activity_report.update({
                                                                                                                                 time_charge_1_Dept    : data_total[m].time_charge_1_Dept,
@@ -4875,7 +4879,7 @@ module.exports = {
                                                                                                                             .success(function(data_success1){
                                                                                                                                 
                                                                                                                                 flag5++;
-                                                                                                                                if(flag5==data_time_activity_table.length){
+                                                                                                                                if(flag5==data_line_count.length){
                                                                                                                                     //success
                                                                                                                                    //console.log("success")
                                                                                                                                     db.sequelize.query(sql_get_total)
@@ -4975,6 +4979,14 @@ module.exports = {
                                                                 return;
                                                             })
                                                         }
+                                                    })
+                                                    .error(function(err){
+                                                        console.log("*****ERROR: "+err+" *****");
+                                                        res.json({
+                                                            status:"error"
+                                                        });
+                                                        return;
+                                                    })
                                                     })
                                                     .error(function(err){
                                                         console.log("*****ERROR: "+err+" *****");
