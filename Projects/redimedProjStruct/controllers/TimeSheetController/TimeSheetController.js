@@ -1678,7 +1678,7 @@ module.exports = {
                             res.json({
                                 status: "success",
                                 result: resultDept,
-                                isStaff: TITLE === "Head of Dept." ? false : true
+                                isStaff: (TITLE === "Head of Dept." || TITLE === "Director") ? false : true
                             });
                             return;
                         })
@@ -1720,7 +1720,7 @@ module.exports = {
         var query = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
             "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-            "WHERE departments.departmentid IN (" + strListDept + ")" + queryStaff;
+            "WHERE departments.departmentid IN (" + strListDept + ") " + queryStaff;
         db.sequelize.query(query)
             .success(function(result) {
                 res.json({
