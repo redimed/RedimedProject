@@ -50,10 +50,10 @@
 			<td>{{l.Injury_name}}</td>
 			<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
-				<button class="btn btn-sm btn-primary" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
+				<button class="btn btn-sm btn-default" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
 					Edit
 				</button>
-				<button class="btn btn-sm btn-primary" ng-click="claim.dialog.show(l)" ng-if="action.show">
+				<button class="btn btn-sm un-bgBlack" ng-click="claim.dialog.show(l)" ng-if="action.show">
 					Show
 				</button>
 
@@ -80,12 +80,22 @@
  </script>
 
  <script type="text/ng-template" id="dialogClaimEdit">
+ 	<style type="text/css">
+		.modal.in .modal-dialog {
+			margin-top:50px;
+		}
+	</style>
     <div class="modal-body">
         <claim-patient-edit claim-id="claim.Claim_id" patient-id="claim.Patient_id" success="claim.success"></claim-patient-edit>
     </div>
  </script>
 
  <script type="text/ng-template" id="dialogClaimShow">
+ 	<style type="text/css">
+		.modal.in .modal-dialog {
+			margin-top:50px;
+		}
+	</style>
     <div class="modal-body">
         <claim-patient-show claim-id="claim.Claim_id" patient-id="claim.Patient_id" success="claim.success"></claim-patient-show>
     </div>

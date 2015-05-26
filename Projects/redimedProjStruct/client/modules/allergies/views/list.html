@@ -1,28 +1,25 @@
-<h1>Allergy List</h1>
-
-<div class="portlet box green ng-scope">
-	<div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-person"></i> Allergy List
+<div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
+    <label class="un-label-header un-bgBlack un-label-header-padding">Allergy List</label>
+    <div class="un-padding-top-bottom-10">
+        <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+            <div class="pull-right navbar-right">
+                <!-- Single button -->
+                  <button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="allergyAddForm.open()">
+                      <i class="fa fa-plus"></i>    New allergy
+                  </button>
+                  <button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">
+                      <i class="fa fa-search"></i>    Add existed
+                  </button>
+            </div>
+            <my-data-table options="allergy.options" numrows="10"></my-data-table>
         </div>
-        <div class="pull-right navbar-right">
-            <!-- Single button -->
-              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="allergyAddForm.open()">
-                  <i class="fa fa-plus"></i>	New allergy
-              </button>
-              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">
-                  <i class="fa fa-search"></i>    Add existed
-              </button>
-        </div>
-    </div>
-
-    <div class="portlet-body">
-    	<my-data-table options="allergy.options" numrows="10"></my-data-table>
     </div>
 </div>
 
+
 <!--ALLERGY ADD FORM-->
-<div class="mdt-search" style="display: block;" ng-if="allergyAddForm.is_show">
+<div class="mdt-search un-popup-config" style="display: block;" ng-if="allergyAddForm.is_show">
+    <label class="un-label-popup-header un-bg-label-B41E46">Add Allergy</label>
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="allergyAddForm.close()">
             <i class="fa fa-times"></i>
@@ -33,7 +30,8 @@
 <!--END ALLERGY ADD FORM-->
 
 <!--ALLERGY EDIT FORM-->
-<div class="mdt-search" style="display: block;" ng-if="allergyEditForm.is_show">
+<div class="mdt-search un-popup-config" style="display: block;" ng-if="allergyEditForm.is_show">
+    <label class="un-label-popup-header un-bg-label-B41E46">Edit Allergy</label>
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="allergyEditForm.close()">
             <i class="fa fa-times"></i>
@@ -44,7 +42,8 @@
 <!--END ALLERGY EDIT FORM-->
 
 <!-- PATIENT ALLERGY SELECT FORM -->
-<div class="mdt-search" style="display: block;" ng-if="patientAllergyForm.is_show">
+<div class="mdt-search un-popup-config" style="display: block;" ng-if="patientAllergyForm.is_show">
+    <label class="un-label-popup-header un-bg-label-B41E46">Add Existed</label>
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="patientAllergyForm.close()">
             <i class="fa fa-times"></i>
