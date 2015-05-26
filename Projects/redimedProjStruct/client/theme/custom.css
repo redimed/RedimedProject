@@ -2533,6 +2533,22 @@ label{
      font-weight: bold;
      border: 0;
 }
+.un-btn-red-add-custom{
+    width: 90px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 7px 10px;
+    background-color: rgb(179, 30, 69) !important;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 20px !important;
+    float: right;
+    margin-top: -60px;
+}
+.un-btn-red-add-custom:hover{
+    text-decoration: none;
+    color: #ffffff;
+}
 /* end */
 
 /* LUAN */
