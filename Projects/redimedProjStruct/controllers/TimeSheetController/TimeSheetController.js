@@ -1668,7 +1668,7 @@ module.exports = {
                             "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
                             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
                             "WHERE departments.departmentType = 'Time Sheet'";
-                    } else if (TITLE === "Head of Dept.") {
+                    } else {
                         //ONE DEPT
                         queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
                             "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
@@ -1679,7 +1679,8 @@ module.exports = {
                         .success(function(resultDept) {
                             res.json({
                                 status: "success",
-                                result: resultDept
+                                result: resultDept,
+                                isStaff: TITLE === "Head of Dept." ? false : true
                             });
                             return;
                         })

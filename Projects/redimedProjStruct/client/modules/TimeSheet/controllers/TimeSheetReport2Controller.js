@@ -99,6 +99,7 @@ angular.module("app.loggedIn.TimeSheet.Report2.Controller", [])
                 toastr.error("Load Department fail!", "Error");
             } else if (response.status === "success") {
                 $scope.listDept = response.result;
+                $scope.isStaff = response.isStaff;
             } else {
                 //catch exception
                 $state.go("loggedIn.TimeSheetHome", null, {
