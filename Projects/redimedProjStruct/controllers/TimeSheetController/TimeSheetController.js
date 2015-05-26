@@ -3541,215 +3541,228 @@ module.exports = {
     LoadReportOweLeave: function(req, res) {
         var info = req.body.info;
         //console.log(info);
-        var stringEMP = "";
-        var stringDept = "";
-        var stringID = "";
+        var stringEMP ="";
+        var stringDept="";
+        var stringID  ="";
         var start_date;
         var finish_date;
         var date;
         var flag1 = 0;
         var flag2 = 0;
-        var flag3 = 0;
-        var flag4 = 0;
         var listleave = [];
-        for (var i = 0; i < info.listEMP.length; i++) {
-            stringEMP += info.listEMP[i].id + ", ";
+        for(var i = 0;i<info.listEMP.length;i++){
+            stringEMP+=info.listEMP[i].id+ ", ";
         }
-        stringEMP += 0;
-        for (var j = 0; j < info.listDept.length; j++) {
-            stringDept += info.listDept[j].id + ", ";
+        stringEMP+=0;
+        for(var j = 0;j<info.listDept.length;j++){
+            stringDept+=info.listDept[j].id+", ";
         }
-        stringDept += 0;
+        stringDept+=0;
+        var sql_get_total_all  ="SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = "+info.USER_ID;
 
-        var sql_get_total_all = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = " + info.USER_ID;
-        var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = " + info.USER_ID + " GROUP BY department ";
-        var sql_get_data_hr_leave_owe_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge,time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
+        var sql_get_total_Dept ="SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = "+info.USER_ID+" GROUP BY department ";
 
-        var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
-
-        var delete_hr_leave_owe_table = "DELETE FROM hr_leave_owe_table WHERE create_id =" + info.USER_ID + " ";
+        var sql_get_data_hr_leave_owe_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge,time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id "
+                                        +"FROM hr_employee "
+                                        +"INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "
+                                        +"INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid "
+                                        +"INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "
+                                        +"WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( "+stringDept+" ) AND (time_tasks_week.week_no BETWEEN "+info.weekNoFrom+" AND "+info.weekNoTo+" ) AND hr_employee.Employee_ID IN ( "+stringEMP+" )";
+        
+        var delete_hr_leave_owe       = "DELETE FROM hr_leave_owe WHERE create_id ="+info.USER_ID+" ";
+        
+        var delete_hr_leave_owe_table = "DELETE FROM hr_leave_owe_table WHERE create_id ="+info.USER_ID+" ";
         db.sequelize.query(delete_hr_leave_owe)
-            .success(function(delete1) {
+            .success(function(delete1){
                 db.sequelize.query(delete_hr_leave_owe_table)
-                    .success(function(delete2) {
+                    .success(function(delete2){
 
                         db.sequelize.query(sql_get_data_hr_leave_owe_table)
-                            .success(function(data_hr_leave_owe_table) {
+                            .success(function(data_hr_leave_owe_table){
                                 //console.log(data_hr_leave_owe_table)
-                                for (var i = 0; i < data_hr_leave_owe_table.length; i++) {
+                                for(var i =0;i <data_hr_leave_owe_table.length;i++){
                                     db.hr_leave_owe_table.create({
-                                            create_id: info.USER_ID,
-                                            user_id: data_hr_leave_owe_table[i].id,
-                                            task_week_id: data_hr_leave_owe_table[i].task_week_id,
-                                            Employee_id: data_hr_leave_owe_table[i].Employee_ID,
-                                            Department_id: data_hr_leave_owe_table[i].departmentid,
-                                            FirstName: data_hr_leave_owe_table[i].FirstName,
-                                            LastName: data_hr_leave_owe_table[i].LastName,
-                                            Department_name: data_hr_leave_owe_table[i].departmentName,
-                                            weekno: data_hr_leave_owe_table[i].week_no,
-                                            from_date: info.weekFrom,
-                                            to_date: info.weekTo
-                                        })
-                                        .success(function(data_insert1) {
-                                            flag1++;
-                                            if (flag1 == data_hr_leave_owe_table.length) {
-                                                //console.log("NEXXT")
-                                                var sql_get_data_1 = "SELECT " + "hr_leave_owe_table.create_id, " + "hr_leave_owe_table.user_id, " + "hr_leave_owe_table.task_week_id, " + "hr_leave_owe_table.Employee_id, " + "hr_leave_owe_table.Department_id, " + "hr_leave_owe_table.from_date, " + "hr_leave_owe_table.to_date, " + "time_tasks.tasks_id, " + "time_tasks.date, " + "time_item_task.item_id " + "FROM hr_leave_owe_table " + "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id " + "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id " + "WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id=" + info.USER_ID + " ORDER BY hr_leave_owe_table.user_id ";
-                                                db.sequelize.query(sql_get_data_1)
-                                                    .success(function(data_1) {
-                                                        //console.log(data_1)
+                                        create_id        : info.USER_ID,
+                                        user_id          : data_hr_leave_owe_table[i].id,
+                                        task_week_id     : data_hr_leave_owe_table[i].task_week_id,
+                                        Employee_id      : data_hr_leave_owe_table[i].Employee_ID,
+                                        Department_id    : data_hr_leave_owe_table[i].departmentid,
+                                        FirstName        : data_hr_leave_owe_table[i].FirstName,
+                                        LastName         : data_hr_leave_owe_table[i].LastName,
+                                        Department_name  : data_hr_leave_owe_table[i].departmentName,
+                                        weekno           : data_hr_leave_owe_table[i].week_no,
+                                        from_date        : info.weekFrom,
+                                        to_date          : info.weekTo
+                                    })
+                                    .success(function(data_insert1){
+                                        flag1++;
+                                        if(flag1==data_hr_leave_owe_table.length){
+                                            //console.log("NEXXT")
+                                            var sql_get_data_1="SELECT "
+                                                                    +"hr_leave_owe_table.create_id, "
+                                                                    +"hr_leave_owe_table.user_id, "
+                                                                    +"hr_leave_owe_table.task_week_id, "
+                                                                    +"hr_leave_owe_table.Employee_id, "
+                                                                    +"hr_leave_owe_table.Department_id, "
+                                                                    +"hr_leave_owe_table.from_date, "
+                                                                    +"hr_leave_owe_table.to_date, "
+                                                                    +"time_tasks.tasks_id, "
+                                                                    +"time_tasks.date, "
+                                                                    +"time_item_task.item_id "
+                                                                    +"FROM hr_leave_owe_table "
+                                                                    +"INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id "
+                                                                    +"INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id "
+                                                                    +"WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id="+info.USER_ID+" ORDER BY hr_leave_owe_table.user_id ";
+                                            db.sequelize.query(sql_get_data_1)
+                                                .success(function(data_1){
+                                                    //console.log(data_1)
+                                                    
+                                                    for(var j = 0;j<data_1.length;j++){
+                                                        stringID+=data_1[j].user_id+", ";
+                                                    }
+                                                    stringID+=0;
+                                                    //console.log(stringID)
+                                                    var sql_get_data_2="SELECT leave_id,start_date,finish_date,status_id,user_id "
+                                                                        +"FROM hr_leave "
+                                                                        +"WHERE user_id IN ("+stringID+") AND status_id=3 ORDER BY user_id ";
+                                                    db.sequelize.query(sql_get_data_2)
+                                                        .success(function(data_2){
+                                                            for(var x = 0;x < data_2.length; x++){
+                                                                start_date  = moment(moment(data_2[x].start_date).format("YYYY-MM-DD")).format("X");
+                                                                finish_date = moment(moment(data_2[x].finish_date).format("YYYY-MM-DD")).format("X");
+                                                                for(var y =0;y < data_1.length; y++){
+                                                                    date = moment(moment(data_1[y].date).format("YYYY-MM-DD")).format("X");
+                                                                    if(data_1[y].user_id==data_2[x].user_id){
+                                                                        if(date<start_date||date>finish_date){
 
-                                                        for (var j = 0; j < data_1.length; j++) {
-                                                            stringID += data_1[j].user_id + ", ";
-                                                        }
-                                                        stringID += 0;
-                                                        //console.log(stringID)
-                                                        var sql_get_data_2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + "FROM hr_leave " + "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id ";
-                                                        db.sequelize.query(sql_get_data_2)
-                                                            .success(function(data_2) {
-                                                                for (var x = 0; x < data_2.length; x++) {
-                                                                    start_date = moment(moment(data_2[x].start_date).format("YYYY-MM-DD")).format("X");
-                                                                    finish_date = moment(moment(data_2[x].finish_date).format("YYYY-MM-DD")).format("X");
-                                                                    for (var y = 0; y < data_1.length; y++) {
-                                                                        date = moment(moment(data_1[y].date).format("YYYY-MM-DD")).format("X");
-                                                                        if (data_1[y].user_id == data_2[x].user_id) {
-                                                                            if (date < start_date || date > finish_date) {
-
-                                                                                listleave.push(data_1[y]);
-                                                                            }
+                                                                            listleave.push(data_1[y]);
                                                                         }
                                                                     }
-
                                                                 }
-                                                                for (var q = 0; q < listleave.length; q++) {
-                                                                    db.hr_leave_owe.create({
-                                                                            create_id: listleave[q].create_id,
-                                                                            user_id: listleave[q].user_id,
-                                                                            department: listleave[q].Department_id,
-                                                                            date_leave: listleave[q].date,
-                                                                            employee: listleave[q].Employee_id,
-                                                                            from_date: listleave[q].from_date,
-                                                                            to_date: listleave[q].to_date,
-                                                                            created_by: info.USER_ID
-                                                                        })
-                                                                        .success(function(data_insert2) {
-                                                                            flag2++;
-                                                                            if (flag2 == listleave.length)
-
-                                                                                db.sequelize.query(sql_get_total_all)
-                                                                                .success(function(data_total_all) {
-                                                                                    db.sequelize.query(sql_get_total_Dept)
-                                                                                        .success(function(data_total_Dept) {
-
-                                                                                            for (var u = 0; u < data_total_Dept.length; u++) {
-                                                                                                for (var t = 0; t < listleave.length; t++) {
-                                                                                                    db.hr_leave_owe.update({
-                                                                                                            total_all: data_total_all[0].total_all,
-                                                                                                            total_Dept: data_total_Dept[u].total_Dept
-                                                                                                        }, {
-                                                                                                            department: data_total_Dept[u].department
-                                                                                                        })
-                                                                                                        .success(function(success) {
-                                                                                                            flag4++;
-                                                                                                            if (flag3 == data_total_Dept.length && flag4 == listleave.length) {
-                                                                                                                res.json({
-                                                                                                                    status: "success"
-                                                                                                                });
-                                                                                                                return;
-                                                                                                            }
-                                                                                                        })
-                                                                                                        .error(function(err) {
-                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                            res.json({
-                                                                                                                status: "error"
-                                                                                                            });
-                                                                                                            return;
-                                                                                                        })
-                                                                                                }
-                                                                                                flag3++;
+                                                                
+                                                            }
+                                                            for(var q = 0;q<listleave.length;q++){
+                                                                db.hr_leave_owe.create({
+                                                                    create_id    : listleave[q].create_id,
+                                                                    user_id      : listleave[q].user_id,
+                                                                    department   : listleave[q].Department_id,
+                                                                    date_leave   : listleave[q].date,
+                                                                    employee     : listleave[q].Employee_id,
+                                                                    from_date    : listleave[q].from_date,
+                                                                    to_date      : listleave[q].to_date,
+                                                                    created_by   : info.USER_ID
+                                                                })
+                                                                .success(function(data_insert2){
+                                                                    flag2++;
+                                                                    if(flag2==listleave.length)
+                                                                        
+                                                                        db.sequelize.query(sql_get_total_all)
+                                                                            .success(function(data_total_all){
+                                                                                db.sequelize.query(sql_get_total_Dept)
+                                                                                    .success(function(data_total_Dept){
+                                                                                        for(var t = 0;t < listleave.length; t++){
+                                                                                            for(var u = 0;u < data_total_Dept.length; u++){
+                                                                                                db.hr_leave_owe.update({
+                                                                                                    total_all   : data_total_all[0].total_all,
+                                                                                                    total_Dept  : data_total_Dept[u].total_Dept
+                                                                                                },{
+                                                                                                    department  : data_total_Dept[u].department
+                                                                                                })
+                                                                                                .success(function(success){
+                                                                                                    //console.log("SUCCESS")
+                                                                                                })
+                                                                                                .error(function(err){
+                                                                                                    console.log("*****ERROR: "+err+" *****");
+                                                                                                    res.json({
+                                                                                                        status:"error"
+                                                                                                    });
+                                                                                                    return;
+                                                                                                })
                                                                                             }
-                                                                                        })
-                                                                                        .error(function(err) {
-                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                            res.json({
-                                                                                                status: "error"
-                                                                                            });
-                                                                                            return;
-                                                                                        })
-                                                                                })
-                                                                                .error(function(err) {
-                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                    res.json({
-                                                                                        status: "error"
-                                                                                    });
-                                                                                    return;
-                                                                                })
+                                                                                        }
+                                                                                    })
+                                                                                    .error(function(err){
+                                                                                        console.log("*****ERROR: "+err+" *****");
+                                                                                        res.json({
+                                                                                            status:"error"
+                                                                                        });
+                                                                                        return;
+                                                                                    })
+                                                                            })
+                                                                            .error(function(err){
+                                                                                console.log("*****ERROR: "+err+" *****");
+                                                                                res.json({
+                                                                                    status:"error"
+                                                                                });
+                                                                                return;
+                                                                            })
 
-                                                                        })
-                                                                        .error(function(err) {
-                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                            res.json({
-                                                                                status: "error"
-                                                                            });
-                                                                            return;
-                                                                        })
-                                                                }
-                                                                //console.log(listleave)
-
-
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR: " + err + " *****");
-                                                                res.json({
-                                                                    status: "error"
-                                                                });
-                                                                return;
-                                                            })
-                                                    })
-                                                    .error(function(err) {
-                                                        console.log("*****ERROR: " + err + " *****");
-                                                        res.json({
-                                                            status: "error"
-                                                        });
-                                                        return;
-                                                    })
-                                            }
-                                        })
-                                        .error(function(err) {
-                                            console.log("*****ERROR: " + err + " *****");
-                                            res.json({
-                                                status: "error"
-                                            });
-                                            return;
-                                        })
+                                                                })
+                                                                .error(function(err){
+                                                                    console.log("*****ERROR: "+err+" *****");
+                                                                    res.json({
+                                                                        status:"error"
+                                                                    });
+                                                                    return;
+                                                                })
+                                                            }
+                                                            //console.log(listleave)
+                                                            
+                                                              
+                                                        })
+                                                        .error(function(err){
+                                                            console.log("*****ERROR: "+err+" *****");
+                                                            res.json({
+                                                                status:"error"
+                                                            });
+                                                            return;
+                                                        })
+                                                })
+                                                .error(function(err){
+                                                    console.log("*****ERROR: "+err+" *****");
+                                                    res.json({
+                                                        status:"error"
+                                                    });
+                                                    return;
+                                                })
+                                        }
+                                    })
+                                    .error(function(err){
+                                        console.log("*****ERROR: "+err+" *****");
+                                        res.json({
+                                            status:"error"
+                                        });
+                                        return;
+                                    })
                                 }
                             })
-                            .error(function(err) {
-                                console.log("*****ERROR: " + err + " *****");
+                            .error(function(err){
+                                console.log("*****ERROR: "+err+" *****");
                                 res.json({
-                                    status: "error"
+                                    status:"error"
                                 });
                                 return;
                             })
 
                     })
 
-            })
-            .error(function(err) {
-                console.log("*****ERROR: " + err + " *****");
+                    })
+                    .error(function(err){
+                        console.log("*****ERROR: "+err+" *****");
+                        res.json({
+                            status:"error"
+                        });
+                        return;
+                    })
+                
+            .error(function(err){
+                console.log("*****ERROR: "+err+" *****");
                 res.json({
-                    status: "error"
+                    status:"error"
                 });
                 return;
             })
-
-        .error(function(err) {
-            console.log("*****ERROR: " + err + " *****");
-            res.json({
-                status: "error"
-            });
-            return;
-        })
+        
     },
     //END REPORT OWE LEAVE
 
