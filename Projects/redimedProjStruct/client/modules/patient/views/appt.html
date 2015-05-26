@@ -3,8 +3,11 @@
     <div class="un_body_content_left_bottom_right un-giang-padding-left-bottom" style="width:100%">
       <div style="width:90%; margin-left: auto; margin-right: auto;">
           <label class="un-label-header un-bgWhite un-label-title">Appointment List</label>
+          <button type="button" class="un-button-giang" ng-click="formRecall.open()">
+                        <b><i class="fa fa-plus"></i> New Recall</b>
+                    </button>
           <div class="un-div-content un-bgXam-colBlack">
-            <div class="un-padding-15">
+            <div class="un-padding-15" style="background-color: #C0C0C0;">
               <div class="row">
                 
                     <table style="width: 100%;">
@@ -23,9 +26,7 @@
                             <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot">{{item.SERVICE_NAME}}</div></td>
                         </tr>
                     </table>
-                    <button type="button" class="un-button-giang" ng-click="formRecall.open()" style="  margin-left: 92.5%">
-                        <b><i class="fa fa-plus"></i> New Recall</b>
-                    </button>
+                    
               </div>
             </div>
           </div>
@@ -34,7 +35,7 @@
                 <div>
                     <label class="un-label-header un-bgWhite un-label-title"><i class="fa fa-calendar"></i>  Make a recall </label>
                 </div>
-    <div class="un-padding-15">
+    <div class="un-padding-15" style="background-color: #C0C0C0;">
         <div class="row">
              <!-- BOOKING DATE -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
