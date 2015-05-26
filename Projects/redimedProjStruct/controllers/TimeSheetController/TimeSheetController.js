@@ -1714,9 +1714,15 @@ module.exports = {
         } else {
             strListDept = null;
         }
-        var query = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
+        var queryStaff = "";
+        if (req.body.listDept[0].USER_ID !== undefined &&
+            req.body.listDept[0].isStaff === true) {
+            queryStaff = "AND users.id = " + req.body.listDept[0].USER_ID;
+        }
+        var query = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
             "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
-            "WHERE departments.departmentid IN (" + strListDept + ")";
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+            "WHERE departments.departmentid IN (" + strListDept + ")" + queryStaff;
         db.sequelize.query(query)
             .success(function(result) {
                 res.json({

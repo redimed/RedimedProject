@@ -16,6 +16,8 @@ angular.module("app.loggedIn.TimeSheet.Report2.Controller", [])
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
+            listNew[0].isStaff = $scope.isStaff;
+            listNew[0].USER_ID = $cookieStore.get("userInfo").id;
             TimeSheetService.LoadEmpReport(listNew).then(function(response) {
                 if (response.status === "success") {
                     //LOAD EMP
