@@ -133,15 +133,26 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
         //CHECK DEFAULT WEEKEND
         if (activity_id === 5) {
-            var item = {};
-            item.isAction = 'insert';
-            item.time_temp = 0;
-            item.totalUnits = 0;
-            item.ratio = 0;
-            item.time_charge = '0000';
-            item.ITEM_ID = 18;
-            item.ITEM_NAME = "Weekend Leave";
-            $scope.tasks[index].item.push(item);
+            if ($scope.tasks[index].date.getDay() === 6 ||
+                $scope.tasks[index].date.getDay() === 0) {
+                var item = {};
+                item.isAction = 'insert';
+                item.time_temp = 0;
+                item.totalUnits = 0;
+                item.ratio = 0;
+                item.time_charge = '0000';
+                item.ITEM_ID = 18;
+                item.ITEM_NAME = "Weekend Leave";
+                $scope.tasks[index].item.push(item);
+                $scope.tasks[index].time_charge = '0000';
+                $scope.tasks[index].time_temp = 0;
+                $scope.tasks[index].notPopup = true;
+            } else {
+                $scope.tasks[index].notPopup = false;
+            }
+
+        } else {
+            $scope.tasks[index].notPopup = false;
         }
         //END CHECK DEFAULT WEEKEND
 
@@ -288,6 +299,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     item.ITEM_ID = 18;
                     item.ITEM_NAME = "Weekend Leave";
                     $scope.tasks[$scope.tasks.length - 1].item.push(item);
+                    $scope.tasks[$scope.tasks.length - 1].time_charge = '0000';
+                    $scope.tasks[$scope.tasks.length - 1].time_temp = 0;
+                    $scope.tasks[$scope.tasks.length - 1].notPopup = true;
                 }
                 //END SUN
 
@@ -302,6 +316,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     item.ITEM_ID = 18;
                     item.ITEM_NAME = "Weekend Leave";
                     $scope.tasks[$scope.tasks.length - 2].item.push(item);
+                    $scope.tasks[$scope.tasks.length - 2].time_charge = '0000';
+                    $scope.tasks[$scope.tasks.length - 2].time_temp = 0;
+                    $scope.tasks[$scope.tasks.length - 2].notPopup = true;
                 }
                 //EN SAT
             }

@@ -106,7 +106,7 @@
                         </td>
                         <td style="text-align:center;width:100px;">
                             <a ng-disabled="((task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined || task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined)&&task.activity_id!==5) || ((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31
-                            ) && task.activity_id===1)" ng-click="chooseItem(task, uploader, isEdit, key)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
+                            ) && task.activity_id===1) || task.notPopup===true" ng-click="chooseItem(task, uploader, isEdit, key)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
                         </td>
                         <td style="text-align: center;width:100px;">
                             <input ng-if="!(task.time_charge>=10000)" type="text" ng-model="task.time_charge" ui-mask="99:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
