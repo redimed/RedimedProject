@@ -2380,6 +2380,160 @@ label{
     width: 200px;
 }
 /*TAN NAV ITEM DROPDOWN END*/
+/* phu css */
+.un-btn-red-add{
+    width: 90px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 7px 10px;
+    background-color: rgb(179, 30, 69) !important;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 20px !important;
+    float: right;
+    margin-top: -45px;
+}
+.un-label-header-custom{
+    padding: 0px 10px 2px 10px;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    margin-bottom: 0;
+    padding: 7px 70px;
+    text-align: center;
+    font-weight: bold;
+}
+.un-bgWhite-custom{
+    color: #ffffff;
+    border-top: 2px solid rgb(204, 201, 202);
+    border-left: 2px solid rgb(204, 201, 202);
+    border-right: 2px solid rgb(204, 201, 202);
+    background: rgb(43, 41, 42);
+    margin-top: -52px;
+    margin-left: -16px;
+}
+.un-background-gray-dv{
+    background: rgb(221, 221, 221);
+}
+.un-header-top{
+    margin-top: 40px;
+}
+.un-label-form-custom{
+    color: #ffffff;
+    width: 95%;
+    margin-bottom: 0;
+    background: rgb(102, 102, 102) !important;
+    padding-top: 2px;
+    padding-left: 5px;
+    font-weight: bold;
+    padding-bottom: 2px;
+}
+.un-button-custom{
+    margin-right: 0;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 20px !important;
+    border: 3px solid white;
+    padding: 5px 25px 5px 25px;
+    box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75);
+    background-color: rgb(102, 102, 102);
+    outline: none;
+    float: right;
+}
+.un_label{
+    color: #ffffff;
+    font-weight: bold;
+    width: 200px;
+    padding: 1px 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    background-color: rgb(103, 104, 104);
+}
+.un_back_input{
+    background: rgb(181, 181, 182) !important;
+    color: #ffffff;
+    border: 0;
+    margin-top: 0;
+}
+.un_red_button{
+    background-color: rgb(180, 30, 71) !important;
+    box-shadow: 7px 7px 10px -8px rgba(0,0,0,0.75);
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.un_blue_button{
+    background-color: rgb(29, 51, 98) !important;
+    box-shadow: 7px 7px 10px -8px rgba(0,0,0,0.75);
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 5px 15px;
+    font-weight: bold;
+}
+.un_table_first{
+    width: 100%;
+    background-color: #ffffff;
+}
+.un_table_first tr{
+    border-bottom: 2px solid rgb(181, 181, 182);
+}
+.un_table_first td{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.un_table_first tr:last-child{
+    border-bottom: 0;
+}
+.un_table_first th{
+    padding-top: 10px;
+    padding-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid rgb(181, 181, 182);
+}
+.un_span_thead{
+    color: #ffffff; 
+    margin-bottom: 0; 
+    padding-top: 10px; 
+    padding-bottom: 15px; 
+    padding-left: 50px; 
+    padding-right: 50px; 
+    font-weight: bold; 
+    background: rgb(96, 99, 94);
+}
+.row_pagi{
+    text-align: right;
+}
+.un-label-header-customs{
+    background: rgb(43, 41, 42);
+    border: 0;
+    width: 100%;
+    padding-left: 5px;
+    border-top: 2px solid rgb(204, 201, 202);
+    border-left: 2px solid rgb(204, 201, 202);
+    border-right: 2px solid rgb(204, 201, 202);
+}
+.un-bgWhite-customs{
+    color: #ffffff;
+    margin-bottom: 0;
+}
+.un-input-customs{
+    width: 100%;
+    border: 0;
+    color: #000000;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgb(238, 238, 238);
+    margin-bottom: 10px;
+}
+.un-bg-XamDen-custom{
+     padding: 5px 10px;
+     background-color: rgb(43, 41, 42);
+     color: #ffffff;
+     font-weight: bold;
+     border: 0;
+}
+/* end */
 
 /* LUAN */
 
