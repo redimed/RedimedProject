@@ -4952,7 +4952,7 @@ module.exports = {
                                                                                             });
                                                                                             return;
                                                                                         })
-                                                                                }
+                                                                                
                                                                                                 }
                                                                                             })
                                                                                             .error(function(err){
@@ -4966,7 +4966,9 @@ module.exports = {
                                                                                         }
                                                                                         co1++;
                                                                                     }
+                                                                                }
                                                                             })
+                                                                            
                                                                             .error(function(err) {
                                                                                 console.log("*****ERROR: " + err + " *****");
                                                                                 res.json({
