@@ -1,13 +1,12 @@
-<div class="row">
-	
+<label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Referral</label>
+<div class="row">	
 	<!-- DATE ISSUED -->
 	<div class="col-md-4">
 		<div class="form-group">
-			<label>
-				Date Issued&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-form-3 un-label-whidth-130">
+				Date Issued *
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.date_issued" id="date_issued">
+			<input class="form-control input-sm select-outside" custom-date ng-model="outreferral.form.date_issued" id="date_issued">
 		</div>
 	</div>
 	<!-- END DATE ISSUED -->
@@ -15,11 +14,10 @@
 	<!-- DATE STARTED -->
 	<div class="col-md-4">
 		<div class="form-group">
-			<label>
-				Date Started&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-form-3 un-label-whidth-130">
+				Date Started *
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.date_started" id="date_started" ng-change="onChange()">
+			<input class="form-control input-sm select-outside" custom-date ng-model="outreferral.form.date_started" id="date_started" ng-change="onChange()">
 		</div>
 	</div>
 	<!-- END DATE STARTED -->
@@ -27,11 +25,10 @@
 	<!-- DURATION -->
 	<div class="col-md-4">
 		<div class="form-group">
-			<label>
-				Duration(Months)&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-form-3 un-label-whidth-130">
+				Duration(Months) *
 			</label>
-			<input class="form-control input-sm" ng-model="outreferral.form.duration" id="duration" ng-change="onChange()">
+			<input class="form-control input-sm select-outside" ng-model="outreferral.form.duration" id="duration" ng-change="onChange()">
 		</div>
 	</div>
 	<!-- END DURATION -->
@@ -40,27 +37,23 @@
 	<!-- DOCTOR ID -->
 	<div class="col-md-4">
 		<div class="form-group">
-			<label>
-				Outside Doctor&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-form-3 un-label-whidth-130">
+				Outside Doctor *
 			</label>
-			<br>
-			<button id="doctor_id" class="btn btn-secondary" ng-click="outdoctor.dialog.select()">
+			<button id="doctor_id" class="btn btn-block select-outside ng-binding" ng-click="outdoctor.dialog.select()">
 				{{outdoctor.name}}
 			</button>
 		</div>
 	</div>
 	<!-- END DOCTOR ID -->
-
 	<!-- REFFERED TO DOCTOR -->
 	<div class="col-md-4">
 		<div class="form-group">
-			<label>
-				Referred To Doctor&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-form-3 un-label-whidth-130">
+				Referred To Doctor *
 			</label>
 			<br>
-			<button id="referred_to_doctor" class="btn btn-secondary" ng-click="referdoctor.dialog.select()">
+			<button id="referred_to_doctor" class="btn btn-block select-outside ng-binding" ng-click="referdoctor.dialog.select()">
 				{{referdoctor.name}}
 			</button>
 		</div>
@@ -70,22 +63,19 @@
 	<!-- EXPIRE DATE -->
 	<div class="col-md-4">
 		<div class="form-group">
-			<label>
-				Expire Date&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-form-3 un-label-whidth-130">
+				Expire Date *
 			</label>
-			<input class="form-control input-sm" custom-date ng-model="outreferral.form.expire_date" id="expire_date" disabled>
+			<input class="form-control input-sm select-outside" custom-date ng-model="outreferral.form.expire_date" id="expire_date" disabled>
 		</div>
 	</div>
 	<!-- END EXPIRE DATE -->
-
-	
 
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<button class="btn btn-primary" ng-click="outreferral.save()">Save</button>
+		<button class="un-button-m" ng-click="outreferral.save()">Save</button>
 	</div>
 </div>
 

@@ -1,13 +1,25 @@
-<button class="btn btn-primary" ng-click="alert.dialog.select()">Select Alert</button>
-<alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload" 
-	permission="{edit: true, remove: true}" cal-id="alert.CAL_ID">
-</alert-patient-list>
-
-<script type="text/ng-template" id="dialogAlertPatientSelect">
-    <div class="modal-body">
-    	<alert-patient-list patient-id="alert.Patient_id" cal-id="alert.CAL_ID" 
-    		limit="alert.limit" reload="alert.reload" without-patient="true"
-    		permission="{edit: false, remove: false, checkbox: true}" on-savecheck="alert.onSaveCheck(data)">
-    	</alert-patient-list>
+<div class="select-outside-div">
+    <div class="select-outside-button inline">
+        <label class="un-title-label select-outside-button">List Alert</label>
+        <div align="right" class="select-outside-button-right">
+            <button class="btn pull-right un-save-m ng-scope un-select-alert-m" ng-click="alert.dialog.select()">Select Alert</button>
+        </div>
     </div>
- </script>
+    <alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload" 
+        permission="{edit: true, remove: true}" cal-id="alert.CAL_ID">
+    </alert-patient-list>
+
+    <script type="text/ng-template" id="dialogAlertPatientSelect">
+            <style type="text/css">
+                  .modal.in .modal-dialog {
+                   margin-top:50px;
+                  }
+             </style>
+        <div class="modal-body">
+            <alert-patient-list patient-id="alert.Patient_id" cal-id="alert.CAL_ID" 
+                limit="alert.limit" reload="alert.reload" without-patient="true"
+                permission="{edit: false, remove: false, checkbox: true}" on-savecheck="alert.onSaveCheck(data)">
+            </alert-patient-list>
+        </div>
+     </script>
+</div> 

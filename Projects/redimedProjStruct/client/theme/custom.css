@@ -23,9 +23,95 @@ a:focus {
 .form-group.detail > div {
     margin-top: 15px;
 }
-/**
-* Khank Style
-*/
+/*Toom Style*/
+.un-input-m-custom{
+      width: 284px !important;
+    height: 20px;
+    border: 2px solid rgb(196, 196, 196)!important;
+}
+.un-input-alert-m{
+      margin-left: -1px !important;
+      margin-top: -1px !important;
+
+}
+.un-select-alert-m{
+    margin-top: -37px;
+    margin-right: -133px;
+}
+.un-save-m{
+    color: white;
+    border-radius: 20px !important;
+    border: 3px solid white;
+    background: rgb(102, 102, 102) !important;
+    margin-bottom: -2px;
+}
+.un-button-submit-m{
+    color: white;
+    border-radius: 20px !important;
+    border: 3px solid white;
+    background: rgb(102, 102, 102) !important;
+    width: 80px;
+    margin-bottom: 10px;
+}
+.select-outside{
+    background: #B4B5B5 !important;
+    width: 95%;
+    height: 28px;
+}  
+.select-outside-div{
+    margin-top: 48px;
+}
+.select-outside-button{
+    margin-top: 47px;
+}
+.select-outside-button-right{
+   margin-right: 136px;
+}
+.select-outside-button-right-m{
+    margin-right: 40px;
+}
+.un-title-label-m{
+    position: absolute;
+    top: -2px;
+    color: white;
+    background: #B31E45 !important;
+    border-top-left-radius: 26px !important;
+    border-top-right-radius: 26px !important;
+    padding: 7px 25px 10px 25px;
+    text-transform: uppercase;
+    border-top: 1px solid;
+}
+.un-button-m{
+    color: white;
+    margin-right: 0;
+    border-radius: 30px !important;
+    border: 3px solid white;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75);
+    outline: none;
+    background: #5B5B5B !important;
+    width: 90px !important;
+    margin-bottom: 10px;
+}
+.un-label-popup-header-m{
+    position: absolute;
+    top: -36px;
+    left: 0;
+    color: white;
+    padding: 10px 50px 5px 50px;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+}
+.un-bg-label-B41E46-m{
+    background-color: #B41E46 !important;
+}
+.modal-dialog-center {
+    margin-top: 25%;
+}
+/*end Toom*/
 
 .mdt-logo {
     margin: 0 auto;

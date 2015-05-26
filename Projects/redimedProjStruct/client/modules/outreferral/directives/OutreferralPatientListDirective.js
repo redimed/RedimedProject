@@ -92,7 +92,8 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 			var clickEnable = function(row){
 				
 				var postData = {
-					CAL_ID:$stateParams.calId,
+					// CAL_ID:$stateParams.calId,//manh comment
+					CAL_ID:$stateParams.cal_id,//manh add
 					patient_id:row.patient_id,
 					outreferral_id:row.id,
 					isEnable:row.isEnable
@@ -104,9 +105,10 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 					}, function(error){})
 			}
 			var clickDisale = function(row){
-				console.log($stateParams.calId);
+				console.log($stateParams.cal_id);
 				var postData = {
-					CAL_ID:$stateParams.calId,
+					// CAL_ID:$stateParams.calId,//manh comment
+					CAL_ID:$stateParams.cal_id,//manh add
 					patient_id:row.patient_id,
 					outreferral_id:row.id,
 					isEnable:row.isEnable

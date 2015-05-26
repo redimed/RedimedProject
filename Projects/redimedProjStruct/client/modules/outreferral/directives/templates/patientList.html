@@ -1,20 +1,18 @@
-<button class="btn btn-primary" ng-click="outreferral.dialog.add()" ng-if="action.add">Add</button>
-
 <script type="text/ng-template" id="referralAdd">
-	<div class="modal-body">	
-		<outreferral-patient-add patient-id="outreferral.Patient_id" cal-id="outreferral.CAL_ID" 
-			success="outreferral.success"></outreferral-patient-add>
-	</div>
+		<div class="modal-body">	
+			<outreferral-patient-add patient-id="outreferral.Patient_id" cal-id="outreferral.CAL_ID" 
+				success="outreferral.success"></outreferral-patient-add>
+		</div>
 </script>
 
-<table class="table">
+<table class="mdt-table">
 	<thead>
 		<tr>
 			<th>Outside Doctor</th>
 			<th>Referred Doctor</th>
 			<th>Date Started</th>
 			<th>Date Expire</th>
-			<th></th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,29 +21,23 @@
 			<td>{{l.doctor_name}}</td>
 			<td>{{l.date_started | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>{{l.expire_date | filterdate: 'DD/MM/YYYY'}}</td>
-			<td>
-				<button ng-click="outreferral.dialog.edit(l)" ng-if="action.edit" class="btn btn-primary btn-sm">
+			<td align="center">
+				<button ng-click="outreferral.dialog.edit(l)" ng-if="action.edit" class="un-button-submit-m ng-scope"><i class="fa fa-pencil-square-o"></i>
 					Edit
 				</button>
-				<button ng-click="outreferral.dialog.show(l)" ng-if="action.show" class="btn btn-primary btn-sm">
+				<button ng-click="outreferral.dialog.show(l)" ng-if="action.show" class="un-button-submit-m ng-scope"><i  class="fa-check-square-o"></i>
 					Show
 				</button>
-				<!--<a ng-click="outreferral.dialog.edit(l)" ng-if="action.edit">
-					<i class="fa fa-pencil"></i>
-				</a>
-				&nbsp
-				<a>
-				   	<span  ng-if="l.isEnable"  ng-click="outreferral.clickEnable(l)">Enable</span>
-					<span  ng-if="!l.isEnable"  ng-click="outreferral.clickDisale(l)">Disable</span>
-				</a>-->
 			</td>
 		</tr>
 	</tbody>
 </table>
-<pagination boundary-links="true" total-items="outreferral.count" ng-model="outreferral.search.page" 
+<div align="right">
+	<pagination boundary-links="true" total-items="outreferral.count" ng-model="outreferral.search.page" 
     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
     items-per-page="outreferral.search.limit" max-size="outreferral.search.max_size" ng-change="outreferral.onPage(outreferral.search.page)">
-</pagination>
+	</pagination>
+</div>
 
 <script type="text/ng-template" id="dialogOutreferralRemove">
     <div class="modal-body">
@@ -70,3 +62,8 @@
         </outreferral-patient-show>
     </div>
  </script>
+ <style type="text/css">
+	  .modal.in .modal-dialog {
+	   margin-top:50px;
+	  }
+ </style>  

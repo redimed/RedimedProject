@@ -14,7 +14,7 @@ angular.module('app.loggedIn.alert', [
 
 	.state('loggedIn.patient.alert', {
 		abstract: true,
-		url: '/:patientId/cal/:calId/alert'
+		url: '/patientalert'
 	})
 
 	.state('loggedIn.patient.alert.list', {

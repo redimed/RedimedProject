@@ -1,5 +1,9 @@
-<button class="btn btn-primary" ng-if="action.checkbox" ng-click="onSavecheck({data: alert.checkbox})">Select</button>
-<table class="table">
+<div class="inline">
+	<label class="un-title-label select-outside-button">List Alert</label>
+	<button class="btn pull-right un-save-m ng-scope" ng-if="action.checkbox" ng-click="onSavecheck({data: alert.checkbox})">
+	<i class="fa fa-floppy-o"></i>Save</button>
+</div>
+<table class="mdt-table">
 	<thead>
 		<tr>
 			<th ng-if="action.checkbox"></th>
@@ -14,20 +18,10 @@
 					<i class="fa fa-caret-down"></i>
 				</a>
 			</th>
-			<th></th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td>
-				<input class="form-control input-sm" ng-model="alert.search.name" ng-enter="alert.onSearch()">
-			</td>
-			<td>
-				<input class="form-control input-sm" ng-model="alert.search.description" ng-enter="alert.onSearch()">
-			</td>
-			<td></td>
-			<td></td>
-		</tr>
 		<tr ng-repeat="l in alert.list">
 			<td ng-if="action.checkbox">
 				<input type="checkbox" class="form-control" ng-model="itemcheck" 
@@ -36,29 +30,40 @@
 			<td>{{l.name}}</td>
 			<td>{{l.description}}</td>
 			<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
-			<td>
-				<button class="btn btn-sm btn-primary" ng-click="alert.dialog.edit(l)" ng-if="action.edit">Edit</button>
-				<button class="btn btn-sm btn-primary" ng-click="alert.dialog.remove(l)" ng-if="action.remove">Remove</button>
+			<td align="center">
+				<button class="un-button-submit-m" ng-click="alert.dialog.edit(l)" ng-if="action.edit">
+				<i class="fa fa-pencil-square-o"></i>
+				Edit</button>
+				<button class="un-button-submit-m" ng-click="alert.dialog.remove(l)" ng-if="action.remove">
+				<i class="fa fa-times"></i>
+				Remove</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<pagination boundary-links="true" total-items="alert.count" ng-model="alert.search.page" 
+<div align="right">
+	<pagination boundary-links="true" total-items="alert.count" ng-model="alert.search.page" 
     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
     items-per-page="alert.search.limit" max-size="alert.search.max_size" ng-change="alert.onPage(alert.search.page)">
-</pagination>
+	</pagination>
+</div>
 
 <script type="text/ng-template" id="dialogAlertRemove">
     <div class="modal-body">
         <p>Do you want to remove this alert ?</p>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
-        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+        <button class="un-button-submit-m ng-scope" ng-click="ok()">OK</button>
+        <button class="un-button-submit-m ng-scope" ng-click="cancel()">Cancel</button>
     </div>
  </script>
 
  <script type="text/ng-template" id="dialogAlertEdit">
+ 	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+     </style>
     <div class="modal-body">
         <alert-edit alert-id="alert.id" success="alert.success"></alert-edit>
     </div>

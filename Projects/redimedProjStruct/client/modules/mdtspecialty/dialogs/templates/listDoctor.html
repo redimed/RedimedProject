@@ -1,4 +1,5 @@
-<table class="table">
+<label class="un-label-popup-header-m un-bg-label-B41E46-m">List Doctor</label>
+<table class="mdt-table">
 	<thead>
 		<tr>
 			<th>Specialty Name</th>
@@ -29,7 +30,9 @@
 		</tr>
 	</tbody>
 </table>
-<pagination boundary-links="true" total-items="speciality.count" ng-model="speciality.search.page" 
+<div align="right">
+	<pagination boundary-links="true" total-items="speciality.count" ng-model="speciality.search.page" 
     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
     items-per-page="speciality.search.limit" max-size="speciality.search.max_size" ng-change="speciality.onPage(speciality.search.page)">
-</pagination>
+	</pagination>
+</div>

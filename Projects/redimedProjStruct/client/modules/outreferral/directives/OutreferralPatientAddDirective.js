@@ -70,6 +70,7 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			var outdoctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectOutdoctorDialog',
+					size:'lg',
 					controller: function($scope, $modalInstance){
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
@@ -85,6 +86,7 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			var doctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectDoctorDialog',
+					size:'lg',
 					controller: function($scope, $modalInstance){
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);

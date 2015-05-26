@@ -16,7 +16,7 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/mdtoutdoctor/dialogs/templates/add.html',
 			      controller: 'MdtoutdoctorAdddialog',
-			      size :''
+			      size :'lg'
 			    })
 			    .result.then(function(response){
 			    	if(response === 'success'){

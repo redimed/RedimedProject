@@ -98,7 +98,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				$modal.open({
 					templateUrl: 'dialogAlertEdit',
 					controller: 'AlertEditDialog',
-					size: 'lg',
+					size: 'md',
 					resolve: {
 						list: function(){
 							return list;
@@ -120,7 +120,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 
 			var onCheckbox = function(option){
 				if(option.value){
-					scope.alert.checkbox.push({patient_id: scope.patientId, cal_id: $stateParams.calId, alert_id: option.list.id});
+					scope.alert.checkbox.push({patient_id: scope.patientId, cal_id: $stateParams.cal_id, alert_id: option.list.id});
 				}else{
 					var i = 0;
 					_.forEach(scope.alert.checkbox, function(checkbox){
@@ -135,8 +135,8 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			var disablePatientAlert = function(l){
 				var postData = {
 					alert_id:l.id,
-					patient_id:$stateParams.patientId,
-					cal_id:$stateParams.calId,
+					patient_id:$stateParams.patient_id,
+					cal_id:$stateParams.cal_id,
 					isEnable:l.isEnable
 				}
 				AlertModel.disablePatientAlert(postData)
