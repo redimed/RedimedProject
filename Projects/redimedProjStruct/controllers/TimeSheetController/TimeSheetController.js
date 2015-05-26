@@ -5378,7 +5378,7 @@ module.exports = {
                                                                                     .success(function(data_get_item_id) {
 
                                                                                         for (var o = 0; o < data_get_item_id.length; o++) {
-                                                                                            stringItem += data_get_item_id[o].item_id + ", ";
+                                                                                            stringItem += "'"+data_get_item_id[o].item_id + "', ";
                                                                                         }
                                                                                         stringItem += -1;
                                                                                         var sql_item_code_report1 = "SELECT user_id,Employee_id,Department_id,item_id,COUNT(item_id) AS 'so_luong',from_date,to_date " + "FROM item_code_detail_table " + "WHERE item_id IN (" + stringItem + ") AND Employee_id IN (" + stringEMP + ") AND user_id=" + info.USER_ID + " " + "GROUP BY Employee_id,item_id";
