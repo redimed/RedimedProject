@@ -29,7 +29,7 @@ angular.module("app.loggedIn.patient.controller", [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},
         {wrap:0,'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 0', 'icon': 'fa fa-building',
-            'state': 'loggedIn.company({patient_id:' + $stateParams.patient_id + '})'},
+            'state': 'loggedIn.patient.company'},
         {wrap:0,'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.claim.list'},
         {wrap:0,'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',

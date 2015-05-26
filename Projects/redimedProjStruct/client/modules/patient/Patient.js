@@ -3,7 +3,9 @@ angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.services",
     "app.loggedIn.patient.directives",
     "app.loggedIn.patient.listall.controller",
-    "app.loggedIn.patient.claim"
+    "app.loggedIn.patient.claim",
+    "app.loggedIn.company"
+
 ])
 
 .config(function ($stateProvider) {
@@ -80,7 +82,9 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.companies", {
+
+    //tannv.dts@gmail.com
+    /*.state("loggedIn.patient.companies", {
         url: "/companies",
         views: {
             "main-content": {
@@ -88,7 +92,8 @@ angular.module("app.loggedIn.patient", [
                 controller: "PatientCompaniesController"
             }
         }
-    })
+    })*/
+
     .state("loggedIn.patient.workcover", {
         url: "/workcover",
         views: {

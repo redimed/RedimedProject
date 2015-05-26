@@ -43,7 +43,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        isExtra:null,
 		        parent_id :null,
 		        listInsurerid :[],
-		        patient_id :$stateParams.patientId
+		        // patient_id :$stateParams.patientId//tannv.dts@gmail.com comment
+		        patient_id :$stateParams.patient_id//tannv.dts add
 			}
 			scope.onRowClick = function(row){
 				 var postData = { 
@@ -136,7 +137,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
-		  				$state.go('loggedIn.company');
+		  				// $state.go('loggedIn.company');//tan comment
+		  				$state.go('loggedIn.patient.company');//tan add
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);
@@ -154,6 +156,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 		    	addCompany :function(){addCompany();},
 		    	addInsurer :function(){addInsurer();},
 		    	remove : function(row){remove(row);}
+		    }
+
+		    scope.cancel=function()
+		    {
+		    	$state.go('loggedIn.patient.company');
 		    }
 		}//end link
 		

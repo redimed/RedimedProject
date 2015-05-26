@@ -2300,3 +2300,220 @@ label{
     width: 200px;
 }
 /*TAN NAV ITEM DROPDOWN END*/
+
+/*TAN PANEL DIFINITION BEGIN*/
+/*---------------------------------------------*/
+/*---------------------------------------------*/
+/*khung panel lon*/
+.un_tn_panel_lg{
+    position: relative;
+    margin-top: 30px;
+}
+
+.un_tn_panel_action{
+    float: right;
+    height: 30px;
+    margin-top: -35px;
+}
+
+.un_tn_panel_body{
+    padding:10px;
+}
+
+/*mau nen cho panel*/
+.un_tn_panel_black{
+    background-color: rgb(37, 33, 34)!important;
+}
+
+/*mau nen cho panel*/
+.un_tn_panel_gray{
+    background-color: rgb(221, 221, 221)!important;
+}
+
+.un_tn_panel_white{
+    background-color: #F6F6F6!important;
+}
+
+/*bo tri label tren panel*/
+.un_tn_panel_lg_label{
+    position: absolute;
+    top: -27px;
+    height:27px;
+    border-top-left-radius: 26px !important;
+    border-top-right-radius: 26px !important;
+    padding: 3px 25px 10px 25px;
+    text-transform: uppercase;
+    border-top: 1px solid;
+}
+
+/*mau cho label tren panel*/
+.un_tn_panel_label_color_black{
+    background: rgb(39, 36, 37)!important;
+    color: white;
+}
+
+/*mau cho label tren panel*/
+.un_tn_panel_label_color_pink{
+    background: #B41E46!important;
+    color: white;
+}
+
+.un_tn_panel_border_white{
+    border:2px solid white;
+}
+.un_tn_panel_border_white>label{
+    left:-2px;
+    border:2px solid white;
+}
+
+.un_tn_panel_border_gray{
+    border:1px solid #B0B0B0;
+}
+.un_tn_panel_border_gray>label{
+    left:-1px;
+    border:1px solid #B0B0B0;
+}
+
+/*kieu ke khung cho table*/
+.un_tn_table_border_black{
+    
+}
+/*kieu ke khung cho table*/
+.un_tn_table_border_black th,td{
+    border:1px solid #2B2B2B!important; 
+}
+
+/*kieu cho button*/
+.un_tn_btn{
+    border-radius: 20px !important;
+    border: 3px solid white;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top:5px;
+    margin-right:5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.un_tn_btn_rect{
+    border-radius: 3px !important;
+    border: 3px solid white;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+}
+/*mau cho button*/
+.un_tn_btn_gray{
+    color: white;
+    background: rgb(102, 102, 102) !important;
+}
+/*mau cho button*/
+.un_tn_btn_pink{
+    color: white;
+    background: #B41E46 !important;
+}
+.un_tn_btn_black{
+    color: white;
+    background: #525252 !important;
+}
+.un_tn_btn_orange{
+    color: white;
+    background: #F37A21 !important;
+}
+
+/*style cho input form*/
+.un_tn_form_control{
+    height: 20px;
+}
+.un_tn_form_control_gray{
+    color: black!important;
+    background-color: rgb(221, 221, 221)!important;
+}
+
+.un_tn_form_label{
+    margin-bottom: 0px;
+    padding: 0px 10px 0px 10px!important;
+    font-size: 12px;
+}
+
+.un_tn_form_label_gray{
+    color: #EAEAEA;
+    background: #686868;
+}
+
+.un-checkbox-group {
+    position:relative
+}
+ 
+/* Hide Checkbox Input */
+.un-checkbox-group input[type=checkbox] {
+    display:none
+}
+ 
+/* Style Label */
+.un-checkbox-group label {
+    padding-left:30px;
+    cursor:pointer;
+}
+ 
+/* Style span tag */
+.un-checkbox-group label span {
+    display:block;
+    position:absolute;
+    left:0;
+    -webkit-transition-duration:.3s;
+    -moz-transition-duration:.3s;
+    transition-duration:.3s
+}
+/* Style box */
+.un-checkbox-group label .box {
+    background:#B41E46;
+    height: 30px;
+    width: 30px;
+    z-index:9;
+    -webkit-transition-delay:.2s;
+    -moz-transition-delay:.2s;
+    transition-delay:.2s
+}
+
+.un-checkbox-group .text{
+    padding-left: 5px;
+    padding-top: 5px;
+    font-weight: bold;
+}
+ 
+/* Style check icon. give it a border on the bottom and right only and then rotate */
+.un-checkbox-group label .check {
+    top: 5px;
+    left: 12px;
+    width:7px;
+    height:15px;
+    border:2px solid #fff;
+    border-top:none;
+    border-left:none;
+    opacity:0;
+    z-index:8;
+    -webkit-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    transform:rotate(180deg);
+    -webkit-transition-delay:.3s;
+    -moz-transition-delay:.3s;
+    transition-delay:.3s
+}
+ 
+/* Change color of box when checkbox is checked */
+.un-checkbox-group input[type=checkbox]:checked ~ label .box {
+    background:#B41E46
+}
+ 
+/* Rotate and show check icon when checkbox is checked */
+.un-checkbox-group input[type=checkbox]:checked ~ label .check {
+    opacity:1;
+    -webkit-transform:scale(1.5) rotate(45deg);
+    -moz-transform:scale(1.5) rotate(45deg);
+    transform:scale(1.5) rotate(45deg);
+    z-index:10
+}
+/*---------------------------------------------*/
+/*---------------------------------------------*/
+/*TAN PANEL DEFINITION END*/

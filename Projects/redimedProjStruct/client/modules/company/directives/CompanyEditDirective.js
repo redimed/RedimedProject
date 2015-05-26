@@ -10,7 +10,8 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		link: function(scope, elem, attrs){
 			var form = {
 				id:$stateParams.companyId,
-				patient_id :$stateParams.patientid,
+				// patient_id :$stateParams.patientid,//tannv.dts@gmail.com comment
+				patient_id :$stateParams.patient_id,//tannv.dts@gmail.com add
 				Company_name:null,
 		        Industry:null,
 		        Addr:null,
@@ -129,7 +130,8 @@ angular.module('app.loggedIn.company.directives.edit', [])
 				CompanyModel.edit(postData)
 				.then(function(response){
 					toastr.success('Edit Company Successfully');
-		  			$state.go('loggedIn.company');
+		  			// $state.go('loggedIn.company');//tannv.dts comment
+		  			$state.go('loggedIn.patient.company');//tannv.dts add
 				}, function(error){
 					scope.company.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.company.errors);

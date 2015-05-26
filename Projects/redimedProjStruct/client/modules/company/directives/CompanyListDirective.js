@@ -15,7 +15,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 				offset: 0,
 				limit: parseInt(scope.limit),
 				company_id :$stateParams.companyId,
-				patient_id :$stateParams.patientId,
+				// patient_id :$stateParams.patientId,//tannv.dts@gmail.com comment
+				patient_id :$stateParams.patient_id,//tannv.dts@gmail add
 				Company_name:'',
 				Industry:'',
 				Addr:'',
@@ -23,7 +24,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 			scope.onRowClick = function(row){
 				scope.updateCompany.id = row.id;
-				scope.updateCompany.patient_id =$stateParams.patientId; 
+				// scope.updateCompany.patient_id =$stateParams.patientId;// tannv.dts@gmail.com comment
+				scope.updateCompany.patient_id =$stateParams.patient_id; // tannv.dts@gmail.com add
 				var postData = angular.copy(scope.updateCompany);
 				 CompanyModel.upCompanyPatient(postData)
 		  			.then(function(response){
@@ -55,7 +57,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 
 			scope.clickEdit = function(row){
-					$state.go('loggedIn.company.edit',{companyId:row.id});
+					// $state.go('loggedIn.company.edit',{companyId:row.id});//tan comment
+					$state.go('loggedIn.patient.company.edit',{companyId:row.id});//tan add
 			}
 			var load = function(){
 				scope.company.loading = true;
@@ -72,7 +75,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 				})
 			}
 			scope.addClick = function(){
-				$state.go('loggedIn.company.add');
+				// $state.go('loggedIn.company.add');//tan comment
+				$state.go('loggedIn.patient.company.add');//tan add
 			}
 			var onSearch = function(option){
 				switch(option.field){
@@ -99,7 +103,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 			scope.disableCompany = function(row){
 				var postData ={
-					patient_id :$stateParams.patientId,
+					// patient_id :$stateParams.patientId,//tannv.dts@gmail.com comment
+					patient_id :$stateParams.patient_id,// tannv.dts@gmail.com add
 					company_id : row.id,
 					isEnable : row.checkisEnable
 				}
@@ -123,7 +128,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			    })
 			    .result.then(function(row){
 			    	var postData = {
-			    		patient_id:$stateParams.patientId,
+			    		// patient_id:$stateParams.patientId,//tannv.dts@gmail.com comment
+			    		patient_id:$stateParams.patient_id,//tannv.dts@gmail.com add
 			    		company_id:row.id
 			    	}
 			    	CompanyModel.AddlistNotFollow(postData)
