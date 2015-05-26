@@ -4085,6 +4085,8 @@ module.exports = {
         var flag4 = 0;
         var flag5 = 0;
         var flag6 = 0;
+        var co1   = 0;
+        var co2   = 0;
         var time_charge_1_all = 0;
         var time_charge_2_all = 0;
         var time_charge_3_all = 0;
@@ -4135,733 +4137,173 @@ module.exports = {
                                                     flag1++;
                                                     if (flag1 == data_time_activity_table.length) {
                                                         //GET DETAIL DATA
-                                                        var sql_get_data_time_activity_detail_table = "SELECT time_activity_table.task_week_id,time_tasks.tasks_id," + "time_activity_table.user_id,time_activity_table.Employee_id," + "time_activity_table.Department_id,time_tasks.activity_id," + "time_tasks.time_charge,time_activity_table.time_charge_week," + "time_activity_table.weekno,time_activity_table.from_date,time_activity_table.to_date " + "FROM time_tasks " + "INNER JOIN time_activity_table ON time_activity_table.task_week_id = time_tasks.tasks_week_id " + "WHERE time_activity_table.user_id=" + info.USER_ID + " ";
+                                                        var sql_get_data_time_activity_detail_table = "SELECT time_activity_table.task_week_id,time_tasks.tasks_id," 
+                                                        + "time_activity_table.user_id,time_activity_table.Employee_id," 
+                                                        + "time_activity_table.Department_id,time_tasks.activity_id," 
+                                                        + "time_tasks.time_charge,time_activity_table.time_charge_week," 
+                                                        + "time_activity_table.weekno,time_activity_table.from_date,time_activity_table.to_date " 
+                                                        + "FROM time_tasks " 
+                                                        + "INNER JOIN time_activity_table ON time_activity_table.task_week_id = time_tasks.tasks_week_id " 
+                                                        + "WHERE time_activity_table.user_id=" + info.USER_ID + " ";
+
+                                                        var sql_get_time_charge_week = "SELECT SUM(time_charge) AS 'time_charge_week',Department_id,Employee_id "
+                                                                                        +" FROM time_activity_detail_table "
+                                                                                        +" WHERE user_id=268 AND Employee_id IN ("+stringEMP+") "
+                                                                                        +" GROUP BY Department_id,Employee_id";
                                                         db.sequelize.query(sql_get_data_time_activity_detail_table)
                                                             .success(function(data_time_activity_detail_table) {
-                                                                //console.log(data_time_activity_detail_table)
-                                                                for (var j = 0; j < data_time_activity_detail_table.length; j++) {
-                                                                    //INSERT time_activity_detail_table
-                                                                    db.time_activity_detail_table.create({
-                                                                            task_week_id: data_time_activity_detail_table[j].task_week_id,
-                                                                            tasks_id: data_time_activity_detail_table[j].tasks_id,
-                                                                            user_id: data_time_activity_detail_table[j].user_id,
-                                                                            Employee_id: data_time_activity_detail_table[j].Employee_id,
-                                                                            Department_id: data_time_activity_detail_table[j].Department_id,
-                                                                            activity_id: data_time_activity_detail_table[j].activity_id,
-                                                                            time_charge: data_time_activity_detail_table[j].time_charge,
-                                                                            time_charge_week: data_time_activity_detail_table[j].time_charge_week,
-                                                                            weekno: data_time_activity_detail_table[j].weekno,
-                                                                            from_date: data_time_activity_detail_table[j].from_date,
-                                                                            to_date: data_time_activity_detail_table[j].to_date,
-                                                                            Creation_by: info.USER_ID
-                                                                        })
-                                                                        .success(function(data_insert2) {
-                                                                            flag2++;
-                                                                            if (flag2 == data_time_activity_detail_table.length) {
-                                                                                var sql_get_data_time_activity_report = "SELECT user_id,task_week_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS 'time_charge_by_activity_id',time_charge_week,weekno,from_date,to_date " + "FROM time_activity_detail_table " + "WHERE Employee_id IN(" + stringEMP + ") AND Department_id in (" + stringDept + ") AND user_id=" + info.USER_ID + " " + "GROUP BY Department_id,activity_id,Employee_id ";
+                                                                db.sequelize.query(sql_get_time_charge_week)
+                                                                    .success(function(data_get_time_charge_week){
 
-                                                                                var sql_get_data_total = "SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', " + "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', " + "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', " + "SUM(time_charge_week) AS 'time_charge_week_Dept' " + "from time_activity_report " + "WHERE Department_id in (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND user_id=" + info.USER_ID + " " + "GROUP BY Department_id";
 
-                                                                                var sql_get_total = "SELECT * FROM time_activity_report ";
+                                                                    for (var j = 0; j < data_time_activity_detail_table.length; j++) {
+                                                                        //INSERT time_activity_detail_table
+                                                                        db.time_activity_detail_table.create({
+                                                                                task_week_id: data_time_activity_detail_table[j].task_week_id,
+                                                                                tasks_id: data_time_activity_detail_table[j].tasks_id,
+                                                                                user_id: data_time_activity_detail_table[j].user_id,
+                                                                                Employee_id: data_time_activity_detail_table[j].Employee_id,
+                                                                                Department_id: data_time_activity_detail_table[j].Department_id,
+                                                                                activity_id: data_time_activity_detail_table[j].activity_id,
+                                                                                time_charge: data_time_activity_detail_table[j].time_charge,
+                                                                                //time_charge_week: data_time_activity_detail_table[j].time_charge_week,
+                                                                                weekno: data_time_activity_detail_table[j].weekno,
+                                                                                from_date: data_time_activity_detail_table[j].from_date,
+                                                                                to_date: data_time_activity_detail_table[j].to_date,
+                                                                                Creation_by: info.USER_ID
+                                                                            })
+                                                                            .success(function(data_insert2) {
+                                                                                flag2++;
+                                                                                if (flag2 == data_time_activity_detail_table.length) {
+                                                                                    var sql_get_data_time_activity_report = "SELECT user_id,task_week_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS 'time_charge_by_activity_id',time_charge_week,weekno,from_date,to_date " + "FROM time_activity_detail_table " + "WHERE Employee_id IN(" + stringEMP + ") AND Department_id in (" + stringDept + ") AND user_id=" + info.USER_ID + " " + "GROUP BY Department_id,activity_id,Employee_id ";
 
-                                                                                var sql_get_line_count ="SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table GROUP BY FirstName ";
+                                                                                    var sql_get_data_total = "SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', " + "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', " + "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', " + "SUM(time_charge_week) AS 'time_charge_week_Dept' " + "from time_activity_report " + "WHERE Department_id in (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND user_id=" + info.USER_ID + " " + "GROUP BY Department_id";
 
-                                                                                db.sequelize.query(sql_get_data_time_activity_report)
-                                                                                    .success(function(data_get_data_time_activity_report) {
-                                                                                        db.sequelize.query(sql_get_line_count)
-                                                                                            .success(function(data_line_count){
+                                                                                    var sql_get_total = "SELECT * FROM time_activity_report ";
 
-                                                                                                for (var a = 0; a < data_line_count.length; a++) {
-                                                                                                    db.time_activity_report.create({
-                                                                                                            user_id: info.USER_ID,
-                                                                                                            Employee_id: data_line_count[a].Employee_id,
-                                                                                                            Department_id: data_line_count[a].Department_id,
-                                                                                                            time_charge_week: data_line_count[a].time_charge_week,
-                                                                                                            //weekno: data_time_activity_table[a].week_no,
-                                                                                                            from_date: info.weekFrom,
-                                                                                                            to_date: info.weekTo,
-                                                                                                            Creation_by: info.USER_ID
-                                                                                                        })
-                                                                                                        .success(function(data_insert3) {
-                                                                                                            flag3++;
-                                                                                                            if (flag3 == data_line_count.length) {
+                                                                                    var sql_get_line_count ="SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table GROUP BY FirstName ";
+                                                                                    
+                                                                                    for(var l=0;l<data_get_time_charge_week.length;l++){
+                                                                                        for(var r=0;r<data_time_activity_detail_table.length;r++){
+                                                                                            db.time_activity_detail_table.update({
+                                                                                                time_charge_week : data_get_time_charge_week[l].time_charge_week
+                                                                                            },{
+                                                                                                Department_id : data_get_time_charge_week[l].Department_id,
+                                                                                                Employee_id   : data_get_time_charge_week[l].Employee_id
+                                                                                            })
+                                                                                            .success(function(updatex){
+                                                                                                co2++;
+                                                                                                if(co1==data_get_time_charge_week.length&&co2==data_time_activity_detail_table.length){
+                                                                                                    db.sequelize.query(sql_get_data_time_activity_report)
+                                                                                        .success(function(data_get_data_time_activity_report) {
+                                                                                            db.sequelize.query(sql_get_line_count)
+                                                                                                .success(function(data_line_count){
 
-                                                                                                                for (var b = 0; b < data_get_data_time_activity_report.length; b++) {
-                                                                                                                    if (data_get_data_time_activity_report[b].activity_id == 1) {
-                                                                                                                        db.time_activity_report.update({
-                                                                                                                                time_charge_1: data_get_data_time_activity_report[b].time_charge_by_activity_id
-                                                                                                                            }, {
-                                                                                                                                Employee_id: data_get_data_time_activity_report[b].Employee_id,
-                                                                                                                                Department_id: data_get_data_time_activity_report[b].Department_id,
-                                                                                                                                user_id: info.USER_ID
-                                                                                                                            })
-                                                                                                                            .success(function(data_success) {
+                                                                                                    for (var a = 0; a < data_line_count.length; a++) {
+                                                                                                        db.time_activity_report.create({
+                                                                                                                user_id: info.USER_ID,
+                                                                                                                Employee_id: data_line_count[a].Employee_id,
+                                                                                                                Department_id: data_line_count[a].Department_id,
+                                                                                                                time_charge_week: data_line_count[a].time_charge_week,
+                                                                                                                //weekno: data_time_activity_table[a].week_no,
+                                                                                                                from_date: info.weekFrom,
+                                                                                                                to_date: info.weekTo,
+                                                                                                                Creation_by: info.USER_ID
+                                                                                                            })
+                                                                                                            .success(function(data_insert3) {
+                                                                                                                flag3++;
+                                                                                                                if (flag3 == data_line_count.length) {
 
-                                                                                                                                flag4++;
-                                                                                                                                if (flag4 == data_get_data_time_activity_report.length) {
-                                                                                                                                    db.sequelize.query(sql_get_data_total)
-                                                                                                                                        .success(function(data_total) {
-                                                                                                                                            for (var f = 0; f < data_total.length; f++) {
-                                                                                                                                                time_charge_1_all += data_total[f].time_charge_1_Dept;
-                                                                                                                                                time_charge_2_all += data_total[f].time_charge_2_Dept;
-                                                                                                                                                time_charge_3_all += data_total[f].time_charge_3_Dept;
-                                                                                                                                                time_charge_4_all += data_total[f].time_charge_4_Dept;
-                                                                                                                                                time_charge_5_all += data_total[f].time_charge_5_Dept;
-                                                                                                                                                time_charge_all += data_total[f].time_charge_week_Dept;
-                                                                                                                                            }
-                                                                                                                                            for (var c = 0; c < data_line_count.length; c++) {
-                                                                                                                                                for (var m = 0; m < data_total.length; m++) {
-                                                                                                                                                    db.time_activity_report.update({
-                                                                                                                                                            time_charge_1_Dept: data_total[m].time_charge_1_Dept,
-                                                                                                                                                            time_charge_1_all: time_charge_1_all,
-                                                                                                                                                            time_charge_2_Dept: data_total[m].time_charge_2_Dept,
-                                                                                                                                                            time_charge_2_all: time_charge_2_all,
-                                                                                                                                                            time_charge_3_Dept: data_total[m].time_charge_3_Dept,
-                                                                                                                                                            time_charge_3_all: time_charge_3_all,
-                                                                                                                                                            time_charge_4_Dept: data_total[m].time_charge_4_Dept,
-                                                                                                                                                            time_charge_4_all: time_charge_4_all,
-                                                                                                                                                            time_charge_5_Dept: data_total[m].time_charge_5_Dept,
-                                                                                                                                                            time_charge_5_all: time_charge_5_all,
-                                                                                                                                                            time_charge_week_Dept: data_total[m].time_charge_week_Dept,
-                                                                                                                                                            time_charge_all: time_charge_all
-                                                                                                                                                        }, {
-                                                                                                                                                            Department_id: data_total[m].Department_id,
-                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                        })
-                                                                                                                                                        .success(function(data_success1) {
+                                                                                                                    for (var b = 0; b < data_get_data_time_activity_report.length; b++) {
+                                                                                                                        if (data_get_data_time_activity_report[b].activity_id == 1) {
+                                                                                                                            db.time_activity_report.update({
+                                                                                                                                    time_charge_1: data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                                                }, {
+                                                                                                                                    Employee_id: data_get_data_time_activity_report[b].Employee_id,
+                                                                                                                                    Department_id: data_get_data_time_activity_report[b].Department_id,
+                                                                                                                                    user_id: info.USER_ID
+                                                                                                                                })
+                                                                                                                                .success(function(data_success) {
 
-                                                                                                                                                            flag5++;
-                                                                                                                                                            if (flag5 == data_line_count.length) {
-                                                                                                                                                                //success
-                                                                                                                                                                //console.log("success")
-                                                                                                                                                                db.sequelize.query(sql_get_total)
-                                                                                                                                                                    .success(function(totals) {
-                                                                                                                                                                        for (var g = 0; g < totals.length; g++) {
-                                                                                                                                                                            db.time_activity_report.update({
-                                                                                                                                                                                    per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                }, {
+                                                                                                                                    flag4++;
+                                                                                                                                    if (flag4 == data_get_data_time_activity_report.length) {
+                                                                                                                                        db.sequelize.query(sql_get_data_total)
+                                                                                                                                            .success(function(data_total) {
+                                                                                                                                                for (var f = 0; f < data_total.length; f++) {
+                                                                                                                                                    time_charge_1_all += data_total[f].time_charge_1_Dept;
+                                                                                                                                                    time_charge_2_all += data_total[f].time_charge_2_Dept;
+                                                                                                                                                    time_charge_3_all += data_total[f].time_charge_3_Dept;
+                                                                                                                                                    time_charge_4_all += data_total[f].time_charge_4_Dept;
+                                                                                                                                                    time_charge_5_all += data_total[f].time_charge_5_Dept;
+                                                                                                                                                    time_charge_all += data_total[f].time_charge_week_Dept;
+                                                                                                                                                }
+                                                                                                                                                for (var c = 0; c < data_line_count.length; c++) {
+                                                                                                                                                    for (var m = 0; m < data_total.length; m++) {
+                                                                                                                                                        db.time_activity_report.update({
+                                                                                                                                                                time_charge_1_Dept: data_total[m].time_charge_1_Dept,
+                                                                                                                                                                time_charge_1_all: time_charge_1_all,
+                                                                                                                                                                time_charge_2_Dept: data_total[m].time_charge_2_Dept,
+                                                                                                                                                                time_charge_2_all: time_charge_2_all,
+                                                                                                                                                                time_charge_3_Dept: data_total[m].time_charge_3_Dept,
+                                                                                                                                                                time_charge_3_all: time_charge_3_all,
+                                                                                                                                                                time_charge_4_Dept: data_total[m].time_charge_4_Dept,
+                                                                                                                                                                time_charge_4_all: time_charge_4_all,
+                                                                                                                                                                time_charge_5_Dept: data_total[m].time_charge_5_Dept,
+                                                                                                                                                                time_charge_5_all: time_charge_5_all,
+                                                                                                                                                                time_charge_week_Dept: data_total[m].time_charge_week_Dept,
+                                                                                                                                                                time_charge_all: time_charge_all
+                                                                                                                                                            }, {
+                                                                                                                                                                Department_id: data_total[m].Department_id,
+                                                                                                                                                                user_id: info.USER_ID
+                                                                                                                                                            })
+                                                                                                                                                            .success(function(data_success1) {
 
-                                                                                                                                                                                    Employee_id: totals[g].Employee_id,
-                                                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                                                })
-                                                                                                                                                                                .success(function(success) {
-                                                                                                                                                                                    flag6++;
-                                                                                                                                                                                    if (flag6 == totals.length) {
+                                                                                                                                                                flag5++;
+                                                                                                                                                                if (flag5 == data_line_count.length) {
+                                                                                                                                                                    //success
+                                                                                                                                                                    //console.log("success")
+                                                                                                                                                                    db.sequelize.query(sql_get_total)
+                                                                                                                                                                        .success(function(totals) {
+                                                                                                                                                                            for (var g = 0; g < totals.length; g++) {
+                                                                                                                                                                                db.time_activity_report.update({
+                                                                                                                                                                                        per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                    }, {
+
+                                                                                                                                                                                        Employee_id: totals[g].Employee_id,
+                                                                                                                                                                                        user_id: info.USER_ID
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .success(function(success) {
+                                                                                                                                                                                        flag6++;
+                                                                                                                                                                                        if (flag6 == totals.length) {
+                                                                                                                                                                                            res.json({
+                                                                                                                                                                                                status: "success"
+                                                                                                                                                                                            });
+                                                                                                                                                                                            return;
+                                                                                                                                                                                        }
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .error(function(err) {
+                                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
                                                                                                                                                                                         res.json({
-                                                                                                                                                                                            status: "success"
+                                                                                                                                                                                            status: "error"
                                                                                                                                                                                         });
                                                                                                                                                                                         return;
-                                                                                                                                                                                    }
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "error"
-                                                                                                                                                                                    });
-                                                                                                                                                                                    return;
-                                                                                                                                                                                })
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
-                                                                                                                                                            }
-                                                                                                                                                        })
-                                                                                                                                                        .error(function(err) {
-                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                            res.json({
-                                                                                                                                                                status: "error"
-                                                                                                                                                            });
-                                                                                                                                                            return;
-                                                                                                                                                        })
-                                                                                                                                                }
-                                                                                                                                            }
-                                                                                                                                        })
-                                                                                                                                }
-
-
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR :" + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            })
-                                                                                                                    } else if (data_get_data_time_activity_report[b].activity_id == 2) {
-                                                                                                                        db.time_activity_report.update({
-                                                                                                                                time_charge_2: data_get_data_time_activity_report[b].time_charge_by_activity_id
-                                                                                                                            }, {
-                                                                                                                                Employee_id: data_get_data_time_activity_report[b].Employee_id,
-                                                                                                                                Department_id: data_get_data_time_activity_report[b].Department_id,
-                                                                                                                                user_id: info.USER_ID
-                                                                                                                            })
-                                                                                                                            .success(function(data_success) {
-
-                                                                                                                                flag4++;
-
-                                                                                                                                if (flag4 == data_get_data_time_activity_report.length) {
-                                                                                                                                    db.sequelize.query(sql_get_data_total)
-                                                                                                                                        .success(function(data_total) {
-                                                                                                                                            for (var f = 0; f < data_total.length; f++) {
-                                                                                                                                                time_charge_1_all += data_total[f].time_charge_1_Dept;
-                                                                                                                                                time_charge_2_all += data_total[f].time_charge_2_Dept;
-                                                                                                                                                time_charge_3_all += data_total[f].time_charge_3_Dept;
-                                                                                                                                                time_charge_4_all += data_total[f].time_charge_4_Dept;
-                                                                                                                                                time_charge_5_all += data_total[f].time_charge_5_Dept;
-                                                                                                                                                time_charge_all += data_total[f].time_charge_week_Dept;
-                                                                                                                                            }
-                                                                                                                                            for (var c = 0; c < data_line_count.length; c++) {
-                                                                                                                                                for (var m = 0; m < data_total.length; m++) {
-                                                                                                                                                    db.time_activity_report.update({
-                                                                                                                                                            time_charge_1_Dept: data_total[m].time_charge_1_Dept,
-                                                                                                                                                            time_charge_1_all: time_charge_1_all,
-                                                                                                                                                            time_charge_2_Dept: data_total[m].time_charge_2_Dept,
-                                                                                                                                                            time_charge_2_all: time_charge_2_all,
-                                                                                                                                                            time_charge_3_Dept: data_total[m].time_charge_3_Dept,
-                                                                                                                                                            time_charge_3_all: time_charge_3_all,
-                                                                                                                                                            time_charge_4_Dept: data_total[m].time_charge_4_Dept,
-                                                                                                                                                            time_charge_4_all: time_charge_4_all,
-                                                                                                                                                            time_charge_5_Dept: data_total[m].time_charge_5_Dept,
-                                                                                                                                                            time_charge_5_all: time_charge_5_all,
-                                                                                                                                                            time_charge_week_Dept: data_total[m].time_charge_week_Dept,
-                                                                                                                                                            time_charge_all: time_charge_all
-                                                                                                                                                        }, {
-                                                                                                                                                            Department_id: data_total[m].Department_id,
-                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                        })
-                                                                                                                                                        .success(function(data_success1) {
-
-                                                                                                                                                            flag5++;
-                                                                                                                                                            if (flag5 == data_line_count.length) {
-                                                                                                                                                                //success
-                                                                                                                                                                //console.log("success")
-                                                                                                                                                                db.sequelize.query(sql_get_total)
-                                                                                                                                                                    .success(function(totals) {
-                                                                                                                                                                        for (var g = 0; g < totals.length; g++) {
-                                                                                                                                                                            db.time_activity_report.update({
-                                                                                                                                                                                    per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                }, {
-                                                                                                                                                                                    Department_id: totals[g].Department_id,
-                                                                                                                                                                                    Employee_id: totals[g].Employee_id,
-                                                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                                                })
-                                                                                                                                                                                .success(function(success) {
-                                                                                                                                                                                    flag6++;
-                                                                                                                                                                                    if (flag6 == totals.length) {
-                                                                                                                                                                                        res.json({
-                                                                                                                                                                                            status: "success"
-                                                                                                                                                                                        });
-                                                                                                                                                                                        return;
-                                                                                                                                                                                    }
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "error"
-                                                                                                                                                                                    });
-                                                                                                                                                                                    return;
-                                                                                                                                                                                })
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
-                                                                                                                                                            }
-                                                                                                                                                        })
-                                                                                                                                                        .error(function(err) {
-                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                            res.json({
-                                                                                                                                                                status: "error"
-                                                                                                                                                            });
-                                                                                                                                                            return;
-                                                                                                                                                        })
-                                                                                                                                                }
-                                                                                                                                            }
-                                                                                                                                        })
-                                                                                                                                }
-
-
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR :" + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            })
-                                                                                                                    } else if (data_get_data_time_activity_report[b].activity_id == 3) {
-                                                                                                                        db.time_activity_report.update({
-                                                                                                                                time_charge_3: data_get_data_time_activity_report[b].time_charge_by_activity_id
-                                                                                                                            }, {
-                                                                                                                                Employee_id: data_get_data_time_activity_report[b].Employee_id,
-                                                                                                                                Department_id: data_get_data_time_activity_report[b].Department_id,
-                                                                                                                                user_id: info.USER_ID
-                                                                                                                            })
-                                                                                                                            .success(function(data_success) {
-
-                                                                                                                                flag4++;
-
-                                                                                                                                if (flag4 == data_get_data_time_activity_report.length) {
-                                                                                                                                    db.sequelize.query(sql_get_data_total)
-                                                                                                                                        .success(function(data_total) {
-                                                                                                                                            for (var f = 0; f < data_total.length; f++) {
-                                                                                                                                                time_charge_1_all += data_total[f].time_charge_1_Dept;
-                                                                                                                                                time_charge_2_all += data_total[f].time_charge_2_Dept;
-                                                                                                                                                time_charge_3_all += data_total[f].time_charge_3_Dept;
-                                                                                                                                                time_charge_4_all += data_total[f].time_charge_4_Dept;
-                                                                                                                                                time_charge_5_all += data_total[f].time_charge_5_Dept;
-                                                                                                                                                time_charge_all += data_total[f].time_charge_week_Dept;
-                                                                                                                                            }
-                                                                                                                                            for (var c = 0; c < data_line_count.length; c++) {
-                                                                                                                                                for (var m = 0; m < data_total.length; m++) {
-                                                                                                                                                    db.time_activity_report.update({
-                                                                                                                                                            time_charge_1_Dept: data_total[m].time_charge_1_Dept,
-                                                                                                                                                            time_charge_1_all: time_charge_1_all,
-                                                                                                                                                            time_charge_2_Dept: data_total[m].time_charge_2_Dept,
-                                                                                                                                                            time_charge_2_all: time_charge_2_all,
-                                                                                                                                                            time_charge_3_Dept: data_total[m].time_charge_3_Dept,
-                                                                                                                                                            time_charge_3_all: time_charge_3_all,
-                                                                                                                                                            time_charge_4_Dept: data_total[m].time_charge_4_Dept,
-                                                                                                                                                            time_charge_4_all: time_charge_4_all,
-                                                                                                                                                            time_charge_5_Dept: data_total[m].time_charge_5_Dept,
-                                                                                                                                                            time_charge_5_all: time_charge_5_all,
-                                                                                                                                                            time_charge_week_Dept: data_total[m].time_charge_week_Dept,
-                                                                                                                                                            time_charge_all: time_charge_all
-                                                                                                                                                        }, {
-                                                                                                                                                            Department_id: data_total[m].Department_id,
-                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                        })
-                                                                                                                                                        .success(function(data_success1) {
-
-                                                                                                                                                            flag5++;
-                                                                                                                                                            if (flag5 == data_line_count.length) {
-                                                                                                                                                                //success
-                                                                                                                                                                // console.log("success")
-                                                                                                                                                                db.sequelize.query(sql_get_total)
-                                                                                                                                                                    .success(function(totals) {
-                                                                                                                                                                        for (var g = 0; g < totals.length; g++) {
-                                                                                                                                                                            db.time_activity_report.update({
-                                                                                                                                                                                    per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                }, {
-                                                                                                                                                                                    Department_id: totals[g].Department_id,
-                                                                                                                                                                                    Employee_id: totals[g].Employee_id,
-                                                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                                                })
-                                                                                                                                                                                .success(function(success) {
-                                                                                                                                                                                    flag6++;
-                                                                                                                                                                                    if (flag6 == totals.length) {
-                                                                                                                                                                                        res.json({
-                                                                                                                                                                                            status: "success"
-                                                                                                                                                                                        });
-                                                                                                                                                                                        return;
-                                                                                                                                                                                    }
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "error"
-                                                                                                                                                                                    });
-                                                                                                                                                                                    return;
-                                                                                                                                                                                })
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
-                                                                                                                                                            }
-                                                                                                                                                        })
-                                                                                                                                                        .error(function(err) {
-                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                            res.json({
-                                                                                                                                                                status: "error"
-                                                                                                                                                            });
-                                                                                                                                                            return;
-                                                                                                                                                        })
-                                                                                                                                                }
-                                                                                                                                            }
-                                                                                                                                        })
-                                                                                                                                }
-
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR :" + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            })
-                                                                                                                    } else if (data_get_data_time_activity_report[b].activity_id == 4) {
-                                                                                                                        db.time_activity_report.update({
-                                                                                                                                time_charge_4: data_get_data_time_activity_report[b].time_charge_by_activity_id
-                                                                                                                            }, {
-                                                                                                                                Employee_id: data_get_data_time_activity_report[b].Employee_id,
-                                                                                                                                Department_id: data_get_data_time_activity_report[b].Department_id,
-                                                                                                                                user_id: info.USER_ID
-                                                                                                                            })
-                                                                                                                            .success(function(data_success) {
-
-                                                                                                                                flag4++;
-                                                                                                                                if (flag4 == data_get_data_time_activity_report.length) {
-                                                                                                                                    db.sequelize.query(sql_get_data_total)
-                                                                                                                                        .success(function(data_total) {
-                                                                                                                                            for (var f = 0; f < data_total.length; f++) {
-                                                                                                                                                time_charge_1_all += data_total[f].time_charge_1_Dept;
-                                                                                                                                                time_charge_2_all += data_total[f].time_charge_2_Dept;
-                                                                                                                                                time_charge_3_all += data_total[f].time_charge_3_Dept;
-                                                                                                                                                time_charge_4_all += data_total[f].time_charge_4_Dept;
-                                                                                                                                                time_charge_5_all += data_total[f].time_charge_5_Dept;
-                                                                                                                                                time_charge_all += data_total[f].time_charge_week_Dept;
-                                                                                                                                            }
-                                                                                                                                            for (var c = 0; c < data_line_count.length; c++) {
-                                                                                                                                                for (var m = 0; m < data_total.length; m++) {
-                                                                                                                                                    db.time_activity_report.update({
-                                                                                                                                                            time_charge_1_Dept: data_total[m].time_charge_1_Dept,
-                                                                                                                                                            time_charge_1_all: time_charge_1_all,
-                                                                                                                                                            time_charge_2_Dept: data_total[m].time_charge_2_Dept,
-                                                                                                                                                            time_charge_2_all: time_charge_2_all,
-                                                                                                                                                            time_charge_3_Dept: data_total[m].time_charge_3_Dept,
-                                                                                                                                                            time_charge_3_all: time_charge_3_all,
-                                                                                                                                                            time_charge_4_Dept: data_total[m].time_charge_4_Dept,
-                                                                                                                                                            time_charge_4_all: time_charge_4_all,
-                                                                                                                                                            time_charge_5_Dept: data_total[m].time_charge_5_Dept,
-                                                                                                                                                            time_charge_5_all: time_charge_5_all,
-                                                                                                                                                            time_charge_week_Dept: data_total[m].time_charge_week_Dept,
-                                                                                                                                                            time_charge_all: time_charge_all
-                                                                                                                                                        }, {
-                                                                                                                                                            Department_id: data_total[m].Department_id,
-                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                        })
-                                                                                                                                                        .success(function(data_success1) {
-
-                                                                                                                                                            flag5++;
-                                                                                                                                                            if (flag5 == data_line_count.length) {
-                                                                                                                                                                //success
-                                                                                                                                                                //console.log("success")
-                                                                                                                                                                db.sequelize.query(sql_get_total)
-                                                                                                                                                                    .success(function(totals) {
-                                                                                                                                                                        for (var g = 0; g < totals.length; g++) {
-                                                                                                                                                                            db.time_activity_report.update({
-                                                                                                                                                                                    per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                }, {
-                                                                                                                                                                                    Department_id: totals[g].Department_id,
-                                                                                                                                                                                    Employee_id: totals[g].Employee_id,
-                                                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                                                })
-                                                                                                                                                                                .success(function(success) {
-                                                                                                                                                                                    flag6++;
-                                                                                                                                                                                    if (flag6 == totals.length) {
-                                                                                                                                                                                        res.json({
-                                                                                                                                                                                            status: "success"
-                                                                                                                                                                                        });
-                                                                                                                                                                                        return;
-                                                                                                                                                                                    }
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "error"
-                                                                                                                                                                                    });
-                                                                                                                                                                                    return;
-                                                                                                                                                                                })
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
-                                                                                                                                                            }
-                                                                                                                                                        })
-                                                                                                                                                        .error(function(err) {
-                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                            res.json({
-                                                                                                                                                                status: "error"
-                                                                                                                                                            });
-                                                                                                                                                            return;
-                                                                                                                                                        })
-                                                                                                                                                }
-                                                                                                                                            }
-                                                                                                                                        })
-                                                                                                                                }
-
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR :" + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            })
-                                                                                                                    } else if (data_get_data_time_activity_report[b].activity_id == 5) {
-                                                                                                                        db.time_activity_report.update({
-                                                                                                                                time_charge_5: data_get_data_time_activity_report[b].time_charge_by_activity_id
-                                                                                                                            }, {
-                                                                                                                                Employee_id: data_get_data_time_activity_report[b].Employee_id,
-                                                                                                                                Department_id: data_get_data_time_activity_report[b].Department_id,
-                                                                                                                                user_id: info.USER_ID
-                                                                                                                            })
-                                                                                                                            .success(function(data_success) {
-
-                                                                                                                                flag4++;
-                                                                                                                                if (flag4 == data_get_data_time_activity_report.length) {
-                                                                                                                                    db.sequelize.query(sql_get_data_total)
-                                                                                                                                        .success(function(data_total) {
-                                                                                                                                            for (var f = 0; f < data_total.length; f++) {
-                                                                                                                                                time_charge_1_all += data_total[f].time_charge_1_Dept;
-                                                                                                                                                time_charge_2_all += data_total[f].time_charge_2_Dept;
-                                                                                                                                                time_charge_3_all += data_total[f].time_charge_3_Dept;
-                                                                                                                                                time_charge_4_all += data_total[f].time_charge_4_Dept;
-                                                                                                                                                time_charge_5_all += data_total[f].time_charge_5_Dept;
-                                                                                                                                                time_charge_all += data_total[f].time_charge_week_Dept;
-                                                                                                                                            }
-                                                                                                                                            for (var c = 0; c < data_line_count.length; c++) {
-                                                                                                                                                for (var m = 0; m < data_total.length; m++) {
-                                                                                                                                                    db.time_activity_report.update({
-                                                                                                                                                            time_charge_1_Dept: data_total[m].time_charge_1_Dept,
-                                                                                                                                                            time_charge_1_all: time_charge_1_all,
-                                                                                                                                                            time_charge_2_Dept: data_total[m].time_charge_2_Dept,
-                                                                                                                                                            time_charge_2_all: time_charge_2_all,
-                                                                                                                                                            time_charge_3_Dept: data_total[m].time_charge_3_Dept,
-                                                                                                                                                            time_charge_3_all: time_charge_3_all,
-                                                                                                                                                            time_charge_4_Dept: data_total[m].time_charge_4_Dept,
-                                                                                                                                                            time_charge_4_all: time_charge_4_all,
-                                                                                                                                                            time_charge_5_Dept: data_total[m].time_charge_5_Dept,
-                                                                                                                                                            time_charge_5_all: time_charge_5_all,
-                                                                                                                                                            time_charge_week_Dept: data_total[m].time_charge_week_Dept,
-                                                                                                                                                            time_charge_all: time_charge_all
-                                                                                                                                                        }, {
-                                                                                                                                                            Department_id: data_total[m].Department_id,
-                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                        })
-                                                                                                                                                        .success(function(data_success1) {
-
-                                                                                                                                                            flag5++;
-                                                                                                                                                            if (flag5 == data_line_count.length) {
-                                                                                                                                                                //success
-                                                                                                                                                                //console.log("success")
-                                                                                                                                                                db.sequelize.query(sql_get_total)
-                                                                                                                                                                    .success(function(totals) {
-                                                                                                                                                                        for (var g = 0; g < totals.length; g++) {
-                                                                                                                                                                            db.time_activity_report.update({
-                                                                                                                                                                                    per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                    per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                                    per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                                }, {
-                                                                                                                                                                                    Department_id: totals[g].Department_id,
-                                                                                                                                                                                    Employee_id: totals[g].Employee_id,
-                                                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                                                })
-                                                                                                                                                                                .success(function(success) {
-                                                                                                                                                                                    flag6++;
-                                                                                                                                                                                    if (flag6 == totals.length) {
-                                                                                                                                                                                        res.json({
-                                                                                                                                                                                            status: "success"
-                                                                                                                                                                                        });
-                                                                                                                                                                                        return;
-                                                                                                                                                                                    }
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "error"
-                                                                                                                                                                                    });
-                                                                                                                                                                                    return;
-                                                                                                                                                                                })
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
-                                                                                                                                                            }
-                                                                                                                                                        })
-                                                                                                                                                        .error(function(err) {
-                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                            res.json({
-                                                                                                                                                                status: "error"
-                                                                                                                                                            });
-                                                                                                                                                            return;
-                                                                                                                                                        })
-                                                                                                                                                }
-                                                                                                                                            }
-                                                                                                                                        })
-                                                                                                                                }
-
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR :" + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            })
-                                                                                                                    } else {
-                                                                                                                        flag4++;
-                                                                                                                        if (flag4 == data_get_data_time_activity_report.length) {
-                                                                                                                            db.sequelize.query(sql_get_data_total)
-                                                                                                                                .success(function(data_total) {
-                                                                                                                                    for (var f = 0; f < data_total.length; f++) {
-                                                                                                                                        time_charge_1_all += data_total[f].time_charge_1_Dept;
-                                                                                                                                        time_charge_2_all += data_total[f].time_charge_2_Dept;
-                                                                                                                                        time_charge_3_all += data_total[f].time_charge_3_Dept;
-                                                                                                                                        time_charge_4_all += data_total[f].time_charge_4_Dept;
-                                                                                                                                        time_charge_5_all += data_total[f].time_charge_5_Dept;
-                                                                                                                                        time_charge_all += data_total[f].time_charge_week_Dept;
-                                                                                                                                    }
-                                                                                                                                    for (var c = 0; c < data_line_count.length; c++) {
-                                                                                                                                        for (var m = 0; m < data_total.length; m++) {
-                                                                                                                                            db.time_activity_report.update({
-                                                                                                                                                    time_charge_1_Dept: data_total[m].time_charge_1_Dept,
-                                                                                                                                                    time_charge_1_all: time_charge_1_all,
-                                                                                                                                                    time_charge_2_Dept: data_total[m].time_charge_2_Dept,
-                                                                                                                                                    time_charge_2_all: time_charge_2_all,
-                                                                                                                                                    time_charge_3_Dept: data_total[m].time_charge_3_Dept,
-                                                                                                                                                    time_charge_3_all: time_charge_3_all,
-                                                                                                                                                    time_charge_4_Dept: data_total[m].time_charge_4_Dept,
-                                                                                                                                                    time_charge_4_all: time_charge_4_all,
-                                                                                                                                                    time_charge_5_Dept: data_total[m].time_charge_5_Dept,
-                                                                                                                                                    time_charge_5_all: time_charge_5_all,
-                                                                                                                                                    time_charge_week_Dept: data_total[m].time_charge_week_Dept,
-                                                                                                                                                    time_charge_all: time_charge_all
-                                                                                                                                                }, {
-                                                                                                                                                    Department_id: data_total[m].Department_id,
-                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                })
-                                                                                                                                                .success(function(data_success1) {
-
-                                                                                                                                                    flag5++;
-                                                                                                                                                    if (flag5 == data_line_count.length) {
-                                                                                                                                                        //success
-                                                                                                                                                        //console.log("success")
-                                                                                                                                                        db.sequelize.query(sql_get_total)
-                                                                                                                                                            .success(function(totals) {
-                                                                                                                                                                for (var g = 0; g < totals.length; g++) {
-                                                                                                                                                                    db.time_activity_report.update({
-                                                                                                                                                                            per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                            per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                            per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                            per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                            per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                            per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                            per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                            per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                            per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                            per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                            per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                            per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                            per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
-                                                                                                                                                                            per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                            per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                            per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                                                            per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                                        }, {
-                                                                                                                                                                            Department_id: totals[g].Department_id,
-                                                                                                                                                                            Employee_id: totals[g].Employee_id,
-                                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                                        })
-                                                                                                                                                                        .success(function(success) {
-                                                                                                                                                                            flag6++;
-                                                                                                                                                                            if (flag6 == totals.length) {
-                                                                                                                                                                                res.json({
-                                                                                                                                                                                    status: "success"
-                                                                                                                                                                                });
-                                                                                                                                                                                return;
+                                                                                                                                                                                    })
                                                                                                                                                                             }
                                                                                                                                                                         })
                                                                                                                                                                         .error(function(err) {
@@ -4881,32 +4323,636 @@ module.exports = {
                                                                                                                                                                 return;
                                                                                                                                                             })
                                                                                                                                                     }
-                                                                                                                                                })
-                                                                                                                                                .error(function(err) {
-                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                    res.json({
-                                                                                                                                                        status: "error"
-                                                                                                                                                    });
-                                                                                                                                                    return;
-                                                                                                                                                })
-                                                                                                                                        }
+                                                                                                                                                }
+                                                                                                                                            })
                                                                                                                                     }
+
+
                                                                                                                                 })
+                                                                                                                                .error(function(err) {
+                                                                                                                                    console.log("*****ERROR :" + err + " *****");
+                                                                                                                                    res.json({
+                                                                                                                                        status: "error"
+                                                                                                                                    });
+                                                                                                                                    return;
+                                                                                                                                })
+                                                                                                                        } else if (data_get_data_time_activity_report[b].activity_id == 2) {
+                                                                                                                            db.time_activity_report.update({
+                                                                                                                                    time_charge_2: data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                                                }, {
+                                                                                                                                    Employee_id: data_get_data_time_activity_report[b].Employee_id,
+                                                                                                                                    Department_id: data_get_data_time_activity_report[b].Department_id,
+                                                                                                                                    user_id: info.USER_ID
+                                                                                                                                })
+                                                                                                                                .success(function(data_success) {
+
+                                                                                                                                    flag4++;
+
+                                                                                                                                    if (flag4 == data_get_data_time_activity_report.length) {
+                                                                                                                                        db.sequelize.query(sql_get_data_total)
+                                                                                                                                            .success(function(data_total) {
+                                                                                                                                                for (var f = 0; f < data_total.length; f++) {
+                                                                                                                                                    time_charge_1_all += data_total[f].time_charge_1_Dept;
+                                                                                                                                                    time_charge_2_all += data_total[f].time_charge_2_Dept;
+                                                                                                                                                    time_charge_3_all += data_total[f].time_charge_3_Dept;
+                                                                                                                                                    time_charge_4_all += data_total[f].time_charge_4_Dept;
+                                                                                                                                                    time_charge_5_all += data_total[f].time_charge_5_Dept;
+                                                                                                                                                    time_charge_all += data_total[f].time_charge_week_Dept;
+                                                                                                                                                }
+                                                                                                                                                for (var c = 0; c < data_line_count.length; c++) {
+                                                                                                                                                    for (var m = 0; m < data_total.length; m++) {
+                                                                                                                                                        db.time_activity_report.update({
+                                                                                                                                                                time_charge_1_Dept: data_total[m].time_charge_1_Dept,
+                                                                                                                                                                time_charge_1_all: time_charge_1_all,
+                                                                                                                                                                time_charge_2_Dept: data_total[m].time_charge_2_Dept,
+                                                                                                                                                                time_charge_2_all: time_charge_2_all,
+                                                                                                                                                                time_charge_3_Dept: data_total[m].time_charge_3_Dept,
+                                                                                                                                                                time_charge_3_all: time_charge_3_all,
+                                                                                                                                                                time_charge_4_Dept: data_total[m].time_charge_4_Dept,
+                                                                                                                                                                time_charge_4_all: time_charge_4_all,
+                                                                                                                                                                time_charge_5_Dept: data_total[m].time_charge_5_Dept,
+                                                                                                                                                                time_charge_5_all: time_charge_5_all,
+                                                                                                                                                                time_charge_week_Dept: data_total[m].time_charge_week_Dept,
+                                                                                                                                                                time_charge_all: time_charge_all
+                                                                                                                                                            }, {
+                                                                                                                                                                Department_id: data_total[m].Department_id,
+                                                                                                                                                                user_id: info.USER_ID
+                                                                                                                                                            })
+                                                                                                                                                            .success(function(data_success1) {
+
+                                                                                                                                                                flag5++;
+                                                                                                                                                                if (flag5 == data_line_count.length) {
+                                                                                                                                                                    //success
+                                                                                                                                                                    //console.log("success")
+                                                                                                                                                                    db.sequelize.query(sql_get_total)
+                                                                                                                                                                        .success(function(totals) {
+                                                                                                                                                                            for (var g = 0; g < totals.length; g++) {
+                                                                                                                                                                                db.time_activity_report.update({
+                                                                                                                                                                                        per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                    }, {
+                                                                                                                                                                                        Department_id: totals[g].Department_id,
+                                                                                                                                                                                        Employee_id: totals[g].Employee_id,
+                                                                                                                                                                                        user_id: info.USER_ID
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .success(function(success) {
+                                                                                                                                                                                        flag6++;
+                                                                                                                                                                                        if (flag6 == totals.length) {
+                                                                                                                                                                                            res.json({
+                                                                                                                                                                                                status: "success"
+                                                                                                                                                                                            });
+                                                                                                                                                                                            return;
+                                                                                                                                                                                        }
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .error(function(err) {
+                                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                                        res.json({
+                                                                                                                                                                                            status: "error"
+                                                                                                                                                                                        });
+                                                                                                                                                                                        return;
+                                                                                                                                                                                    })
+                                                                                                                                                                            }
+                                                                                                                                                                        })
+                                                                                                                                                                        .error(function(err) {
+                                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                            res.json({
+                                                                                                                                                                                status: "error"
+                                                                                                                                                                            });
+                                                                                                                                                                            return;
+                                                                                                                                                                        })
+                                                                                                                                                                }
+                                                                                                                                                            })
+                                                                                                                                                            .error(function(err) {
+                                                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                res.json({
+                                                                                                                                                                    status: "error"
+                                                                                                                                                                });
+                                                                                                                                                                return;
+                                                                                                                                                            })
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            })
+                                                                                                                                    }
+
+
+                                                                                                                                })
+                                                                                                                                .error(function(err) {
+                                                                                                                                    console.log("*****ERROR :" + err + " *****");
+                                                                                                                                    res.json({
+                                                                                                                                        status: "error"
+                                                                                                                                    });
+                                                                                                                                    return;
+                                                                                                                                })
+                                                                                                                        } else if (data_get_data_time_activity_report[b].activity_id == 3) {
+                                                                                                                            db.time_activity_report.update({
+                                                                                                                                    time_charge_3: data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                                                }, {
+                                                                                                                                    Employee_id: data_get_data_time_activity_report[b].Employee_id,
+                                                                                                                                    Department_id: data_get_data_time_activity_report[b].Department_id,
+                                                                                                                                    user_id: info.USER_ID
+                                                                                                                                })
+                                                                                                                                .success(function(data_success) {
+
+                                                                                                                                    flag4++;
+
+                                                                                                                                    if (flag4 == data_get_data_time_activity_report.length) {
+                                                                                                                                        db.sequelize.query(sql_get_data_total)
+                                                                                                                                            .success(function(data_total) {
+                                                                                                                                                for (var f = 0; f < data_total.length; f++) {
+                                                                                                                                                    time_charge_1_all += data_total[f].time_charge_1_Dept;
+                                                                                                                                                    time_charge_2_all += data_total[f].time_charge_2_Dept;
+                                                                                                                                                    time_charge_3_all += data_total[f].time_charge_3_Dept;
+                                                                                                                                                    time_charge_4_all += data_total[f].time_charge_4_Dept;
+                                                                                                                                                    time_charge_5_all += data_total[f].time_charge_5_Dept;
+                                                                                                                                                    time_charge_all += data_total[f].time_charge_week_Dept;
+                                                                                                                                                }
+                                                                                                                                                for (var c = 0; c < data_line_count.length; c++) {
+                                                                                                                                                    for (var m = 0; m < data_total.length; m++) {
+                                                                                                                                                        db.time_activity_report.update({
+                                                                                                                                                                time_charge_1_Dept: data_total[m].time_charge_1_Dept,
+                                                                                                                                                                time_charge_1_all: time_charge_1_all,
+                                                                                                                                                                time_charge_2_Dept: data_total[m].time_charge_2_Dept,
+                                                                                                                                                                time_charge_2_all: time_charge_2_all,
+                                                                                                                                                                time_charge_3_Dept: data_total[m].time_charge_3_Dept,
+                                                                                                                                                                time_charge_3_all: time_charge_3_all,
+                                                                                                                                                                time_charge_4_Dept: data_total[m].time_charge_4_Dept,
+                                                                                                                                                                time_charge_4_all: time_charge_4_all,
+                                                                                                                                                                time_charge_5_Dept: data_total[m].time_charge_5_Dept,
+                                                                                                                                                                time_charge_5_all: time_charge_5_all,
+                                                                                                                                                                time_charge_week_Dept: data_total[m].time_charge_week_Dept,
+                                                                                                                                                                time_charge_all: time_charge_all
+                                                                                                                                                            }, {
+                                                                                                                                                                Department_id: data_total[m].Department_id,
+                                                                                                                                                                user_id: info.USER_ID
+                                                                                                                                                            })
+                                                                                                                                                            .success(function(data_success1) {
+
+                                                                                                                                                                flag5++;
+                                                                                                                                                                if (flag5 == data_line_count.length) {
+                                                                                                                                                                    //success
+                                                                                                                                                                    // console.log("success")
+                                                                                                                                                                    db.sequelize.query(sql_get_total)
+                                                                                                                                                                        .success(function(totals) {
+                                                                                                                                                                            for (var g = 0; g < totals.length; g++) {
+                                                                                                                                                                                db.time_activity_report.update({
+                                                                                                                                                                                        per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                    }, {
+                                                                                                                                                                                        Department_id: totals[g].Department_id,
+                                                                                                                                                                                        Employee_id: totals[g].Employee_id,
+                                                                                                                                                                                        user_id: info.USER_ID
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .success(function(success) {
+                                                                                                                                                                                        flag6++;
+                                                                                                                                                                                        if (flag6 == totals.length) {
+                                                                                                                                                                                            res.json({
+                                                                                                                                                                                                status: "success"
+                                                                                                                                                                                            });
+                                                                                                                                                                                            return;
+                                                                                                                                                                                        }
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .error(function(err) {
+                                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                                        res.json({
+                                                                                                                                                                                            status: "error"
+                                                                                                                                                                                        });
+                                                                                                                                                                                        return;
+                                                                                                                                                                                    })
+                                                                                                                                                                            }
+                                                                                                                                                                        })
+                                                                                                                                                                        .error(function(err) {
+                                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                            res.json({
+                                                                                                                                                                                status: "error"
+                                                                                                                                                                            });
+                                                                                                                                                                            return;
+                                                                                                                                                                        })
+                                                                                                                                                                }
+                                                                                                                                                            })
+                                                                                                                                                            .error(function(err) {
+                                                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                res.json({
+                                                                                                                                                                    status: "error"
+                                                                                                                                                                });
+                                                                                                                                                                return;
+                                                                                                                                                            })
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            })
+                                                                                                                                    }
+
+                                                                                                                                })
+                                                                                                                                .error(function(err) {
+                                                                                                                                    console.log("*****ERROR :" + err + " *****");
+                                                                                                                                    res.json({
+                                                                                                                                        status: "error"
+                                                                                                                                    });
+                                                                                                                                    return;
+                                                                                                                                })
+                                                                                                                        } else if (data_get_data_time_activity_report[b].activity_id == 4) {
+                                                                                                                            db.time_activity_report.update({
+                                                                                                                                    time_charge_4: data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                                                }, {
+                                                                                                                                    Employee_id: data_get_data_time_activity_report[b].Employee_id,
+                                                                                                                                    Department_id: data_get_data_time_activity_report[b].Department_id,
+                                                                                                                                    user_id: info.USER_ID
+                                                                                                                                })
+                                                                                                                                .success(function(data_success) {
+
+                                                                                                                                    flag4++;
+                                                                                                                                    if (flag4 == data_get_data_time_activity_report.length) {
+                                                                                                                                        db.sequelize.query(sql_get_data_total)
+                                                                                                                                            .success(function(data_total) {
+                                                                                                                                                for (var f = 0; f < data_total.length; f++) {
+                                                                                                                                                    time_charge_1_all += data_total[f].time_charge_1_Dept;
+                                                                                                                                                    time_charge_2_all += data_total[f].time_charge_2_Dept;
+                                                                                                                                                    time_charge_3_all += data_total[f].time_charge_3_Dept;
+                                                                                                                                                    time_charge_4_all += data_total[f].time_charge_4_Dept;
+                                                                                                                                                    time_charge_5_all += data_total[f].time_charge_5_Dept;
+                                                                                                                                                    time_charge_all += data_total[f].time_charge_week_Dept;
+                                                                                                                                                }
+                                                                                                                                                for (var c = 0; c < data_line_count.length; c++) {
+                                                                                                                                                    for (var m = 0; m < data_total.length; m++) {
+                                                                                                                                                        db.time_activity_report.update({
+                                                                                                                                                                time_charge_1_Dept: data_total[m].time_charge_1_Dept,
+                                                                                                                                                                time_charge_1_all: time_charge_1_all,
+                                                                                                                                                                time_charge_2_Dept: data_total[m].time_charge_2_Dept,
+                                                                                                                                                                time_charge_2_all: time_charge_2_all,
+                                                                                                                                                                time_charge_3_Dept: data_total[m].time_charge_3_Dept,
+                                                                                                                                                                time_charge_3_all: time_charge_3_all,
+                                                                                                                                                                time_charge_4_Dept: data_total[m].time_charge_4_Dept,
+                                                                                                                                                                time_charge_4_all: time_charge_4_all,
+                                                                                                                                                                time_charge_5_Dept: data_total[m].time_charge_5_Dept,
+                                                                                                                                                                time_charge_5_all: time_charge_5_all,
+                                                                                                                                                                time_charge_week_Dept: data_total[m].time_charge_week_Dept,
+                                                                                                                                                                time_charge_all: time_charge_all
+                                                                                                                                                            }, {
+                                                                                                                                                                Department_id: data_total[m].Department_id,
+                                                                                                                                                                user_id: info.USER_ID
+                                                                                                                                                            })
+                                                                                                                                                            .success(function(data_success1) {
+
+                                                                                                                                                                flag5++;
+                                                                                                                                                                if (flag5 == data_line_count.length) {
+                                                                                                                                                                    //success
+                                                                                                                                                                    //console.log("success")
+                                                                                                                                                                    db.sequelize.query(sql_get_total)
+                                                                                                                                                                        .success(function(totals) {
+                                                                                                                                                                            for (var g = 0; g < totals.length; g++) {
+                                                                                                                                                                                db.time_activity_report.update({
+                                                                                                                                                                                        per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                    }, {
+                                                                                                                                                                                        Department_id: totals[g].Department_id,
+                                                                                                                                                                                        Employee_id: totals[g].Employee_id,
+                                                                                                                                                                                        user_id: info.USER_ID
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .success(function(success) {
+                                                                                                                                                                                        flag6++;
+                                                                                                                                                                                        if (flag6 == totals.length) {
+                                                                                                                                                                                            res.json({
+                                                                                                                                                                                                status: "success"
+                                                                                                                                                                                            });
+                                                                                                                                                                                            return;
+                                                                                                                                                                                        }
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .error(function(err) {
+                                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                                        res.json({
+                                                                                                                                                                                            status: "error"
+                                                                                                                                                                                        });
+                                                                                                                                                                                        return;
+                                                                                                                                                                                    })
+                                                                                                                                                                            }
+                                                                                                                                                                        })
+                                                                                                                                                                        .error(function(err) {
+                                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                            res.json({
+                                                                                                                                                                                status: "error"
+                                                                                                                                                                            });
+                                                                                                                                                                            return;
+                                                                                                                                                                        })
+                                                                                                                                                                }
+                                                                                                                                                            })
+                                                                                                                                                            .error(function(err) {
+                                                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                res.json({
+                                                                                                                                                                    status: "error"
+                                                                                                                                                                });
+                                                                                                                                                                return;
+                                                                                                                                                            })
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            })
+                                                                                                                                    }
+
+                                                                                                                                })
+                                                                                                                                .error(function(err) {
+                                                                                                                                    console.log("*****ERROR :" + err + " *****");
+                                                                                                                                    res.json({
+                                                                                                                                        status: "error"
+                                                                                                                                    });
+                                                                                                                                    return;
+                                                                                                                                })
+                                                                                                                        } else if (data_get_data_time_activity_report[b].activity_id == 5) {
+                                                                                                                            db.time_activity_report.update({
+                                                                                                                                    time_charge_5: data_get_data_time_activity_report[b].time_charge_by_activity_id
+                                                                                                                                }, {
+                                                                                                                                    Employee_id: data_get_data_time_activity_report[b].Employee_id,
+                                                                                                                                    Department_id: data_get_data_time_activity_report[b].Department_id,
+                                                                                                                                    user_id: info.USER_ID
+                                                                                                                                })
+                                                                                                                                .success(function(data_success) {
+
+                                                                                                                                    flag4++;
+                                                                                                                                    if (flag4 == data_get_data_time_activity_report.length) {
+                                                                                                                                        db.sequelize.query(sql_get_data_total)
+                                                                                                                                            .success(function(data_total) {
+                                                                                                                                                for (var f = 0; f < data_total.length; f++) {
+                                                                                                                                                    time_charge_1_all += data_total[f].time_charge_1_Dept;
+                                                                                                                                                    time_charge_2_all += data_total[f].time_charge_2_Dept;
+                                                                                                                                                    time_charge_3_all += data_total[f].time_charge_3_Dept;
+                                                                                                                                                    time_charge_4_all += data_total[f].time_charge_4_Dept;
+                                                                                                                                                    time_charge_5_all += data_total[f].time_charge_5_Dept;
+                                                                                                                                                    time_charge_all += data_total[f].time_charge_week_Dept;
+                                                                                                                                                }
+                                                                                                                                                for (var c = 0; c < data_line_count.length; c++) {
+                                                                                                                                                    for (var m = 0; m < data_total.length; m++) {
+                                                                                                                                                        db.time_activity_report.update({
+                                                                                                                                                                time_charge_1_Dept: data_total[m].time_charge_1_Dept,
+                                                                                                                                                                time_charge_1_all: time_charge_1_all,
+                                                                                                                                                                time_charge_2_Dept: data_total[m].time_charge_2_Dept,
+                                                                                                                                                                time_charge_2_all: time_charge_2_all,
+                                                                                                                                                                time_charge_3_Dept: data_total[m].time_charge_3_Dept,
+                                                                                                                                                                time_charge_3_all: time_charge_3_all,
+                                                                                                                                                                time_charge_4_Dept: data_total[m].time_charge_4_Dept,
+                                                                                                                                                                time_charge_4_all: time_charge_4_all,
+                                                                                                                                                                time_charge_5_Dept: data_total[m].time_charge_5_Dept,
+                                                                                                                                                                time_charge_5_all: time_charge_5_all,
+                                                                                                                                                                time_charge_week_Dept: data_total[m].time_charge_week_Dept,
+                                                                                                                                                                time_charge_all: time_charge_all
+                                                                                                                                                            }, {
+                                                                                                                                                                Department_id: data_total[m].Department_id,
+                                                                                                                                                                user_id: info.USER_ID
+                                                                                                                                                            })
+                                                                                                                                                            .success(function(data_success1) {
+
+                                                                                                                                                                flag5++;
+                                                                                                                                                                if (flag5 == data_line_count.length) {
+                                                                                                                                                                    //success
+                                                                                                                                                                    //console.log("success")
+                                                                                                                                                                    db.sequelize.query(sql_get_total)
+                                                                                                                                                                        .success(function(totals) {
+                                                                                                                                                                            for (var g = 0; g < totals.length; g++) {
+                                                                                                                                                                                db.time_activity_report.update({
+                                                                                                                                                                                        per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                        per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                        per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                    }, {
+                                                                                                                                                                                        Department_id: totals[g].Department_id,
+                                                                                                                                                                                        Employee_id: totals[g].Employee_id,
+                                                                                                                                                                                        user_id: info.USER_ID
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .success(function(success) {
+                                                                                                                                                                                        flag6++;
+                                                                                                                                                                                        if (flag6 == totals.length) {
+                                                                                                                                                                                            res.json({
+                                                                                                                                                                                                status: "success"
+                                                                                                                                                                                            });
+                                                                                                                                                                                            return;
+                                                                                                                                                                                        }
+                                                                                                                                                                                    })
+                                                                                                                                                                                    .error(function(err) {
+                                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                                        res.json({
+                                                                                                                                                                                            status: "error"
+                                                                                                                                                                                        });
+                                                                                                                                                                                        return;
+                                                                                                                                                                                    })
+                                                                                                                                                                            }
+                                                                                                                                                                        })
+                                                                                                                                                                        .error(function(err) {
+                                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                            res.json({
+                                                                                                                                                                                status: "error"
+                                                                                                                                                                            });
+                                                                                                                                                                            return;
+                                                                                                                                                                        })
+                                                                                                                                                                }
+                                                                                                                                                            })
+                                                                                                                                                            .error(function(err) {
+                                                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                res.json({
+                                                                                                                                                                    status: "error"
+                                                                                                                                                                });
+                                                                                                                                                                return;
+                                                                                                                                                            })
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            })
+                                                                                                                                    }
+
+                                                                                                                                })
+                                                                                                                                .error(function(err) {
+                                                                                                                                    console.log("*****ERROR :" + err + " *****");
+                                                                                                                                    res.json({
+                                                                                                                                        status: "error"
+                                                                                                                                    });
+                                                                                                                                    return;
+                                                                                                                                })
+                                                                                                                        } else {
+                                                                                                                            flag4++;
+                                                                                                                            if (flag4 == data_get_data_time_activity_report.length) {
+                                                                                                                                db.sequelize.query(sql_get_data_total)
+                                                                                                                                    .success(function(data_total) {
+                                                                                                                                        for (var f = 0; f < data_total.length; f++) {
+                                                                                                                                            time_charge_1_all += data_total[f].time_charge_1_Dept;
+                                                                                                                                            time_charge_2_all += data_total[f].time_charge_2_Dept;
+                                                                                                                                            time_charge_3_all += data_total[f].time_charge_3_Dept;
+                                                                                                                                            time_charge_4_all += data_total[f].time_charge_4_Dept;
+                                                                                                                                            time_charge_5_all += data_total[f].time_charge_5_Dept;
+                                                                                                                                            time_charge_all += data_total[f].time_charge_week_Dept;
+                                                                                                                                        }
+                                                                                                                                        for (var c = 0; c < data_line_count.length; c++) {
+                                                                                                                                            for (var m = 0; m < data_total.length; m++) {
+                                                                                                                                                db.time_activity_report.update({
+                                                                                                                                                        time_charge_1_Dept: data_total[m].time_charge_1_Dept,
+                                                                                                                                                        time_charge_1_all: time_charge_1_all,
+                                                                                                                                                        time_charge_2_Dept: data_total[m].time_charge_2_Dept,
+                                                                                                                                                        time_charge_2_all: time_charge_2_all,
+                                                                                                                                                        time_charge_3_Dept: data_total[m].time_charge_3_Dept,
+                                                                                                                                                        time_charge_3_all: time_charge_3_all,
+                                                                                                                                                        time_charge_4_Dept: data_total[m].time_charge_4_Dept,
+                                                                                                                                                        time_charge_4_all: time_charge_4_all,
+                                                                                                                                                        time_charge_5_Dept: data_total[m].time_charge_5_Dept,
+                                                                                                                                                        time_charge_5_all: time_charge_5_all,
+                                                                                                                                                        time_charge_week_Dept: data_total[m].time_charge_week_Dept,
+                                                                                                                                                        time_charge_all: time_charge_all
+                                                                                                                                                    }, {
+                                                                                                                                                        Department_id: data_total[m].Department_id,
+                                                                                                                                                        user_id: info.USER_ID
+                                                                                                                                                    })
+                                                                                                                                                    .success(function(data_success1) {
+
+                                                                                                                                                        flag5++;
+                                                                                                                                                        if (flag5 == data_line_count.length) {
+                                                                                                                                                            //success
+                                                                                                                                                            //console.log("success")
+                                                                                                                                                            db.sequelize.query(sql_get_total)
+                                                                                                                                                                .success(function(totals) {
+                                                                                                                                                                    for (var g = 0; g < totals.length; g++) {
+                                                                                                                                                                        db.time_activity_report.update({
+                                                                                                                                                                                per_1: ((totals[g].time_charge_1 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                per_1_Dept: ((totals[g].time_charge_1_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                per_1_all: ((totals[g].time_charge_1_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                per_2: ((totals[g].time_charge_2 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                per_2_Dept: ((totals[g].time_charge_2_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                per_2_all: ((totals[g].time_charge_2_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                per_3: ((totals[g].time_charge_3 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                per_3_Dept: ((totals[g].time_charge_3_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                per_3_all: ((totals[g].time_charge_3_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                per_4: ((totals[g].time_charge_4 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                per_4_Dept: ((totals[g].time_charge_4_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                per_4_all: ((totals[g].time_charge_4_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                per_5: ((totals[g].time_charge_5 / totals[g].time_charge_week) * 100).toFixed(2),
+                                                                                                                                                                                per_5_Dept: ((totals[g].time_charge_5_Dept / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                per_5_all: ((totals[g].time_charge_5_all / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                per_week: ((totals[g].time_charge_week / totals[g].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                                per_week_Dept: ((totals[g].time_charge_week_Dept / totals[g].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                            }, {
+                                                                                                                                                                                Department_id: totals[g].Department_id,
+                                                                                                                                                                                Employee_id: totals[g].Employee_id,
+                                                                                                                                                                                user_id: info.USER_ID
+                                                                                                                                                                            })
+                                                                                                                                                                            .success(function(success) {
+                                                                                                                                                                                flag6++;
+                                                                                                                                                                                if (flag6 == totals.length) {
+                                                                                                                                                                                    res.json({
+                                                                                                                                                                                        status: "success"
+                                                                                                                                                                                    });
+                                                                                                                                                                                    return;
+                                                                                                                                                                                }
+                                                                                                                                                                            })
+                                                                                                                                                                            .error(function(err) {
+                                                                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                                res.json({
+                                                                                                                                                                                    status: "error"
+                                                                                                                                                                                });
+                                                                                                                                                                                return;
+                                                                                                                                                                            })
+                                                                                                                                                                    }
+                                                                                                                                                                })
+                                                                                                                                                                .error(function(err) {
+                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                                    res.json({
+                                                                                                                                                                        status: "error"
+                                                                                                                                                                    });
+                                                                                                                                                                    return;
+                                                                                                                                                                })
+                                                                                                                                                        }
+                                                                                                                                                    })
+                                                                                                                                                    .error(function(err) {
+                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                        res.json({
+                                                                                                                                                            status: "error"
+                                                                                                                                                        });
+                                                                                                                                                        return;
+                                                                                                                                                    })
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    })
+                                                                                                                            }
                                                                                                                         }
+
                                                                                                                     }
 
+
                                                                                                                 }
-
-
-                                                                                                            }
-                                                                                                        })
-                                                                                                        .error(function(err) {
-                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                            res.json({
-                                                                                                                status: "error"
-                                                                                                            });
-                                                                                                            return;
-                                                                                                        })
+                                                                                                            })
+                                                                                                            .error(function(err) {
+                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                res.json({
+                                                                                                                    status: "error"
+                                                                                                                });
+                                                                                                                return;
+                                                                                                            })
+                                                                                                    }
+                                                                                                })
+                                                                                                .error(function(err){
+                                                                                                    console.log("*****ERROR: "+err+" *****");
+                                                                                                    res.json({
+                                                                                                        status:"error"
+                                                                                                    });
+                                                                                                    return;
+                                                                                                })
+                                                                                        })
+                                                                                        .error(function(err) {
+                                                                                            console.log("*****ERROR: " + err + " *****");
+                                                                                            res.json({
+                                                                                                status: "error"
+                                                                                            });
+                                                                                            return;
+                                                                                        })
+                                                                                }
                                                                                                 }
                                                                                             })
                                                                                             .error(function(err){
@@ -4916,24 +4962,27 @@ module.exports = {
                                                                                                 });
                                                                                                 return;
                                                                                             })
-                                                                                    })
-                                                                                    .error(function(err) {
-                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                        res.json({
-                                                                                            status: "error"
-                                                                                        });
-                                                                                        return;
-                                                                                    })
-                                                                            }
-                                                                        })
-                                                                        .error(function(err) {
-                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                            res.json({
-                                                                                status: "error"
-                                                                            });
-                                                                            return;
-                                                                        })
-                                                                }
+                                                                                    
+                                                                                        }
+                                                                                        co1++;
+                                                                                    }
+                                                                            })
+                                                                            .error(function(err) {
+                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                res.json({
+                                                                                    status: "error"
+                                                                                });
+                                                                                return;
+                                                                            })
+                                                                    }
+                                                                    })
+                                                                    .error(function(err){
+                                                                        console.log("*****ERROR: "+err+" *****");
+                                                                        res.json({
+                                                                            status:"error"
+                                                                        });
+                                                                        return;
+                                                                    })
                                                             })
                                                             .error(function(err) {
                                                                 console.log("*****ERROR: " + err + " *****");
