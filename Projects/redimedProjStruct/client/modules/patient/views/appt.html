@@ -1,50 +1,46 @@
-<h3 class="page-title"> Appointment List </h3>
 
-<div class="portlet box red">
-   <div class="portlet-title">
-       <div class="caption">
-            <i class="fa fa-calendar"></i>  Appointment List 
-        </div>
-        <div class="pull-right navbar-right">
-              <button  type="button" class="btn btn-default" ng-click="formRecall.open()">
-                    <i class="fa fa-plus"></i> New Recall
-              </button>
-        </div>
-    </div>
-    <div class="portlet-body">
-    	<table class="mdt-table table table-bordered">
-    		<tr>
-    			<th>#</th>
-    			<th>Appointment Time</th>
-    			<th>Doctor</th>
-    			<th>Department</th>
-    			<th>Service</th>
-    		</tr>
-    		<tr ng-repeat="item in appt_listNew">
-    			<td>{{$index + 1}}</td>
-    			<td>{{item.FROM_TIME}} - {{item.TO_TIME}}</td>
-    			<td>{{item.NAME}}</td>
-    			<td>{{item.CLINICAL_DEPT_NAME}}</td>
-    			<td>{{item.SERVICE_NAME}}</td>
-    		</tr>
-    	</table>
-    </div>
-</div>
-
-
-
-<div class="portlet box blue" ng-if="formRecall.is_show">
-   <div class="portlet-title">
-       <div class="caption">
-            <i class="fa fa-calendar"></i>  Make a recall 
-        </div>
-    </div>
-    <div class="portlet-body">
+<div class="un_body_panel_1">
+    <div class="un_body_content_left_bottom_right un-giang-padding-left-bottom" style="width:100%">
+      <div style="width:90%; margin-left: auto; margin-right: auto;">
+          <label class="un-label-header un-bgWhite un-label-title">Appointment List</label>
+          <button type="button" class="un-button-giang" ng-click="formRecall.open()">
+                        <b><i class="fa fa-plus"></i> New Recall</b>
+                    </button>
+          <div class="un-div-content un-bgXam-colBlack">
+            <div class="un-padding-15" style="background-color: #C0C0C0;">
+              <div class="row">
+                
+                    <table style="width: 100%;">
+                        <tr style="font-size: 15px; color: white;">
+                            <td style="width:15%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>#</b></div></td>
+                            <td style="width:25%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Appointment Time</b></div></td>
+                            <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Doctor</b></div></td>
+                            <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Department</b></div></td>
+                            <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Service</b></div></td>
+                        </tr>                      
+                        <tr ng-repeat="item in appt_listNew" >
+                            <td style="width:15%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot">{{$index + 1}}</div></td>
+                            <td style="width:25%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot">{{item.FROM_TIME}} - {{item.TO_TIME}}</div></td>
+                            <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot">{{item.NAME}}</div></td>
+                            <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot">{{item.CLINICAL_DEPT_NAME}}</div></td>
+                            <td style="width:20%"><div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot">{{item.SERVICE_NAME}}</div></td>
+                        </tr>
+                    </table>
+                    
+              </div>
+            </div>
+          </div>
+          <div class="un-div-content un-bgXam-colBlack" style="margin-top: 20;">
+                <div  ng-if="formRecall.is_show">
+                <div>
+                    <label class="un-label-header un-bgWhite un-label-title"><i class="fa fa-calendar"></i>  Make a recall </label>
+                </div>
+    <div class="un-padding-15" style="background-color: #C0C0C0;">
         <div class="row">
              <!-- BOOKING DATE -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <span class="field">
-                    <label for="booking-date">Booking Date</label>
+                <span class="field" style="height:60px">
+                    <label style="background-color: #708090; height:30px; font-size:15px; " for="booking-date">Booking Date</label>
                     <input ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="Booking Date" 
                         ng-change="refreshAppointment()"
                         name="booking-date" ng-model="modelObjectMap.datepicker" float-label>
@@ -54,12 +50,12 @@
 
             <!-- CHOOSE REDIMEDSITE -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <span class="field">
-                    <label for="site">Redimed Site</label>
+                <span class="field" style="height:60px">
+                    <label style="background-color: #708090; height:30px; font-size:15px;" for="site">Redimed Site</label>
                     <select ng-options="site.id as site.Site_name for site in options.redimedsites" 
                         ng-change="refreshAppointment()"
                         name="site" ng-model="modelObjectMap.site" id="site" float-label>
-                        <option value="" disabled selected>Redimed Site</option>
+                        <option  style="background-color: #708090; height:30px; font-size:15px;" value="" disabled selected>Redimed Site</option>
                     </select>
                 </span>
             </div>
@@ -67,8 +63,8 @@
 
             <!-- CHOOSE DEPT -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <span class="field">
-                    <label for="dept">Department</label>
+                <span class="field" style="height:60px">
+                    <label style="background-color: #708090; height:30px; font-size:15px;" for="dept">Department</label>
                     <select ng-options="dept.CLINICAL_DEPT_ID as dept.CLINICAL_DEPT_NAME for dept in options.departments" 
                         ng-change="refreshAppointment('department')"
                         name="dept" ng-model="modelObjectMap.dept" id="dept" float-label>
@@ -80,23 +76,20 @@
 
               <!-- CHOOSE DEPT -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <span class="field">
-                    <label for="dept">Service</label>
+                <span class="field" style="height:60px">
+                    <label style="background-color: #708090; height:30px; font-size:15px;" for="dept">Service</label>
                     <select ng-options="dept.SERVICE_ID as dept.SERVICE_NAME for dept in opt_services" 
                         name="dept" ng-model="modelObjectMap.service" id="dept" float-label>
                     </select>
                 </span>
             </div>
             <!-- END CHOOSE DEPT -->
-
-
-        </div>
+        </div>  
 
         <div class="row">
             <table class="mdt-booking-table" id="main-table">
             <thead>
                 <tr>
-                    <th class="no-border"></th>
                     <th ng-repeat="doctor in options.doctors">
                         <a ng-click="goToAppointmentDoctor(doctor)">
                             {{doctor.NAME}}
@@ -132,3 +125,13 @@
         </div>
     </div>
 </div>
+          </div>
+      </div>            
+    </div>
+
+</div>
+
+
+
+
+
