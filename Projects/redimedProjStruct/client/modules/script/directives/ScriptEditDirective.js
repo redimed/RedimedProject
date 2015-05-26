@@ -14,7 +14,7 @@ angular.module('app.loggedIn.script.directive.edit', [])
 			var user_id = $cookieStore.get('userInfo').id;
 
 			patientLoad = function(){
-				PatientService.get($stateParams.patientId)
+				PatientService.get($stateParams.patient_id)
 				.then(function(response){
 					scope.patient.item = response.data;
 				}, function(error){})
@@ -45,8 +45,8 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				var postData = angular.copy(scope.script.form); 
 
 
-				postData.Patient_id = $stateParams.patientId;
-				postData.CAL_ID = $stateParams.calId;
+				postData.Patient_id = $stateParams.patient_id;
+				postData.CAL_ID = $stateParams.cal_id;
 				postData.Last_updated_by = user_id;
 				postData.ID = $stateParams.scriptId;
 				postData.Creation_date = ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
@@ -58,7 +58,7 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				.then(function(response){
 					console.log(postData);
 					toastr.success('Edited Successfully');
-					$state.go('loggedIn.script');
+					$state.go('loggedIn.patient.script');
 				}, function(error){
 					scope.script.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.script.errors);

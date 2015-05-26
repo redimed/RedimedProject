@@ -5,13 +5,17 @@ angular.module('app.loggedIn.script', [
 
 	$stateProvider
 
-	.state('loggedIn.script', {
-		url: '/patient/:patientId/script/:calId',
-		templateUrl: 'modules/script/views/list.html',
-		controller: 'ScriptListController'
+	.state('loggedIn.patient.script', {
+		url: '/script',
+		views: {
+			'main-content': {
+				templateUrl: 'modules/script/views/list.html',
+				controller: 'ScriptListController'
+			}
+		}
 
 	})
-	.state('loggedIn.script.add', {
+	.state('loggedIn.patient.script.add', {
 		url: '/add',
 		views: {
 			'@loggedIn': {
@@ -21,7 +25,7 @@ angular.module('app.loggedIn.script', [
 		}
 
 	})
-	.state('loggedIn.script.edit', {
+	.state('loggedIn.patient.script.edit', {
 		url: '/edit/:scriptId',
 		views:{
 			'@loggedIn': {

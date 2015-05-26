@@ -1,32 +1,19 @@
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<table class="un_table_first">
 			<thead>
 				<tr>
-					<th><span>First Name</span></th>
+					<th><span class="un_span_thead">First Name</span></th>
+					<th><span class="un_span_thead">Sur Name</span></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr class="no-hover">
 					<td><input type="text" ng-model="params.filters[0].value" class="form-control" ng-change="refreshList()"></td>
-				</tr>
-				<tr ng-repeat="l in list.data" ng-click="clickRow({row: l})" style="cursor: pointer;">
-					<td>{{l.First_name}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="col-md-6">
-		<table class="un_table_last">
-			<thead>
-				<tr>
-					<th><span>Sur Name</span></th>
-				</tr>
-			</thead>
-				<tbody>
 					<td><input type="text" ng-model="params.filters[1].value" class="form-control" ng-change="refreshList()"></td>
 				</tr>
 				<tr ng-repeat="l in list.data" ng-click="clickRow({row: l})" style="cursor: pointer;">
+					<td>{{l.First_name}}</td>
 					<td>{{l.Sur_name}}</td>
 				</tr>
 			</tbody>

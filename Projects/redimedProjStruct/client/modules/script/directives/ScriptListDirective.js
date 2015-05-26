@@ -18,8 +18,9 @@ angular.module('app.loggedIn.script.directive.list', [])
 				max_size: 5,
 				scriptNum: '',
 				Medicare: '',
-				Patient_id: $stateParams.patientId,
-				CAL_ID: $stateParams.calId,
+				isEnable: '',
+				Patient_id: $stateParams.patient_id,
+				CAL_ID: $stateParams.cal_id,
 				Creation_date: 'desc'
 			}
 
@@ -81,12 +82,20 @@ angular.module('app.loggedIn.script.directive.list', [])
 
 			var add = function(){
 
-				$state.go('loggedIn.script.add');
+				$state.go('loggedIn.patient.script.add');
+
+			}
+
+			var disable = function(row){
+				
+				ScriptModel.postDisable(row).then(function(response){
+					scope.script.load();
+				}, function(error) {})
 
 			}
 
 			var edit = function(id){
-				$state.go('loggedIn.script.edit', {scriptId: id});
+				$state.go('loggedIn.patient.script.edit', {scriptId: id});
 			}
 			scope.setPage = function (page) {
 				scope.script.search.offset = (page-1)*scope.script.search.limit;
@@ -102,6 +111,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 				list: [],
 				count: 0,
 				error: '',
+				disable: function(row){ disable(row); },
 				load: function(){ load(); },
 				add: function(){ add(); },
 				edit: function(id){ edit(id); },

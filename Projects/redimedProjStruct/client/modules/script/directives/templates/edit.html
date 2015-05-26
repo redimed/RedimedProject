@@ -1,88 +1,109 @@
-<div class="panel panel-primary">
-	<div class="panel-heading" style="font-weight: bold; color: ">Edit Script</div>
+<div class="panel panel-default un-header-top">
 	<div class="panel-body">
-		<form name="FrForm">
+		<label class="un-label-header-custom un-bgWhite-custom">Edit Script</label>
+		<form name="FrForm" novalidate>
 			<div class="row">
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Patient Name</span>
-					<label class="col-xs-4 control-label">{{patient.item.First_name}}&nbsp;{{patient.item.Sur_name}}</label>
+					<div class="un-label-form-custom">
+						<span>Patient Name</span>
+					</div>
+					<label>{{patient.item.First_name}}&nbsp;{{patient.item.Sur_name}}</label>
 				</div>
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Prescriber</span>
+					<div class="un-label-form-custom">
+						<span>Prescriber</span>
+					</div>
 					<input type="text" class="form-control" ng-model="script.form.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" />
 				</div>
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Script Number</span>
-					<input type="text" class="form-control" ng-model="script.form.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" />
+					<div class="un-label-form-custom">
+						<span>Script Number</span>
+					</div>
+					<input type="text" class="form-control" ng-model="script.form.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" required />
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Medicare</span>
-					<input type="text" class="form-control" ng-model="script.form.Medicare" placeholder="Medicare" id="Medicare" name="Medicare" />
+					<div class="un-label-form-custom">
+						<span>Medicare</span>
+					</div>
+					<input type="text" class="form-control" ng-model="script.form.Medicare" placeholder="Medicare" id="Medicare" name="Medicare" required />
 				</div>
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">EntitlementNo</span>
-					<input type="text" class="form-control" ng-model="script.form.EntitlementNo" placeholder="EntitlementNo" id="EntitlementNo" name="EntitlementNo" />
+					<div class="un-label-form-custom">
+						<span>EntitlementNo</span>
+					</div>
+					<input type="text" class="form-control" ng-model="script.form.EntitlementNo" placeholder="EntitlementNo" id="EntitlementNo" name="EntitlementNo" required />
 				</div>
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Pharmacist</span>
-					<input type="text" class="form-control" ng-model="script.form.pharmacist" placeholder="Pharmarcist" id="pharmacist" name="pharmacist" />
+					<div class="un-label-form-custom">	
+						<span>Pharmacist</span>
+					</div>
+					<input type="text" class="form-control" ng-model="script.form.pharmacist" placeholder="Pharmarcist" id="pharmacist" name="pharmacist" required />
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
-				
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Doctor Date</span>
-					<input custom-date class="form-control" placeholder="Doctor Date" ng-model="script.form.doctordate" id="doctordate" name="doctordate" float-label />
+					<div class="un-label-form-custom">
+						<span>Doctor Date</span>
+					</div>
+					<input custom-date class="form-control" placeholder="Doctor Date" ng-model="script.form.doctordate" id="doctordate" name="doctordate" float-label required />
 				</div>
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Patient Date</span>
-					<input custom-date class="form-control" placeholder="Patient Date" ng-model="script.form.patientDate" id="patientDate" name="patientDate" float-label />
+					<div class="un-label-form-custom">
+						<span>Patient Date</span>
+					</div>
+					<input custom-date class="form-control" placeholder="Patient Date" ng-model="script.form.patientDate" id="patientDate" name="patientDate" float-label required />
 				</div>
 				<div class="col-xs-4">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Agent Address</span>
-					<input type="text" class="form-control" ng-model="script.form.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" />
+					<div class="un-label-form-custom">
+						<span>Agent Address</span>
+					</div>
+					<input type="text" class="form-control" ng-model="script.form.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" required />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-xs-2">
 					<label class="control-label">
-		                <input type="checkbox" ng-checked="script.form.isRefNo" ng-model="script.form.isRefNo" ng-true-value=1 ng-false-value=0>&nbsp;RefNo
+		                <input type="checkbox" ng-model="script.form.isRefNo" ng-true-value=1 ng-false-value=0>&nbsp;RefNo
 					</label>
 				</div>
 				<div class="col-xs-2">
 					<label class="control-label">
-		                <input type="checkbox" ng-checked="script.form.isSafety" ng-model="script.form.isSafety" ng-true-value=1 ng-false-value=0>&nbsp;Safety
+		                <input type="checkbox" ng-model="script.form.isSafety" ng-true-value=1 ng-false-value=0>&nbsp;Safety
 					</label>
 				</div>
 				<div class="col-xs-2">
 					<label class="control-label">
-		                <input type="checkbox" ng-checked="script.form.isConcessional" ng-model="script.form.isConcessional" ng-true-value=1 ng-false-value=0>&nbsp;Concessional
+		                <input type="checkbox" ng-model="script.form.isConcessional" ng-true-value=1 ng-false-value=0>&nbsp;Concessional
 					</label>
 				</div>
 				<div class="col-xs-2">
 					<label class="control-label">
-		                <input type="checkbox" ng-checked="script.form.isPBS" ng-model="script.form.isPBS" ng-true-value=1 ng-false-value=0>&nbsp;PBS
+		                <input type="checkbox" ng-model="script.form.isPBS" ng-true-value=1 ng-false-value=0>&nbsp;PBS
 					</label>
 				</div>
 				<div class="col-xs-2">
 					<label class="control-label">
-		                <input type="checkbox" ng-checked="script.form.isRPBS" ng-model="script.form.isRPBS" ng-true-value=1 ng-false-value=0>&nbsp;RPBS
+		                <input type="checkbox" ng-model="script.form.isRPBS" ng-true-value=1 ng-false-value=0>&nbsp;RPBS
 					</label>
 				</div>
 				<div class="col-xs-2">
 					<label class="control-label">
-		                <input type="checkbox" ng-checked="script.form.isBrand" ng-model="script.form.isBrand" ng-true-value=1 ng-false-value=0>&nbsp;Brand
+		                <input type="checkbox" ng-model="script.form.isBrand" ng-true-value=1 ng-false-value=0>&nbsp;Brand
 					</label>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-6">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Doctor Signature</span>	
+					<div class="un-label-form-custom">
+						<span>Doctor Signature</span>	
+					</div>
 				</div>
 				<div class="col-xs-6">
-					<span class="form-control" style="background: rgb(66, 139, 202); margin-bottom: -1px; color: #ffffff; height: 20px; padding-top: 0;">Patient Signature</span>
+					<div class="un-label-form-custom">
+						<span>Patient Signature</span>
+					</div>
 				</div>
 			</div>
 
@@ -92,6 +113,7 @@
 			            <canvas width="500" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.doctorSign">
 			            </canvas>
 			        </span>
+
 				</div>
 				<div class="col-xs-6">
 					<span>
@@ -102,7 +124,7 @@
 			</div>
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-12">
-					<input type="submit" class="btn btn-primary" ng-click="script.save()" value="Save" />
+					<input type="submit" class="un-button-custom" ng-click="script.save()" value="Save" />
 				</div>
 			</div>
 		</form>
