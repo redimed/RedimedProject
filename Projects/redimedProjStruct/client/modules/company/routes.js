@@ -3,13 +3,26 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 
 .config(function($stateProvider){
 	$stateProvider
-	 .state('loggedIn.company', {
-		url: '/patientid/:patientId/company',
-		templateUrl: 'modules/company/views/list.html',
-		controller: 'CompanyListController'
+	// .state('loggedIn.company', {
+	// 	url: '/patientid/:patient_id/company',
+	// 	templateUrl: 'modules/company/views/list.html',
+	// 	controller: 'CompanyListController'
 			
+	// })
+
+	.state('loggedIn.patient.company', {
+		url: '/company',
+		// templateUrl: 'modules/company/views/list.html',
+		// controller: 'CompanyListController'
+		views: {
+			'main-content@loggedIn.patient': {
+				templateUrl: 'modules/company/views/list.html',
+				controller: 'CompanyListController'
+			}
+		}
 	})
-	.state('loggedIn.company.add', {
+
+	.state('loggedIn.patient.company.add', {
 			url: '/add',
 			views: {
 				'@loggedIn': {
@@ -18,7 +31,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}//end views
 		})
-	.state('loggedIn.company.addCompanyNotFollow', {
+	.state('loggedIn.patient.company.addCompanyNotFollow', {
 			url: '/addCompany',
 			views: {
 				'@loggedIn': {
@@ -26,7 +39,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}//end views
 		})
-	.state('loggedIn.company.addParent',{
+	.state('loggedIn.patient.company.addParent',{
 			url:'/addParent',
 			views:{
 				'@loggedIn':{
@@ -35,7 +48,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}
 	})
-	.state('loggedIn.company.addInsurer',{
+	.state('loggedIn.patient.company.addInsurer',{
 			url:'/addParent',
 			views:{
 				'@loggedIn':{
@@ -44,7 +57,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}
 	})
-	.state('loggedIn.company.listParent', {
+	.state('loggedIn.patient.company.listParent', {
 			url: '/listParent',
 			views: {
 				'@loggedIn': {
@@ -53,7 +66,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}//end views
 		})
-	.state('loggedIn.company.listInsurer', {
+	.state('loggedIn.patient.company.listInsurer', {
 			url: '/listInsurer',
 			views: {
 				'@loggedIn': {
@@ -62,7 +75,7 @@ angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
 				}
 			}//end views
 		})
-	.state('loggedIn.company.edit', {
+	.state('loggedIn.patient.company.edit', {
 			url: '/:companyId/edit',
 			views: {
 				'@loggedIn': {

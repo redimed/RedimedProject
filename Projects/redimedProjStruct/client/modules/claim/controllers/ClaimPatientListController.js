@@ -5,13 +5,13 @@ angular.module('app.loggedIn.claim.controllers.patientList', [])
 		$modal.open({
 			templateUrl: 'dialogClaimAdd',
 			controller: 'ClaimPatientAddDialog',
-			size: 'lg',
+			size: 'md',
 			resolve: {
 				patientId: function(){
-					return $stateParams.patientId;
+					return $stateParams.patient_id;
 				},
 				calId: function(){
-					return $stateParams.calId;
+					return $stateParams.cal_id;;
 				}
 			}
 		})
@@ -32,8 +32,8 @@ angular.module('app.loggedIn.claim.controllers.patientList', [])
 		},
 		reload: false,
 		limit: 20,
-		Patient_id: $stateParams.patientId,
-		CAL_ID: $stateParams.calId
+		Patient_id: $stateParams.patient_id,
+		CAL_ID: $stateParams.cal_id
 	}//end claim
 })
 

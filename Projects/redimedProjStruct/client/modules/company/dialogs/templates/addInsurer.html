@@ -1,8 +1,22 @@
 <div class="modal-body">
-   <h4 class="modal-title">Select Insurer</h4>
+   <!-- <h4 class="modal-title">Select Insurer</h4> -->
+   <label class="un_tn_panel_modal_label un_tn_panel_label_color_black">Select Insurer</label>
    <list-insurer on-row-click="clickRow(row)" insurer-array="insurerArray"></list-insurer>
 </div>
 <div class="modal-footer">
     <!-- <button class="btn btn-primary" ng-click="ok()">OK</button> -->
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <!-- <button class="un_tn_btn un_tn_btn_gray" ng-click="cancel()">Cancel</button> -->
+<!--     <div class="row">
+		<div class="col-md-12">
+			<button class="btn un-btn-save-xam" ng-click="cancel()">Cancel</button>
+		</div>
+	</div> -->
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="un_tn_panel_modal_action">
+				<button class="un_tn_btn un_tn_btn_gray" ng-click="cancel()">Cancel</button>
+			</div>
+		</div>
+	</div>
 </div>

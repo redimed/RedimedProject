@@ -6,10 +6,14 @@ angular.module('app.loggedIn.company.directives.add', [])
 		templateUrl: 'modules/company/directives/templates/add.html',
 		scope: {
 			options: '=',
-			onRowClick: '&'
+			onRowClick: '&',
+			actionCenter:'='//tannv.dts@gmail.com add
 		},
 		link: function(scope, elem, attrs)
 		{
+				var parent=document.getElementsByClassName("un_tn_modal_remove_background")[0].parentNode;
+				parent.style.background="none";
+				console.log(parent.style.background);
 			var form ={
 		        Company_name:null,
 		        Industry:null,
@@ -43,7 +47,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        isExtra:null,
 		        parent_id :null,
 		        listInsurerid :[],
-		        patient_id :$stateParams.patientId
+		        // patient_id :$stateParams.patientId//tannv.dts@gmail.com comment
+		        patient_id :$stateParams.patient_id//tannv.dts add
 			}
 			scope.onRowClick = function(row){
 				 var postData = { 
@@ -136,7 +141,9 @@ angular.module('app.loggedIn.company.directives.add', [])
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
-		  				$state.go('loggedIn.company');
+		  				// $state.go('loggedIn.company');//tan comment
+		  				$state.go('loggedIn.patient.company');//tan add
+		  				scope.actionCenter.closeModal();
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);
@@ -154,6 +161,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 		    	addCompany :function(){addCompany();},
 		    	addInsurer :function(){addInsurer();},
 		    	remove : function(row){remove(row);}
+		    }
+
+		    scope.cancel=function()
+		    {
+		    	scope.actionCenter.closeModal();
 		    }
 		}//end link
 		
