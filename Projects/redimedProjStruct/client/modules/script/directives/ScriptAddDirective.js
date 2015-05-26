@@ -21,8 +21,8 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 				console.log(postData);
 
-				postData.Patient_id = $stateParams.patientId;
-				postData.CAL_ID = $stateParams.calId;
+				postData.Patient_id = $stateParams.patient_id;
+				postData.CAL_ID = $stateParams.cal_id;
 				postData.Creation_date = ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
 				postData.Last_update_date =  ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
 				postData.Created_by = postData.Last_updated_by = user_id;
@@ -32,7 +32,7 @@ angular.module('app.loggedIn.script.directive.add', [])
 				ScriptModel.add(postData)
 				.then(function(response){
 					toastr.success('Added Successfully');
-					$state.go('loggedIn.script');
+					$state.go('loggedIn.patient.script');
 				}, function(error){
 					scope.script.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.script.errors);

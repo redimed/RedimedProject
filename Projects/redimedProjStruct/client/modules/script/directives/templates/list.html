@@ -1,53 +1,57 @@
-<button class="btn btn-primary" ng-click="script.add()" style="margin-bottom: 10px;">Add</button>
-<div class="panel panel-primary">
-	<div class="panel-heading">Script</div>
+<div>
+	<button class="un-btn-red-add" ng-click="script.add()" style="margin-bottom: 10px;">Add</button>
+</div>
+<div class="panel panel-default un-header-top">
 	<div class="panel-body">
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Patient Name</th>
-					<th>CAL ID</th>
-					<th>Script Num</th>
-					<th>Medicare</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" ng-model="script.search.scriptNum" ng-enter="script.onSearch({field: 'scriptNum', value: script.search.scriptNum})" placeholder="Script Num" />
-						</div>
-					</td>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" ng-model="script.search.Medicare" ng-enter="script.onSearch({field: 'Medicare', value: script.search.Medicare})" placeholder="Medicare" />
-						</div>
-					</td>
-					<td></td>
-				</tr>
-				<tr ng-repeat="row in script.list" style="cursor:pointer;">
-					<td>{{row.First_name}}&nbsp;{{row.Sur_name}}</td>
-					<td>{{row.CAL_ID}}</td>
-					<td>{{row.scriptNum}}</td>
-					<td>{{row.Medicare}}</td>
-					<td align="center">
-						<a><i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>
-						<!--<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;-->
-						<a>
-							<span ng-if="row.isEnable" ng-click="disable(row)">Enable</span>
-							<span ng-if="!row.isEnable" ng-click="disable(row)">Disable</span>
-						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<pagination boundary-links="true" total-items="script.count" ng-model="script.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="script.search.limit" max-size="script.search.max_size" ng-change="setPage(script.search.page)">
-</pagination>
+		<label class="un-label-header-custom un-bgWhite-custom">Script</label>
+		<div class="un-background-gray-dv">
+			<table class="mdt-table">
+				<thead>
+					<tr>
+						<th>Patient Name</th>
+						<th>CAL ID</th>
+						<th>Script Num</th>
+						<th>Medicare</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" ng-model="script.search.scriptNum" ng-enter="script.onSearch({field: 'scriptNum', value: script.search.scriptNum})" placeholder="Script Num" />
+							</div>
+						</td>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" ng-model="script.search.Medicare" ng-enter="script.onSearch({field: 'Medicare', value: script.search.Medicare})" placeholder="Medicare" />
+							</div>
+						</td>
+						<td></td>
+					</tr>
+					<tr ng-repeat="row in script.list" style="cursor:pointer;">
+						<td>{{row.First_name}}&nbsp;{{row.Sur_name}}</td>
+						<td>{{row.CAL_ID}}</td>
+						<td>{{row.scriptNum}}</td>
+						<td>{{row.Medicare}}</td>
+						<td align="center">
+							<a><i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>
+							<!--<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;-->
+							<a>
+								<span ng-if="row.isEnable" ng-click="script.disable(row)">Enable</span>
+								<span ng-if="!row.isEnable" ng-click="script.disable(row)">Disable</span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
+	<pagination boundary-links="true" total-items="script.count" ng-model="script.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="script.search.limit" max-size="script.search.max_size" ng-change="setPage(script.search.page)" style="float: right">
+</pagination>
 <script type="text/ng-template" id="notifyToRemove">
     <div class="modal-body">
         <p>Do you want to remove this site ?</p>

@@ -21,8 +21,8 @@ module.exports = {
 			'isEnable': postData.isEnable
 		})
 		.where({
-			'ID': postData.script_id,
-			'Patient_id': postData.patient_id,
+			'ID': postData.ID,
+			'Patient_id': postData.Patient_id,
 		})
 		.toString();
 		db.sequelize.query(sql)
