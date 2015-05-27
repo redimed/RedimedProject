@@ -27,7 +27,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);
-				postData.Creation_date = postData.Last_update_date = moment().format('YYYY-MM-DD');
+				postData.Creation_date = postData.last_update_date = moment().format('YYYY-MM-DD');
 
 				if(postData.date_issued)
 					postData.date_issued = ConfigService.convertToDB(postData.date_issued);
