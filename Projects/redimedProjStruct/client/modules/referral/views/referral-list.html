@@ -1,8 +1,12 @@
 <div class="portlet box" style="position: relative; margin-top: 32px;">
-    <button type="button" class="btn pull-right un-save-m ng-scope un-select-alert-m" ng-click="referralAddForm.open()">
-        Add referral
-    </button>
-    <label class="un-title-label" style="top: -38px;">Make Referrals</label>
+   <div class="select-outside-button inline">
+       <label class="un-title-label" style="top: -38px;">Make Referrals</label>
+       <div align="right" class="select-outside-button-right">
+           <button class="btn pull-right un-save-m ng-scope un-select-alert-m" ng-click="referralAddForm.open()">
+                Add referral
+            </button> 
+        </div>
+   </div>   
     <div class="portlet-body">
        	<my-data-table options="referrals.options" rowclass="referrals.class" numrows="10"></my-data-table>
     	<div class="clearfix"></div>
