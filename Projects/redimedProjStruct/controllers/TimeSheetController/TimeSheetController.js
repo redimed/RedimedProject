@@ -4219,23 +4219,24 @@ module.exports = {
                                                                                                                     db.sequelize.query(sql_count_line)
                                                                                                                         .success(function(data_count){
                                                                                                                             
-                                                                                                                            for(var v = 0;v <data_count[0].count;v++){
-                                                                                                                                //continue
-                                                                                                                                chainer.add(db.time_activity_report.update({
-                                                                                                                                    time_charge_1_Dept     : data_time_charge_Dept_all[v].time_charge_1_Dept,
-                                                                                                                                    per_1_Dept             : ((data_time_charge_Dept_all[v].time_charge_1_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
-                                                                                                                                    time_charge_2_Dept     : data_time_charge_Dept_all[v].time_charge_2_Dept,
-                                                                                                                                    per_2_Dept             : ((data_time_charge_Dept_all[v].time_charge_2_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
-                                                                                                                                    time_charge_3_Dept     : data_time_charge_Dept_all[v].time_charge_3_Dept,
-                                                                                                                                    per_3_Dept             : ((data_time_charge_Dept_all[v].time_charge_3_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
-                                                                                                                                    time_charge_4_Dept     : data_time_charge_Dept_all[v].time_charge_4_Dept,
-                                                                                                                                    per_4_Dept             : ((data_time_charge_Dept_all[v].time_charge_4_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
-                                                                                                                                    time_charge_5_Dept     : data_time_charge_Dept_all[v].time_charge_5_Dept,
-                                                                                                                                    per_5_Dept             : ((data_time_charge_Dept_all[v].time_charge_5_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
-                                                                                                                                    time_charge_week_Dept  : data_time_charge_Dept_all[v].time_charge_week_Dept
-                                                                                                                                },{
-                                                                                                                                    Department_id          : data_time_charge_Dept_all[v].Department_id
-                                                                                                                                }));
+                                                                                                                            for(var m = 0;v <data_count[0].count;m++){
+                                                                                                                                for(var v=0;v<data_time_charge_Dept_all.length;v++){
+                                                                                                                                    chainer.add(db.time_activity_report.update({
+                                                                                                                                        time_charge_1_Dept     : data_time_charge_Dept_all[v].time_charge_1_Dept,
+                                                                                                                                        per_1_Dept             : ((data_time_charge_Dept_all[v].time_charge_1_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
+                                                                                                                                        time_charge_2_Dept     : data_time_charge_Dept_all[v].time_charge_2_Dept,
+                                                                                                                                        per_2_Dept             : ((data_time_charge_Dept_all[v].time_charge_2_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
+                                                                                                                                        time_charge_3_Dept     : data_time_charge_Dept_all[v].time_charge_3_Dept,
+                                                                                                                                        per_3_Dept             : ((data_time_charge_Dept_all[v].time_charge_3_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
+                                                                                                                                        time_charge_4_Dept     : data_time_charge_Dept_all[v].time_charge_4_Dept,
+                                                                                                                                        per_4_Dept             : ((data_time_charge_Dept_all[v].time_charge_4_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
+                                                                                                                                        time_charge_5_Dept     : data_time_charge_Dept_all[v].time_charge_5_Dept,
+                                                                                                                                        per_5_Dept             : ((data_time_charge_Dept_all[v].time_charge_5_Dept/data_time_charge_Dept_all[v].time_charge_week_Dept)*100).toFixed(2),
+                                                                                                                                        time_charge_week_Dept  : data_time_charge_Dept_all[v].time_charge_week_Dept
+                                                                                                                                    },{
+                                                                                                                                        Department_id          : data_time_charge_Dept_all[v].Department_id
+                                                                                                                                    }));
+                                                                                                                                }
                                                                                                                                 
                                                                                                                             }
                                                                                                                             chainer.runSerially()
