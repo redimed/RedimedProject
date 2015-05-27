@@ -3,7 +3,7 @@ module.exports = function(sequelize,DataTypes){
         task_week_id: {type:DataTypes.INTEGER(11), primaryKey:true},
         tasks_id: DataTypes.INTEGER(11),
         user_id :DataTypes.INTEGER(11),
-        item_id :DataTypes.STRING(100),
+        item_id :DataTypes.STRING(20),
         Employee_id : DataTypes.INTEGER(11) ,
         Department_id : DataTypes.INTEGER(11) ,
         weekno : DataTypes.INTEGER(11) ,
