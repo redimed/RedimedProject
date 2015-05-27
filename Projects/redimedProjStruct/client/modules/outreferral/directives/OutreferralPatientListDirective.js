@@ -39,7 +39,7 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 })
 
 
-.directive('outreferralPatientList', function(OutreferralModel, $modal, toastr, $stateParams){
+.directive('outreferralPatientList', function(OutreferralModel, $modal, toastr, $stateParams, $timeout){
 	return {
 		restrict: 'EA',
 		scope:{
@@ -47,6 +47,7 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 			limit: '=',
 			patientId: '=',
 			calId: '=',
+			doctorId: '=',
 			withoutPatient: '@',
 			permission: '@',
 			onRowClick: '&',
@@ -185,12 +186,16 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 			var add = function(){
 				$modal.open({
 					templateUrl: 'referralAdd',
-					controller: function($scope, $modalInstance, patientId, calId){
+					controller: function($scope, $modalInstance, patientId, calId, doctorId){
 						$scope.outreferral = {
 							Patient_id: patientId,
 							CAL_ID: calId,
 							success: false
 						}
+
+						$timeout(function(){
+							$scope.outreferral.doctorId = doctorId;
+						}, 200)
 
 						$scope.$watch('outreferral.success', function(success){
 							if(success)
@@ -204,6 +209,9 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 						},
 						calId: function(){
 							return scope.calId;
+						},
+						doctorId: function(){
+							return scope.doctorId
 						}
 					}
 				})
