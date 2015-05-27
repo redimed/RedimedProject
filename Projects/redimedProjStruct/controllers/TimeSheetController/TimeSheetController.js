@@ -4215,7 +4215,7 @@ module.exports = {
                                                                                                             db.sequelize.query(sql_get_time_charge_Dept_all)
                                                                                                                 .success(function(data_time_charge_Dept_all){
                                                                                                                     
-                                                                                                                    var sql_count_line="SELECT COUNT(*) AS count FROM time_activity_report ";
+                                                                                                                    var sql_count_line="SELECT COUNT(*) AS count FROM time_activity_report WHERE user_id="+info.USER_ID;
                                                                                                                     db.sequelize.query(sql_count_line)
                                                                                                                         .success(function(data_count){
                                                                                                                             
