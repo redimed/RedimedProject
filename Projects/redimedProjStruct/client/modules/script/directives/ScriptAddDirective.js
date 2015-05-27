@@ -19,7 +19,7 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 				var postData = angular.copy(scope.script.form);
 
-				console.log(postData);
+				//console.log(postData);
 
 				postData.Patient_id = $stateParams.patient_id;
 				postData.CAL_ID = $stateParams.cal_id;
@@ -41,7 +41,7 @@ angular.module('app.loggedIn.script.directive.add', [])
 			}
 			
 			var patientLoad = function(){
-				PatientService.get($stateParams.patientId)
+				PatientService.get($stateParams.patient_id)
 				.then(function(response){
 					scope.patient.item = response.data;
 				}, function(error){});

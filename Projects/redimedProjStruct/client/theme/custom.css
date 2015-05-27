@@ -2512,7 +2512,7 @@ label{
     color: #ffffff;
     font-weight: bold;
     padding: 7px 10px;
-    background-color: rgb(179, 30, 69) !important;
+    background-color: rgb(102, 102, 102) !important;
     border: 2px solid #ffffff;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
     border-radius: 20px !important;
@@ -2564,6 +2564,7 @@ label{
     background-color: rgb(102, 102, 102);
     outline: none;
     float: right;
+    margin-right: 5px;
 }
 .un_label{
     color: #ffffff;
@@ -2642,6 +2643,16 @@ label{
     color: #ffffff;
     margin-bottom: 0;
 }
+.un-inputs-customs{
+    width: 100%;
+    border: 0;
+    color: #ffffff;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #000000;
+    margin-bottom: 10px;
+}
 .un-input-customs{
     width: 100%;
     border: 0;
@@ -2664,16 +2675,52 @@ label{
     color: #ffffff;
     font-weight: bold;
     padding: 7px 10px;
-    background-color: rgb(179, 30, 69) !important;
+    background-color: rgb(102, 102, 102) !important;
     border: 2px solid #ffffff;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
     border-radius: 20px !important;
     float: right;
+    text-align: center;
     margin-top: -60px;
 }
 .un-btn-red-add-custom:hover{
     text-decoration: none;
     color: #ffffff;
+}
+.un-label-headers-customs{
+    width: 60%;
+    background: rgb(43, 41, 42);
+    border: 0;
+    padding-left: 5px;
+    border-top: 2px solid rgb(204, 201, 202);
+    border-left: 2px solid rgb(204, 201, 202);
+    border-right: 2px solid rgb(204, 201, 202);
+}
+.un-input-tcustoms{
+    background-color: rgb(238, 238, 238);
+    border: 0;
+    width: 60%;
+    padding-left: 5px;
+    margin-bottom: 7px;
+}
+.un-labels-headers-customs{
+    width: 170px;
+    background: rgb(49, 50, 50);
+    border: 0;
+    padding-left: 5px;
+    border-top: 2px solid rgb(204, 201, 202);
+    border-left: 2px solid rgb(204, 201, 202);
+    border-right: 2px solid rgb(204, 201, 202);
+}
+.un-input-scustoms{
+    width: 100%;
+    color: #000000;
+    border: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    background-color: rgb(238, 238, 238);
+    margin-bottom: 10px;
 }
 /* end */
 

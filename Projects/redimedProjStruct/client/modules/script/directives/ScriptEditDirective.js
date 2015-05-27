@@ -56,7 +56,7 @@ angular.module('app.loggedIn.script.directive.edit', [])
 
 				ScriptModel.edit(postData)
 				.then(function(response){
-					console.log(postData);
+					//console.log(postData);
 					toastr.success('Edited Successfully');
 					$state.go('loggedIn.patient.script');
 				}, function(error){
