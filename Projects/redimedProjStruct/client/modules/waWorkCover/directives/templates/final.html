@@ -151,7 +151,7 @@
                             <input class="un-input-tcustoms" name="fullCapaFrom" readonly="readonly" ng-model="wafinal.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="wafinal.isRequireTreat">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="wafinal.isRequireTreat">
                             <label for="isRequireTreat">but requires further treatment</label>
                         </div>
                     </div>
@@ -299,7 +299,7 @@
                         <div class="un-label-header-customs">
                             <label class="un-bgWhite-customs" for="doc_Phone">Sign</label>
                         </div>
-                        <img src="{{doctor.Signature}}" style="width:100%; height: 200px;" />
+                        <img src="{{doctor.Signature}}" style="width:100%; height: 200px; margin-bottom: 10px;" />
                     </div>
                 </div>
             </div>

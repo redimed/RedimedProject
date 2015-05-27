@@ -308,7 +308,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isFullCapacity" id="isFullCapacity" ng-model="waprogress.isFullCapacity">
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isFullCapacity" id="isFullCapacity" ng-model="waprogress.isFullCapacity">
                         <label for="isFullCapacity"><b>full capacity for work</b>
                         </label>
                     </div>
@@ -319,13 +319,13 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-6 col-sm-6">
-                            <div class="un-label-header-customs">
+                            <div class="un-label-headers-customs">
                                 <label class="un-bgWhite-customs" for="fullCapaFrom">Full capacity from</label>
                             </div>
-                            <input class="un-input-customs" name="fullCapaFrom" readonly="readonly" ng-model="waprogress.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                            <input class="un-input-tcustoms" name="fullCapaFrom" readonly="readonly" ng-model="waprogress.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="waprogress.isRequireTreat">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="waprogress.isRequireTreat">
                             <label for="isRequireTreat">but requires further treatment</label>
                         </div>
                     </div>
@@ -335,7 +335,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isSomeCapacity" id="isSomeCapacity" ng-model="waprogress.isSomeCapacity">
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isSomeCapacity" id="isSomeCapacity" ng-model="waprogress.isSomeCapacity">
                         <label for="isSomeCapacity"><b>some capacity for work</b>
                         </label>
                     </div>
@@ -368,15 +368,15 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isPreDuties" id="isPreDuties" ng-model="waprogress.isPreDuties">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isPreDuties" id="isPreDuties" ng-model="waprogress.isPreDuties">
                             <label for="isPreDuties">pre-injury duties</label>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isModiDuties" id="isModiDuties" ng-model="waprogress.isModiDuties">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isModiDuties" id="isModiDuties" ng-model="waprogress.isModiDuties">
                             <label for="isModiDuties">modified or alternative duties</label>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWorkModifi" id="isWorkModifi" ng-model="waprogress.isWorkModifi">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isWorkModifi" id="isWorkModifi" ng-model="waprogress.isWorkModifi">
                             <label for="isWorkModifi">workplace modifications</label>
                         </div>
                     </div>
@@ -387,11 +387,11 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isPreHours" id="isPreHours" ng-model="waprogress.isPreHours">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isPreHours" id="isPreHours" ng-model="waprogress.isPreHours">
                             <label for="isPreHours">pre-injury hours</label>
                         </div>
                         <div class="col-md-8 col-sm-8">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isModiHrs" id="isModiHrs" ng-model="waprogress.isModiHours">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isModiHrs" id="isModiHrs" ng-model="waprogress.isModiHours">
                             <label for="isModiHrs">modified hours of
                                 <input type="text" class="form-control input-mini inline" ng-model="waprogress.modiHrs">hrs/day
                                 <input type="text" class="form-control input-mini inline" ng-model="waprogress.modiDays">days/week
@@ -404,7 +404,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isNoCapacity" id="isNoCapacity" ng-model="waprogress.isNoCapacity">
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isNoCapacity" id="isNoCapacity" ng-model="waprogress.isNoCapacity">
                         <label for="isNoCapacity"><b>no capacity for work</b>
                         </label>
                     </div>
@@ -670,7 +670,7 @@
                         <div class="un-label-header-customs">
                             <label class="un-bgWhite-customs" for="doc_Phone">Sign</label>
                         </div>
-                        <img src="{{doctor.Signature}}" style="width:100%; height:200px;" />
+                        <img src="{{doctor.Signature}}" style="width:100%; height:200px; margin-bottom: 10px;" />
                     </div>
                 </div>
             </div>
