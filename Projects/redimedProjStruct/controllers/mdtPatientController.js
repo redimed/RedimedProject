@@ -1,7 +1,7 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 var knex = require('../knex-connect.js');
-
+var kiss=require('./kissUtilsController');
 
 module.exports = {
 	postAdd: function(req, res){
@@ -95,18 +95,112 @@ module.exports = {
 		})
 		//END POST
 	},
+
+	/**
+	 * Ham lay thong tin patient kem voi company cua patient, insurer cua company
+	 * create by: buivuong
+	 * tannv.dts@gmail.com modify and fix
+	 */
 	postById: function(req, res){
+		var fHeader="mtdPatientController->postById";
 		// POST
 		var Patient_id = req.body.Patient_id;
 		// END POST
+		//tannv.dts@gmail.com
+		var returnFunction=function(status,patient_param,company_param,insurer_param){
+			if(status=='success')
+			{
+				var returnObj={
+					status:'success',
+					data:patient_param,
+					company:null,
+					insurer:null
+				}
+				if(company_param) returnObj.company=company_param;
+				if(insurer_param) returnObj.insurer=insurer_param;
+				res.json(returnObj);
+			}
+			else
+			{
+				res.json(500,{status:'error'});
+			}
+		}
+		//tannv.dts@gmail.com
+		var sql="SELECT * FROM `cln_patients` patient  WHERE patient.`Patient_id`=?";
+		kiss.executeQuery(req,sql,[Patient_id],function(rows){
+			if(rows.length>0)
+			{
+				var patient=rows[0];
+				if(kiss.checkData(patient.company_id))
+				{
+					var sql="SELECT * FROM `companies` company WHERE company.id=?";
+					kiss.executeQuery(req,sql,[patient.company_id],function(rows){
+						if(rows.length>0)
+						{
+							var company=rows[0];
+							if(kiss.checkData(company.Insurer))
+							{
+								var sql="SELECT * FROM `cln_insurers` insurer WHERE insurer.`id`=?";
+								kiss.executeQuery(req,sql,[company.Insurer],function(rows){
+									if(rows.length>0)
+									{
+										var insurer=rows[0];
+										kiss.exlog(fHeader,"Success with company,insurer,patient info");
+										returnFunction('success',patient,company,insurer);
+									}
+									else
+									{
+										kiss.exlog(fHeader,"success nhung khong lay duoc thong tin insurer");
+										returnFunction("success",patient,company);
+									}
+								},function(err){
+									kiss.exlog(fHeader,"Loi truy van lay thong tin insurer",err);
+									returnFunction("error");
+								});
+							}
+							else
+							{
+								kiss.exlog(fHeader,"success nhung company khong co insurer");
+								returnFunction('success',patient,company);
+							}
+						}
+						else
+						{
+							kiss.exlog("fHeader","Khong lay duoc thong tin company");
+							returnFunction('success',patient);
+						}
+					},function(err){
+						kiss.exlog(fHeader,"Loi truy van lay thong tin company",err);
+						returnFunction('error');
+					});
+				}
+				else
+				{
+					kiss.exlog(fHeader,"success nhung patient ko co company");
+					returnFunction('success',patient);
+				}
 
-		db.Patient.find(Patient_id)
+			}
+			else
+			{
+				kiss.exlog(fHeader,"Khong tim thay patient nao");
+				returnFunction("error");
+			}
+		},function(err){
+			kiss.exlog(fHeader,"Loi truy van lay thong tin patient",err);
+			returnFunction('error');
+		});
+	
+		//tannv.dts@gmail.com comment
+		/*db.Patient.find(Patient_id)
 		.success(function(patient){
+
 			if(!patient){
 				res.json(500, {"status": "error", "message": "Database Error"});
 			}else{
                 if(!!patient.company_id){
                         patient.getCompany().then(function(company){
+                    	kiss.exFileJSON(company,"company.txt");
                         console.log("this is company", company);
                         if(!!company.Insurer){
                             var insurer_sql = "SELECT id, insurer_name FROM cln_insurers WHERE id="+company.Insurer;
@@ -133,7 +227,7 @@ module.exports = {
 		})
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
-		});
+		});*/
 	},
 	postSearch: function(req, res){
 		//POST DUA VAO

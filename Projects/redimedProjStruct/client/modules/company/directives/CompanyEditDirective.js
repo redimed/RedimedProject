@@ -198,6 +198,12 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		    	remove : function(row){remove(row);}
 			}
 
+			//tannv.dts@gmail.com
+			scope.cancel=function()
+		    {
+		    	$state.go('loggedIn.patient.company');//tannv.dts add
+		    }
+
 			/* LOAD FIRST */
 			scope.company.load();
 			/* END LOAD FIRST */
