@@ -49,8 +49,8 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				postData.CAL_ID = $stateParams.cal_id;
 				postData.Last_updated_by = user_id;
 				postData.ID = $stateParams.scriptId;
-				postData.Creation_date = ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
-				postData.Last_update_date =  ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
+				postData.Creation_date = moment().format('YYYY-MM-DD');
+				postData.Last_update_date =  moment().format('YYYY-MM-DD');
 				postData.doctordate = ConfigService.convertToDB(postData.doctordate);
 				postData.patientDate = ConfigService.convertToDB(postData.patientDate);
 
@@ -73,18 +73,18 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				load: function(){ load(); },
 				form: {
 					ID: '',
-					Patient_id: '',
-					CAL_ID: '',
+					Patient_id: 0,
+					CAL_ID: 0,
 					prescriber: '',
-					scriptNum: '',
+					scriptNum: 0,
 					Medicare: '',
-					isRefNo: '',
+					isRefNo: 0,
 					EntitlementNo: '',
-					isSafety: '',
+					isSafety: 0,
 					isConcessional: '',
-					isPBS: '',
-					isRPBS: '',
-					isBrand: '',
+					isPBS: 0,
+					isRPBS: 0,
+					isBrand: 0,
 					pharmacist: '',
 					doctorSign: '',
 					doctordate: '',
