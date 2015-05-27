@@ -7,7 +7,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 		scope: {
 			options: '=',
 			limit: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			actionCenter:'='//add by tannv.dts@gmail.com, function: runWhenFinish
 		},
 		link: function(scope, elem, attrs){
 			var search = {
@@ -31,6 +32,9 @@ angular.module('app.loggedIn.company.directives.list', [])
 		  			.then(function(response){
 		  				toastr.success('Change Active Company Successfully');
 		  				scope.company.load();
+		  				//tannv.dts@gmail.com
+		  				//cap nhat lai patient detail bar
+		  				scope.actionCenter.runWhenFinish();
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 		  			})
