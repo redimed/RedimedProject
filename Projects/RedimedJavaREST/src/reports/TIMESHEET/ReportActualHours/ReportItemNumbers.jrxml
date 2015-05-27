@@ -157,7 +157,9 @@ item_code_report1.total_items,
 item_code_report1.total_items_Dept,
 item_code_report1.time_charge_average,
 item_code_report1.from_date,
-item_code_report1.to_date
+item_code_report1.to_date,
+item_code_report1.average_item_employee,
+item_code_report1.average_item_dept
 FROM item_code_report1
 INNER JOIN hr_employee ON hr_employee.Employee_ID = item_code_report1.Employee_id
 INNER JOIN departments ON departments.departmentid = item_code_report1.Department_id
@@ -216,6 +218,12 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<field name="to_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="average_item_employee" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="average_item_dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<group name="DeptGroup">
 		<groupExpression><![CDATA[$F{departmentName}]]></groupExpression>
 	</group>
@@ -254,7 +262,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textField>
 					<reportElement x="345" y="1" width="45" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["~"+$F{average_item_dept}+"%"]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="124" y="21" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
@@ -395,7 +403,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			<textField>
 				<reportElement x="345" y="0" width="45" height="17" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{time_charge_average}+"%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["~"+$F{average_item_employee}+"%"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -414,7 +422,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["~100.0%"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="124" y="21" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>

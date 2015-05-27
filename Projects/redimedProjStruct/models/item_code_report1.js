@@ -12,6 +12,8 @@ module.exports = function(sequelize,DataTypes){
         total_items_Dept: DataTypes.INTEGER(11),
         time_charge_items: DataTypes.INTEGER(11),
         time_charge_average: DataTypes.FLOAT,
+        average_item_employee: DataTypes.FLOAT,
+        average_item_dept: DataTypes.FLOAT,
         from_date :DataTypes.DATE,
         to_date:DataTypes.DATE,
         Creation_date : DataTypes.DATE ,
