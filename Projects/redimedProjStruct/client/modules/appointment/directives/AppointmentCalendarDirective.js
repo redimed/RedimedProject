@@ -552,6 +552,10 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 														$scope.limit = 10;
 														$scope.addSuccess = false;
 
+														$timeout(function(){
+															$scope.calId = col.CAL_ID;
+														}, 600)
+
 														$scope.$watch('addSuccess', function(addSuccess){
 															if(addSuccess){
 																$modalInstance.close('success');
@@ -600,7 +604,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 														$scope.success = false;
 														$timeout(function(){
 															$scope.doctorId = col.DOCTOR_ID;
-														}, 200)
+														}, 600)
 
 														$scope.$watch('success', function(success){
 															if(success){

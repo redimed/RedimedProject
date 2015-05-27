@@ -26,6 +26,14 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 				last_updated_by: user_id,
 			}
 
+			console.log(scope.calId);
+
+			scope.$watch('calId', function(calId){
+				if(typeof calId !== 'undefined'){
+					form.CAL_ID = calId;
+				}
+			})
+
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);

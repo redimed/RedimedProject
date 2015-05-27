@@ -189,13 +189,14 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 					controller: function($scope, $modalInstance, patientId, calId, doctorId){
 						$scope.outreferral = {
 							Patient_id: patientId,
-							CAL_ID: calId,
-							success: false
+							success: false,
+							calId: calId
 						}
 
 						$timeout(function(){
 							$scope.outreferral.doctorId = doctorId;
-						}, 200)
+							$scope.outreferral.calId = calId;
+						}, 600)
 
 						$scope.$watch('outreferral.success', function(success){
 							if(success)
