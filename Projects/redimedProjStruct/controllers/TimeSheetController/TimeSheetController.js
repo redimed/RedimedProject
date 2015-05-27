@@ -4219,7 +4219,7 @@ module.exports = {
                                                                                                                     db.sequelize.query(sql_count_line)
                                                                                                                         .success(function(data_count){
                                                                                                                             
-                                                                                                                            for(var m = 0;v <data_count[0].count;m++){
+                                                                                                                            for(var m = 0;m <data_count[0].count;m++){
                                                                                                                                 for(var v=0;v<data_time_charge_Dept_all.length;v++){
                                                                                                                                     chainer.add(db.time_activity_report.update({
                                                                                                                                         time_charge_1_Dept     : data_time_charge_Dept_all[v].time_charge_1_Dept,
