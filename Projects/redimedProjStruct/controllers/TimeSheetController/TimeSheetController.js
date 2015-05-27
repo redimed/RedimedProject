@@ -4414,6 +4414,7 @@ module.exports = {
         var flag7 = 0;
         var flag8 = 0;
         var flag9 = 0;
+        var sum = 0;
         //DELETE ALL TABLE
         var sql_delete_time_activity_summary_table = " DELETE FROM time_activity_summary_table WHERE user_id=" + info.USER_ID + " ";
         var sql_delete_time_activity_summary_detail_table = " DELETE FROM time_activity_summary_detail_table WHERE user_id=" + info.USER_ID + " ";
@@ -4453,14 +4454,27 @@ module.exports = {
                                                     if (flag1 == data_time_activity_summary_table.length) {
                                                         //console.log("NEXT")
                                                         //GET DATA TABLE time_activity_summary_detail_table
-                                                        var sql_get_data_time_activity_summary_detail_table = "SELECT " + "time_activity_summary_table.from_date, " + "time_activity_summary_table.to_date, " + "time_activity_summary_table.weekno, " + "time_tasks.tasks_id, " + "time_activity_summary_table.task_week_id, " + "time_activity_summary_table.user_id, " + "time_tasks.activity_id, " + "time_activity_summary_table.Department_id, " + "time_activity_summary_table.Employee_id, " + "time_tasks.time_charge, " + "time_activity_summary_table.time_charge_week " + "FROM time_tasks " + "INNER JOIN time_activity_summary_table ON time_tasks.tasks_week_id = time_activity_summary_table.task_week_id " + "WHERE time_activity_summary_table.Employee_id IN (" + stringEMP + ") AND time_activity_summary_table.Department_id IN (" + stringDept + ") AND time_activity_summary_table.user_id=" + info.USER_ID + " ";
+                                                        var sql_get_data_time_activity_summary_detail_table = "SELECT " + 
+                                                        "time_activity_summary_table.from_date, " + 
+                                                        "time_activity_summary_table.to_date, " + 
+                                                        "time_activity_summary_table.weekno, " + 
+                                                        "time_tasks.tasks_id, " + "time_activity_summary_table.task_week_id, " + 
+                                                        "time_activity_summary_table.user_id, " + 
+                                                        "time_tasks.activity_id, " + 
+                                                        "time_activity_summary_table.Department_id, " + 
+                                                        "time_activity_summary_table.Employee_id, " + 
+                                                        "time_tasks.time_charge, " + 
+                                                        "time_activity_summary_table.time_charge_week " + 
+                                                        "FROM time_tasks " + 
+                                                        "INNER JOIN time_activity_summary_table ON time_tasks.tasks_week_id = time_activity_summary_table.task_week_id " + 
+                                                        "WHERE time_activity_summary_table.Employee_id IN (" + stringEMP + ") AND time_activity_summary_table.Department_id IN (" + stringDept + ") AND time_activity_summary_table.user_id=" + info.USER_ID + " ";
                                                         db.sequelize.query(sql_get_data_time_activity_summary_detail_table)
                                                             .success(function(data_time_activity_summary_detail_table) {
                                                                 // console.log(data_time_activity_summary_detail_table)
                                                                 // console.log("NEXT")
                                                                 //INSERT DATA INTO time_activity_summary_detail_table
                                                                 for (var j = 0; j < data_time_activity_summary_detail_table.length; j++) {
-                                                                    db.time_activity_summary_detail_table.create({
+                                                                    chainer.add(db.time_activity_summary_detail_table.create({
                                                                             task_week_id: data_time_activity_summary_detail_table[j].task_week_id,
                                                                             tasks_id: data_time_activity_summary_detail_table[j].tasks_id,
                                                                             user_id: data_time_activity_summary_detail_table[j].user_id,
@@ -4473,170 +4487,190 @@ module.exports = {
                                                                             from_date: data_time_activity_summary_detail_table[j].from_date,
                                                                             to_date: data_time_activity_summary_detail_table[j].to_date,
                                                                             Creation_by: info.USER_ID
-                                                                        })
-                                                                        .success(function(data_insert2) {
-                                                                            flag2++;
-                                                                            if (flag2 == data_time_activity_summary_detail_table.length) {
-                                                                                var sql_get_length_time_activity_summary_report = "SELECT DISTINCT Department_id FROM time_activity_summary_table ";
-                                                                                db.sequelize.query(sql_get_length_time_activity_summary_report)
-                                                                                    .success(function(data_length) {
-
-                                                                                        for (var d = 0; d < data_length.length; d++) {
-                                                                                            for (var c = 0; c < 5; c++) {
-                                                                                                db.time_activity_summary_report.create({
-                                                                                                        user_id: info.USER_ID,
-                                                                                                        Department_id: data_length[d].Department_id,
-                                                                                                        activity_id: c + 1,
-                                                                                                        from_date: info.weekFrom,
-                                                                                                        to_date: info.weekTo,
-                                                                                                        Creation_by: info.USER_ID
-                                                                                                    })
-                                                                                                    .success(function(data_insert3) {
-                                                                                                        flag4++;
-                                                                                                        if (flag4 == (5 * data_length.length) && flag5 == data_length.length) {
-                                                                                                            //GET DATA DETAIL FOR time_activity_summary_report
-                                                                                                            var sql_get_data_detail_time_activity_summary_report1 = "SELECT Department_id,activity_id,SUM(time_charge) AS 'time_charge_Dept' " + " FROM time_activity_summary_detail_table " + " WHERE Department_id IN (" + stringDept + ") AND activity_id IS NOT NULL AND user_id=" + info.USER_ID + " " + " GROUP BY Department_id,activity_id";
-                                                                                                            var sql_get_data_detail_time_activity_summary_report2 = "SELECT Department_id,SUM(time_charge) AS 'time_charge_Dept_all' " + " FROM time_activity_summary_detail_table " + " WHERE Department_id IN (" + stringDept + ") AND user_id=" + info.USER_ID + " " + " GROUP BY Department_id";
-                                                                                                            db.sequelize.query(sql_get_data_detail_time_activity_summary_report1)
-                                                                                                                .success(function(data_detail_time_activity_summary_report1) {
-                                                                                                                    // console.log(data_detail_time_activity_summary_report1)//continue
-                                                                                                                    db.sequelize.query(sql_get_data_detail_time_activity_summary_report2)
-                                                                                                                        .success(function(data_detail_time_activity_summary_report2) {
-                                                                                                                            for (var p = 0; p < data_detail_time_activity_summary_report2.length; p++) {
-                                                                                                                                time_charge_all += data_detail_time_activity_summary_report2[p].time_charge_Dept_all;
-                                                                                                                            }
-
-                                                                                                                            for (var t = 0; t < data_detail_time_activity_summary_report1.length; t++) {
-                                                                                                                                db.time_activity_summary_report.update({
-                                                                                                                                        time_charge_Dept: data_detail_time_activity_summary_report1[t].time_charge_Dept
-                                                                                                                                    }, {
-                                                                                                                                        Department_id: data_detail_time_activity_summary_report1[t].Department_id,
-                                                                                                                                        activity_id: data_detail_time_activity_summary_report1[t].activity_id,
-                                                                                                                                        user_id: info.USER_ID
-                                                                                                                                    })
-                                                                                                                                    .success(function(data_success1) {
-                                                                                                                                        flag6++;
-                                                                                                                                        if (flag6 == data_detail_time_activity_summary_report1.length) {
-                                                                                                                                            for (var x = 0; x < data_detail_time_activity_summary_report2.length; x++) {
-                                                                                                                                                flag7++;
-                                                                                                                                                for (var y = 0; y < 5 * data_time_activity_summary_table.length; y++) {
-                                                                                                                                                    db.time_activity_summary_report.update({
-                                                                                                                                                            time_charge_Dept_all: data_detail_time_activity_summary_report2[x].time_charge_Dept_all,
-
-                                                                                                                                                            time_charge_all: time_charge_all
-                                                                                                                                                        }, {
-                                                                                                                                                            Department_id: data_detail_time_activity_summary_report2[x].Department_id,
-                                                                                                                                                            user_id: info.USER_ID
-                                                                                                                                                        })
-                                                                                                                                                        .success(function(data_success2) {
-
-                                                                                                                                                            flag8++;
-                                                                                                                                                            if (flag8 == data_time_activity_summary_table.length && flag7 == data_detail_time_activity_summary_report2.length) {
-                                                                                                                                                                var sql_get_per = "SELECT * FROM time_activity_summary_report ORDER BY Department_id,activity_id  ";
-                                                                                                                                                                db.sequelize.query(sql_get_per)
-                                                                                                                                                                    .success(function(data_per) {
-                                                                                                                                                                        for (var o = 0; o < data_per.length; o++) {
-                                                                                                                                                                            db.time_activity_summary_report.update({
-                                                                                                                                                                                    time_charge_Dept_per: ((data_per[o].time_charge_Dept / data_per[o].time_charge_Dept_all) * 100).toFixed(2)
-                                                                                                                                                                                }, {
-                                                                                                                                                                                    Department_id: data_per[o].Department_id,
-                                                                                                                                                                                    activity_id: data_per[o].activity_id,
-                                                                                                                                                                                    user_id: info.USER_ID
-                                                                                                                                                                                })
-                                                                                                                                                                                .success(function(success) {
-                                                                                                                                                                                    flag9++;
-                                                                                                                                                                                    if (flag9 == data_per.length) {
-                                                                                                                                                                                        res.json({
-                                                                                                                                                                                            status: "success"
-                                                                                                                                                                                        });
-                                                                                                                                                                                        return;
-                                                                                                                                                                                    }
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "error"
-                                                                                                                                                                                    });
-                                                                                                                                                                                    return;
-                                                                                                                                                                                })
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
-                                                                                                                                                            }
-                                                                                                                                                        })
-                                                                                                                                                        .error(function(err) {
-                                                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                            res.json({
-                                                                                                                                                                status: "error"
-                                                                                                                                                            });
-                                                                                                                                                            return;
-                                                                                                                                                        })
+                                                                        }))
+                                                                        
+                                                                }
+                                                                chainer.runSerially()
+                                                                    .success(function(data_insert1){
+                                                                        var sql_line="SELECT DISTINCT Department_id,from_date,to_date  "+
+                                                                                        "FROM time_activity_summary_detail_table "+
+                                                                                        "WHERE user_id="+info.USER_ID;
+                                                                        db.sequelize.query(sql_line)
+                                                                            .success(function(data_insert1){
+                                                                                for(var t=0;t<data_insert1.length;t++){
+                                                                                    for(var u=0;u<5;u++){
+                                                                                        chainer.add(db.time_activity_summary_report.create({
+                                                                                                user_id      :info.USER_ID,
+                                                                                                Department_id:data_insert1[t].Department_id,
+                                                                                                activity_id  :u+1,
+                                                                                                from_date    :data_insert1[t].from_date,
+                                                                                                to_date      :data_insert1[t].to_date
+                                                                                            }));
+                                                                                    }
+                                                                                }
+                                                                                chainer.runSerially()
+                                                                                    .success(function(data_insert2){
+                                                                                        var sql_update1="SELECT user_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS'time_charge_Dept' "+
+                                                                                                            "FROM time_activity_summary_detail_table "+
+                                                                                                            "WHERE user_id="+info.USER_ID+" AND Department_id IN ("+stringDept+") AND Employee_id IN("+stringEMP+") "+
+                                                                                                            "GROUP BY Employee_id,Department_id,activity_id";
+                                                                                        db.sequelize.query(sql_update1)
+                                                                                            .success(function(data_update1){
+                                                                                                for(var y=0;y<5*data_insert1.length;y++){
+                                                                                                    for(var x=0;x<data_update1.length;x++){
+                                                                                                        chainer.add(db.time_activity_summary_report.update({
+                                                                                                            time_charge_Dept  : data_update1[x].time_charge_Dept,
+                                                                                                        
+                                                                                                        },{
+                                                                                                            user_id       : data_update1[x].user_id,
+                                                                                                                
+                                                                                                            Department_id : data_update1[x].Department_id,
+                                                                                                            activity_id   : data_update1[x].activity_id
+                                                                                                        }));
+                                                                                                    }
+                                                                                                }
+                                                                                                chainer.runSerially()
+                                                                                                    .success(function(data_insert3){
+                                                                                                        var sql_update2="SELECT SUM(time_charge_Dept) AS 'time_charge_Dept_all',Department_id,user_id "+
+                                                                                                                            "FROM time_activity_summary_report "+
+                                                                                                                            "WHERE Department_id IN("+stringDept+") AND user_id="+info.USER_ID+" "+
+                                                                                                                            "GROUP BY Department_id";
+                                                                                                        db.sequelize.query(sql_update2)
+                                                                                                            .success(function(data_update2){
+                                                                                                                for(var m=0;m<5*data_insert1.length;m++){
+                                                                                                                    for(var n=0;n<data_update2.length;n++){
+                                                                                                                        chainer.add(db.time_activity_summary_report.update({
+                                                                                                                            time_charge_Dept_all : data_update2[n].time_charge_Dept_all
+                                                                                                                        },{
+                                                                                                                            Department_id : data_update2[n].Department_id,
+                                                                                                                            user_id : data_update2[n].user_id
+                                                                                                                        }))
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                chainer.runSerially()
+                                                                                                                    .success(function(data_insert4){
+                                                                                                                        var sql_update3="SELECT SUM(t.time_charge_Dept_all) AS 'time_charge_all',t.user_id "+
+                                                                                                                            "FROM "+
+                                                                                                                            "(SELECT * "+
+                                                                                                                            "FROM time_activity_summary_report "+
+                                                                                                                            "WHERE user_id=268 "+
+                                                                                                                            "GROUP BY Department_id "+
+                                                                                                                            ") t";
+                                                                                                                        db.sequelize.query(sql_update3)
+                                                                                                                            .success(function(data_update4){
+                                                                                                                                for(var h=0;h<5*data_insert1.length;h++){
+                                                                                                                                    chainer.add(db.time_activity_summary_report.update({
+                                                                                                                                        time_charge_all   : data_update4[0].time_charge_all
+                                                                                                                                    },{
+                                                                                                                                        user_id : data_update4[0].user_id
+                                                                                                                                    }))
+                                                                                                                                }
+                                                                                                                                chainer.runSerially()
+                                                                                                                                    .success(function(data_success){
+                                                                                                                                        var sql_get_data="SELECT * "+
+                                                                                                                                                            "FROM time_activity_summary_report "+
+                                                                                                                                                            "WHERE user_id="+info.USER_ID+" "+
+                                                                                                                                                            "GROUP BY Department_id,activity_id";
+                                                                                                                                        db.sequelize.query(sql_get_data)
+                                                                                                                                            .success(function(data){
+                                                                                                                                                for(var k=0;k<data.length;k++){
+                                                                                                                                                    chainer.add(db.time_activity_summary_report.update({
+                                                                                                                                                        time_charge_Dept_per : ((data[k].time_charge_Dept/data[k].time_charge_Dept_all)*100).toFixed(2)
+                                                                                                                                                    },{
+                                                                                                                                                        user_id      : data[k].user_id,
+                                                                                                                                                        Department_id: data[k].Department_id,
+                                                                                                                                                        activity_id  : data[k].activity_id
+                                                                                                                                                    }))
                                                                                                                                                 }
-                                                                                                                                            }
-                                                                                                                                        }
+                                                                                                                                                chainer.runSerially()
+                                                                                                                                                    .success(function(data_success_final){
+                                                                                                                                                        res.json({status:"success"});
+                                                                                                                                                    })
+                                                                                                                                                    .error(function(err){
+                                                                                                                                                        console.log("*****ERROR: "+err+" *****");
+                                                                                                                                                    });
+                                                                                                                                                    return;
+                                                                                                                                            })
+                                                                                                                                            .error(function(err){
+                                                                                                                                                console.log("*****ERROR: "+err+" *****");
+                                                                                                                                                res.json({
+                                                                                                                                                    status:"error"
+                                                                                                                                                });
+                                                                                                                                                return;
+                                                                                                                                            })
                                                                                                                                     })
-                                                                                                                                    .error(function(err) {
-                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                    .error(function(err){
+                                                                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                                                                         res.json({
-                                                                                                                                            status: "error"
+                                                                                                                                            status:"error"
                                                                                                                                         });
                                                                                                                                         return;
                                                                                                                                     })
-                                                                                                                            }
+                                                                                                                            })
+                                                                                                                            .error(function(err){
+                                                                                                                                console.log("*****ERROR: "+err+" *****");
+                                                                                                                                res.json({
+                                                                                                                                    status:"error"
+                                                                                                                                });
+                                                                                                                                return;
+                                                                                                                            })
+                                                                                                                    })
+                                                                                                                    .error(function(err){
+                                                                                                                        console.log("*****ERROR: "+err+" *****");
+                                                                                                                        res.json({
+                                                                                                                            status:"error"
+                                                                                                                        });
+                                                                                                                        return;
+                                                                                                                    })
 
-                                                                                                                        })
-                                                                                                                        .error(function(err) {
-                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                            res.json({
-                                                                                                                                status: "error"
-                                                                                                                            });
-                                                                                                                            return;
-                                                                                                                        })
-                                                                                                                })
-                                                                                                                .error(function(err) {
-                                                                                                                    console.log("*****ERROR: " + err + "*****");
-                                                                                                                    res.json({
-                                                                                                                        status: "error"
-                                                                                                                    });
-                                                                                                                    return;
-                                                                                                                })
-                                                                                                        }
+                                                                                                            })
+                                                                                                            .error(function(err){
+                                                                                                                console.log("*****ERROR: "+err+" *****");
+                                                                                                                res.json({
+                                                                                                                    status:"error"
+                                                                                                                });
+                                                                                                                return;
+                                                                                                            })
                                                                                                     })
-                                                                                                    .error(function(err) {
-                                                                                                        console.log("******ERROR: " + err + " *****");
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                                         res.json({
-                                                                                                            status: "error"
+                                                                                                            status:"error"
                                                                                                         });
                                                                                                         return;
                                                                                                     })
-                                                                                            }
-                                                                                            flag5++;
-                                                                                        }
-
+                                                                                            })
+                                                                                            .error(function(err){
+                                                                                                console.log("*****ERROR: "+err+"*****");
+                                                                                                res.json({
+                                                                                                    status:"error"
+                                                                                                });
+                                                                                                return;
+                                                                                            })
                                                                                     })
-                                                                                    .error(function(err) {
-                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                    .error(function(err){
+                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                         res.json({
-                                                                                            status: "error"
+                                                                                            status:"error"
                                                                                         });
                                                                                         return;
                                                                                     })
-                                                                            }
-                                                                        })
-                                                                        .error(function(err) {
-                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                            res.json({
-                                                                                status: "error"
-                                                                            });
-                                                                            return;
-                                                                        })
-                                                                }
+                                                                            })
+                                                                            .error(function(err){
+                                                                                console.log("*****ERROR: "+err+" *****");
+                                                                                res.json({
+                                                                                    status:"error"
+                                                                                });
+                                                                                return;
+                                                                            })
+                                                                    })
+                                                                    .error(function(err){
+                                                                        console.log("*****ERROR: "+err+" *****");
+                                                                        res.json({
+                                                                            status:"error"
+                                                                        });
+                                                                        return;
+                                                                    })
                                                             })
                                                             .error(function(err) {
                                                                 console.log("*****ERROR: " + err + " *****");
