@@ -3869,13 +3869,13 @@ module.exports = {
                                                                     .success(function(data_insert1){
                                                                         var sql_get_data1="SELECT user_id,Employee_id,Department_id,SUM(time_in_lieu_week) AS 'time_in_lieu_Employee',SUM(time_in_lieu_used) AS 'time_in_lieu_used',from_date,to_date "+
                                                                                         "FROM time_in_lieu_detail "+
-                                                                                        "WHERE Employee_id IN ("+stringEMP+") AND Department_id IN ("+stringDept+") AND user_id="+info.USER_ID+" "+
+                                                                                        "WHERE user_id="+info.USER_ID+" "+
                                                                                         "GROUP BY Department_id,Employee_id";
                                                                         db.sequelize.query(sql_get_data1)
                                                                             .success(function(data1){
                                                                                 //console.log(data1)
                                                                                 for(var x =0;x<data1.length;x++){
-                                                                                    for(var y =0;y<data_time_in_lieu_data.length;y++){
+                                                                                   
                                                                                         chainer.add(db.time_in_lieu_detail_report.create({
                                                                                             user_id                    : info.USER_ID,
                                                                                             Employee_id                : data1[x].Employee_id,
@@ -3886,58 +3886,57 @@ module.exports = {
                                                                                             from_date                  : data1[x].from_date,
                                                                                             to_date                    : data1[x].to_date
                                                                                         }))
-                                                                                    }
+                                                                                    
                                                                                 }
                                                                                 chainer.runSerially()
                                                                                     .success(function(data_insert2){
                                                                                         var sql_get_data_2 ="SELECT SUM(time_in_lieu_remain_all) AS 'time_in_lieu_remain_Dept',"+
                                                                                                             "SUM(time_in_lieu_used_all) AS 'time_in_lieu_used_Dept',"+
-                                                                                                            "SUM(time_in_lieu_week_all) AS 'time_in_lieu_week_Dept',Department_id "+
+                                                                                                            "SUM(time_in_lieu_week_all) AS 'time_in_lieu_week_Dept',Department_id,user_id "+
                                                                                                             "FROM time_in_lieu_detail_report "+
                                                                                                             "WHERE Department_id IN("+stringDept+") AND user_id="+info.USER_ID+" "+
                                                                                                             "GROUP BY Department_id ";
                                                                                         db.sequelize.query(sql_get_data_2)
                                                                                             .success(function(data_update2){
-                                                                                                for(var q=0;q<data_update2.length;q++){
-                                                                                                    for(var w=0;w<data_time_in_lieu_data.length;w++){
+                                                                                            //viet lai.
+                                                                                                for(var y=0;y<data1.length;y++){
+                                                                                                    for(var z=0;z<data_update2.length;z++){
                                                                                                         chainer.add(db.time_in_lieu_detail_report.update({
-                                                                                                            time_in_lieu_remain_Dept   : data_update2[q].time_in_lieu_remain_Dept,
-                                                                                                            time_in_lieu_used_Dept     : data_update2[q].time_in_lieu_used_Dept,
-                                                                                                            time_in_lieu_week_Dept     : data_update2[q].time_in_lieu_week_Dept
+                                                                                                            time_in_lieu_remain_Dept: data_update2[z].time_in_lieu_remain_Dept,
+                                                                                                            time_in_lieu_used_Dept  : data_update2[z].time_in_lieu_used_Dept,
+                                                                                                            time_in_lieu_week_Dept  : data_update2[z].time_in_lieu_week_Dept
                                                                                                         },{
-                                                                                                            Department_id              : data_update2[q].Department_id
-                                                                                                        }))
+                                                                                                            Department_id           : data_update2[z].Department_id,
+                                                                                                            user_id                 : data_update2[z].user_id
+                                                                                                        }));
                                                                                                     }
                                                                                                 }
                                                                                                 chainer.runSerially()
                                                                                                     .success(function(data_update3){
-                                                                                                        var sql_get_data3="SELECT SUM(time_in_lieu_remain_Dept) AS 'time_in_lieu_remain_total',"+
-                                                                                                                            "SUM(time_in_lieu_used_Dept) AS 'time_in_lieu_used_total', "+
-                                                                                                                            "SUM(time_in_lieu_week_Dept) AS 'time_in_lieu_week_total', "+
-                                                                                                                            "user_id "+
-                                                                                                                            "FROM time_in_lieu_detail_report "+
-                                                                                                                            "WHERE user_id="+info.USER_ID+" ";
-                                                                                                        db.sequelize.query(sql_get_data3)
+                                                                                                        var sql_total ="SELECT SUM(time_in_lieu_remain_Dept) AS time_in_lieu_remain_total,"+
+                                                                                                                        "SUM(time_in_lieu_used_Dept) AS time_in_lieu_used_total,"+
+                                                                                                                        "SUM(time_in_lieu_week_Dept) AS time_in_lieu_week_total,"+
+                                                                                                                        "user_id "+
+                                                                                                                        "FROM time_in_lieu_detail_report "+
+                                                                                                                        "WHERE user_id="+info.USER_ID;
+                                                                                                        db.sequelize.query(sql_total)
                                                                                                             .success(function(data_update4){
-                                                                                                                for(var m=0;m<data_time_in_lieu_data.length;m++){
+                                                                                                                for(var k=0;k<data1.length;k++){
                                                                                                                     chainer.add(db.time_in_lieu_detail_report.update({
                                                                                                                         time_in_lieu_remain_total  : data_update4[0].time_in_lieu_remain_total,
                                                                                                                         time_in_lieu_used_total    : data_update4[0].time_in_lieu_used_total,
                                                                                                                         time_in_lieu_week_total    : data_update4[0].time_in_lieu_week_total
                                                                                                                     },{
-                                                                                                                        user_id                    : data_update4[0].user_id
+                                                                                                                        user_id    : data_update4[0].user_id
                                                                                                                     }));
                                                                                                                 }
                                                                                                                 chainer.runSerially()
                                                                                                                     .success(function(data_success){
-                                                                                                                        
                                                                                                                         res.json({status:"success"});
+                                                                                                                        
                                                                                                                     })
                                                                                                                     .error(function(err){
                                                                                                                         console.log("*****ERROR: "+err+" *****");
-                                                                                                                        res.json({
-                                                                                                                            status:"error"
-                                                                                                                        });
                                                                                                                         return;
                                                                                                                     })
                                                                                                             })
@@ -3956,6 +3955,7 @@ module.exports = {
                                                                                                         });
                                                                                                         return;
                                                                                                     })
+                                                                                                
                                                                                             })
                                                                                     })
                                                                                     .error(function(err){
