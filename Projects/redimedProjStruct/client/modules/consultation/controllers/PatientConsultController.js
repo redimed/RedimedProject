@@ -3,7 +3,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
-
+		//chien show patien bar
+        $scope.patientBarVer.version='zip';
+        
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		$scope.patientInfo = {};

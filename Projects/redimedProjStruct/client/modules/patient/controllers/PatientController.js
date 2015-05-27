@@ -23,8 +23,18 @@ angular.module("app.loggedIn.patient.controller", [
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams,mdtAppointmentService) {
     $scope.patient_id = $stateParams.patient_id;
     $scope.cal_id = $stateParams.cal_id;
-
-
+    //chien set patient id in allergy
+    $scope.search = {};
+    $scope.search.Patient_id = $scope.patient_id;
+    //change bar
+    $scope.patientBarVer={};
+    $scope.patientBarVer.version='full';
+    $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+        if(toState.name.indexOf('loggedIn.patient')>-1)
+        {
+            $scope.patientBarVer.version='full';
+        }
+    })
     $scope.patient_detail_modules = [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},
@@ -100,7 +110,15 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.getPatientInfo();
     // get appointments
     
-    
+    //chien get list allercy
+    $scope.setListAllergy = function(){
+        PatientService.getListAllergyinPatient($scope.search).then(function(data){
+            if (data.status == 'success') {
+                $scope.listAllergyinPAtient = data.list;
+            };
+        })
+    }
+    $scope.setListAllergy();
 
     // FOR VIEW LIST
     $scope.searchObject = {

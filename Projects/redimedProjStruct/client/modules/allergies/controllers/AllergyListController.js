@@ -34,6 +34,19 @@ angular.module('app.loggedIn.allergy.list.controller',[
                     }
                 },
             ],
+            actionsIsEnable: {
+                show:true,
+                setEnable:function(item){
+                    item.isEnable=0;
+                    console.log(item);
+                    AllergyService.update(item).then(function(data){
+                        if (data.status = "success") {
+                            $scope.setListAllergy();
+                            $scope.allergy_panel.reload();
+                        };
+                    })
+                }
+            },
 		}
 	}
 
@@ -59,6 +72,7 @@ angular.module('app.loggedIn.allergy.list.controller',[
         },
         success: function (response) {
             if (response.status == 'success')
+                $scope.setListAllergy();
                 $scope.allergy_panel.reload();
                 $scope.allergyAddForm.close();
         }
@@ -74,6 +88,7 @@ angular.module('app.loggedIn.allergy.list.controller',[
         },
         success: function (response) {
             if (response.status == 'success')
+                $scope.setListAllergy();
                 $scope.allergy_panel.reload();
                 $scope.allergyEditForm.close();
         }
@@ -110,6 +125,7 @@ angular.module('app.loggedIn.allergy.list.controller',[
         AllergyService.insertPatientAllergy(postData).then(function(response2){
             if(response2.status === 'success'){
                 toastr.success('Allergy applied to patient', 'Successfully');
+                $scope.setListAllergy();
                 $scope.patientAllergyForm.close();
                 $scope.allergy_panel.reload();
             }

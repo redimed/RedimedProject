@@ -32,6 +32,8 @@ module.exports = {
 
 	postInsert: function (req, res) {
         var postData = req.body;
+        postData.isEnable=1;
+        console.log(postData);
         db.Allergy.create(postData)
             .success(function (created) {
                 if (!created) res.json(500, {
@@ -101,7 +103,7 @@ module.exports = {
         var patient_id = req.body.search.Patient_id;
         var sql = "SELECT `cln_allergies`.`allergy_id`, `cln_allergies`.`allergy_name` FROM `cln_allergies` "
                 +"INNER JOIN `cln_patient_allergies` ON `cln_allergies`.`allergy_id` = `cln_patient_allergies`.`allergy_id` "
-                +"WHERE `cln_patient_allergies`.`patient_id` = " + patient_id;
+                +"WHERE `cln_patient_allergies`.`patient_id` = " + patient_id+" AND cln_allergies.isEnable = 1";
         if(req.body.search.allergy_name){
              sql += (" AND `cln_allergies`.`allergy_name` LIKE '%"+req.body.search.allergy_name+"%' ");
         }
@@ -112,7 +114,7 @@ module.exports = {
         .success(function(result){
             var sql2 = "SELECT COUNT(*) as `count` FROM `cln_allergies` "
                 +"INNER JOIN `cln_patient_allergies` ON `cln_allergies`.`allergy_id` = `cln_patient_allergies`.`allergy_id` "
-                +"WHERE `cln_patient_allergies`.`patient_id` = " + patient_id;
+                +"WHERE `cln_patient_allergies`.`patient_id` = " + patient_id+" AND cln_allergies.isEnable = 1";
             if(req.body.search.allergy_name)
                 sql2 += (" AND `cln_allergies`.`allergy_name` LIKE '%"+req.body.search.allergy_name+"%' ");
             db.sequelize.query(sql2)

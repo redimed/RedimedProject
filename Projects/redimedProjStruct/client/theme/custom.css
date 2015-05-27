@@ -2197,6 +2197,7 @@ label{
     border: none !important;
     padding: 3px 5px 3px 5px !important;
     color: white !important;
+    overflow: overlay;
 }
 .un-input-xam-fig-60{
     height: 60px !important;
@@ -2204,6 +2205,7 @@ label{
     border: none !important;
     padding: 3px 5px 3px 5px !important;
     color: white !important;
+    overflow: overlay;
 }
 .un-div-width-90{
     width: 90%;
@@ -2504,6 +2506,11 @@ label{
     top: 8;
     left: 4%;
     width: 200px;
+}
+.un-mdt-button{
+    margin-right: 0; 
+    padding: 4.5px; 
+    margin-left: 10px !important;
 }
 /*TAN NAV ITEM DROPDOWN END*/
 /* phu css */

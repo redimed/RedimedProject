@@ -86,6 +86,9 @@
                                 <a ng-click="action.callback(item)"><i ng-if="action.class" class="{{action.class}}"></i> {{action.title}}</a>
                             </li>
                         </ul>
+                        <button ng-show="options.actionsIsEnable.show == true" ng-click="options.actionsIsEnable.setEnable(item)" type="button" class="btn un-mdt-button un-submit">
+                            Enabled
+                        </button>
                     </div>
                 </td>
                 <!-- END ACTION -->
