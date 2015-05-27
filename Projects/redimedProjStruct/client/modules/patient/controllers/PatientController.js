@@ -34,7 +34,7 @@ angular.module("app.loggedIn.patient.controller", [
             'state': 'loggedIn.patient.claim.list'},
         {wrap:0,'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
-        {wrap:0,'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
+        {wrap:0,'name': 'Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
             'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {wrap:0,'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
             'state': 'loggedIn.patient.im_Map({patient_id:' + $stateParams.patient_id + '})'},
