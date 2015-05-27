@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="164"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -144,6 +144,8 @@ hr_employee.FirstName,
 hr_employee.LastName,
 departments.departmentName,
 time_item_code.ITEM_NAME,
+time_item_code.IS_BILLABLE,
+time_item_code.ITEM_ID,
 item_code_report1.user_id,
 item_code_report1.Employee_id,
 item_code_report1.Department_id,
@@ -175,6 +177,12 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<field name="ITEM_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="IS_BILLABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_ID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="user_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -182,9 +190,6 @@ WHERE item_code_report1.user_id =$P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Department_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="item_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="total_numbers" class="java.lang.Integer">
@@ -380,7 +385,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			<textField>
 				<reportElement x="124" y="0" width="100" height="17" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{IS_BILLABLE}==1?$F{ITEM_ID}:$F{ITEM_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="245" y="0" width="70" height="17" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
