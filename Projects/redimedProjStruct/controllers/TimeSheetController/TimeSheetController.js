@@ -3915,7 +3915,7 @@ module.exports = {
                                                                                                     .success(function(data_update3) {
                                                                                                         var sql_total = "SELECT SUM(t.time_in_lieu_remain_Dept) AS time_in_lieu_remain_total,"+
                                                                                                                         "SUM(t.time_in_lieu_used_Dept) AS time_in_lieu_used_total,"+
-                                                                                                                        "SUM(t.time_in_lieu_week_Dept) AS time_in_lieu_week_all,user_id "+
+                                                                                                                        "SUM(t.time_in_lieu_week_Dept) AS time_in_lieu_week_total,user_id "+
                                                                                                                         "FROM "+
                                                                                                                         "(SELECT * FROM time_in_lieu_detail_report WHERE user_id="+info.USER_ID+" GROUP BY Department_id)t";
                                                                                                         db.sequelize.query(sql_total)
