@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="272"/>
-	<property name="ireport.y" value="34"/>
+	<property name="ireport.x" value="268"/>
+	<property name="ireport.y" value="192"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
@@ -189,14 +189,14 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 		<groupHeader>
 			<band height="31">
 				<staticText>
-					<reportElement x="9" y="-20" width="117" height="20" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
+					<reportElement isPrintRepeatedValues="false" mode="Opaque" x="9" y="-20" width="117" height="20" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="c5a32366-dead-4bf5-aaed-c2d905c1e41c"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
 						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Employee]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="141" y="-20" width="45" height="20" forecolor="#6666FF" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9">
+					<reportElement isPrintRepeatedValues="false" x="141" y="-20" width="45" height="20" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="c746cbdd-4005-468b-84e1-e6ceb64fc9f9">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -206,7 +206,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<text><![CDATA[Billable]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="201" y="-20" width="86" height="20" forecolor="#6666FF" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219">
+					<reportElement isPrintRepeatedValues="false" x="201" y="-20" width="86" height="20" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="899344cd-d8cf-4aed-91cf-7eab605b1219">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unitwidth" value="pixel"/>
@@ -218,7 +218,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<text><![CDATA[Administration]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="304" y="-20" width="52" height="20" forecolor="#6666FF" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0">
+					<reportElement isPrintRepeatedValues="false" x="304" y="-20" width="52" height="20" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="5b854b7a-0842-4c54-a4c1-c9634a85f3a0">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unitwidth" value="pixel"/>
@@ -230,7 +230,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<text><![CDATA[Training]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="464" y="-19" width="78" height="19" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46">
+					<reportElement isPrintRepeatedValues="false" x="464" y="-19" width="78" height="19" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="81527d2f-1d1a-4ab5-b152-6484d2997b46">
 						<property name="local_mesure_unitx" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="local_mesure_unitwidth" value="pixel"/>
@@ -242,7 +242,7 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<text><![CDATA[Non-Charged]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="371" y="-20" width="78" height="20" forecolor="#6666FF" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5">
+					<reportElement isPrintRepeatedValues="false" x="371" y="-20" width="78" height="20" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="7ac5d926-a519-47e1-bf0b-35e8f34476a5">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -259,28 +259,28 @@ ORDER BY time_time_charge_reports1.employee_id]]>
 					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="9" y="-1" width="117" height="1" forecolor="#6666FF" uuid="69cd0784-3ec2-452e-b893-a96ba792145b"/>
+					<reportElement isPrintRepeatedValues="false" x="9" y="-1" width="117" height="1" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="69cd0784-3ec2-452e-b893-a96ba792145b"/>
 				</line>
 				<line>
-					<reportElement x="201" y="-1" width="86" height="1" forecolor="#6666FF" uuid="24ce9247-dd48-443f-8f64-c89fa922491d">
+					<reportElement isPrintRepeatedValues="false" x="201" y="-1" width="86" height="1" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="24ce9247-dd48-443f-8f64-c89fa922491d">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="371" y="-1" width="78" height="1" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0">
+					<reportElement isPrintRepeatedValues="false" x="371" y="-1" width="78" height="1" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="f0895edc-edcf-4444-bf98-292852b594d0">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="464" y="-1" width="78" height="1" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8">
+					<reportElement isPrintRepeatedValues="false" x="464" y="-1" width="78" height="1" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="0fe0c58d-bff6-4d7c-a3a2-6ebbb7d5f2d8">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
 				</line>
 				<line>
-					<reportElement x="735" y="-1" width="60" height="1" forecolor="#6666FF" uuid="7247aa56-3d4c-4591-bd20-241580735672">
+					<reportElement isPrintRepeatedValues="false" x="735" y="-1" width="60" height="1" isPrintInFirstWholeBand="true" forecolor="#6666FF" uuid="7247aa56-3d4c-4591-bd20-241580735672">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
