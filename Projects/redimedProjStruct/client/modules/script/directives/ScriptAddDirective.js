@@ -62,7 +62,7 @@ angular.module('app.loggedIn.script.directive.add', [])
 					isRefNo: 0,
 					EntitlementNo: '',
 					isSafety: 0,
-					isConcessional: '',
+					isConcessional: 0,
 					isPBS: 0,
 					isRPBS: 0,
 					isBrand: 0,
