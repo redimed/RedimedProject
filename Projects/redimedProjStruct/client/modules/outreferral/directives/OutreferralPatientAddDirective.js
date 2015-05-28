@@ -7,7 +7,8 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			patientId: '=',
 			calId: '=',
 			success: '=',
-			doctorId: '='
+			doctorId: '=',
+			data:'='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientAdd.html',
 		link: function(scope, elem, attrs){
@@ -33,7 +34,6 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					form.CAL_ID = calId;
 				}
 			})
-
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);
@@ -82,6 +82,11 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 					templateUrl: 'selectOutdoctorDialog',
 					size:'lg',
 					controller: function($scope, $modalInstance){
+						$scope.$watch('data', function(data){
+								if(typeof data !== 'undefined'){
+									$modalInstance.close(data);
+								}
+							})
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
 						}

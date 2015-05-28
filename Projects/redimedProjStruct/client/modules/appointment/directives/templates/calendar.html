@@ -181,6 +181,11 @@
 </script>
 
 <script type="text/ng-template" id="claimSelect">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
 	<div class="modal-body">	
 		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true" add-success="claim.addSuccess"
 			cal-id="claim.CAL_ID"
@@ -190,6 +195,11 @@
 </script>
 
 <script type="text/ng-template" id="referralAdd">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
 	<div class="modal-body">	
 		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
 		</outreferral-patient-add>
@@ -197,6 +207,11 @@
 </script>
 
 <script type="text/ng-template" id="referralSelect">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
 	<div class="modal-body">
 		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
 			doctor-id="doctorId"

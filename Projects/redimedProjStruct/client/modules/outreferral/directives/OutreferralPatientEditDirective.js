@@ -6,7 +6,8 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 		scope:{
 			patientId: '=',
 			id: '=',
-			success: '='
+			success: '=',
+			data:'='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientEdit.html',
 		link: function(scope, elem, attrs){
@@ -52,6 +53,11 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 					templateUrl: 'selectOutdoctorDialog',
 					size :'lg',
 					controller: function($scope, $modalInstance){
+						$scope.$watch('data', function(data){
+								if(typeof data !== 'undefined'){
+									$modalInstance.close(data);
+								}
+							})
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
 						}

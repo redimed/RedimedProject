@@ -405,7 +405,7 @@ module.exports = {
 
 	postUpdateEnable : function(req,res){
 		var postData = req.body.data;
-		if (postData.isEnable == 0){
+		if (postData.isEnable != 1){
 			postData.isEnable = 1;
 		}
 		else{

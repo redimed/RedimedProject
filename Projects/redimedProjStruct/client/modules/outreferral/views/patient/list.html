@@ -1,23 +1,23 @@
-<div class="select-outside-div">
-	<div class="select-outside-button inline">
-		<label class="btn un-title-label select-outside-button">List Referral</label>
-		<div align="right" class="select-outside-button-right">
-			<button class="btn pull-right un-save-m ng-scope un-select-alert-m" ng-click="outreferral.dialog.add()">Add Referral</button>
-		</div>
-	</div>
-	<outreferral-patient-list reload="outreferral.reload" limit="outreferral.limit" 
+<div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
+ <label class="un-label-popup-header un-bg-label-333333">List Referral</label>
+  <div class="un-padding-top-bottom-10 ">
+    <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+      <button class="btn un-btn-red un-btn-position" ng-click="outreferral.dialog.add()">Add Referral</button>
+     <outreferral-patient-list reload="outreferral.reload" limit="outreferral.limit" 
 		patient-id="outreferral.Patient_id" permission="{'add': false, 'edit': true, 'show': true}">
 	</outreferral-patient-list>
-
-	<script type="text/ng-template" id="dialogOutreferralAdd">
-		<style type="text/css">
-			  .modal.in .modal-dialog {
-			   margin-top:50px;
-			  }
-		 </style>    
-	 	<div class="modal-body">
-	        <outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
-	        </outreferral-patient-add>
-	    </div>
-	</script>	
+    </div>
+  </div>
 </div>
+
+<script type="text/ng-template" id="dialogOutreferralAdd">
+	<style type="text/css">
+		  .modal.in .modal-dialog {
+		   margin-top:50px;
+		  }
+	 </style>    
+ 	<div class="modal-body">
+        <outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
+        </outreferral-patient-add>
+    </div>
+</script>	

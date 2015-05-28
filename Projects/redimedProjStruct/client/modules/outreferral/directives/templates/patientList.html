@@ -5,7 +5,10 @@
 				success="outreferral.success"></outreferral-patient-add>
 		</div>
 </script>
-
+<label class="un-label-popup-header un-bg-label-333333" ng-if="action.add">Add Referral</label>
+		<button class="btn un-btn-red un-btn-position ng-scope" ng-if="action.add" ng-click="outreferral.dialog.add()">
+		Add Referral
+	</button>
 <table class="mdt-table">
 	<thead>
 		<tr>
@@ -29,15 +32,13 @@
 				<button ng-click="outreferral.dialog.show(l)" ng-if="action.show" class="un-button-submit-m ng-scope"><i  class="fa-check-square-o"></i>
 					Show
 				</button>
+				<!-- <button  ng-if="l.isEnable"  ng-click="outreferral.clickEnable(l)" class="un-button-submit-m ng-scope">Enable</button>
+				<button  ng-if="!l.isEnable"  ng-click="outreferral.clickDisale(l)" class="un-button-submit-m ng-scope">Disable</button> -->
 			</td>
 		</tr>
 	</tbody>
 </table>
 <div align="right">
-	<button class="btn un-submit" ng-if="action.add" ng-click="outreferral.dialog.add()" style="margin-top: -25px;">
-		Add Referral
-	</button>
-	&nbsp;
 	<pagination boundary-links="true" total-items="outreferral.count" ng-model="outreferral.search.page" 
     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
     items-per-page="outreferral.search.limit" max-size="outreferral.search.max_size" ng-change="outreferral.onPage(outreferral.search.page)">
