@@ -68,7 +68,7 @@ angular.module("app.loggedIn.patient.controller", [
             'state': 'loggedIn.patient.workcover'},
         {wrap:1,'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.script'},
-        {wrap:1,'name': 'Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
+        {wrap:1,'name': 'Make Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.referral.list'},
         {wrap:1,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices'},    
