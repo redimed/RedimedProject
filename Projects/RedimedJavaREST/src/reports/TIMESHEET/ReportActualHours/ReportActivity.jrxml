@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="268"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="34"/>
 	<style name="table">
 		<box>
@@ -569,7 +569,7 @@ WHERE time_activity_report.user_id=$P{id}]]>
 				<textFieldExpression><![CDATA[($F{time_charge_week}==null || $F{time_charge_week}=="" || $F{time_charge_week}==0)?"-":(($F{time_charge_week}/60<10?"0"+($F{time_charge_week}/60).intValue():($F{time_charge_week}/60).intValue()))+":"+(($F{time_charge_week}%60<10?"0"+$F{time_charge_week}%60:$F{time_charge_week}%60))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="51" y="0" width="107" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
+				<reportElement x="55" y="0" width="103" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
 			</textField>
