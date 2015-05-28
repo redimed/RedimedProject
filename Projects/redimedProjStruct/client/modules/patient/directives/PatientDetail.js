@@ -309,29 +309,30 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                        if (data.status != 'success') {
 	                            toastr.error("Cannot Insert!", "Error");
 	                            return;
+	                        }else{
+	                        	toastr.success('Insert Patient Successfully !!!', "Success");
+		                        if(uploader.queue.length > 0){
+		                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
+									uploader.uploadItem(uploader.queue[0]);
+								}
+		                        if(scope.params.isAtAllPatient!== true){
+		                        	//return
+			                        scope.patient = {};
+			                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
+			                        scope.patient.Patient_id = data.data.Patient_id;
+			                        //end return
+		                        }
+		                        
+		                        initObject();
+		                        CompanyModel.insertPatientCompanies(postData.company_id,data.data.Patient_id);
+		                        if(scope.isClose){
+		                        	scope.closePopup();
+		                        }
+		                        scope.onsuccess = data.data;
+		                        scope.patient = data.data;
 	                        }
-	                        console.log(postData);
-	                        console.log(data.data.Patient_id);
-	                        toastr.success('Insert Patient Successfully !!!', "Success");
-	                        if(uploader.queue.length > 0){
-	                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
-								uploader.uploadItem(uploader.queue[0]);
-							}
-	                        if(scope.params.isAtAllPatient!== true){
-	                        	//return
-		                        scope.patient = {};
-		                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
-		                        scope.patient.Patient_id = data.data.Patient_id;
-		                        //end return
-	                        }
-	                        
-	                        initObject();
 
-	                        if(scope.isClose){
-	                        	scope.closePopup();
-	                        }
-	                        scope.onsuccess = data.data;
-	                        scope.patient = data.data;
+	                        
 	                    })
 					}
 				}else{

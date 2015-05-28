@@ -3,7 +3,8 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 .controller("PatientDetailController", function($scope, $state, $stateParams, PatientService, FileUploader){
 	//init
 	$scope.current_patient = {};
-		
+	//chien set bar null
+    $scope.patientBarVer.version='null';
 	
 	$scope.actionCenter={
 		runWhenFinish:function(){

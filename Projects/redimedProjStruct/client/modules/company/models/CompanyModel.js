@@ -22,6 +22,11 @@ angular.module("app.loggedIn.company.models", [])
         var instanceApi = mainApi.all('addCompanyNotFollow');
         return instanceApi.post({data: data});
     }
+    //chien
+    instanceService.insertPatientCompanies = function(company_id,patient_id){
+        var instanceApi = mainApi.all('insertPatientCompanies');
+        return instanceApi.post({company_id: company_id,patient_id:patient_id});
+    }
     instanceService.listParent = function(data){
         var instanceApi = mainApi.all('listParent');
         return instanceApi.post({data: data});
@@ -71,7 +76,6 @@ angular.module("app.loggedIn.company.models", [])
         var instanceApi = mainApi.all('AddlistNotFollow');
         return instanceApi.post({data: data});
     }
-
     return instanceService;
 })
 

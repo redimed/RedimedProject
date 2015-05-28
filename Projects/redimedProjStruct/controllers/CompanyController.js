@@ -4,6 +4,8 @@ var _ = require('lodash');
 var S = require('string');
 var db = require('../models');
 var kiss=require('./kissUtilsController');
+var moment=require('moment');
+
 module.exports = {
     postDetail: function(req, res){
         var postData = req.body.data;
@@ -819,7 +821,40 @@ module.exports = {
         });
     },
     // ben chien
-    // insertClnPatientCompanies 
+    insertPatientCompanies:function(req,res){
+        var company_id=kiss.checkData(req.body.company_id)?req.body.company_id:null;
+        var patient_id=kiss.checkData(req.body.patient_id)?req.body.patient_id:null;
+        var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
+        if(!kiss.checkListData(company_id,patient_id))
+        {
+            kiss.exlog('insertPatientCompanies',"Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var insertRow={
+            company_id:company_id,
+            patient_id:patient_id,
+            isEnable:1,
+            Creation_date:currentDate
+        }
+        var sql="INSERT INTO `patient_companies` SET ?";
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[insertRow],function(err,result)
+            {
+                if(err)
+                {
+                    kiss.exlog("insertPatientCompanies",err);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    res.json({status:'success'});    
+                    kiss.exlog("insertPatientCompanies",'thanh cong');
+                }
+            });
+        });
+    },
     companyList: function(req,res){
         db.Company.findAll({order: 'Company_name ASC'})
             .success(function(data){

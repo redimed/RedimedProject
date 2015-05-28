@@ -139,7 +139,6 @@ angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 		  		CompanyModel.addCompanyNotFollow(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
-		  				scope.success = true;
 		  				//phan quoc chien set company name and company id
 		    			actionCenter.saveModal(postData.Company_name,response.data[0].id);
 		  			}, function(error){
