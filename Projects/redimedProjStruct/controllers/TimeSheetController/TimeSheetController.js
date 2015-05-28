@@ -4178,7 +4178,7 @@ module.exports = {
 
                                                                                                         }
                                                                                                         stringline1 = stringline1.substring(0, stringline1.length - 1);
-
+                                                                                                        console.log(stringline1);
                                                                                                         var sql_insert_time_activity_report = "INSERT INTO time_activity_report (time_charge_1,per_1,time_charge_2,per_2,time_charge_3,per_3,time_charge_4,per_4,time_charge_5,per_5,Department_id,Employee_id,user_id,time_charge_week,from_date,to_date) VALUE " + stringline1;
                                                                                                         db.sequelize.query(sql_insert_time_activity_report)
                                                                                                             .success(function(data_insert_success) {
