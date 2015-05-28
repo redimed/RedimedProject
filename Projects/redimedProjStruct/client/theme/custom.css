@@ -1782,6 +1782,7 @@ table.timetable-table td:last-child {
     width: 20px;
     position: relative;
     top: 18px;
+    color: black;
 }
 .un_page_panel {
     margin-left: -20px;

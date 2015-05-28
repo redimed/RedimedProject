@@ -549,7 +549,7 @@ module.exports = {
             db.sequelize.query(unique_sql)
             .success(function(rows){
                 if(rows.length > 0){
-                    errors.push({field: 'Company_name', message: 'Alert Name exists'});
+                    errors.push({field: 'Company_name', message: 'Company Name exists'});
                     res.status(500).json({errors: errors});
                     return;
                 }else{
@@ -818,6 +818,8 @@ module.exports = {
             });
         });
     },
+    // ben chien
+    // insertClnPatientCompanies 
     companyList: function(req,res){
         db.Company.findAll({order: 'Company_name ASC'})
             .success(function(data){
