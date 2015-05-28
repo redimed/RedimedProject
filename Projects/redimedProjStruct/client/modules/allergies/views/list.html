@@ -2,13 +2,11 @@
     <label class="un-label-header un-bgBlack un-label-header-padding">Allergy List</label>
     <div class="un-padding-top-bottom-10">
         <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
-            <div class="pull-right navbar-right">
+            <div class="pull-right navbar-right un-padding-bottom-5">
                 <!-- Single button -->
-                  <button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="allergyAddForm.open()">
-                      <i class="fa fa-plus"></i>    New allergy
+                  <button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="allergyAddForm.open()">New allergy
                   </button>
-                  <button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">
-                      <i class="fa fa-search"></i>    Add existed
+                  <button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">Add existed
                   </button>
             </div>
             <my-data-table options="allergy.options" numrows="10"></my-data-table>

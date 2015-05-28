@@ -1,41 +1,33 @@
- <div class="portlet box blue ng-scope">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-medkit"></i> Edit Company
-        </div>
-        <div class="pull-right navbar-right">
-            <!-- Single button -->
-         <button style="margin-right: 0;" type="button" class="btn btn-default green" ng-click="company.save()">
-                    Save
-              </button>
-        </div>
-    </div>
-    <div class="portlet-body">
-		 <!-- FORM --> 
-	   	<form name="FirstForm" novalidate>
+<div class="un_tn_panel_lg un_tn_panel_white un_tn_panel_border_white">
+	<label class="un_tn_panel_lg_label un_tn_panel_label_color_pink">Edit Company</label>
+	<div class="un_tn_panel_action">
+		
+	</div>
+	<div class="un_tn_panel_body">
+		<form name="FirstForm" novalidate>
 			<div class="row">
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Company_name"  >Company name</label>
-				    <input type="text" class="form-control" ng-model="company.form.Company_name" name="CompanyName" id="Company_name">
+				    <label for="company.form.Company_name" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Company name</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Company_name" name="CompanyName" id="Company_name">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Industry">Industry</label>
-				    <input type="text" class="form-control" ng-model="company.form.Industry">
+				    <label for="company.form.Industry" class="un_tn_form_label un_tn_form_label_gray" style="width:110px" >Industry</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Industry">
 				 </div>
 			  </div>
 			   <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Addr">Addr</label>
-				    <input type="text" class="form-control" ng-model="company.form.Addr">
+				    <label for="company.form.Addr" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Addr</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Addr">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.CODE">CODE</label>
-				    <input type="text" class="form-control" ng-model="company.form.CODE" >
+				    <label for="company.form.CODE" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">CODE</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.CODE" >
 				 </div>
 			  </div>
 			</div>
@@ -43,214 +35,279 @@
 			<div class="row">
 			<div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.country">Country</label>
-				    <input type="text" class="form-control" ng-model="company.form.country">
+				    <label for="company.form.country" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Country</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.country">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Phone">Phone</label>
-				    <input type="text" class="form-control" ng-model="company.form.Phone" >
+				    <label for="company.form.Phone" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">Phone</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Phone" >
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.State">State</label>
-				    <input type="text" class="form-control" ng-model="company.form.State" >
+				    <label for="company.form.State" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">State</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.State" >
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Description">Description</label>
-				    <input type="text" class="form-control" ng-model="company.form.Description" >
+				    <label for="company.form.Description" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">Description</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Description" >
 				 </div>
 			  </div>
 			</div>
 			<div class="row">
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.latitude">Latitude</label>
-				    <input type="text" class="form-control" ng-model="company.form.latitude" id="latitude" name="latitude">
+				    <label for="company.form.latitude" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Latitude</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.latitude" id="latitude" name="latitude">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.longitude">Longitude</label>
-				    <input type="text" class="form-control" ng-model="company.form.longitude" id="longitude" name="longitude">
+				    <label for="company.form.longitude" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">Longitude</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.longitude" id="longitude" name="longitude">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.PO_number">PO Number</label>
-				    <input type="text" class="form-control" ng-model="company.form.PO_number" id="PO_number" name="PO_number">
+				    <label for="company.form.PO_number" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">PO Number</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.PO_number" id="PO_number" name="PO_number">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.postcode">Postcode</label>
-				    <input type="text" class="form-control" ng-model="company.form.postcode" name="postcode" id="postcode">
+				    <label for="company.form.postcode" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">Postcode</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.postcode" name="postcode" id="postcode">
 				 </div>
 			  </div>
 			</div>
 			<div class="row">
 			  <div class="col-md-2">
-			  	<div class="form-group">
+			  	<div class="un-checkbox-group">
+				    <input type="checkbox" id="company.form.isExtra" ng-model="company.form.isExtra"  ng-true-value=1 ng-false-value=0 ng-checked="company.form.isExtra">
+				    <label for="company.form.isExtra">
+				        <span class="check"></span>
+				        <span class="box"></span>
+				        <label class="text">Is Extra</label>
+				     </label>
+				</div>
+			  	<!-- <div class="form-group">
 				    <input type="checkbox" id="company.form.isExtra" ng-model="company.form.isExtra"  ng-true-value=1 ng-false-value=0 ng-checked="company.form.isExtra">
 				    <label for="company.form.isExtra">Is Extra</label>
-				 </div>
+				 </div> -->
 			  </div>
 			  <div class="col-md-2">
-			  	<div class="form-group">
+			  	<div class="un-checkbox-group">
+			  		<input type="checkbox" id="company.form.isPO" g-model="company.form.isPO" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isPO">
+				    <label for="company.form.isPO">
+				        <span class="check"></span>
+				        <span class="box"></span>
+				        <label class="text">Is PO</label>
+				    </label>
+			  	</div>
+			  	
+			  	<!-- <div class="form-group">
 				    <input type="checkbox" id="company.form.isPO" ng-model="company.form.isPO" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isPO">
 				     <label for="company.form.isPO">Is PO</label>
-				 </div>
+				 </div> -->
 			  </div>
 			  <div class="col-md-2">
-			  	<div class="form-group">
+			  	<div class="un-checkbox-group">
+			  		<input type="checkbox" id="company.form.isProject" ng-model="company.form.isProject" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isProject">
+				    <label for="company.form.isProject">
+				        <span class="check"></span>
+				        <span class="box"></span>
+				        <label class="text">Is Project</label>
+				    </label>
+			  	</div>
+
+			  	<!-- <div class="form-group">
 				    <input type="checkbox" id="company.form.isProject" ng-model="company.form.isProject" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isProject">
 				     <label for="company.form.isProject">Is Project</label>
-				 </div>
+				 </div> -->
 			  </div>
 			  <div class="col-md-2">
-			  	<div class="form-group">
+			  	<div class="un-checkbox-group">
+			  		<input type="checkbox" id="company.form.isCalendar" ng-model="company.form.isCalendar" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isCalendar">
+				    <label for="company.form.isCalendar">
+				        <span class="check"></span>
+				        <span class="box"></span>
+				        <label class="text">Is Calendar</label>
+				    </label>
+			  	</div>
+
+			  	<!-- <div class="form-group">
 				    <input type="checkbox" id="company.form.isCalendar" ng-model="company.form.isCalendar" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isCalendar">
 				    <label for="company.form.isCalendar">Is Calendar</label>
-				 </div>
+				 </div> -->
 			  </div>
 			  <div class="col-md-2">
-			  	<div class="form-group">
+			  	<div class="un-checkbox-group">
+			  		<input type="checkbox" id="company.form.isInvoiceEmailToUser" ng-model="company.form.isInvoiceEmailToUser" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isInvoiceEmailToUser">
+				    <label for="company.form.isInvoiceEmailToUser">
+				        <span class="check"></span>
+				        <span class="box"></span>
+				        <label class="text">Is Invoice</label>
+				    </label>
+			  	</div>
+
+			  	<!-- <div class="form-group">
 				    <input type="checkbox" id="company.form.isInvoiceEmailToUser" ng-model="company.form.isInvoiceEmailToUser" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isInvoiceEmailToUser">
 				    <label for="company.form.isInvoiceEmailToUser">Is Invoice</label>
-				 </div>
+				 </div> -->
 			  </div>
 			   <div class="col-md-2">
-			  	<div class="form-group">    
+			   	<div class="un-checkbox-group">
+			  		<input type="checkbox" id="company.form.isAddContactEmailToResult" ng-model="company.form.isAddContactEmailToResult" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isAddContactEmailToResult">
+				    <label for="company.form.isAddContactEmailToResult">
+				        <span class="check"></span>
+				        <span class="box"></span>
+				        <label class="text">Is Add To Result</label>
+				    </label>
+			  	</div>
+
+			  	<!-- <div class="form-group">    
 				    <input type="checkbox" id="company.form.isAddContactEmailToResult" ng-model="company.form.isAddContactEmailToResult" ng-true-value=1 ng-false-value=0 ng-checked="company.form.isAddContactEmailToResult">
 				    <label for="company.form.isAddContactEmailToResult">Is Add To Result</label>
-				 </div>
+				 </div> -->
 			  </div>
 			</div>
 			<div class="row">
 		        <div class="col-md-3">
 				  	<div class="form-group">
-					    <label for="company.form.invoice_email">Invoice Email</label>
-					    <input type="text" class="form-control" ng-model="company.form.invoice_email" name="invoice_email" id="invoice_email">
+					    <label for="company.form.invoice_email" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Invoice Email</label>
+					    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.invoice_email" name="invoice_email" id="invoice_email">
 					</div>
 				</div>
 				 <div class="col-md-3">
 				  	<div class="form-group">
-					    <label for="company.form.report_to_email">Report to email</label>
-					    <input type="text" class="form-control" ng-model="company.form.report_to_email" id="report_to_email" name="report_to_email">
+					    <label for="company.form.report_to_email" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">Report to email</label>
+					    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.report_to_email" id="report_to_email" name="report_to_email">
 					 </div>
 				  </div>
 				<div class="col-md-3">
 				  	<div class="form-group">
-					    <label for="company.form.Email">Email</label>
-					    <input type="text" class="form-control" ng-model="company.form.Email" name="Email" id="Email" >
+					    <label for="company.form.Email" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Email</label>
+					    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Email" name="Email" id="Email" >
 					 </div>
 				  </div>
 			    <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.result_email">Result Email</label>
-				    <input type="text" class="form-control" ng-model="company.form.result_email" name="result_email" id="result_email">
+				    <label for="company.form.result_email" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">Result Email</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.result_email" name="result_email" id="result_email">
 				 </div>
 			    </div>
 			</div>
 			<div class="row">
 			 <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Site_medic">Site Medic</label>
-				    <input type="text" class="form-control" ng-model="company.form.Site_medic">
+				    <label for="company.form.Site_medic" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Site Medic</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Site_medic">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.IMA">IMA</label>
-				    <input type="text" class="form-control" ng-model="company.form.IMA">
+				    <label for="company.form.IMA" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">IMA</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.IMA">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Site_name">Site Name</label>
-				    <input type="text" class="form-control" ng-model="company.form.Site_name">
+				    <label for="company.form.Site_name" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Site Name</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Site_name">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Medic_contact_no">Medic Contact No</label>
-				    <input type="text" class="form-control" ng-model="company.form.Medic_contact_no">
+				    <label for="company.form.Medic_contact_no" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">Medic Contact No</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Medic_contact_no">
 				 </div>
 			  </div>
 			</div>
 
 			<div class="row">
-				<div class="col-md-3">
-				  	<div class="form-group">
-					    <label for="company.form.default_status">Default Status</label>
-					    <input type="text" class="form-control" ng-model="company.form.default_status">
-					 </div>
-				  </div>
-			  <!-- parent_id -->
-				  <div class="col-md-3">
-				  	<div class="form-group">
-					    <label for="company.form.parent_id">Parent Company</label>
-					   <!--  <input type="text" class="form-control" ng-model="company.form.parent_id" placeholder="parent_id"> -->
-					   <button class="form-control btn btn-default green" ng-model="company.form.parent_id" ng-click="company.addCompany()">
-					   	<span  ng-if="company.Company_name_Parent">{{company.Company_name_Parent}}</span>
-						<span  ng-if="!company.Company_name_Parent">Select Parent Company</span>
-					   </button>
-					 </div>
-				  </div>
-			 <!-- parent_id -->
-			  <div class="col-md-3">
+			<div class="col-md-3">
 			  	<div class="form-group">
-			  	   <label>Select Insurer</label>
-				   <button class="form-control btn btn-default green" ng-model="company.form.Insurer" ng-click="company.addInsurer()">Select Insurer</button>
+				    <label for="company.form.default_status" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Default Status</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.default_status">
 				 </div>
 			  </div>
-			<!-- add -->
+			  
+			  <!-- parent_id -->
+			  <div class="col-md-3">
+			  	<div class="form-group">
+				    <label for="company.form.parent_id" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">Parent Company</label>
+				   <button class="form-control un_tn_btn_rect un_tn_btn_black" ng-model="company.form.parent_id" ng-click="company.addCompany()">
+				   	<span  ng-if="company.Company_name_Parent">{{company.Company_name_Parent}}</span>
+					<span  ng-if="!company.Company_name_Parent">Select Parent Company</span>
+				   </button>
+				 </div>
+			  </div>
+
+			  <div class="col-md-3">
+			  	<div class="form-group">
+			  		 <label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Select Insurer</label>
+				   <button class="form-control un_tn_btn_rect un_tn_btn_black"  ng-model="company.form.Insurer" ng-click="company.addInsurer()">Select Insurer</button>
+				 </div>
+			  </div>
 			</div>
-			<!-- -->
-			<div class="row">
-			<div class="col-md-12">
-			<div class="portlet box blue ng-scope">
-			   <div class="portlet-title">
-			        <div class="caption">
-			            List Insurer
-			        </div>
-		    	</div>
-		    </div>
-			<div class="row">
-				<div class="col-md-12">
-					<table class="table table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>Insurer Name</th>
-								<th>Address</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="row in company.listInsurer track by $index">
-								<td>{{row.insurer_name}}</td>
-								<td>{{row.address}}</td>
-								<td align="center">
-								<a>
-								   	<button class="btn btn-primary"  ng-if="row.id === company.checkColor"  ng-click="onRowClick(row)">Active</button>
-									<button class="btn btn-secondary" ng-if="row.id !== company.checkColor"  ng-click="onRowClick(row)">Inactive</button>
-								</a>
-								<!-- <a>
-								   	<button class="btn btn-primary"  ng-if="row.checkisEnable"  ng-click="disableInsurer(row)">Enable{{row.isEnable}}</span>
-									<button class="btn btn-secondary" ng-if="!row.checkisEnable"  ng-click="disableInsurer(row)">Disable {{row.isEnable}}</button>
-								</a> -->
-								</td>
-							</tr>
-						</tbody>
-					</table>
+
+			<div class="un_tn_panel_lg un_tn_panel_gray">
+				<label class="un_tn_panel_lg_label un_tn_panel_label_color_black">List Insurer</label>
+				<div class="un_tn_panel_action">
+					
 				</div>
+				<div class="un_tn_panel_body">
+					<div class="row">
+				    	<div class="col-md-12">
+				    		<table class="table table-bordered table-hover un_tn_table_border_black">
+								<thead>
+									<tr>
+										<th>Insurer Name</th>
+										<th>Address</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+							<tr ng-repeat="row in company.listInsurer track by $index">
+										<td>{{row.insurer_name}}</td>
+										<td>{{row.address}}</td>
+										<td align="center">
+										<a>
+										   	<button class="btn btn-primary"  ng-if="row.id === company.checkColor"  ng-click="onRowClick(row)">Active</button>
+											<button class="btn btn-secondary" ng-if="row.id !== company.checkColor"  ng-click="onRowClick(row)">Inactive</button>
+										</a>
+										</td>
+
+									</tr>
+								</tbody>
+							</table>
+				    	</div>
+				    </div>
+				</div>
+			    
 			</div>
-			<!-- -- -->
+
 		</form>
-	<!--  END FORM -->
+
 	</div>
+	
+</div>
+
+<!-- ng-click="navigator.prev()" -->
+
+
+
+<!-- <div class="navbar-left"> -->
+<div>
+	<button style="margin-right: 0;" type="button" class="un_tn_btn un_tn_btn_orange" ng-click="company.save()">
+		Save
+	</button>
+
+	<button style="margin-right: 0;" type="button" class="un_tn_btn un_tn_btn_gray" ng-click="cancel()">
+	    Cancel
+	</button>
 </div>

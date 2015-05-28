@@ -49,14 +49,14 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				postData.CAL_ID = $stateParams.cal_id;
 				postData.Last_updated_by = user_id;
 				postData.ID = $stateParams.scriptId;
-				postData.Creation_date = ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
-				postData.Last_update_date =  ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
+				postData.Creation_date = moment().format('YYYY-MM-DD');
+				postData.Last_update_date =  moment().format('YYYY-MM-DD');
 				postData.doctordate = ConfigService.convertToDB(postData.doctordate);
 				postData.patientDate = ConfigService.convertToDB(postData.patientDate);
 
 				ScriptModel.edit(postData)
 				.then(function(response){
-					console.log(postData);
+					//console.log(postData);
 					toastr.success('Edited Successfully');
 					$state.go('loggedIn.patient.script');
 				}, function(error){
@@ -76,15 +76,15 @@ angular.module('app.loggedIn.script.directive.edit', [])
 					Patient_id: '',
 					CAL_ID: '',
 					prescriber: '',
-					scriptNum: '',
+					scriptNum: 0,
 					Medicare: '',
-					isRefNo: '',
+					isRefNo: 0,
 					EntitlementNo: '',
-					isSafety: '',
-					isConcessional: '',
-					isPBS: '',
-					isRPBS: '',
-					isBrand: '',
+					isSafety: 0,
+					isConcessional: 0,
+					isPBS: 0,
+					isRPBS: 0,
+					isBrand: 0,
 					pharmacist: '',
 					doctorSign: '',
 					doctordate: '',

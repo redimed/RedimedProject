@@ -1,6 +1,7 @@
 <script type="text/ng-template" id="referralAdd">
 		<div class="modal-body">	
-			<outreferral-patient-add patient-id="outreferral.Patient_id" cal-id="outreferral.CAL_ID" 
+			<outreferral-patient-add patient-id="outreferral.Patient_id" cal-id="outreferral.calId" 
+				doctor-id="outreferral.doctorId"
 				success="outreferral.success"></outreferral-patient-add>
 		</div>
 </script>
@@ -33,6 +34,10 @@
 	</tbody>
 </table>
 <div align="right">
+	<button class="btn un-submit" ng-if="action.add" ng-click="outreferral.dialog.add()" style="margin-top: -25px;">
+		Add Referral
+	</button>
+	&nbsp;
 	<pagination boundary-links="true" total-items="outreferral.count" ng-model="outreferral.search.page" 
     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
     items-per-page="outreferral.search.limit" max-size="outreferral.search.max_size" ng-change="outreferral.onPage(outreferral.search.page)">

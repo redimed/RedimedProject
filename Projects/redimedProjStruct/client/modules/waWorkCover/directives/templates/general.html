@@ -3,182 +3,171 @@
         <accordion-group heading="WORKER'S, EMPLOYER'S AND INSURANCE'S DETAILS" is-open="isOpen">
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Patient">Patient name</label>
                         </div>
-                        <input class="un-input-customs" name="Patient" ng-model="patient.fullname" placeholder="Patient" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Patient" ng-model="patient.fullname" placeholder="Patient" float-label readonly="readonly"/>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="DOB">Date of birth</label>
                         </div>
-                        <input class="un-input-customs" readonly="readonly" name="DOB" ng-model="patient.DOB" placeholder="Date of birth" float-label ui-date="{dateFormat: 'dd/mm/yy'}" />
+                        <input class="un-input-scustoms" readonly="readonly" name="DOB" ng-model="patient.DOB" placeholder="Date of birth" float-label ui-date="{dateFormat: 'dd/mm/yy'}" />
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
+                            <label class="un-bgWhite-customs" for="Address">Address</label>
+                        </div>
+                        <input class="un-input-scustoms" name="Address" ng-model="patient.Address1" placeholder="Address" float-label readonly="readonly"/>
                     </div>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
-                            <label class="un-bgWhite-customs" for="Address">Address</label>
-                        </div>
-                        <input class="un-input-customs" name="Address" ng-model="patient.Address1" placeholder="Address" float-label readonly="readonly"/>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Suburb">Suburb</label>
                         </div>
-                        <input class="un-input-customs" name="Suburb" ng-model="patient.Suburb" placeholder="Suburb" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Suburb" ng-model="patient.Suburb" placeholder="Suburb" float-label readonly="readonly"/>
                     </div>
-                    <div class="col-md-3 col-sm-3">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Postcode">Postcode</label>
                         </div>
-                        <input class="un-input-customs" name="Postcode" ng-model="patient.Post_code" placeholder="Postcode" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Postcode" ng-model="patient.Post_code" placeholder="Postcode" float-label readonly="readonly"/>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
+                            <label class="un-bgWhite-customs" for="Home phone">Home phone</label>
+                        </div>
+                        <input class="un-input-scustoms" name="Home phone" ng-model="patient.Home_phone" placeholder="Home phone" float-label readonly="readonly"/>
                     </div>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-ms-12 col-sm-12">
-                     <div class="col-md-4 col-sm-4">
-                        <div class="un-label-header-customs">
-                            <label class="un-bgWhite-customs" for="Home phone">Home phone</label>
-                        </div>
-                        <input class="un-input-customs" name="Home phone" ng-model="patient.Home_phone" placeholder="Home phone" float-label readonly="readonly"/>
-                    </div>
                     <div class="col-md-4 col-sm-4">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Work phone">Work phone</label>
                         </div>
-                        <input class="un-input-customs" name="Work phone" ng-model="patient.Work_phone" placeholder="Work phone" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Work phone" ng-model="patient.Work_phone" placeholder="Work phone" float-label readonly="readonly"/>
                     </div>
                     <div class="col-md-4 col-sm-4">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Mobile phone">Mobile phone</label>
                         </div>
-                        <input class="un-input-customs" name="Mobile phone" ng-model="patient.Mobile" placeholder="Mobile phone" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Mobile phone" ng-model="patient.Mobile" placeholder="Mobile phone" float-label readonly="readonly"/>
                     </div>
-                </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Next of kin">Next of kin</label>
                         </div>
-                        <input class="un-input-customs" name="Next of kin" ng-model="patient.NextOfKin" placeholder="Next of kin" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Next of kin" ng-model="patient.NextOfKin" placeholder="Next of kin" float-label readonly="readonly"/>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Telephone">Telephone</label>
                         </div>
-                        <input class="un-input-customs" name="Telephone" ng-model="patient.Telephone" placeholder="Telephone" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Telephone" ng-model="patient.Telephone" placeholder="Telephone" float-label readonly="readonly"/>
                     </div>
-                </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Company's name">Company's name</label>
                         </div>
-                        <input class="un-input-customs" name="Company's name" ng-model="companyInfo.Company_name" placeholder="Company's name" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Company's name" ng-model="companyInfo.Company_name" placeholder="Company's name" float-label readonly="readonly"/>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Insurer">Insurer</label>
                         </div>
-                        <input class="un-input-customs" name="Insurer" ng-model="insurer.insurer_name" placeholder="Insurer" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="Insurer" ng-model="insurer.insurer_name" placeholder="Insurer" float-label readonly="readonly"/>
                     </div>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="IMA">IMA</label>
                         </div>
                         <input class="un-input-customs" name="IMA" ng-model="companyInfo.IMA" placeholder="IMA" float-label />
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Address">Address</label>
                         </div>
                         <input class="un-input-customs" name="Address" ng-model="companyInfo.Addr" placeholder="Address" float-label readonly="readonly"/>
                     </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
+                            <label class="un-bgWhite-customs" for="Email">Email</label>
+                        </div>
+                        <input class="un-input-scustoms" name="Email" ng-model="companyInfo.Email" placeholder="Email" float-label  readonly="readonly"/>
+                    </div>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
-                            <label class="un-bgWhite-customs" for="Email">Email</label>
-                        </div>
-                        <input class="un-input-customs" name="Email" ng-model="companyInfo.Email" placeholder="Email" float-label  readonly="readonly"/>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Phone">Phone</label>
                         </div>
                         <input class="un-input-customs" name="Phone" ng-model="companyInfo.Phone" placeholder="Phone" float-label readonly="readonly"/>
                     </div>
-                </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="MembershipNo">Membership No.</label>
                         </div>
-                        <input class="un-input-customs" name="MembershipNo" ng-model="patient.MemberShip_no" placeholder="Membership No." float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="MembershipNo" ng-model="patient.MemberShip_no" placeholder="Membership No." float-label readonly="readonly"/>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="PositionNo">Position No.</label>
                         </div>
-                        <input class="un-input-customs" name="PositionNo" ng-model="undefinedInfo.PositionNo" placeholder="Position No." float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="PositionNo" ng-model="undefinedInfo.PositionNo" placeholder="Position No." float-label readonly="readonly"/>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Expiry">Expiry date</label>
                         </div>
-                        <input class="un-input-customs" name="Expiry" ng-model="undefinedInfo.Expiry" placeholder="Expiry date" float-label readonly="readonly" ui-date="{dateFormat:'dd/mm/yy'}"/>
+                        <input class="un-input-scustoms" name="Expiry" ng-model="undefinedInfo.Expiry" placeholder="Expiry date" float-label readonly="readonly" ui-date="{dateFormat:'dd/mm/yy'}"/>
                     </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="HealthFun">Health Fund</label>
                         </div>
-                        <input class="un-input-customs" name="HealthFun" ng-model="undefinedInfo.HealthFun" placeholder="Health Fund" float-label readonly="readonly"/>
+                        <input class="un-input-scustoms" name="HealthFun" ng-model="undefinedInfo.HealthFun" placeholder="Health Fund" float-label readonly="readonly"/>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
+                            <label class="un-bgWhite-customs" for="Medicare">Medicare No.</label>
+                        </div>
+                        <input class="un-input-scustoms" name="Expiry" ng-model="patient.Medicare_no" placeholder="Medicare No." float-label readonly="readonly"/>
                     </div>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
-                            <label class="un-bgWhite-customs" for="Medicare">Medicare No.</label>
-                        </div>
-                        <input class="un-input-customs" name="Expiry" ng-model="patient.Medicare_no" placeholder="Medicare No." float-label readonly="readonly"/>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="VANo">VA No.</label>
                         </div>
                         <input class="un-input-customs" name="VANo" ng-model="patient.DVA_No" placeholder="VA No." float-label readonly="readonly"/>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -186,140 +175,114 @@
         </accordion-group>
         <accordion-group heading="DESCRIPTION OF INJURY" is-open="isOpen">
             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="injuryDate">Date of accident/onset</label>
                     </div>
-                    <input class="un-input-customs" name="injuryDate" ng-model="generalwc.injuryDate" placeholder="Date of accident/onset" float-label readonly="readonly" ui-date="{dateFormat:'dd/mm/yy'}"/>
+                    <input class="un-input-scustoms" name="injuryDate" ng-model="generalwc.injuryDate" placeholder="Date of accident/onset" float-label readonly="readonly" ui-date="{dateFormat:'dd/mm/yy'}"/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Symptoms">Symptoms</label>
                     </div>
-                    <input class="un-input-customs" name="Symptoms" ng-model="generalwc.Symptoms" placeholder="Symptoms" float-label/>
+                    <input class="un-input-scustoms" name="Symptoms" ng-model="generalwc.Symptoms" placeholder="Symptoms" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Vital signs">Vital signs</label>
                     </div>
-                    <input class="un-input-customs" name="Vital signs" ng-model="generalwc.vitalSigns" placeholder="Vital signs" float-label/>
+                    <input class="un-input-scustoms" name="Vital signs" ng-model="generalwc.vitalSigns" placeholder="Vital signs" float-label/>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="medicalHistory">Medical history</label>
                     </div>
-                    <input class="un-input-customs" name="medicalHistory" ng-model="generalwc.medicalHistory" placeholder="Medical history" float-label/>
+                    <input class="un-input-scustoms" name="medicalHistory" ng-model="generalwc.medicalHistory" placeholder="Medical history" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Medications">Medications</label>
                     </div>
-                    <input class="un-input-customs" name="Medications" ng-model="generalwc.medications" placeholder="Medications" float-label/>
+                    <input class="un-input-scustoms" name="Medications" ng-model="generalwc.medications" placeholder="Medications" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Allergies">Allergies</label>
                     </div>
-                    <input class="un-input-customs" name="Allergies" ng-model="generalwc.allergies" placeholder="Allergies" float-label/>
+                    <input class="un-input-scustoms" name="Allergies" ng-model="generalwc.allergies" placeholder="Allergies" float-label/>
                 </div>
             </div>
             <div class="break-row"></div>
         </accordion-group>
         <accordion-group heading="ASSESSMENT" is-open="isOpen">
             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Symptomology">Symptomology</label>
                     </div>
-                    <input class="un-input-customs" name="Symptomology" ng-model="generalwc.symptomology" placeholder="Symptomology" float-label/>
+                    <input class="un-input-scustoms" name="Symptomology" ng-model="generalwc.symptomology" placeholder="Symptomology" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-               <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Examination">Examination</label>
                     </div>
-                    <input class="un-input-customs" name="Examination" ng-model="generalwc.examiantion" placeholder="Examination" float-label/>
+                    <input class="un-input-scustoms" name="Examination" ng-model="generalwc.examiantion" placeholder="Examination" float-label/>
                 </div>
-            <div class="break-row"></div>
-               <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-4 col-sm-4">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="diffDiagnosis">Differential Diagnosis</label>
                     </div>
-                    <input class="un-input-customs" name="diffDiagnosis" ng-model="generalwc.diffDiagnosis" placeholder="Differential Diagnosis" float-label/>
+                    <input class="un-input-scustoms" name="diffDiagnosis" ng-model="generalwc.diffDiagnosis" placeholder="Differential Diagnosis" />
                 </div>
             </div>
             <div class="break-row"></div>
         </accordion-group>
         <accordion-group heading="MANAGEMENT PLAN" is-open="isOpen">
             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-6 col-sm-6">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Medication">Medication</label>
                     </div>
-                    <input class="un-input-customs" name="Medication" ng-model="generalwc.medication" placeholder="Medication" float-label/>
+                    <input class="un-input-scustoms" name="Medication" ng-model="generalwc.medication" placeholder="Medication" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-6 col-sm-6">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Physio">Physio/allied</label>
                     </div>
-                    <input class="un-input-customs" name="Physio" ng-model="generalwc.physio" placeholder="Physio/allied" float-label/>
+                    <input class="un-input-scustoms" name="Physio" ng-model="generalwc.physio" placeholder="Physio/allied" float-label/>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-6 col-sm-6">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="dutyrestriction">Duty restriction</label>
                     </div>
-                    <input class="un-input-customs" name="dutyrestriction" ng-model="generalwc.dutyrestriction" placeholder="Duty restriction" float-label/>
+                    <input class="un-input-scustoms" name="dutyrestriction" ng-model="generalwc.dutyrestriction" placeholder="Duty restriction" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-6 col-sm-6">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Recommendations">Recommendations</label>
                     </div>
-                    <input class="un-input-customs" name="Recommendations" ng-model="generalwc.recommendations" placeholder="Recommendations" float-label/>
+                    <input class="un-input-scustoms" name="Recommendations" ng-model="generalwc.recommendations" placeholder="Recommendations" float-label/>
                 </div>
             </div>
             <div class="break-row"></div>
             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                   <div class="un-label-header-customs">
+                <div class="col-md-6 col-sm-6">
+                   <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="followup">Follow up/review</label>
                     </div>
-                    <input class="un-input-customs" name="followup" ng-model="generalwc.followup" placeholder="Follow up/review" float-label/>
+                    <input class="un-input-scustoms" name="followup" ng-model="generalwc.followup" placeholder="Follow up/review" float-label/>
                 </div>
-            </div>
-            <div class="break-row"></div>
-             <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="un-label-header-customs">
+                <div class="col-md-6 col-sm-6">
+                    <div class="un-labels-headers-customs">
                         <label class="un-bgWhite-customs" for="Referrals">Referrals</label>
                     </div>
-                    <input class="un-input-customs" name="Referrals" ng-model="generalwc.referrals" placeholder="Referrals" float-label/>
+                    <input class="un-input-scustoms" name="Referrals" ng-model="generalwc.referrals" placeholder="Referrals" float-label/>
                 </div>
             </div>
             <div class="break-row"></div>
@@ -328,13 +291,13 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="doc_name">Name</label>
                         </div>
                         <input class="un-input-customs" name="doc_name" ng-model="doctor.NAME" placeholder="Name" float-label readonly="readonly">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="Provider_no">AHPRA no. MED</label>
                         </div>
                         <input class="un-input-customs" name="Provider_no" ng-model="doctor.Provider_no" placeholder="AHPRA no. MED" float-label readonly="readonly">
@@ -345,13 +308,13 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="doc_Address">Address</label>
                         </div>
                         <input class="un-input-customs" name="doc_Address" ng-model="doctor.Address" placeholder="Address" float-label readonly="readonly">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="doc_email">Email</label>
                         </div>
                         <input class="un-input-customs" name="doc_email" ng-model="doctor.Email" placeholder="Email" float-label readonly="readonly">
@@ -363,30 +326,30 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="doc_Phone">Phone</label>
                         </div>
                         <input class="un-input-customs" name="doc_Phone" ng-model="doctor.Phone" placeholder="Phone" float-label readonly="readonly">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="doc_Phone">Sign</label>
                         </div>
-                        <img src="{{doctor.Signature}}" style="width:100%; height: 200px;" />
+                        <img src="{{doctor.Signature}}" style="width:100%; height: 200px; margin-bottom: 10px;" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="doc_Fax">Fax</label>
                         </div>
                         <input class="un-input-customs" name="doc_Fax" ng-model="doctor.Fax" placeholder="Fax" float-label readonly="readonly">
                         </span>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <div class="un-label-header-customs">
+                        <div class="un-labels-headers-customs">
                             <label class="un-bgWhite-customs" for="examDate">Date</label>
                         </div>
                         <input class="un-input-customs" name="examDate" ng-model="generalwc.examDate" placeholder="Date" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
@@ -397,22 +360,16 @@
         <div class="break-row-alt"></div>
         <div class="row" ng-show="params.edit===false">
             <div class="col-md-offset-10 col-sm-offset-10 col-md-2 col-sm-2">
-                <button type="button" class="un-button-custom" ng-show="params.edit===false" ng-click="clickAction()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Submit
-                </button>
+                <button type="button" class="un-button-custom" ng-show="params.edit===false" ng-click="clickAction()">Submit</button>
             </div>
         </div>
         <div class="row" ng-show="params.edit===true">
             <div class="col-md-offset-9 col-sm-offset-9 col-md-3 col-sm-3">
 
-                <button type="button" class="un-button-custom" ng-show="params.edit===true" ng-click="clickAction()">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update
-                </button>
+                <button type="button" class="un-button-custom" ng-show="params.edit===true" ng-click="clickAction()">Save</button>
 
 
-                <a type="button" class="un-button-custom" ng-show="params.edit===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/general/{{generalwc.id}}">
-                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print
-                </a>
+                <a type="button" class="un-button-custom" ng-show="params.edit===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/general/{{generalwc.id}}">Print</a>
 
             </div>
         </div>

@@ -3,7 +3,7 @@ var commonFunction =  require('../knex-function.js');
 var _ = require('lodash');
 var S = require('string');
 var db = require('../models');
-
+var kiss=require('./kissUtilsController');
 module.exports = {
     postDetail: function(req, res){
         var postData = req.body.data;
@@ -275,6 +275,12 @@ module.exports = {
                 res.json(500, {error: error});
             })
     },
+
+    /**
+     * Lay danh sach company cua patient
+     * create by: unknown
+     * modify by: tannv.dts@gmail.com
+     */
     postList: function(req, res){
         var postData = req.body.data;
         var pagination = req.body.pagination;
@@ -316,6 +322,7 @@ module.exports = {
             res.json(500, {'status': 'error', 'message': error});
         })
     },
+
     postAdd : function(req,res){
             var postData = req.body.data;
            var errors = [];

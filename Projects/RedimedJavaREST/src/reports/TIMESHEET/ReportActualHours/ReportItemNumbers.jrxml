@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
-	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="164"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -144,6 +144,8 @@ hr_employee.FirstName,
 hr_employee.LastName,
 departments.departmentName,
 time_item_code.ITEM_NAME,
+time_item_code.IS_BILLABLE,
+time_item_code.ITEM_ID,
 item_code_report1.user_id,
 item_code_report1.Employee_id,
 item_code_report1.Department_id,
@@ -155,7 +157,9 @@ item_code_report1.total_items,
 item_code_report1.total_items_Dept,
 item_code_report1.time_charge_average,
 item_code_report1.from_date,
-item_code_report1.to_date
+item_code_report1.to_date,
+item_code_report1.average_item_employee,
+item_code_report1.average_item_dept
 FROM item_code_report1
 INNER JOIN hr_employee ON hr_employee.Employee_ID = item_code_report1.Employee_id
 INNER JOIN departments ON departments.departmentid = item_code_report1.Department_id
@@ -175,6 +179,12 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<field name="ITEM_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="IS_BILLABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_ID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="user_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -182,9 +192,6 @@ WHERE item_code_report1.user_id =$P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Department_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="item_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="total_numbers" class="java.lang.Integer">
@@ -211,6 +218,12 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<field name="to_date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="average_item_employee" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="average_item_dept" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<group name="DeptGroup">
 		<groupExpression><![CDATA[$F{departmentName}]]></groupExpression>
 	</group>
@@ -232,7 +245,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<staticText>
 					<reportElement x="14" y="0" width="70" height="19" forecolor="#6666FF" uuid="69772fa3-b301-46ab-bba9-19e53e529d6b"/>
 					<textElement textAlignment="Left" verticalAlignment="Bottom">
-						<font size="11" isBold="true" isItalic="false" isUnderline="false"/>
+						<font size="11" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
@@ -249,7 +262,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textField>
 					<reportElement x="345" y="1" width="45" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["~"+$F{average_item_dept}+"%"]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="124" y="21" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
@@ -333,28 +346,28 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			<staticText>
 				<reportElement x="14" y="148" width="100" height="20" forecolor="#6666FF" uuid="6021cf2b-817e-4c86-ac7f-8d72c9250134"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+					<font size="10" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Employee Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="124" y="148" width="100" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+					<font size="10" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Item Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="234" y="148" width="81" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+					<font size="10" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total numbers]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="325" y="148" width="65" height="20" forecolor="#6666FF" uuid="15ff9fa9-9aaf-4d9c-9ff9-dad9bbc81c6b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true" isItalic="false" isUnderline="false"/>
+					<font size="10" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Average]]></text>
 			</staticText>
@@ -380,7 +393,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			<textField>
 				<reportElement x="124" y="0" width="100" height="17" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{ITEM_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{IS_BILLABLE}==1?$F{ITEM_ID}:$F{ITEM_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="245" y="0" width="70" height="17" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
@@ -390,7 +403,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			<textField>
 				<reportElement x="345" y="0" width="45" height="17" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{time_charge_average}+"%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["~"+$F{average_item_employee}+"%"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -409,7 +422,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["~100.0%"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="124" y="21" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
@@ -432,7 +445,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 			<staticText>
 				<reportElement x="14" y="0" width="70" height="20" forecolor="#6666FF" uuid="fc3b8e4f-7ca5-46f2-9bd7-853a3c6ea3f6"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom">
-					<font size="11" isBold="true" isItalic="false" isUnderline="false"/>
+					<font size="11" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>

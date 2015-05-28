@@ -98,7 +98,9 @@
 								<i class="fa fa-caret-right"></i>
 							</a>
 						</a>
-						<br>
+						<span ng-if="col.patients.length > 1 && $index < col.patients.length-1">
+							&nbsp;|&nbsp;
+						</span>
 					</span>
 				</span>
 			</div>
@@ -107,13 +109,13 @@
 </div>
 
 <!-- RIGHT CLICK DROPDOWN MENU -->
-<!--<ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">
+<ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">
 	<li>
 		<a ng-click="appointment.dialog.rightAdd(appointment.selectedAppointment, appointment.selectedCol)">
 			Make new Booking
 		</a>
 	</li>
-</ul>-->
+</ul>
 <!-- END RIGHT CLICK DROPDOWN MENU -->
 
 <script type="text/ng-template" id="appointmentAdd">
@@ -197,6 +199,8 @@
 <script type="text/ng-template" id="referralSelect">
 	<div class="modal-body">
 		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
+			doctor-id="doctorId"
+			cal-id="calId"
 			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
 			permission="{edit: false, remove: false, add: true}">
 		</outreferral-patient-list>

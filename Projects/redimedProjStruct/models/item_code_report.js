@@ -4,7 +4,7 @@ module.exports = function(sequelize,DataTypes){
         user_id :DataTypes.INTEGER(11),
         Employee_id : DataTypes.INTEGER(11) ,
         Department_id : DataTypes.INTEGER(11) ,
-        item_id :DataTypes.STRING(100),
+        item_id :DataTypes.STRING(20),
         item_id_count :DataTypes.INTEGER(11),
         time_charge_all:DataTypes.INTEGER(11),
         from_date :DataTypes.DATE,

@@ -26,6 +26,14 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 				last_updated_by: user_id,
 			}
 
+			console.log(scope.calId);
+
+			scope.$watch('calId', function(calId){
+				if(typeof calId !== 'undefined'){
+					form.CAL_ID = calId;
+				}
+			})
+
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);
@@ -50,22 +58,24 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			}
 			
 			scope.$watch('doctorId', function(doctorId){
-				var postData = doctorId;
-				
-				OutreferralModel.DotorFromUserId(postData)
-				.then(function(response){
-					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
-					scope.referdoctor.name = response.data[0].NAME;
-				}, function(error){})
+				if(typeof doctorId !== 'undefined'){
+					var postData = doctorId;
+					
+					OutreferralModel.DotorFromUserId(postData)
+					.then(function(response){
+						scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
+						scope.referdoctor.name = response.data[0].NAME;
+					}, function(error){})
+				}
 			})
 			var load = function(){
-				var postData = scope.doctorId;
+				/*var postData = scope.doctorId;
 				
 				OutreferralModel.DotorFromUserId(postData)
 				.then(function(response){
 					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
 					scope.referdoctor.name = response.data[0].NAME;
-				}, function(error){})
+				}, function(error){})*/
 			}
 			var outdoctorSelect = function(){
 				$modal.open({

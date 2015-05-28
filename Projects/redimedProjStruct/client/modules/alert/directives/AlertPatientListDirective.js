@@ -163,7 +163,8 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				onOrderBy: function(option){ onOrderBy(option); },
 				onPage: function(page){ onPage(page); },
 				onCheckbox: function(option){ onCheckbox(option); },
-				disablePatientAlert : function(l){disablePatientAlert(l);}
+				disablePatientAlert : function(l){disablePatientAlert(l);},
+				checkedit:scope.action.edit
 			}
 
 			scope.alert.load();

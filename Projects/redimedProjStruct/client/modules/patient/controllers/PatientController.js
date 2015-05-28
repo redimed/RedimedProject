@@ -23,8 +23,18 @@ angular.module("app.loggedIn.patient.controller", [
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams,mdtAppointmentService) {
     $scope.patient_id = $stateParams.patient_id;
     $scope.cal_id = $stateParams.cal_id;
-
-
+    //chien set patient id in allergy
+    $scope.search = {};
+    $scope.search.Patient_id = $scope.patient_id;
+    //change bar
+    $scope.patientBarVer={};
+    $scope.patientBarVer.version='full';
+    $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+        if(toState.name.indexOf('loggedIn.patient')>-1)
+        {
+            $scope.patientBarVer.version='full';
+        }
+    })
     $scope.patient_detail_modules = [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},
@@ -34,7 +44,7 @@ angular.module("app.loggedIn.patient.controller", [
             'state': 'loggedIn.patient.claim.list'},
         {wrap:0,'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
             'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
-        {wrap:0,'name': 'Outside Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
+        {wrap:0,'name': 'Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
             'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {wrap:0,'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
             'state': 'loggedIn.patient.im_Map({patient_id:' + $stateParams.patient_id + '})'},
@@ -58,7 +68,7 @@ angular.module("app.loggedIn.patient.controller", [
         //     'state': 'loggedIn.patient.workcover'},
         {wrap:1,'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.script'},
-        {wrap:1,'name': 'Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
+        {wrap:1,'name': 'Make Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
             'state': 'loggedIn.patient.referral.list'},
         {wrap:1,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices'},    
@@ -100,7 +110,15 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.getPatientInfo();
     // get appointments
     
-    
+    //chien get list allercy
+    $scope.setListAllergy = function(){
+        PatientService.getListAllergyinPatient($scope.search).then(function(data){
+            if (data.status == 'success') {
+                $scope.listAllergyinPAtient = data.list;
+            };
+        })
+    }
+    $scope.setListAllergy();
 
     // FOR VIEW LIST
     $scope.searchObject = {
