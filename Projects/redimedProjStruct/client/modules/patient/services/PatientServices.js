@@ -263,7 +263,6 @@ angular.module("app.loggedIn.patient.services", [])
         return detailApi.post(data);
     }
 
-
     instanceService.getPatient = function (patient_id) {
         var detailApi = appApi.all("patient/get_by_id");
         return detailApi.post({'patient_id': patient_id});

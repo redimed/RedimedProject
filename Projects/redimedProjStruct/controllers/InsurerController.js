@@ -47,5 +47,19 @@ module.exports = {
 		.error(function(error){
 			res.status(500).json({error: error, sql: sql});
 		})
-	}	
+	},
+
+	postGetByPatient: function(req,res){
+		var patientId = req.body.patient_id;
+
+		db.sequelize.query("SELECT * FROM cln_insurers i "+
+						   "WHERE i.id = (SELECT c.`Insurer` FROM companies c "+
+						   "WHERE c.id = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?))",null,{raw:true},[patientId])
+			.success(function(rs){
+				if(rs)
+					res.json({status:'success',data:rs});
+				else
+					res.json({status:'error'});
+			})
+	}
 }

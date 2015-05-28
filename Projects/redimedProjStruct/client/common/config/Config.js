@@ -784,9 +784,9 @@ angular.module('app.config', [])
         if (typeof dateTime === 'string')
             dateTime = new Date(dateTime);
 
-        var year = dateTime.getUTCFullYear();
-        var month = dateTime.getUTCMonth() + 1;
-        var date = dateTime.getUTCDate();
+        var year = dateTime.getFullYear();
+        var month = dateTime.getMonth() + 1;
+        var date = dateTime.getDate();
 
         if (month < 10) {
             month = "0" + month;

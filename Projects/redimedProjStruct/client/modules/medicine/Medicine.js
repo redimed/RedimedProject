@@ -10,7 +10,7 @@ angular.module('app.loggedIn.medicine',[
 	.state("loggedIn.medicine", {
         url: "/medicine",
         abstract: true,
-        templateUrl: "modules/patient/views/structure.html",
+        templateUrl: "modules/medicine/views/structure.html",
         controller: "MedicineController"
     })
 

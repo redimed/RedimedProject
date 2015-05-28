@@ -30,7 +30,6 @@ angular.module('app.loggedIn.patient.problem.detail.directive',[])
 
             var addProcess = function (postData) {
             	postData.Patient_id = patient_id;
-            	console.log("this is postData", postData);
                 ProblemService.insert(postData).then(function (response) {
                     if (response.status === 'success') {
                         toastr.success("Problem added", "Success");
