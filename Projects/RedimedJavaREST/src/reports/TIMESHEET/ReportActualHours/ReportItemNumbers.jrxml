@@ -152,7 +152,9 @@ report_item_code.sum_time_charge_for_employee,
 report_item_code.count_item_for_dept,
 report_item_code.sum_time_charge_for_dept,
 report_item_code.count_item_all,
-report_item_code.sum_time_charge_all
+report_item_code.sum_time_charge_all,
+report_item_code.from_date,
+report_item_code.to_date
 FROM report_item_code
 INNER JOIN hr_employee ON hr_employee.Employee_ID = report_item_code.employee_id
 INNER JOIN departments ON departments.departmentid = report_item_code.Dept_id
@@ -196,6 +198,12 @@ WHERE report_item_code.user_id =$P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="sum_time_charge_all" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="from_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="to_date" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<group name="DeptGroup">
@@ -286,7 +294,7 @@ WHERE report_item_code.user_id =$P{id}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["1111"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{to_date}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="555" height="68" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
@@ -304,7 +312,7 @@ WHERE report_item_code.user_id =$P{id}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["aaa"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{from_date}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="48" y="148" width="100" height="20" forecolor="#6666FF" uuid="6021cf2b-817e-4c86-ac7f-8d72c9250134"/>
@@ -355,7 +363,7 @@ WHERE report_item_code.user_id =$P{id}]]>
 		<band height="15">
 			<textField>
 				<reportElement x="158" y="0" width="100" height="15" uuid="ec26938f-d9ef-4b1d-b386-1ed199c89016"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{item_id}]]></textFieldExpression>
 			</textField>
 			<textField>
