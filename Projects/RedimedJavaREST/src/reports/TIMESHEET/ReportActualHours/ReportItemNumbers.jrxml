@@ -244,10 +244,7 @@ WHERE report_item_code.user_id =$P{id}]]>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="158" y="0" width="100" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
-				</line>
-				<line>
-					<reportElement x="268" y="0" width="111" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
+					<reportElement x="158" y="0" width="221" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
 				</line>
 				<line>
 					<reportElement x="389" y="0" width="118" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
