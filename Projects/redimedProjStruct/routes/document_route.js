@@ -18,6 +18,7 @@ var gorgonFAController = require('./controllers/DocumentController/gorgonFAContr
 var gorgonMAController = require('./controllers/DocumentController/gorgonMAController');
 var COEController = require('./controllers/DocumentController/COEController');
 var demoController = require('./controllers/DocumentController/demoController');
+var newFAController = require('./controllers/DocumentController/newFAController');
 
 app.post('/api/document/loadPatient', demoController.loadPatient);
 
@@ -31,6 +32,11 @@ app.post('/api/document/editCat2', Cat2Controller.editCat2);
  * end category 2
  */
 
+// Begin new functional assessment
+app.post('/api/document/newHeaderSections', newFAController.newHeaderAndSections);
+app.post('/api/document/newLines', newFAController.newLines);
+app.post('/api/document/newDetailsComments', newFAController.newDetailsAndComments);
+// end
 
 
 // Begin funtion assessment
