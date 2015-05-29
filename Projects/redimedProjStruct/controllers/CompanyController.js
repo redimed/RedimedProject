@@ -388,7 +388,7 @@ module.exports = {
             db.sequelize.query(unique_sql)
             .success(function(rows){
                 if(rows.length > 0){
-                    errors.push({field: 'Company_name', message: 'Company Name exists'});
+                    errors.push({field: 'Company_name', message: 'Alert Name exists'});
                     res.status(500).json({errors: errors});
                     return;
                 }else{

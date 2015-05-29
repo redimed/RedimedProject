@@ -30,7 +30,7 @@ angular.module("app.loggedIn.patient.services", [])
      get list allergy
     */
     instanceService.getListAllergyinPatient = function(search){
-        var funcApi = khankAPI.all('allergy/search_patient_allergy');
+        var funcApi = khankAPI.all('allergy/list_patient_allergy_enable');
         return funcApi.post({search:search})
     }
 

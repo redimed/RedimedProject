@@ -86,8 +86,9 @@
                                 <a ng-click="action.callback(item)"><i ng-if="action.class" class="{{action.class}}"></i> {{action.title}}</a>
                             </li>
                         </ul>
-                        <button ng-show="options.actionsIsEnable.show == true" ng-click="options.actionsIsEnable.setEnable(item)" type="button" class="btn un-mdt-button un-submit">
-                            Enabled
+                        <button ng-show="options.actionsIsEnable.show == true" ng-class="item.isEnable==0?'un-bgXam-colBlack':'un-bgBlack'" ng-click="options.actionsIsEnable.setEnable(item)" type="button" class=" un-mdt-button un-submit">
+                            <label ng-show="item.isEnable==0">Enable</label>
+                            <label ng-show="item.isEnable==1">Disable</label>
                         </button>
                     </div>
                 </td>
