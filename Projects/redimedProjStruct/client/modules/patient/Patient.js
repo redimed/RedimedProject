@@ -154,14 +154,10 @@ angular.module("app.loggedIn.patient", [
         templateUrl: "modules/patient/views/allpatients.html",
         controller: "PatientListAllController"
     })
-    .state("loggedIn.patient.checkin",{
+    .state("loggedIn.checkin",{
         url:'/checkin',
-        views:{
-            "main-content":{
-                templateUrl:'modules/patient/views/checkin.html',
-                controller:'PatientCheckinController'
-            }
-        }
+        templateUrl:'modules/patient/views/checkin.html',
+        controller:'PatientCheckinController'
     })
 
    
