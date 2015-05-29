@@ -36,13 +36,13 @@
 		<div class="col-md-6 col-sm-6 col-xs-6">
 			<span class="field">
 				<label for="To">To</label>
-	           	<input ui-date="{dateFormat: 'dd/mm/yy'}" readonly="readonly" placeholder="To" name="to_date" ng-model="modelObjectMap.To_date" class="form-control" id="to_date" float-label required>
+	           	<input ui-date="{dateFormat: 'dd/mm/yy'}" readonly="readonly" placeholder="To" name="to_date" ng-model="modelObjectMap.To_date" class="form-control" id="to_date" float-label>
 				<!-- ERROR -->
-	            <span ng-show="mainForm.to_date.$invalid && isSubmit">
+	           <!--  <span ng-show="mainForm.to_date.$invalid && isSubmit">
 	                <span class="mdt-popover above" ng-show="mainForm.to_date.$error.required">
 	                    To date is required
 	                </span>
-	            </span>
+	            </span> -->
 	            <!-- ERROR -->
 			</span>
 		</div>

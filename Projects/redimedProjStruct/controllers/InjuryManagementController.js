@@ -10,6 +10,7 @@ var gcm = require('node-gcm');
 var mkdirp = require('mkdirp');
 
 var _ = require('lodash-node');
+var bcrypt = require('bcrypt-nodejs');
 
 var transport = nodemailer.createTransport(smtpTransport({
     host: "mail.redimed.com.au", // hostname
@@ -24,6 +25,56 @@ var transport = nodemailer.createTransport(smtpTransport({
 }));
 
 module.exports = {
+      register: function(req,res){
+        var info = req.body.user;
+        var hashPass = bcrypt.hashSync(info.password);
+
+        var fullNameArr = [];
+        fullNameArr.push(info.firstName,info.surName,info.middleName);
+
+        db.UserType.find({where:{user_type:'Patient'}},{raw:true})
+          .success(function(type){
+               db.User.create({
+                  Booking_Person: fullNameArr.join(' '),
+                  Contact_email: info.email,
+                  user_name: info.user_name,
+                  password: hashPass,
+                  Contact_number: info.phone,
+                  isEnable: 1,
+                  user_type: type.ID
+              },{raw:true})
+                  .success(function(){
+                      db.Patient.create({
+                        Title: info.title,
+                        First_name: info.firstName,
+                        Sur_name: info.surName,
+                        Middle_name: info.middleName,
+                        DOB: info.dob,
+                        Sex: info.sex,
+                        Mobile: info.phone,
+                        Email: info.email,
+                        Isenable: 1
+                      })
+                      .success(function(){
+                        res.json({status:'success'});
+                      })
+                      .error(function(err){
+                          res.json({status:'error'});
+                          console.log(err);
+                      })
+                      
+                  })
+                  .error(function(err){
+                      res.json({status:'error'});
+                      console.log(err);
+                  })
+          })
+          .error(function(err){
+              res.json({status:'error'});
+              console.log(err);
+          })
+
+      },
       search : function(req,res) {
           var comId = req.body.companyId;
           db.sequelize.query("SELECT p.Patient_id, p.Title, p.First_name, p.Sur_name, p.Middle_name, p.DOB, p.Mobile FROM cln_patients p WHERE p.company_id = ?", null, {raw: true},[comId])

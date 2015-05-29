@@ -20,6 +20,8 @@ angular.module('app.loggedIn.patient.problem.detail.directive',[])
             scope.modelObjectMap = angular.copy(ProblemModel);
             scope.mode = {type: 'add', text: 'Add problem'};
 
+            scope.modelObjectMap.From_date = new Date();
+
             if (scope.data) {
                 var data = scope.$eval(scope.data);
                 if (data.id) { 

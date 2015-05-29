@@ -4,53 +4,6 @@
     }
 </style>
 
-
-<div class="un-background">
-    <label class="un-title-label">Company Information</label>
-    <div class="row un-div-l-r-15">
-        <div class="col-lg-12 col-md-12 un-div-p-r-30">
-            <div class="un-bg-trang">
-                <div class="row ">
-                    <div class="col-lg-4 col-md-4 un-form-white-p">
-                        <label class="un-label-form-3 un-label-whidth-130">Company Name</label>
-                        <input disabled="true" 
-                            ng-model="companyInfo.Company_name"
-                            class="form-control un-input-custom-1 un-select-p-5" float-label>
-                    </div>
-                    <div class="col-lg-4 col-md-4 un-form-white-p">
-                        <label class="un-label-form-3 un-label-whidth-130">Company Address</label>
-                        <input disabled="true" 
-                            ng-model="companyInfo.Addr"
-                            class="form-control un-input-custom-1 un-select-p-5" float-label>
-                    </div>
-                    <div class="col-lg-4 col-md-4 un-form-white-p">
-                        <label class="un-label-form-3 un-label-whidth-130">Industry</label>
-                        <input disabled="true" 
-                            ng-model="companyInfo.Industry"
-                            class="form-control un-input-custom-1 un-select-p-5" float-label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 un-form-white-p">
-                        <label class="un-label-form-3 un-label-whidth-130">Online Users</label>
-                        <br/>
-                        <table cellspacing="0" border="0">
-                            <tr>
-                                <td ng-if="u.id != userInfo.id" ng-repeat="u in companyInfo.users" >
-                                    <a ng-click="makeCall(u)" href="javascript:;" class="btn" style="color: white;" ng-class="(companyInfo.users.length % $index) == 0 ? 'red' : 'blue'">
-                                        <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br/>
-
 <div class="row">
     <div class="col-md-10 col-sm-10">
         <ul class="un-tabs">
@@ -69,12 +22,24 @@
             <li>
                 <a href="index.html#tab_1_5" data-toggle="tab">Item Sheet</a>
             </li>
-            <!--  <li>
+             <li>
                 <a href="index.html#tab_1_6" data-toggle="tab">E-Forms</a>
-            </li> -->
+            </li>
             <li>
                 <a href="index.html#tab_1_7" data-toggle="tab">Workcover</a>
-            </li>   
+            </li> 
+            <li>
+                <a href="index.html#tab_1_8" data-toggle="tab">Script</a>
+            </li>  
+            <li>
+                <a href="index.html#tab_1_9" data-toggle="tab">Make Referral</a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_10" data-toggle="tab">Drawing</a>
+            </li>
+            <li>
+                <a href="index.html#tab_1_11" data-toggle="tab">Attach File</a>
+            </li>
         </ul>
         <div class="un-tabs-content"> 
             <div class="un-tab-content active" id="tab_1_1">
@@ -151,7 +116,7 @@
                                             {{p.From_date | date:'dd/MM/yyyy'}}
                                         </td>
                                         <td style="vertical-align: middle">
-                                            {{p.To_date | date:'dd/MM/yyyy'}}
+                                            {{(p.To_date == null ? 'N/A' : p.To_date)| date:'dd/MM/yyyy'}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -163,14 +128,14 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group" >
                             <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
-                            <textarea ng-model="consultInfo.history" 
+                            <textarea rows="6" ng-model="consultInfo.history" 
                                 class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group" >
                             <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
-                            <textarea ng-model="consultInfo.examination" 
+                            <textarea rows="6" ng-model="consultInfo.examination" 
                                 class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                         </div>
                     </div>
@@ -180,14 +145,14 @@
                      <div class="col-md-6 col-sm-6">
                         <div class="form-group" >
                             <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
-                            <textarea ng-model="consultInfo.treatment" 
+                            <textarea rows="6" ng-model="consultInfo.treatment" 
                                 class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group" >
                             <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
-                            <textarea ng-model="consultInfo.diagnosis" 
+                            <textarea rows="6" ng-model="consultInfo.diagnosis" 
                                 class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                         </div>
                     </div>
@@ -239,8 +204,6 @@
                             <tr>
                                 <td colspan="7">
                                     <div style="text-align: center;">
-                                         <a href="javascript:;" ng-click="measureAction('new',null)" class="btn green-jungle btn-block">
-                                        <i class="fa fa-plus"></i> Add New Measure</a>
                                         <span ng-if="consultInfo.measurements.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
                                             Empty Data
                                         </span>
@@ -277,6 +240,13 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3">
+                        <a href="javascript:;" ng-click="measureAction('new',null)" class="btn red pull-left un-submit">
+                             Add New Measure
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="un-tab-content" id="tab_1_3">
@@ -325,8 +295,6 @@
                             <tr>
                                 <td colspan="8">
                                     <div style="text-align: center;">
-                                         <a href="javascript:;" ng-click="scriptAction('new',null)" class="btn green-jungle btn-block">
-                                        <i class="fa fa-plus"></i> Add New Script</a>
                                         <span ng-if="consultInfo.scripts.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
                                             Empty Data
                                         </span>
@@ -363,6 +331,13 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3">
+                        <a href="javascript:;" ng-click="scriptAction('new',null)" class="btn red pull-left un-submit">
+                             Add New Script
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="un-tab-content" id="tab_1_4">
@@ -497,7 +472,7 @@
                        <div class="caption">
                            <i class="fa fa-medkit"></i> Item Sheet
                         </div>
-                        <div class="pull-right navbar-right">
+                        <div class="actions">
                     
                             <div class="btn-group" dropdown>
 
@@ -568,9 +543,346 @@
                     </div>
                 </div> -->
             </div>
-<!--             <div class="un-tab-content" id="tab_1_6">
-                
-            </div> -->
+            <div class="un-tab-content" id="tab_1_6">
+                <div ng-controller="DoctorPaperlessController">
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" id="appt_paperless">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Paperless
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'gorgonMA'">Gorgon Medical Assessment</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'gorgonFA'">Gorgon Functional Assessment</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'gorgonUQ'">Respiratory User Questionnaire</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'gorgonMH'">Gorgon Medical History</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'MRS'">Medical Result Summary</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'FA'">Functional Assessment</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'MA'">Medical Assessment</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'category2'">Rail Category 2</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'category3'">Rail Category 3</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'IDS'">Instant Drug Screen</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'Form18'">Form 18</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'SA1'">Workcover Audiogram</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'SA2'">Standard Audiogram</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'MH'">Medical History</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ng-click="tab = 'COE'">COE</a>
+                            </div>
+
+
+                            <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.MRS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Medical Result Summary</a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.FA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Functional Assessment</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.MA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" > Medical Assessment</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.category2({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Category 2</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.category3({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Category 3</a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a  ui-sref="loggedIn.IDS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Instant Drug Screen</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.Form18({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Form 18</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.SA1({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Audiogram 1</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.SA2({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Audiogram 2</a>
+                            </div>
+
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.MH({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Medical History</a>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                <a ui-sref="loggedIn.COE({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >COE</a>
+                            </div> -->
+
+                            <div class="clearfix"></div>
+                        </div> <!-- END BODY -->
+                    </div> <!-- END HEAD -->
+
+                    <!-- gorgonMA -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonMA'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Gorgon Medical Assessment
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()">Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionGorgonMA"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end gorgonMA -->
+
+
+                    <!-- gorgonFA -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);"  ng-show="tab == 'gorgonFA'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Gorgon Functional Assessment
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()">Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionGorgonFA"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end gorgonFA -->
+
+                    <!-- gorgonUQ -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonUQ'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Gorgon User Questionnaire
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionGorgonUQ"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end gorgonUQ -->
+
+                    <!-- gorgonMH -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonMH'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Gorgon Medical History
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionGorgonMH"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end gorgonMH -->
+
+                    <!-- MRS -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MRS'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Medical Result Summary
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionMRS"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end MRS -->
+
+                    <!-- FA -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'FA'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Functional Assessment
+                            </div>
+                             <div class="actions">
+                                <!-- <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a> -->
+                                <a class="btn un-submit red" ng-click="faNewClick()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionFA"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end FA -->
+
+                    <!-- MA -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MA'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Medical Assessment
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionMA"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end MA -->
+
+                    <!-- category2 -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'category2'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Category 2
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionCategory2"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end category2 -->
+
+                    <!-- category3 -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'category3'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Category 3
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionCategory3"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end category3 -->
+
+                    <!-- IDS -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'IDS'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Instant Drug Screen
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionIDS"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end IDS -->
+
+                    <!-- Form18 -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'Form18'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Form 18
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="Optionform18"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end Form18 -->
+
+                    <!-- Audiogram1 -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'SA1'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Audiogram 1
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionSA1"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end Audiogram1 -->
+
+                    <!-- Audiogram2 -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'SA2'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Audiogram 2
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionSA2"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end Audiogram2 -->
+
+                    <!-- MH -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MH'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                Medical History
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionMH"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end MH -->
+
+                    <!-- COE -->
+                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'COE'">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                COE
+                            </div>
+                             <div class="actions">
+                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <my-data-table options="OptionCOE"></my-data-table>
+                        </div>
+                    </div>
+                    <!-- end COE -->
+                </div>
+            </div>
             <div class="un-tab-content" id="tab_1_7">
                 <div class="row">
                     <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -611,6 +923,140 @@
                     </div>
                 </div>
             </div>
+            <div class="un-tab-content" id="tab_1_8">
+                <div class="row" ng-controller="ScriptListController">
+                    <script-list></script-list>
+                </div>
+            </div>
+            <div class="un-tab-content" id="tab_1_9">
+                <div class="row" ng-controller="ReferralListController">
+                    
+                    <div class="panel panel-default un-header-top">
+                        <div class="panel-body">
+                            <label class="un-label-header-custom un-bgWhite-custom">Make Referral</label>
+                            <button class="un-btn-red-add" ng-click="referralAddForm.open()" style="margin-top: -60px !important;">Add New</button>
+                            <div class="un-background-gray-dv">
+                                <my-data-table options="referrals.options" rowclass="referrals.class" numrows="10"></my-data-table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--REFERRAL ADD FORM-->
+                    <div class="mdt-search" style="display: block;" ng-if="referralAddForm.is_show">
+                        <div class="pull-right text-center ng-scope">
+                            <button class="btn btn-sm btn-block red" ng-click="referralAddForm.close()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        <referral-detail options="options" onsuccess="referralAddForm.success" />
+                    </div>
+                    <!--END REFERRAL ADD FORM-->
+
+
+                    <!--REFERRAL EDIT FORM-->
+                    <div class="mdt-search" style="display: block;" ng-if="referralEditForm.is_show">
+                        <div class="pull-right text-center ng-scope">
+                            <button class="btn btn-sm btn-block red" ng-click="referralEditForm.close()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        <referral-detail options="options" onsuccess="referralEditForm.success" data="{id:'{{referral.id}}'}"/>
+                    </div>
+                    <!--END REFERRAL EDIT FORM-->
+                </div>
+            </div>
+            <div class="un-tab-content" id="tab_1_10">
+                <consult-drawing
+                    images="consultInfo.images"
+                    patient="patient_id"
+                    width="700"
+                    height="600"
+                    lineWidth="5"
+                ></consult-drawing>
+            </div>
+            <div class="un-tab-content" id="tab_1_11">
+                <div class="row" ng-controller="PatientApptDocController">
+
+                    <div class="un_body_content_left_bottom_right un-giang-padding-left-bottom" style="width:100%">
+
+                      <div style="width:90%; margin-left: auto; margin-right: auto;">
+                          <label class="un-label-header un-bgWhite" style="width: 12%; text-align: center; height: 2%; padding-bottom: 3%; font-size: 17px;background-color: #808285; color:white"><b>Document</b></label>
+                          <button class="un-button-giang un-btn-Xam-right-header" style=" width: 10%; height: 5%; font-size: 15px; color:white; margin-top: 15px" ng-click="openUploader()" >
+                                    Upload Documents
+                          </button>
+                          <div class="un-div-content un-bgXam-colBlack">
+                            <div class="un-padding-15" style="background-color: #F8F8FF">
+                              <div class="row">
+                                
+                            <div ng-if="uploader.queue.length> 0">
+                              <table style="width:90%; margin-left: 5%">
+                                  <tr style="color: white">
+                                    <td width="30%">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Name</b></div>
+                                    </td>
+                                    <td width="30%" ng-show="uploader.isHTML5" class="">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Size</b></div>
+                                    </td>
+                                    <td width="20%" ng-show="uploader.isHTML5" class="">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Progress</b></div>
+                                    </td>
+                                    <td width="20%">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="height: 35px; background-color: #708090;"><b>Actions</b></div>
+                                    </td>
+                                  </tr>
+                                  <tr ng-repeat="item in uploader.queue" class="ng-scope"><!-- ngRepeat: item in uploader.queue -->
+                                    <td width="30%">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">{{item.file.name}}</div>
+                                    </td>
+                                    <td width="30%" ng-show="uploader.isHTML5" nowrap="" class="ng-binding">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">{{item.file.size/1024/1024 | number:2}} MB</div>
+                                    </td>
+                                    <td width="30%" ng-show="uploader.isHTML5" class="">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">
+                                        <div class="progress progress-sm" style="margin-bottom: 0;">
+                                          <div class="progress-bar progress-bar-info" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 0%;"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td width="30%" nowrap="">
+                                      <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr><!-- end ngRepeat: item in uploader.queue -->
+                              </table>
+                            </div>
+
+                            <div ng-if="uploader.queue.length> 0" class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-danger" role="progressbar"  ng-style="{ 'width': info_upload.progress_percent + '%' }" >
+                                </div>
+                            </div>
+                            <div ng-if="uploader.queue.length> 0">
+                              <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                <span class="glyphicon glyphicon-upload"></span> Upload all
+                              </button>
+                              <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                <span class="glyphicon glyphicon-trash"></span> Remove all
+                              </button>
+                            </div>
+
+
+                            <my-data-table options="docs.options" rowclass="docs.class" numrows="10"></my-data-table>
+                          <div class="clearfix"></div>
+                        </div>
+                              </div>
+                            </div>
+                          
+                      </div>
+                                      
+                    </div>
+                    <input id="appt_doc_upload" ng-hide="true" type="file" multiple nv-file-select uploader="uploader" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-2 col-sm-2">
@@ -620,6 +1066,12 @@
                 <div class="col-lg-12 col-md-12 un-div-p-r-30" style="background-color: #B0B0B0;">
                     <div>
                         <br/>
+                        <div class="row ">
+                            <label class="un-label-form-3 un-label-whidth-130">Company Name</label>
+                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                                {{(companyInfo.Company_name == '' || companyInfo.Company_name == null) ? 'N/A' : companyInfo.Company_name}}
+                            </label>
+                        </div>
                         <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">NOK Contact</label>
                             <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
@@ -643,6 +1095,13 @@
                             <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
                                 {{(userInfo.Booking_Person == '' || userInfo.Booking_Person == null) ? userInfo.user_name : userInfo.Booking_Person}}
                             </label>
+                        </div>
+                        <div class="row ">
+                            <label class="un-label-form-3 un-label-whidth-130">Online Users</label>
+                            <br/>
+                            <button style="margin-right: 0px !important;" ng-repeat="u in companyInfo.users" ng-click="makeCall(u)" class="btn btn-sm" style="color: white;" ng-class="(companyInfo.users.length % $index) == 0 ? 'red' : 'blue'">
+                                <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
+                            </button>
                         </div>
                     </div>
                 </div>
