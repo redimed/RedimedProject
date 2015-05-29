@@ -60,7 +60,7 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.patient_apt_modules = [
         // {'name': 'Appointment', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
         //     'state': 'loggedIn.receptionist.appointment.detail({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
-        {wrap:0,'name': 'ItemSheet', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
+        {wrap:1,'name': 'ItemSheet', 'icon': 'fa fa-bookmark-o', 'color': 'blue-soft', 'desc': 'Info',
             'state': 'loggedIn.patient.itemsheet'},
         // {wrap:1,'name': 'Paperless', 'icon': 'fa fa-pencil-square-o', 'color': 'red-soft', 'desc': 'Total: 0',
         //     'state': 'loggedIn.doctor.paperless({patient_id:' + $stateParams.patient_id + ', cal_id:' + $stateParams.cal_id + '})'},
@@ -70,7 +70,7 @@ angular.module("app.loggedIn.patient.controller", [
         //     'state': 'loggedIn.patient.script'},
         // {wrap:1,'name': 'Make Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
         //     'state': 'loggedIn.patient.referral.list'},
-        {wrap:0,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
+        {wrap:1,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices'},    
         {wrap:1,'name': 'Appointment List', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.appt'},
