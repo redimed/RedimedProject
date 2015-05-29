@@ -143,28 +143,21 @@ FROM item_code_report1]]>
 hr_employee.FirstName,
 hr_employee.LastName,
 departments.departmentName,
-time_item_code.ITEM_ID,
-item_code_report1.user_id,
-item_code_report1.Employee_id,
-item_code_report1.Department_id,
-item_code_report1.time_charge_items,
-item_code_report1.item_id,
-item_code_report1.total_numbers,
-item_code_report1.total_numbers_Dept,
-item_code_report1.total_numbers_all,
-item_code_report1.total_items,
-item_code_report1.total_items_Dept,
-item_code_report1.time_charge_average,
-item_code_report1.from_date,
-item_code_report1.to_date,
-item_code_report1.average_item_employee,
-item_code_report1.average_item_dept
-FROM item_code_report1
-INNER JOIN hr_employee ON hr_employee.Employee_ID = item_code_report1.Employee_id
-INNER JOIN departments ON departments.departmentid = item_code_report1.Department_id
-INNER JOIN time_item_code ON time_item_code.ITEM_ID =
-item_code_report1.item_id
-WHERE item_code_report1.user_id =$P{id}]]>
+report_item_code.user_id,
+report_item_code.item_id,
+report_item_code.dept_id,
+report_item_code.employee_id,
+report_item_code.count_item_for_employee,
+report_item_code.sum_time_charge_for_employee,
+report_item_code.count_item_for_dept,
+report_item_code.sum_time_charge_for_dept,
+report_item_code.count_item_all,
+report_item_code.sum_time_charge_all
+FROM report_item_code
+INNER JOIN hr_employee ON hr_employee.Employee_ID = report_item_code.employee_id
+INNER JOIN departments ON departments.departmentid = report_item_code.Dept_id
+INNER JOIN time_item_code ON time_item_code.ITEM_ID = report_item_code.item_id
+WHERE report_item_code.user_id =$P{id}]]>
 	</queryString>
 	<field name="FirstName" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -175,62 +168,47 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	<field name="departmentName" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ITEM_ID" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="user_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Employee_id" class="java.lang.Integer">
+	<field name="item_id" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Department_id" class="java.lang.Integer">
+	<field name="dept_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_charge_items" class="java.lang.Integer">
+	<field name="employee_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_numbers" class="java.lang.Integer">
+	<field name="count_item_for_employee" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_numbers_Dept" class="java.lang.Integer">
+	<field name="sum_time_charge_for_employee" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_numbers_all" class="java.lang.Integer">
+	<field name="count_item_for_dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_items" class="java.lang.Integer">
+	<field name="sum_time_charge_for_dept" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="total_items_Dept" class="java.lang.Integer">
+	<field name="count_item_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="time_charge_average" class="java.lang.Float">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="from_date" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="to_date" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="average_item_employee" class="java.lang.Float">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="average_item_dept" class="java.lang.Float">
+	<field name="sum_time_charge_all" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<group name="DeptGroup">
 		<groupExpression><![CDATA[$F{departmentName}]]></groupExpression>
 	</group>
 	<group name="time_in_lieu">
-		<groupExpression><![CDATA[$F{Department_id}]]></groupExpression>
+		<groupExpression><![CDATA[$F{dept_id}]]></groupExpression>
 		<groupHeader>
 			<band height="25">
 				<textField>
-					<reportElement x="48" y="0" width="331" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
+					<reportElement x="48" y="0" width="459" height="18" uuid="fdb0ad68-3ffd-487c-b6a5-66622e698ef4"/>
 					<textElement verticalAlignment="Bottom">
-						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						<font size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
 				</textField>
@@ -245,29 +223,8 @@ WHERE item_code_report1.user_id =$P{id}]]>
 					</textElement>
 					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="158" y="2" width="100" height="16" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
-					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA[$F{total_items_Dept}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="268" y="2" width="111" height="16" uuid="9660f367-7060-40e5-94d3-8b560fbe3441"/>
-					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA[$F{total_numbers_Dept}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="389" y="2" width="118" height="16" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
-					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA["~"+$F{average_item_dept}+"%"]]></textFieldExpression>
-				</textField>
 				<line>
-					<reportElement x="158" y="18" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
-					<graphicElement>
-						<pen lineWidth="2.5" lineStyle="Double"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement x="268" y="18" width="111" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
+					<reportElement x="158" y="18" width="221" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
@@ -287,16 +244,26 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<line>
 					<reportElement x="389" y="0" width="118" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
 				</line>
+				<textField>
+					<reportElement x="158" y="1" width="221" height="17" uuid="84f23495-049a-4215-bf8c-d76a6a17a35c"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[$F{count_item_for_dept}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="389" y="2" width="118" height="16" uuid="8c2ae656-0254-4945-a485-7008e7031162"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[($F{sum_time_charge_for_dept}==null || $F{sum_time_charge_for_dept}=="" || $F{sum_time_charge_for_dept}==0)?"-":(($F{sum_time_charge_for_dept}/60<10?"0"+($F{sum_time_charge_for_dept}/60).intValue():($F{sum_time_charge_for_dept}/60).intValue()))+":"+(($F{sum_time_charge_for_dept}%60<10?"0"+$F{sum_time_charge_for_dept}%60:$F{sum_time_charge_for_dept}%60))]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
 	<group name="Employee">
-		<groupExpression><![CDATA[$F{Employee_id}]]></groupExpression>
+		<groupExpression><![CDATA[$F{employee_id}]]></groupExpression>
 		<groupHeader>
 			<band height="17">
 				<textField>
-					<reportElement x="58" y="0" width="200" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
-					<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+					<reportElement x="58" y="0" width="449" height="17" uuid="ec8b673f-dc59-4daa-b471-42cb0145988c"/>
+					<textElement verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -319,7 +286,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{to_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1111"]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="555" height="68" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
@@ -337,7 +304,7 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{from_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["aaa"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="48" y="148" width="100" height="20" forecolor="#6666FF" uuid="6021cf2b-817e-4c86-ac7f-8d72c9250134"/>
@@ -385,21 +352,21 @@ WHERE item_code_report1.user_id =$P{id}]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<detail>
-		<band height="13">
+		<band height="15">
 			<textField>
-				<reportElement x="158" y="0" width="100" height="13" uuid="81c81151-d072-46a3-9476-f35f531d6f75"/>
+				<reportElement x="158" y="0" width="100" height="15" uuid="ec26938f-d9ef-4b1d-b386-1ed199c89016"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{ITEM_ID}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{item_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="268" y="0" width="111" height="13" uuid="1cc87c48-cf63-4142-b38f-bcbcd5f9e518"/>
+				<reportElement x="268" y="0" width="111" height="15" uuid="d9124b91-f56e-4118-812e-f3ddd93602ea"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{total_numbers}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{count_item_for_employee}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="389" y="0" width="118" height="13" uuid="248289ce-ba68-48e0-bf8a-1fcf01adca6b"/>
+				<reportElement x="389" y="0" width="118" height="15" uuid="6a063c9a-e829-49ac-82ce-9217999056f2"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[($F{time_charge_items}==null || $F{time_charge_items}=="" || $F{time_charge_items}==0)?"-":(($F{time_charge_items}/60<10?"0"+($F{time_charge_items}/60).intValue():($F{time_charge_items}/60).intValue()))+":"+(($F{time_charge_items}%60<10?"0"+$F{time_charge_items}%60:$F{time_charge_items}%60))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{sum_time_charge_for_employee}==null || $F{sum_time_charge_for_employee}=="" || $F{sum_time_charge_for_employee}==0)?"-":(($F{sum_time_charge_for_employee}/60<10?"0"+($F{sum_time_charge_for_employee}/60).intValue():($F{sum_time_charge_for_employee}/60).intValue()))+":"+(($F{sum_time_charge_for_employee}%60<10?"0"+$F{sum_time_charge_for_employee}%60:$F{sum_time_charge_for_employee}%60))]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -408,26 +375,8 @@ WHERE item_code_report1.user_id =$P{id}]]>
 	</pageFooter>
 	<summary>
 		<band height="19" splitType="Stretch">
-			<textField>
-				<reportElement x="268" y="0" width="111" height="18" uuid="758d276c-9521-4e1b-846f-ee4c9eb14497"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{total_numbers_all}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="389" y="0" width="118" height="18" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["~100.0%"]]></textFieldExpression>
-			</textField>
 			<line>
-				<reportElement x="158" y="18" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
-				<graphicElement>
-					<pen lineWidth="3.5" lineStyle="Double"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="268" y="18" width="111" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
+				<reportElement x="158" y="18" width="221" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
@@ -446,9 +395,14 @@ WHERE item_code_report1.user_id =$P{id}]]>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="158" y="0" width="100" height="18" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
+				<reportElement x="158" y="0" width="221" height="18" uuid="ac833bf9-6a8e-47d6-86f3-f1594a67f9df"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{total_items}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{count_item_all}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="0" width="118" height="18" uuid="87c87ea0-68b0-4304-a47a-8a542d7fd1ac"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{sum_time_charge_all}==null || $F{sum_time_charge_all}=="" || $F{sum_time_charge_all}==0)?"-":(($F{sum_time_charge_all}/60<10?"0"+($F{sum_time_charge_all}/60).intValue():($F{sum_time_charge_all}/60).intValue()))+":"+(($F{sum_time_charge_all}%60<10?"0"+$F{sum_time_charge_all}%60:$F{sum_time_charge_all}%60))]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
