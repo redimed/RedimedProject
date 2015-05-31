@@ -14,6 +14,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.iso", //ISO manage files
     "app.loggedIn.pr",//PAYROLL (TANNV.DTS@GMAIL.COM)
     "app.loggedIn.doctor", // DOCTOR MODULE
+    "app.loggedIn.waitingList",
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",
     "app.loggedIn.waworkcover",

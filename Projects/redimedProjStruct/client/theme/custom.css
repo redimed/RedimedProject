@@ -1391,6 +1391,7 @@ table.timetable-table td:last-child {
     font-weight: bold;
     margin-right: 7px;
     border-top: 1px solid rgb(96, 99, 94);
+    height: auto;
 }
 
 .appointment .appointment-block {

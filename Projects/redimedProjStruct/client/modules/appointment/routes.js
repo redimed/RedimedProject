@@ -9,6 +9,12 @@ angular.module('app.loggedIn.appointment', ['app.loggedIn.appointment.include'])
 			controller: 'AppointmentController'
 		})
 
+		.state('loggedIn.appointment_doctor', {
+			url: '/appointment/doctor/:doctorId',
+			templateUrl: 'modules/appointment/views/doctor/index.html',
+			controller: 'AppointmentDoctorController'
+		})		
+
 		/*.state('loggedIn.appointment.detail', {
 			url: '/:appointmentId/patient/:patientId',
 			views: {

@@ -1,0 +1,80 @@
+<label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Waiting List</label>
+<div class="row">
+	<!-- DOCTOR -->
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130">
+				Doctor *
+			</label>
+			<br>
+			<button id="doctor_id" class="btn btn-block select-outside ng-binding" 
+				ng-model="waitingList.model.doctor_id"
+				ng-click="doctor.dialog.select()">
+				{{doctor.name}}
+			</button>
+		</div>
+	</div>
+	<!-- END DOCTOR -->
+
+	<!-- PATIENT -->
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130">
+				Patient *
+			</label>
+			<br>
+			<button id="Patient_id" 
+				ng-model="waitingList.model.Patient_id"
+				class="btn btn-block select-outside ng-binding" ng-click="patient.dialog.select()">
+				{{patient.name}}
+			</button>
+		</div>
+	</div>
+	<!-- END PATIENT -->
+
+	<!-- PRIORITY -->
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130">
+				Priority *
+			</label>
+			<br>
+			<select class="form-control un-input-custom un-select-p" id="priority"
+				ng-model="waitingList.model.priority"
+				ng-options="title.key as title.value for title in priorities">
+                    <option value="" disabled selected>Choose Priority</option>
+            </select>
+		</div>
+	</div>
+	<!-- END PRIORITY -->
+</div>
+<div class="row">
+	<!-- REASON -->
+	<div class="col-md-12">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130">
+				Reason
+			</label>
+			<input id="reason" class="form-control input-sm un-input-group" ng-model="waitingList.model.reason">
+		</div>
+	</div>
+	<!-- END REASON -->
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button class="un-button-m" ng-click="waitingList.save()">Save</button>
+	</div>
+</div>
+
+<script type="text/ng-template" id="selectDoctorDialog">
+    <div class="modal-body">
+        <mdtdoctor-search click-row="clickRow(row)"></mdtdoctor-search>
+    </div>
+</script>
+
+<script type="text/ng-template" id="selectPatientDialog">
+    <div class="modal-body">
+        <patient-search click-row="clickRow(row)"></patient-search>
+    </div>
+</script>

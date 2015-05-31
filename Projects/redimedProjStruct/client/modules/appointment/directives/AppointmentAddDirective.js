@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.appointment.directives.add', [])
 
-.directive('appointmentAdd', function(ConfigService, sysServiceService, AppointmentModel, $modal, $state, toastr){
+.directive('appointmentAdd', function(ConfigService, sysServiceService, AppointmentModel, WaitingListModel, $modal, $state, toastr){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -34,6 +34,58 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 				sysServiceService.byClinicalDepartment(scope.params.col.CLINICAL_DEPT_ID).then(function(response){
   					scope.service.list = response.data;
 		  		}, function(error){})
+			}
+
+			var waitingListSelect = function(){
+				$modal.open({
+					templateUrl: 'waitingListSelect',
+					controller: function($scope, $modalInstance){
+						$scope.clickRow = function(row){
+							$modalInstance.close(row);
+						}
+					}
+				})
+				.result.then(function(row){
+
+					$modal.open({
+						templateUrl: 'notifyAppointment',
+						controller: function($scope, $modalInstance){
+							$scope.clickYes = function(){
+								$modalInstance.close('success');
+							}
+
+							$scope.clickNo = function(){
+								$modalInstance.dismiss('cancel');
+							}
+						}
+					})
+					.result.then(function(success){
+						if(success === 'success'){
+							if(row){
+								var postData = {
+									form: {},
+									Patient_id: null
+								}
+								postData.form = angular.copy(scope.appointment.form);
+								postData.form.ARR_TIME = ConfigService.convertToDB(postData.ARR_TIME);
+								postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.ATTEND_TIME);
+								postData.form.CAL_ID = scope.params.col.CAL_ID;
+								postData.Patient_id = row.Patient_id;
+
+								AppointmentModel.add(postData)
+								.then(function(response){
+									scope.patient = row;
+								}, function(error){})
+
+								WaitingListModel.remove({id: row.id})
+								.then(function(response){
+									
+								}, function(error){})		
+							}
+						}
+
+					})// end result then
+				})
 			}
 
 			var patientAdd = function(){
@@ -160,7 +212,8 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 			scope.app_patient = {
 				dialog: {
 					add: function(){ patientAdd(); },
-					select: function(){ patientSelect(); }
+					select: function(){ patientSelect(); },
+					waitingListSelect: function(){ waitingListSelect(); }
 				}
 			}
 		}

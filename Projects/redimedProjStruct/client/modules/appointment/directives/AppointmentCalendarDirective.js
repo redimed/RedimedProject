@@ -8,6 +8,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
+			scope.goToCalendarDetail = function(doctor){
+				$cookieStore.put('appointment', scope.appointment.search);
+
+				$state.go('loggedIn.appointment_doctor', {doctorId: doctor.DOCTOR_ID});
+			}
+
 			scope.extendMinutes = function(hour, minute){
 				hour = scope.convertToSeconds(hour);
 				var seconds = hour+minute*60;
@@ -354,7 +360,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 										doctor_array_temp[k].color = scope.appointment.list[i].doctors[j].SERVICE_COLOR;
 
 										if(doctor_array_temp[k].left_temp === 0){
-											scope.appointment.list[i].doctors[j].height = '28px';
+											scope.appointment.list[i].doctors[j].height = '35px';
 										}
 									}else{
 										if(doctor_array_temp[k].left_temp > 0){
@@ -362,7 +368,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 											doctor_array_temp[k].left_temp -= 15;
 
 											if(doctor_array_temp[k].left_temp === 0){
-												scope.appointment.list[i].doctors[j].height = '28px';
+												scope.appointment.list[i].doctors[j].height = '35px';
 											}
 										}
 									}
@@ -374,7 +380,46 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						i++;
 					})
 
+					var i = 0;
+					_.forEach(scope.appointment.list, function(list){
+						var j = 0;
+						_.forEach(list.doctors, function(doctor){
+							if(scope.appointment.list[i].doctors[j].patients.length > 1 && scope.appointment.list[i].doctors[j].PATIENTS === 'ok'){
+								scope.appointment.list[i].doctors[j].height = "auto";
+							}
+							j++;
+						})
+						i++;
+					})
+
 				}, function(error){})
+			}
+
+			var dialogWaitingListAdd = function(col){
+				angular.element("#popupMenu").css({'display':'none'});
+
+				var modalInstance = $modal.open({
+					templateUrl: 'waitingListAdd',
+					controller: function($scope, $modalInstance){
+						$scope.success = false;
+
+						$timeout(function(){
+							$scope.doctor_id = col.DOCTOR_ID;
+						}, 200)
+
+						$scope.$watch('success', function(success){
+							if(success){
+								$modalInstance.close('success');								
+							}
+						})
+					},
+					size: 'lg',
+					resolve: {
+						col: function(){
+							return col;
+						}
+					}
+				});
 			}
 
 			var dialogRightAdd = function(app, col){
@@ -669,7 +714,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				onRightClick: function($event, app, col){ onRightClick($event, app, col) },
 				dialog: {
 					rightAdd: function(app, col){ dialogRightAdd(app, col) },
-					add: function(app, col){ dialogAdd(app, col) }
+					add: function(app, col){ dialogAdd(app, col) },
+					chooseWaitingList: function(col){ dialogWaitingListAdd(col) }
 				},
 				list: [],
 				search: angular.copy(search),
