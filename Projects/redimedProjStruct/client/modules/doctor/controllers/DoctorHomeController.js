@@ -23,7 +23,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 
 		var doctor_id = $scope.doctorInfo.doctor_id;
 
-		DoctorService.doctor_calendar_by_date(doctor_id, fromDate, toDate).then(function(data){
+		DoctorService.doctor_calendar_by_date(doctor_id, fromDate._i, toDate._i).then(function(data){
 			$scope.list_appts = data.list;
 
 			angular.forEach($scope.list_appts, function(value, key) {
