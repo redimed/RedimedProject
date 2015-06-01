@@ -159,7 +159,7 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 				<textField>
 					<reportElement x="375" y="0" width="45" height="19" uuid="af9b8719-60b4-4c62-85c1-2a72a4c8f10a"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["100%"]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="330" y="0" width="90" height="1" uuid="4f67544e-a1ff-4813-8365-e4df69df4be8"/>
@@ -173,6 +173,11 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
+				<staticText>
+					<reportElement x="357" y="0" width="25" height="19" uuid="893bc73b-18f9-484f-8afa-4e2b9c330f20"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<text><![CDATA[~]]></text>
+				</staticText>
 			</band>
 		</groupFooter>
 	</group>
@@ -263,8 +268,13 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 			<textField>
 				<reportElement x="375" y="0" width="45" height="17" uuid="fb6613d4-358b-4c7d-9742-61a6b25ca333"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["~"+$F{time_charge_Dept_per}+"%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{time_charge_Dept_per}+"%"]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="357" y="0" width="25" height="17" uuid="0ed945ac-88d0-4985-a68b-26f678628e86"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<text><![CDATA[~]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>
@@ -296,7 +306,7 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 			<textField>
 				<reportElement x="375" y="0" width="45" height="20" uuid="f1367a16-096a-41e5-b9dc-3305be336143"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA["~100%"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["100%"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="275" y="0" width="45" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
@@ -309,6 +319,11 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
 			</line>
+			<staticText>
+				<reportElement x="357" y="0" width="25" height="20" uuid="5e297b0a-a797-4256-a9ee-0711f53c17e8"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<text><![CDATA[~]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>
