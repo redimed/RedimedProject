@@ -196,12 +196,12 @@
                 </li>
                 <!-- NOT TIMESHEET -->
                 <li ng-repeat="menu in loggedInMenus" class="m-add-hover-color">
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='E-TimeSheet System for Employee'">
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='E-TimeSheet System'">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
                     <!-- NOT TIME SHEET -->
-                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='E-TimeSheet System for Employee'">
+                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='E-TimeSheet System'">
                         <li ng-repeat="submenu in menu.parent.childs">
                             <a ui-sref="{{submenu.definition}}">
                                 <i class="fa fa-angle-right"></i> {{submenu.name}}
@@ -211,7 +211,7 @@
                     <!-- END NOT TIMESHEET -->
                     <!-- FOR EMPLOYEE -->
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===144">
-                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <i></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
                     <ul class="sub-menu" ng-if="menu.parent.menu_id===144">
