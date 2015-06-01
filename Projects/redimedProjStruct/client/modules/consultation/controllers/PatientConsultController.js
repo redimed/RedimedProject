@@ -83,9 +83,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 	    }
 
+	    refresh($scope.patient_id);
+
 		$interval(function(){
 			refresh($scope.patient_id);
-		},1 * 1000);
+		},60 * 1000);
 
 
 		PatientService.get($scope.patient_id).then(function(rs){
@@ -98,7 +100,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					(rs.data.Title != null || rs.data.Title != '') ? (rs.data.Title +" . " + fName.join(' ')) : fName.join(' ');
 
 				InsurerService.insurerByPatient($scope.patient_id).then(function(res){
-					if(res.status.toLowerCase() == 'success' && res.data)
+					if(res.status.toLowerCase() == 'success' && res.data.length > 0)
 						$scope.patientInfo.insurer = res.data[0].insurer_name;
 				})
 			}
