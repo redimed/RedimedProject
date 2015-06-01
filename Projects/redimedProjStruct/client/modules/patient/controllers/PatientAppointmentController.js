@@ -192,48 +192,55 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
         *   COMPANIES
         */
         PatientService.numCompanies(patient_id).then(function(response){
-            $scope.patient_detail_modules[1].desc = 'Total: ' + response.count; 
+            if(response)
+                $scope.patient_detail_modules[1].desc = 'Total: ' + response.count; 
         });
         /*
         *   CLAIMS
         */
         PatientService.numClaims(patient_id).then(function(response){
-            $scope.patient_detail_modules[2].desc = 'Total: ' + response.count; 
+            if(response)
+                $scope.patient_detail_modules[2].desc = 'Total: ' + response.count; 
         });
         
         /*
         *   OUTSIDE REFERALS
         */  
         PatientService.numOutReferrals(patient_id).then(function(response){
-            $scope.patient_detail_modules[3].desc = 'Total: ' + response.count; 
+            if(response)
+                $scope.patient_detail_modules[3].desc = 'Total: ' + response.count; 
         });
         
         /*
         *   REFERALS
         */
         PatientService.mumReferrals(patient_id).then(function(response){
-            $scope.patient_apt_modules[4].desc = 'Has: ' + response.count; 
+            if(response)
+                $scope.patient_apt_modules[4].desc = 'Has: ' + response.count; 
         });
         
         /*
         *   SCRIPT
         */
         PatientService.numScripts(patient_id).then(function(response){
-            $scope.patient_apt_modules[3].desc = 'Has: ' + response.count; 
+            if(response)
+                $scope.patient_apt_modules[3].desc = 'Has: ' + response.count; 
         });
     
      /*
         *   RECALL 
         */
         PatientService.numRecalls(patient_id).then(function(response){
-            $scope.patient_apt_modules[6].desc = 'Has: ' + response.count; 
+            if(response)
+                $scope.patient_apt_modules[6].desc = 'Has: ' + response.count; 
         });
 
         /*
         *   DOCUMENT
         */
         PatientService.numDocuments(patient_id).then(function(response){
-            $scope.patient_apt_modules[7].desc = 'Has: ' + response.count; 
+            if(response)
+                $scope.patient_apt_modules[7].desc = 'Has: ' + response.count; 
         });
     }
 
