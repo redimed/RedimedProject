@@ -16,7 +16,9 @@ angular.module("app.loggedIn.TimeSheet.Report2.Controller", [])
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
-            if (listNew !== undefined && listNew.length !== 0) {
+            if (listNew !== undefined &&
+                listNew !== null &&
+                listNew.length !== 0) {
                 listNew[0].isStaff = $scope.isStaff;
                 listNew[0].USER_ID = $cookieStore.get("userInfo").id;
                 TimeSheetService.LoadEmpReport(listNew).then(function(response) {
