@@ -10,7 +10,7 @@ module.exports = function(sequelize,DataTypes){
         LastName: DataTypes.STRING(100),
         Department_name: DataTypes.STRING(100),
         weekno : DataTypes.INTEGER(11) ,
-        //time_charge_week : DataTypes.INTEGER(11) ,
+        
         from_date :DataTypes.DATE,
         to_date:DataTypes.DATE,
         Creation_date : DataTypes.DATE ,

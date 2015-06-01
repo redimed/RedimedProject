@@ -14,7 +14,7 @@ module.exports = function(sequelize,DataTypes){
         Last_updated_by : DataTypes.INTEGER(11) ,
         Last_update_date : DataTypes.DATE
     },{
-        tableName: 'hr_leave_owe', // đặt tên bảng
+        tableName: 'hr_leave_owe', // đặt tên bảng a
         createdAt: 'Creation_date',
         updatedAt: 'Last_update_date'
     });

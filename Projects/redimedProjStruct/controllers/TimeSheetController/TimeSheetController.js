@@ -3646,7 +3646,7 @@ module.exports = {
                                                                     employee      : listleave[x].Employee_id,
                                                                     from_date     : listleave[x].from_date,
                                                                     to_date       : listleave[x].to_date
-                                                                }))
+                                                                })) 
                                                             }
                                                             chainer.runSerially()
                                                                 .success(function(data_success){
