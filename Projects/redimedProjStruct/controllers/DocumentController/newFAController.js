@@ -89,6 +89,24 @@ module.exports = {
 		.error(function(err){
 			res.json(500,{status:'error'})
 		})
-
 	},
+
+	autoRating: function(req,res){
+		var patient_age = req.body.patient_age;
+		var patient_gender = req.body.patient_gender;
+		var valueToRate = req.body.valueToRate;
+		var rating_id = req.body.rating_id;
+
+		knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ? and ? between `FROM_VALUE` and `TO_VALUE`",[rating_id, patient_age, patient_gender,valueToRate])
+		.then(function(result){
+			console.log('this is result.length', result);
+			if(result[0].length===0){
+				res.json({status:'unrated'});
+			}
+			else res.json({status:'success', data:result[0]});
+		})
+		.error(function(err){
+			res.json({status:'error'});
+		})
+	}
 }

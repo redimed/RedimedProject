@@ -36,6 +36,7 @@ app.post('/api/document/editCat2', Cat2Controller.editCat2);
 app.post('/api/document/newHeaderSections', newFAController.newHeaderAndSections);
 app.post('/api/document/newLines', newFAController.newLines);
 app.post('/api/document/newDetailsComments', newFAController.newDetailsAndComments);
+app.post('/api/document/autoRating', newFAController.autoRating)
 // end
 
 
