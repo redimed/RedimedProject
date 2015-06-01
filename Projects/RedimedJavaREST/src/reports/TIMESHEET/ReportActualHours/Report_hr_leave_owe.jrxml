@@ -105,7 +105,7 @@ WHERE hr_leave_owe.create_id =$P{id}]]>
 		<groupHeader>
 			<band height="20">
 				<textField>
-					<reportElement x="74" y="0" width="200" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
+					<reportElement x="54" y="0" width="200" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
 					<textElement textAlignment="Left" verticalAlignment="Bottom">
 						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 					</textElement>
@@ -152,34 +152,34 @@ WHERE hr_leave_owe.create_id =$P{id}]]>
 				<textFieldExpression><![CDATA[$F{from_date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="74" y="148" width="130" height="20" forecolor="#6666FF" uuid="6021cf2b-817e-4c86-ac7f-8d72c9250134"/>
+				<reportElement x="30" y="148" width="200" height="20" forecolor="#6666FF" uuid="6021cf2b-817e-4c86-ac7f-8d72c9250134"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Employee Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="214" y="148" width="90" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
+				<reportElement x="240" y="148" width="105" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Leave Date]]></text>
 			</staticText>
 			<line>
-				<reportElement x="74" y="168" width="130" height="1" forecolor="#6666FF" uuid="a52c6240-62f1-4117-a9d9-cc1f7f0001bc"/>
+				<reportElement x="30" y="168" width="200" height="1" forecolor="#6666FF" uuid="a52c6240-62f1-4117-a9d9-cc1f7f0001bc"/>
 			</line>
 			<line>
-				<reportElement x="214" y="168" width="90" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
+				<reportElement x="240" y="168" width="105" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
 			</line>
 			<staticText>
-				<reportElement x="314" y="148" width="145" height="20" forecolor="#6666FF" uuid="16ef0398-9c60-4772-bfec-ee6b1fc2c4da"/>
+				<reportElement x="355" y="148" width="170" height="20" forecolor="#6666FF" uuid="16ef0398-9c60-4772-bfec-ee6b1fc2c4da"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Submitted Leave Form]]></text>
 			</staticText>
 			<line>
-				<reportElement x="314" y="168" width="145" height="1" forecolor="#6666FF" uuid="4eebda26-104b-4076-8b45-eb641632aed1"/>
+				<reportElement x="355" y="168" width="170" height="1" forecolor="#6666FF" uuid="4eebda26-104b-4076-8b45-eb641632aed1"/>
 			</line>
 		</band>
 	</title>
@@ -189,18 +189,18 @@ WHERE hr_leave_owe.create_id =$P{id}]]>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="84" y="0" width="120" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
+				<reportElement x="30" y="0" width="200" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="214" y="0" width="90" height="17" uuid="6eba9d3e-a884-43c5-a552-15d500221632"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<reportElement x="240" y="0" width="105" height="17" uuid="6eba9d3e-a884-43c5-a552-15d500221632"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{date_leave}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="314" y="0" width="145" height="17" uuid="fe2a14b1-317e-4907-a411-93a17f787e32"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<reportElement x="355" y="0" width="170" height="17" uuid="fe2a14b1-317e-4907-a411-93a17f787e32"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{isReject}==1?"Yes":"No"]]></textFieldExpression>
 			</textField>
 		</band>
