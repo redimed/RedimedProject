@@ -3577,7 +3577,7 @@ module.exports = {
                             .success(function(data_hr_leave_owe_table) {
                                 //console.log(data_hr_leave_owe_table)
                                 for (var i = 0; i < data_hr_leave_owe_table.length; i++) {
-                                    db.hr_leave_owe_table.create({
+                                    chainer.add(db.hr_leave_owe_table.create({
                                             create_id: info.USER_ID,
                                             user_id: data_hr_leave_owe_table[i].id,
                                             task_week_id: data_hr_leave_owe_table[i].task_week_id,
@@ -3589,131 +3589,92 @@ module.exports = {
                                             weekno: data_hr_leave_owe_table[i].week_no,
                                             from_date: info.weekFrom,
                                             to_date: info.weekTo
-                                        })
+                                        }));
+                                }
+                                    chainer.runSerially()
                                         .success(function(data_insert1) {
-                                            flag1++;
-                                            if (flag1 == data_hr_leave_owe_table.length) {
-                                                //console.log("NEXXT")
-                                                var sql_get_data_1 = "SELECT " + "hr_leave_owe_table.create_id, " + "hr_leave_owe_table.user_id, " + "hr_leave_owe_table.task_week_id, " + "hr_leave_owe_table.Employee_id, " + "hr_leave_owe_table.Department_id, " + "hr_leave_owe_table.from_date, " + "hr_leave_owe_table.to_date, " + "time_tasks.tasks_id, " + "time_tasks.date, " + "time_item_task.item_id " + "FROM hr_leave_owe_table " + "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id " + "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id " + "WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id=" + info.USER_ID + " ORDER BY hr_leave_owe_table.user_id ";
-                                                db.sequelize.query(sql_get_data_1)
-                                                    .success(function(data_1) {
-                                                        //console.log(data_1)
+                                            var sql_get_data_1 = "SELECT " + 
+                                                "hr_leave_owe_table.create_id, " + 
+                                                "hr_leave_owe_table.user_id, " +
+                                                "time_tasks.tasks_id, "+
+                                                "hr_leave_owe_table.task_week_id, " + 
+                                                "hr_leave_owe_table.Employee_id, " + 
+                                                "hr_leave_owe_table.Department_id, " + 
+                                                "hr_leave_owe_table.from_date, " + 
+                                                "hr_leave_owe_table.to_date, " + 
+                                                "time_tasks.tasks_id, " + 
+                                                "time_tasks.date, " + 
+                                                "time_item_task.item_id " + 
+                                                "FROM hr_leave_owe_table " + 
+                                                "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id " + 
+                                                "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id " + 
+                                                "WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id=" + info.USER_ID + 
+                                                " ORDER BY hr_leave_owe_table.user_id ";
+                                            db.sequelize.query(sql_get_data_1)
+                                                .success(function(data_1){
+                                                    for (var j = 0; j < data_1.length; j++) {
+                                                        stringID += data_1[j].user_id + ", ";
+                                                    }
+                                                    stringID += 0;
+                                                    var sql_get_data_2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + 
+                                                                        "FROM hr_leave " + 
+                                                                        "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id ";
+                                                    db.sequelize.query(sql_get_data_2)
+                                                        .success(function(data_2){
+                                                            for(var t =0;t<data_1.length;t++){
+                                                                data_1[t].isReject=0;// if isReject=0 ->>>> ngay nghi khong nam trong leave form 
+                                                            }
+                                                            for(var a= 0;a<data_1.length;a++){
+                                                                date = moment(moment(data_1[a].date).format("YYYY-MM-DD")).format("X");
+                                                                 for(var b =0;b<data_2.length;b++){
+                                                                     start_date  = moment(moment(data_2[b].start_date).format("YYYY-MM-DD")).format("X");
+                                                                     finish_date = moment(moment(data_2[b].finish_date).format("YYYY-MM-DD")).format("X");
+                                                                     if(date>=start_date&&date<=finish_date){
+                                                                         data_1[a].isReject=1;
+                                                                     }
+                                                                 }
+                                                                 listleave.push(data_1[a]);
 
-                                                        for (var j = 0; j < data_1.length; j++) {
-                                                            stringID += data_1[j].user_id + ", ";
-                                                        }
-                                                        stringID += 0;
-                                                        //console.log(stringID)
-                                                        var sql_get_data_2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + "FROM hr_leave " + "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id ";
-                                                        db.sequelize.query(sql_get_data_2)
-                                                            .success(function(data_2) {
-                                                                for (var x = 0; x < data_2.length; x++) {
-                                                                    start_date = moment(moment(data_2[x].start_date).format("YYYY-MM-DD")).format("X");
-                                                                    finish_date = moment(moment(data_2[x].finish_date).format("YYYY-MM-DD")).format("X");
-                                                                    for (var y = 0; y < data_1.length; y++) {
-                                                                        date = moment(moment(data_1[y].date).format("YYYY-MM-DD")).format("X");
-                                                                        if (data_1[y].user_id == data_2[x].user_id) {
-                                                                            if (date < start_date || date > finish_date) {
-
-                                                                                listleave.push(data_1[y]);
-                                                                            }
-                                                                        }
-                                                                    }
-
-                                                                }
-                                                                for (var q = 0; q < listleave.length; q++) {
-                                                                    db.hr_leave_owe.create({
-                                                                            create_id: listleave[q].create_id,
-                                                                            user_id: listleave[q].user_id,
-                                                                            department: listleave[q].Department_id,
-                                                                            date_leave: listleave[q].date,
-                                                                            employee: listleave[q].Employee_id,
-                                                                            from_date: listleave[q].from_date,
-                                                                            to_date: listleave[q].to_date,
-                                                                            created_by: info.USER_ID
-                                                                        })
-                                                                        .success(function(data_insert2) {
-                                                                            flag2++;
-                                                                            if (flag2 == listleave.length)
-
-                                                                                db.sequelize.query(sql_get_total_all)
-                                                                                .success(function(data_total_all) {
-                                                                                    db.sequelize.query(sql_get_total_Dept)
-                                                                                        .success(function(data_total_Dept) {
-
-                                                                                            for (var u = 0; u < data_total_Dept.length; u++) {
-                                                                                                for (var t = 0; t < listleave.length; t++) {
-                                                                                                    db.hr_leave_owe.update({
-                                                                                                            total_all: data_total_all[0].total_all,
-                                                                                                            total_Dept: data_total_Dept[u].total_Dept
-                                                                                                        }, {
-                                                                                                            department: data_total_Dept[u].department
-                                                                                                        })
-                                                                                                        .success(function(success) {
-                                                                                                            flag4++;
-                                                                                                            if (flag3 == data_total_Dept.length && flag4 == listleave.length) {
-                                                                                                                res.json({
-                                                                                                                    status: "success"
-                                                                                                                });
-                                                                                                                return;
-                                                                                                            }
-                                                                                                        })
-                                                                                                        .error(function(err) {
-                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                            res.json({
-                                                                                                                status: "error"
-                                                                                                            });
-                                                                                                            return;
-                                                                                                        })
-                                                                                                }
-                                                                                                flag3++;
-                                                                                            }
-                                                                                        })
-                                                                                        .error(function(err) {
-                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                            res.json({
-                                                                                                status: "error"
-                                                                                            });
-                                                                                            return;
-                                                                                        })
-                                                                                })
-                                                                                .error(function(err) {
-                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                    res.json({
-                                                                                        status: "error"
-                                                                                    });
-                                                                                    return;
-                                                                                })
-
-                                                                        })
-                                                                        .error(function(err) {
-                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                            res.json({
-                                                                                status: "error"
-                                                                            });
-                                                                            return;
-                                                                        })
-                                                                }
-                                                                //console.log(listleave)
-
-
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR: " + err + " *****");
-                                                                res.json({
-                                                                    status: "error"
-                                                                });
-                                                                return;
-                                                            })
-                                                    })
-                                                    .error(function(err) {
-                                                        console.log("*****ERROR: " + err + " *****");
-                                                        res.json({
-                                                            status: "error"
-                                                        });
-                                                        return;
-                                                    })
-                                            }
+                                                            }
+                                                            for(var x=0;x <listleave.length;x++){
+                                                                chainer.add(db.hr_leave_owe.create({
+                                                                    create_id     : listleave[x].create_id,
+                                                                    user_id       : listleave[x].user_id,
+                                                                    department    : listleave[x].Department_id,
+                                                                    date_leave    : listleave[x].date,
+                                                                    isReject      : listleave[x].isReject,
+                                                                    employee      : listleave[x].Employee_id,
+                                                                    from_date     : listleave[x].from_date,
+                                                                    to_date       : listleave[x].to_date
+                                                                }))
+                                                            }
+                                                            chainer.runSerially()
+                                                                .success(function(data_success){
+                                                                    res.json({status:"success"});
+                                                                })
+                                                                .error(function(err){
+                                                                    console.log("*****ERROR: "+err+" *****");
+                                                                    res.json({
+                                                                        status:"error"
+                                                                    });
+                                                                    return;
+                                                                })
+                                                        })
+                                                        .error(function(err){
+                                                            console.log("*****ERROR: "+err+" *****");
+                                                            res.json({
+                                                                status:"error"
+                                                            });
+                                                            return;
+                                                        })
+                                                })
+                                                .error(function(err){
+                                                    console.log("*****ERROR: "+err+" *****");
+                                                    res.json({
+                                                        status:"error"
+                                                    });
+                                                    return;
+                                                })
                                         })
                                         .error(function(err) {
                                             console.log("*****ERROR: " + err + " *****");
@@ -3722,7 +3683,7 @@ module.exports = {
                                             });
                                             return;
                                         })
-                                }
+                                
                             })
                             .error(function(err) {
                                 console.log("*****ERROR: " + err + " *****");
@@ -3756,240 +3717,369 @@ module.exports = {
     //REPORT TIME IN LIEU
     LoadReportTimeInLieu: function(req, res) {
         var info = req.body.info;
-        var listEMP = info.listEMP;
-        var USER_ID = info.USER_ID;
-        var weekNo = getWeekNo(new Date());
-        if (listEMP !== undefined &&
-            listEMP !== null &&
-            listEMP.length !== 0) {
-            //GET LIST EMPLOYEE ID
-            var strListEmp = "";
-            listEMP.forEach(function(value, index) {
-                if (value !== undefined &&
-                    value !== null &&
-                    !isNaN(value.id)) {
-                    strListEmp += value.id + ",";
-                }
-            });
-            if (strListEmp !== "") {
-                strListEmp = "(" + strListEmp.substring(0, strListEmp.length - 1) + ")";
-            }
-            //END GET LIST EMPLOYEE ID
-
-            //GET TIME IN LIEU
-            var queryGetTimeInLieu =
-                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID, hr_employee.Dept_ID, " +
-                "time_item_task.item_id, time_item_task.time_charge, time_tasks_week.time_in_lieu, " +
-                "hr_employee.Dept_ID, time_tasks_week.week_no, YEAR(time_tasks_week.start_date) as YEAR " +
-                "FROM hr_employee " +
-                "INNER JOIN Departments ON departments.departmentid = hr_employee.Dept_ID " +
-                "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
-                "INNER JOIN time_tasks_week ON time_tasks_week.user_id = users.id " +
-                "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-                "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
-                "WHERE time_tasks_week.task_status_id = 3 AND hr_employee.Employee_ID IN " + strListEmp;
-            db.sequelize.query(queryGetTimeInLieu)
-                .success(function(resultTimeInLieu) {
-                    if (resultTimeInLieu !== undefined &&
-                        resultTimeInLieu !== null &&
-                        resultTimeInLieu.length !== 0) {
-                        var arrayDept = [];
-                        var arrayEmployee = [];
-                        resultTimeInLieu.forEach(function(valueResult, indexResult) {
-                            //PUSH DEPT
-                            var isFoundDept = false;
-                            arrayDept.forEach(function(valueDept, indexDept) {
-                                if (valueResult.Dept_ID === valueDept.Dept_ID) {
-                                    isFoundDept = true;
-                                }
-                            });
-                            if (isFoundDept === false) {
-                                arrayDept.push({
-                                    Dept_ID: valueResult.Dept_ID
-                                });
-                            }
-                            //END PUSH DEPT
-
-                            //PUSH EMPLOYEE
-                            var isFoundEmployee = false;
-                            arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                                if (valueEmployee.Employee_ID === valueResult.Employee_ID) {
-                                    isFoundEmployee = true;
-                                }
-                            });
-                            if (isFoundEmployee === false) {
-                                arrayEmployee.push({
-                                    Employee_ID: valueResult.Employee_ID,
-                                    Dept_ID: valueResult.Dept_ID
-                                });
-                            }
-                            //END PUSH EMPLOYEE
-                        });
-                        //PUSH TIME IN LIEU REST FOR EMPLOYEE
-                        arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                            var timeInLieuHasTemp = 0;
-                            var timeInLieuUseTemp = 0;
-                            var timeInLieuNow = 0;
-                            var arrayWeekNo = [];
-                            resultTimeInLieu.forEach(function(valueTimeInLieu, indexTimeInLieu) {
-                                //FOR REST
-                                if (valueTimeInLieu.Employee_ID === valueEmployee.Employee_ID &&
-                                    !isNaN(valueTimeInLieu.time_in_lieu)) {
-                                    var isFoundWeekNo = false;
-                                    arrayWeekNo.forEach(function(valueWeekNo, indexWeekNo) {
-                                        if (valueWeekNo.week_no === valueTimeInLieu.week_no) {
-                                            isFoundWeekNo = true;
-                                        }
-                                    });
-                                    if (isFoundWeekNo === false) {
-                                        //FOR HAS
-                                        timeInLieuHasTemp += valueTimeInLieu.time_in_lieu;
-                                        arrayWeekNo.push({
-                                            week_no: valueTimeInLieu.week_no
-                                        });
-                                        //END FOR HAS
-
-                                        //FOR NOW
-                                        if ((valueTimeInLieu.week_no >= weekNo - 2 && valueTimeInLieu.week_no <= weekNo) &&
-                                            valueTimeInLieu.YEAR == moment().format("YYYY")) {
-                                            timeInLieuNow += valueTimeInLieu.time_in_lieu;
-                                        }
-                                        //END FOR NOW
-                                    }
-                                }
-                                //END FOR REST
-
-                                //FOR USE
-                                if (valueTimeInLieu.Employee_ID === valueEmployee.Employee_ID &&
-                                    !isNaN(valueTimeInLieu.time_charge) &&
-                                    valueTimeInLieu.item_id == 22) {
-                                    timeInLieuUseTemp += valueTimeInLieu.time_charge;
-                                }
-                                //END FOR USE
-                            });
-                            arrayEmployee[indexEmployee].time_in_lieu_has = timeInLieuHasTemp;
-                            arrayEmployee[indexEmployee].time_in_lieu_use = timeInLieuUseTemp;
-                            arrayEmployee[indexEmployee].time_in_lieu_now = timeInLieuNow;
-                            arrayEmployee[indexEmployee].time_in_lieu_deduction = timeInLieuHasTemp - timeInLieuUseTemp - timeInLieuNow;
-                        });
-                        //END PUSH TIME IN LIEU REST FOR EMPLOYEE
-
-                        //TIME IN LIEU FOR DEPT
-                        var timeInLieuHasAllTemp = 0;
-                        var timeInLieuUseAllTemp = 0;
-                        var timeInLieuNowAllTemp = 0;
-                        var timeInLieuDeductionAllTemp = 0;
-                        arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                            var timeInLieuHasDeptTemp = 0;
-                            var timeInLieuUseDeptTemp = 0;
-                            var timeInLieuNowDeptTemp = 0;
-                            var timeInLieuDeductionDeptTemp = 0;
-                            arrayDept.forEach(function(valueDept, indexDept) {
-                                if (valueEmployee.Dept_ID === valueDept.Dept_ID) {
-                                    timeInLieuHasDeptTemp += valueEmployee.time_in_lieu_has;
-                                    timeInLieuUseDeptTemp += valueEmployee.time_in_lieu_use;
-                                    timeInLieuNowDeptTemp += valueEmployee.time_in_lieu_now;
-                                    timeInLieuDeductionDeptTemp += valueEmployee.time_in_lieu_deduction;
-                                }
-                                //PUSH FOR DEPT
-                                arrayDept[indexDept].time_in_lieu_has_dept = timeInLieuHasDeptTemp;
-                                arrayDept[indexDept].time_in_lieu_use_dept = timeInLieuUseDeptTemp;
-                                arrayDept[indexDept].time_in_lieu_now_dept = timeInLieuNowDeptTemp;
-                                arrayDept[indexDept].time_in_lieu_deduction_dept = timeInLieuDeductionDeptTemp;
-                                //END PUSH FOR DEPT
-                                timeInLieuHasAllTemp += valueEmployee.time_in_lieu_has;
-                                timeInLieuUseAllTemp += valueEmployee.time_in_lieu_use;
-                                timeInLieuNowAllTemp += valueEmployee.time_in_lieu_now;
-                                timeInLieuDeductionAllTemp += valueEmployee.time_in_lieu_deduction;
-                            });
-                        });
-                        //END TIME IN LIEU FOR DEPT
-
-                        //PUSH FROM DEPT TO EMPLOYEE
-                        arrayDept.forEach(function(valueDept, indexDept) {
-                            arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                                if (valueDept.Dept_ID === valueEmployee.Dept_ID) {
-                                    arrayEmployee[indexEmployee].time_in_lieu_has_dept = valueDept.time_in_lieu_has_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_use_dept = valueDept.time_in_lieu_use_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_now_dept = valueDept.time_in_lieu_now_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_deduction_dept = valueDept.time_in_lieu_deduction_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_has_all = timeInLieuHasAllTemp;
-                                    arrayEmployee[indexEmployee].time_in_lieu_use_all = timeInLieuUseAllTemp;
-                                    arrayEmployee[indexEmployee].time_in_lieu_now_all = timeInLieuNowAllTemp;
-                                    arrayEmployee[indexEmployee].time_in_lieu_deduction_all = timeInLieuDeductionAllTemp;
-                                }
-                            });
-                        });
-                        //END PUSH
-                        //INSERT REPORT
-                        var listReport = "";
-                        arrayEmployee.forEach(function(value, index) {
-                            if (value !== undefined &&
-                                value !== null) {
-                                listReport += "(" + USER_ID + "," + value.Dept_ID + "," + value.Employee_ID + "," +
-                                    value.time_in_lieu_has + "," + value.time_in_lieu_use + "," + value.time_in_lieu_now + "," + value.time_in_lieu_deduction + "," +
-                                    value.time_in_lieu_has_dept + "," + value.time_in_lieu_use_dept + "," + value.time_in_lieu_now_dept + "," + value.time_in_lieu_deduction_dept + "," +
-                                    value.time_in_lieu_has_all + "," + value.time_in_lieu_use_all + "," + value.time_in_lieu_now_all + "," + value.time_in_lieu_deduction_all + ",'" +
-                                    moment().format("YYYY-MM-DD HH:mm:ss") + "'," + USER_ID + "),";
-                            }
-                        });
-                        if (listReport !== "") {
-                            listReport = listReport.substring(0, listReport.length - 1);
-                        }
-                        //END INSERT
-
-                        //DELETE ALL REPORT FOR USER ID
-                        var queryDelReport = "DELETE FROM report_time_in_lieu WHERE user_id = :userId";
-                        db.sequelize.query(queryDelReport, null, {
-                                raw: true
-                            }, {
-                                userId: USER_ID
-                            })
-                            .success(function(resultDel) {
-                                var queryInsertReport = "INSERT INTO report_time_in_lieu " +
-                                    "(user_id, dept_id, employee_id, " +
-                                    "time_in_lieu_has_employee, time_in_lieu_use_employee, time_in_lieu_now_employee, time_in_lieu_deduction_employee," +
-                                    "time_in_lieu_has_dept, time_in_lieu_use_dept, time_in_lieu_now_dept, time_in_lieu_deduction_dept," +
-                                    "time_in_lieu_has_all, time_in_lieu_use_all, time_in_lieu_now_all, time_in_lieu_deduction_all, creation_date, created_by" +
-                                    ")" +
-                                    "VALUES" + listReport;
-                                db.sequelize.query(queryInsertReport)
-                                    .success(function(resultLast) {
-                                        res.json({
-                                            status: "success"
-                                        });
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR:" + err + "*****");
-                                        res.json({
-                                            status: "error"
-                                        });
-                                    });
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR:" + err + "*****");
-                                res.json({
-                                    status: "error"
-                                });
-                            });
-                        //END DELETE
-                    }
-                })
-                .error(function(err) {
-                    console.log("*****ERROR:" + err + "*****");
-                    res.json({
-                        status: "error"
-                    });
-                    return;
-                });
-            // END GET TIME IN LIEU
+        //console.log(info);
+        //CHUYEN LIST EMPL VA LIST DEPT THANH CHUOI STRING
+        var stringEMP = "";
+        var stringDept = "";
+        for (var i = 0; i < info.listEMP.length; i++) {
+            stringEMP += info.listEMP[i].id + ", ";
         }
+        stringEMP += 0;
+        for (var j = 0; j < info.listDept.length; j++) {
+            stringDept += info.listDept[j].id + ", ";
+        }
+        stringDept += 0;
+        var sum_ = 0;
+        var data      = [];
+        var data_Dept = [];
+        var d = new Date();
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        var yearStart = new Date(d.getFullYear(), 0, 1);
+        var weeks = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        var sql_delete_time_in_lieu_detail_report="DELETE FROM time_in_lieu_report WHERE create_id="+info.USER_ID;
+        db.sequelize.query(sql_delete_time_in_lieu_detail_report)
+            .success(function(data_delete1){
+                //cau SQL lay time in lieu ma user duoc chon tich luy~ tu do den from_date
+                var sql_get_data1 = "SELECT users.id, "+
+                                    "hr_employee.Employee_ID , "+
+                                    "departments.departmentid, "+
+                                    "time_tasks_week.week_no,"+
+                                    "time_tasks_week.task_week_id, "+
+                                    "time_tasks_week.time_in_lieu "+
+                                    "FROM hr_employee  "+
+                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "+
+                                    "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  "+
+                                    "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+
+                                    "WHERE time_tasks_week.task_status_id = 3 AND "+
+                                    "departments.departmentid IN ("+stringDept+") AND "+
+                                    // "time_tasks_week.week_no<"+info.weekNoFrom+" AND "+
+                                    "hr_employee.Employee_ID IN ("+stringEMP+")";
+                db.sequelize.query(sql_get_data1)
+                    .success(function(data1){
+                        //get time in lieu*********************
+                        if(data1!==null&&data1!==undefined){
+                            
+                            data1.forEach(function(value,index) {
+                                
+                               if(value!==null && value !==undefined){
+                                    var isFound = false;
+                                    data.forEach(function(valueTime,indexTime){
+                                        if(valueTime!==null&&
+                                            valueTime!==undefined&&
+                                            valueTime.Employee_id===value.Employee_ID
+                                            &&valueTime.Department_id===value.departmentid){
+                                            isFound= true;
+                                        }
+                                    });
+                                    if(isFound===false){
+                                        data.push({create_id:info.USER_ID,
+                                                    user_id:value.id,
+                                                    Employee_id:value.Employee_ID,
+                                                    Department_id:value.departmentid});
+
+                                    }
+                               }
+
+                            });
+                                data.forEach(function(value,index){
+                                    data[index].time_in_lieu=0;
+                                    data1.forEach(function(valueTime,indexTime){
+                                        if(value.Employee_id===valueTime.Employee_ID&&value.Department_id===valueTime.departmentid){
+                                            data[index].time_in_lieu=data[index].time_in_lieu+valueTime.time_in_lieu;
+                                        }
+                                    });
+                                });
+                        }
+                        //end get time in lieu**********
+                        var sql_get_data2 = "SELECT users.id, "+
+                                                "hr_employee.Employee_ID , "+
+                                                "departments.departmentid, "+
+                                                "time_tasks_week.week_no, "+
+                                                "time_tasks_week.task_week_id, "+
+                                                "time_item_task.task_id, "+
+                                                "time_item_task.time_charge "+
+                                                "FROM hr_employee  "+
+                                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "+
+                                                "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid "+
+                                                "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+
+                                                "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id "+
+                                                "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id "+
+                                                "WHERE time_tasks_week.task_status_id = 3 AND "+
+                                                "departments.departmentid IN ("+stringDept+") AND "+
+                                                // "(time_tasks_week.week_no <"+info.weekNoFrom+") AND "+
+                                                "hr_employee.Employee_ID IN ("+stringEMP+") AND "+
+                                                "time_item_task.item_id=22";
+                    db.sequelize.query(sql_get_data2)
+                        .success(function(data2){
+                            //get time in lieu used and time in lieu remain *******************
+                            if(data!==null && data!==undefined){
+                                data.forEach(function(value,index){
+                                    data[index].time_in_lieu_used=0;
+                                    data[index].time_in_lieu_remain=0;
+                                    data[index].time_in_lieu_gan_nhat=0;
+                                   
+                                    if(value!==null&&value!==undefined){
+                                        data2.forEach(function(valueTime,indexTime){
+                                            if(value.Employee_id===valueTime.Employee_ID&&value.Department_id===valueTime.departmentid){
+                                                data[index].time_in_lieu_used   = data[index].time_in_lieu_used + valueTime.time_charge; 
+                                            }
+                                        });
+                                    }
+                                });
+                                data.forEach(function(value,index){
+                                    if(value!==null&&value!==undefined){
+                                        data[index].time_in_lieu_remain = data[index].time_in_lieu - data[index].time_in_lieu_used;
+                                    }
+                                });
+                            }
+                            //end get ***********************************
+                            //get time in lieu for Department
+                            if(data!==null&&data!==undefined){
+                                data.forEach(function(value,index){
+                                    if(value!==null&&value!==undefined){
+                                        var isFound=false;
+                                        data_Dept.forEach(function(valueDept,indexDept){
+                                            if(valueDept!==null&&
+                                            valueDept!==undefined&&
+                                            valueDept.Department_id===value.Department_id){
+                                                
+                                                isFound=true;
+                                            }
+                                        });
+                                        if(isFound==false){
+                                            data_Dept.push({Department_id:value.Department_id});
+                                        }
+                                    }
+                                });
+                                data_Dept.forEach(function(value,index){
+                                    data_Dept[index].time_in_lieu_Dept=0;
+                                    data_Dept[index].time_in_lieu_used_Dept=0;
+                                    data_Dept[index].time_in_lieu_remain_Dept=0;
+                                    if(value!==null&&value!==undefined){
+                                        data.forEach(function(valueTime,indexTime){
+                                            if(value.Department_id==valueTime.Department_id){
+                                                data_Dept[index].time_in_lieu_Dept        = data_Dept[index].time_in_lieu_Dept + valueTime.time_in_lieu;
+                                                data_Dept[index].time_in_lieu_used_Dept   = data_Dept[index].time_in_lieu_used_Dept + valueTime.time_in_lieu_used;
+                                                data_Dept[index].time_in_lieu_remain_Dept = data_Dept[index].time_in_lieu_remain_Dept + valueTime.time_in_lieu_remain;
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                            
+                            //end get***********************
+
+                            //get time_in_lieu_all***************
+                            var time_in_lieu_all=0;
+                            var time_in_lieu_used_all=0;
+                            var time_in_lieu_remain_all=0;
+                            if(data_Dept!==null&&data_Dept!==undefined){
+                                data_Dept.forEach(function(value,index){
+                                    if(value!==null&&value!==undefined){
+                                        time_in_lieu_all        = time_in_lieu_all + data_Dept[index].time_in_lieu_Dept;
+                                        time_in_lieu_used_all   = time_in_lieu_used_all + data_Dept[index].time_in_lieu_used_Dept;
+                                        time_in_lieu_remain_all = time_in_lieu_remain_all + data_Dept[index].time_in_lieu_remain_Dept;
+
+                                    }
+                                });
+                                data_Dept.forEach(function(value,index){
+                                    data_Dept[index].time_in_lieu_all = 0;
+                                    data_Dept[index].time_in_lieu_used_all = 0;
+                                    data_Dept[index].time_in_lieu_remain_all = 0;
+                                    if(value!==null&&value!==undefined){
+                                        data_Dept[index].time_in_lieu_all        = time_in_lieu_all;
+                                        data_Dept[index].time_in_lieu_used_all   = time_in_lieu_used_all;
+                                        data_Dept[index].time_in_lieu_remain_all = time_in_lieu_remain_all;
+                                    }
+                                });
+                            }
+                            
+                            //end get************************
+
+                            //push data_Dept into data**********************
+                            if(data!==null&&data!==undefined){
+                                data.forEach(function(value,index){
+                                    data[index].time_in_lieu_Dept         = 0;
+                                    data[index].time_in_lieu_used_Dept    = 0;
+                                    data[index].time_in_lieu_remain_Dept  = 0;
+                                    data[index].time_in_lieu_gan_nhat_Dept= 0;
+                                    data[index].time_in_lieu_all          = 0;
+                                    data[index].time_in_lieu_used_all     = 0;
+                                    data[index].time_in_lieu_remain_all   = 0;
+                                    data[index].time_in_lieu_gan_nhat_all = 0;
+                                    if(value!==null&&value!==undefined){
+                                        data_Dept.forEach(function(valueTime,indexTime){
+                                            if(valueTime!==null&&valueTime!==undefined&&valueTime.Department_id===value.Department_id){
+                                                data[index].time_in_lieu_Dept         = data_Dept[indexTime].time_in_lieu_Dept;
+                                                data[index].time_in_lieu_used_Dept    = data_Dept[indexTime].time_in_lieu_used_Dept;
+                                                data[index].time_in_lieu_remain_Dept  = data_Dept[indexTime].time_in_lieu_remain_Dept;
+                                                data[index].time_in_lieu_all          = data_Dept[indexTime].time_in_lieu_all;
+                                                data[index].time_in_lieu_used_all     = data_Dept[indexTime].time_in_lieu_used_all;
+                                                data[index].time_in_lieu_remain_all   = data_Dept[indexTime].time_in_lieu_remain_all;
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                            //end push*********************************
+                            //get data3 
+                            var week2 = weeks-2;
+                            var sql_get_data3 = "SELECT users.id, "+
+                                    "hr_employee.Employee_ID , "+
+                                    "departments.departmentid, "+
+                                    "time_tasks_week.week_no,"+
+                                    "time_tasks_week.task_week_id, "+
+                                    "time_tasks_week.time_in_lieu "+
+                                    "FROM hr_employee  "+
+                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "+
+                                    "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  "+
+                                    "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+
+                                    "WHERE time_tasks_week.task_status_id = 3 AND "+
+                                    "departments.departmentid IN ("+stringDept+") AND "+
+                                    "(time_tasks_week.week_no BETWEEN "+week2+" AND "+weeks+" ) AND "+
+                                    "hr_employee.Employee_ID IN ("+stringEMP+")";
+                            db.sequelize.query(sql_get_data3)
+                                .success(function(data3){
+                                    
+                                    if(data3!==undefined){
+                                        if(data===null){
+                                            data.forEach(function(value,index){
+                                                data[index].time_in_lieu_gan_nhat      = 0;
+                                                data[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                data[index].time_in_lieu_gan_nhat_all  = 0;
+                                            });
+                                        }
+                                        else{
+                                            data.forEach(function(value,index){
+                                                data[index].time_in_lieu_gan_nhat      = 0;
+                                                data[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                data[index].time_in_lieu_gan_nhat_all  = 0;
+                                                if(value!==null&&value!==undefined){
+                                                    data3.forEach(function(valueTime,indexTime){
+                                                        if(valueTime!==null&&valueTime!==undefined&&valueTime.departmentid===value.Department_id){
+                                                            data[index].time_in_lieu_gan_nhat = data[index].time_in_lieu_gan_nhat + valueTime.time_in_lieu;
+                                                        }
+                                                    })
+                                                }
+                                            });
+                                            data_Dept.forEach(function(value,index){
+                                                data_Dept[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                if(value!==null&&value!==undefined){
+                                                    data.forEach(function(valueTime,indexTime){
+                                                        if(valueTime!==null&&valueTime!==undefined&&valueTime.Department_id===value.Department_id){
+                                                            data_Dept[index].time_in_lieu_gan_nhat_Dept = data_Dept[index].time_in_lieu_gan_nhat_Dept + valueTime.time_in_lieu_gan_nhat;
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            var time_in_lieu_gan_nhat_all = 0;
+                                            data_Dept.forEach(function(value,index){
+                                                if(value!==null&&value!==undefined){
+                                                    time_in_lieu_gan_nhat_all = time_in_lieu_gan_nhat_all + value.time_in_lieu_gan_nhat_Dept;
+                                                }
+                                            });
+                                            data.forEach(function(value,index){
+                                                if(value!==null&&value!==undefined){
+                                                    data[index].time_in_lieu_gan_nhat_all = time_in_lieu_gan_nhat_all;
+                                                    data_Dept.forEach(function(valueTime,indexTime){
+                                                        if(valueTime!==null&&valueTime!==undefined&&valueTime.Department_id===value.Department_id){
+                                                            data[index].time_in_lieu_gan_nhat_Dept = valueTime.time_in_lieu_gan_nhat_Dept;
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    }
+                                    if(data!==null&&data!==undefined){
+                                        data.forEach(function(value,index){
+                                            if(value!==null&&value!==undefined){
+                                                value.time_in_lieu_remain      = value.time_in_lieu_remain - value.time_in_lieu_gan_nhat;
+                                                value.time_in_lieu_remain_Dept = value.time_in_lieu_remain_Dept - value.time_in_lieu_gan_nhat_Dept;
+                                                value.time_in_lieu_remain_all  = value.time_in_lieu_remain_all - value.time_in_lieu_gan_nhat_all;
+                                            }
+                                        });
+                                    }
+                                    for(var t = 0;t<data.length;t++){
+                                        chainer.add(db.time_in_lieu_report.create({
+                                            create_id                   : data[t].create_id,
+                                            Employee_id                 : data[t].Employee_id,
+                                            Department_id               : data[t].Department_id,
+                                            time_in_lieu                : data[t].time_in_lieu,
+                                            time_in_lieu_used           : data[t].time_in_lieu_used,
+                                            time_in_lieu_remain         : data[t].time_in_lieu_remain,
+                                            time_in_lieu_gan_nhat       : data[t].time_in_lieu_gan_nhat,
+                                            time_in_lieu_Dept           : data[t].time_in_lieu_Dept,
+                                            time_in_lieu_used_Dept      : data[t].time_in_lieu_used_Dept,
+                                            time_in_lieu_remain_Dept    : data[t].time_in_lieu_remain_Dept,
+                                            time_in_lieu_gan_nhat_Dept  : data[t].time_in_lieu_gan_nhat_Dept,
+                                            time_in_lieu_all            : data[t].time_in_lieu_all,
+                                            time_in_lieu_used_all       : data[t].time_in_lieu_used_all,
+                                            time_in_lieu_remain_all     : data[t].time_in_lieu_remain_all,
+                                            time_in_lieu_gan_nhat_all   : data[t].time_in_lieu_gan_nhat_all,
+                                            user_id                     : data[t].user_id
+                                        }));
+                                    }
+                                    chainer.runSerially()
+                                        .success(function(data_success){
+                                            res.json({
+                                                status:"success"
+                                            });
+                                        })
+                                        .error(function(err){
+                                            console.log("*****ERROR: "+err+" *****");
+                                            res.json({
+                                                status:"error"
+                                            });
+                                            return;
+                                        })
+                                    
+                                })
+                                .error(function(err){
+                                    console.log("*****ERROR: "+err+" *****");
+                                    res.json({
+                                        status:"error"
+                                    });
+                                    return;
+                                })
+                            //
+                            
+                        })
+                        .error(function(err){
+                            console.log("*****ERROR: "+err+" *****");
+                            res.json({
+                                status:"error"
+                            });
+                            return;
+                        })
+
+                    })
+                    .error(function(err){
+                        console.log("*****ERROR: "+err+" *****");
+                        res.json({
+                            status:"error"
+                        });
+                        return;
+                    })
+                
+            })
+            .error(function(err){
+                console.log("*****ERROR: "+err+" *****");
+                res.json({
+                    status:"error"
+                });
+                return;
+            })
+            //1.END XOA TIME IN LIEU REPORT
+
+        //END
     },
     //END TIME IN LIEU
 
     //REPORT UTILIZATION RATIO DETAIL
     LoadReportUtilizationRatioDetail: function(req, res) {
         var info = req.body.info;
+        //console.log(info);
         var stringEMP = "";
         var stringDept = "";
         var stringWeek = "";
@@ -4045,7 +4135,14 @@ module.exports = {
                         db.sequelize.query(sql_delete_time_activity_table)
                             .success(function(data_delete2) {
                                 //END DELETE
-                                var sql_get_data_time_activity_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
+                                var sql_get_data_time_activity_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + 
+                                "FROM hr_employee " + 
+                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + 
+                                "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + 
+                                "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + 
+                                "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept 
+                                    + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + 
+                                    " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
                                 db.sequelize.query(sql_get_data_time_activity_table)
                                     .success(function(data_time_activity_table) {
                                         //console.log(data_time_activity_table)
@@ -4127,7 +4224,7 @@ module.exports = {
 
                                                                                                         }
                                                                                                         stringline1 = stringline1.substring(0, stringline1.length - 1);
-                                                                                                        console.log(stringline1);
+
                                                                                                         var sql_insert_time_activity_report = "INSERT INTO time_activity_report (time_charge_1,per_1,time_charge_2,per_2,time_charge_3,per_3,time_charge_4,per_4,time_charge_5,per_5,Department_id,Employee_id,user_id,time_charge_week,from_date,to_date) VALUE " + stringline1;
                                                                                                         db.sequelize.query(sql_insert_time_activity_report)
                                                                                                             .success(function(data_insert_success) {
@@ -4137,11 +4234,18 @@ module.exports = {
                                                                                                                     "FROM time_activity_report " +
                                                                                                                     "WHERE Department_id IN(" + stringDept + ") AND user_id=" + info.USER_ID + " " +
                                                                                                                     "GROUP BY Department_id";
-                                                                                                                var sql_get_time_charge_all = "SELECT user_id,SUM(time_charge_1_Dept) AS'time_charge_1_all',SUM(time_charge_2_Dept) AS'time_charge_2_all',SUM(time_charge_3_Dept) AS'time_charge_3_all', " +
-                                                                                                                    "SUM(time_charge_4_Dept) AS'time_charge_4_all',SUM(time_charge_5_Dept) AS'time_charge_5_all', " +
-                                                                                                                    "SUM(time_charge_week_Dept) AS'time_charge_all' " +
-                                                                                                                    "FROM time_activity_report " +
-                                                                                                                    "WHERE user_id=" + info.USER_ID;
+                                                                                                                var sql_get_time_charge_all = "SELECT "+
+                                                                                                                                                "t.user_id, "+
+                                                                                                                                                "SUM(t.time_charge_1_Dept) AS'time_charge_1_all', "+
+                                                                                                                                                "SUM(t.time_charge_2_Dept) AS'time_charge_2_all', "+
+                                                                                                                                                "SUM(t.time_charge_3_Dept) AS'time_charge_3_all', "+
+                                                                                                                                                "SUM(t.time_charge_4_Dept) AS'time_charge_4_all', "+
+                                                                                                                                                "SUM(t.time_charge_5_Dept) AS'time_charge_5_all', "+
+                                                                                                                                                "SUM(t.time_charge_week_Dept) AS'time_charge_all' "+
+                                                                                                                                                "FROM(SELECT * FROM time_activity_report "+
+                                                                                                                                                "WHERE user_id="+info.USER_ID+" "+
+                                                                                                                                                "GROUP BY Department_id)t";
+                                                                                                                    
                                                                                                                 db.sequelize.query(sql_get_time_charge_Dept_all)
                                                                                                                     .success(function(data_time_charge_Dept_all) {
 
@@ -4196,7 +4300,7 @@ module.exports = {
                                                                                                                                                         res.json({
                                                                                                                                                             status: "success"
                                                                                                                                                         });
-                                                                                                                                                        return;
+                                                                                                                                                        
                                                                                                                                                     })
                                                                                                                                                     .error(function(err) {
                                                                                                                                                         console.log("*****ERROR: " + err + " *****");
@@ -4402,20 +4506,20 @@ module.exports = {
                                                     if (flag1 == data_time_activity_summary_table.length) {
                                                         //console.log("NEXT")
                                                         //GET DATA TABLE time_activity_summary_detail_table
-                                                        var sql_get_data_time_activity_summary_detail_table = "SELECT " +
-                                                            "time_activity_summary_table.from_date, " +
-                                                            "time_activity_summary_table.to_date, " +
-                                                            "time_activity_summary_table.weekno, " +
-                                                            "time_tasks.tasks_id, " + "time_activity_summary_table.task_week_id, " +
-                                                            "time_activity_summary_table.user_id, " +
-                                                            "time_tasks.activity_id, " +
-                                                            "time_activity_summary_table.Department_id, " +
-                                                            "time_activity_summary_table.Employee_id, " +
-                                                            "time_tasks.time_charge, " +
-                                                            "time_activity_summary_table.time_charge_week " +
-                                                            "FROM time_tasks " +
-                                                            "INNER JOIN time_activity_summary_table ON time_tasks.tasks_week_id = time_activity_summary_table.task_week_id " +
-                                                            "WHERE time_activity_summary_table.Employee_id IN (" + stringEMP + ") AND time_activity_summary_table.Department_id IN (" + stringDept + ") AND time_activity_summary_table.user_id=" + info.USER_ID + " ";
+                                                        var sql_get_data_time_activity_summary_detail_table = "SELECT " + 
+                                                        "time_activity_summary_table.from_date, " + 
+                                                        "time_activity_summary_table.to_date, " + 
+                                                        "time_activity_summary_table.weekno, " + 
+                                                        "time_tasks.tasks_id, " + "time_activity_summary_table.task_week_id, " + 
+                                                        "time_activity_summary_table.user_id, " + 
+                                                        "time_tasks.activity_id, " + 
+                                                        "time_activity_summary_table.Department_id, " + 
+                                                        "time_activity_summary_table.Employee_id, " + 
+                                                        "time_tasks.time_charge, " + 
+                                                        "time_activity_summary_table.time_charge_week " + 
+                                                        "FROM time_tasks " + 
+                                                        "INNER JOIN time_activity_summary_table ON time_tasks.tasks_week_id = time_activity_summary_table.task_week_id " + 
+                                                        "WHERE time_activity_summary_table.Employee_id IN (" + stringEMP + ") AND time_activity_summary_table.Department_id IN (" + stringDept + ") AND time_activity_summary_table.user_id=" + info.USER_ID + " ";
                                                         db.sequelize.query(sql_get_data_time_activity_summary_detail_table)
                                                             .success(function(data_time_activity_summary_detail_table) {
                                                                 // console.log(data_time_activity_summary_detail_table)
@@ -4423,201 +4527,200 @@ module.exports = {
                                                                 //INSERT DATA INTO time_activity_summary_detail_table
                                                                 for (var j = 0; j < data_time_activity_summary_detail_table.length; j++) {
                                                                     chainer.add(db.time_activity_summary_detail_table.create({
-                                                                        task_week_id: data_time_activity_summary_detail_table[j].task_week_id,
-                                                                        tasks_id: data_time_activity_summary_detail_table[j].tasks_id,
-                                                                        user_id: data_time_activity_summary_detail_table[j].user_id,
-                                                                        Employee_id: data_time_activity_summary_detail_table[j].Employee_id,
-                                                                        Department_id: data_time_activity_summary_detail_table[j].Department_id,
-                                                                        activity_id: data_time_activity_summary_detail_table[j].activity_id,
-                                                                        time_charge: data_time_activity_summary_detail_table[j].time_charge,
-                                                                        time_charge_week: data_time_activity_summary_detail_table[j].time_charge_week,
-                                                                        weekno: data_time_activity_summary_detail_table[j].weekno,
-                                                                        from_date: data_time_activity_summary_detail_table[j].from_date,
-                                                                        to_date: data_time_activity_summary_detail_table[j].to_date,
-                                                                        Creation_by: info.USER_ID
-                                                                    }))
-
+                                                                            task_week_id: data_time_activity_summary_detail_table[j].task_week_id,
+                                                                            tasks_id: data_time_activity_summary_detail_table[j].tasks_id,
+                                                                            user_id: data_time_activity_summary_detail_table[j].user_id,
+                                                                            Employee_id: data_time_activity_summary_detail_table[j].Employee_id,
+                                                                            Department_id: data_time_activity_summary_detail_table[j].Department_id,
+                                                                            activity_id: data_time_activity_summary_detail_table[j].activity_id,
+                                                                            time_charge: data_time_activity_summary_detail_table[j].time_charge,
+                                                                            time_charge_week: data_time_activity_summary_detail_table[j].time_charge_week,
+                                                                            weekno: data_time_activity_summary_detail_table[j].weekno,
+                                                                            from_date: data_time_activity_summary_detail_table[j].from_date,
+                                                                            to_date: data_time_activity_summary_detail_table[j].to_date,
+                                                                            Creation_by: info.USER_ID
+                                                                        }))
+                                                                        
                                                                 }
                                                                 chainer.runSerially()
-                                                                    .success(function(data_insert1) {
-                                                                        var sql_line = "SELECT DISTINCT Department_id,from_date,to_date  " +
-                                                                            "FROM time_activity_summary_detail_table " +
-                                                                            "WHERE user_id=" + info.USER_ID;
+                                                                    .success(function(data_insert1){
+                                                                        var sql_line="SELECT DISTINCT Department_id,from_date,to_date  "+
+                                                                                        "FROM time_activity_summary_detail_table "+
+                                                                                        "WHERE user_id="+info.USER_ID;
                                                                         db.sequelize.query(sql_line)
-                                                                            .success(function(data_insert1) {
-                                                                                for (var t = 0; t < data_insert1.length; t++) {
-                                                                                    for (var u = 0; u < 5; u++) {
+                                                                            .success(function(data_insert1){
+                                                                                for(var t=0;t<data_insert1.length;t++){
+                                                                                    for(var u=0;u<5;u++){
                                                                                         chainer.add(db.time_activity_summary_report.create({
-                                                                                            user_id: info.USER_ID,
-                                                                                            Department_id: data_insert1[t].Department_id,
-                                                                                            activity_id: u + 1,
-                                                                                            from_date: data_insert1[t].from_date,
-                                                                                            to_date: data_insert1[t].to_date
-                                                                                        }));
+                                                                                                user_id      :info.USER_ID,
+                                                                                                Department_id:data_insert1[t].Department_id,
+                                                                                                activity_id  :u+1,
+                                                                                                from_date    :data_insert1[t].from_date,
+                                                                                                to_date      :data_insert1[t].to_date
+                                                                                            }));
                                                                                     }
                                                                                 }
                                                                                 chainer.runSerially()
-                                                                                    .success(function(data_insert2) {
-                                                                                        var sql_update1 = "SELECT user_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS'time_charge_Dept' " +
-                                                                                            "FROM time_activity_summary_detail_table " +
-                                                                                            "WHERE user_id=" + info.USER_ID + " AND Department_id IN (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") " +
-                                                                                            "GROUP BY Employee_id,Department_id,activity_id";
+                                                                                    .success(function(data_insert2){
+                                                                                        var sql_update1="SELECT SUM(e.time_charge) AS time_charge_Dept,e.activity_id,e.Department_id,e.user_id "+
+                                                                                                            "FROM( SELECT * FROM time_activity_summary_detail_table WHERE user_id="+info.USER_ID+" AND Department_id IN ("+stringDept+") AND Employee_id IN("+stringEMP+") )e "+
+                                                                                                            "GROUP BY e.Department_id,e.activity_id "+ 
+                                                                                                            "ORDER BY Employee_id,Department_id,activity_id";
                                                                                         db.sequelize.query(sql_update1)
-                                                                                            .success(function(data_update1) {
-                                                                                                for (var y = 0; y < 5 * data_insert1.length; y++) {
-                                                                                                    for (var x = 0; x < data_update1.length; x++) {
+                                                                                            .success(function(data_update1){
+                                                                                                
+                                                                                                for(var y=0;y<5*data_insert1.length;y++){
+                                                                                                    for(var x=0;x<data_update1.length;x++){
                                                                                                         chainer.add(db.time_activity_summary_report.update({
-                                                                                                            time_charge_Dept: data_update1[x].time_charge_Dept,
-
-                                                                                                        }, {
-                                                                                                            user_id: data_update1[x].user_id,
-
-                                                                                                            Department_id: data_update1[x].Department_id,
-                                                                                                            activity_id: data_update1[x].activity_id
+                                                                                                            time_charge_Dept  : data_update1[x].time_charge_Dept,
+                                                                                                        
+                                                                                                        },{
+                                                                                                            user_id       : data_update1[x].user_id,
+                                                                                                                
+                                                                                                            Department_id : data_update1[x].Department_id,
+                                                                                                            activity_id   : data_update1[x].activity_id
                                                                                                         }));
                                                                                                     }
                                                                                                 }
                                                                                                 chainer.runSerially()
-                                                                                                    .success(function(data_insert3) {
-                                                                                                        var sql_update2 = "SELECT SUM(time_charge_Dept) AS 'time_charge_Dept_all',Department_id,user_id " +
-                                                                                                            "FROM time_activity_summary_report " +
-                                                                                                            "WHERE Department_id IN(" + stringDept + ") AND user_id=" + info.USER_ID + " " +
-                                                                                                            "GROUP BY Department_id";
+                                                                                                    .success(function(data_insert3){
+                                                                                                        var sql_update2="SELECT SUM(time_charge_Dept) AS 'time_charge_Dept_all',Department_id,user_id "+
+                                                                                                                            "FROM time_activity_summary_report "+
+                                                                                                                            "WHERE Department_id IN("+stringDept+") AND user_id="+info.USER_ID+" "+
+                                                                                                                            "GROUP BY Department_id";
                                                                                                         db.sequelize.query(sql_update2)
-                                                                                                            .success(function(data_update2) {
-                                                                                                                for (var m = 0; m < 5 * data_insert1.length; m++) {
-                                                                                                                    for (var n = 0; n < data_update2.length; n++) {
+                                                                                                            .success(function(data_update2){
+                                                                                                                for(var m=0;m<5*data_insert1.length;m++){
+                                                                                                                    for(var n=0;n<data_update2.length;n++){
                                                                                                                         chainer.add(db.time_activity_summary_report.update({
-                                                                                                                            time_charge_Dept_all: data_update2[n].time_charge_Dept_all
-                                                                                                                        }, {
-                                                                                                                            Department_id: data_update2[n].Department_id,
-                                                                                                                            user_id: data_update2[n].user_id
+                                                                                                                            time_charge_Dept_all : data_update2[n].time_charge_Dept_all
+                                                                                                                        },{
+                                                                                                                            Department_id : data_update2[n].Department_id,
+                                                                                                                            user_id : data_update2[n].user_id
                                                                                                                         }))
                                                                                                                     }
                                                                                                                 }
                                                                                                                 chainer.runSerially()
-                                                                                                                    .success(function(data_insert4) {
-                                                                                                                        var sql_update3 = "SELECT SUM(t.time_charge_Dept_all) AS 'time_charge_all',t.user_id " +
-                                                                                                                            "FROM " +
-                                                                                                                            "(SELECT * " +
-                                                                                                                            "FROM time_activity_summary_report " +
-                                                                                                                            "WHERE user_id=268 " +
-                                                                                                                            "GROUP BY Department_id " +
+                                                                                                                    .success(function(data_insert4){
+                                                                                                                        var sql_update3="SELECT SUM(t.time_charge_Dept_all) AS 'time_charge_all',t.user_id "+
+                                                                                                                            "FROM "+
+                                                                                                                            "(SELECT * "+
+                                                                                                                            "FROM time_activity_summary_report "+
+                                                                                                                            "WHERE user_id=268 "+
+                                                                                                                            "GROUP BY Department_id "+
                                                                                                                             ") t";
                                                                                                                         db.sequelize.query(sql_update3)
-                                                                                                                            .success(function(data_update4) {
-                                                                                                                                for (var h = 0; h < 5 * data_insert1.length; h++) {
+                                                                                                                            .success(function(data_update4){
+                                                                                                                                for(var h=0;h<5*data_insert1.length;h++){
                                                                                                                                     chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                        time_charge_all: data_update4[0].time_charge_all
-                                                                                                                                    }, {
-                                                                                                                                        user_id: data_update4[0].user_id
+                                                                                                                                        time_charge_all   : data_update4[0].time_charge_all
+                                                                                                                                    },{
+                                                                                                                                        user_id : data_update4[0].user_id
                                                                                                                                     }))
                                                                                                                                 }
                                                                                                                                 chainer.runSerially()
-                                                                                                                                    .success(function(data_success) {
-                                                                                                                                        var sql_get_data = "SELECT * " +
-                                                                                                                                            "FROM time_activity_summary_report " +
-                                                                                                                                            "WHERE user_id=" + info.USER_ID + " " +
-                                                                                                                                            "GROUP BY Department_id,activity_id";
+                                                                                                                                    .success(function(data_success){
+                                                                                                                                        var sql_get_data="SELECT * "+
+                                                                                                                                                            "FROM time_activity_summary_report "+
+                                                                                                                                                            "WHERE user_id="+info.USER_ID+" "+
+                                                                                                                                                            "GROUP BY Department_id,activity_id";
                                                                                                                                         db.sequelize.query(sql_get_data)
-                                                                                                                                            .success(function(data) {
-                                                                                                                                                for (var k = 0; k < data.length; k++) {
+                                                                                                                                            .success(function(data){
+                                                                                                                                                for(var k=0;k<data.length;k++){
                                                                                                                                                     chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                                        time_charge_Dept_per: ((data[k].time_charge_Dept / data[k].time_charge_Dept_all) * 100).toFixed(2)
-                                                                                                                                                    }, {
-                                                                                                                                                        user_id: data[k].user_id,
+                                                                                                                                                        time_charge_Dept_per : ((data[k].time_charge_Dept/data[k].time_charge_Dept_all)*100).toFixed(2)
+                                                                                                                                                    },{
+                                                                                                                                                        user_id      : data[k].user_id,
                                                                                                                                                         Department_id: data[k].Department_id,
-                                                                                                                                                        activity_id: data[k].activity_id
+                                                                                                                                                        activity_id  : data[k].activity_id
                                                                                                                                                     }))
                                                                                                                                                 }
                                                                                                                                                 chainer.runSerially()
-                                                                                                                                                    .success(function(data_success_final) {
-                                                                                                                                                        res.json({
-                                                                                                                                                            status: "success"
-                                                                                                                                                        });
+                                                                                                                                                    .success(function(data_success_final){
+                                                                                                                                                        res.json({status:"success"});
                                                                                                                                                     })
-                                                                                                                                                    .error(function(err) {
-                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                                    .error(function(err){
+                                                                                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                                                                                     });
-                                                                                                                                                return;
+                                                                                                                                                    return;
                                                                                                                                             })
-                                                                                                                                            .error(function(err) {
-                                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                                            .error(function(err){
+                                                                                                                                                console.log("*****ERROR: "+err+" *****");
                                                                                                                                                 res.json({
-                                                                                                                                                    status: "error"
+                                                                                                                                                    status:"error"
                                                                                                                                                 });
                                                                                                                                                 return;
                                                                                                                                             })
                                                                                                                                     })
-                                                                                                                                    .error(function(err) {
-                                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                                    .error(function(err){
+                                                                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                                                                         res.json({
-                                                                                                                                            status: "error"
+                                                                                                                                            status:"error"
                                                                                                                                         });
                                                                                                                                         return;
                                                                                                                                     })
                                                                                                                             })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                                            .error(function(err){
+                                                                                                                                console.log("*****ERROR: "+err+" *****");
                                                                                                                                 res.json({
-                                                                                                                                    status: "error"
+                                                                                                                                    status:"error"
                                                                                                                                 });
                                                                                                                                 return;
                                                                                                                             })
                                                                                                                     })
-                                                                                                                    .error(function(err) {
-                                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                                    .error(function(err){
+                                                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                                                         res.json({
-                                                                                                                            status: "error"
+                                                                                                                            status:"error"
                                                                                                                         });
                                                                                                                         return;
                                                                                                                     })
 
                                                                                                             })
-                                                                                                            .error(function(err) {
-                                                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                                                            .error(function(err){
+                                                                                                                console.log("*****ERROR: "+err+" *****");
                                                                                                                 res.json({
-                                                                                                                    status: "error"
+                                                                                                                    status:"error"
                                                                                                                 });
                                                                                                                 return;
                                                                                                             })
                                                                                                     })
-                                                                                                    .error(function(err) {
-                                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                                    .error(function(err){
+                                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                                         res.json({
-                                                                                                            status: "error"
+                                                                                                            status:"error"
                                                                                                         });
                                                                                                         return;
                                                                                                     })
                                                                                             })
-                                                                                            .error(function(err) {
-                                                                                                console.log("*****ERROR: " + err + "*****");
+                                                                                            .error(function(err){
+                                                                                                console.log("*****ERROR: "+err+"*****");
                                                                                                 res.json({
-                                                                                                    status: "error"
+                                                                                                    status:"error"
                                                                                                 });
                                                                                                 return;
                                                                                             })
                                                                                     })
-                                                                                    .error(function(err) {
-                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                    .error(function(err){
+                                                                                        console.log("*****ERROR: "+err+" *****");
                                                                                         res.json({
-                                                                                            status: "error"
+                                                                                            status:"error"
                                                                                         });
                                                                                         return;
                                                                                     })
                                                                             })
-                                                                            .error(function(err) {
-                                                                                console.log("*****ERROR: " + err + " *****");
+                                                                            .error(function(err){
+                                                                                console.log("*****ERROR: "+err+" *****");
                                                                                 res.json({
-                                                                                    status: "error"
+                                                                                    status:"error"
                                                                                 });
                                                                                 return;
                                                                             })
                                                                     })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                    .error(function(err){
+                                                                        console.log("*****ERROR: "+err+" *****");
                                                                         res.json({
-                                                                            status: "error"
+                                                                            status:"error"
                                                                         });
                                                                         return;
                                                                     })
