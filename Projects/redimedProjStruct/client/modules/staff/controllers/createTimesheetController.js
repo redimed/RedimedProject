@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.timesheet.create.controller", [])
 
-.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr) {
+.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader) {
     //CLOSE MEMU
     $('body').addClass("page-sidebar-closed");
     $('ul').addClass("page-sidebar-menu-closed");
@@ -124,10 +124,38 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHANGE ACTIVITY
     $scope.ChangeActivity = function(activity_id, index) {
+        //DEFAULT VALUE
         $scope.tasks[index].time_charge = null;
         $scope.tasks[index].time_temp = null;
         $scope.tasks[index].item = [];
         $scope.tasks[index].task = null;
+        //END DEFAULT VALUE
+
+        //CHECK DEFAULT WEEKEND
+        if (activity_id === 5) {
+            if ($scope.tasks[index].date.getDay() === 6 ||
+                $scope.tasks[index].date.getDay() === 0) {
+                var item = {};
+                item.isAction = 'insert';
+                item.time_temp = 0;
+                item.totalUnits = 0;
+                item.ratio = 0;
+                item.time_charge = '0000';
+                item.ITEM_ID = 18;
+                item.ITEM_NAME = "Weekend Leave";
+                $scope.tasks[index].item.push(item);
+                $scope.tasks[index].time_charge = '0000';
+                $scope.tasks[index].time_temp = 0;
+                $scope.tasks[index].notPopup = true;
+            } else {
+                $scope.tasks[index].notPopup = false;
+            }
+
+        } else {
+            $scope.tasks[index].notPopup = false;
+        }
+        //END CHECK DEFAULT WEEKEND
+
         //SET TIME CHARGE-INLIEU
         $scope.changeTimeCharge();
         //END
@@ -146,6 +174,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //FUNCTION GET WEEK NUMBER
 
     //GET TIM IN LIEU
+
     // GET TIME IN LIEU TO CHECK SUBMIT
     var toDate = new Date();
     var weekNo = $scope.getWeekNumber(toDate);
@@ -167,6 +196,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         }
     });
     //END
+
     //END
 
     //FUNCTION CHECK TASK WEEK
@@ -269,6 +299,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     item.ITEM_ID = 18;
                     item.ITEM_NAME = "Weekend Leave";
                     $scope.tasks[$scope.tasks.length - 1].item.push(item);
+                    $scope.tasks[$scope.tasks.length - 1].time_charge = '0000';
+                    $scope.tasks[$scope.tasks.length - 1].time_temp = 0;
+                    $scope.tasks[$scope.tasks.length - 1].notPopup = true;
                 }
                 //END SUN
 
@@ -283,6 +316,9 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     item.ITEM_ID = 18;
                     item.ITEM_NAME = "Weekend Leave";
                     $scope.tasks[$scope.tasks.length - 2].item.push(item);
+                    $scope.tasks[$scope.tasks.length - 2].time_charge = '0000';
+                    $scope.tasks[$scope.tasks.length - 2].time_temp = 0;
+                    $scope.tasks[$scope.tasks.length - 2].notPopup = true;
                 }
                 //EN SAT
             }
@@ -326,7 +362,19 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 $scope.changeTimeCharge();
                             });
                         } else if (response['status'] === 'success') {
-                            angular.forEach(response['data'], function(data) {
+                            //UPLOADER
+                            $scope.uploader = new FileUploader({
+                                url: "/api/TimeSheet/post-upload-file",
+                                method: "POST",
+                                autoUpload: true,
+                                formData: [{
+                                    userId: $cookieStore.get("userInfo").id
+                                }],
+                                isHTML5: true,
+                                isUploading: true
+                            });
+                            //END UPLOADER
+                            angular.forEach(response['data'], function(data, indexData) {
                                 data.item = [];
                                 data.isEdit = true;
                                 data.time_temp = data.time_charge;
@@ -349,11 +397,24 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                         item.deleted = item.deleted;
                                         item.totalUnits = item.units;
                                         item.ratio = item.ratio;
+                                        item.task_id = item.task_id;
                                         item.time_charge = StaffService.convertFromFullToShow(item.time_charge);
+                                        item.fileUpload = [];
+                                        //PUSH FILE
+                                        angular.forEach(response['file'], function(valueFile, indexFile) {
+                                            if (valueFile.tasks_id === item.tasks_id &&
+                                                valueFile.ITEM_ID === item.ITEM_ID) {
+                                                item.fileUpload.push({
+                                                    file_name: valueFile.file_name,
+                                                    file_id: valueFile.file_id,
+                                                    isAction: "update"
+                                                });
+                                            }
+                                        });
+                                        //END FILE
                                         data.item.push(item);
                                     }
                                 });
-
                                 //PUSH DATA AND REFRESH
                                 $scope.tasks.push(data);
                                 $scope.changeTimeCharge();
@@ -506,7 +567,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //END ADD ALL TASK OF WEEK
 
     //CHOOSE ITEM
-    $scope.chooseItem = function(task) {
+    $scope.chooseItem = function(task, uploader, statusEdit, taskIndex) {
         if (task !== undefined && task.activity_id === 1) {
             //GET LOCAION NAME
             if ($scope.locations !== undefined &&
@@ -619,6 +680,12 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 templateUrl: "ActivityDetail",
                 controller: function($scope) {
                     $scope.activities = angular.copy(task);
+                    $scope.activities.uploader = uploader;
+
+                    $scope.activities.taskIndex = taskIndex;
+                    if (statusEdit === true) {
+                        $scope.activities.id_task_week = $stateParams.id;
+                    }
                     //click cancel
                     $scope.clickCancel = function() {
                         modalInstanceAC.close({
@@ -628,7 +695,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     //end click cancel
 
                     //click save
-                    $scope.clickSave = function(info, formValid) {
+                    $scope.clickSave = function(info, formValid, upload) {
                         if (formValid.$invalid === true) {
                             toastr.warning("Please Input All Required Information!", "Error");
                         } else {
@@ -639,7 +706,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             }
                             modalInstanceAC.close({
                                 type: "ok",
-                                value: info
+                                value: info,
+                                valueUpload: upload
                             });
                         }
                     };
@@ -672,6 +740,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         task.time_charge = null;
                         $scope.changeTimeCharge();
                     }
+                    //PROCESSING FOR UPLOAD FILE
+                    $scope.uploader = obj.valueUpload; //INPUT FILE CAN NOT COPY BY ANGULAR.COPY
+                    task.fileUpload = [];
+                    angular.forEach($scope.uploader.queue, function(value, index) {
+                        task.fileUpload.push({
+                            file_id: value.file_id,
+                            item_id: value.itemId,
+                            isAction: "update"
+                        });
+                    });
+                    //END
                 }
             });
             //END

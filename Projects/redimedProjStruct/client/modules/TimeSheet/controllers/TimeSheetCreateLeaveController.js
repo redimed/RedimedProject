@@ -65,11 +65,12 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     if (response.status === "success") {
                         //load employee
                         if (response !== undefined && response !== null &&
-                            response.result !== undefined && response.result !== null &&
-                            response.result[0] !== undefined && response.result[0] !== null) {
-                            $scope.info = response.result[0];
+                            response.resultEmployee !== undefined && response.resultEmployee !== null &&
+                            response.resultEmployee[0] !== undefined && response.resultEmployee[0] !== null) {
+                            $scope.info = response.resultEmployee[0];
                             $scope.info.standard = 1;
                             $scope.info.application_date = new Date();
+                            $scope.info.infoTypeLeave = angular.copy(response.resultTypeLeave);
                         }
                         //employee
                     } else if (response.status === "error" || response.result.length === 0) {
@@ -92,23 +93,6 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 toastr.error("You not section!", "Error");
             }
             //END LOAD INFO
-            // LOAD TYPE LEAVE
-            TimeSheetService.LoadTypeLeave().then(function(response) {
-                if (response.status === "success") {
-                    $scope.info.infoTypeLeave = angular.copy(response.result);
-                } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Load type leave fail!", "Error");
-                } else {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Server not response!", "Error");
-                }
-            });
-            //END
         }
         $scope.clickSendServer = function(statusID, formLeave) {
             $scope.isRequired = 1; //SET REQUIRED

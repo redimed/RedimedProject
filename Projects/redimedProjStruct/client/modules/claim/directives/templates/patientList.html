@@ -1,12 +1,12 @@
-<button class="btn btn-primary" ng-click="claim.dialog.add()" ng-if="action.add">Add Claim</button>
-
+<label class="un-label-popup-header un-bg-label-333333">Add Claim</label>
+<button class="btn un-btn-red un-btn-position" ng-click="claim.dialog.add()" ng-if="action.add">Add Claim</button>
 <script type="text/ng-template" id="claimAdd">
 	<div class="modal-body">	
 		<claim-patient-add patient-id="claim.Patient_id" cal-id="claim.CAL_ID" success="claim.success"></claim-patient-add>
 	</div>
 </script>
 
-<table class="table">
+<table class="mdt-table">
 	<thead>
 		<tr>
 			<th>Claim No</th>
@@ -50,10 +50,10 @@
 			<td>{{l.Injury_name}}</td>
 			<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>
-				<button class="btn btn-sm btn-primary" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
+				<button class="un-button un-bgXam-colBlack" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
 					Edit
 				</button>
-				<button class="btn btn-sm btn-primary" ng-click="claim.dialog.show(l)" ng-if="action.show">
+				<button class="un-button un-bgBlack" ng-click="claim.dialog.show(l)" ng-if="action.show">
 					Show
 				</button>
 
@@ -64,10 +64,12 @@
 		</tr>
 	</tbody>
 </table>
-<pagination boundary-links="true" total-items="claim.count" ng-model="claim.search.page" 
+<div align="right">
+	<pagination boundary-links="true" total-items="claim.count" ng-model="claim.search.page" 
     class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
     items-per-page="claim.search.limit" max-size="claim.search.max_size" ng-change="claim.onPage(claim.search.page)">
 </pagination>
+</div>
 
 <script type="text/ng-template" id="dialogClaimRemove">
     <div class="modal-body">
@@ -80,12 +82,22 @@
  </script>
 
  <script type="text/ng-template" id="dialogClaimEdit">
+ 	<style type="text/css">
+		.modal.in .modal-dialog {
+			margin-top:50px;
+		}
+	</style>
     <div class="modal-body">
         <claim-patient-edit claim-id="claim.Claim_id" patient-id="claim.Patient_id" success="claim.success"></claim-patient-edit>
     </div>
  </script>
 
  <script type="text/ng-template" id="dialogClaimShow">
+ 	<style type="text/css">
+		.modal.in .modal-dialog {
+			margin-top:50px;
+		}
+	</style>
     <div class="modal-body">
         <claim-patient-show claim-id="claim.Claim_id" patient-id="claim.Patient_id" success="claim.success"></claim-patient-show>
     </div>

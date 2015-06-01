@@ -170,9 +170,10 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 					})
 				}
 				if (scope.params.permission.create === true) {
+					//phan quoc chien  set country and state form add new patient
 					scope.modelObjectMap.Country = "Australia";
 					scope.loadState();
-
+					scope.modelObjectMap.State = 20;
 				};
 			} // end initObject
 
@@ -186,14 +187,30 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 						$scope.actionCenter={
 							createAdd:true,
 							goToStateAddCompany:function(){
-
+								//phan quoc chien close modal list company
+								$modalInstance.dismiss('cancel');
 								$modal.open({
 									templateUrl: 'dialogAddCompany',
 									controller: function($scope, $modalInstance){
-										 $scope.$watch('success', function(item){
-							            	if(item === true)
-							            		$modalInstance.close('success');
-							            }) 
+										$scope.actionCenter={
+											saveModal:function(Company_name,Company_id){
+												//phan quoc chien set company name and insuere name
+												scope.selectedCompany.id = Company_id;
+												scope.selectedCompany.Company_name = Company_name;
+												InsurerService.oneFollowCompany({company_id: Company_id}).then(function(response){
+													scope.selectedCompany.insurer = {
+														insurer_name: 'No Insurer'
+													};
+													if(response.data.insurer_name !== null){
+														scope.selectedCompany.insurer.insurer_name = response.data.insurer_name;
+													}
+													$modalInstance.dismiss('cancel');
+												}, function(error){});
+											},
+											closeModal:function(){
+												$modalInstance.dismiss('cancel');
+											}
+										}
 									},
 									size:'lg'
 								})
@@ -214,7 +231,6 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 							scope.selectedCompany.insurer = {
 								insurer_name: 'No Insurer'
 							};
-
 							if(response.data.insurer_name !== null)
 								scope.selectedCompany.insurer.insurer_name = response.data.insurer_name;
 						}, function(error){})
@@ -237,7 +253,6 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 			// ACTION
 			var clickAction = function(){
 				
-
 				scope.isSubmit = true;
 
 				//ACCORDION
@@ -294,28 +309,30 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 	                        if (data.status != 'success') {
 	                            toastr.error("Cannot Insert!", "Error");
 	                            return;
+	                        }else{
+	                        	toastr.success('Insert Patient Successfully !!!', "Success");
+		                        if(uploader.queue.length > 0){
+		                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
+									uploader.uploadItem(uploader.queue[0]);
+								}
+		                        if(scope.params.isAtAllPatient!== true){
+		                        	//return
+			                        scope.patient = {};
+			                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
+			                        scope.patient.Patient_id = data.data.Patient_id;
+			                        //end return
+		                        }
+		                        
+		                        initObject();
+		                        CompanyModel.insertPatientCompanies(postData.company_id,data.data.Patient_id);
+		                        if(scope.isClose){
+		                        	scope.closePopup();
+		                        }
+		                        scope.onsuccess = data.data;
+		                        scope.patient = data.data;
 	                        }
 
-	                        toastr.success('Insert Patient Successfully !!!', "Success");
-	                        if(uploader.queue.length > 0){
-	                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
-								uploader.uploadItem(uploader.queue[0]);
-							}
-	                        if(scope.params.isAtAllPatient!== true){
-	                        	//return
-		                        scope.patient = {};
-		                        scope.patient.Patient_name = scope.modelObjectMap.First_name+" "+scope.modelObjectMap.Sur_name;
-		                        scope.patient.Patient_id = data.data.Patient_id;
-		                        //end return
-	                        }
 	                        
-	                        initObject();
-
-	                        if(scope.isClose){
-	                        	scope.closePopup();
-	                        }
-	                        scope.onsuccess = data.data;
-	                        scope.patient = data.data;
 	                    })
 					}
 				}else{

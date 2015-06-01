@@ -39,7 +39,8 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 				})
 			}
 			scope.addClick = function(){
-				$state.go('loggedIn.company.add');
+				// $state.go('loggedIn.company.add');//tan comment
+				$state.go('loggedIn.patient.company.add');//tan add
 			}
 			var onSearch = function(option){
 				switch(option.field){

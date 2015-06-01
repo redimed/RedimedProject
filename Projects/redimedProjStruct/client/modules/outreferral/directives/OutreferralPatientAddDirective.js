@@ -7,7 +7,8 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			patientId: '=',
 			calId: '=',
 			success: '=',
-			doctorId: '='
+			doctorId: '=',
+			data:'='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientAdd.html',
 		link: function(scope, elem, attrs){
@@ -26,6 +27,11 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 				last_updated_by: user_id,
 			}
 
+			scope.$watch('calId', function(calId){
+				if(typeof calId !== 'undefined'){
+					form.CAL_ID = calId;
+				}
+			})
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);
@@ -50,27 +56,35 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			}
 			
 			scope.$watch('doctorId', function(doctorId){
-				var postData = doctorId;
-				
-				OutreferralModel.DotorFromUserId(postData)
-				.then(function(response){
-					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
-					scope.referdoctor.name = response.data[0].NAME;
-				}, function(error){})
+				if(typeof doctorId !== 'undefined'){
+					var postData = doctorId;
+					
+					OutreferralModel.DotorFromUserId(postData)
+					.then(function(response){
+						scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
+						scope.referdoctor.name = response.data[0].NAME;
+					}, function(error){})
+				}
 			})
 			var load = function(){
-				var postData = scope.doctorId;
+				/*var postData = scope.doctorId;
 				
 				OutreferralModel.DotorFromUserId(postData)
 				.then(function(response){
 					scope.outreferral.form.referred_to_doctor = response.data[0].doctor_id;
 					scope.referdoctor.name = response.data[0].NAME;
-				}, function(error){})
+				}, function(error){})*/
 			}
 			var outdoctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectOutdoctorDialog',
+					size:'lg',
 					controller: function($scope, $modalInstance){
+						$scope.$watch('data', function(data){
+								if(typeof data !== 'undefined'){
+									$modalInstance.close(data);
+								}
+							})
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
 						}
@@ -85,6 +99,7 @@ angular.module('app.loggedIn.outreferral.directives.patientAdd', [])
 			var doctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectDoctorDialog',
+					size:'lg',
 					controller: function($scope, $modalInstance){
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);

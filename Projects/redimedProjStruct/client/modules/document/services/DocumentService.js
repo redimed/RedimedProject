@@ -346,6 +346,21 @@ angular.module('app.loggedIn.document.services', [])
          * end gorgon medical history
          */
 
+         // begin new Functional Assessment
+         documentService.loadNewHeaderSections = function(fa_id){
+            var info = api.all("document/newHeaderSections");
+            return info.post({fa_id: fa_id});
+         }
+         documentService.loadNewLines = function(section_id, fa_id){
+            var info = api.all("document/newLines");
+            return info.post({section_id: section_id, fa_id:fa_id});
+         }
+         documentService.loadNewCommentsAndDetails = function(line_id){
+            var info = api.all("document/newDetailsComments");
+            return info.post({line_id: line_id});
+         }
+         // end new Functional Assessment
+
         var strPrefixAPI = 'api/erm/v2/paperless/';
          /*
          *  KHANK API

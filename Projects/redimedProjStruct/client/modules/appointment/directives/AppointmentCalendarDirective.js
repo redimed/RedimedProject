@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.appointment.directives.calendar', [])
 
-.directive('appointmentCalendar', function($modal, $state, $cookieStore, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
+.directive('appointmentCalendar', function($modal, $timeout, $state, $cookieStore, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
@@ -8,6 +8,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
+			scope.goToCalendarDetail = function(doctor){
+				$cookieStore.put('appointment', scope.appointment.search);
+
+				$state.go('loggedIn.appointment_doctor', {doctorId: doctor.DOCTOR_ID});
+			}
+
 			scope.extendMinutes = function(hour, minute){
 				hour = scope.convertToSeconds(hour);
 				var seconds = hour+minute*60;
@@ -155,7 +161,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 								_.forEach(response.doctors, function(doctor){
 									if(doctor.DOCTOR_ID === data.DOCTOR_ID){
-										scope.appointment.list[flagPatient].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, outreferral: data.outreferral});
+										scope.appointment.list[flagPatient].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, outreferral: data.outreferral, DOCTOR_ID: data.DOCTOR_ID});
 										scope.appointment.list[flagPatient].doctors[doctor_row].PATIENTS = 'ok';
 										return;
 									}
@@ -354,7 +360,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 										doctor_array_temp[k].color = scope.appointment.list[i].doctors[j].SERVICE_COLOR;
 
 										if(doctor_array_temp[k].left_temp === 0){
-											scope.appointment.list[i].doctors[j].height = '28px';
+											scope.appointment.list[i].doctors[j].height = '35px';
 										}
 									}else{
 										if(doctor_array_temp[k].left_temp > 0){
@@ -362,7 +368,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 											doctor_array_temp[k].left_temp -= 15;
 
 											if(doctor_array_temp[k].left_temp === 0){
-												scope.appointment.list[i].doctors[j].height = '28px';
+												scope.appointment.list[i].doctors[j].height = '35px';
 											}
 										}
 									}
@@ -374,7 +380,46 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						i++;
 					})
 
+					var i = 0;
+					_.forEach(scope.appointment.list, function(list){
+						var j = 0;
+						_.forEach(list.doctors, function(doctor){
+							if(scope.appointment.list[i].doctors[j].patients.length > 1 && scope.appointment.list[i].doctors[j].PATIENTS === 'ok'){
+								scope.appointment.list[i].doctors[j].height = "auto";
+							}
+							j++;
+						})
+						i++;
+					})
+
 				}, function(error){})
+			}
+
+			var dialogWaitingListAdd = function(col){
+				angular.element("#popupMenu").css({'display':'none'});
+
+				var modalInstance = $modal.open({
+					templateUrl: 'waitingListAdd',
+					controller: function($scope, $modalInstance){
+						$scope.success = false;
+
+						$timeout(function(){
+							$scope.doctor_id = col.DOCTOR_ID;
+						}, 200)
+
+						$scope.$watch('success', function(success){
+							if(success){
+								$modalInstance.close('success');								
+							}
+						})
+					},
+					size: 'lg',
+					resolve: {
+						col: function(){
+							return col;
+						}
+					}
+				});
 			}
 
 			var dialogRightAdd = function(app, col){
@@ -548,8 +593,13 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 														$scope.patientId = new_patient.Patient_id;
 														$scope.reload = false;
 														$scope.calId = col.CAL_ID;	
+														$scope.doctorId = col.DOCTOR_ID;
 														$scope.limit = 10;
 														$scope.addSuccess = false;
+
+														$timeout(function(){
+															$scope.calId = col.CAL_ID;
+														}, 600)
 
 														$scope.$watch('addSuccess', function(addSuccess){
 															if(addSuccess){
@@ -597,7 +647,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 														$scope.patientId = new_patient.Patient_id;
 														$scope.calId = col.CAL_ID;
 														$scope.success = false;
-														$scope.doctorId = col.DOCTOR_ID;
+														$timeout(function(){
+															$scope.doctorId = col.DOCTOR_ID;
+														}, 600)
 
 														$scope.$watch('success', function(success){
 															if(success){
@@ -662,7 +714,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				onRightClick: function($event, app, col){ onRightClick($event, app, col) },
 				dialog: {
 					rightAdd: function(app, col){ dialogRightAdd(app, col) },
-					add: function(app, col){ dialogAdd(app, col) }
+					add: function(app, col){ dialogAdd(app, col) },
+					chooseWaitingList: function(col){ dialogWaitingListAdd(col) }
 				},
 				list: [],
 				search: angular.copy(search),
@@ -729,7 +782,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 								})
 
 								if(cal_flag){
-									scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+									scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no', DOCTOR_ID: row.DOCTOR_ID});
 									if(row.outreferral_id){
 										var cal_length = scope.alertCenter.list[flag].cal.length;
 										scope.alertCenter.list[flag].cal[cal_length-1].OUTREFERRAL = 'yes';
@@ -745,7 +798,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							}
 
 							if(row.CAL_ID){
-								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, DOCTOR_ID: row.DOCTOR_ID, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
 								if(row.outreferral_id)
 									object.cal[0].OUTREFERRAL = 'yes';
 							}

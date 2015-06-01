@@ -351,5 +351,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
         };
         //END LEAVE FORM
 
+        TimeSheetService.DeleteFile = function(fileId) {
+            var DeleteFile = api.all("TimeSheet/post-del-file");
+            return DeleteFile.post({
+                fileId: fileId
+            });
+        };
+
         return TimeSheetService;
     });

@@ -8,7 +8,7 @@ angular.module('app.loggedIn.claim', [
 
 	.state('loggedIn.patient.claim', {
 		abstract: true,
-		url: '/:patientId/cal/:calId/claim'
+		url: '/claim'
 	})
 
 	.state('loggedIn.patient.claim.list', {

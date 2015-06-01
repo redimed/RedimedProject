@@ -1,0 +1,32 @@
+<div id="appointment">
+	<div class="row" style="margin-bottom: 20px;">
+		<div class="col-md-12">
+			<b>Doctor Name: </b>{{appointment.pre.name}}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<b>Appointment Date: </b>{{appointment.pre.datepicker}}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<tr>
+					<th>From</th>
+					<th>To</th>
+					<th>Patients</th>
+					<th>Status</th>
+					<th>Service</th>
+				</tr>
+				<tr ng-repeat="l in appointment.list">
+					<td>{{l.FROM_TIME}}</td>
+					<td>{{l.TO_TIME}}</td>
+					<td>
+						<span ng-if="l.Patient_id">{{l.First_name}} {{l.Sur_name}}</span>
+						<span ng-if="!l.Patient_id">No Patient</span>
+					</td>
+					<td>{{l.STATUS}}</th>
+					<td>{{l.SERVICE_NAME}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

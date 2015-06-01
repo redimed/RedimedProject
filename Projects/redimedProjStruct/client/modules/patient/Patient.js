@@ -83,7 +83,9 @@ angular.module("app.loggedIn.patient", [
             }
         }
     })
-    .state("loggedIn.patient.companies", {
+
+    //tannv.dts@gmail.com
+    /*.state("loggedIn.patient.companies", {
         url: "/companies",
         views: {
             "main-content": {
@@ -91,7 +93,8 @@ angular.module("app.loggedIn.patient", [
                 controller: "PatientCompaniesController"
             }
         }
-    })
+    })*/
+
     .state("loggedIn.patient.workcover", {
         url: "/workcover",
         views: {
@@ -151,14 +154,10 @@ angular.module("app.loggedIn.patient", [
         templateUrl: "modules/patient/views/allpatients.html",
         controller: "PatientListAllController"
     })
-    .state("loggedIn.patient.checkin",{
+    .state("loggedIn.checkin",{
         url:'/checkin',
-        views:{
-            "main-content":{
-                templateUrl:'modules/patient/views/checkin.html',
-                controller:'PatientCheckinController'
-            }
-        }
+        templateUrl:'modules/patient/views/checkin.html',
+        controller:'PatientCheckinController'
     })
 
    

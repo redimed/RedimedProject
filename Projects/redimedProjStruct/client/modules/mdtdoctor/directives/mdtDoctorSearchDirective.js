@@ -17,7 +17,7 @@ angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoct
 				scope.list = {};
 				scope.params = {
 					pagination: {
-						limit: 30,
+						limit: 7,
 						offset: 0,
 						current_page: 1,
 						max_size: 3

@@ -1,43 +1,37 @@
 <form name="mdtrecallForm" novalidate>
-<!--ACTION-->
-<div class="row" style="margin-bottom: 15px;">
-	<div class="col-md-2 col-sm-3 col-xs-6">
-		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.create">
-			<i class="fa fa-save"></i> Save
-		</button>
-		<button class="btn btn-sm btn-block green" ng-click="clickAction()" ng-show="params.permission.edit">
-			<i class="fa fa-pencil"></i> Update
-		</button>
-	</div>
-</div>
-<!--END ACTION -->
 <!--phanquocchien.c1109g@gmail.com-->
 <div class="row">
 
 	<!--notes-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="notes">Notes</label>
-			<input type="text" placeholder="Notes" name="notes" ng-model="mdtRecallMap.notes" class="form-control" id="notes" float-label>
-		</span>	
+		<div class="form-group">
+			<label class="un-label-group">
+				Notes
+			</label>
+			<input type="text" name="notes" ng-model="mdtRecallMap.notes" class="form-control input-sm un-input-group" id="notes" float-label required>
+		</div>
 	</div>
 	<!--notes-->
 
 	<!--Transaction Date-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="notes">Transaction Date</label>
-			<input type="text" placeholder="Transaction Date" name="notes" ng-model="mdtRecallMap.transaction_date" class="form-control" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" id="transaction_date" ng-change="setRecallDate()" float-label>
-		</span>	
+		<div class="form-group">
+			<label class="un-label-group">
+				Transaction Date
+			</label>
+			<input type="text" name="notes" ng-model="mdtRecallMap.transaction_date" class="form-control input-sm un-input-group" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" id="transaction_date" ng-change="setRecallDate()" float-label>
+		</div>
 	</div>
 	<!--Transaction Date-->
 
 	<!--Recall Date-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="notes">Recall Date</label>
-			<input disabled type="text" placeholder="Recall Date" name="notes" ng-model="mdtRecallMap.recall_date" class="form-control" id="recall_date" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" float-label>
-		</span>	
+		<div class="form-group">
+			<label class="un-label-group">
+				Recall Date
+			</label>
+			<input disabled type="text" name="notes" ng-model="mdtRecallMap.recall_date" class="form-control input-sm un-input-group" id="recall_date" ui-date="{dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,yearRange:'c-20:c+20'}" float-label>
+		</div>
 	</div>
 	<!--Recall Date-->
 </div>
@@ -45,32 +39,46 @@
 <div class="row">
 	<!--recall_period-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="remind_before">Remind period</label>
-
-			<select ng-change="setRecallDate()" class="form-control" name="recall_period"
+		<div class="form-group">
+			<label class="un-label-group">
+				Remind period
+			</label>
+			<select ng-change="setRecallDate()" class="form-control input-sm un-input-group" name="recall_period"
                 ng-model="mdtRecallMap.recall_period"
                 ng-options="item.code as item.title for item in options.recall_period"
            		 float-label>
                 <option disabled value="">-- Recall Period --</option>
             </select>
-		</span>	
+		</div>
 	</div>
 	<!--recall_period-->
 
 	<!--remind_before-->
 	<div class="col-md-4 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="remind_before">Remind before</label>
-
-			<select class="form-control" name="remind_before"
+		<div class="form-group">
+			<label class="un-label-group">
+				Remind before
+			</label>
+			<select class="form-control input-sm un-input-group" name="remind_before"
                 ng-model="mdtRecallMap.remind_before"
                 ng-options="item.code as item.title for item in options.recall_remind"
            		 float-label>
                 <option disabled value="">-- Remind Before --</option>
             </select>
-		</span>	
+		</div>
 	</div>
 	<!--remind_before-->
 </div>
 </form>
+<!--ACTION-->
+<div class="row">
+	<div class="col-md-2 col-sm-3 col-xs-6">
+		<button class="un-button un-bgXam-colBlack un-popup-button-config" ng-click="clickAction()" ng-show="params.permission.create"> 
+			Save
+		</button>
+		<button class="un-button un-bgXam-colBlack un-popup-button-config" ng-click="clickAction()" ng-show="params.permission.edit">
+		 	Update
+		</button>
+	</div>
+</div>
+<!--END ACTION -->

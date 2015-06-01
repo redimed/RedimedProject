@@ -4,8 +4,7 @@
 	        restrict: 'E',
 	        scope: {
 	        	images: '=',
-	        	patient: '=',
-	        	callInfo: '='
+	        	patient: '='
 	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {
@@ -15,33 +14,6 @@
 	            var drawing = false;
 	            var lastX;
 	      		var lastY;
-
-	      		scope.calling = null;
-	      		scope.callee = null;
-
-	      		scope.isCalling = false;
-	      		scope.callUser = null;
-
-
-	      		scope.$watch('callInfo',function(val){
-	      			if(val != null || typeof val !== 'undefined')
-	      			{
-	      				scope.calling = val.isCalling != null || typeof val.isCalling !== 'undefined' ? val.isCalling : null;
-	      				scope.callee = val.callUser != null || typeof val.callUser !== 'undefined' ? val.callUser : null;
-	      			}
-	      		})
-
-	      		scope.$watch('calling',function(val){
-	      			if(val != null)
-  						scope.isCalling = val;
-	      		})
-
-	      		scope.$watch('callee',function(val){
-	      			if(val != null)
-	      				scope.callUser = val;
-
-	      		})
-
 
 	            scope.colors = [{'color': 'blue-ebonyclay'},
 	            				{'color': 'green'},
@@ -136,8 +108,7 @@
 	                	if(rs.status == 'success')
 	                	{
 	                		scope.images.push(rs.id);
-	                		socket.emit("shareImage",rs.id,scope.callUser);
-	                		toastr.success("Success!");
+	                		toastr.success("Image Saved!");
 	                	}
 	                	else
 	                		toastr.error("Error!");

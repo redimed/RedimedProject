@@ -18,6 +18,8 @@ app.post('/api/im/searchByDate',injuryController.searchByDate);
 app.post('/api/im/searchByDatePatient',injuryController.searchByDatePatient);
 app.post('/api/im/getById',injuryController.injuryById);
 
+app.post('/api/im/register',injuryController.register);
+
 app.get('/api/im/testGCM',injuryController.testPushGCM);
 app.get('/api/im/getOnlineUsers',injuryController.getOnlineUsers);
 app.post('/api/im/getInjuryByCompany',injuryController.getInjuryByCompany);

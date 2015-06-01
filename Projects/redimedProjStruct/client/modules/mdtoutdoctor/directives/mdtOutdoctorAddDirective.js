@@ -6,7 +6,8 @@ angular.module('app.loggedIn.mdtoutdoctor.add.directive', [])
 		scope: {
 			options: '=',
 			params: '=',
-			success: '='
+			success: '=',
+			data:'='
 		},
 		templateUrl: 'modules/mdtoutdoctor/directives/templates/add.html',
 		link: function(scope, element, attrs){
@@ -26,6 +27,7 @@ angular.module('app.loggedIn.mdtoutdoctor.add.directive', [])
 				mdtOutdoctorService.add(postData)
 				.then(function(data){
 		  				scope.success = true;
+		  				scope.data = data;
 		  			}, function(error){
 		  				scope.errors = angular.copy(error.data.errors);
 		  				ConfigService.beforeError(scope.errors);

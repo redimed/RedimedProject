@@ -1,5 +1,10 @@
 angular.module('app.loggedIn.company.controllers.add', [])
 
-.controller('CompanyAddController', function($scope, $state){
-	
+.controller('CompanyAddController', function($scope, $state,$modalInstance){
+	$scope.actionCenter={
+		closeModal:function(){
+			$modalInstance.dismiss('cancel');
+		}
+	}
+
 })

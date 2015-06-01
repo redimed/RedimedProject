@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
     .controller("Report1Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
-        
+
         // POPUP Date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -17,31 +17,36 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
-            TimeSheetService.LoadEmpReport(listNew).then(function(response) {
-                if (response.status === "success") {
-                    //LOAD EMP
-                    var arrayEmp = [];
-                    angular.forEach(response.result, function(emp, index) {
-                        arrayEmp.push({
-                            id: emp.Employee_ID,
-                            label: emp.FirstName + " " + emp.LastName
+            if (listNew !== undefined &&
+                listNew !== null &&
+                listNew.length !== 0) {
+                TimeSheetService.LoadEmpReport(listNew).then(function(response) {
+                    if (response.status === "success") {
+                        //LOAD EMP
+                        var arrayEmp = [];
+                        angular.forEach(response.result, function(emp, index) {
+                            arrayEmp.push({
+                                id: emp.Employee_ID,
+                                label: emp.FirstName + " " + emp.LastName
+                            });
                         });
-                    });
-                    $scope.listEmp = angular.copy(arrayEmp);
-                    //END
-                } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Loading employee fail!", "Error");
-                } else {
-                    //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Server not response!", "Error");
-                }
-            });
+                        $scope.listEmp = angular.copy(arrayEmp);
+                        //END
+                    } else if (response.status === "error") {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Loading employee fail!", "Error");
+                    } else {
+                        //catch exception
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Server not response!", "Error");
+                    }
+                });
+            }
+
         };
         //FUNCTION GET WEEK NUMBER
         $scope.getWeekNumber = function(d) {
@@ -55,20 +60,10 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
         //FUNCTION GET WEEK NUMBER
 
         $scope.changeEmp = function(list) {
-            if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
-                $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
-                $scope.listEmployeeChoose.length !== 0) {
+            if ($scope.listEmployeeChoose.length !== 0) {
                 var info = {};
-                var weekNoFrom = $scope.dateWeekFrom;
-                var weekNoTo = $scope.dateWeekTo;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                info.weekNoTo = $scope.getWeekNumber(weekNoTo);
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
-                info.weekFrom = $scope.dateWeekFrom;
-                info.weekTo = $scope.dateWeekTo;
-                info.listDept = $scope.listDepartmentChoose;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
                 TimeSheetService.LoadReportTimeInLieu(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF

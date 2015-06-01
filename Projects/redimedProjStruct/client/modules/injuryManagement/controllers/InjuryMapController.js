@@ -176,11 +176,11 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
             getOnlineDriver();
         }
 
-    
-        $interval(function(){
+        $scope.refreshList = function(){
             refreshList();
-        },10 * 1000);
+        }
 
+    
         setInterval(refreshMap,60 * 1000);
         setInterval(getOnlineDriver,60 * 1000);
 
@@ -238,18 +238,8 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
                             rs.data[j].driverUser = '';
                     }
                     $scope.injuryListTemp = rs.data;
+                    $scope.injuryList = $scope.injuryListTemp;
 
-                    if($scope.injuryList.length == 0)
-                        $scope.injuryList = $scope.injuryListTemp;
-                    else
-                    {
-                        var arr = [];
-                        arr = _.difference($scope.injuryList, $scope.injuryListTemp);
-                        if(arr.length > 0)
-                            $scope.injuryList = $scope.injuryListTemp;
-                    }
-
-                    
                 }
             })
         }

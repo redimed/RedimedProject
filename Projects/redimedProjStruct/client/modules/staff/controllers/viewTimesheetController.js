@@ -293,6 +293,20 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $scope.tasks = _.filter(response['data'], function(data) {
                         return data.date == infoWeek.date;
                     });
+                    //PUSH FILE
+                    angular.forEach($scope.tasks, function(valueTask, indexTask) {
+                        $scope.tasks[indexTask].files = [];
+                        angular.forEach(response['file'], function(valueFile, indexFile) {
+                            if (valueTask.tasks_id === valueFile.tasks_id &&
+                                valueTask.ITEM_ID === valueFile.ITEM_ID) {
+                                $scope.tasks[indexTask].files.push({
+                                    file_id: valueFile.file_id,
+                                    file_name: valueFile.file_name
+                                });
+                            }
+                        });
+                    });
+                    //END PUSH
                 } else {
                     $scope.Title = "Full Timesheet"; //set title Full Timesheet
                     $scope.one = false;

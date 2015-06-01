@@ -26,8 +26,13 @@ angular.module("app.loggedIn.patient.services", [])
         return restfulAPI.all('mdtPatientClaim').post(data);
     }     
 
-
-
+    /*phan quoc chien 
+     get list allergy
+    */
+    instanceService.getListAllergyinPatient = function(search){
+        var funcApi = khankAPI.all('allergy/list_patient_allergy_enable');
+        return funcApi.post({search:search})
+    }
 
     //  RESTFUL
 
@@ -262,7 +267,6 @@ angular.module("app.loggedIn.patient.services", [])
         var detailApi = appApi.all("patient/update");
         return detailApi.post(data);
     }
-
 
     instanceService.getPatient = function (patient_id) {
         var detailApi = appApi.all("patient/get_by_id");

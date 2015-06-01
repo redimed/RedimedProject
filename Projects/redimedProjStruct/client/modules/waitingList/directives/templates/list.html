@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-md-12">
+		<table class="un_table_first">
+			<thead>
+				<tr>
+					<th><span class="un_span_thead">Doctor</span></th>
+					<th><span class="un_span_thead">Patient</span></th>
+					<th><span class="un_span_thead">Priority</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="l in waitingList.list" ng-click="clickRow({row: l})" style="cursor: pointer;">
+					<td>{{l.doctor_name}}</td>
+					<td>{{l.First_name}} {{l.Sur_name}}</td>
+					<td>{{l.priority}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

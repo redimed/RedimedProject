@@ -21,8 +21,8 @@ module.exports = {
 			'isEnable': postData.isEnable
 		})
 		.where({
-			'ID': postData.script_id,
-			'Patient_id': postData.patient_id,
+			'ID': postData.ID,
+			'Patient_id': postData.Patient_id,
 		})
 		.toString();
 		db.sequelize.query(sql)
@@ -51,8 +51,8 @@ module.exports = {
 		'cln_scripts.isEnable')
 		.from('cln_scripts')
 		.innerJoin('cln_patients', 'cln_scripts.Patient_id', 'cln_patients.Patient_id')
-		.where(knex.raw('IFNULL(cln_scripts.scriptNum, "") LIKE "%' + postData.scriptNum + '%"'))
-		.where(knex.raw('IFNULL(cln_scripts.Medicare, "") LIKE "%' + postData.Medicare + '%"'))
+		.where(knex.raw("IFNULL(cln_scripts.scriptNum, '') LIKE '%" + postData.scriptNum + "%'"))
+		.where(knex.raw("IFNULL(cln_scripts.Medicare, '') LIKE '%" + postData.Medicare + "%'"))
 		.where({'cln_scripts.Patient_id': postData.Patient_id, 'cln_scripts.CAL_ID': postData.CAL_ID})
 		.orderBy('cln_scripts.Creation_date', postData.Creation_date)
 		.limit(postData.limit)

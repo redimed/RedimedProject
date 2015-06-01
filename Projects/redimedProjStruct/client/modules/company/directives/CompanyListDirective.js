@@ -7,7 +7,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 		scope: {
 			options: '=',
 			limit: '@',
-			onRowClick: '&'
+			onRowClick: '&',
+			actionCenter:'='//add by tannv.dts@gmail.com, function: runWhenFinish
 		},
 		link: function(scope, elem, attrs){
 			var search = {
@@ -15,7 +16,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 				offset: 0,
 				limit: parseInt(scope.limit),
 				company_id :$stateParams.companyId,
-				patient_id :$stateParams.patientId,
+				// patient_id :$stateParams.patientId,//tannv.dts@gmail.com comment
+				patient_id :$stateParams.patient_id,//tannv.dts@gmail add
 				Company_name:'',
 				Industry:'',
 				Addr:'',
@@ -23,12 +25,16 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 			scope.onRowClick = function(row){
 				scope.updateCompany.id = row.id;
-				scope.updateCompany.patient_id =$stateParams.patientId; 
+				// scope.updateCompany.patient_id =$stateParams.patientId;// tannv.dts@gmail.com comment
+				scope.updateCompany.patient_id =$stateParams.patient_id; // tannv.dts@gmail.com add
 				var postData = angular.copy(scope.updateCompany);
 				 CompanyModel.upCompanyPatient(postData)
 		  			.then(function(response){
 		  				toastr.success('Change Active Company Successfully');
 		  				scope.company.load();
+		  				//tannv.dts@gmail.com
+		  				//cap nhat lai patient detail bar
+		  				scope.actionCenter.runWhenFinish();
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 		  			})
@@ -55,7 +61,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 
 			scope.clickEdit = function(row){
-					$state.go('loggedIn.company.edit',{companyId:row.id});
+					// $state.go('loggedIn.company.edit',{companyId:row.id});//tan comment
+					$state.go('loggedIn.patient.company.edit',{companyId:row.id});//tan add
 			}
 			var load = function(){
 				scope.company.loading = true;
@@ -72,8 +79,28 @@ angular.module('app.loggedIn.company.directives.list', [])
 				})
 			}
 			scope.addClick = function(){
-				$state.go('loggedIn.company.add');
+				// $state.go('loggedIn.company.add');//tan comment
+				$state.go('loggedIn.patient.company.add');//tan add
 			}
+
+			scope.addClick1=function()
+			{
+				var modalInstance = $modal.open({
+			      templateUrl: 'modules/company/views/add.html',
+			      controller: 'CompanyAddController',
+			      size :'lg',
+			      resolve: {
+			      		insurerArray: function(){
+			      			return scope.company.listTemp;
+			      		}
+			      }
+			    })
+			    .result.then(function(row){
+					
+					
+				})
+			}
+			
 			var onSearch = function(option){
 				switch(option.field){
 					case 'Company_name':
@@ -99,7 +126,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 			scope.disableCompany = function(row){
 				var postData ={
-					patient_id :$stateParams.patientId,
+					// patient_id :$stateParams.patientId,//tannv.dts@gmail.com comment
+					patient_id :$stateParams.patient_id,// tannv.dts@gmail.com add
 					company_id : row.id,
 					isEnable : row.checkisEnable
 				}
@@ -123,7 +151,8 @@ angular.module('app.loggedIn.company.directives.list', [])
 			    })
 			    .result.then(function(row){
 			    	var postData = {
-			    		patient_id:$stateParams.patientId,
+			    		// patient_id:$stateParams.patientId,//tannv.dts@gmail.com comment
+			    		patient_id:$stateParams.patient_id,//tannv.dts@gmail.com add
 			    		company_id:row.id
 			    	}
 			    	CompanyModel.AddlistNotFollow(postData)

@@ -20,7 +20,12 @@ f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`
 p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS patientAddress,
 c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
 d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone` AS docPhone, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName
-FROM `th_first_assessment` f INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID` INNER JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` INNER JOIN `companies` c ON p.`company_id` = c.`id` INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
+FROM `th_first_assessment` f
+INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID`
+INNER JOIN `cln_appt_patients` ap on ap.`CAL_ID` = a.`CAL_ID`
+INNER JOIN `cln_patients` p ON ap.`Patient_id` = p.`Patient_id`
+INNER JOIN `companies` c ON p.`company_id` = c.`id`
+INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
 WHERE f.`Ass_id` = $P{id}]]>
 	</queryString>
 	<field name="examDate" class="java.sql.Timestamp">
@@ -191,7 +196,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="reviewCmt" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="signature" class="java.lang.String">
+	<field name="signature" class="java.lang.Object">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="First_name" class="java.lang.String">
@@ -229,7 +234,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="docAddress" class="java.lang.String"/>
 	<field name="docEmail" class="java.lang.String"/>
 	<field name="docPhone" class="java.lang.String"/>
-	<field name="docSign" class="java.lang.Object"/>
+	<field name="docSign" class="java.lang.String"/>
 	<field name="FullName" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>

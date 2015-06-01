@@ -3,7 +3,8 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 		restrict: 'EA',
 		scope: {
 			clickRow: '&',
-			isClose: '@'
+			isClose: '@',
+			data:'='
 		},
 		templateUrl: 'modules/mdtoutdoctor/directives/templates/search.html',
 		link: function(scope, element, attrs){
@@ -16,13 +17,14 @@ angular.module('app.loggedIn.mdtoutdoctor.search.directive', []).directive('mdto
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/mdtoutdoctor/dialogs/templates/add.html',
 			      controller: 'MdtoutdoctorAdddialog',
-			      size :''
+			      size :'lg'
 			    })
 			    .result.then(function(response){
-			    	if(response === 'success'){
+			 	    if(response.status === 'success'){
 						toastr.success('Add Successfully');
+						scope.data = response.data;
 						loadList();
-					}   	
+					} 	
 			    })
 			}
 			var init = function(){

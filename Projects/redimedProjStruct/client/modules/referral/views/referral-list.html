@@ -1,14 +1,19 @@
-<div class="portlet box" style="position: relative; margin-top: 32px;">
-    <button type="button" class="btn btn-default btn-fix" ng-click="referralAddForm.open()">
-        Add referral
-    </button>
-    <label class="un-title-label" style="top: -38px;">Make Referrals</label>
-    <div class="portlet-body">
-       	<my-data-table options="referrals.options" rowclass="referrals.class" numrows="10"></my-data-table>
-    	<div class="clearfix"></div>
+<div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
+ <label class="un-label-popup-header un-bg-label-333333">Make Referrals</label>
+  <div class="un-padding-top-bottom-10 ">
+    <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+      <button class="btn un-btn-red un-btn-position" ng-click="referralAddForm.open()">
+                Add referral
+            </button> 
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <my-data-table options="referrals.options" rowclass="referrals.class" numrows="10"></my-data-table>
+        </div>
+        
     </div>
+    </div>
+  </div>
 </div>
-
 
 <!--REFERRAL ADD FORM-->
 <div class="mdt-search" style="display: block;" ng-if="referralAddForm.is_show">

@@ -1,14 +1,7 @@
-<div class='row'>
-	<div class='col-md-10'>
-		<pagination boundary-links='true' total-items='list.count' ng-model='params.pagination.current_page' class='pagination-sm' previous-text='&lsaquo;' next-text='&rsaquo;' first-text='&laquo;' last-text='&raquo;' items-per-page='params.pagination.limit' max-size='params.pagination.max_size' ng-change='setPage()'>
-		</pagination>
-	</div>
-	<button class="btn btn-primary" ng-click="addDoctor()">Add</button>
-	<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
-        <button class="btn btn-sm btn-block red" ng-click="closePopup()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
+<div class='inline'>
+	<label class="un-label-popup-header-m un-bg-label-B41E46-m">Select doctor</label>
+	<button class="btn pull-right un-save-m ng-scope" ng-click="addDoctor()"><i class="fa fa-plus"></i> Add new doctor</button>
+	
 </div>
 <div class='row'>
 	<div class='col-md-12'>
@@ -35,8 +28,17 @@
 		</table>
 	</div>
 </div>
+<div align="right">
+		<pagination boundary-links='true' total-items='list.count' ng-model='params.pagination.current_page' class='pagination-sm' previous-text='&lsaquo;' next-text='&rsaquo;' first-text='&laquo;' last-text='&raquo;' items-per-page='params.pagination.limit' max-size='params.pagination.max_size' ng-change='setPage()'>
+		</pagination>
+	</div>
 
 <script type="text/ng-template" id="AddDoctorDialog">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+     </style>
     <div class="modal-body">
         <mdtdoctor-detail options="options" params="params_doctor" item-update="itemUpdate"/>
     </div>

@@ -21,7 +21,8 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.demo.controllers",
     "app.loggedIn.document.detail.controllers",
     "app.loggedIn.document.addPatient.controllers",
-    "app.loggedIn.document.form18.controllers"
+    "app.loggedIn.document.form18.controllers",
+    "app.loggedIn.document.newFA.controllers"
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -154,6 +155,12 @@ angular.module("app.loggedIn.document", [
 
                 templateUrl: "modules/document/views/audiogramresults2.html",
                 controller: 'SA2Controller'
+            })
+            .state("loggedIn.newFA",{
+                // url:"/newFA/:patient_id/:cal_id/:fa_id",
+                url:"/newFA",
+                templateUrl: "modules/document/views/newFunctionalAssessment.html",
+                controller: "newFAController"
             })
 
 

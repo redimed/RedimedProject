@@ -1,11 +1,6 @@
-<div class='row'>
-	<div class='col-md-10'>
-		<pagination boundary-links='true' total-items='list.count' ng-model='params.pagination.current_page' class='pagination-sm' previous-text='&lsaquo;' next-text='&rsaquo;' first-text='&laquo;' last-text='&raquo;' items-per-page='params.pagination.limit' max-size='params.pagination.max_size' ng-change='setPage()'>
-		</pagination>
-	</div>
-	<div>
-		<button class="btn btn-primary" ng-click="OutSideDoctor()">Add</button>
-	</div>
+<div class='inline'>
+	<label class="un-label-popup-header-m un-bg-label-B41E46-m">Select Outdoctor</label>
+    <button class="btn pull-right un-save-m ng-scope" ng-click="OutSideDoctor()"><i class="fa fa-plus"></i> Add new Outdoctor</button>
 </div>
 <div class='row'>
 	<div class='col-md-12'>
@@ -28,4 +23,8 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+<div align='right'>
+	<pagination boundary-links='true' total-items='list.count' ng-model='params.pagination.current_page' class='pagination-sm' previous-text='&lsaquo;' next-text='&rsaquo;' first-text='&laquo;' last-text='&raquo;' items-per-page='params.pagination.limit' max-size='params.pagination.max_size' ng-change='setPage()'>
+	</pagination>
 </div>

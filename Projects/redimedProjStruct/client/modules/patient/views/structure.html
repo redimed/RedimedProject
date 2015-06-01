@@ -49,15 +49,11 @@
 
 				</ul>
 			</div>
-
-
-
-
 		</div>
 	</div>
 	<div class="un_body_panel">
-		<div class="un_body_top un-padding-left-right-20-top-2-bottom-10">
-			<div class="row">
+		<div class="un_body_top un-padding-left-right-20-top-15-bottom-10">
+			<div ng-show="patientBarVer.version=='full'" class="row">
 				<div class="col-lg-12">
 					<div class="un-bgXam-colBlack un-padding-top-10 un-padding-bottom-10 un-div-width-90">
 						<div class="row">
@@ -75,25 +71,36 @@
 												<span class="input-group-btn ">
 												<button class="btn un-btn-black-label" type="button">Gender</button>
 												</span>
-												<label type="text" class="form-control un-input-xam-fig un-div-width-50" ng-show="current_patient.Sex==1">Male</label>
-												<label type="text" class="form-control un-input-xam-fig un-div-width-50" ng-show="current_patient.Sex==0">Female</label>
-												<label type="text" class="form-control un-input-xam-fig un-div-width-50" ng-show="current_patient.Sex==null"></label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Male</label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Female</label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null && current_patient.Sex==un"></label>
 											</div>
 										</div>
 										<div class="col-lg-4 un-padding-right-0 un-padding-left-10 un-padding-bottom-10">
+											<div class="input-group un-padding-bottom-10">
+												<span class="input-group-btn ">
+												<button class="btn un-btn-black-label" type="button">Injury/ Illness </button>
+												</span>
+												<label type="text" class="form-control un-input-xam-fig"></label>
+											</div>
 											<div class="input-group">
 												<span class="input-group-btn ">
-												<button class="btn un-btn-black-label-60" type="button">Injury/ Illness </button>
+												<button class="btn un-btn-black-label" type="button">Previous Medical Hx</button>
 												</span>
-												<label type="text" class="form-control un-input-xam-fig-60"></label>
+												<label type="text" class="form-control un-input-xam-fig"></label>
 											</div>
 										</div>
 										<div class="col-lg-4 un-padding-left-10 un-padding-bottom-10">
 											<div class="input-group">
 												<span class="input-group-btn ">
-												<button class="btn un-btn-black-label-60" type="button">Previous <br/> Medical Hx</button>
+												<button class="btn un-btn-black-label-60" type="button">Allergy</button>
 												</span>
-												<label type="text" class="form-control un-input-xam-fig-60"></label>
+												<label type="text" class="form-control un-input-xam-fig-60">
+													<label ng-repeat="item in listAllergyinPAtient">
+														<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
+														<label ng-if="$last">{{item.allergy_name}}</label>
+													</label>
+												</label>
 											</div>
 										</div>
 									</div>
@@ -149,16 +156,65 @@
 							</div>
 						</div>
 					</div>
-					<div class="un-bgWhite un-div-width-10">
+					<div class="un-bg-avatar un-div-width-10">
 						<img src="{{current_patient.avatar}}" width="100%" height="100%">
 					</div>
 				</div>
 			</div>
-			
+			<div ng-show="patientBarVer.version=='zip'" class="row">
+				<div class="col-lg-12">
+					<div class="un-bgXam-colBlack un-padding-top-10">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="col-lg-3 un-padding-right-0 un-padding-left-10">
+									<div class="input-group un-padding-bottom-10">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Patient Name</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.First_name}}</label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-right-0">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">DOB</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.DOB | date:'dd-MM-yyyy'}}</label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Gender</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Male</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Female</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null"></label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Allergy</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">
+											<label ng-repeat="item in listAllergyinPAtient">
+												<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
+												<label ng-if="$last">{{item.allergy_name}}</label>
+											</label>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="un_body_center un-margin-left-right-15 un-padding-left-right-20-top-2-bottom-10">
+		<div class="un_body_center un-margin-left-right-20 un-padding-left-right-20-top-2-bottom-10">
 			<div class="row">
-				<div class="col-lg-12 un-bgXam-colBlack un-padding-top-10">
+				<!-- <div class="col-lg-12 un-bgXam-colBlack un-padding-top-10"> --><!-- tan comment -->
+				<div class="col-lg-12 un-padding-top-10"><!-- tan add -->
 					<div ui-view="main-content"></div>
 				</div>
 			</div>

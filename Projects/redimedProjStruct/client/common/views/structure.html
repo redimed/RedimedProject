@@ -188,13 +188,13 @@
         <div class="page-sidebar navbar-collapse collapse">
             <!-- BEGIN SIDEBAR MENU -->
             <ul style="margin-bottom: 0px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                <li class="start">
+                <li class="start m-add-hover-color">
                     <a href="javascript:;" ng-click="userclick()">
-                        <i class="icon-home"></i>
+                        <i class="icon-home"  style="float:left;"></i>
                         <span class="title">Home</span>
                     </a>
                 </li>
-                <li ng-repeat="menu in loggedInMenus">
+                <li ng-repeat="menu in loggedInMenus" class="m-add-hover-color">
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='e-Timesheets'">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>

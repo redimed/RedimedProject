@@ -19,3 +19,4 @@ app.post(url + 'listNotFollow',CompanyController.postListNotFollow);
 app.post(url + 'AddlistNotFollow',CompanyController.postAddlistNotFollow);
 app.post(url + 'detail',CompanyController.postDetail);
 app.post(url + 'addCompanyNotFollow',CompanyController.postaddCompanyNotFollow);
+app.post(url + 'insertPatientCompanies',CompanyController.insertPatientCompanies);

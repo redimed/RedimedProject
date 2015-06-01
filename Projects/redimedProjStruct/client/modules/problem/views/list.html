@@ -1,20 +1,20 @@
-<div class="un-background">
-    <label class="un-title-label">Problem List</label>
-    <div class="un-div-l-r-15">
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <my-data-table options="problem.options" numrows="10"></my-data-table>
+<div>
+     <div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
+         <label class="un-label-popup-header un-bg-label-333333">Problem list</label>
+          <div class="un-padding-top-bottom-10 ">
+            <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+              <button ng-click="problemAddForm.open()" class="btn un-btn-red un-btn-position">Add problem</button>
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <my-data-table options="problem.options" numrows="10"></my-data-table>
+                </div>
+                
             </div>
-            
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <a href="javascript:;" ng-click="problemAddForm.open()" style="width: 120px" class="btn red pull-left un-submit">
-               <i class="fa fa-plus"></i> Add problem
-             </a>
             </div>
+          </div>
         </div>
+        
+        
         
         
         <!-- <div class="portlet box green ng-scope">
@@ -33,7 +33,6 @@
                 
             </div>
         </div> -->
-    </div>
 </div>
 
 

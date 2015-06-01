@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.TimeSheet.Report6.Controller", [])
     .controller("Report6Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
-        
+
         // POPUP Date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -17,31 +17,37 @@ angular.module("app.loggedIn.TimeSheet.Report6.Controller", [])
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
-            TimeSheetService.LoadEmpReport(listNew).then(function(response) {
-                if (response.status === "success") {
-                    //LOAD EMP
-                    var arrayEmp = [];
-                    angular.forEach(response.result, function(emp, index) {
-                        arrayEmp.push({
-                            id: emp.Employee_ID,
-                            label: emp.FirstName + " " + emp.LastName
+            if (listNew !== undefined &&
+                listNew !== null &&
+                listNew.length !== 0) {
+                listNew[0].isStaff = $scope.isStaff;
+                listNew[0].USER_ID = $cookieStore.get("userInfo").id;
+                TimeSheetService.LoadEmpReport(listNew).then(function(response) {
+                    if (response.status === "success") {
+                        //LOAD EMP
+                        var arrayEmp = [];
+                        angular.forEach(response.result, function(emp, index) {
+                            arrayEmp.push({
+                                id: emp.Employee_ID,
+                                label: emp.FirstName + " " + emp.LastName
+                            });
                         });
-                    });
-                    $scope.listEmp = angular.copy(arrayEmp);
-                    //END
-                } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Loading employee fail!", "Error");
-                } else {
-                    //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Server not response!", "Error");
-                }
-            });
+                        $scope.listEmp = angular.copy(arrayEmp);
+                        //END
+                    } else if (response.status === "error") {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Loading employee fail!", "Error");
+                    } else {
+                        //catch exception
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Server not response!", "Error");
+                    }
+                });
+            }
         };
         //FUNCTION GET WEEK NUMBER
         $scope.getWeekNumber = function(d) {
@@ -100,6 +106,7 @@ angular.module("app.loggedIn.TimeSheet.Report6.Controller", [])
                 toastr.error("Load Department fail!", "Error");
             } else if (response.status === "success") {
                 $scope.listDept = response.result;
+                $scope.isStaff = response.isStaff;
             } else {
                 //catch exception
                 $state.go("loggedIn.TimeSheetHome", null, {

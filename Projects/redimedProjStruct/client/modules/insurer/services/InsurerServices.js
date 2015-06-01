@@ -34,5 +34,9 @@ angular.module("app.loggedIn.insurer.services", [])
         return instanceApi.post({data: data});
     }
 
+    instanceService.insurerByPatient = function(patient_id){
+        return insurerApi.all('getByPatient').post({patient_id: patient_id});
+    }
+
     return instanceService;
 })

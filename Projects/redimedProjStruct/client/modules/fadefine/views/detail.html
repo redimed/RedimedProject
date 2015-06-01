@@ -192,24 +192,24 @@
 													<div class="col-md-5 col-xs-5 col-sm-5">
 														<div>
 															<label>
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentsText===1" ng-model="detail.IsCommentsText" ng-change="IsCommentTextWatch(detail, detail.IsCommentsText)"></span> Comment
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentText===1 || detail.IsCommentText==='1'" ng-model="detail.IsCommentText" ng-change="IsCommentTextWatch(detail, detail.IsCommentText)"></span> Comment
 															</label>
-															<label ng-show="detail.IsCommentsText==='1' && (detail.VAL1_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX===1)">
+															<label ng-show="(detail.IsCommentText===1 || detail.IsCommentText==='1') && (detail.VAL1_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX===1)">
 																required when
 															</label>
 														</div>
 														<div>
-															<label ng-show="detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_YES"></span> Value 1 checked
+															<label ng-show="(detail.VAL1_ISCHECKBOX===1 || detail.VAL1_ISCHECKBOX==='1') && (detail.IsCommentText===1 || detail.IsCommentText==='1')">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_YES === 1" ng-model="detail.VAL1_ISCOMMENT_WHEN_YES"></span> Value 1 checked
 															</label> &nbsp;
-															<label ng-show=" detail.VAL1_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL1_ISCOMMENT_WHEN_NO"></span> Value 1 unchecked
+															<label ng-show="(detail.VAL1_ISCHECKBOX===1 || detail.VAL1_ISCHECKBOX==='1') && (detail.IsCommentText===1 || detail.IsCommentText==='1')">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_ISCOMMENT_WHEN_NO === 1" ng-model="detail.VAL1_ISCOMMENT_WHEN_NO"></span> Value 1 unchecked
 															</label>
-															<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_YES === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_YES"></span> Value 2 checked
+															<label ng-show="(detail.VAL2_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX==='1') && (detail.IsCommentText===1 || detail.IsCommentText==='1')">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_YES === 1" ng-model="detail.VAL2_ISCOMMENT_WHEN_YES"></span> Value 2 checked
 															</label> &nbsp;
-															<label ng-show="detail.VAL2_ISCHECKBOX===1 && detail.IsCommentsText==='1'">
-																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_NO === '1'" ng-model="detail.VAL2_ISCOMMENT_WHEN_NO"></span> Value 2 unchecked
+															<label ng-show="(detail.VAL2_ISCHECKBOX===1 || detail.VAL2_ISCHECKBOX==='1') && (detail.IsCommentText===1 || detail.IsCommentText==='1')">
+																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_NO === 1" ng-model="detail.VAL2_ISCOMMENT_WHEN_NO"></span> Value 2 unchecked
 															</label>
 														</div>
 													</div>

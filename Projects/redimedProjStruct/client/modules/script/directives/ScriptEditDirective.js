@@ -14,7 +14,7 @@ angular.module('app.loggedIn.script.directive.edit', [])
 			var user_id = $cookieStore.get('userInfo').id;
 
 			patientLoad = function(){
-				PatientService.get($stateParams.patientId)
+				PatientService.get($stateParams.patient_id)
 				.then(function(response){
 					scope.patient.item = response.data;
 				}, function(error){})
@@ -45,20 +45,20 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				var postData = angular.copy(scope.script.form); 
 
 
-				postData.Patient_id = $stateParams.patientId;
-				postData.CAL_ID = $stateParams.calId;
+				postData.Patient_id = $stateParams.patient_id;
+				postData.CAL_ID = $stateParams.cal_id;
 				postData.Last_updated_by = user_id;
 				postData.ID = $stateParams.scriptId;
-				postData.Creation_date = ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
-				postData.Last_update_date =  ConfigService.convertToDB('YYYY-MM-DD hh:mm:ss');
+				postData.Creation_date = moment().format('YYYY-MM-DD');
+				postData.Last_update_date =  moment().format('YYYY-MM-DD');
 				postData.doctordate = ConfigService.convertToDB(postData.doctordate);
 				postData.patientDate = ConfigService.convertToDB(postData.patientDate);
 
 				ScriptModel.edit(postData)
 				.then(function(response){
-					console.log(postData);
+					//console.log(postData);
 					toastr.success('Edited Successfully');
-					$state.go('loggedIn.script');
+					$state.go('loggedIn.patient.script');
 				}, function(error){
 					scope.script.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.script.errors);
@@ -76,15 +76,15 @@ angular.module('app.loggedIn.script.directive.edit', [])
 					Patient_id: '',
 					CAL_ID: '',
 					prescriber: '',
-					scriptNum: '',
+					scriptNum: 0,
 					Medicare: '',
-					isRefNo: '',
+					isRefNo: 0,
 					EntitlementNo: '',
-					isSafety: '',
-					isConcessional: '',
-					isPBS: '',
-					isRPBS: '',
-					isBrand: '',
+					isSafety: 0,
+					isConcessional: 0,
+					isPBS: 0,
+					isRPBS: 0,
+					isBrand: 0,
 					pharmacist: '',
 					doctorSign: '',
 					doctordate: '',

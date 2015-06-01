@@ -4,33 +4,16 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="first_name">First name</label>
-                            <input class="form-control" name="first_name" ng-model="patient.First_name" placeholder="First name" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="first_name">First name</label>
+                        </div>
+                        <input class="un-input-customs" name="first_name" ng-model="patient.First_name" placeholder="First name" float-label readonly="readonly">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="last_name">Last name</label>
-                            <input class="form-control" name="last_name" ng-model="patient.Sur_name" placeholder="Last name" float-label readonly="readonly">
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="DOB">Date of birth</label>
-                            <input class="form-control" readonly="readonly" name="DOB" ng-model="patient.DOB" placeholder="Date of birth" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="Email">Email</label>
-                            <input class="form-control" name="Email" ng-model="patient.Email" placeholder="Email" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="last_name">Last name</label>
+                        </div>
+                        <input class="un-input-customs" name="last_name" ng-model="patient.Sur_name" placeholder="Last name" float-label readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -38,16 +21,33 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="Phone">Phone</label>
-                            <input class="form-control" name="Phone" ng-model="patient.Phone" placeholder="Phone" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="DOB">Date of birth</label>
+                        </div>
+                        <input class="un-input-customs" readonly="readonly" name="DOB" ng-model="patient.DOB" placeholder="Date of birth" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="claim_no">Claim No.</label>
-                            <input class="form-control" name="claim_no" ng-model="patient.claim_no" placeholder="Claim No." float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Email">Email</label>
+                        </div>
+                        <input class="un-input-customs" name="Email" ng-model="patient.Email" placeholder="Email" float-label readonly="readonly">
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Phone">Phone</label>
+                        </div>
+                        <input class="un-input-customs" name="Phone" ng-model="patient.Phone" placeholder="Phone" float-label readonly="readonly">
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="claim_no">Claim No.</label>
+                        </div>
+                        <input class="un-input-customs" name="claim_no" ng-model="patient.claim_no" placeholder="Claim No." float-label readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -55,10 +55,10 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <span class="field">
-                            <label class="control-label" for="Address">Address</label>
-                            <input class="form-control" name="Address" ng-model="patient.Address" placeholder="Address" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Address">Address</label>
+                        </div>
+                        <input class="un-input-customs" name="Address" ng-model="patient.Address" placeholder="Address" float-label readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -68,16 +68,16 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="Company_name">Employer's name</label>
-                            <input class="form-control" name="Company_name" ng-model="company.Company_name" placeholder="Employer's name" float-label readonly="readonly">
-                        </span>
+                       <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Company_name">Employer's name</label>
+                        </div>
+                        <input class="un-input-customs" name="Company_name" ng-model="company.Company_name" placeholder="Employer's name" float-label readonly="readonly">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="Company_phone">Employer's phone</label>
-                            <input class="form-control" name="Company_phone" ng-model="company.Phone" placeholder="Employer's phone" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Company_phone">Employer's phone</label>
+                        </div>
+                        <input class="un-input-customs" name="Company_phone" ng-model="company.Phone" placeholder="Employer's phone" float-label readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -85,10 +85,10 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <span class="field">
-                            <label class="control-label" for="Addr">Employer's address</label>
-                            <input class="form-control" name="Addr" ng-model="company.Addr" placeholder="Employer's address" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Addr">Employer's address</label>
+                        </div>
+                        <input class="un-input-customs" name="Addr" ng-model="company.Addr" placeholder="Employer's address" float-label readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -98,16 +98,16 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="ass_examDate">Date of this assessment</label>
-                            <input type="text" class="form-control" name="ass_examDate" ng-model="waprogress.examDate" placeholder="Date of this assessment" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="ass_examDate">Date of this assessment</label>
+                        </div>
+                        <input type="text" class="un-input-customs" name="ass_examDate" ng-model="waprogress.examDate" placeholder="Date of this assessment" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="ass_injuryDate">Date of injury</label>
-                            <input type="text" class="form-control" name="ass_injuryDate" ng-model="waprogress.injuryDate" placeholder="Date of injury" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                       <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="ass_injuryDate">Date of injury</label>
+                        </div>
+                        <input type="text" class="un-input-customs" name="ass_injuryDate" ng-model="waprogress.injuryDate" placeholder="Date of injury" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                     </div>
                 </div>
             </div>
@@ -115,9 +115,10 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <span class="field">
-                            <label class="control-label" for="diagnosis">Diagnosis</label>
-                            <input class="form-control" name="diagnosis" ng-model="waprogress.diagnosis" placeholder="Diagnosis" float-label>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="diagnosis">Diagnosis</label>
+                        </div>
+                        <input class="un-input-customs" name="diagnosis" ng-model="waprogress.diagnosis" placeholder="Diagnosis" float-label>
                         </span>
                     </div>
                 </div>
@@ -276,10 +277,10 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <span class="field">
-                            <label class="control-label" for="progressCmt">Comment</label>
-                            <input class="form-control" name="progressCmt" ng-model="waprogress.progressCmt" placeholder="Comment" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="progressCmt">Comment</label>
+                        </div>
+                        <input class="un-input-customs" name="progressCmt" ng-model="waprogress.progressCmt" placeholder="Comment" float-label>
                     </div>
                 </div>
             </div>
@@ -288,10 +289,10 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <span class="field">
-                            <label class="control-label" for="usualDuties">Worker's usual duties</label>
-                            <input class="form-control" name="usualDuties" ng-model="waprogress.usualDuties" placeholder="Worker's usual duties" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="usualDuties">Worker's usual duties</label>
+                        </div>
+                        <input class="un-input-customs" name="usualDuties" ng-model="waprogress.usualDuties" placeholder="Worker's usual duties" float-label>
                     </div>
                 </div>
             </div>
@@ -307,7 +308,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isFullCapacity" id="isFullCapacity" ng-model="waprogress.isFullCapacity">
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isFullCapacity" id="isFullCapacity" ng-model="waprogress.isFullCapacity">
                         <label for="isFullCapacity"><b>full capacity for work</b>
                         </label>
                     </div>
@@ -318,13 +319,13 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-6 col-sm-6">
-                            <span class="field">
-                            <label class="control-label" for="fullCapaFrom">Full capacity from</label>
-                            <input class="form-control" name="fullCapaFrom" readonly="readonly" ng-model="waprogress.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                            <div class="un-label-headers-customs">
+                                <label class="un-bgWhite-customs" for="fullCapaFrom">Full capacity from</label>
+                            </div>
+                            <input class="un-input-tcustoms" name="fullCapaFrom" readonly="readonly" ng-model="waprogress.fullCapaFrom" placeholder="Full capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="waprogress.isRequireTreat">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isRequireTreat" id="isRequireTreat" ng-model="waprogress.isRequireTreat">
                             <label for="isRequireTreat">but requires further treatment</label>
                         </div>
                     </div>
@@ -334,7 +335,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isSomeCapacity" id="isSomeCapacity" ng-model="waprogress.isSomeCapacity">
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isSomeCapacity" id="isSomeCapacity" ng-model="waprogress.isSomeCapacity">
                         <label for="isSomeCapacity"><b>some capacity for work</b>
                         </label>
                     </div>
@@ -345,15 +346,16 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-5 col-sm-5">
-                            <span class="field">
-                            <label class="control-label" for="someCapaFrom">Some capacity from</label>
-                            <input class="form-control" name="someCapaFrom" readonly="readonly" ng-model="waprogress.someCapaFrom" placeholder="Some capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                            <div class="un-label-header-customs">
+                                <label class="un-bgWhite-customs" for="someCapaFrom">Some capacity from</label>
+                            </div>
+                            <input class="un-input-customs" name="someCapaFrom" readonly="readonly" ng-model="waprogress.someCapaFrom" placeholder="Some capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </div>
                         <div class="col-md-5 col-sm-5">
-                            <span class="field">
-                            <label class="control-label" for="someCapaTo">Some capacity to</label>
-                            <input class="form-control" name="someCapaTo" readonly="readonly" ng-model="waprogress.someCapaTo" placeholder="Some capacity to" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
+                            <div class="un-label-header-customs">
+                                <label class="un-bgWhite-customs" for="someCapaTo">Some capacity to</label>
+                            </div>
+                            <input class="un-input-customs" name="someCapaTo" readonly="readonly" ng-model="waprogress.someCapaTo" placeholder="Some capacity to" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </span>
                         </div>
                         <label class="col-md-2 col-sm-2 control-label">performing:</label>
@@ -366,15 +368,15 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isPreDuties" id="isPreDuties" ng-model="waprogress.isPreDuties">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isPreDuties" id="isPreDuties" ng-model="waprogress.isPreDuties">
                             <label for="isPreDuties">pre-injury duties</label>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isModiDuties" id="isModiDuties" ng-model="waprogress.isModiDuties">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isModiDuties" id="isModiDuties" ng-model="waprogress.isModiDuties">
                             <label for="isModiDuties">modified or alternative duties</label>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isWorkModifi" id="isWorkModifi" ng-model="waprogress.isWorkModifi">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isWorkModifi" id="isWorkModifi" ng-model="waprogress.isWorkModifi">
                             <label for="isWorkModifi">workplace modifications</label>
                         </div>
                     </div>
@@ -385,11 +387,11 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-4 col-sm-4">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isPreHours" id="isPreHours" ng-model="waprogress.isPreHours">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isPreHours" id="isPreHours" ng-model="waprogress.isPreHours">
                             <label for="isPreHours">pre-injury hours</label>
                         </div>
                         <div class="col-md-8 col-sm-8">
-                            <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isModiHrs" id="isModiHrs" ng-model="waprogress.isModiHours">
+                            <input type="checkbox" class="un-mdt-radio" ng-true-value="1" ng-false-value="0" name="isModiHrs" id="isModiHrs" ng-model="waprogress.isModiHours">
                             <label for="isModiHrs">modified hours of
                                 <input type="text" class="form-control input-mini inline" ng-model="waprogress.modiHrs">hrs/day
                                 <input type="text" class="form-control input-mini inline" ng-model="waprogress.modiDays">days/week
@@ -402,7 +404,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
-                        <input type="checkbox" class="mdt-checkbox" ng-true-value="1" ng-false-value="0" name="isNoCapacity" id="isNoCapacity" ng-model="waprogress.isNoCapacity">
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" name="isNoCapacity" id="isNoCapacity" ng-model="waprogress.isNoCapacity">
                         <label for="isNoCapacity"><b>no capacity for work</b>
                         </label>
                     </div>
@@ -413,16 +415,16 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 col-sm-12">
                         <div class="col-md-4 col-sm-4">
-                            <span class="field">
-                            <label class="control-label" for="noCapaFrom">No capacity from</label>
-                            <input class="form-control" name="noCapaFrom" readonly="readonly" ng-model="waprogress.noCapaFrom" placeholder="No capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                            <div class="un-label-header-customs">
+                                <label class="un-bgWhite-customs" for="noCapaFrom">No capacity from</label>
+                            </div>
+                            <input class="un-input-customs" name="noCapaFrom" readonly="readonly" ng-model="waprogress.noCapaFrom" placeholder="No capacity from" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <span class="field">
-                            <label class="control-label" for="noCapaTo">No capacity to</label>
-                            <input class="form-control" name="noCapaTo" readonly="readonly" ng-model="waprogress.noCapaTo" placeholder="No capacity to" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                            <div class="un-label-header-customs">
+                                <label class="un-bgWhite-customs" for="noCapaTo">No capacity to</label>
+                            </div>
+                            <input class="un-input-customs" name="noCapaTo" readonly="readonly" ng-model="waprogress.noCapaTo" placeholder="No capacity to" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                         </div>
                         <label class="col-md-4 col-sm-4 control-label"> <i>(outline clinical reason below)</i> 
                         </label>
@@ -614,10 +616,10 @@
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <span class="field">
-                        <label class="control-label" for="reviewCmt">Comments</label>
-                        <input type="text" name="reviewCmt" class="form-control" placeholder="Comments" ng-model="waprogress.reviewCmt" float-label>
-                    </span>
+                    <div class="un-label-header-customs">
+                        <label class="un-bgWhite-customs" for="reviewCmt">Comments</label>
+                    </div>
+                    <input type="text" name="reviewCmt" class="un-input-customs" placeholder="Comments" ng-model="waprogress.reviewCmt" float-label>
                 </div>
             </div>
         </accordion-group>
@@ -625,33 +627,16 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="doc_name">Name</label>
-                            <input class="form-control" name="doc_name" ng-model="doctor.NAME" placeholder="Name" float-label readonly="readonly">
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="doc_name">Name</label>
+                        </div>
+                        <input class="un-input-customs" name="doc_name" ng-model="doctor.NAME" placeholder="Name" float-label readonly="readonly">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="Provider_no">AHPRA no. MED</label>
-                            <input class="form-control" name="Provider_no" ng-model="doctor.Provider_no" placeholder="AHPRA no. MED" float-label readonly="readonly">
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="break-row"></div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="doc_Address">Address</label>
-                            <input readonly="readonly" class="form-control" name="doc_Address" ng-model="doctor.Address" placeholder="Address" float-label>
-                        </span>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="doc_email">Email</label>
-                            <input readonly="readonly" class="form-control" name="doc_email" ng-model="doctor.Email" placeholder="Email" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="Provider_no">AHPRA no. MED</label>
+                        </div>
+                        <input class="un-input-customs" name="Provider_no" ng-model="doctor.Provider_no" placeholder="AHPRA no. MED" float-label readonly="readonly">
                     </div>
                 </div>
             </div>
@@ -659,29 +644,49 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="doc_Phone">Phone</label>
-                            <input readonly="readonly" class="form-control" name="doc_Phone" ng-model="doctor.Phone" placeholder="Phone" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="doc_Address">Address</label>
+                        </div>
+                        <input readonly="readonly" class="un-input-customs" name="doc_Address" ng-model="doctor.Address" placeholder="Address" float-label>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <img src="{{doctor.Signature}}" style="width:100%" />
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="doc_email">Email</label>
+                        </div>
+                        <input readonly="readonly" class="un-input-customs" name="doc_email" ng-model="doctor.Email" placeholder="Email" float-label>
+                    </div>
+                </div>
+            </div>
+            <div class="break-row"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="doc_Phone">Phone</label>
+                        </div>
+                        <input readonly="readonly" class="un-input-customs" name="doc_Phone" ng-model="doctor.Phone" placeholder="Phone" float-label>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="doc_Phone">Sign</label>
+                        </div>
+                        <img src="{{doctor.Signature}}" style="width:100%; height:200px; margin-bottom: 10px;" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="doc_Fax">Fax</label>
-                            <input readonly="readonly" class="form-control" name="doc_Fax" ng-model="doctor.Fax" placeholder="Fax" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="doc_Fax">Fax</label>
+                        </div>
+                        <input readonly="readonly" class="un-input-customs" name="doc_Fax" ng-model="doctor.Fax" placeholder="Fax" float-label>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <span class="field">
-                            <label class="control-label" for="examDate">Date</label>
-                            <input readonly="readonly" class="form-control" name="examDate" ng-model="waprogress.examDate" placeholder="Date" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
-                        </span>
+                        <div class="un-label-header-customs">
+                            <label class="un-bgWhite-customs" for="examDate">Date</label>
+                        </div>
+                        <input readonly="readonly" class="un-input-customs" name="examDate" ng-model="waprogress.examDate" placeholder="Date" readonly="readonly" ui-date="{dateFormat: 'dd/mm/yy'}" float-label>
                     </div>
                 </div>
             </div>
@@ -689,22 +694,15 @@
         <div class="break-row-alt"></div>
         <div class="row" ng-show="params.edit===false">
             <div class="col-md-offset-10 col-sm-offset-10 col-md-2 col-sm-2">
-                <button type="button" class="btn-lg btn green" ng-show="params.edit===false" ng-click="clickAction()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Submit
-                </button>
+                <button type="button" class="un-button-custom" ng-show="params.edit===false" ng-click="clickAction()">Submit</button>
             </div>
         </div>
         <div class="row" ng-show="params.edit===true">
             <div class="col-md-offset-9 col-sm-offset-9 col-md-3 col-sm-3">
 
-                <button type="button" class="btn-lg btn green" ng-show="params.edit===true" ng-click="clickAction()">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Update
-                </button>
+                <button type="button" class="un-button-custom" ng-show="params.edit===true" ng-click="clickAction()">Save</button>
 
-
-                <a type="button" class="btn-lg btn green" ng-show="params.edit===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/progressWA/{{waprogress.progress_id}}">
-                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print
-                </a>
+                <a type="button" class="un-button-custom" ng-show="params.edit===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/progressWA/{{waprogress.progress_id}}">Print</a>
 
             </div>
         </div>

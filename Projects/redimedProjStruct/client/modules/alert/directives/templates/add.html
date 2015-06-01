@@ -1,9 +1,10 @@
+<label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Alert</label>
 <div class="row">
 	<!-- NAME -->
 	<div class="col-md-6">
 		<div class="form-group">
-			<label>Alert Name</label>
-			<input ng-model="alert.form.name" class="form-control input-sm" id="name">
+			<label class="un-label-form-3 un-label-whidth-130" >Alert Name</label>
+			<input ng-model="alert.form.name" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="name">
 		</div>
 	</div>
 	<!-- END NAME -->
@@ -11,8 +12,8 @@
 	<!-- DESCRIPTION -->
 	<div class="col-md-6">
 		<div class="form-group">
-			<label>Description</label>
-			<textarea ng-model="alert.form.description" class="form-control input-sm" id="description"></textarea>
+			<label class="un-label-form-3 un-label-whidth-130 un-input-alert-m">Description</label>
+			<input ng-model="alert.form.description" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="description"></input>
 		</div>
 	</div>
 	<!-- END DESCRIPTION -->
@@ -20,6 +21,6 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<button class="btn btn-primary" ng-click="alert.save()">Save</button>
+		<button class="btn pull-right un-save-m ng-scope" ng-click="alert.save()">Save</button>
 	</div>
 </div>
