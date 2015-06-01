@@ -194,25 +194,273 @@
                         <span class="title">Home</span>
                     </a>
                 </li>
+                <!-- NOT TIMESHEET -->
                 <li ng-repeat="menu in loggedInMenus" class="m-add-hover-color">
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='e-Timesheets'">
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name!=='E-TimeSheet System for Employee'">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
-                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='e-Timesheets'">
+                    <!-- NOT TIME SHEET -->
+                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='E-TimeSheet System for Employee'">
                         <li ng-repeat="submenu in menu.parent.childs">
                             <a ui-sref="{{submenu.definition}}">
                                 <i class="fa fa-angle-right"></i> {{submenu.name}}
                             </a>
                         </li>
                     </ul>
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='e-Timesheets'">
-                        <i>
-                            <img src="/img/TimeSheet/icon_03.PNG">
-                        </i>
+                    <!-- END NOT TIMESHEET -->
+                    <!-- FOR EMPLOYEE -->
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===144">
+                        <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===144">
+                        <!-- LEAVE FORM -->
+                        <li>
+                            <a ui-sref="#">
+                                <i class="fa fa-angle-right"></i> Leave Management System
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a ui-sref="loggedIn.LeaveHistory">
+                                        <i class="fa fa-angle-right"></i>My Leave History
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.CreateLeave">
+                                        <i class="fa fa-angle-right"></i>Apply a Leave Form
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END LEAVE FORM -->
+                        <!--E-TIMESHEET -->
+                        <li>
+                            <a ui-sref="loggedIn.timesheet.view">
+                                <i class="fa fa-angle-right"></i>View Timesheet History
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="loggedIn.timesheet.create">
+                                <i class="fa fa-angle-right"></i>Create New Timesheet
+                            </a>
+                        </li>
+                        <!-- END E-TIMESHEET -->
+                        <!-- REPORT -->
+                        <li>
+                            <a ui-sref="#">
+                                <i class="fa fa-angle-right"></i> Utilization Time Reporting System
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a ui-sref="loggedIn.Report2TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report3TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report6TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Item Numbers
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END REPORT -->
+                    </ul>
+                    <!-- END FOR EMPLOYEE -->
+                    <!-- FOR MANAGE -->
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===146">
+                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <span class="title">{{menu.parent.name}}</span>
+                    </a>
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===146">
+                        <!-- LEAVE FORM -->
+                        <li>
+                            <a ui-sref="#">
+                                <i class="fa fa-angle-right"></i> Leave Management System
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a ui-sref="loggedIn.LeaveHistory">
+                                        <i class="fa fa-angle-right"></i>My Leave History
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.CreateLeave">
+                                        <i class="fa fa-angle-right"></i>Apply a Leave Form
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.ApproveLeave">
+                                        <i class="fa fa-angle-right"></i>Approve and Manage Leave
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END LEAVE FORM -->
+                        <!--E-TIMESHEET -->
+                        <li>
+                            <a ui-sref="loggedIn.timesheet.view">
+                                <i class="fa fa-angle-right"></i>View Timesheet History
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="loggedIn.timesheet.create">
+                                <i class="fa fa-angle-right"></i>Create New Timesheet
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="loggedIn.ApproveTask">
+                                <i class="fa fa-angle-right"></i>Approve and Manage Timesheets
+                            </a>
+                        </li>
+                        <!-- END E-TIMESHEET -->
+                        <!-- REPORT -->
+                        <li>
+                            <a ui-sref="#">
+                                <i class="fa fa-angle-right"></i> Utilization Time Reporting System
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a ui-sref="loggedIn.Report1TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Time In Lieu
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report2TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report3TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report4TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Actual Working Hours
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report5TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Actual Working Ratio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report6TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Item Numbers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.ReportOweLeave">
+                                        <i class="fa fa-angle-right"></i>List of Employee on Unsubmitted Leave Form
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END REPORT -->
+                    </ul>
+                    <!-- END FOR MANAGE -->
+                    <!-- FOR DIRECTOR -->
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===148">
+                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <span class="title">{{menu.parent.name}}</span>
+                    </a>
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===148">
+                        <!-- LEAVE FORM -->
+                        <li>
+                            <a ui-sref="#">
+                                <i class="fa fa-angle-right"></i> Leave Management System
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a ui-sref="loggedIn.ApproveLeave">
+                                        <i class="fa fa-angle-right"></i>Approve and Manage Leave
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END LEAVE FORM -->
+                        <!--E-TIMESHEET -->
+                        <li>
+                            <a ui-sref="loggedIn.ApproveTask">
+                                <i class="fa fa-angle-right"></i>Approve and Manage Timesheets
+                            </a>
+                        </li>
+                        <!-- END E-TIMESHEET -->
+                        <!-- REPORT -->
+                        <li>
+                            <a ui-sref="#">
+                                <i class="fa fa-angle-right"></i> Utilization Time Reporting System
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a ui-sref="loggedIn.Report1TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Time In Lieu
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report2TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report3TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report4TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Actual Working Hours
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report5TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Actual Working Ratio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.Report6TimeSheet">
+                                        <i class="fa fa-angle-right"></i>Report on Item Numbers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ui-sref="loggedIn.ReportOweLeave">
+                                        <i class="fa fa-angle-right"></i>List of Employee on Unsubmitted Leave Form
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END REPORT -->
+                    </ul>
+                    <!-- END FOR DIRECTOR -->
+                    <!-- FOR ADMIN -->
+                    <!-- FOR DIRECTOR -->
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===147">
+                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <span class="title">{{menu.parent.name}}</span>
+                    </a>
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===147">
+                        <li>
+                            <a ui-sref="loggedIn.TimeSheetTree">
+                                <i class="fa fa-angle-right"></i>Manager Users
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="loggedIn.TimeSheetDept">
+                                <i class="fa fa-angle-right"></i>Manage Departments
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END FOR DIRECTOR -->
+                    <!-- END FOR ADMIN -->
+                    <!-- END IS TIMESHEET -->
                 </li>
+                <!-- END NOT TIMESHEET -->
             </ul>
             <!-- END SIDEBAR MENU -->
             <div ng-show="have_redilegal_components.value==1" style="border-top: 1px solid #43525c;color: #dce2e6;">
