@@ -63,6 +63,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
             if ($scope.listEmployeeChoose.length !== 0) {
                 var info = {};
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
+                info.listDept = angular.copy($scope.listDepartmentChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
                 TimeSheetService.LoadReportTimeInLieu(info).then(function(response) {
                     if (response.status === "success") {
