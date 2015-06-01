@@ -9,8 +9,9 @@ app.post('/api/phUser/checkUserName',ph_userController.checkUserName);
 app.post('/api/phUser/forgotpass',ph_userController.forgotpass);
 app.post('/api/phUser/updateUser',ph_userController.updateUser);
 app.post('/api/phUser/changePass',ph_userController.changePass);
+// app.post('/api/phUser/getPostCadidates',ph_userController.getPostCadidates);
 app.post('/api/phUser/uploadAvatar',multipartMiddleware, ph_userController.uploadAvatarPic);
-app.post('/api/phUser/getAvatar', ph_userController.getAvatar);
+app.get('/api/phUser/getAvatar/:user_id', ph_userController.getAvatar);
 
 
 //company controller
@@ -27,6 +28,7 @@ app.post('/api/phCompany/insertPostCadidates',ph_companyController.insertPostCad
 app.post('/api/phCompany/getPostForShopId',ph_companyController.getPostForShopId);
 app.post('/api/phCompany/countMember',ph_companyController.countMember);
 app.post('/api/phCompany/deletePostShop',ph_companyController.deletePostShop);
+app.post('/api/phCompany/deleteUserInCompany',ph_companyController.deleteUserInCompany);
 
 //pharmacis controller
 app.post('/api/phPharmacist/getPharmacist',ph_companyController.getPharmacist);
@@ -37,6 +39,7 @@ app.post('/api/phPharmacist/deletePharmacistQualification',ph_companyController.
 app.post('/api/phPharmacist/updateQulification',ph_companyController.updateQulification);
 app.post('/api/phPharmacist/getPostByUserId',ph_userController.getPostByUserId);
 app.post('/api/phPharmacist/searchPost',ph_userController.searchPost);
+app.post('/api/phPharmacist/getDistance',ph_userController.getDistance);
 
 app.post('/api/phPharmacist/addNewExp',ph_companyController.addNewExp);
 app.get('/api/phPharmacist/getExp',ph_companyController.getExp);
