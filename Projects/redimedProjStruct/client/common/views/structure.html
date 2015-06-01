@@ -7,12 +7,12 @@
         <div class="page-top un-header-right">
             <div class="btn-group un-btn-header">
                 <button type="button" class="btn btn-circle dropdown-toggle" data-toggle="dropdown" ng-click="navigator.prev()">
-                <i class="fa fa-long-arrow-left"></i>&nbsp;<span>Prev&nbsp;</span>
+                    <i class="fa fa-long-arrow-left"></i>&nbsp;<span>Prev&nbsp;</span>
                 </button>
                 <button type="button" class="btn btn-circle dropdown-toggle" data-toggle="dropdown" ng-click="navigator.next()"><span>Next&nbsp;</span>&nbsp;<i class="fa fa-long-arrow-right"></i>
                 </button>
             </div>
-            <img src="./theme/un/un_redimed_logo.jpg" class="un-header-logo-img"  alt="Redimed Logo"   height="65px"  width="100px" />
+            <img src="./theme/un/un_redimed_logo.jpg" class="un-header-logo-img" alt="Redimed Logo" height="65px" width="100px" />
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right un-header-top-menu">
                     <li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
@@ -172,7 +172,7 @@
                     </li>
                 </ul>
             </div>
-            <img src="./theme/un/un_header_panel.jpg" class="un-img-header"  alt="Redimed Logo"   height="65px"  width="100%" />
+            <img src="./theme/un/un_header_panel.jpg" class="un-img-header" alt="Redimed Logo" height="65px" width="100%" />
         </div>
     </div>
 </div>
@@ -190,7 +190,7 @@
             <ul style="margin-bottom: 0px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                 <li class="start m-add-hover-color">
                     <a href="javascript:;" ng-click="userclick()">
-                        <i class="icon-home"  style="float:left;"></i>
+                        <i class="icon-home" style="float:left;"></i>
                         <span class="title">Home</span>
                     </a>
                 </li>
@@ -207,17 +207,20 @@
                         </li>
                     </ul>
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='e-Timesheets'">
-                        <i><img src="/img/TimeSheet/timesheet.jpg"></i>
+                        <i>
+                            <img src="/img/TimeSheet/icon_03.PNG" style=" background: transparent url('/img/TimeSheet/icon_03.PNG') center center no-repeat;border:0 none;">
+                        </i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
                 </li>
             </ul>
             <!-- END SIDEBAR MENU -->
             <div ng-show="have_redilegal_components.value==1" style="border-top: 1px solid #43525c;color: #dce2e6;">
-                <div style="margin-top: 20px;text-align: center;" >
+                <div style="margin-top: 20px;text-align: center;">
                     <img style="width: 149px;" src="modules/rediLegalOnlineBooking/images/Medico-Legal.png">
                     <div ng-repeat="item in contactDetails">
-                        <label>{{item.label}}</label><br/>
+                        <label>{{item.label}}</label>
+                        <br/>
                         <label>{{item.content}}</label>
                     </div>
                 </div>
