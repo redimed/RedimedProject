@@ -6,6 +6,7 @@ angular.module('starter.NFC',[
         $stateProvider
             .state('app.NFC',{
                 url:"/readNFC",
+                cache: false,
                 views:{
                     'menuContent':{
                         templateUrl:"modules/NFC/views/readNFC.html",

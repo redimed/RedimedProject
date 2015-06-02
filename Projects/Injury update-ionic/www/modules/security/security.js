@@ -6,6 +6,7 @@ angular.module('starter.security',[
         $stateProvider
             .state('security',{
                 abstract:true,
+                cache: false,
                 views:{
                     'root':{
                         templateUrl: 'modules/security/views/structure.html',
@@ -15,6 +16,7 @@ angular.module('starter.security',[
             })
             .state('security.login',{
                 url:'/login',
+                cache: false,
                 views:{
                     'main-content':{
                         templateUrl: 'modules/security/views/login.html',
@@ -24,6 +26,7 @@ angular.module('starter.security',[
             })
             .state('security.forgot',{
                 url:'/forgot',
+                cache: false,
                 views:{
                     'main-content':{
                         templateUrl: 'modules/security/views/forgot.html',
@@ -33,6 +36,7 @@ angular.module('starter.security',[
             })
             .state('security.register',{
                 url:'/register',
+                cache: false,
                 views:{
                     'main-content':{
                         templateUrl: 'modules/security/views/register.html',

@@ -169,7 +169,8 @@ form i.icon.error {
 }
 .item-menu a {
     background-color: rgba(0, 0, 0, 0) !important;
-    margin: 0 3px 0 3px;
+    margin: 0 10px 0 10px;
+    border-bottom: 1px solid #fff;
 }
 .item-menu a:active, .item-menu a:focus, .item-menu a:visited {
     background-color: rgba(189, 191, 191, 0.7) !important;
@@ -952,10 +953,6 @@ form i.icon.error {
     background-color: #34AADC !important;
     color: whitesmoke !important;
     width: 80%;
-}
-
-.item-menu-custom {
-    font-weight: 400;
 }
 
 .current {

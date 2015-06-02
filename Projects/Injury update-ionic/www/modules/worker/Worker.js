@@ -8,6 +8,7 @@ angular.module('starter.worker', [
     $stateProvider
         .state('app.worker',{
             url:"/worker",
+            cache: false,
             views: {
                 'menuContent':{
                     templateUrl: "modules/worker/views/structure.html",
@@ -17,6 +18,7 @@ angular.module('starter.worker', [
         })
         .state('app.worker.add',{
             url:"/firstInfo",
+            cache: false,
             views: {
                 'content':{
                     templateUrl: "modules/worker/views/first.html"
@@ -25,6 +27,7 @@ angular.module('starter.worker', [
         })
         .state('app.worker.main', {
             url:"/secondInfo",
+            cache: false,
             views: {
                 'content':{
                     templateUrl: "modules/worker/views/second.html"
@@ -33,6 +36,7 @@ angular.module('starter.worker', [
         })
         .state('app.worker.second', {
             url:"/last",
+            cache: false,
             views: {
                 'content':{
                     templateUrl: "modules/worker/views/last.html"
@@ -41,6 +45,7 @@ angular.module('starter.worker', [
         })
         .state('app.worker.writeNFC',{
             url:"/writeNFC",
+            cache: false,
             views:{
                 'content':{
                     templateUrl:"modules/worker/views/writeNFC.html"

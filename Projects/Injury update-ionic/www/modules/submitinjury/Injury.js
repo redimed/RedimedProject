@@ -7,6 +7,7 @@ angular.module('starter.injury', [
         $stateProvider
             .state('app.injury', {
                 url: "/injury",
+                cache: false,
                 views: {
                     'menuContent' :
                     {
@@ -17,6 +18,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.info', {
                 url: "/info",
+                cache: false,
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/info.html"
@@ -25,6 +27,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.desInjury', {
                 url: "/des_injury",
+                cache: false,
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/desinjury.html"
@@ -33,6 +36,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.desInjurySuccess', {
                 url: "/successInjury",
+                cache: false,
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/successinjury.html"
@@ -41,6 +45,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.modelBody', {
                 url: "/modelbody",
+                cache: false,
                 views: {
                     'main': {
                         templateUrl: "modules/submitinjury/views/modelBody.html"
@@ -49,6 +54,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.mapCompany',{
                 url:"/mapCompany",
+                cache: false,
                 views:{
                     'main':{
                         templateUrl:"modules/submitinjury/views/mapCompany.html"
@@ -57,6 +63,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.historyInjury',{
                 url:"/historyInjury",
+                cache: false,
                 views:{
                     'main':{
                         templateUrl:"modules/submitinjury/views/historyInjury.html"
@@ -65,6 +72,7 @@ angular.module('starter.injury', [
             })
             .state('app.injury.historyDetail',{
                 url:"/historyDetail",
+                cache: false,
                 views:{
                     'main':{
                         templateUrl:"modules/submitinjury/views/historyDetail.html"
