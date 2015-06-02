@@ -1,0 +1,17 @@
+- Misc Inv:
+	+ view account: them CLose button =>phim tat
+	+ credit memo: load invoice test6 lnen: ko load tax
+- Payment
+	+ luc clear remain:Base R.Amount: ko co clear
+	+ "Chose auto invoice" + "Complete" button co cung phim tat la Alt + "C" => thay doi lai 1 button
+	+ "Chose auto invoice" => "Choose auto invoice"	
+	+  view account: them CLose button =>phim tat
+- Misc payment: 
+	+ them cheque number giong ben Payment
+	+ them "Include tax"
+	+ Category: ko required
+	+ LOV cua category: dich wa tieng anh cac title
+	+ 
+- REP-110: File rptAP_Payment.rdf cannot be opened.
+REP-1070: An error occurred while opening or saving a document.
+REP-0110: File rptAP_Payment.rdf cannot be opened.		

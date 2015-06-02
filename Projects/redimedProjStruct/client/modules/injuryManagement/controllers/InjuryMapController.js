@@ -1,8 +1,8 @@
 /**
  * Created by Luan Nguyen on 1/11/2015.
  */
-angular.module("app.loggedIn.im.map.controller",[])
-    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket){
+angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
+    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket,$interval){
         $scope.injuryMarker = [];
         $scope.driverMarker = [];
         $scope.driverListTemp = [];
@@ -153,7 +153,7 @@ angular.module("app.loggedIn.im.map.controller",[])
         })
 
         $scope.showDetails = function(id){
-            $state.go('loggedIn.im.detail',{id:id});
+            $state.go('loggedIn.patient.im_Detail',{id:id});
         }
 
         $scope.allocateDriver = function(injury){
@@ -180,6 +180,7 @@ angular.module("app.loggedIn.im.map.controller",[])
             refreshList();
         }
 
+    
         setInterval(refreshMap,60 * 1000);
         setInterval(getOnlineDriver,60 * 1000);
 
@@ -228,9 +229,7 @@ angular.module("app.loggedIn.im.map.controller",[])
             $scope.search.patient = "";
             $scope.search.driver = "";
             $scope.search.dateRange = null;
-
-            $scope.injuryList = [];
-            $scope.injuryListTemp = [];
+            
             InjuryManagementService.getInjuryList().then(function(rs) {
                 if (rs.status == 'success') {
                     for(var j=0;j<rs.data.length;j++){
@@ -239,8 +238,8 @@ angular.module("app.loggedIn.im.map.controller",[])
                             rs.data[j].driverUser = '';
                     }
                     $scope.injuryListTemp = rs.data;
-
                     $scope.injuryList = $scope.injuryListTemp;
+
                 }
             })
         }

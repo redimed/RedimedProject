@@ -3,7 +3,11 @@ var randomstr = require('randomstring');
 var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
-var moment=require('moment');
+var moment = require('moment');
+var mkdirp = require('mkdirp');
+var fs = require('fs-extra');
+var mv = require('mv');
+var db = require("../../models");
 
 module.exports = {
 	//signup user 
@@ -20,8 +24,8 @@ module.exports = {
 			"VALUES (?,?,?,?,?,?,?) ";
 			//query insert table ph_company 
 		var sqlInsertCompany = 
-			"INSERT INTO ph_companies(`company_name`,`address`,`surburb`,`postcode`,`state`,`country`,`contact_name`,`contact_number`,`email`,`phone`,`mobile`,`isCompouding`,`isCPOP`,`Dispensing_software`,`isMutiShops`) "+
-			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			"INSERT INTO ph_companies(`company_name`,`address`,`surburb`,`postcode`,`state`,`country`,`contact_name`,`contact_number`,`email`,`phone`,`mobile`,`isCompouding`,`isCPOP`,`Dispensing_software`,`isMutiShops`, `lat`, `lng`) "+
+			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		// query select userid by user name
 		var sqlSelectUserId = "SELECT user_id FROM ph_users WHERE  username = ? ";
 		//query select company_id by companyname
@@ -32,8 +36,8 @@ module.exports = {
 			"VALUES(?,?,?,?)" ;
 		//query insert ph_pharmacist
 		var sqlInsertPharmacist = 
-			"INSERT INTO ph_phamacists(surname,firstname,DOB,email,phone,mobile,address,surburb,postcode,state,country,gender,preferred_name,user_id,APHRA,Proficient,isHMR,isCPOP,isCompounding) "+
-			"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			"INSERT INTO ph_phamacists(surname,firstname,DOB,email,phone,mobile,address,surburb,postcode,state,country,gender,preferred_name,user_id,APHRA,Proficient,isHMR,isCPOP,isCompounding, lat, lng) "+
+			"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		var sqlSelectCompanyName = "SELECT company_name FROM ph_companies WHERE company_name =  ? ";
 		req.getConnection(function(err,connection){
             var query = connection.query(sqlInsertUser,[data.username,password,data.user_type,data.firstname,data.surname,data.mobile,data.email],function(err,rows){
@@ -42,12 +46,12 @@ module.exports = {
                     res.json({status:'fail'});
                 }
                 else{
-                     console.log("Insert table ph_user SUccess");
+                     console.log("Insert table ph_user Success");
 					//insert ph_user success select userID 
 					req.getConnection(function(err,connection){
 						var query = connection.query(sqlSelectUserId,data.username,function(err,user_id){
 							if(err){
-								 console.log(err);
+								console.log(err);
                     			res.json({status:'fail'});
 							}else{
 								//select user id 
@@ -58,18 +62,19 @@ module.exports = {
 				                if(data.user_type=="Company"){
 
 				                	 req.getConnection(function(err,connection){
-										var query = connection.query(sqlSelectUserId,data.name_company,function(err,rows){
+										var query = connection.query(sqlSelctCompanyId,data.name_company,function(err,rows){
 											if(err){
 												console.log(err);
 												res.json({status:'fail'});
 											}else{
-												console.log(rows)
-												if(typeof rows[0] !== ''){
+												console.log(rows[0])
+
+												if(typeof rows[0] !== 'undefined'){
 													console.log("--------------Trung")
 													res.json({status:'have Company in database'});
 												}else{
 													req.getConnection(function(err,connection){
-								                     	var query = connection.query(sqlInsertCompany,[data.name_company,data.address_company,data.surburb_company,data.postcode_company,data.state_company,data.country_company,data.contact_name_company,data.contact_number_company,data.email_company,data.phone_company,data.mobile_company,data.compouding_company,data.CPOP_company,data.dispendingsoftware_company,data.multishop_company],function(err,resultInsertCompany){
+								                     	var query = connection.query(sqlInsertCompany,[data.name_company,data.address_company,data.surburb_company,data.postcode_company,data.state_company,data.country_company,data.contact_name_company,data.contact_number_company,data.email_company,data.phone_company,data.mobile_company,data.compouding_company,data.CPOP_company,data.dispendingsoftware_company,data.multishop_company, data.latitude, data.longitude],function(err,resultInsertCompany){
 								                     		if(err){
 								                     				console.log(err);
 								                    				res.json({status:'fail'});
@@ -85,7 +90,7 @@ module.exports = {
 								                     						console.log(companyid)
 								                     						//insert table company user 
 								                     						req.getConnection(function(err,connection){
-											                     				var query = connection.query(sqlInsertCompanyUser,[userID,companyid[0].company_id,1,1],function(err,rows){
+											                     				var query = connection.query(sqlInsertCompanyUser,[companyid[0].company_id,userID,1,1],function(err,rows){
 											                     					if(err){
 											                     						console.log(err);
 											                    						res.json({status:'fail'});
@@ -113,7 +118,7 @@ module.exports = {
 				                     // user type is Pharmarcis asd
 				                     //insert user pharmacist
 				                     req.getConnection(function(err,connection){
-							            var query = connection.query(sqlInsertPharmacist,[data.surname_pharmacist,data.firstname_pharmacist,DOB,data.emai_pharmacist,data.phone_pharmacist,data.mobile_pharmacist,data.address_pharmacist,data.surburb_pharmacist,data.postcode_pharmacist,data.state_pharmacist,data.country_pharmacist,data.gender_pharmacist,data.preferred_pharmacist,userID,data.APHRA_pharmacist,data.proficient_pharmacist,data.CPOP_pharmacist,data.HMR_pharmacist,data.Compouding],function(err,rows){
+							            var query = connection.query(sqlInsertPharmacist,[data.surname_pharmacist,data.firstname_pharmacist,DOB,data.emai_pharmacist,data.phone_pharmacist,data.mobile_pharmacist,data.address_pharmacist,data.surburb_pharmacist,data.postcode_pharmacist,data.state_pharmacist,data.country_pharmacist,data.gender_pharmacist,data.preferred_pharmacist,userID,data.APHRA_pharmacist,data.proficient_pharmacist,data.CPOP_pharmacist,data.HMR_pharmacist,data.Compouding, data.latitude, data.longitude],function(err,rows){
 							                if(err){
 							                    console.log(err);
 							                    res.json({status:'fail'});
@@ -177,16 +182,11 @@ module.exports = {
 					}else{
 						 res.json({status:'fail'});
 					}
-
-
-					
-					
-					
-
 				}
 			})
 		})
 	},
+
 	//check user 
 	checkUserName:function(req,res){
 		var data= req.body.username;
@@ -278,24 +278,58 @@ module.exports = {
 			})
 		})
 	},
+
 	updateUser:function(req,res){
-		var userInfo = req.body;
-		console.log(userInfo);
+		var userInfo = req.body.userInfo;
+		var flag = req.body.flag;
+	    var targetFolder = '.\\uploadFile\\' + 'Pharmacist\\' + 'userID_' + userInfo.user_id + '\\' + userInfo.user_img;
+		if (flag) {
+			targetFolder = '.\\uploadFile\\'+'Pharmacist\\'+'userID_'+ userInfo.user_id + '\\' + userInfo.user_id + "_" + new Date().getTime() +".jpg";
+			flag = false;
+		console.log("-------targetFolder", targetFolder);
+
+		}
 		//query update Ph_user
-		var sqlUpdateUser = "UPDATE ph_users SET firstname= ? ,surname= ? , mobile = ? , email = ? WHERE user_id = ? ";
+		var sqlUpdateUser = "UPDATE ph_users SET firstname= ? ,surname= ? , mobile = ? , email = ?, user_img = ? WHERE user_id = ? ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlUpdateUser,[userInfo.firstname,userInfo.surname,userInfo.mobile,userInfo.email,userInfo.user_id],function(err){
+			var query = connection.query(sqlUpdateUser,[userInfo.firstname,userInfo.surname,userInfo.mobile, userInfo.email, targetFolder, userInfo.user_id],function(err){
 				if(err){
-					console.log(err);
+					console.log("-------------",err);
 					res.json({status:'fail'});
 				}
 				else{
-					console.log("success update")
-					res.json({status:'success'});
+					res.json({status:'success', data:targetFolder});
 				}
 			})
 		})
 	},
+
+	uploadAvatarPic: function(req,res){
+        var data = req.body;
+        if(data.user_id !== 'undefined'){
+	        var prefix = __dirname.substring(0,__dirname.indexOf('controllers'));
+	        var targetFolder = prefix+'uploadFile\\'+'Pharmacist\\'+'userID_'+ data.user_id;
+	        //var targetFolderForSave = '.\\uploadFile\\'+'Pharmacist\\'+'userID_'+data.user_id;
+
+		    mkdirp(targetFolder, function(err) {
+		        if(req.files){	
+		        	console
+		            var tmp_path = req.files.file.path;
+		            var target_path = targetFolder+ "\\" + req.files.file.name;
+		            //var target_path_for_save = targetFolderForSave+ "\\" + req.files.file.name;
+		            	console.log("--------Name", req.files.file.name);
+		            	console.log("--------old path", tmp_path);
+		            	console.log("--------new path", target_path);
+
+			        mv(tmp_path, target_path, function(err) {
+					  	fs.unlink(tmp_path, function() {
+						});
+					});
+			    }
+		    });
+		}
+	},
+
 	changePass:function(req,res){
 		 var infoPass = req.body.infoPass;
 		 var user_id = req.body.user_id;
@@ -330,8 +364,6 @@ module.exports = {
 	                        			}
 	                        		})
 	                        	})
-
-
 	                        }else{
 	                        	res.json({status:'fail'});
 	                        	console.log("sai");
@@ -345,9 +377,97 @@ module.exports = {
 				}
 			})
 		})
+	},
+
+	getAvatar: function(req, res){
+		var patientId = req.params.user_id;
+		var sql = "SELECT pu.`user_img` FROM `ph_users` pu WHERE pu.`user_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [patientId])
+			.success(function(data){
+            if(data){
+                if(data[0].user_img == null){
+            		console.log("------avatar", data[0].user_img);
+                }
+                else{
+                    fs.exists(data[0].user_img,function(exists){
+            		console.log("------avatar", exists);
+                      if (exists) {
+                        res.sendfile(data[0].user_img);
+                      } else {
+                        res.sendfile("./uploadFile/Pharmacist/default-avatar.png");
+                      }
+                    })
+                }
+            }})
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+	},
+
+	getPostByUserId: function(req, res){
+		var sql = "SELECT * FROM `ph_post_cadidates` pc " +
+				"INNER JOIN `ph_phamacists` p ON pc.`phamacist_id` = p.`phamacist_id` " +
+				"INNER JOIN `ph_posts` po ON pc.`post_id` = po.`post_id` " + 
+				"INNER JOIN `ph_company_shops` cs ON pc.`shop_id` = cs.`shop_id` " +
+				"WHERE p.`user_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [req.body.user_id])
+			.success(function(rows){
+				console.log("---------------success", rows);
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	searchPost: function(req, res){
+		var data = req.body;
+		console.log("----------data", data);
+
+		// console.log("----------Keyword", data.key);
+		// console.log("----------Company", data.company);
+		// console.log("----------Start_Date", data.start_date);
+
+		var sql = {};
+				if(data.selected === 'com') {
+					sql = 	"SELECT * FROM `ph_posts` p " +
+				  	"INNER JOIN `ph_companies` c ON p.`company_id` = c.`company_id` " + 
+				  	"WHERE c.`company_name` LIKE ? " ;
+	            }
+	            if (data.selected === 'key') {
+	            	sql = 	"SELECT * FROM `ph_posts` p " +
+				  	"INNER JOIN `ph_companies` c ON p.`company_id` = c.`company_id` " + 
+				  	"WHERE p.`job_description` LIKE ?  ";
+	            };
+	            console.log("----------------sql", sql);
+		db.sequelize.query(sql, null, {raw:true}, ["%" + data.data_post + "%"])
+			.success(function(rows){
+				console.log("---------------success", rows);
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	getDistance: function(req, res){
+		var user = req.body.user;
+
+		if (user.user_type == "Company") {
+			var sql = 	"SELECT c.`lat`, c.`lng` FROM `ph_company_users` cu " +
+						"INNER JOIN `ph_users` u ON cu.`user_id` = u.`user_id` " + 
+						"INNER JOIN `ph_companies`c ON cu.`company_id` = c.`company_id` " +
+						"WHERE u.`user_id` = ?";
+		}else{
+			var sql = "SELECT p.`lat`, p.`lng` FROM `ph_phamacists` p WHERE p.`user_id` = ?";
+		}
+		db.sequelize.query(sql, null, {raw:true}, [user.user_id])
+			.success(function(rows){
+				console.log("---------------distance", rows[0]);
+				res.json({status:'success', address:rows[0]});
+			})
+			.error(function(err){
+				console.log("errorDistance", err);
+			})
 	}
-
-	
-
-
 }

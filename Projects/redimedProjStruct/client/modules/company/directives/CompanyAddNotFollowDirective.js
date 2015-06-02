@@ -7,10 +7,12 @@ angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 		scope: {
 			options: '=',
 			onRowClick: '&',
-			success:'='
+			success:'=',
+			actionCenter:'='
 		},
 		link: function(scope, elem, attrs)
 		{
+			var actionCenter = scope.actionCenter;
 			var form ={
 		        Company_name:null,
 		        Industry:null,
@@ -137,7 +139,8 @@ angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 		  		CompanyModel.addCompanyNotFollow(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
-		  				scope.success = true;
+		  				//phan quoc chien set company name and company id
+		    			actionCenter.saveModal(postData.Company_name,response.data[0].id);
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);
@@ -155,6 +158,10 @@ angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 		    	addCompany :function(){addCompany();},
 		    	addInsurer :function(){addInsurer();},
 		    	remove : function(row){remove(row);}
+		    }
+		    scope.cancel=function()
+		    {
+		    	actionCenter.closeModal();
 		    }
 		}//end link
 		

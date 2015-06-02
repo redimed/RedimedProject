@@ -8,7 +8,8 @@ var fs = require('fs'),
         host: 'localhost',
         port: 3306,
         maxConcurrentQueries: 100,
-        pool: { maxConnections: 10, maxIdleTime: 1000}
+        pool: { maxConnections: 10, maxIdleTime: 1000},
+        timezone: '+00:00'
     }),
     useTransaction(sequelize);
     db = {};

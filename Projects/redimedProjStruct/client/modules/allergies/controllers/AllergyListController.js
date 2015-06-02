@@ -18,6 +18,7 @@ angular.module('app.loggedIn.allergy.list.controller',[
 			columns:[
                 {field: 'allergy_id', is_hide: true},
                 {field: 'allergy_name', label: 'Allergy Name'},
+                {field: 'isEnable', is_hide: true},
             ],
             use_filters: true,
             filters:{
@@ -34,6 +35,25 @@ angular.module('app.loggedIn.allergy.list.controller',[
                     }
                 },
             ],
+            actionsIsEnable: {
+                show:true,
+                setEnable:function(item){
+                    if (item.isEnable == 0 ) {
+                        item.isEnable=1;
+                    }else{
+                        item.isEnable=0;
+                    };
+                    console.log(item);
+                    AllergyService.update(item).then(function(data){
+                        if (data.status = "success") {
+                            if ($scope.setListAllergy) {
+                                $scope.setListAllergy();
+                            };
+                            $scope.allergy_panel.reload();
+                        };
+                    })
+                }
+            },
 		}
 	}
 
@@ -59,6 +79,9 @@ angular.module('app.loggedIn.allergy.list.controller',[
         },
         success: function (response) {
             if (response.status == 'success')
+                if ($scope.setListAllergy) {
+                    $scope.setListAllergy();
+                };
                 $scope.allergy_panel.reload();
                 $scope.allergyAddForm.close();
         }
@@ -74,6 +97,9 @@ angular.module('app.loggedIn.allergy.list.controller',[
         },
         success: function (response) {
             if (response.status == 'success')
+                if ($scope.setListAllergy) {
+                    $scope.setListAllergy();
+                };
                 $scope.allergy_panel.reload();
                 $scope.allergyEditForm.close();
         }
@@ -110,6 +136,9 @@ angular.module('app.loggedIn.allergy.list.controller',[
         AllergyService.insertPatientAllergy(postData).then(function(response2){
             if(response2.status === 'success'){
                 toastr.success('Allergy applied to patient', 'Successfully');
+                if ($scope.setListAllergy) {
+                    $scope.setListAllergy();
+                };
                 $scope.patientAllergyForm.close();
                 $scope.allergy_panel.reload();
             }

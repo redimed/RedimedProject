@@ -1,26 +1,10 @@
 <div class="row">
-	<div class="col-md-10">
-		<!-- PAGINATION -->
-		<pagination boundary-links="true" total-items="list.count" ng-model="params.pagination.current_page" 
-	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-	        items-per-page="params.pagination.limit" max-size="params.pagination.max_size" ng-change="setPage()">
-	    </pagination>
-	    <!-- END PAGINATION -->
-	</div>
-	<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
-        <button class="btn btn-sm btn-block red" ng-click="closePopup()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-</div>
-
-<div class="row">
 	<div class="col-md-12">
-		<table class="mdt-table">
+		<table class="un_table_first">
 			<thead>
 				<tr>
-					<th>First Name</th>
-					<th>Sur Name</th>
+					<th><span class="un_span_thead">First Name</span></th>
+					<th><span class="un_span_thead">Sur Name</span></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,4 +19,20 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+<div class="row row_pagi">
+	<div class="col-md-12">
+		<!-- PAGINATION -->
+		<pagination boundary-links="true" total-items="list.count" ng-model="params.pagination.current_page" 
+	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+	        items-per-page="params.pagination.limit" max-size="params.pagination.max_size" ng-change="setPage()">
+	    </pagination>
+	    <!-- END PAGINATION -->
+	</div>
+	<!--
+	<div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center" ng-if="isClose">
+        <button class="btn btn-sm btn-block red" ng-click="closePopup()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>-->
 </div>

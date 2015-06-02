@@ -143,7 +143,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				$modal.open({
 					templateUrl: 'dialogClaimEdit',
 					controller: 'ClaimPatientEditDialog',
-					size: 'lg',
+					size: 'md',
 					resolve: {
 						list: function(){
 							return list;
@@ -195,7 +195,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				$modal.open({
 					templateUrl: 'dialogClaimShow',
 					controller: 'ClaimPatientShowDialog',
-					size: 'lg',
+					size: 'md',
 					resolve: {
 						list: function(){
 							return list;

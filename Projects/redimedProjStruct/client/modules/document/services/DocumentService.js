@@ -37,9 +37,9 @@ angular.module('app.loggedIn.document.services', [])
             Begin
          */
 
-        documentService.insertFA = function(infoH,infoL,infoD,infoC){
+        documentService.insertFA = function(infoH,infoL,infoD,infoC, fa_id){
             var insertFA = api.all("document/insertFA");
-            return insertFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC});
+            return insertFA.post({infoL:infoL,infoH:infoH,infoD:infoD,infoC:infoC,fa_id:fa_id});
         }
 
         documentService.updateFA = function(infoH,infoL,infoD,infoC){
@@ -346,6 +346,32 @@ angular.module('app.loggedIn.document.services', [])
          * end gorgon medical history
          */
 
+         // begin new Functional Assessment
+         documentService.loadNewHeaderSections = function(fa_id){
+            var info = api.all("document/newHeaderSections");
+            return info.post({fa_id: fa_id});
+         }
+         documentService.loadNewLines = function(section_id, fa_id){
+            var info = api.all("document/newLines");
+            return info.post({section_id: section_id, fa_id:fa_id});
+         }
+         documentService.loadNewCommentsAndDetails = function(line_id){
+            var info = api.all("document/newDetailsComments");
+            return info.post({line_id: line_id});
+         }
+         documentService.autoRating = function(ratingData){
+            var info = api.all("document/autoRating");
+            return info.post({
+                patient_age: ratingData.patient_age,
+                patient_gender: ratingData.patient_gender,
+                valueToRate: ratingData.valueToRate,
+                rating_id: ratingData.rating_id
+            });
+         }
+
+         
+         // end new Functional Assessment
+
         var strPrefixAPI = 'api/erm/v2/paperless/';
          /*
          *  KHANK API
@@ -644,6 +670,7 @@ angular.module('app.loggedIn.document.services', [])
                 columns: [
                     {field: 'CAL_ID' , is_hide: true },
                     {field: 'FA_ID' , is_hide: true },
+                    {field: 'FA_NAME', label:'Name'},
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
                     }},
@@ -653,7 +680,7 @@ angular.module('app.loggedIn.document.services', [])
                 use_actions: true,
                 actions: [
                     { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
-                        $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID})
+                        $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID, fa_id: item.FA_ID})
                     } }
                 ]
             };

@@ -70,7 +70,12 @@ angular.module("app", [
             'reconnection delay': 2000,
             'max reconnection attempts': 10000,
             'force new connection': false,
-            'secure': true
+            'secure': true,
+			'transports': ['websocket'
+						  , 'flashsocket'
+						  , 'htmlfile'
+						  , 'xhr-polling'
+						  , 'jsonp-polling']
         });
 
         var socketFactory = socketFactory({
@@ -225,7 +230,7 @@ angular.module("app", [
         if ($cookieStore.get("userInfo") != null || typeof $cookieStore.get("userInfo") !== 'undefined') {
             socket.emit("checkApp", $cookieStore.get("userInfo").id)
         }
-    }, 5000);
+    }, 5 * 1000);
 
 
     // socket.on("isLoggedIn",function(){

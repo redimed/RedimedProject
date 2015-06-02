@@ -154,18 +154,6 @@ angular.module("app.model", [])
 })
 // END APPOINTMENT CALENDAR
 
-//WAITING LIST
-.value("WaitingListModel", {
-	id: null,
-	reason: '',
-	priority: 'low',
-	doctor_id: null,
-	Patient_id: null,
-	Created_by: null,
-	Last_updated_by: null
-})
-//END WAITING LIST
-
 /*AUTO CREATE*/
 .value('InvoiceHeaderModel', {
 	cal_id: null,
@@ -785,7 +773,7 @@ angular.module("app.model", [])
 	SECTION_ID: null,
 	FA_ID: null,
 	QUESTION: '',
-	PICTURE: '',
+	PICTURE: null,
 	ISSCORE1: null,
 	SCORE_TYPE1: null,
 	SCORE1: null,
@@ -833,7 +821,7 @@ angular.module("app.model", [])
 	VAL2_ISCHECKBOX: null,
 	VAL2_CHECKBOX: '',
 	COMMENTS: '',
-	PICTURE: '',
+	PICTURE: null,
 	ORD: null,
 	ISENABLE: null,
 	Created_by: null,

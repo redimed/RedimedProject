@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.im.bluetooth.controller",[])
+angular.module("app.loggedIn.patient.injuryManagement.bluetooth.controller",[])
     .controller("BluetoothController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket,$stateParams,$cookieStore,ngTableParams){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.deviceList = [];

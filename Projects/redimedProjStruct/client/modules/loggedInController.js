@@ -63,7 +63,7 @@ angular.module("app.loggedIn.controller",[
 
     })
 
-.controller("loggedInController", function(beforeUnload,$scope,$window,$timeout, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
+.controller("loggedInController", function(beforeUnload,$scope,$window,$timeout,localStorageService, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
     $scope.isShow = true;
 
@@ -358,6 +358,9 @@ angular.module("app.loggedIn.controller",[
             $cookieStore.remove("toState");
             $cookieStore.remove("fromState");
             $cookieStore.remove("isRemember");
+
+            localStorageService.clearAll();
+
             $state.go("security.login",null,{location: "replace", reload: true});
 
             socket.removeAllListeners();

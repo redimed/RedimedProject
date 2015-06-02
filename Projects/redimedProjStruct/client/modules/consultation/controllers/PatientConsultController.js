@@ -1,9 +1,11 @@
-angular.module("app.loggedIn.consult.patient.controller",[])
-	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService){
+angular.module("app.loggedIn.patient.consult.controller",[])
+	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
-
+		//chien show patien bar
+        $scope.patientBarVer.version='zip';
+        
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		$scope.patientInfo = {};
@@ -23,6 +25,32 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			scripts: [],
 			images: []
 		}
+
+		$scope.problemAddForm = {
+	        is_show: false,
+	        open: function () {
+	            this.is_show = true;
+	        },
+	        close: function () {
+	            this.is_show = false;
+	        },
+	        success: function (response) {
+	            if (response.status == 'success')
+	            {
+	            	$scope.problemAddForm.close();
+	            	ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
+						if(rs.status.toLowerCase() == 'success' && rs.data)
+						{
+							$scope.problemList = rs.data;
+							$scope.consultInfo.problem_id = response.data.Problem_id;
+							$scope.viewProblem(response.data.Problem_id);
+						}
+					})
+
+
+	            }
+	        }
+	    }
 
 		$scope.callInfo = {
 			isCalling: null,
@@ -48,34 +76,39 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			return false;
 		}
 
-	    refresh($scope.patient_id);
-
-	    function refresh(patientId){
+		function refresh(patientId){
 	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
 				if(rs.status.toLowerCase() == 'success' && rs.info)
-				{
 					$scope.companyInfo = rs.info;
-				}
 			})
 	    }
+
+	    refresh($scope.patient_id);
+
+		$interval(function(){
+			refresh($scope.patient_id);
+		},60 * 1000);
+
 
 		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 			{
 				var fName = [];
 				fName.push(rs.data.First_name,rs.data.Sur_name,rs.data.Middle_name);
-
 				$scope.patientInfo = rs.data;
 				$scope.patientInfo.FullName = 
 					(rs.data.Title != null || rs.data.Title != '') ? (rs.data.Title +" . " + fName.join(' ')) : fName.join(' ');
+
+				InsurerService.insurerByPatient($scope.patient_id).then(function(res){
+					if(res.status.toLowerCase() == 'success' && res.data.length > 0)
+						$scope.patientInfo.insurer = res.data[0].insurer_name;
+				})
 			}
 		})
 
 		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
-			{
 				$scope.problemList = rs.data;
-			}
 		})
 
 		$scope.viewProblem = function(id){
@@ -94,7 +127,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/measureModal.html',
-					windowClass: "consult-modal-window",
+					size:'lg',
 					controller: "MeasurementController",
 					resolve:{
 						measure:function(){
@@ -113,7 +146,7 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/measureModal.html',
-					windowClass: "consult-modal-window",
+					size:'lg',
 					controller: "MeasurementController",
 					resolve:{
 						measure: function(){
@@ -252,6 +285,72 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		    }
 		  };
 
+	  	// ======================================WORK COVER=======================================
+	  	$scope.selectedOpt = null;
+	  	$scope.currWorkcover = null;
+
+	  	$scope.first_opt = PatientService.workcoverSearchOpt('first', $scope.patient_id);
+		$scope.progress_opt = PatientService.workcoverSearchOpt('progress', $scope.patient_id);
+		$scope.final_opt = PatientService.workcoverSearchOpt('final', $scope.patient_id);
+	    $scope.general_opt = PatientService.workcoverSearchOpt('general', $scope.patient_id);
+
+	  	$scope.viewWorkcover = function(i){
+	  		$scope.selectedOpt = i;
+	  		switch(i){
+	  			case 1:
+	  				$scope.currWorkcover = 'First Assessment';
+	  				break;
+  				case 2:
+	  				$scope.currWorkcover = 'Progress Assessment';
+	  				break;
+  				case 3:
+	  				$scope.currWorkcover = 'Final Assessment';
+	  				break;
+  				case 4:
+	  				$scope.currWorkcover = 'General Assessment';
+	  				break;
+	  		}
+	  	}
+
+	  	$scope.addWorkcover = function(){
+	  		if($scope.selectedOpt != null)
+	  		{
+	  			switch($scope.selectedOpt){
+	  				case 1:
+		  				$state.go('loggedIn.waworkcover.first', {
+							patient_id: $scope.patient_id,
+			                action: 'add',
+			                cal_id: $scope.cal_id,
+			                wc_id: 0
+			            });
+		  				break;
+	  				case 2:
+		  				$state.go('loggedIn.waworkcover.progress', {
+							patient_id: $scope.patient_id,
+			                action: 'add',
+			                cal_id: $scope.cal_id,
+			                wc_id: 0
+			            });
+		  				break;
+	  				case 3:
+		  				$state.go('loggedIn.waworkcover.final', {
+							patient_id: $scope.patient_id,
+			                action: 'add',
+			                cal_id: $scope.cal_id,
+			                ass_id: 0
+			            });
+		  				break;
+	  				case 4:
+		  				$state.go('loggedIn.waworkcover.general', {
+							patient_id: $scope.patient_id,
+			                action: 'add',
+			                cal_id: $scope.cal_id,
+			                ass_id: 0
+			            });
+		  				break;
+	  			}
+	  		}
+	  	}
 
 	  	// ======================================ITEM SHEET========================================
 	  	var arrGetBy = $filter('arrGetBy');
@@ -477,6 +576,19 @@ angular.module("app.loggedIn.consult.patient.controller",[])
 		                    toastr.error('Save Item Failed!');
 		                }
 		            });
+
+		            $scope.consultInfo = {
+						patient_id: $scope.patient_id,
+						cal_id: $scope.cal_id,
+						problem_id: null,
+						history: null,
+						examination: null,
+						treatment: null,
+						diagnosis: null,
+						measurements: [],
+						scripts: [],
+						images: []
+					}
 				}
 				else
 					toastr.success("Submit Consultation Failed!");

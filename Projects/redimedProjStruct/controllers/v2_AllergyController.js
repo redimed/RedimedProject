@@ -32,6 +32,8 @@ module.exports = {
 
 	postInsert: function (req, res) {
         var postData = req.body;
+        postData.isEnable=1;
+        console.log(postData);
         db.Allergy.create(postData)
             .success(function (created) {
                 if (!created) res.json(500, {
@@ -93,13 +95,12 @@ module.exports = {
     },
     
 
-    
     postSearchPatientAllergy: function(req,res){
         console.log('this is req body',req.body);
         var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
         var patient_id = req.body.search.Patient_id;
-        var sql = "SELECT `cln_allergies`.`allergy_id`, `cln_allergies`.`allergy_name` FROM `cln_allergies` "
+        var sql = "SELECT `cln_allergies`.`allergy_id`, `cln_allergies`.`allergy_name`,`cln_allergies`.`isEnable` FROM `cln_allergies` "
                 +"INNER JOIN `cln_patient_allergies` ON `cln_allergies`.`allergy_id` = `cln_patient_allergies`.`allergy_id` "
                 +"WHERE `cln_patient_allergies`.`patient_id` = " + patient_id;
         if(req.body.search.allergy_name){
@@ -130,13 +131,31 @@ module.exports = {
         });
 
     },
+    //phan quoc chien list patient bar isEnable = 1
+    postListPatientAllergyEnable: function(req,res){
+        console.log('this is req body',req.body);
+        var patient_id = req.body.search.Patient_id;
+        var sql = "SELECT `cln_allergies`.`allergy_id`, `cln_allergies`.`allergy_name` FROM `cln_allergies` "
+                +"INNER JOIN `cln_patient_allergies` ON `cln_allergies`.`allergy_id` = `cln_patient_allergies`.`allergy_id` "
+                +"WHERE `cln_patient_allergies`.`patient_id` = " + patient_id+" AND cln_allergies.isEnable = 1";
+           
+        sql+=(" ORDER BY `cln_allergies`.`allergy_id` DESC");
+        db.sequelize.query(sql)
+        .success(function(result){
+            res.json({"status": "success", "list": result});
+        })
+        .error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
+
+    },
 
     postSearchRemainAllergy: function(req,res){
         console.log('this is req body',req.body);
         var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
         var patient_id = req.body.search.Patient_id;
-        var sql = "SELECT * FROM `cln_allergies` WHERE `cln_allergies`.`allergy_id` NOT IN "
+        var sql = "SELECT * FROM `cln_allergies` WHERE `cln_allergies`.`isEnable` =1 AND `cln_allergies`.`allergy_id` NOT IN  "
                   +"(SELECT `allergy_id` FROM `cln_patient_allergies` WHERE `cln_patient_allergies`.`patient_id` = "+patient_id+")";
         if(req.body.search.allergy_name){
              sql += (" AND `cln_allergies`.`allergy_name` LIKE '%"+req.body.search.allergy_name+"%' ");
@@ -146,7 +165,7 @@ module.exports = {
              +" LIMIT " + offset + ", "+limit);
         db.sequelize.query(sql)
         .success(function(result){
-            var sql2 = "SELECT COUNT(*) AS `count` FROM `cln_allergies` WHERE `cln_allergies`.`allergy_id` NOT IN "
+            var sql2 = "SELECT COUNT(*) AS `count` FROM `cln_allergies` WHERE `cln_allergies`.`isEnable` =1 AND `cln_allergies`.`allergy_id` NOT IN "
                   +"(SELECT `allergy_id` FROM `cln_patient_allergies` WHERE `cln_patient_allergies`.`patient_id` ="+patient_id+")";
             if(req.body.search.allergy_name)
                 sql2 += (" AND `cln_allergies`.`allergy_name` LIKE '%"+req.body.search.allergy_name+"%' ");

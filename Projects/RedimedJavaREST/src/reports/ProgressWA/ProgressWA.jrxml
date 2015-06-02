@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProgressWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eece4994-d7fd-4e72-be00-9be9ebf6c4c2">
 	<property name="ireport.zoom" value="1.3660269107301437"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1008"/>
+	<property name="ireport.y" value="0"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -29,7 +29,8 @@ d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRI
 
 
 FROM `th_progress_assessment` p INNER JOIN `cln_appointment_calendar` a ON p.`cal_id` = a.`CAL_ID`
-				INNER JOIN `cln_patients` pa ON a.`Patient_id` = pa.`Patient_id`
+				INNER JOIN `cln_appt_patients` ap on ap.`CAL_ID` = a.`CAL_ID`
+				INNER JOIN `cln_patients` pa ON ap.`Patient_id` = pa.`Patient_id`
 				INNER JOIN `companies` c ON pa.`company_id` = c.`id`
 				INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
 WHERE p.`progress_id` = $P{id}]]>

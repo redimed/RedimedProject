@@ -1,7 +1,7 @@
 /**
  * Created by Luan Nguyen on 1/11/2015.
  */
-angular.module("app.loggedIn.im.services",[])
+angular.module("app.loggedIn.patient.injuryManagement.services",[])
     .factory("InjuryManagementService",function(Restangular){
         var imService = {};
         var api = Restangular.all("api");

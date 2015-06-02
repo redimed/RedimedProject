@@ -39,20 +39,29 @@ module.exports = {
 		var data = req.body;
 		console.log(data);
 		var sqlUpdateCompany=
-			"UPDATE ph_companies SET address = ?, surburb = ? , postcode= ?,state= ?,country= ?,contact_name = ?, contact_number= ?,email= ?,phone=?,mobile=?,isCompouding=?,isCPOP=?,Dispensing_software=?,isMutiShops=? "+
+			"UPDATE ph_companies SET address = ?, surburb = ? , postcode= ?,state= ?,country= ?,contact_name = ?, contact_number= ?,email= ?,phone=?,mobile=?,isCompouding=?,isCPOP=?,Dispensing_software=?,isMutiShops=?, lat = ?, lng = ? "+
 			"WHERE company_id = ? ";
-		req.getConnection(function(err,connection){
-			var query = connection.query(sqlUpdateCompany,[data.address,data.surburb,data.postcode,data.state,data.country,data.contact_name,data.contact_number,data.email,data.phone,data.mobile,data.isCompouding,data.isCPOP,data.Dispensing_software,data.isMultiShops,data.company_id],function(err){
-				if(err){
-					console.log(err);
-					res.json({status:'fail'});
-				}else{
-					console.log("update success")
-					res.json({status:'success'});
-				}
+		db.sequelize.query(sqlUpdateCompany, null, {raw:true}, [data.address,data.surburb,data.postcode,data.state,data.country,data.contact_name,data.contact_number,data.email,data.phone,data.mobile,data.isCompouding,data.isCPOP,data.Dispensing_software,data.isMultiShops, data.latitude, data.longitude ,data.company_id])
+			.success(function(rows){
+				res.json({status:'success'});
 			})
-		})
+			.error(function(err){
+				console.log("--------error", err);
+			})	
+
+		// req.getConnection(function(err,connection){
+		// 	var query = connection.query(sqlUpdateCompany,[data.address,data.surburb,data.postcode,data.state,data.country,data.contact_name,data.contact_number,data.email,data.phone,data.mobile,data.isCompouding,data.isCPOP,data.Dispensing_software,data.isMultiShops,data.company_id, data.latitude, data.longitude],function(err){
+		// 		if(err){
+		// 			console.log(err);
+		// 			res.json({status:'fail'});
+		// 		}else{
+		// 			console.log("update success")
+		// 			res.json({status:'success'});
+		// 		}
+		// 	})
+		// })
 	},
+
 	//get data pharmacist
 	getPharmacist:function(req,res){
 		var data = req.body.user_id;
@@ -239,12 +248,12 @@ module.exports = {
 	//insert new shop company
 	insertCompanyShop:function(req,res){
 		var data = req.body;
-		console.log(data.ShopInfo.shop_name)
+		console.log("------", data.ShopInfo.latitude)
 		var sqlInsertShop = 
-				" INSERT INTO ph_company_shops(company_id,shop_name,address,suburb,postcode,state,phone) "+
-				" VALUES (?,?,?,?,?,?,?) ";
+				" INSERT INTO ph_company_shops(company_id,shop_name,address,suburb,postcode,state,phone, lat, lng) "+
+				" VALUES (?,?,?,?,?,?,?,?,?) ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlInsertShop,[data.company_id,data.ShopInfo.shop_name,data.ShopInfo.address,data.ShopInfo.suburb,data.ShopInfo.postcode,data.ShopInfo.state,data.ShopInfo.phone],function(err){
+			var query = connection.query(sqlInsertShop,[data.company_id,data.ShopInfo.shop_name,data.ShopInfo.address,data.ShopInfo.suburb,data.ShopInfo.postcode,data.ShopInfo.state,data.ShopInfo.phone, data.ShopInfo.latitude, data.ShopInfo.longitude],function(err){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
@@ -288,15 +297,28 @@ module.exports = {
 			})
 		})
 	},
+
+	deletePostShop:function(req,res){
+		var data = req.body.shop_id;
+		var sql = 	"DELETE sp FROM `ph_shops_post` sp " +
+					"WHERE sp.`shop_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [data])
+			.success(function(rows){
+				res.json({status:'success'});
+			})
+			.error(function(err){
+				console.log("--------error", err);
+			})
+	},
 	//update shop company
 	updateShopCompany:function(req,res){
 		var data = req.body;
 		console.log(data)
 		var sql = 
-				"UPDATE ph_company_shops SET shop_name= ?,address = ?,suburb = ? ,postcode = ?,state = ? ,phone = ? "+
+				"UPDATE ph_company_shops SET shop_name= ?,address = ?,suburb = ? ,postcode = ?,state = ? ,phone = ?, lat = ?, lng = ? "+
 				"WHERE shop_id = ? ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sql,[data.shop_name,data.address,data.suburb,data.postcode,data.state,data.phone,data.shop_id],function(err,rows){
+			var query = connection.query(sql,[data.shop_name,data.address,data.suburb,data.postcode,data.state,data.phone, data.latitude, data.longitude, data.shop_id],function(err,rows){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
@@ -307,30 +329,49 @@ module.exports = {
 			})
 		})
 	},
+
 	//insert new post 
 	insertNewPost:function(req,res){
 		var data = req.body.post;
-		console.log(data);
+		var shopId = req.body.shop;
 		var sqlInsertPost = 
 			"INSERT INTO ph_posts (company_id,required_date,time_od_shift,local_weekday_rate,nonelocal_weekday_rate,sat_rate,sun_rate,ph_rate,isTravel,isAccommodation,post_type,job_title,job_description,Start_date,Duration,job_type,Qualification,experiences_require,hours_per_week,days_per_week,isweekend_shift,CREATION_DATE) "+
 			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		var required_date = moment(data.required_date).format("YYYY-MM-DD");
 		var time_od_shift = moment(data.time_od_shift).format("h:mm:ss a");
 		var Start_date =  moment(data.Start_date).format("YYYY-MM-DD");
-		var CREATION_DATE = moment(new Date()).format("YYYY-MM-DD h:mm:ss");;
-		console.log(CREATION_DATE)
+		var CREATION_DATE = moment(new Date()).format("YYYY-MM-DD h:mm:ss");
+
+		console.log("--------------------", data);
+		console.log("--------------------", shopId);
+
 		req.getConnection(function(err,connection){
 			var query = connection.query(sqlInsertPost,[data.company_id,required_date,time_od_shift,data.local_weekday_rate,data.nonelocal_weekday_rate,data.sat_rate,data.sun_rate,data.ph_rate,data.isTravel,data.isAccommodation,data.post_type,data.job_title,data.job_description,Start_date,data.Duration,data.job_type,data.Qualification,data.experiences_require,data.hours_per_week,data.days_per_week,data.isweekend_shift,CREATION_DATE],function(err,rows){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
 				}else{
-					console.log("success");
-					res.json({status:'success'});
+					console.log("-----------------success------------------");
+					var sqlPostId = "SELECT distinct(post_id) FROM ph_posts ORDER BY post_id DESC LIMIT 1";
+						db.sequelize.query(sqlPostId, null, {raw:true})
+						.success(function(rows){
+								var sql = "INSERT INTO ph_shops_post (post_id, shop_id) SELECT  ?, shop_id FROM ph_company_shops WHERE shop_id IN (?) ";
+								db.sequelize.query(sql, null, {raw:true}, [rows[0].post_id, shopId])
+								.success(function(rows){
+									res.json({status:'success'});	
+								})
+								.error(function(err){
+									res.json({status:'error'});
+								})
+						})
+						.error(function(err){
+							console.log("--------------------error", error);
+						})
 				}
 			})
 		})
 	},
+
 	addNewUserInCompany:function(req,res){
 		var data = req.body;
 		console.log(data)
@@ -400,21 +441,103 @@ module.exports = {
 				})
 
 	},
+
 	checkIsMain:function(req,res){
 		var user_id = req.body.user_id;
 		console.log(user_id);
 		var sql = "SELECT isMain FROM ph_company_users WHERE user_id = ?";
 		db.sequelize.query(sql,null,{raw:true},[user_id])
 				.success(function(rows){
-					console.log(rows)
+					console.log("----------main",rows)
 					res.json({status:'success',data:rows[0]});	
 				})
 				.error(function(err){
 					res.json({status:'error',err:err});
 				})
-	}
+	},
 
+	getAllShopPost:function(req, res) {
+		var records = req.body.records;
+		console.log(records);
+		var sql = "SELECT * FROM `ph_shops_post` sp " +
+					   "INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
+					   "INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					   "ORDER BY po.`post_id` DESC ";
+					   // "LIMIT ?,? ";
+		// db.sequelize.query(sql, null, {raw:true}, [records,5])
+		db.sequelize.query(sql, null, {raw:true})
+			.success(function(rows){
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
 
+	insertPostCadidates: function(req, res){
+		var data = req.body;
+		console.log("------------------", data);
 
+		var sqlPharmacistId = "SELECT `phamacist_id` FROM `ph_phamacists` ph WHERE ph.`user_id` = ? ";
+		db.sequelize.query(sqlPharmacistId, null, {raw:true}, [data.user_id])
+			.success(function(rows){
+				console.log("---------------success", rows[0]);
+				var sql = "INSERT INTO `ph_post_cadidates`(post_id, shop_id, phamacist_id) " +
+						  "VALUES (?,?,?)"
+				db.sequelize.query(sql, null, {raw:true}, [data.post_id, data.shop_id, rows[0].phamacist_id])
+					.success(function(rows){
+						console.log("---------------success", rows);
+						res.json({status:'success', data:rows});
+					})
+					.error(function(err){
+						res.json({status:'error', err:err});
+					})
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	getPostForShopId: function(req, res){
+		var shop_id = req.body.shop_id;
+		var sql = "SELECT p.`post_id`, p.`job_title`, p.`job_type`, p.`job_description` " +
+				"FROM `ph_shops_post` sp " +
+				"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
+				"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+				"WHERE cs.`shop_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [shop_id])
+			.success(function(rows){
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				console.log("--------error", err);
+			})
+	},
+
+	countMember: function(req, res){
+		var post_id = req.body.post_id;
+		var sql = "SELECT COUNT(post_id) AS Member FROM `ph_post_cadidates` pc WHERE pc.`post_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [post_id])
+			.success(function(rows){
+				console.log("-------------", rows[0].Member);
+				res.json({status:'success', data:rows[0].Member});
+			})
+			.error(function(err){
+				console.log("--------error", err);
+			})
+	},
+
+	deleteUserInCompany: function(req, res){
+		var user_id = req.body.user_id;
+		var sql = "DELETE cu.*, u.* FROM `ph_company_users` cu INNER JOIN `ph_users` u ON cu.`user_id` = u.`user_id` WHERE u.`user_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [user_id])
+			.success(function(rows){
+				console.log("-------------", rows);
+				res.json({status:'success'});
+			})
+			.error(function(err){
+				console.log("--------error", err);
+			})
+	},
 }
 

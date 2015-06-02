@@ -12,6 +12,7 @@ angular.module("app.call.controller",[
         var apiKey = $stateParams.apiKey;
         var sessionId = $stateParams.sessionId;
         var token = $stateParams.token;
+        $scope.newwin = null;
 
         $scope.session = null;
 
@@ -33,7 +34,6 @@ angular.module("app.call.controller",[
 
         $scope.$on('onUnload', function (e) {
             audio.pause();
-            socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
             disconnect();
         });
 
@@ -144,26 +144,18 @@ angular.module("app.call.controller",[
                 audio.pause();
                 $scope.isAccept = true;
 
-                console.log($scope.streams);
-
-                if($scope.isCaller)
-                    $cookieStore.put('callInfo',{isCalling: true, callUser: fromId})
-
                 $modalStack.dismissAll();
             }
             if(message.type === 'ignore')
             {
+                toastr.info(fromUser + " Has Ignored The Call!");
                 if($scope.streams.length == 0)
                 {
                     audio.pause();
-                    toastr.info(fromUser + " Has Ignored The Call!");
                     disconnect();
                 }
                 else
-                {
-                    toastr.info(fromUser + " Has Ignored The Call!");
                     $modalStack.dismissAll();
-                }
             }
             if(message.type === 'cancel')
             {
@@ -182,14 +174,36 @@ angular.module("app.call.controller",[
             $scope.isVideoMuted = !$scope.isVideoMuted;
         }
 
-        var disconnect = function() {
-            if($scope.session != null)
-                $scope.session.disconnect();
+        function disconnect() {
+            if($scope.streams.length == 0)
+            {
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
 
-            if(typeof $cookieStore.get("callInfo") !== undefined)
-                $cookieStore.remove("callInfo");
+                window.close();
+                
+                if (($scope.newwin != null) || (!$scope.newwin.closed))
+                    $scope.newwin.close();
+            }
+            else
+            {
+                UserService.getUserInfo($scope.userInfo.id).then(function(data){
+                    var signal = {
+                        type: 'cancelCall',
+                        data: data.user_name
+                    };
+                    OTSession.session.signal(signal, function(err){
+                        if (err)
+                            TB.error(err);
+                        else
+                        {
+                            window.close();
 
-            window.close();
+                            if (($scope.newwin != null) || (!$scope.newwin.closed))
+                                $scope.newwin.close();
+                        }
+                    });
+                })
+            }
         }
 
         var signalError = function (err) {
@@ -199,8 +213,6 @@ angular.module("app.call.controller",[
             };
 
         $scope.cancelCall = function(){
-            audio.pause();
-            
             swal({
                 title: "Are you sure want to cancel the call?",
                 type: "warning",
@@ -209,36 +221,26 @@ angular.module("app.call.controller",[
                 confirmButtonText: "Yes",
                 closeOnConfirm: true
             }, function() {
-                if($scope.streams.length == 0)
-                {
-                    socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'cancel'});
-                    disconnect();
-                }
-                else
-                {
-                    UserService.getUserInfo($scope.userInfo.id).then(function(data){
-                        var signal = {
-                            type: 'cancelCall',
-                            data: data.user_name
-                        };
-                        OTSession.session.signal(signal, function(err){
-                            if (err)
-                                TB.error(err);
-                            else
-                                disconnect();
-                        });
-                    })
-                    
-                }
+                audio.pause();
+                disconnect();
             });
         }
 
         if (OTSession.session) 
         {
             OTSession.session.on({
-                'signal:cancel': function (event) {
-                    console.log(event);
-                    toastr.info(JSON.parse(event.data).username + " Has Left The Call!");
+                'signal:cancelCall': function (event) {
+                    toastr.info(event.data + " Has Left The Call!");
+                    
+                    $timeout(function(){
+                        if($scope.streams.length == 0)
+                        {
+                            window.close();
+                            if (($scope.newwin != null) || (!$scope.newwin.closed))
+                                $scope.newwin.close();
+                        }
+                    }, 1.5 * 1000);
+                    
                 }
             })
         }
@@ -251,21 +253,22 @@ angular.module("app.call.controller",[
               });
         };
 
-        var newwin = null;
+        
         function popup(url) 
         {
              params  = 'width='+screen.width;
              params += ', height='+screen.height;
-             params += ', top=0, left=0';
+             params += ', left='+ 0;
+             params += ', top='+0;
              params += ', fullscreen=yes';
 
-            if ((newwin == null) || (newwin.closed))
+            if (($scope.newwin == null) || ($scope.newwin.closed))
             {
-                newwin=window.open(url,'RedimedWhiteboard', params);
-                newwin.focus();
+                $scope.newwin=window.open(url,'RedimedWhiteboard', params);
+                $scope.newwin.focus();
             }
 
-            if(newwin != null && !newwin.closed)
+            if($scope.newwin != null && !$scope.newwin.closed)
                 window.open('','RedimedWhiteboard','');
             return false;
         }
@@ -519,9 +522,6 @@ angular.module("app.call.controller",[
                   else
                     console.log("success");
                 };
-
-                scope.onlineDevice = "Pulse Oximeter";
-                scope.onlineData = {"sys":150,"dia":100,"bpm":86,"mmHg":119};
 
                 socket.on('getMeasureData',function(rs){
                     if(rs.info){

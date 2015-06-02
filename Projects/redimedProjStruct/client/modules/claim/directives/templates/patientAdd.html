@@ -1,49 +1,46 @@
+<label class="un-label-popup-header un-bg-label-333333">Add Claim</label>
 <div class="row">
 	
 	<!-- CLAIM NO -->
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="form-group">
-			<label>
-				Claim No&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-group">
+				Claim No&nbsp;*
 			</label>
-			<input class="form-control input-sm" ng-model="claim.form.Claim_no" id="Claim_no">
+			<input class="form-control input-sm un-input-group" ng-model="claim.form.Claim_no" id="Claim_no">
 		</div>
 	</div>
 	<!-- END CLAIM NO -->
 
 	<!-- CLAIM DATE -->
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="form-group">
-			<label>
-				Claim Date&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-group">
+				Claim Date&nbsp;*
 			</label>
-			<input custom-date class="form-control input-sm" ng-model="claim.form.Claim_date" id="Claim_date">
+			<input custom-date class="form-control input-sm un-input-group" ng-model="claim.form.Claim_date" id="Claim_date">
 		</div>
 	</div>
 	<!-- END CLAIM DATE -->
 
 	<!-- INJURY NAME -->
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="form-group">
-			<label>
-				Injury Name&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-group">
+				Injury Name&nbsp;*
 			</label>
-			<input class="form-control input-sm" ng-model="claim.form.Injury_name" id="Injury_name">
+			<input class="form-control input-sm un-input-group" ng-model="claim.form.Injury_name" id="Injury_name">
 		</div>
 	</div>
 	<!-- END INJURY NAME -->
 
 	<!-- INJURY DATE -->
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="form-group">
-			<label>
-				Injury Date&nbsp;
-				<span class="required" style="color: red;">*</span>
+			<label class="un-label-group">
+				Injury Date&nbsp;*
 			</label>
-			<input custom-date class="form-control input-sm" ng-model="claim.form.Injury_date" id="Injury_date">
+			<input custom-date class="form-control input-sm un-input-group" ng-model="claim.form.Injury_date" id="Injury_date">
 		</div>
 	</div>
 	<!-- END INJURY DATE -->
@@ -52,19 +49,19 @@
 
 <div class="row">
 	<!-- LOCATION -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-group">
-			<label>Location</label>
-			<input ng-model="claim.form.Location" id="Location" class="form-control input-sm">
+			<label class="un-label-group">Location</label>
+			<input ng-model="claim.form.Location" id="Location" class="form-control input-sm un-input-group">
 		</div>
 	</div>
 	<!-- END LOCATION -->
 	
 	<!-- HOW INJURY OCCURRED -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-group">
-			<label>How Injury Occurred</label>
-			<textarea ng-model="claim.form.How_Injury_Occurred" id="How_Injury_Occurred" class="form-control input-sm"></textarea>
+			<label class="un-label-group">How Injury Occurred</label>
+			<textarea ng-model="claim.form.How_Injury_Occurred" id="How_Injury_Occurred" class="form-control input-sm un-input-group"></textarea>
 		</div>
 	</div>
 	<!-- END HOW INJURY OCCURRED -->
@@ -72,28 +69,28 @@
 
 <div class="row">
 	<!-- ADDRESS -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-group">
-			<label>Address</label>
-			<input ng-model="claim.form.Address" id="Address" class="form-control input-sm">
+			<label class="un-label-group">Address</label>
+			<input ng-model="claim.form.Address" id="Address" class="form-control input-sm un-input-group">
 		</div>
 	</div>
 	<!-- END ADDRESS -->
-
-	<!-- IS CURR -->
-	<div class="col-md-3">
+	<!-- INSURER -->
+	<div class="col-md-6">
 		<div class="form-group">
-			<label>Is Current</label>
-			<input type="checkbox" ng-model="claim.form.isCurr" ng-true-value="1" ng-false-value="0" class="form-control">
+			<label class="un-label-group">Insurer</label>
+			<label class="un-input-group input-sm">{{insurer.name}}</label>
 		</div>
 	</div>
-	<!-- END IS CURR -->
+	<!-- END INSURER -->
+	
 
 	<!-- PO NUMBER -->
-	<div class="col-md-3">
+	<div class="col-md-6">
 		<div class="form-group">
-			<label>PO Num</label>
-			<input ng-model="claim.form.PO_number" class="form-control input-sm" id="PO_number">
+			<label class="un-label-group">PO Num</label>
+			<input ng-model="claim.form.PO_number" class="form-control input-sm un-input-group" id="PO_number">
 		</div>
 	</div>
 	<!-- END PO NUMBER -->
@@ -101,25 +98,25 @@
 
 <div class="row">
 	<!-- CASE MANAGER -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-group">
-			<label>Case Manager</label>
-			<input ng-model="claim.form.Case_manager" class="form-control input-sm" id="Case_manager">
+			<label class="un-label-group">Case Manager</label>
+			<input ng-model="claim.form.Case_manager" class="form-control input-sm un-input-group" id="Case_manager">
 		</div>
 	</div>
 	<!-- END CASE MANAGER -->
-	<!-- INSURER -->
+	<!-- IS CURR -->
 	<div class="col-md-6">
-		<div class="form-group">
-			<label>Insurer</label>
-			<p><h4 style="color: ">{{insurer.name}}</h4></p>
+		<div>
+			<input type="checkbox" ng-model="claim.form.isCurr" ng-true-value="1" ng-false-value="0" class="un-input-checkbox">
+			<label>Is Current</label>
 		</div>
 	</div>
-	<!-- END INSURER -->
+	<!-- END IS CURR -->
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<button class="btn btn-primary" ng-click="claim.save()">Save</button>
+		<button class="btn un-btn-save-xam" ng-click="claim.save()">SUBMIT</button>
 	</div>
 </div>

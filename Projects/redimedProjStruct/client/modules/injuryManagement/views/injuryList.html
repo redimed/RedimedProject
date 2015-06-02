@@ -7,6 +7,17 @@
         background-color: rgba(117, 255, 186, 0.35);
     }
 
+    .img-image-name{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+        color: white;
+        font-size: 40px;
+        font-weight: lighter;
+    }
 
     table {
         table-layout:fixed;
@@ -18,43 +29,27 @@
     }
 
 </style>
-<h3 class="page-title">Injury List</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.home">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a href="javascript:;">Injury Management</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a>Injury List</a>
+<div class="tabbable-custom nav-justified">
+    <ul class="un-tabs">
+        <li class="active">
+            <a href="injuryMap.html#tab_1_1_2" data-toggle="tab">
+                <i class="icon-list"></i>&nbsp;&nbsp;&nbsp;
+                Injury List</a>
         </li>
     </ul>
-</div>
-<div class="portlet blue-chambray box">
-    <div class="portlet-title">
-        <div class="caption ">
-            <i class="fa fa-list"></i>
-            <span class="caption-subject uppercase">Injury List</span>
-        </div>
-        <div class="actions">
-            <a href="javascript:;" ng-click="refreshList()" class="btn btn-sm green">
-                    Refresh &nbsp;<i class="fa fa-refresh"></i>
-            </a>
-            <!-- <a href="javascript:;" ng-click="goBack()" class="btn btn-sm grey">
-                    Back &nbsp;<i class="fa fa-backward"></i>
-            </a> -->
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="panel panel-default">
-            <table class="table table-condensed" >
-                <thead>
+    <div class="un-tabs-content">
+        <div class="un-tab-content active" id="tab_1_1_2">
+            <div style="margin-bottom: 0 !important;" class="panel panel-default">
+                <table class="table table-condensed" >
                     <tr>
+                        <th width="100px">
+                           <!--  <a href="javascript:;" ng-click="refreshList()" class="btn un-submit green">
+                                Refresh &nbsp;<i class="fa fa-refresh"></i>
+                            </a> -->
+                        </th>
+                        <th>
+                            <label style="font-size: 17px;">Patient Name</label>
+                        </th>
                         <th style="text-align:center">
                             <label style="font-size: 17px;">Injury Date</label>
                         </th>
@@ -65,7 +60,15 @@
                             <label style="font-size: 17px;">Status</label>
                         </th>
                     </tr>
-                    <tr ng-if="haveData">
+                    <tr>
+                        <th width="100px">
+                            <a href="javascript:;" ng-click="refreshList()" class="btn un-submit green">
+                                Refresh &nbsp;<i class="fa fa-refresh"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <input ng-change="searchInjury(search)" ng-model="search.patient" class="form-control" type="text" />
+                        </th>
                         <th style="text-align:center">
                             <date-range-picker style="width:200px;" ng-model="search.dateRange" ranged="true" callback="getDateRange(search.dateRange)"></date-range-picker>
                             <!--<input class="form-control" type="text" />-->
@@ -79,33 +82,50 @@
                             <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done-->
                         </th>
                     </tr>
-                </thead>
-            </table>
+                </table>
+            </div>
+            <div style="text-align: center;background-color: white;" ng-if="injuryList == null || injuryList.length == 0">
+                <br/>
+                <span style="font-size: 20px; font-style: italic; font-weight: bold;"> 
+                    Empty Data
+                </span>
+                <br/>
+            </div>
+            <div ng-if="injuryList.length > 0"  style="background-color: white;" class="div-table-content">
+                <table class="table table-hover table-condensed">
+                    <tbody> 
+                        <tr style="white-space: nowrap; cursor: pointer;" ng-click="showDetails(im.injury_id)"  ng-repeat="im in injuryList"  ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
+                            <td width="100px"  style="vertical-align:middle" align="center">
+                                <div class="img-image-name" ng-style={"background-color":im.background} >
+                                    {{im.First_name | limitTo: 1 | uppercase}}
+                                </div>
+                            </td>
+                            <td style="vertical-align:middle" >
+                                <label class="bold">
+                                    {{im.FullName}}
+                                </label>
+                            </td>
+                            <td style="vertical-align:middle" align="center">
+                                {{im.injury_date | date:'dd/MM/yyyy'}}
+                            </td>
+                            <td style="vertical-align:middle" align="center">
+                                <label class="bold">{{im.driverUser}}</label>
+                            </td>
+                            <td style="vertical-align:middle" align="center">
+                                <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn blue un-submit" style="width:100px">
+                                    {{im.STATUS}}
+                                </a>
+                                <a ng-show="im.STATUS == 'Waiting'" href="javascript:;" class="btn un-submit" style="width:100px">
+                                    {{im.STATUS}}
+                                </a>
+                                <a ng-show="im.STATUS == 'Done'" href="javascript:;" class="btn green un-submit" style="width:100px">
+                                    {{im.STATUS}}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div ng-if="haveData" class="div-table-content">
-            <table class="table table-hover table-condensed">
-                <tbody>
-                <tr style="white-space: nowrap; cursor: pointer;" ng-click="showDetails(im.injury_id)"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
-                    <td style="vertical-align:middle" align="center">
-                        {{im.injury_date | date:'dd/MM/yyyy'}}
-                    </td>
-                    <td style="vertical-align:middle" align="center">
-                        <label class="bold">{{im.driverUser}}</label>
-                    </td>
-                    <td style="vertical-align:middle" align="center">
-                        <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn btn-primary btn-md" style="width:100px">
-                            {{im.STATUS}}
-                        </a>
-                        <a ng-show="im.STATUS == 'Waiting'" href="javascript:;" class="btn btn-warning btn-md" style="width:100px">
-                            {{im.STATUS}}
-                        </a>
-                        <a ng-show="im.STATUS == 'Done'" href="javascript:;" class="btn btn-success btn-md" style="width:100px">
-                            {{im.STATUS}}
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-</div>  
-
+    </div>
+</div>

@@ -16,31 +16,37 @@ angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
-            TimeSheetService.LoadEmpReport(listNew).then(function(response) {
-                if (response.status === "success") {
-                    //LOAD EMP
-                    var arrayEmp = [];
-                    angular.forEach(response.result, function(emp, index) {
-                        arrayEmp.push({
-                            id: emp.Employee_ID,
-                            label: emp.FirstName + " " + emp.LastName
+            if (listNew !== undefined &&
+                listNew !== null &&
+                listNew.length !== 0) {
+                listNew[0].isStaff = $scope.isStaff;
+                listNew[0].USER_ID = $cookieStore.get("userInfo").id;
+                TimeSheetService.LoadEmpReport(listNew).then(function(response) {
+                    if (response.status === "success") {
+                        //LOAD EMP
+                        var arrayEmp = [];
+                        angular.forEach(response.result, function(emp, index) {
+                            arrayEmp.push({
+                                id: emp.Employee_ID,
+                                label: emp.FirstName + " " + emp.LastName
+                            });
                         });
-                    });
-                    $scope.listEmp = angular.copy(arrayEmp);
-                    //END
-                } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Loading employee fail!", "Error");
-                } else {
-                    //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
-                        "reload": true
-                    });
-                    toastr.error("Server not response!", "Error");
-                }
-            });
+                        $scope.listEmp = angular.copy(arrayEmp);
+                        //END
+                    } else if (response.status === "error") {
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Loading employee fail!", "Error");
+                    } else {
+                        //catch exception
+                        $state.go("loggedIn.TimeSheetHome", null, {
+                            "reload": true
+                        });
+                        toastr.error("Server not response!", "Error");
+                    }
+                });
+            }
         };
         //FUNCTION GET WEEK NUMBER
         $scope.getWeekNumber = function(d) {
@@ -68,7 +74,7 @@ angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
                 info.weekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                TimeSheetService.LoadReportUtilizationRatioSumnary(info).then(function(response) {
+                TimeSheetService.LoadReportUtilizationRatioSumary(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;
@@ -99,6 +105,7 @@ angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
                 toastr.error("Load Department fail!", "Error");
             } else if (response.status === "success") {
                 $scope.listDept = response.result;
+                $scope.isStaff = response.isStaff;
             } else {
                 //catch exception
                 $state.go("loggedIn.TimeSheetHome", null, {

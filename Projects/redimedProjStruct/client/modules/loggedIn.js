@@ -14,6 +14,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.iso", //ISO manage files
     "app.loggedIn.pr",//PAYROLL (TANNV.DTS@GMAIL.COM)
     "app.loggedIn.doctor", // DOCTOR MODULE
+    "app.loggedIn.waitingList",
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",
     "app.loggedIn.waworkcover",
@@ -64,7 +65,6 @@ angular.module("app.loggedIn", [
     /*END AUTO CREATE*/
     'app.loggedIn.timetable',
 
-    'app.loggedIn.im',
     "app.loggedIn.staff",
 
     // MODULE TREEAPPROVE
@@ -74,10 +74,7 @@ angular.module("app.loggedIn", [
     //MODULE TIMESHEET
     'app.loggedIn.TimeSheet',
     //END MODULE TIMESHEET
-
-    //MODULE CONSULTATION
-    'app.loggedIn.consult',
-
+    
     'app.loggedIn.claim',
 
     'app.loggedIn.timetable',
@@ -89,7 +86,7 @@ angular.module("app.loggedIn", [
     'app.loggedIn.company',
     'app.loggedIn.alert',
     'app.loggedIn.outreferral',
-    'app.loggedIn.problem',
+    // 'app.loggedIn.problem',
     'app.loggedIn.fadefine'
 ])
 

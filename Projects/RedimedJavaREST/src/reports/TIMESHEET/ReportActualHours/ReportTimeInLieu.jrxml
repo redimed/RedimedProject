@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
+		<queryString>
+			<![CDATA[SELECT
+time_employee_reports1.employee,
+time_time_charge_reports1.time_ac1,
+time_time_charge_reports1.time_ac2,
+time_time_charge_reports1.time_ac3,
+time_time_charge_reports1.time_ac4,
+time_time_charge_reports1.time_ac5,
+time_time_charge_reports1.time_convert,
+time_time_charge_reports1.time_in_lieu,
+time_time_charge_reports1.time_charge_sum,
+time_time_charge_reports1.time_over,
+departments.departmentName
+FROM
+time_employee_reports1
+INNER JOIN time_time_charge_reports1 ON time_employee_reports1.employee_id = time_time_charge_reports1.employee_id
+INNER JOIN departments ON departments.departmentid = time_employee_reports1.departmentid]]>
+		</queryString>
+		<field name="employee" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac1" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac2" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac3" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac4" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_ac5" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_convert" class="java.lang.Float">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_in_lieu" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_charge_sum" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="time_over" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="departmentName" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="realPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+time_in_lieu_report.create_id,
+time_in_lieu_report.user_id,
+time_in_lieu_report.Employee_id,
+time_in_lieu_report.Department_id,
+time_in_lieu_report.time_in_lieu,
+time_in_lieu_report.time_in_lieu_used,
+time_in_lieu_report.time_in_lieu_remain,
+time_in_lieu_report.time_in_lieu_gan_nhat,
+time_in_lieu_report.time_in_lieu_Dept,
+time_in_lieu_report.time_in_lieu_used_Dept,
+time_in_lieu_report.time_in_lieu_remain_Dept,
+time_in_lieu_report.time_in_lieu_gan_nhat_Dept,
+time_in_lieu_report.time_in_lieu_all,
+time_in_lieu_report.time_in_lieu_used_all,
+time_in_lieu_report.time_in_lieu_remain_all,
+time_in_lieu_report.time_in_lieu_gan_nhat_all,
+departments.departmentName,
+hr_employee.FirstName,
+hr_employee.LastName
+FROM time_in_lieu_report
+INNER JOIN departments ON departments.departmentid = time_in_lieu_report.Department_id
+INNER JOIN hr_employee ON hr_employee.Employee_ID  = time_in_lieu_report.Employee_id
+WHERE time_in_lieu_report.create_id =$P{id}
+ORDER BY time_in_lieu_report.Department_id]]>
+	</queryString>
+	<field name="create_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Employee_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Department_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_used" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_remain" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_gan_nhat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_Dept" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_used_Dept" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_remain_Dept" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_gan_nhat_Dept" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_all" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_used_all" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_remain_all" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="time_in_lieu_gan_nhat_all" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="departmentName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FirstName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LastName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="DeptGroup">
+		<groupExpression><![CDATA[$F{departmentName}]]></groupExpression>
+	</group>
+	<group name="time_in_lieu">
+		<groupExpression><![CDATA[$F{Department_id}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="330" height="20" uuid="b840e584-fe19-4e71-94bb-a067d71bbd70"/>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<staticText>
+					<reportElement x="0" y="0" width="70" height="19" forecolor="#6666FF" uuid="69772fa3-b301-46ab-bba9-19e53e529d6b"/>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Subtotal:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="170" y="1" width="60" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[($F{time_in_lieu_Dept}==null || $F{time_in_lieu_Dept}=="" || $F{time_in_lieu_Dept}==0)?"-":(($F{time_in_lieu_Dept}/60<10?"0"+($F{time_in_lieu_Dept}/60).intValue():($F{time_in_lieu_Dept}/60).intValue()))+":"+(($F{time_in_lieu_Dept}%60<10?"0"+$F{time_in_lieu_Dept}%60:$F{time_in_lieu_Dept}%60))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="1" width="70" height="19" uuid="9660f367-7060-40e5-94d3-8b560fbe3441"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[($F{time_in_lieu_used_Dept}==null || $F{time_in_lieu_used_Dept}=="" || $F{time_in_lieu_used_Dept}==0)?"-":(($F{time_in_lieu_used_Dept}/60<10?"0"+($F{time_in_lieu_used_Dept}/60).intValue():($F{time_in_lieu_used_Dept}/60).intValue()))+":"+(($F{time_in_lieu_used_Dept}%60<10?"0"+$F{time_in_lieu_used_Dept}%60:$F{time_in_lieu_used_Dept}%60))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="400" y="1" width="45" height="19" uuid="b6fd12fc-4cc2-4fac-b96f-15377640c7f9"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[($F{time_in_lieu_remain_Dept}==null || $F{time_in_lieu_remain_Dept}=="" || $F{time_in_lieu_remain_Dept}==0)?"-":(($F{time_in_lieu_remain_Dept}/60<10?"0"+($F{time_in_lieu_remain_Dept}/60).intValue():($F{time_in_lieu_remain_Dept}/60).intValue()))+":"+(($F{time_in_lieu_remain_Dept}%60<10?"0"+$F{time_in_lieu_remain_Dept}%60:$F{time_in_lieu_remain_Dept}%60))]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="130" y="21" width="100" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="240" y="21" width="110" height="1" uuid="c145116c-9a7f-4f89-8f40-261458b231cf"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="360" y="21" width="85" height="1" uuid="3ffc12b7-1b37-4923-bfae-fb6de43b1040"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="130" y="0" width="100" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
+				</line>
+				<line>
+					<reportElement x="240" y="0" width="110" height="1" uuid="f2ac7233-c406-47d1-8f73-172d33ef939d"/>
+				</line>
+				<line>
+					<reportElement x="360" y="0" width="85" height="1" uuid="dab6755c-5e36-4812-b990-8e71e11294de"/>
+				</line>
+				<line>
+					<reportElement x="455" y="21" width="100" height="1" uuid="1a81f628-d082-464f-93a7-de2828e1a792"/>
+					<graphicElement>
+						<pen lineWidth="2.5" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="455" y="0" width="100" height="1" uuid="6210dbeb-a6d4-47d2-9079-7235c02d840e"/>
+				</line>
+				<textField>
+					<reportElement x="455" y="1" width="100" height="19" uuid="72bd490e-1f18-4571-99a5-bc0750c02adf"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[($F{time_in_lieu_gan_nhat_Dept}==null || $F{time_in_lieu_gan_nhat_Dept}=="" || $F{time_in_lieu_gan_nhat_Dept}==0)?"-":(($F{time_in_lieu_gan_nhat_Dept}/60<10?"0"+($F{time_in_lieu_gan_nhat_Dept}/60).intValue():($F{time_in_lieu_gan_nhat_Dept}/60).intValue()))+":"+(($F{time_in_lieu_gan_nhat_Dept}%60<10?"0"+$F{time_in_lieu_gan_nhat_Dept}%60:$F{time_in_lieu_gan_nhat_Dept}%60))]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="169" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="802" height="68" uuid="53e2929b-dd5b-4df4-bc79-3a056dd464e8"/>
+				<imageExpression><![CDATA[$P{realPath}+"logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="68" width="555" height="33" forecolor="#990000" uuid="c7f6054c-4cbd-4815-91f1-9acb2db5b718"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ Report on Time In Lieu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="148" width="120" height="20" forecolor="#6666FF" uuid="6021cf2b-817e-4c86-ac7f-8d72c9250134"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Employee Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="148" width="100" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TIL Openning Bal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="148" width="110" height="20" forecolor="#6666FF" uuid="08539f6d-ac2c-449b-acc4-684d7d573f9b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TIL Used]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="148" width="85" height="20" forecolor="#6666FF" uuid="15ff9fa9-9aaf-4d9c-9ff9-dad9bbc81c6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TIL Deduction]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="168" width="120" height="1" forecolor="#6666FF" uuid="a52c6240-62f1-4117-a9d9-cc1f7f0001bc"/>
+			</line>
+			<line>
+				<reportElement x="130" y="168" width="100" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
+			</line>
+			<line>
+				<reportElement x="240" y="168" width="110" height="1" forecolor="#6666FF" uuid="d21cbf72-6fad-46ce-a343-53c1b088e481"/>
+			</line>
+			<line>
+				<reportElement x="360" y="168" width="85" height="1" forecolor="#6666FF" uuid="4ba9cae4-7680-4f46-828b-c81e8e511a2d"/>
+			</line>
+			<line>
+				<reportElement x="455" y="168" width="100" height="1" forecolor="#6666FF" uuid="2ce4356c-0602-4af5-84e5-44582d4fd255"/>
+			</line>
+			<staticText>
+				<reportElement x="455" y="148" width="100" height="20" forecolor="#6666FF" uuid="2473c4d6-6a14-40fc-a58a-eea48b34a79d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TIL Accumulated]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="115" width="123" height="20" uuid="8dc91551-8f9a-44fb-bea6-70d4b6c518fc"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="11" isItalic="true" pdfFontName="Times-Italic"/>
+				</textElement>
+				<text><![CDATA[Unit of Measure: Ratio]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="120" height="17" uuid="37a050ec-4a8f-4d43-9219-d95e15fd6b89"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{FirstName}+" "+$F{LastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="85" height="17" uuid="6eba9d3e-a884-43c5-a552-15d500221632"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu}==null || $F{time_in_lieu}=="" || $F{time_in_lieu}==0)?"-":(($F{time_in_lieu}/60<10?"0"+($F{time_in_lieu}/60).intValue():($F{time_in_lieu}/60).intValue()))+":"+(($F{time_in_lieu}%60<10?"0"+$F{time_in_lieu}%60:$F{time_in_lieu}%60))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="95" height="17" uuid="92c798cb-2184-409c-a83e-0164146c4d1a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_used}==null || $F{time_in_lieu_used}=="" || $F{time_in_lieu_used}==0)?"-":(($F{time_in_lieu_used}/60<10?"0"+($F{time_in_lieu_used}/60).intValue():($F{time_in_lieu_used}/60).intValue()))+":"+(($F{time_in_lieu_used}%60<10?"0"+$F{time_in_lieu_used}%60:$F{time_in_lieu_used}%60))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="0" width="70" height="17" uuid="78b3f69a-bcfc-4722-b137-82e468611f44"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_remain}==null || $F{time_in_lieu_remain}=="" || $F{time_in_lieu_remain}==0)?"-":(($F{time_in_lieu_remain}/60<10?"0"+($F{time_in_lieu_remain}/60).intValue():($F{time_in_lieu_remain}/60).intValue()))+":"+(($F{time_in_lieu_remain}%60<10?"0"+$F{time_in_lieu_remain}%60:$F{time_in_lieu_remain}%60))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="17" uuid="a53a42e4-67a9-40a1-928a-2945c5b661b3"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_gan_nhat}==null || $F{time_in_lieu_gan_nhat}=="" || $F{time_in_lieu_gan_nhat}==0)?"-":(($F{time_in_lieu_gan_nhat}/60<10?"0"+($F{time_in_lieu_gan_nhat}/60).intValue():($F{time_in_lieu_gan_nhat}/60).intValue()))+":"+(($F{time_in_lieu_gan_nhat}%60<10?"0"+$F{time_in_lieu_gan_nhat}%60:$F{time_in_lieu_gan_nhat}%60))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="455" y="30" width="100" height="20" uuid="36089bfa-07e3-429c-8aa7-de080090f556"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="170" y="0" width="60" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_all}==null || $F{time_in_lieu_all}=="" || $F{time_in_lieu_all}==0)?"-":(($F{time_in_lieu_all}/60<10?"0"+($F{time_in_lieu_all}/60).intValue():($F{time_in_lieu_all}/60).intValue()))+":"+(($F{time_in_lieu_all}%60<10?"0"+$F{time_in_lieu_all}%60:$F{time_in_lieu_all}%60))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="70" height="20" uuid="758d276c-9521-4e1b-846f-ee4c9eb14497"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_used_all}==null || $F{time_in_lieu_used_all}=="" || $F{time_in_lieu_used_all}==0)?"-":(($F{time_in_lieu_used_all}/60<10?"0"+($F{time_in_lieu_used_all}/60).intValue():($F{time_in_lieu_used_all}/60).intValue()))+":"+(($F{time_in_lieu_used_all}%60<10?"0"+$F{time_in_lieu_used_all}%60:$F{time_in_lieu_used_all}%60))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="45" height="20" uuid="9458776d-74a9-4903-97ae-b938f52238cf"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_remain_all}==null || $F{time_in_lieu_remain_all}=="" || $F{time_in_lieu_remain_all}==0)?"-":(($F{time_in_lieu_remain_all}/60<10?"0"+($F{time_in_lieu_remain_all}/60).intValue():($F{time_in_lieu_remain_all}/60).intValue()))+":"+(($F{time_in_lieu_remain_all}%60<10?"0"+$F{time_in_lieu_remain_all}%60:$F{time_in_lieu_remain_all}%60))]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="130" y="21" width="100" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
+				<graphicElement>
+					<pen lineWidth="3.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="240" y="21" width="110" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
+				<graphicElement>
+					<pen lineWidth="3.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="360" y="21" width="85" height="1" uuid="cf18d92c-9864-49a4-a952-f4ec409d60a1"/>
+				<graphicElement>
+					<pen lineWidth="3.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" forecolor="#6666FF" uuid="fc3b8e4f-7ca5-46f2-9bd7-853a3c6ea3f6"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="4b4f1661-132e-4cdf-8818-63c8a91c9ce2"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[($F{time_in_lieu_gan_nhat_all}==null || $F{time_in_lieu_gan_nhat_all}=="" || $F{time_in_lieu_gan_nhat_all}==0)?"-":(($F{time_in_lieu_gan_nhat_all}/60<10?"0"+($F{time_in_lieu_gan_nhat_all}/60).intValue():($F{time_in_lieu_gan_nhat_all}/60).intValue()))+":"+(($F{time_in_lieu_gan_nhat_all}%60<10?"0"+$F{time_in_lieu_gan_nhat_all}%60:$F{time_in_lieu_gan_nhat_all}%60))]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="455" y="21" width="100" height="1" uuid="6f99e495-c4e3-4065-ade5-a14609ac4fb3"/>
+				<graphicElement>
+					<pen lineWidth="3.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

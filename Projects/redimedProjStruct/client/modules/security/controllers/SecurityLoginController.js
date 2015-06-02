@@ -1,6 +1,6 @@
 angular.module("app.security.login.controller",[
 ])
-    .controller("SecurityLoginController", function ($scope, $state,$modal, $cookieStore, SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
+    .controller("SecurityLoginController", function ($scope, $state,$modal, $cookieStore,localStorageService ,SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
         $scope.showClickedValidation = false;
 
         $scope.isLogging = false;

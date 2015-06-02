@@ -1,7 +1,7 @@
 /**
  * Created by Luan Nguyen on 1/12/2015.
  */
-angular.module("app.loggedIn.im.detail.controller",[])
+angular.module("app.loggedIn.patient.injuryManagement.detail.controller",[])
     .controller("InjuryDetailController",function($scope,$http,$modal,$filter,$state,$stateParams,InjuryManagementService,toastr){
         $scope.injuryInfo = {};
         $scope.injuryImages = [];

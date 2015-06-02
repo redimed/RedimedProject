@@ -6,117 +6,82 @@
 </style>
 
 <div class="modal-body">
-	<div class="portlet light ">
-		<div class="portlet-title tabbable-line">
-			<div class="caption">
-				<i class="fa fa-medkit"></i>
-        		<span class="caption-subject bold uppercase">Script</span>
-			</div>
-			<ul class="nav nav-tabs">
-				<li class="active">
-					<a href="index.html#tab_1" data-toggle="tab">
-						Details
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div class="portlet-body">
-			<div class="tab-content">
-				<div class="tab-pane active" id="tab_1">
-					<div class="row">
-	                    <div class="col-md-12 col-sm-12">
-	                        <div class="form-group">
-	                           <label class="bold">Medication:</label>
-                               <div angucomplete id="ex2" placeholder="Search Medication" pause="300" selectedobject="selectedMedication" localdata="medications" searchfields="medicine_name" titlefield="medicine_name" descriptionfield="desc" minlength="1" inputclass="form-control form-control-small"></div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                    <div class="col-md-6 col-sm-6">
-	                        <div class="form-group">
-	                            <label class="bold">Strength:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.strength"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                    <div class="col-md-6 col-sm-6">
-	                       <div class="form-group">
-	                            <label class="bold">Form:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.form"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                    <div class="col-md-6 col-sm-6">
-	                        <div class="form-group">
-	                            <label class="bold">Quantity:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.qty" number type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                    <div class="col-md-6 col-sm-6">
-	                       <div class="form-group">
-	                            <label class="bold">Code:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.code"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                    <div class="col-md-6 col-sm-6">
-	                        <div class="form-group">
-	                            <label class="bold">Dose:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.dose"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                    <div class="col-md-6 col-sm-6">
-	                       <div class="form-group">
-	                            <label class="bold">Frequency:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.frequency"   type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                	<div class="col-md-12 col-sm-12">
-	                        <div class="form-group">
-	                            <label class="bold">Script:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.script"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                	<div class="col-md-12 col-sm-12">
-	                        <div class="form-group">
-	                            <label class="bold">Instructions:</label>
-                                <textarea ng-disabled="!checkMedication" ng-model="scriptInfo.instructions" class="form-control"></textarea>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                    <div class="col-md-6 col-sm-6">
-	                        <div class="form-group">
-	                            <label class="bold">Repeat:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.repeat"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                    <div class="col-md-6 col-sm-6">
-	                       <div class="form-group">
-	                            <label class="bold">Category:</label>
-                                <input ng-disabled="!checkMedication" ng-model="scriptInfo.category"  type="text" class="form-control" />
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row">
-	                	<div class="col-md-12 col-sm-12">
-	                        <div class="form-group">
-	                            <label class="bold">Reason:</label>
-                                <textarea ng-disabled="!checkMedication" ng-model="scriptInfo.reason" class="form-control"></textarea>
-	                        </div>
-	                    </div>
-	                </div>
-				</div>
-			</div>
+	<ul class="un-tabs">
+		<li class="active">
+			<a href="index.html#tab_1" data-toggle="tab">
+				Add Script
+			</a>
+		</li>
+	</ul>
+	<div class="un-tabs-content">
+		<div class="un-tab-content active" id="tab_1">
+			<div class="row">
+                <div class="col-md-12 col-sm-12">
+                   <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Medication:</label>
+                   <!-- <div angucomplete id="ex2" placeholder="Search Medication" pause="300" selectedobject="selectedMedication" localdata="medications" searchfields="medicine_name" titlefield="medicine_name" descriptionfield="desc" minlength="1" inputclass="form-control form-control-small"></div> -->
+                   <input ng-model="scriptInfo.medication"  type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Strength:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.strength"  type="text" class="form-control" />
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Form:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.form"  type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Quantity:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.qty" number type="text" class="form-control" />
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Code:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.code"  type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Dose:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.dose"  type="text" class="form-control" />
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Frequency:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.frequency"   type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-12 col-sm-12">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Script:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.script"  type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-12 col-sm-12">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Instructions:</label>
+                    <textarea ng-disabled="!checkMedication" ng-model="scriptInfo.instructions" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Repeat:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.repeat"  type="text" class="form-control" />
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Category:</label>
+                    <input ng-disabled="!checkMedication" ng-model="scriptInfo.category"  type="text" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-12 col-sm-12">
+                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Reason:</label>
+                    <textarea ng-disabled="!checkMedication" ng-model="scriptInfo.reason" class="form-control"></textarea>
+                </div>
+            </div>
 		</div>
 	</div>
-</div>
-<div class="modal-footer">
-    <a href="javascript:;" class="btn btn-danger  btn-circle " ng-click='cancelClick()'>Cancel</a>
-    <a href="javascript:;" ng-click="okClick()" class="btn green  btn-circle "  >Submit</button>
+	<a href="javascript:;" class="btn btn-danger un-submit " ng-click='cancelClick()'>Cancel</a>
+    <a href="javascript:;" ng-click="okClick()" class="btn green un-submit "  >Submit</a>
 </div>

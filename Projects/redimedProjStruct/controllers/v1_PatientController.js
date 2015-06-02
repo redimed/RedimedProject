@@ -67,7 +67,7 @@ module.exports = {
     },
     getGetById: function (req, res) {
         var patient_id = req.query.patient_id;
-
+        console.log('this is patient id', patient_id);
         if(!patient_id){
             res.end();
             return;

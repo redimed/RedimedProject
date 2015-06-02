@@ -1,0 +1,484 @@
+<form name="FAForm" novalidate>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.FA_NAME}}</p>
+		</div>
+	</div>
+	<!-- this is section -->
+	<div class="portlet box blue-hoki" ng-repeat="section in header.sections">
+		<div class="portlet-title">
+			<div class="caption">{{section.SECTION_NAME}}</div>
+		</div>
+		<div class="portlet-body">
+			<!-- this is line -->
+			<div class="portlet box grey-cascade" ng-repeat="line in section.lines" ng-if="line.LineType===0">
+				<div class="portlet-title">
+					<div class="caption">{{line.QUESTION}}</div>
+				</div>
+				<div class="portlet-body">
+					<!-- this is line image if that line has image -->
+					<div class="row" ng-if="line.PICTURE!==null && line.PICTURE!==''">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<img ng-src="{{line.previewPath}}" height="200px" />
+						</div>
+					</div>
+					<!-- this is end line image -->
+					<div ng-repeat="detail in line.details">
+						<!-- this is detail title -->
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label"><b>{{detail.QUESTION}}</b></label>
+							</div>
+						</div>
+						<!-- this is end detail title -->
+						<!-- this is detail image if that detail has image  -->
+						<div class="row" style="margin-bottom:15px;" ng-if="detail.PICTURE!==null && detail.PICTURE!==''">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<img ng-src="{{detail.previewPath}}" height="200px" />
+							</div>
+						</div>
+						<!-- this is end detail image -->
+
+						<!-- text box with detail comment-->
+						<div class="row">
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
+								<label class="control-label pull-right" style="margin-top:10px;" >{{detail.VAL1_NAME}}</label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
+								<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line)">
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
+								<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
+							</div>
+							
+						<!-- end text box with detail comment -->
+
+						<!-- simple check box with detail comment -->
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISCHECKBOX===1">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+							</div>
+							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===1">
+								<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_CHECKBOX===1 || detail.VAL1_CHECKBOX==='1'" ng-model="detail.VAL1_CHECKBOX">
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISCHECKBOX===1">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+							</div>
+							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===1">
+								<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_CHECKBOX===1 || detail.VAL2_CHECKBOX==='1'" ng-model="detail.VAL2_CHECKBOX">
+							</div>
+						<!-- end simple check box with detail comment -->
+
+
+						<!-- Yes/No checkbox with detail comment -->
+							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===3">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Yes
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> No
+								</label>
+							</div>
+							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Yes
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> No
+								</label>
+							</div>
+						<!-- end yes/no checkbox with detail comment -->
+
+						<!-- Unable/Partial/Able checkbox with detail comment-->
+							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===2">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL1_ISCHECKBOX===2">
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> UNABLE
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> PARTIAL
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="2"> ABLE
+								</label>
+							</div>
+							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===2">
+								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL2_ISCHECKBOX===2">
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> UNABLE
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> PARTIAL
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="2"> ABLE
+								</label>
+							</div>
+							<label class="control-label col-md-1 col-sm-1 col-xs-1 caption" style="margin-top:10px;" ng-if="detail.IsCommentText===1">Comment</label>
+							<div class="col-md-3 col-sm-3 col-xs-3" ng-if="detail.IsCommentText===1">
+								<input type="text" class="form-control" ng-model="detail.COMMENTS">
+							</div>
+						<!-- end Unable/Partial/Able checkbox with detail comment -->
+						</div>
+					<!-- this is end line details -->
+					</div>
+					
+					<!-- Detail Score -->
+					<div class="row" ng-if="line.ISSCORE1 === 1 || line.ISSCORE2 === 1">
+						<!-- AVG Score -->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 3">
+							<label class="control-label pull-right" style="margin-top:15px;">Score (AVG): </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 3">
+							<label class="control-label" style="margin-top:10px;" ><b style="font-size:16pt;">{{line.SCORE1}}</b> </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 3">
+							<label class="control-label pull-right" style="margin-top:15px;">Score (AVG): </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 3">
+							<label class="control-label" style="margin-top:10px;" ><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
+						</div>
+						<!-- end AVG Score -->
+						<!-- MAX Score -->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 9)">
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 !== 9">Score (MAX): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 === 9">Managed (kg): </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 9)">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE1}}</b> </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 9)">
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 !== 9">Score (MAX): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 === 9">Managed (kg): </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && l(line.SCORE_TYPE2 === 10 || line.SCORE_TYPE1 === 2)">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
+						</div>
+						<!-- end MAX Score -->
+						<!-- MIN Score -->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 11">
+							<label class="control-label pull-right" style="margin-top:15px;">Score (MAX): </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 11">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE1}}</b> </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 11">
+							<label class="control-label pull-right" style="margin-top:15px;">Score (MAX): </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 11">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
+						<!-- end MIN Score -->
+						</div>
+					</div>
+					<!-- End Detail Score -->
+					<div class="row" ng-if="line.ISRATING1 === 1 || line.ISRATING2 === 1">
+						<!-- Normal Rate -->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
+							<label class="control-label pull-right" style="margin-top:15px;">Normal Range: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
+							<label class="control-label pull-right" style="margin-top:15px;">Normal Range: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
+						</div>
+						<!-- End Normal Rate -->
+						<!-- MAX Score, MIN Score, Recovery and Simple Rating-->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11)">
+							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11)">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11)">
+							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11)">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
+						</div>
+						<!-- End MAX Score, MIN Score, Recovery and Simple Rating-->
+						<!-- Excellent/Good/Fair/Poor radio Rating -->
+						<div class="col-md-1 col-sm-1 col-xs-1" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 8">
+							<label class="control-label pull-right" style="margin-top:10px;">Rating: </label>
+						</div>
+						<div class="col-md-5 col-sm-5 col-xs-5" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 8">
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="4"> Excellent 
+							</label>
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="3"> Good 
+							</label>
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="2"> Fair 
+							</label>
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="1"> Poor 
+							</label>
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-1" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 8">
+							<label class="control-label pull-right" style="margin-top:10px;">Rating: </label>
+						</div>
+						<div class="col-md-5 col-sm-5 col-xs-5" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 8">
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="4"> Excellent 
+							</label>
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="3"> Good 
+							</label>
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="2"> Fair 
+							</label>
+							<label class="btn">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="1"> Poor 
+							</label>
+						</div>	
+						<!-- End Excellent/Good/Fair/Por radio Rating-->
+						<!-- Unable/Partial/Able Rating -->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
+							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
+							<label class="btn">
+								<input type="radio"> UNABLE 
+							</label>
+							<label class="btn">
+								<input type="radio"> PARTIAL 
+							</label>
+							<label class="btn">
+								<input type="radio"> ABLE 
+							</label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
+							<label class="control-label pull-right" style="margin-top:15px;">Rating 2: </label>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
+							<label class="btn">
+								<input type="radio"> UNABLE 
+							</label>
+							<label class="btn">
+								<input type="radio"> PARTIAL 
+							</label>
+							<label class="btn">
+								<input type="radio"> ABLE 
+							</label>
+						</div>
+						<!-- End Unable?Partial/Able Rating -->
+					</div>
+
+					<!-- Heart Rate Rating -->
+					<div class="row" ng-if="(line.ISRATING1 === 1 && line.SCORE_TYPE1 === 4) || (line.ISRATING2 === 1 && line.SCORE_TYPE2 === 4)">
+						<div class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-11 col-sm-11 col-xs-11">
+							<label class="control-label" style="margin-top:15px;"><b>Age predicted max HR max: {{220-patient_age}}</b></label>
+							<br>
+							<label class="control-label text-info">85% Max HR: {{(85/100)*(220-patient_age)}} bpm</label>
+
+						</div>
+					</div>
+					<!-- End Heart Rate Rating -->
+					
+					<!-- this is end line rating and scoring -->
+					<!-- this is line comments -->
+					<div class="panel panel-default" ng-if="line.IsCommentsText === 1 || line.comments.length > 0">
+						<div class="panel-body">
+							<label class="control-label bold">Questions comment</label>
+
+							<!-- Textbox comment -->
+							<div class="row" ng-if="line.IsCommentsText === 1">
+								<div class="col-md-12 col-sm-12 col xs-12">
+									<textarea rows="4" class="form-control" ng-model="line.COMMENTS"></textarea>
+								</div>
+							</div>
+							<!-- End textbox comment -->
+
+							
+							<div class="row" ng-repeat="comment in line.comments">
+								<!-- Checkbox comment -->
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 1 && comment.NAME !== null && comment.NAME !== ''">
+									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
+								</div>
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 1">
+									<label class="btn">
+										<input type="checkbox" ng-true-value="0" ng-false-value="1" ng-checked="comment.VALUE === 1 || comment.VALUE === '1'" ng-model="comment.VALUE"/>
+									</label>
+									
+								</div>
+								<!-- End Checkbox comment -->
+								<!-- Yes/No comment -->
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 3 && comment.NAME !== null && comment.NAME !== ''">
+									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
+								</div>
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 3">
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="1"> Yes 
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="0"> No 
+									</label>
+								</div>
+							<!-- End Yes/No comment -->
+							<!-- Good/Avg/Poor comment -->
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 4 && comment.NAME !== null && comment.NAME !== ''">
+									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
+								</div>
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 4">
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="3"> Good 
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="2"> Average 
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="1"> Poor 
+									</label>
+								</div>
+							<!-- End Good/Avg/Poor comment -->
+							<!-- Min/Mor/Max comment -->
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 5 && comment.NAME !== null && comment.NAME !== ''">
+									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
+								</div>
+								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 5">
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="1"> Minimal
+									</label>
+									<label class="btn">
+										 <input type="radio" ng-model="comment.VALUE" ng-value="2"> Moderate
+									</label>
+									<label class="btn">
+										 <input type="radio" ng-model="comment.VALUE" ng-value="3"> Maximal
+									</label>
+								</div>
+							<!-- End Min/Mor/Max comment -->
+							<!-- Above/Within/Below comment -->
+								<div class="col-md-5 col-sm-5 col xs-5" ng-if="comment.Comment_Type === 6 && comment.NAME !== null && comment.NAME !== ''">
+									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
+								</div>
+								<div class="col-md-7 col-sm-7 col xs-7" ng-if="comment.Comment_Type === 6">
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="3" /> Above normal range 
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="comment.VALUE" ng-value="2" /> Within normal range 
+									</label>
+									<label class="btn">
+										 <input type="radio" ng-model="comment.VALUE" ng-value="1" /> Below normal range
+									</label>
+								</div>
+							<!-- End Above/Within/Below comment -->
+							</div>
+						</div>
+					</div>
+					<!-- this is end line comments -->
+				</div>
+			</div>
+			<!-- this is end line -->
+		</div>
+	</div>
+	<!-- This is end section -->
+
+	<!-- Risk rating and additional test -->
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<label class="control-label text-info bold" style="margin-top:10px;">Risk rating</label>
+
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label bold">Risk rating:</label>
+				</div>
+				<div class="col-md-10 col-sm-10 col-xs-10">
+					<label class="btn">
+						Low Risk <input type="radio">
+					</label>
+					<label class="btn">
+						Medium Risk <input type="radio">
+					</label>
+					<label class="btn">
+						High Risk <input type="radio">
+					</label>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label bold">*Comments/Recommendations:</label>
+				</div>
+				<div class="col-md-9 col-sm-9 col-xs-9">
+					<textarea rows="4" class="form-control"></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 col-sm-6 col-xs-6">
+					<label class="control-label bold" style="margin-top:10px;">Health and Rehab Coorinator Review Recommended:</label>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-6">
+					<label class="btn">
+						Yes <input type="radio">
+					</label>
+					<label class="btn">
+						No <input type="radio">
+					</label>
+				</div>
+			</div>
+			
+			<label class="control-label text-info bold">Additional Tests Attached:</label>
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label pull-right">Flexibility</label>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<input type="checkbox" />
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label pull-right">Score Stability</label>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<input type="checkbox" />
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label pull-right">Wrist/elbow function</label>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<input type="checkbox" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label pull-right">Shoulder function</label>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<input type="checkbox" />
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label pull-right">Lower limb function</label>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<input type="checkbox" />
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<label class="control-label pull-right">Balance</label>
+				</div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<input type="checkbox" />
+				</div>
+			</div>
+
+			<button class="btn btn-default green">Signature</button>
+		</div>
+		
+	</div>
+</form>

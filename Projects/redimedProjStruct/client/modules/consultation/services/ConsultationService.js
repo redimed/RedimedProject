@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.consult.services",[])
+angular.module("app.loggedIn.patient.consult.services",[])
 	.factory("ConsultationService",function(Restangular){
 		var services = {};
 		var api = Restangular.all("api");

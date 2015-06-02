@@ -64,5 +64,6 @@ eval(fs.readFileSync('./routes/company_route.js') + '');
 eval(fs.readFileSync('./routes/timetable.js') + '');
 eval(fs.readFileSync('./routes/appointment.js') + '');
 eval(fs.readFileSync('./routes/insurer.js') + '');
+eval(fs.readFileSync('./routes/waitingList.js') + '');
 /* ************************************************ END VUONG TEAM ********************************************* */
 

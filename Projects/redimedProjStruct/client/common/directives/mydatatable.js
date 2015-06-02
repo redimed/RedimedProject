@@ -11,7 +11,6 @@ angular.module("app.directive.mydatatable.common", [])
         },
         controller: function ($scope, $element, $attrs) {
             var options = $scope.options;
-            // console.log(options)
             if(!options) return;
             $scope.search = {};
             

@@ -303,6 +303,7 @@
     <script type="text/javascript" src="modules/document/controllers/detailController.js"></script>
     <script type="text/javascript" src="modules/document/controllers/addPatientController.js"></script>
     <script type="text/javascript" src="modules/document/controllers/COEController.js"></script>
+    <script type="text/javascript" src="modules/document/controllers/newFAController.js"></script>
     <!-- END MODULE DOCUMENT -->
     <!-- START MODULE ITEM -->
     <script type="text/javascript" src="modules/item/Item.js"></script>
@@ -569,12 +570,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/certificate/directives/CertificateDirective.js"></script>
     <script type="text/javascript" src="modules/certificate/directives/ScriptDirective.js"></script>
     <!--END CERTIFICATE-->
-    <!-- WAITING LIST SON OF DOCTOR -->
-    <script type="text/javascript" src="modules/doctor/modules/waitingList/WaitingList.js"></script>
-    <script type="text/javascript" src="modules/doctor/modules/waitingList/services/WaitingListServices.js"></script>
-    <script type="text/javascript" src="modules/doctor/modules/waitingList/directives/WaitingListDirectives.js"></script>
-    <script type="text/javascript" src="modules/doctor/modules/waitingList/directives/WaitingListSearchDirective.js"></script>
-    <!-- END WAITING LIST SON OF DOCTOR -->
     <!-- MEDICINE LIST -->
     <script type="text/javascript" src="modules/medicine/Medicine.js"></script>
     <script type="text/javascript" src="modules/medicine/controllers/MedicineController.js"></script>
@@ -757,7 +752,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script src="vendor/angular-svg-round-progressbar/build/roundProgress.js" type="text/javascript"></script>
     <script src="vendor/angular-flot/angular-flot.js"></script>
     <script type="text/javascript" src="modules/injuryManagement/InjuryManagement.js"></script>
-    <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryManagementController.js"></script>
     <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryMapController.js"></script>
     <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryListController.js"></script>
     <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryDetailController.js"></script>
@@ -871,10 +865,11 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="lib/jsTree/dist/jsTree.directive.js"></script>
     <script type="text/javascript" src="modules/consultation/directives/ConsultationDirectives.js"></script>
     <script type="text/javascript" src="modules/consultation/services/ConsultationService.js"></script>
+    <script type="text/javascript" src="modules/consultation/controllers/PatientConsultItemsheetController.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/ScriptController.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/MeasurementController.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/PatientConsultController.js"></script>
-    <script type="text/javascript" src="modules/consultation/controllers/ConsultController.js"></script>
+
     <script type="text/javascript" src="modules/consultation/consultation.js"></script>
     <!--END MODULE CONSULTATION-->
     <!-- JQUERY ORGCHART -->
@@ -973,8 +968,16 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/appointment/models/AppointmentModel.js"></script>
     <script type="text/javascript" src="modules/appointment/controllers/AppointmentController.js"></script>
     <script type="text/javascript" src="modules/appointment/controllers/AppointmentDetailController.js"></script>
+    <script type="text/javascript" src="modules/appointment/controllers/AppointmentDoctorController.js"></script>
     <script type="text/javascript" src="modules/appointment/directives/AppointmentCalendarDirective.js"></script>
     <script type="text/javascript" src="modules/appointment/directives/AppointmentAddDirective.js"></script>
+
+    <!-- MODULE WAITING LIST -->
+    <script type="text/javascript" src="modules/waitingList/routes.js"></script>
+    <script type="text/javascript" src="modules/waitingList/include.js"></script>
+    <script type="text/javascript" src="modules/waitingList/models/waitingListModel.js"></script>
+    <script type="text/javascript" src="modules/waitingList/directives/waitingListAddDirective.js"></script>
+    <script type="text/javascript" src="modules/waitingList/directives/waitingListListDirective.js"></script>
     <!-- ENd MODULE COMPANIES -->
     <!-- ------------------------------------------------------ END VUONG TEAM ------------------------------------------ -->
     <!--SCRIPT-->

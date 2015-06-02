@@ -1,24 +1,20 @@
-<h3 class="page-title"> Recall List </h3>
-
-<div class="portlet box red">
-   <div class="portlet-title">
-       <div class="caption">
-            <i class="fa fa-calendar"></i>  Recall List 
+<div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
+    <label class="un-label-header un-bgBlack un-label-header-padding">Recall List</label>
+    <div class="un-padding-top-bottom-10">
+        <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+            <div class="pull-right navbar-right">
+                <button  type="button" class="btn un-btn-red un-btn-position" ng-click="addForm.open()">
+                    New Recall
+                </button>
+            </div>
+            <my-data-table numrows="20" options="recall_opt" rowclick="rowClick"></my-data-table>
         </div>
-        <div class="pull-right navbar-right">
-              <button  type="button" class="btn btn-default" ng-click="addForm.open()">
-                    <i class="fa fa-plus"></i> New Recall
-              </button>
-        </div>
-    </div>
-    <div class="portlet-body">
-    	<my-data-table numrows="20" options="recall_opt" rowclick="rowClick"></my-data-table>
     </div>
 </div>
-
 <!-- ADD FORM -->
-<div class="mdt-search" style="display: block; width: 50%;" ng-if="addForm.is_show">
-    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+<div class="mdt-search un-popup-config" style="display: block; width: 50%;" ng-if="addForm.is_show">
+    <label class="un-label-popup-header un-bg-label-B41E46">Add Recall</label>
+    <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="addForm.close()">
             <i class="fa fa-times"></i>
         </button>
@@ -29,8 +25,9 @@
 </div>
 <!-- END ADD FORM -->
 <!-- EDIT FORM -->
-<div class="mdt-search" style="display: block; width: 50%;" ng-if="editForm.is_show">
-    <div class="col-md-2 col-sm-2 col-xs-2 pull-right text-center ng-scope">
+<div class="mdt-search un-popup-config" style="display: block; width: 50%;" ng-if="editForm.is_show">
+    <label class="un-label-popup-header un-bg-label-B41E46">Edit Allergy</label>
+    <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="editForm.close()">
             <i class="fa fa-times"></i>
         </button>

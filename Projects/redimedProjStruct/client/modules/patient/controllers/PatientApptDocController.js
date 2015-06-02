@@ -2,7 +2,7 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
     .controller("PatientApptDocController",function($scope, $stateParams, $timeout, FileUploader, ConfigService, PatientService, toastr){
         
         var patient_id = $stateParams.patient_id, cal_id = $stateParams.cal_id; 
-        var download_api = 'http://' + location.host + '/api/erm/v2/apptdoc/download?id=';
+        var download_api = 'https://' + location.host + '/api/erm/v2/apptdoc/download?id=';
         $scope.info_upload = {
             total_size: 0,
             progress_percent: 0,
@@ -70,7 +70,7 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
                 method:'post',
                 scope: $scope.document_panel,
                 columns:[
-                    {field: 'ID', is_hide: true},
+                    {field: 'id', is_hide: true},
                     {field: 'cal_id', label: 'Date', width:"20%", type:'custom', 
                         fn:function(item){
                             if(!item.appointment) return '';
@@ -97,7 +97,7 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
                     {
                         class: 'fa fa-times', title: 'Delete',
                         callback: function(item){
-                            PatientService.deleteFile(item.ID).then(function(res){
+                            PatientService.deleteFile(item.id).then(function(res){
                                 if(res.status === 'success'){
                                     toastr.success('Delete file success!','Success!');
                                     $scope.document_panel.reload();
@@ -111,7 +111,7 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
                         class: 'fa fa-download', title: 'Donwload',
                         callback: function(item){
                             console.log(item);
-                            window.open(download_api + item.ID);
+                            window.open(download_api + item.id);
 
                         }
                     },

@@ -29,10 +29,10 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 			size: 'lg',
 			resolve: {
 				Patient_id: function(){
-					return $stateParams.patientId;
+					return $stateParams.patient_id;
 				},
 				CAL_ID: function(){
-					return $stateParams.calId;
+					return $stateParams.cal_id;
 				}
 			}
 		})
@@ -48,8 +48,8 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 			select: function(){ select(); }
 		},
 		reload: false,
-		Patient_id: $stateParams.patientId,
-		CAL_ID: $stateParams.calId,
+		Patient_id: $stateParams.patient_id,
+		CAL_ID: $stateParams.cal_id,
 		limit: 20
 	}
 })

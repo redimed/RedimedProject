@@ -6,7 +6,8 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 		scope:{
 			patientId: '=',
 			id: '=',
-			success: '='
+			success: '=',
+			data:'='
 		},
 		templateUrl: 'modules/outreferral/directives/templates/patientEdit.html',
 		link: function(scope, elem, attrs){
@@ -27,7 +28,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);
-				postData.Creation_date = postData.Last_update_date = moment().format('YYYY-MM-DD');
+				postData.Creation_date = postData.last_update_date = moment().format('YYYY-MM-DD');
 
 				if(postData.date_issued)
 					postData.date_issued = ConfigService.convertToDB(postData.date_issued);
@@ -50,7 +51,13 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 			var outdoctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectOutdoctorDialog',
+					size :'lg',
 					controller: function($scope, $modalInstance){
+						$scope.$watch('data', function(data){
+								if(typeof data !== 'undefined'){
+									$modalInstance.close(data);
+								}
+							})
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);
 						}
@@ -65,6 +72,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 			var doctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectDoctorDialog',
+					size :'lg',
 					controller: function($scope, $modalInstance){
 						$scope.clickRow = function(row){
 							$modalInstance.close(row);

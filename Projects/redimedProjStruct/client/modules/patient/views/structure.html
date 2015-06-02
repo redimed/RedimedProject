@@ -1,1 +1,225 @@
-<div ui-view="main-content"></div>
+<style type="text/css">
+	.page-content-wrapper .page-content {
+	    background: rgb(24, 22, 78);
+	}
+</style>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="un_page_panel">
+	<!-- <div class="un_header_panel">
+		<div class="un_header_part_left">
+			<img src="../theme/un/un_redimed_logo.jpg" alt="Redimed Logo" width="268px" height="60px" />
+		</div>
+		<div class="un_header_part_right">
+			<div class="un_header_part_right_content">
+				Header panel
+			</div>
+			<div class="un_header_part_right_btn">
+				btn
+			</div>
+		</div>
+		<div>
+			<img src="../theme/un/un_header_panel.jpg"  alt="Redimed Logo"   height="99px"  width="100%" />
+		</div>
+	</div> -->
+	<div class="un_main_nav_panel">
+		<div class="un_main_nav_bar">
+			<div ng-if="module.wrap==0" class="un_main_nav_item" ng-repeat="module in patient_detail_modules">
+				<a ui-sref="{{module.state}}">{{module.name}}</a>
+			</div>
+			<div ng-if="module.wrap==0" class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
+				<a ui-sref="{{module.state}}">{{module.name}}</a>
+			</div>
+
+			<div class="un_main_nav_item">
+				<ul class="un_main_nav_item_dropdown">
+				    <li>
+				        <a>More<i class="fa fa-chevron-down"></i></a>
+				        <ul style="list-style-type: none;">
+				            <li ng-if="module.wrap==1" ng-repeat="module in patient_detail_modules">
+				            	<a ui-sref="{{module.state}}">{{module.name}}</a>
+				            </li>
+
+				            <li ng-if="module.wrap==1" ng-repeat="module in patient_apt_modules">
+				            	<a ui-sref="{{module.state}}">{{module.name}}</a>
+				            </li>
+
+				        </ul>
+				    </li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="un_body_panel">
+		<div class="un_body_top un-padding-left-right-20-top-15-bottom-10">
+			<div ng-show="patientBarVer.version=='full'" class="row">
+				<div class="col-lg-12">
+					<div class="un-bgXam-colBlack un-padding-top-10 un-padding-bottom-10 un-div-width-90">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="col-lg-4 un-padding-right-0 un-padding-bottom-10">
+											<div class="input-group un-padding-bottom-10">
+												<span class="input-group-btn ">
+												<button class="btn un-btn-black-label" type="button">Patient Name</button>
+												</span>
+												<label type="text" class="form-control un-input-xam-fig">{{current_patient.First_name}}</label>
+											</div>
+											<div class="input-group">
+												<span class="input-group-btn ">
+												<button class="btn un-btn-black-label" type="button">Gender</button>
+												</span>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Male</label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Female</label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null && current_patient.Sex==un"></label>
+											</div>
+										</div>
+										<div class="col-lg-4 un-padding-right-0 un-padding-left-10 un-padding-bottom-10">
+											<div class="input-group un-padding-bottom-10">
+												<span class="input-group-btn ">
+												<button class="btn un-btn-black-label" type="button">Injury/ Illness </button>
+												</span>
+												<label type="text" class="form-control un-input-xam-fig"></label>
+											</div>
+											<div class="input-group">
+												<span class="input-group-btn ">
+												<button class="btn un-btn-black-label" type="button">Previous Medical Hx</button>
+												</span>
+												<label type="text" class="form-control un-input-xam-fig"></label>
+											</div>
+										</div>
+										<div class="col-lg-4 un-padding-left-10 un-padding-bottom-10">
+											<div class="input-group">
+												<span class="input-group-btn ">
+												<button class="btn un-btn-black-label-60" type="button">Allergy</button>
+												</span>
+												<label type="text" class="form-control un-input-xam-fig-60">
+													<label ng-repeat="item in listAllergyinPAtient">
+														<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
+														<label ng-if="$last">{{item.allergy_name}}</label>
+													</label>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 un-padding-right-0 un-padding-bottom-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">DOB</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.DOB | date:'dd-MM-yyyy'}}</label>
+									</div>
+								</div>
+								<div class="col-lg-4 un-padding-right-0 un-padding-left-10 un-padding-bottom-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Employer</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.company.Company_name}}</label>
+									</div>
+								</div>
+								<div class="col-lg-4 un-padding-left-10 un-padding-bottom-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Site</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.Site_name}}</label>
+									</div>
+								</div>
+								<div class="col-lg-4 un-padding-right-0">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Occupation</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.Occupation}}</label>
+									</div>
+								</div>
+								<div class="col-lg-4 un-padding-right-0 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Email</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.Email}}</label>
+									</div>
+								</div>
+								<div class="col-lg-4 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Time</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME|date:'dd/MM/yyyy - hh:mm'}}</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="un-bg-avatar un-div-width-10">
+						<img src="{{current_patient.avatar}}" width="100%" height="100%">
+					</div>
+				</div>
+			</div>
+			<div ng-show="patientBarVer.version=='zip'" class="row">
+				<div class="col-lg-12">
+					<div class="un-bgXam-colBlack un-padding-top-10">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="col-lg-3 un-padding-right-0 un-padding-left-10">
+									<div class="input-group un-padding-bottom-10">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Patient Name</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.First_name}}</label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-right-0">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">DOB</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.DOB | date:'dd-MM-yyyy'}}</label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Gender</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Male</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Female</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null"></label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Allergy</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">
+											<label ng-repeat="item in listAllergyinPAtient">
+												<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
+												<label ng-if="$last">{{item.allergy_name}}</label>
+											</label>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="un_body_center un-margin-left-right-20 un-padding-left-right-20-top-2-bottom-10">
+			<div class="row">
+				<!-- <div class="col-lg-12 un-bgXam-colBlack un-padding-top-10"> --><!-- tan comment -->
+				<div class="col-lg-12 un-padding-top-10"><!-- tan add -->
+					<div ui-view="main-content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	</div>
+</div>

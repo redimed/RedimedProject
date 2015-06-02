@@ -2,16 +2,19 @@
 	<h3>Notification List</h3>
 	<hr>
 	<span ng-repeat="list in alertCenter.list">
-		<h4 ng-if="(list.IS_REFERRAL && list.outreferral_id === 'no')">
+		<h4 ng-if="list.alert.length > 0 || list.cal.length > 0">
 			{{list.First_name}} {{list.Sur_name}}
-			({{list.FROM_TIME}} - {{list.TO_TIME}})
 		</h4>
-		<!--<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+		<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
 			<li>{{alert.name}}</li>
-		</ul>-->
-		<p ng-if="list.IS_REFERRAL">
-			<b ng-if="list.outreferral_id === 'no'">There is no referral. Please make referral</b>
+		</ul>
+		<p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+			<span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'">
+				{{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+				There is no referral
+			</span>
 		</p>
+		
 	</span>
 </div>
 <div class="bv-arrow" ng-click="clickArrow()"></div>
@@ -21,19 +24,28 @@
 		<!-- DATEPICKER -->
 		<div class="col-md-4">
 			<div class="form-group">
-				<label>Datepicker</label>
-				<input custom-date ng-model="appointment.search.datepicker" ng-change="appointment.load()" class="form-control">
+				<label class="un-label-header un-bgWhite">Datepicker</label>
+				<div class="un-div-content un-bgWhite-boxshadow-bottom">
+					<input custom-date ng-model="appointment.search.datepicker" ng-change="appointment.load()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+				</div>
 			</div>
 		</div>
+		<style type="text/css">
+			.un_group_black_header{
+				z-index: 0;
+			}
+		</style>
 		<!-- END DATEPICKER -->
 
 		<!-- REDIMEDSITE -->
 		<div class="col-md-4">
 			<div class="form-group">
-				<label>Redimed Site</label>
-				<select ng-options="s.id as s.Site_name for s in site.list" ng-model="appointment.search.site_id"
-					ng-change="appointment.load()" class="form-control">
-				</select>
+				<label class="un-label-header un-bgWhite">Redimed Site</label>
+				<div class="un-div-content un-bgWhite-boxshadow-bottom">
+		        	<select ng-options="s.id as s.Site_name for s in site.list" ng-model="appointment.search.site_id"
+					ng-change="appointment.load()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+					</select>	
+		        </div>
 			</div>
 		</div>
 		<!-- END REDIMEDSITE -->
@@ -41,35 +53,42 @@
 		<!-- CLINICAL DEPT -->
 		<div class="col-md-4">
 			<div class="form-group">
-				<label>Clinical Dept</label>
-				<select ng-options="c.CLINICAL_DEPT_ID as c.CLINICAL_DEPT_NAME for c in clinicalDept.list" 
+				<label class="un-label-header un-bgWhite">Clinical Dept</label>
+				<div class="un-div-content un-bgWhite-boxshadow-bottom">
+					<select ng-options="c.CLINICAL_DEPT_ID as c.CLINICAL_DEPT_NAME for c in clinicalDept.list" 
 					ng-model="appointment.search.clinical_dept_id"
 					class="form-control"
-					ng-change="appointment.load()">
-					<option value="">All</option>
-				</select>
+					ng-change="appointment.load()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+						<option value="">All</option>
+					</select>
+				</div>
 			</div>
 		</div>
 		<!-- END CLINICAL DEPT -->
 	</div>
 
 	<div class="appointment">
-		<div class="appointment-row" style="margin-bottom: 10px;">
-			<div class="appointment-block-time"></div>
+		<div class="appointment-row">
+			<div class="appointment-block-times" style="background: rgb(96, 99, 94)">
+				<label style="color: #ffffff; font-weight: bold;">Times</label>
+			</div>
 			<div class="appointment-block-header" ng-repeat="doctor in doctor.headers">
-				{{doctor.NAME}}
+					<label style="color: #ffffff; margin-bottom: 0; padding-top: 10px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; font-weight: bold; background: rgb(96, 99, 94)"
+						ng-click="goToCalendarDetail(doctor)">
+						{{doctor.NAME}}
+					</label>
 			</div>
 		</div>
 		<div class="appointment-row" ng-repeat="app in appointment.list">
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}" ng-right-click="appointment.onRightClick($event, app, col)"
-				ng-style="{'background-color': '{{col.SERVICE_COLOR}}'}">
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
 				<span ng-if="col.PATIENTS === '###'">
-					{{col.PATIENTS}}
+					
 				</span>
 				<span ng-if="col.PATIENTS === 'ok'">
 					<span ng-repeat="patient in col.patients">
@@ -82,7 +101,9 @@
 								<i class="fa fa-caret-right"></i>
 							</a>
 						</a>
-						<br>
+						<span ng-if="col.patients.length > 1 && $index < col.patients.length-1">
+							<br/>
+						</span>
 					</span>
 				</span>
 			</div>
@@ -96,22 +117,27 @@
 		<a ng-click="appointment.dialog.rightAdd(appointment.selectedAppointment, appointment.selectedCol)">
 			Make new Booking
 		</a>
+		<a ng-click="appointment.dialog.chooseWaitingList(appointment.selectedCol)">
+			Add Waiting List
+		</a>
 	</li>
-	<!--<li><a ng-click="addWaitingList()">Add Waiting List</a></li>
-	<li><a ng-click="openWaitingList()">Select Waiting List</a></li>
-	<li><a ng-click="cancelStatus(rightSelectedBooking.data, rightSelectedBooking.overId, rightSelectedBooking.docId)">
-		Cancel Status</a></li>-->
 </ul>
 <!-- END RIGHT CLICK DROPDOWN MENU -->
 
+<script type="text/ng-template" id="waitingListAdd">
+	<div class="modal-body">
+		<waiting-list-add success="success" doctor-id="doctor_id"></waiting-list-add>
+	</div>
+</script>
+
 <script type="text/ng-template" id="appointmentAdd">
-	<div class="modal-body">	
+	<div class="modal-body">
 		<appointment-add params="appointment" patient="patient" options="options"></appointment-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="patientAdd">
-	<div style="background-color: rgb(23, 20, 76)!important;" class="modal-body">
+	<div class="modal-body">
 		<patient-detail options="options" params="params" onsuccess="onsuccess" patient="onsuccess"></patient-detail>
 	</div>
 </script>
@@ -119,6 +145,12 @@
 <script type="text/ng-template" id="patientList">
 	<div class="modal-body">	
 		<patient-search click-row="clickRow(row)"></patient-search>
+	</div>
+</script>
+
+<script type="text/ng-template" id="waitingListSelect">
+	<div class="modal-body">	
+		<waiting-list-list click-row="clickRow(row)"></waiting-list-list>
 	</div>
 </script>
 
@@ -167,6 +199,11 @@
 </script>
 
 <script type="text/ng-template" id="claimSelect">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
 	<div class="modal-body">	
 		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true" add-success="claim.addSuccess"
 			cal-id="claim.CAL_ID"
@@ -176,15 +213,27 @@
 </script>
 
 <script type="text/ng-template" id="referralAdd">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
 	<div class="modal-body">	
-		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success">
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
 		</outreferral-patient-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="referralSelect">
-	<div class="modal-body">	
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">
 		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
+			doctor-id="doctorId"
+			cal-id="calId"
 			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
 			permission="{edit: false, remove: false, add: true}">
 		</outreferral-patient-list>

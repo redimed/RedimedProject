@@ -23,7 +23,7 @@
     </script>
     <script type="text/ng-template" id="dialogAddCompany">
         <div class="modal-body">
-            <add-company-not-follow success="success"></add-company-not-follow>
+            <add-company-not-follow action-center="actionCenter"></add-company-not-follow>
         </div>
     </script>
     <!-- <add-company></add-company> -->
@@ -130,11 +130,16 @@
                                                 </span>
                                             </span> -->
                                             <!-- ERROR -->
-                                        </div>                        
+                                        </div>   
                                         <div>
                                             <label class="un-label-form un-label-whidth-85">Middle name</label>
                                             <input type="text" id="mname" name="mname" ng-model="modelObjectMap.Middle_name" class="form-control un-input-custom" float-label />
                                         </div>
+                                        <div>
+                                            <label class="un-label-form un-label-whidth-97">Known as</label>
+                                            <input type="text" id="knownas" 
+                                                name="knownas" ng-model="modelObjectMap.Known_as" class="form-control un-input-custom" float-label />
+                                        </div>  
                                         <div class="form-group">
                                             <select class="un-select-sex" ng-model="modelObjectMap.Sex">
                                                 <option value="0" selected>Male</option>
@@ -146,11 +151,6 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 un-form-right">
-                                        <div>
-                                            <label class="un-label-form un-label-whidth-97">Known as</label>
-                                            <input type="text" id="knownas" 
-                                                name="knownas" ng-model="modelObjectMap.Known_as" class="form-control un-input-custom" float-label />
-                                        </div>
                                         <div ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
                                             <label class="un-label-form un-label-whidth-97">Date of Birth *</label>
                                             <input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
@@ -198,6 +198,11 @@
                                                 </span>
                                             </span> -->
                                             <!-- ERROR -->
+                                        </div>
+                                        <div>
+                                            <label class="un-label-form un-label-whidth-97">Occupation</label>
+                                            <input type="text" name="occupation" ng-model="modelObjectMap.Occupation"
+                                                class="form-control un-input-custom" id="occupation" float-label>
                                         </div>
                                     </div>
                                 </div>
@@ -647,8 +652,8 @@
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12">
-    <button class="btn pull-right un-submit" ng-if="params.permission.create !== false" ng-click="buttonclick()"><i class="fa fa-plus"></i>&nbsp SAVE</button>
-    <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"><i class="fa fa-pencil"></i>&nbsp EDIT</button>
-    <button class="btn pull-right un-submit" ng-if="isClose" ng-click="closePopup()"><i class="fa fa-times"></i>&nbsp CLOSE</button>
+    <button class="btn pull-right un-submit" ng-if="params.permission.create !== false" ng-click="buttonclick()">&nbsp SAVE</button>
+    <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"></i>&nbsp EDIT</button>
+    <button class="btn pull-right un-submit" ng-if="isClose" ng-click="closePopup()">&nbsp CLOSE</button>
     </div>
 </div>

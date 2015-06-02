@@ -17,13 +17,13 @@ var chainer = new db.Sequelize.Utils.QueryChainer;
 
 module.exports = {
 
-    insertFA : function(req, res)
+    insertFATest: function(req, res)
     {
         var infoL = req.body.infoL;
         var infoH = req.body.infoH;
         var infoD = req.body.infoD;
         var infoC = req.body.infoC;
-        var FA_ID = 11;
+        var FA_ID = req.body.fa_id;
         var max;
 
         db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s where s.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
@@ -50,6 +50,38 @@ module.exports = {
         });
     },
 
+
+    insertFA: function(req,res){
+        var infoL = req.body.infoL;
+        var infoH = req.body.infoH;
+        var infoD = req.body.infoD;
+        var infoC = req.body.infoC;
+        var FA_ID = infoH.FA_ID;
+        //insert cln_header template
+        db.sequelize.query("INSERT INTO `cln_fa_df_headers` SELECT ?,?,h.* FROM `sys_fa_df_headers` h where h.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
+            db.sequelize.query("INSERT INTO `cln_fa_df_sections` SELECT ?,?,s.*  FROM `sys_fa_df_sections` s where s.`FA_ID` = ?",null,{raw:true},[infoH.PATIENT_ID,infoH.CAL_ID, FA_ID]).success(function(){
+                db.sequelize.query("INSERT INTO `cln_fa_df_lines` SELECT ?,?,l.* FROM `sys_fa_df_lines` l WHERE l.`FA_ID` = ? AND l.`SECTION_ID` IN (SELECT s.`SECTION_ID` FROM `sys_fa_df_sections` s WHERE s.`FA_ID` = ?)",null,{raw:true},[infoH.PATIENT_ID, infoH.CAL_ID, FA_ID, FA_ID]).success(function(){
+                    db.sequelize.query("INSERT INTO `cln_fa_df_line_details` SELECT ?,?,d.* FROM `sys_fa_df_line_details` d WHERE d.`LINE_ID` IN(SELECT l.`LINE_ID` FROM `sys_fa_df_lines` l WHERE l.`FA_ID` = ? AND l.`SECTION_ID` IN(SELECT s.`SECTION_ID` FROM `sys_fa_df_sections` s WHERE s.`FA_ID` = ?))",null,{raw:true},[infoH.PATIENT_ID, infoH.CAL_ID, FA_ID, FA_ID]).success(function(){
+                        db.sequelize.query("INSERT INTO `cln_fa_df_comments` SELECT ?,?,c.* FROM `sys_fa_df_comments` c WHERE c.`LINE_ID` IN(SELECT l.`LINE_ID` FROM `sys_fa_df_lines` l WHERE l.`FA_ID` = ? AND l.`SECTION_ID` IN(SELECT s.`SECTION_ID` FROM `sys_fa_df_sections` s WHERE s.`FA_ID` = ?))",null,{raw:true},[infoH.PATIENT_ID, infoH.CAL_ID, FA_ID, FA_ID]).success(function(){
+                            submitFA(res,infoH,infoL,infoD,infoC);
+                        })
+                        .error(function(err){
+                            res.json(500,{status:'error',error:err});
+                        });
+                    }).error(function(err){
+                        res.json(500,{status:'error',error:err});
+                    });
+                }).error(function(err){
+                    res.json(500,{status:'error',error:err});
+                });
+            }).error(function(err){
+                res.json(500,{status:'error',error:err});
+            });
+        }).error(function(err){
+            res.json(500,{status:'error',error:err});
+        })
+    },
+
     updateFA : function(req, res)
     {
         var infoL = req.body.infoL;
@@ -72,6 +104,7 @@ module.exports = {
                     loadNewFA(res, FA_ID);
                 }else
                 {
+                    console.log('this is fa id',FA_ID);
                     loadFA(res,Patient_Id,CalId, FA_ID);
                 }
             })
@@ -106,28 +139,34 @@ module.exports = {
     }
 };
 
-var loadFA = function(res,idP, idC){
+var loadFA = function(res,idP, idC, fa_id){
     var data = [];
     sequelize.transaction(function(t) {
-        db.HeaderFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}},{transaction: t})
+        db.HeaderFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC, FA_ID:fa_id}},{transaction: t})
             .success(function(dataH){
-                db.SectionFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}, order : 'ORD'},{transaction: t})
+                db.SectionFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC, FA_ID:fa_id}, order : 'ORD'},{transaction: t})
                     .success(function(dataS){
-                        db.LineFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}, order : 'ORD'},{transaction: t})
+                        var sectionID_arr = [];
+                        for(var k=0; k<dataS.length; k++){
+                            sectionID_arr.push(dataS[k].SECTION_ID);
+                        }
+                        db.LineFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC, FA_ID:fa_id, SECTION_ID:{in:sectionID_arr}}, order : 'ORD'},{transaction: t})
                             .success(function(dataL){
+                                var lineID_arr=[];
                                 for(var i=0; i<dataL.length; i++) {
                                     if (dataL[i].PICTURE != null) {
                                         dataL[i].PICTURE = base64Image(dataL[i].PICTURE);
                                     }
+                                    lineID_arr.push(dataL[i].LINE_ID);
                                 }
-                                db.DetailFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}, order : 'ORD'},{transaction: t})
+                                db.DetailFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC, LINE_ID:{in:lineID_arr}}, order : 'ORD'},{transaction: t})
                                     .success(function(dataD){
                                         for(var i=0; i<dataD.length; i++) {
                                             if (dataD[i].PICTURE != null) {
                                                 dataD[i].PICTURE = base64Image(dataD[i].PICTURE);
                                             }
                                         }
-                                        db.CommentFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC}},{transaction: t})
+                                        db.CommentFA.findAll({where : {ISENABLE : 1,PATIENT_ID : idP,CAL_ID: idC,LINE_ID:{in:lineID_arr}}},{transaction: t})
                                             .success(function(dataC){
                                                 t.commit().success(function() {
                                                     data = [{"Header": dataH, "Section" : dataS,"Line": dataL,"Detail" : dataD,"Comment" : dataC}];

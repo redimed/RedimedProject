@@ -786,13 +786,19 @@ Page sidebar
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.start > a {
   border-top-color: transparent !important;
 }
+.m-add-hover-color:hover .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a, .page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li.open > a {
+  color: red !important;
+  background: -webkit-gradient(linear, left center, right center, color-stop(0%, #87888B), color-stop(50%, white), color-stop(109%, #87888B)) !important;
+}
 .page-sidebar .page-sidebar-menu > li.last > a,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.last > a {
   border-bottom-color: transparent !important;
+  color: red !important;
+  background: -webkit-gradient(linear, left center, right center, color-stop(0%, #87888B), color-stop(50%, white), color-stop(109%, #87888B)) !important;
 }
 .page-sidebar .page-sidebar-menu > li > a,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a {
-  min-height: 78px;
+  min-height: 60px;
   display: block;
   position: relative;
   margin: 0;
@@ -801,12 +807,14 @@ Page sidebar
   text-decoration: none;
   font-size: 13px;
   font-weight: 300;
-  text-align: center;
+  background: -webkit-gradient(linear, left center, right center, color-stop(0%, #19274E), color-stop(50%, #576076), color-stop(109%, #19274E));
+  border-top: 10px solid rgb(15, 26, 52) !important;
+  /*text-align: center;*/
 }
 .page-sidebar .page-sidebar-menu > li > a > .title,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > .title {
   display: block;
-  text-align: center;
+  /*text-align: center;*/
   margin-top: 5px;
 }
 .page-sidebar .page-sidebar-menu > li > a > i,
@@ -821,6 +829,7 @@ Page sidebar
   top: 3px;
   margin-left: 1px;
   margin-right: 4px;
+  float: left;
 }
 .page-sidebar .page-sidebar-menu > li > a > [class^="icon-"],
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > [class^="icon-"] {

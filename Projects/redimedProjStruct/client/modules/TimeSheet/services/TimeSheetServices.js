@@ -337,7 +337,7 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
         };
 
         TimeSheetService.LoadReportUtilizationRatioSumary = function(info) {
-            var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-summary");
+            var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-sumary");
             return LoadReportUtilizationRatioSumary.post({
                 info: info
             });
@@ -350,6 +350,13 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
         //END LEAVE FORM
+
+        TimeSheetService.DeleteFile = function(fileId) {
+            var DeleteFile = api.all("TimeSheet/post-del-file");
+            return DeleteFile.post({
+                fileId: fileId
+            });
+        };
 
         return TimeSheetService;
     });
