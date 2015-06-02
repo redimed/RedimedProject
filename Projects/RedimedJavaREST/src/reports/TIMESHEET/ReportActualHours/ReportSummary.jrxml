@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7234812-1a5c-45b3-9eec-acf39cec918f">
 	<property name="ireport.zoom" value="1.6105100000000014"/>
-	<property name="ireport.x" value="99"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="New Dataset 1" uuid="0392eabf-3e20-4b77-aa90-73ee10e7c949">
 		<queryString>
@@ -143,18 +143,18 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 					<text><![CDATA[Subtotal:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="300" y="2" width="45" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
+					<reportElement x="333" y="0" width="45" height="19" uuid="57e16783-e4ae-4c37-8f21-0097cdfb7b4e"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[($F{time_charge_Dept_all}==null || $F{time_charge_Dept_all}=="" || $F{time_charge_Dept_all}==0)?"-":(($F{time_charge_Dept_all}/60<10?"0"+($F{time_charge_Dept_all}/60).intValue():($F{time_charge_Dept_all}/60).intValue()))+":"+(($F{time_charge_Dept_all}%60<10?"0"+$F{time_charge_Dept_all}%60:$F{time_charge_Dept_all}%60))]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="240" y="21" width="105" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
+					<reportElement x="240" y="21" width="138" height="1" uuid="6d2574d7-48e7-4dbf-9c2c-5eda11b43b4d"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="240" y="0" width="105" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
+					<reportElement x="240" y="0" width="138" height="1" uuid="7782a11a-7d91-4b7a-ad7c-ddc6507f17fd"/>
 				</line>
 				<textField>
 					<reportElement x="480" y="0" width="45" height="19" uuid="af9b8719-60b4-4c62-85c1-2a72a4c8f10a"/>
@@ -162,13 +162,13 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 					<textFieldExpression><![CDATA["100.0%"]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="355" y="0" width="170" height="1" uuid="4f67544e-a1ff-4813-8365-e4df69df4be8"/>
+					<reportElement x="388" y="0" width="137" height="1" uuid="4f67544e-a1ff-4813-8365-e4df69df4be8"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="355" y="21" width="170" height="1" uuid="d04f3224-c418-4986-828d-150616505b13"/>
+					<reportElement x="388" y="21" width="137" height="1" uuid="d04f3224-c418-4986-828d-150616505b13"/>
 					<graphicElement>
 						<pen lineWidth="2.5" lineStyle="Double"/>
 					</graphicElement>
@@ -221,7 +221,7 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 				<text><![CDATA[Activities]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="240" y="148" width="105" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
+				<reportElement x="240" y="148" width="138" height="20" forecolor="#6666FF" uuid="f4357994-9e48-444b-b62d-020e3ed5c0b1"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
@@ -231,17 +231,17 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 				<reportElement x="30" y="168" width="200" height="1" forecolor="#6666FF" uuid="a52c6240-62f1-4117-a9d9-cc1f7f0001bc"/>
 			</line>
 			<line>
-				<reportElement x="240" y="168" width="105" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
+				<reportElement x="240" y="168" width="138" height="1" forecolor="#6666FF" uuid="38ca2336-c396-41df-bd19-944a5b152190"/>
 			</line>
 			<staticText>
-				<reportElement x="355" y="148" width="170" height="20" forecolor="#6666FF" uuid="5a08c96b-4367-447e-b6c0-f30177b98380"/>
+				<reportElement x="388" y="148" width="137" height="20" forecolor="#6666FF" uuid="5a08c96b-4367-447e-b6c0-f30177b98380"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font size="12" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Percentage]]></text>
 			</staticText>
 			<line>
-				<reportElement x="355" y="168" width="170" height="1" forecolor="#6666FF" uuid="6934170a-189f-4fdc-8cbd-56ed3b8d639e"/>
+				<reportElement x="388" y="168" width="137" height="1" forecolor="#6666FF" uuid="6934170a-189f-4fdc-8cbd-56ed3b8d639e"/>
 			</line>
 		</band>
 	</title>
@@ -251,7 +251,7 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="300" y="0" width="45" height="17" uuid="6eba9d3e-a884-43c5-a552-15d500221632"/>
+				<reportElement x="333" y="0" width="45" height="17" uuid="6eba9d3e-a884-43c5-a552-15d500221632"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_Dept}==null || $F{time_charge_Dept}=="" || $F{time_charge_Dept}==0)?"-":(($F{time_charge_Dept}/60<10?"0"+($F{time_charge_Dept}/60).intValue():($F{time_charge_Dept}/60).intValue()))+":"+(($F{time_charge_Dept}%60<10?"0"+$F{time_charge_Dept}%60:$F{time_charge_Dept}%60))]]></textFieldExpression>
 			</textField>
@@ -281,7 +281,7 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 	<summary>
 		<band height="28" splitType="Stretch">
 			<line>
-				<reportElement x="240" y="21" width="105" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
+				<reportElement x="240" y="21" width="138" height="1" uuid="d61a925a-25de-4e72-b19f-a4ff7b68b3f5"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
@@ -299,12 +299,12 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 				<textFieldExpression><![CDATA["100.0%"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="300" y="0" width="45" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
+				<reportElement x="333" y="0" width="45" height="20" uuid="4de2139a-e644-4609-a929-49ff25b343fe"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[($F{time_charge_all}==null || $F{time_charge_all}=="" || $F{time_charge_all}==0)?"-":(($F{time_charge_all}/60<10?"0"+($F{time_charge_all}/60).intValue():($F{time_charge_all}/60).intValue()))+":"+(($F{time_charge_all}%60<10?"0"+$F{time_charge_all}%60:$F{time_charge_all}%60))]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="355" y="21" width="170" height="1" uuid="f448d8f3-cdec-44b8-9404-afd840166f10"/>
+				<reportElement x="388" y="21" width="137" height="1" uuid="f448d8f3-cdec-44b8-9404-afd840166f10"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>
