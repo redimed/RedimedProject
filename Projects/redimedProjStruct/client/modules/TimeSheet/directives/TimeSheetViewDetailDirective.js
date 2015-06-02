@@ -20,7 +20,7 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                             scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
                         } else {
                             //catch exception
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error('Server not response!', "Error");

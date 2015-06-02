@@ -3,11 +3,11 @@
         <ul class="page-breadcrumb">
             <li>
                 <img src="/img/TimeSheet/time-sheet-icon.jpg" style="margin-top:-7px;">
-                <a ui-sref="loggedIn.TimeSheetHome">e-Timesheets</a>
+                <a ui-sref="loggedIn.home">e-Timesheets</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a ui-sref="loggedIn.TimeSheetHome">
+                <a ui-sref="loggedIn.home">
                     <span>Leave Management System</span>
                 </a>
                 <i class="fa fa-angle-right"></i>
@@ -187,7 +187,7 @@
             </div>
             <div class="row" style="margin-right:-7px;">
                 <a class="btn btn-xs yellow pull-right" ng-if="isEdit===true" ui-sref="loggedIn.LeaveHistory" style="width:75px;">Cancel</a>
-                <a class="btn btn-xs yellow pull-right" ng-if="isEdit===false" ui-sref="loggedIn.TimeSheetHome" style="width:75px;">Cancel</a>
+                <a class="btn btn-xs yellow pull-right" ng-if="isEdit===false" ui-sref="loggedIn.home" style="width:75px;">Cancel</a>
                 <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px;" ng-if="is_reject!==1">Submit</button>
                 <button class="btn btn-xs purple pull-right" ng-click="clickSendServer(5,formLeave)" style="width:75px; " ng-if="is_reject===1">Re-submit</button>
                 <button class="btn btn-xs green pull-right" ng-click="clickSendServer(1,formLeave)" style="width:75px;" ng-if="status_id!==4">Save</button>

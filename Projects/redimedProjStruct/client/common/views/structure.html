@@ -211,14 +211,16 @@
                     <!-- END NOT TIMESHEET -->
                     <!-- FOR EMPLOYEE -->
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===144">
-                        <i></i>
-                        <span class="title">{{menu.parent.name}}</span>
+                        <i>
+                            <img src="/img/TimeSheet/icon_03.PNG"/>
+                        </i>
+                        <span>{{menu.parent.name}}</span>
                     </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===144">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===144" style="width:230px;">
                         <!-- LEAVE FORM -->
                         <li>
-                            <a ui-sref="#">
-                                <i class="fa fa-angle-right"></i> Leave Management System
+                            <a ui-sref="#" class="title">
+                                <i class="fa fa-angle-right"></i> Leave Management
                             </a>
                             <ul class="sub-menu">
                                 <li>
@@ -249,9 +251,9 @@
                         <!-- REPORT -->
                         <li>
                             <a ui-sref="#">
-                                <i class="fa fa-angle-right"></i> Utilization Time Reporting System
+                                <i class="fa fa-angle-right"></i>Timesheet Reporting System
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" style="width: 350px;">
                                 <li>
                                     <a ui-sref="loggedIn.Report2TimeSheet">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
@@ -277,11 +279,11 @@
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===146">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===146" style="width:230px;">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#">
-                                <i class="fa fa-angle-right"></i> Leave Management System
+                                <i class="fa fa-angle-right"></i> Leave Management
                             </a>
                             <ul class="sub-menu">
                                 <li>
@@ -322,9 +324,9 @@
                         <!-- REPORT -->
                         <li>
                             <a ui-sref="#">
-                                <i class="fa fa-angle-right"></i> Utilization Time Reporting System
+                                <i class="fa fa-angle-right"></i>Timesheet Reporting System
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" style="width:350px;">
                                 <li>
                                     <a ui-sref="loggedIn.Report1TimeSheet">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
@@ -370,7 +372,7 @@
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===148">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===148" style="width:230px;">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#">
@@ -397,7 +399,7 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i> Utilization Time Reporting System
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" style="width:350px;">
                                 <li>
                                     <a ui-sref="loggedIn.Report1TimeSheet">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
@@ -439,7 +441,6 @@
                     </ul>
                     <!-- END FOR DIRECTOR -->
                     <!-- FOR ADMIN -->
-                    <!-- FOR DIRECTOR -->
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===147">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>

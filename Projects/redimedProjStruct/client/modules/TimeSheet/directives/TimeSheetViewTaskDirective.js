@@ -49,7 +49,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetHome", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error('Server not response!', "Error");

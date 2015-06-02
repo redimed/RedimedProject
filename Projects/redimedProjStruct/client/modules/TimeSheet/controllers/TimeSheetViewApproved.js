@@ -32,7 +32,7 @@ angular.module("app.loggedIn.TimeSheet.ViewApproved.Controller", [])
                     });
                 } else {
                     //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Server not response!", "Error");

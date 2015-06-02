@@ -72,13 +72,13 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                                     });
                                 toastr.success("Submit success!", "Success");
                             } else if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetHome", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error("Submit fail!", "Error");
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetHome", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");

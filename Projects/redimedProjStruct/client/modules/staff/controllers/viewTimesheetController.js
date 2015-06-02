@@ -204,7 +204,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             $scope.time_in_lieuHas = timeInLieu;
 
         } else {
-            $state.go("loggedIn.TimeSheetHome", null, {
+            $state.go("loggedIn.home", null, {
                 "reload": true
             });
             toastr.error("Server not response!", "Error");
@@ -370,7 +370,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             $scope.time_in_lieuHas = timeInLieu;
 
         } else {
-            $state.go("loggedIn.TimeSheetHome", null, {
+            $state.go("loggedIn.home", null, {
                 "reload": true
             });
             toastr.error("Server not response!", "Error");

@@ -37,13 +37,13 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                 if (response.status === "success") {
                     $scope.list = response;
                 } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Loading leave fail!", "Error");
                 } else {
                     //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Server not response!", "Error");

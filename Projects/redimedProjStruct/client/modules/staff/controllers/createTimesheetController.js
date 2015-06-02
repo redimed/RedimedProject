@@ -79,7 +79,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 swal(notification);
                 //END NOTIFICATION
             } else {
-                $state.go("loggedIn.TimeSheetHome", null, {
+                $state.go("loggedIn.home", null, {
                     "reload": true
                 });
                 toastr.error("Server not response!", "Error");
@@ -189,7 +189,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info.time_in_lieuHas = timeInLieu;
 
         } else {
-            $state.go("loggedIn.TimeSheetHome", null, {
+            $state.go("loggedIn.home", null, {
                 "reload": true
             });
             toastr.error("Server not response!", "Error");

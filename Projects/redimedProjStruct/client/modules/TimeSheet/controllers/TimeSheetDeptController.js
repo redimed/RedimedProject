@@ -23,7 +23,7 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
         //load location
         TimeSheetService.LoadLocation().then(function(response) {
             if (response.status === "error") {
-                $state.go("loggedIn.TimeSheetHome", null, {
+                $state.go("loggedIn.home", null, {
                     "reload": true
                 });
                 toastr.error("Server response error!", "Error");
@@ -31,7 +31,7 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                 $scope.location = response.result;
             } else {
                 //catch exception
-                $state.go("loggedIn.TimeSheetHome", null, {
+                $state.go("loggedIn.home", null, {
                     "reload": true
                 });
                 toastr.error("Server not response!", "Error");
@@ -44,7 +44,7 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
             $scope.list.loading = true;
             TimeSheetService.LoadDept($scope.searchObjectMap).then(function(response) {
                 if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Server response error!", "Error");
@@ -52,7 +52,7 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                 } else if (response.status === "success") {
                     $scope.list = response;
                 } else {
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Server not response!", "Error");

@@ -74,13 +74,13 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         }
                         //employee
                     } else if (response.status === "error" || response.result.length === 0) {
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr("Load infomation employee fail!", "Error");
                     } else {
                         //catch exception
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr("Server not response!", "Error");
@@ -134,12 +134,12 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                                 "reload": true
                             });
                         } else if (response.status === "error") {
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("Apply for leave fail!", "Error");
                         } else {
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");
@@ -161,7 +161,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         } else {
 
                             //catch exception
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");

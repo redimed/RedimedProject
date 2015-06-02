@@ -40,13 +40,13 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                 if (response.status == "success") {
                     $scope.list = response;
                 } else if (response.status === "error") {
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Loading fail!", "Error");
                 } else {
                     //catch exception
-                    $state.go("loggedIn.TimeSheetHome", null, {
+                    $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Server not response!", "Error");
@@ -145,7 +145,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                 } else {
                                     //catch exception
                                     modalInstance.close();
-                                    $state.go("loggedIn.TimeSheetHome", null, {
+                                    $state.go("loggedIn.home", null, {
                                         "reload": true
                                     });
                                     toastr.error("Server not response!", "Error");
@@ -188,7 +188,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                             } else {
                                                 //catch exception
                                                 modalInstance.close();
-                                                $state.go("loggedIn.TimeSheetHome", null, {
+                                                $state.go("loggedIn.home", null, {
                                                     "reload": true
                                                 });
                                                 toastr.error("Server not response!", "Error");
@@ -215,7 +215,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                     } else {
                                         //catch exception
                                         modalInstance.close();
-                                        $state.go("loggedIn.TimeSheetHome", null, {
+                                        $state.go("loggedIn.home", null, {
                                             "reload": true
                                         });
                                         toastr.error("Server not response!", "Error");
