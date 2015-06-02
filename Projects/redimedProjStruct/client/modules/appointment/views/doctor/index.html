@@ -20,13 +20,169 @@
 					<td>{{l.FROM_TIME}}</td>
 					<td>{{l.TO_TIME}}</td>
 					<td>
-						<span ng-if="l.Patient_id">{{l.First_name}} {{l.Sur_name}}</span>
-						<span ng-if="!l.Patient_id">No Patient</span>
+						<span ng-if="l.patients.length > 0">
+							<p ng-repeat="patient in l.patients" ng-right-click="onRightClick($event, l, patient)">
+								<b ng-if="patient.Patient_id" 
+									style="cursor: pointer;">
+									<span ng-click="goToAppDetail(l, patient)">{{patient.First_name}} {{patient.Sur_name}}</span>
+									&nbsp;
+									<a ng-click="showDropdown(patient, col)">
+										<i class="fa fa-caret-right"></i>
+									</a>
+								</b>
+								<b ng-if="!patient.Patient_id" style="cursor: pointer;"
+									ng-click="dialogAppointmentAdd(l, patient)">
+									No Patient
+								</b>
+							</p>
+						</span>
 					</td>
 					<td>{{l.STATUS}}</th>
-					<td>{{l.SERVICE_NAME}}</td>
+					<td>
+						<div style="width: 20px; height: 20px; background-color: {{l.SERVICE_COLOR}}">
+						</div>
+					</td>
 				</tr>
 			</table>
 		</div>
 	</div>
 </div>
+
+<!-- RIGHT CLICK DROPDOWN MENU -->
+<ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">
+	<li>
+		<a ng-click="rightAdd(appointment.selectedAppointment, appointment.selectedCol)">
+			Make new Booking
+		</a>
+		<a ng-click="dialogWaitingListAdd(appointment.selectedCol)">
+			Add Waiting List
+		</a>
+	</li>
+</ul>
+<!-- END RIGHT CLICK DROPDOWN MENU -->
+
+<script type="text/ng-template" id="waitingListAdd">
+	<div class="modal-body">
+		<waiting-list-add success="success" doctor-id="doctor_id"></waiting-list-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="appointmentAdd">
+	<div class="modal-body">
+		<appointment-add params="appointment" patient="patient" options="options"></appointment-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="patientAdd">
+	<div class="modal-body">
+		<patient-detail options="options" params="params" onsuccess="onsuccess" patient="onsuccess"></patient-detail>
+	</div>
+</script>
+
+<script type="text/ng-template" id="patientList">
+	<div class="modal-body">	
+		<patient-search click-row="clickRow(row)"></patient-search>
+	</div>
+</script>
+
+<script type="text/ng-template" id="waitingListSelect">
+	<div class="modal-body">	
+		<waiting-list-list click-row="clickRow(row)"></waiting-list-list>
+	</div>
+</script>
+
+<script type="text/ng-template" id="notifyClaim">
+    <div class="modal-body">
+        <p>
+        	Do you want to&nbsp;
+        	<button class="btn btn-primary btn-xs" ng-click="addClaim()">Add</button> or&nbsp;
+        	<button class="btn btn-primary btn-xs" ng-click="selectClaim()">Select</button> claim ?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="notifyReferral">
+    <div class="modal-body">
+        <p>
+        	Do you want to&nbsp;
+        	<button class="btn btn-primary btn-xs" ng-click="addReferral()">Add</button>
+        	or <button class="btn btn-primary btn-xs" ng-click="selectReferral()">Select</button> referral ?
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+<script type="text/ng-template" id="notifyAppointment">
+	<div class="modal-body">
+	    <p>
+	    	Do you want to really choose this patient ???
+	    </p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary btn-xs" ng-click="clickYes()">I am sure</button>
+	    <button class="btn btn-warning btn-xs" ng-click="clickNo()">Cancel</button>
+	</div>
+</script>
+
+<script type="text/ng-template" id="claimAdd">
+	<div class="modal-body">	
+		<claim-patient-add patient-id="claim.Patient_id" cal-id="claim.CAL_ID" success="claim.success"></claim-patient-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="claimSelect">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">	
+		<claim-patient-list limit="claim.limit" reload="claim.reload" patient-id="claim.Patient_id" without-patient="true" add-success="claim.addSuccess"
+			cal-id="claim.CAL_ID"
+			permission="{edit: false, remove: false, add: true}" on-row-click="claim.clickRow(row)">
+		</claim-patient-list>
+	</div>
+</script>
+
+<script type="text/ng-template" id="referralAdd">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">	
+		<outreferral-patient-add patient-id="patientId" cal-id="calId" success="success" doctor-id="doctorId">
+		</outreferral-patient-add>
+	</div>
+</script>
+
+<script type="text/ng-template" id="referralSelect">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">
+		<outreferral-patient-list reload="reload" limit="limit" add-success="addSuccess"
+			doctor-id="doctorId"
+			cal-id="calId"
+			patient-id="patientId" without-patient="true" on-row-click="clickRow(row)"
+			permission="{edit: false, remove: false, add: true}">
+		</outreferral-patient-list>
+	</div>
+</script>
+
+<script type="text/ng-template" id="notifyAlert">
+	<div class="modal-body">
+		<p>{{outreferral.name}}</p>
+		<h4>Alert List</h4>
+		<ul>
+			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>
+		</ul>
+	</div>
+</script>
