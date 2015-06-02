@@ -12,7 +12,7 @@ angular.module("app.loggedIn", [
     "app.loggedIn.medifood", //Medifood
     "app.loggedIn.vaccinob", //Vaccination Online Booking
     "app.loggedIn.iso", //ISO manage files
-    "app.loggedIn.pr",//PAYROLL (TANNV.DTS@GMAIL.COM)
+    "app.loggedIn.pr", //PAYROLL (TANNV.DTS@GMAIL.COM)
     "app.loggedIn.doctor", // DOCTOR MODULE
     "app.loggedIn.receptionist", // RECEPTIONIST MODULE
     "app.loggedIn.patient",
@@ -63,9 +63,6 @@ angular.module("app.loggedIn", [
     'app.loggedIn.sysservices',
     /*END AUTO CREATE*/
     'app.loggedIn.timetable',
-
-    "app.loggedIn.staff",
-
     // MODULE TREEAPPROVE
     'app.loggedIn.treeApprove',
     // END MODULE TREE APPROVE
@@ -73,7 +70,7 @@ angular.module("app.loggedIn", [
     //MODULE TIMESHEET
     'app.loggedIn.TimeSheet',
     //END MODULE TIMESHEET
-    
+
     'app.loggedIn.claim',
 
     'app.loggedIn.timetable',
@@ -81,7 +78,7 @@ angular.module("app.loggedIn", [
     'app.loggedIn.appointment',
     'app.loggedIn.medicine',
     'app.loggedIn.allergy',
-    
+
     'app.loggedIn.company',
     'app.loggedIn.alert',
     'app.loggedIn.outreferral',

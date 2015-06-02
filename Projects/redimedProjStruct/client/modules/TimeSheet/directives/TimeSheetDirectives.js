@@ -13,5 +13,6 @@ angular.module("app.loggedIn.TimeSheet.Directives", [
     "app.loggedIn.TimeSheet.ActivityDetail.Directive",
     "angularjs-dropdown-multiselect",
     "app.loggedIn.TimeSheet.ViewLeave.Directive",
-    "app.loggedIn.TimeSheet.ApproveLeave.Directive"
+    "app.loggedIn.TimeSheet.ApproveLeave.Directive",
+    "app.loggedIn.staff.calendar.directive"
 ]);
