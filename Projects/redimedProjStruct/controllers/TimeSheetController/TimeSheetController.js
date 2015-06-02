@@ -4204,7 +4204,7 @@ module.exports = {
                                                                                                                                                             status: "error"
                                                                                                                                                         });
                                                                                                                                                         return;
-                                                                                                                                                    })
+                                                                                                                                                    });
                                                                                                                                             })
                                                                                                                                             .error(function(err) {
                                                                                                                                                 console.log("*****ERROR: " + err + " *****");
@@ -4212,7 +4212,7 @@ module.exports = {
                                                                                                                                                     status: "error"
                                                                                                                                                 });
                                                                                                                                                 return;
-                                                                                                                                            })
+                                                                                                                                            });
                                                                                                                                     })
                                                                                                                                     .error(function(err) {
                                                                                                                                         console.log("*****ERROR: " + err + " *****");
@@ -4220,7 +4220,7 @@ module.exports = {
                                                                                                                                             status: "error"
                                                                                                                                         });
                                                                                                                                         return;
-                                                                                                                                    })
+                                                                                                                                    });
                                                                                                                             })
                                                                                                                             .error(function(err) {
                                                                                                                                 console.log("*****ERROR: " + err + " *****");
@@ -4228,7 +4228,7 @@ module.exports = {
                                                                                                                                     status: "error"
                                                                                                                                 });
                                                                                                                                 return;
-                                                                                                                            })
+                                                                                                                            });
 
                                                                                                                     })
                                                                                                                     .error(function(err) {
@@ -4237,7 +4237,7 @@ module.exports = {
                                                                                                                             status: "error"
                                                                                                                         });
                                                                                                                         return;
-                                                                                                                    })
+                                                                                                                    });
                                                                                                             })
                                                                                                             .error(function(err) {
                                                                                                                 console.log("*****ERROR: " + err + " *****");
@@ -4245,7 +4245,7 @@ module.exports = {
                                                                                                                     status: "error"
                                                                                                                 });
                                                                                                                 return;
-                                                                                                            })
+                                                                                                            });
 
                                                                                                     })
                                                                                                     .error(function(err) {
@@ -4254,7 +4254,7 @@ module.exports = {
                                                                                                             status: "error"
                                                                                                         });
                                                                                                         return;
-                                                                                                    })
+                                                                                                    });
                                                                                             })
                                                                                             .error(function(err) {
                                                                                                 console.log("*****ERROR: " + err + " *****");
@@ -4262,7 +4262,7 @@ module.exports = {
                                                                                                     status: "error"
                                                                                                 });
                                                                                                 return;
-                                                                                            })
+                                                                                            });
                                                                                     }
                                                                                 })
 
@@ -4272,7 +4272,7 @@ module.exports = {
                                                                                     status: "error"
                                                                                 });
                                                                                 return;
-                                                                            })
+                                                                            });
                                                                         }
                                                                     })
                                                                     .error(function(err) {
@@ -4281,7 +4281,7 @@ module.exports = {
                                                                             status: "error"
                                                                         });
                                                                         return;
-                                                                    })
+                                                                    });
                                                             })
                                                             .error(function(err) {
                                                                 console.log("*****ERROR: " + err + " *****");
@@ -4289,8 +4289,8 @@ module.exports = {
                                                                     status: "error"
                                                                 });
                                                                 return;
-                                                            })
-                                                            //END GET
+                                                            });
+                                                        //END GET
                                                     }
                                                 })
                                                 .error(function(err) {
@@ -4299,7 +4299,7 @@ module.exports = {
                                                         status: "error"
                                                     });
                                                     return;
-                                                })
+                                                });
                                         }
                                     })
                                     .error(function(err) {
@@ -4308,7 +4308,7 @@ module.exports = {
                                             status: "error"
                                         });
                                         return;
-                                    })
+                                    });
                             })
                             .error(function(err) {
                                 console.log("*****ERROR: " + err + " *****");
@@ -4316,7 +4316,7 @@ module.exports = {
                                     status: "error"
                                 });
                                 return;
-                            })
+                            });
                     })
                     .error(function(err) {
                         console.log("*****ERROR: " + err + " *****");
@@ -4324,7 +4324,7 @@ module.exports = {
                             status: "error"
                         });
                         return;
-                    })
+                    });
 
             })
             .error(function(err) {
@@ -4333,8 +4333,8 @@ module.exports = {
                     status: "error"
                 });
                 return;
-            })
-            //
+            });
+        //
     },
     //END REPORT UTILIZITION RATIO DETAIL
 

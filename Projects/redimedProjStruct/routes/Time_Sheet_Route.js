@@ -1,3 +1,16 @@
+// EXPORT MODULE
+var adminController = require("./controllers/TimeSheetController/adminController");
+var downloadController = require("./controllers/TimeSheetController/downloadController");
+var functionForTimesheet = require("./controllers/TimeSheetController/functionForTimesheet");
+var manageLeave = require("./controllers/TimeSheetController/manageLeaveController");
+var manageTimesheet = require("./controllers/TimeSheetController/manageTimesheetController");
+var staffLeaveController = require("./controllers/TimeSheetController/staffLeaveController");
+var staffTimesheetController = require("./controllers/TimeSheetController/staffTimesheetController");
+var sendMailController = require("./controllers/TimeSheetController/sendMailController");
+var uploadController = require("./controllers/TimeSheetController/uploadController");
+//END
+
+
 var TimeSheet = require("./controllers/TimeSheetController/TimeSheetController");
 var TimeSheetUploadController = require("./controllers/TimeSheetController/TimeSheetUploadController");
 var TimeSheetController = require('./controllers/TimeSheetController');
