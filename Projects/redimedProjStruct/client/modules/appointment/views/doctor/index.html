@@ -1,52 +1,67 @@
-<div id="appointment">
-	<div class="row" style="margin-bottom: 20px;">
-		<div class="col-md-12">
-			<b>Doctor Name: </b>{{appointment.pre.name}}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<b>Appointment Date: </b>{{appointment.pre.datepicker}}
+<div class="col-md-12">
+	<ul class="un-tabs">
+		<li ng-repeat="doctor in appointment.doctors" 
+			ng-class="{'active': doctor.DOCTOR_ID.toString()===appointment.pre.doctor_id.toString()}"
+			ng-click="goToOtherDoctor(doctor)">
+			<a>{{doctor.NAME}}</a>
+		</li>
+	</ul>
+	<div class="un-tabs-content">
+		<div class="un-tab-content active">
+			<div id="appointment">
+				<div class="row" style="margin-bottom: 20px;">
+					<div class="col-md-12">
+						<b>Doctor Name: </b>{{appointment.pre.name}}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Appointment Date: </b>{{appointment.pre.datepicker}}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<tr>
+								<th>From</th>
+								<th>To</th>
+								<th>Patients</th>
+								<th>Status</th>
+								<th>Service</th>
+							</tr>
+							<tr ng-repeat="l in appointment.list">
+								<td>{{l.FROM_TIME}}</td>
+								<td>{{l.TO_TIME}}</td>
+								<td>
+									<span ng-if="l.patients.length > 0">
+										<p ng-repeat="patient in l.patients" ng-right-click="onRightClick($event, l, patient)">
+											<b ng-if="patient.Patient_id" 
+												style="cursor: pointer;">
+												<span ng-click="goToAppDetail(l, patient)">{{patient.First_name}} {{patient.Sur_name}}</span>
+												&nbsp;
+												<a ng-click="showDropdown(patient, col)">
+													<i class="fa fa-caret-right"></i>
+												</a>
+											</b>
+											<b ng-if="!patient.Patient_id" style="cursor: pointer;"
+												ng-click="dialogAppointmentAdd(l, patient)">
+												No Patient
+											</b>
+										</p>
+									</span>
+								</td>
+								<td>{{l.STATUS}}</th>
+								<td>
+									<div style="width: 20px; height: 20px; background-color: {{l.SERVICE_COLOR}}">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<table class="table">
-				<tr>
-					<th>From</th>
-					<th>To</th>
-					<th>Patients</th>
-					<th>Status</th>
-					<th>Service</th>
-				</tr>
-				<tr ng-repeat="l in appointment.list">
-					<td>{{l.FROM_TIME}}</td>
-					<td>{{l.TO_TIME}}</td>
-					<td>
-						<span ng-if="l.patients.length > 0">
-							<p ng-repeat="patient in l.patients" ng-right-click="onRightClick($event, l, patient)">
-								<b ng-if="patient.Patient_id" 
-									style="cursor: pointer;">
-									<span ng-click="goToAppDetail(l, patient)">{{patient.First_name}} {{patient.Sur_name}}</span>
-									&nbsp;
-									<a ng-click="showDropdown(patient, col)">
-										<i class="fa fa-caret-right"></i>
-									</a>
-								</b>
-								<b ng-if="!patient.Patient_id" style="cursor: pointer;"
-									ng-click="dialogAppointmentAdd(l, patient)">
-									No Patient
-								</b>
-							</p>
-						</span>
-					</td>
-					<td>{{l.STATUS}}</th>
-					<td>
-						<div style="width: 20px; height: 20px; background-color: {{l.SERVICE_COLOR}}">
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+	
 </div>
+
 
 <!-- RIGHT CLICK DROPDOWN MENU -->
 <ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">

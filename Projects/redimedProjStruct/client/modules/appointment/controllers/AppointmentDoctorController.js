@@ -1,6 +1,10 @@
 angular.module('app.loggedIn.appointment.controllers.doctor', [])
 
 .controller('AppointmentDoctorController', function($scope, $state, $timeout, $stateParams, $modal, toastr, $cookieStore, OutreferralModel, AppointmentModel, ConfigService){
+	$scope.goToOtherDoctor = function(doctor){
+		$scope.appointment.load({site_id: data.site_id, datepicker: data.datepicker, doctor_id: doctor.DOCTOR_ID});
+		$scope.appointment.pre.doctor_id = doctor.DOCTOR_ID;
+	}
 
 	$scope.dialogWaitingListAdd = function(col){
 		angular.element("#popupMenu").css({'display':'none'});
@@ -325,6 +329,8 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 
 		AppointmentModel.detailLoad(option)
 		.then(function(response){
+			$scope.appointment.doctors = response.doctors;
+
 			_.forEach(response.data, function(data){
 
 				var flagTheme = -1;
@@ -430,10 +436,12 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 
 	$scope.appointment = {
 		pre: {
+			doctor_id: null,
 			name: null,
 			datepicker: null
 		},
 		list: [],
+		doctors: [],
 		load: function(option){
 			load(option);
 		}
@@ -443,6 +451,7 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 		var data = $cookieStore.get('appointment');
 
 		$scope.appointment.pre.datepicker = data.datepicker;
+		$scope.appointment.pre.doctor_id = $stateParams.doctorId;
 
 		OutreferralModel.DotorFromUserId($stateParams.doctorId)
 		.then(function(response){

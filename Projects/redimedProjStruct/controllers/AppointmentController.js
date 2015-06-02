@@ -292,9 +292,31 @@ module.exports = {
 		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
 		.toString();
 
+		var sub_sql = knex
+		.distinct(
+			'cln_appointment_calendar.DOCTOR_ID',
+			'doctors.NAME',
+			'doctors.Appt_interval'
+		)
+		.select()
+		.from('cln_appointment_calendar')
+		.innerJoin('doctors', 'cln_appointment_calendar.DOCTOR_ID', 'doctors.doctor_id')
+		.where({
+			'cln_appointment_calendar.SITE_ID': postData.site_id
+		})
+		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.orderBy('cln_appointment_calendar.DOCTOR_ID', 'asc')
+		.toString();
+
 		db.sequelize.query(main_sql)
 		.success(function(rows){
-			res.json({data: rows});
+			db.sequelize.query(sub_sql)
+			.success(function(doctors){
+				res.json({data: rows, doctors: doctors});
+			})
+			.error(function(error){
+				res.status(500).json({error: error, sql: sub_sql});
+			})	
 		})
 		.error(function(error){
 			res.status(500).json({error: error, sql: main_sql});
