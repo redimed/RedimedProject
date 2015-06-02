@@ -56,7 +56,9 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
         };
 
         $scope.document_panel = {};
-        
+        $scope.docSelected = function(item){
+             window.open(download_api + item.id);
+        }
         $scope.docs = {
             select:0,
             class:function(doc){
