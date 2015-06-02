@@ -216,7 +216,7 @@
                         </i>
                         <span>{{menu.parent.name}}</span>
                     </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===144" style="width:230px;">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===144" style="width:250px;">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#" class="title">
@@ -253,7 +253,7 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i>Timesheet Reporting System
                             </a>
-                            <ul class="sub-menu" style="width: 350px;">
+                            <ul class="sub-menu" style="width: 360px;">
                                 <li>
                                     <a ui-sref="loggedIn.Report2TimeSheet">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
@@ -276,10 +276,12 @@
                     <!-- END FOR EMPLOYEE -->
                     <!-- FOR MANAGE -->
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===146">
-                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <i>
+                            <img src="/img/TimeSheet/icon_03.PNG"/>
+                        </i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===146" style="width:230px;">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===146" style="width:250px;">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#">
@@ -326,7 +328,7 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i>Timesheet Reporting System
                             </a>
-                            <ul class="sub-menu" style="width:350px;">
+                            <ul class="sub-menu" style="width:360px;">
                                 <li>
                                     <a ui-sref="loggedIn.Report1TimeSheet">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
@@ -369,10 +371,12 @@
                     <!-- END FOR MANAGE -->
                     <!-- FOR DIRECTOR -->
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===148">
-                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <i>
+                            <img src="/img/TimeSheet/icon_03.PNG"/>
+                        </i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===148" style="width:230px;">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===148" style="width:250px;">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#">
@@ -399,7 +403,7 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i> Utilization Time Reporting System
                             </a>
-                            <ul class="sub-menu" style="width:350px;">
+                            <ul class="sub-menu" style="width:360px;">
                                 <li>
                                     <a ui-sref="loggedIn.Report1TimeSheet">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
@@ -442,7 +446,9 @@
                     <!-- END FOR DIRECTOR -->
                     <!-- FOR ADMIN -->
                     <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===147">
-                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <i>
+                            <img src="/img/TimeSheet/icon_03.PNG"/>
+                        </i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
                     <ul class="sub-menu" ng-if="menu.parent.menu_id===147">
