@@ -1,0 +1,44 @@
+<ion-view title="History Detail">
+    <ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-ios-arrow-left " style="color:#fff" ng-click="backToHistory()"></a>
+    </ion-nav-buttons>
+    <!--<ion-nav-buttons side="right">-->
+        <!--<a menu-toggle="right" class="button button-icon icon ion-android-contacts" style="color:#fff"></a>-->
+    <!--</ion-nav-buttons>-->
+    <ion-content class="padding has-subheader">
+
+
+        <label class="item item-input label-custom-field">
+            <span class="input-label span-input-color">Full Name</span>
+            <span>{{historyDetail.detail.FullName}}</span>
+        </label>
+
+        <label class="item item-input label-custom-field">
+            <span class="input-label span-input-color">Mobile</span>
+            <span>{{historyDetail.detail.Mobile}}</span>
+        </label>
+        <label class="item item-input label-custom-field">
+            <span class="input-label span-input-color">Injury Date</span>
+            <span>{{historyDetail.detail.injury_date|date:'yyyy-MM-dd'}}</span>
+        </label>
+        <label class="item item-input label-custom-field">
+            <span class="input-label span-input-color">Injury Description</span>
+            <span>{{historyDetail.detail.injury_description}}</span>
+        </label>
+        <label class=" item-input label-custom-field">
+            <span class="input-label span-input-color">Injury Pickup Address</span>
+            <span>{{historyDetail.detail.pickup_address}}</span>
+        </label>
+        <label class="item-input label-custom-field">
+            <span class="input-label span-input-color">Image</span>
+            <!--  <div ng-repeat="im in historyDetail.img">
+               <img ng-src="{{im.image}}" style="width:200px;height:200px">
+             </div>  -->
+            <ion-scroll direction="y">
+                <a ng-repeat="im in historyDetail.detail.injuryImg" >
+                    <img ng-src="https://testapp.redimed.com.au:3000/api/im/image/{{im}}" class="a-img-custom img-thumbnail"/>
+                </a>
+            </ion-scroll>
+        </label>
+    </ion-content>
+</ion-view>

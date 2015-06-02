@@ -14,7 +14,6 @@
     float: right;
 }
 .has-error  {
-
     border-bottom: 2px solid red ;
 }
 input[type=text].has-error  {
@@ -782,13 +781,12 @@ form i.icon.error {
     text-align: center;
     bottom: 0;
     width: 100%;
-    height: 100px;
     z-index: 1;
+    padding: 0 70px 0 70px;
+    margin-bottom: 10px;
 }
 .div_controlButton {
     text-align: center;
-    height: 100%;
-    width:  60%;
     margin: auto;
     background-color: rgba(255,255,255,0.2);
 }
@@ -849,7 +847,7 @@ form i.icon.error {
 .buttonCall-control {
     width: 19.38%;
     height: 100%;
-    padding-top: 20px;
+    padding: 5px 0 5px 0;
 }
 .active-buttonCall-control {
     border-bottom: 3px solid #019875;
@@ -2109,5 +2107,10 @@ ion-scroll[direction=y] {
     width: 0px;
     -webkit-transition: 0.5s ease;
     transition: 0.5s ease;
+}
+
+.has-error-input-pass  {
+    border-bottom: 2px solid #ee6e73 !important;
+    box-shadow: none !important;
 }
 
