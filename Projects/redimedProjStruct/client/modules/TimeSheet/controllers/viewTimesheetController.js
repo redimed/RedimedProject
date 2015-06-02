@@ -150,7 +150,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.chooseItem = function(task) {
         console.log(task);
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/itemModal.html",
+            templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
             size: 'md'
         });
@@ -158,7 +158,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.view = function(item) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/viewTimesheetByHour.html",
+            templateUrl: "modules/TimeSheet/views/viewTimesheetByHour.html",
             controller: "ViewTimesheetByHourController",
             size: 'lg',
             resolve: {
@@ -321,7 +321,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.chooseItem = function(item) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/itemModal.html",
+            templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
             size: 'lg',
             resolve: {
@@ -482,7 +482,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.viewDetailDate = function(infoWeek, date) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/viewDetail.html",
+            templateUrl: "modules/TimeSheet/views/viewDetail.html",
             controller: 'ViewDetailController',
             size: 'lg',
             resolve: {
