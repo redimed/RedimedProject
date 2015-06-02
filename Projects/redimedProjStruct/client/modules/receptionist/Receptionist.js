@@ -15,35 +15,15 @@ angular.module("app.loggedIn.receptionist", [
     })
 
     // APPOINTMENT
-    .state("loggedIn.receptionist.appointment", {
-        url: "/receptionist/appointment",
+    .state("loggedIn.receptionist.home", {
+        url: "/receptionist/home",
         views: {
             "main-content": {
-                templateUrl: "modules/receptionist/views/appointment.html",
-                controller: "ReceptionistAppointmentController"
+                templateUrl: "modules/receptionist/views/home.html",
+                controller: "ReceptionistHomeController"
             }
         }
     })
 
-    // APPOINTMENT DOCTOR
-    .state("loggedIn.receptionist.appointment.doctor", {
-        url: "/doctor",
-        views: {
-            "main-content@loggedIn.receptionist": {
-                templateUrl: "modules/receptionist/views/doctor.html",
-                controller: "ReceptionistAppointmentDoctorController"
-            }
-        }
-    })
-
-    // APPOINTMENT PATIENT
-    .state("loggedIn.receptionist.appointment.detail", {
-        url: "/detail/:patient_id/:cal_id",
-        views: {
-            "main-content@loggedIn.receptionist": {
-                templateUrl: "modules/receptionist/views/detail.html",
-                controller: "ReceptionistAppointmentDetailController"
-            }
-        }
-    })
+   
 })
