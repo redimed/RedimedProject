@@ -274,6 +274,7 @@ ORDER BY time_activity_summary_report.Department_id,time_activity_summary_report
 		<band height="50">
 			<textField>
 				<reportElement x="455" y="30" width="100" height="20" uuid="b9f144c4-2ab3-4fa2-b832-bbb69a4bdb1a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
