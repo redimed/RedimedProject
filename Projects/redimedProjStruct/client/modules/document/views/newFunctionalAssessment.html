@@ -41,17 +41,17 @@
 
 						<!-- text box with detail comment-->
 						<div class="row">
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISVALUE===1">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
+								<label class="control-label pull-right" style="margin-top:10px;" >{{detail.VAL1_NAME}}</label>
 							</div>
 							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
-								<input type="text" class="form-control" ng-model="detail.VAL1_VALUE">
+								<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line)">
 							</div>
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISVALUE===1">
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
 								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
 							</div>
 							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
-								<input type="text" class="form-control" ng-model="detail.VAL2_VALUE">
+								<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
 							</div>
 							
 						<!-- end text box with detail comment -->
@@ -78,10 +78,10 @@
 							</div>
 							<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
 								<label class="btn">
-									Yes <input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Yes
 								</label>
 								<label class="btn">
-									No <input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> No
 								</label>
 							</div>
 							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
@@ -89,10 +89,10 @@
 							</div>
 							<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
 								<label class="btn">
-									Yes <input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Yes
 								</label>
 								<label class="btn">
-									No <input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> No
 								</label>
 							</div>
 						<!-- end yes/no checkbox with detail comment -->
@@ -101,33 +101,33 @@
 							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===2">
 								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
 							</div>
-							<div class="col-md-5 col-sm-5 col-xs-5 btn-group" ng-if="detail.VAL1_ISCHECKBOX===2">
+							<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL1_ISCHECKBOX===2">
 								<label class="btn">
-									UNABLE <input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> UNABLE
 								</label>
 								<label class="btn">
-									PARTIAL <input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> PARTIAL
 								</label>
 								<label class="btn">
-									ABLE <input type="radio" ng-model="detail.VAL1.CHECKBOX" value="2">
+									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="2"> ABLE
 								</label>
 							</div>
 							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===2">
 								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
 							</div>
-							<div class="col-md-5 col-sm-5 col-xs-5 btn-group" ng-if="detail.VAL2_ISCHECKBOX===2">
+							<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL2_ISCHECKBOX===2">
 								<label class="btn">
-									UNABLE <input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> UNABLE
 								</label>
 								<label class="btn">
-									PARTIAL <input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> PARTIAL
 								</label>
 								<label class="btn">
-									ABLE <input type="radio" ng-model="detail.VAL2.CHECKBOX" value="2">
+									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="2"> ABLE
 								</label>
 							</div>
-							<label class="control-label col-md-1 col-sm-1 col-xs-1" style="margin-top:10px;" ng-if="detail.IsCommentText===1">Comment</label>
-							<div class="col-md-5 col-sm-5 col-xs-5" ng-if="detail.IsCommentText===1">
+							<label class="control-label col-md-1 col-sm-1 col-xs-1 caption" style="margin-top:10px;" ng-if="detail.IsCommentText===1">Comment</label>
+							<div class="col-md-3 col-sm-3 col-xs-3" ng-if="detail.IsCommentText===1">
 								<input type="text" class="form-control" ng-model="detail.COMMENTS">
 							</div>
 						<!-- end Unable/Partial/Able checkbox with detail comment -->
@@ -189,13 +189,13 @@
 							<label class="control-label pull-right" style="margin-top:15px;">Normal Range: </label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
-							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Auto cal</b></label>
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
 							<label class="control-label pull-right" style="margin-top:15px;">Normal Range: </label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
-							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Auto cal</b></label>
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
 						</div>
 						<!-- End Normal Rate -->
 						<!-- MAX Score, MIN Score, Recovery and Simple Rating-->
@@ -203,13 +203,13 @@
 							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11)">
-							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Auto cal</b></label>
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11)">
-							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Auto cal</b></label>
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
 						</div>
 						<!-- End MAX Score, MIN Score, Recovery and Simple Rating-->
 						<!-- Excellent/Good/Fair/Poor radio Rating -->
@@ -218,16 +218,16 @@
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 8">
 							<label class="btn">
-								Excellent <input type="radio" mg-model="line.RATING_VALUE1" value="4">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="4"> Excellent 
 							</label>
 							<label class="btn">
-								Good <input type="radio" mg-model="line.RATING_VALUE1" value="3">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="3"> Good 
 							</label>
 							<label class="btn">
-								Fair <input type="radio" mg-model="line.RATING_VALUE1" value="2">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="2"> Fair 
 							</label>
 							<label class="btn">
-								Poor <input type="radio" mg-model="line.RATING_VALUE1" value="1">
+								<input type="radio" mg-model="line.RATING_VALUE1" value="1"> Poor 
 							</label>
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-1" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 8">
@@ -235,16 +235,16 @@
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 8">
 							<label class="btn">
-								Excellent <input type="radio" mg-model="line.RATING_VALUE2" value="4">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="4"> Excellent 
 							</label>
 							<label class="btn">
-								Good <input type="radio" mg-model="line.RATING_VALUE2" value="3">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="3"> Good 
 							</label>
 							<label class="btn">
-								Fair <input type="radio" mg-model="line.RATING_VALUE2" value="2">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="2"> Fair 
 							</label>
 							<label class="btn">
-								Poor <input type="radio" mg-model="line.RATING_VALUE2" value="1">
+								<input type="radio" mg-model="line.RATING_VALUE2" value="1"> Poor 
 							</label>
 						</div>	
 						<!-- End Excellent/Good/Fair/Por radio Rating-->
@@ -254,13 +254,13 @@
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
 							<label class="btn">
-								UNABLE <input type="radio">
+								<input type="radio"> UNABLE 
 							</label>
 							<label class="btn">
-								PARTIAL <input type="radio">
+								<input type="radio"> PARTIAL 
 							</label>
 							<label class="btn">
-								ABLE <input type="radio">
+								<input type="radio"> ABLE 
 							</label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
@@ -268,24 +268,24 @@
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
 							<label class="btn">
-								UNABLE <input type="radio">
+								<input type="radio"> UNABLE 
 							</label>
 							<label class="btn">
-								PARTIAL <input type="radio">
+								<input type="radio"> PARTIAL 
 							</label>
 							<label class="btn">
-								ABLE <input type="radio">
+								<input type="radio"> ABLE 
 							</label>
 						</div>
 						<!-- End Unable?Partial/Able Rating -->
 					</div>
 
 					<!-- Heart Rate Rating -->
-					<div class="row" ng-if="(line.ISRATING1 === 1 && line.ISCORE1 === 4) || (line.ISRATING2 === 1 && line.ISCORE2 === 4)">
+					<div class="row" ng-if="(line.ISRATING1 === 1 && line.SCORE_TYPE1 === 4) || (line.ISRATING2 === 1 && line.SCORE_TYPE2 === 4)">
 						<div class="col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-11 col-sm-11 col-xs-11">
-							<label class="control-label" style="margin-top:15px;"><b>Age predicted max HR max: (calculate)</b></label>
+							<label class="control-label" style="margin-top:15px;"><b>Age predicted max HR max: {{220-patient_age}}</b></label>
 							<br>
-							<label class="control-label text-info">85% Max HR: (auto calculate) bpm</label>
+							<label class="control-label text-info">85% Max HR: {{(85/100)*(220-patient_age)}} bpm</label>
 
 						</div>
 					</div>
@@ -312,7 +312,10 @@
 									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
 								</div>
 								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 1">
-									<input type="checkbox" ng-true-value="0" ng-false-value="1" ng-checked="comment.VALUE === 1 || comment.VALUE === '1'" ng-model="comment.VALUE"/>
+									<label class="btn">
+										<input type="checkbox" ng-true-value="0" ng-false-value="1" ng-checked="comment.VALUE === 1 || comment.VALUE === '1'" ng-model="comment.VALUE"/>
+									</label>
+									
 								</div>
 								<!-- End Checkbox comment -->
 								<!-- Yes/No comment -->
@@ -321,10 +324,10 @@
 								</div>
 								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 3">
 									<label class="btn">
-										Yes <input type="radio" ng-model="comment.VALUE" ng-value="1">
+										<input type="radio" ng-model="comment.VALUE" ng-value="1"> Yes 
 									</label>
 									<label class="btn">
-										No <input type="radio" ng-model="comment.VALUE" ng-value="0">
+										<input type="radio" ng-model="comment.VALUE" ng-value="0"> No 
 									</label>
 								</div>
 							<!-- End Yes/No comment -->
@@ -334,13 +337,13 @@
 								</div>
 								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 4">
 									<label class="btn">
-										Good <input type="radio" ng-model="comment.VALUE" ng-value="3">
+										<input type="radio" ng-model="comment.VALUE" ng-value="3"> Good 
 									</label>
 									<label class="btn">
-										Average <input type="radio" ng-model="comment.VALUE" ng-value="2">
+										<input type="radio" ng-model="comment.VALUE" ng-value="2"> Average 
 									</label>
 									<label class="btn">
-										Poor <input type="radio" ng-model="comment.VALUE" ng-value="1">
+										<input type="radio" ng-model="comment.VALUE" ng-value="1"> Poor 
 									</label>
 								</div>
 							<!-- End Good/Avg/Poor comment -->
@@ -350,32 +353,32 @@
 								</div>
 								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 5">
 									<label class="btn">
-										Minimal <input type="radio" ng-model="comment.VALUE" ng-value="1">
+										<input type="radio" ng-model="comment.VALUE" ng-value="1"> Minimal
 									</label>
 									<label class="btn">
-										Moderate <input type="radio" ng-model="comment.VALUE" ng-value="2">
+										 <input type="radio" ng-model="comment.VALUE" ng-value="2"> Moderate
 									</label>
 									<label class="btn">
-										Maximal <input type="radio" ng-model="comment.VALUE" ng-value="3">
+										 <input type="radio" ng-model="comment.VALUE" ng-value="3"> Maximal
 									</label>
 								</div>
 							<!-- End Min/Mor/Max comment -->
-							<!-- Min/Mor/Max comment -->
-								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 6 && comment.NAME !== null && comment.NAME !== ''">
+							<!-- Above/Within/Below comment -->
+								<div class="col-md-5 col-sm-5 col xs-5" ng-if="comment.Comment_Type === 6 && comment.NAME !== null && comment.NAME !== ''">
 									<label class="control-label text-info" style="margin-top:10px;">{{comment.NAME}}</label>
 								</div>
-								<div class="col-md-6 col-sm-6 col xs-6" ng-if="comment.Comment_Type === 6">
+								<div class="col-md-7 col-sm-7 col xs-7" ng-if="comment.Comment_Type === 6">
 									<label class="btn">
-										Above normal range <input type="radio" ng-model="comment.VALUE" ng-value="3">
+										<input type="radio" ng-model="comment.VALUE" ng-value="3" /> Above normal range 
 									</label>
 									<label class="btn">
-										Within normal range <input type="radio" ng-model="comment.VALUE" ng-value="2">
+										<input type="radio" ng-model="comment.VALUE" ng-value="2" /> Within normal range 
 									</label>
 									<label class="btn">
-										Below normal range <input type="radio" ng-model="comment.VALUE" ng-value="1">
+										 <input type="radio" ng-model="comment.VALUE" ng-value="1" /> Below normal range
 									</label>
 								</div>
-							<!-- End Min/Mor/Max comment -->
+							<!-- End Above/Within/Below comment -->
 							</div>
 						</div>
 					</div>

@@ -47,7 +47,6 @@ angular.module('starter', ['ionic',
         var socketFactory = socketFactory({
             ioSocket: socket
         });
-
         return socketFactory;
     })
 
@@ -105,7 +104,7 @@ angular.module('starter', ['ionic',
         $rootScope.$on("$stateChangeSuccess", function (e, toState,toParams, fromState, fromParams) {
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
-                if(toState.name !== "security.forgot" && toState.name !== "security.login") {
+                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register") {
                     e.preventDefault();
                     $state.go("security.login");
                 }
@@ -121,7 +120,6 @@ angular.module('starter', ['ionic',
                 screen.lockOrientation('landscape');
             }
             document.addEventListener("deviceready", function() {
-
                 var config = null;
 
                 if (ionic.Platform.isAndroid()) {
@@ -141,6 +139,7 @@ angular.module('starter', ['ionic',
                 }, function (err) {
                     console.log("Register Push Notification Status: " + err)
                 });
+                AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             });
         });
 

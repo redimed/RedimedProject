@@ -5,17 +5,16 @@ module.exports = function(sequelize,DataTypes){
         user_id :DataTypes.INTEGER(11),
         department: DataTypes.INTEGER(11),
         date_leave : DataTypes.DATE ,
+        isReject: DataTypes.INTEGER(11),
         employee : DataTypes.INTEGER(11) ,
         from_date :DataTypes.DATE,
         to_date:DataTypes.DATE,
-        total_Dept:DataTypes.INTEGER(11),
-        total_all:DataTypes.INTEGER(11),
         Creation_date : DataTypes.DATE ,
         created_by  : DataTypes.INTEGER(11),
         Last_updated_by : DataTypes.INTEGER(11) ,
         Last_update_date : DataTypes.DATE
     },{
-        tableName: 'hr_leave_owe', // đặt tên bảng
+        tableName: 'hr_leave_owe', // đặt tên bảng a
         createdAt: 'Creation_date',
         updatedAt: 'Last_update_date'
     });

@@ -359,6 +359,17 @@ angular.module('app.loggedIn.document.services', [])
             var info = api.all("document/newDetailsComments");
             return info.post({line_id: line_id});
          }
+         documentService.autoRating = function(ratingData){
+            var info = api.all("document/autoRating");
+            return info.post({
+                patient_age: ratingData.patient_age,
+                patient_gender: ratingData.patient_gender,
+                valueToRate: ratingData.valueToRate,
+                rating_id: ratingData.rating_id
+            });
+         }
+
+         
          // end new Functional Assessment
 
         var strPrefixAPI = 'api/erm/v2/paperless/';
