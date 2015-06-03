@@ -259,6 +259,8 @@ module.exports = {
 
 	postDetailLoad: function(req, res){
 		var postData = req.body.data;
+
+		if(!postData.clinical_dept_id) postData.clinical_dept_id = '';
 		
 		var main_sql = knex
 		.distinct(
@@ -289,6 +291,7 @@ module.exports = {
 			'cln_appointment_calendar.DOCTOR_ID': postData.doctor_id
 		})
 		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.where('cln_appointment_calendar.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
 		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
 		.toString();
 
@@ -305,6 +308,7 @@ module.exports = {
 			'cln_appointment_calendar.SITE_ID': postData.site_id
 		})
 		.where('cln_appointment_calendar.FROM_TIME', 'like', '%'+postData.datepicker+'%')
+		.where('cln_appointment_calendar.CLINICAL_DEPT_ID', 'like', '%'+postData.clinical_dept_id+'%')
 		.orderBy('cln_appointment_calendar.DOCTOR_ID', 'asc')
 		.toString();
 
