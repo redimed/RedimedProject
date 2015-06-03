@@ -20,12 +20,12 @@ angular.module("starter.menu.controller",[])
         var src = "/android_asset/www/receive_phone.mp3";
         var media = null;
         var loop = function (status) {
-            //if (status === Media.MEDIA_STOPPED) {
-            //     media.play();
-            //}
-            //else if (status === Media.MEDIA_PAUSED) {
-            //     media.pause();
-            //}
+            if (status === Media.MEDIA_STOPPED) {
+                 media.play();
+            }
+            else if (status === Media.MEDIA_PAUSED) {
+                 media.pause();
+            }
         };
 
 
@@ -99,13 +99,12 @@ angular.module("starter.menu.controller",[])
                         type: 'button button-assertive',
                         onTap: function(e) {
                             signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
+                            $scope.messageLoading = {message: "Waiting..."};
                             $ionicLoading.show({
-                                template: "<div class='icon ion-ios7-reloading'></div>"+
-                                "<br />"+
-                                "<span>Logout...</span>",
+                                templateUrl: "modules/loadingTemplate.html",
                                 animation: 'fade-in',
-                                showBackdrop: true,
-                                maxWidth: 200,
+                                scope: $scope,
+                                maxWidth: 500,
                                 showDelay: 0
                             });
                             signaling.on('logoutSuccess', function(){
@@ -317,6 +316,8 @@ angular.module("starter.menu.controller",[])
                 if(stopInterval != undefined) {
                     stopInterval = $interval(function () { getLocation()}, 10 * 1000);
                 }
+            } else {
+                return;
             }
         });
     })

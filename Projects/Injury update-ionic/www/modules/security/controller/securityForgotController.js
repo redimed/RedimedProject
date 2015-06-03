@@ -6,13 +6,12 @@ angular.module('starter.security.forgot.controller',[])
         $scope.objForgotpass = {};
 
         $scope.submitResetPassword = function(){
+            $scope.messageLoading = {message: "Waiting..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>waiting...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
+                scope: $scope,
+                maxWidth: 500,
                 showDelay: 0
             });
             SecurityService.forgotPass($scope.objForgotpass.email).then(function(data){

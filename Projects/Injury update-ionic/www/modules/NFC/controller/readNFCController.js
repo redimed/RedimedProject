@@ -82,13 +82,12 @@ angular.module('starter.NFC.controller',[])
                 };
                 WorkerServices.updateInfoPatientID(NewInfo).then(function(data){
                     if(data.status =="success"){
+                        $scope.messageLoading = {message: "Waiting..."};
                         $ionicLoading.show({
-                            template: "<div class='icon ion-ios7-reloading'></div>"+
-                            "<br />"+
-                            "<span>Waiting...</span>",
+                            templateUrl: "modules/loadingTemplate.html",
                             animation: 'fade-in',
-                            showBackdrop: true,
-                            maxWidth: 200,
+                            scope: $scope,
+                            maxWidth: 500,
                             showDelay: 0
                         });
                         $timeout(function () {

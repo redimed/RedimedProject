@@ -71,13 +71,12 @@ angular.module('starter.driver.controller',[])
         };
 
         $scope.selectPatient = function (injuryID){
+            $scope.messageLoading = {message: "Waiting..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>Waiting...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
+                scope: $scope,
+                maxWidth: 500,
                 showDelay: 0
             });
             $state.go('app.driver.detailInjury',{injuryID:injuryID},{reload:true});
@@ -122,7 +121,7 @@ angular.module('starter.driver.controller',[])
         $scope.injuryID = {};
     })
 
-    .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading){
+    .directive("pickupMap", function( $state, DriverServices, localStorageService, $ionicLoading){
         return {
             restrict: "A",
             replace: "true",
@@ -163,13 +162,12 @@ angular.module('starter.driver.controller',[])
 
                 var location =  function(){
                     map.removeMarkers();
+                    scope.messageLoading = {message: "Waiting..."};
                     $ionicLoading.show({
-                        template: "<div class='icon ion-ios7-reloading'></div>"+
-                        "<br />"+
-                        "<span>Waiting...</span>",
+                        templateUrl: "modules/loadingTemplate.html",
                         animation: 'fade-in',
-                        showBackdrop: true,
-                        maxWidth: 200,
+                        scope: scope,
+                        maxWidth: 500,
                         showDelay: 0
                     });
 

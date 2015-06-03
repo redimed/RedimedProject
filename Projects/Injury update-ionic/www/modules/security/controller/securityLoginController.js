@@ -1,7 +1,7 @@
 angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $rootScope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
-                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading, $ionicPlatform){
+                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
         $scope.notifications = [];
 
         $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
@@ -89,12 +89,11 @@ angular.module('starter.security.login.controller',[])
 
         // SUBMIT LOGIN
         $scope.loginApp = function() {
+            $scope.messageLoading = {message: "Waiting..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>Signing...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
+                scope: $scope,
                 maxWidth: 500,
                 showDelay: 0
             });
@@ -138,12 +137,11 @@ angular.module('starter.security.login.controller',[])
         }
 
         function sigInApp() {
+            $scope.messageLoading = {message: "Signing..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>Signing...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
+                scope: $scope,
                 maxWidth: 500,
                 showDelay: 0
             });
@@ -221,22 +219,6 @@ angular.module('starter.security.login.controller',[])
                     { text: "Ok" }
                 ]
             });
-        }
-
-        document.addEventListener("deviceready", onDeviceReady, false);
-
-        function onDeviceReady() {
-            gpsDetect = cordova.require('cordova/plugin/GPSCheck');
-
-            var success = function(message) {
-                alert("Success calling plugin", message);
-            }
-
-            var failure = function() {
-                alert("Error calling plugin");
-            }
-
-            gpsDetect.locationCheck(success, failure);
         }
 
     });
