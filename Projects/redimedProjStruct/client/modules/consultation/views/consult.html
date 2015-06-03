@@ -440,7 +440,15 @@
                                             <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
                                         </td>
                                         <td>{{item.ITEM_CODE}}</td>
-                                        <td>{{item.ITEM_NAME}}</td>
+                                        <!-- TANNV.DTS MODIFY
+                                        BEGIN -->
+                                        <td>
+                                            <span popover="{{item.ITEM_NAME}}" popover-trigger="mouseenter">
+                                                {{item.ITEM_NAME| limitTo:70}}{{item.ITEM_NAME.length>70?'...':''}}
+                                            </span>
+                                            
+                                        </td>
+                                        <!-- END -->
                                                 <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                                         <td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT"></td>
                                         <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
