@@ -2525,8 +2525,9 @@ label{
     margin-top: -65px
 }
 .un-btn-header{
-    top: 8px;
-    left: 8;
+    top: 24px;
+    left: 220px;
+    position: absolute;
 }
 .un-header-top-menu{
     position: absolute;
@@ -2534,11 +2535,10 @@ label{
     top: 0px;
 }
 .un-header-logo-img{
-    height: 30px;
-    position: relative;
-    top: 8;
-    left: 4%;
-    width: 200px;
+    height: 35px;
+    position: absolute;
+    top: 9;
+    width: 11%;
 }
 .un-mdt-button{
     margin-right: 0; 
@@ -2855,6 +2855,7 @@ label{
     width: 65%;
     background-image: url(un/c_09.png);
     margin-top: 5px;
+    background-position: -9px -8px;
 }
 .un-c-toggle:hover{
     background-color: transparent !important;
