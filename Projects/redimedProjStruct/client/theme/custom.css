@@ -2789,6 +2789,83 @@ label{
     color: #ffffff;
     background-color: rgb(143, 140, 145);
 }
+.un-icon_class{
+    float: left;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 10px;
+    vertical-align: text-top;
+}
+.un-icon-drop{
+    width: 30px;
+    height: 30px;
+    float: right;
+}
+.un-btn-prev{
+    float: left;
+    width: 50px;
+    height: 30px;
+    overflow: hidden;
+}
+.un-btn-next{
+    float: right;
+    width: 50px;
+    height: 30px;
+    overflow: hidden;
+}
+.un-backbar-side{
+    background-color: #18284E;
+}
+.un-dropdown-ul{
+    color: #000000;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    background-color: rgb(204, 204, 204) !important;
+}
+.dropdown-menu > li a:hover{
+    color: #ffffff !important;
+    background: -webkit-linear-gradient(100deg, rgb(85, 143, 237), #ffffff) !important;
+    background: -o-linear-gradient(100deg, rgb(85, 143, 237), #ffffff) !important;
+    background: -moz-linear-gradient(100deg, rgb(85, 143, 237), #ffffff) !important;
+    background: linear-gradient(100deg, rgb(85, 143, 237), #ffffff) !important;
+
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown.open .dropdown-toggle {
+  background-color: transparent !important;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .un-dropdown-ul::after{
+    border-bottom: 6px solid rgb(204, 204, 204) !important;
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+    content: "";
+    display: inline-block !important;
+    position: absolute;
+    right: 10px;
+    top: -6px;
+}
+.un-c-header-left{
+    height: 68px;
+    float: left;
+    width: 35%;
+}
+.un-c-header-right{
+    height: 63px;
+    float: left;
+    width: 65%;
+    background-image: url(un/c_09.png);
+    margin-top: 5px;
+}
+.un-c-toggle:hover{
+    background-color: transparent !important;
+}
+.un-back-rfl{
+    width: 100%;
+    height: 100%;
+    background-image: url(un/icon3_03size022.png);
+    background-position: 150;
+    background-repeat: no-repeat;
+}
 /* end */
 
 /* LUAN */

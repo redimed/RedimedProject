@@ -1,18 +1,25 @@
 <div class="page-header navbar">
     <div class="page-header-inner">
-        <div class="page-logo un-header-left">
-            <div class="menu-toggler sidebar-toggler" ng-click="toggleMenu()">
-            </div>
-        </div>
         <div class="page-top un-header-right">
-            <div class="btn-group un-btn-header">
-                <button type="button" class="btn btn-circle dropdown-toggle" data-toggle="dropdown" ng-click="navigator.prev()">
-                <i class="fa fa-long-arrow-left"></i>&nbsp;<span>Prev&nbsp;</span>
+            <div class="un-c-header-left">
+                <img src="./theme/un/un_redimed_logo.jpg" class="un-header-logo-img"  alt="Redimed Logo" />
+                <img src="./theme/un/a_01.png"  alt="Redimed Logo"   height="68px"  width="100%" />
+            </div>
+            <div class="un-c-header-right"></div>
+            <div class="un-btn-header">
+                <div class="un-btn-prev" ng-click="navigator.prev()">
+                    <img src="img/icon/icon2_03.png" width="90" height="30" />
+                </div>
+                <div class="un-btn-next" ng-click="navigator.next()">
+                    <img src="img/icon/icon2_03.png" width="90" height="30" style="position: relative; right: 40px;" />
+                </div>
+                <!--<button type="button" class="dropdown-toggle" data-toggle="dropdown" ng-click="navigator.prev()">
+                    
                 </button>
                 <button type="button" class="btn btn-circle dropdown-toggle" data-toggle="dropdown" ng-click="navigator.next()"><span>Next&nbsp;</span>&nbsp;<i class="fa fa-long-arrow-right"></i>
-                </button>
+                </button>-->
             </div>
-            <img src="./theme/un/un_redimed_logo.jpg" class="un-header-logo-img"  alt="Redimed Logo"   height="65px"  width="100px" />
+            
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right un-header-top-menu">
                     <li ng-show="userInfo.HAVE_BELL==1" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
@@ -123,16 +130,16 @@
                         </ul>
                     </li>
                     <li class="dropdown dropdown-user">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle hide1" style="width:50px;height:50px;margin-bottom:20px;" ng-src="./theme/assets/icon.png" />
+                        <a href="#" class="dropdown-toggle un-c-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle hide1" style="width:50px;height:50px;margin-bottom:20px; margin-top: -17px;" ng-src="./theme/assets/icon.png" />
                             <span class="username username-hide-on-mobile">
                     {{user}} </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu un-dropdown-ul">
                             <li>
                                 <a ui-sref="loggedIn.userProfile">
-                                    <i class="icon-user"></i> My Profile </a>
+                                    <img src="img/icon/icon2_13.png" style="width: 20px; height: 20px; margin-right: 10px;" />My Profile </a>
                             </li>
                             <li ng-show="userInfo.HAVE_CALENDAR==1">
                                 <a ng-click="showMyCalendar();">
@@ -158,21 +165,21 @@
                             </span>
                                 </a>
                             </li>
-                            <li class="divider">
-                            </li>
                             <li>
+                                <hr style="width: 80%; margin-bottom: 0; margin-top: 0; margin: 0 auto; border-color: rgb(179, 179, 179);" />
                                 <a ng-click="lockscreen()" href="javascript:;">
-                                    <i class="icon-lock"></i> Lock Screen </a>
+                                    <img src="img/icon/icon2_16.png" style="width: 20px; height: 20px; margin-right: 10px;" />Lock Screen </a>
                             </li>
                             <li>
+                                <hr style="width: 80%; margin-bottom: 0; margin-top: 0; margin: 0 auto; border-color: rgb(179, 179, 179);" />
                                 <a href="javascript:;" ng-click="logout()">
-                                    <i class="icon-key"></i> Log Out </a>
+                                    <img src="img/icon/icon2_06.png" style="width: 20px; height: 20px; margin-right: 10px;" />Log Out </a>
                             </li>
                         </ul>
                     </li>
                 </ul>
             </div>
-            <img src="./theme/un/un_header_panel.jpg" class="un-img-header"  alt="Redimed Logo"   height="65px"  width="100%" />
+            
         </div>
     </div>
 </div>
@@ -182,15 +189,19 @@
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
+    
     <div class="page-sidebar-wrapper">
         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
         <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-        <div class="page-sidebar navbar-collapse collapse">
+        <div class="page-sidebar navbar-collapse collapse un-backbar-side">
+            <div class="page-logo un-header-left" style="background: rgb(15, 26, 52); padding-right: 0 !important;">
+            <img src="img/icon/icon2_10.png" class="un-icon-drop sidebar-toggler" ng-click="toggleMenu()" />
+        </div>
             <!-- BEGIN SIDEBAR MENU -->
-            <ul style="margin-bottom: 0px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <ul style="margin-bottom: 0px; margin-top: 40px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                 <li class="start m-add-hover-color">
                     <a href="javascript:;" ng-click="userclick()">
-                        <i class="icon-home"  style="float:left;"></i>
+                        <img src="img/icon/icon_26.png" class="un-icon_class" />
                         <span class="title">Home</span>
                     </a>
                 </li>

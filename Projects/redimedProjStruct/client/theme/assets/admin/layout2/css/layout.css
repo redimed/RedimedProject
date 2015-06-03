@@ -788,7 +788,7 @@ Page sidebar
 }
 .m-add-hover-color:hover .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li:hover > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.open > a, .page-sidebar .page-sidebar-menu > li:hover > a, .page-sidebar .page-sidebar-menu > li.open > a {
   color: red !important;
-  background: -webkit-gradient(linear, left center, right center, color-stop(0%, #87888B), color-stop(50%, white), color-stop(109%, #87888B)) !important;
+  background: #ffffff !important;
 }
 .page-sidebar .page-sidebar-menu > li.last > a,
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.last > a {
@@ -807,8 +807,8 @@ Page sidebar
   text-decoration: none;
   font-size: 13px;
   font-weight: 300;
-  background: -webkit-gradient(linear, left center, right center, color-stop(0%, #19274E), color-stop(50%, #576076), color-stop(109%, #19274E));
-  border-top: 10px solid rgb(15, 26, 52) !important;
+  background: #131133;
+  border-top: 10px solid rgb(24, 40, 78) !important;
   /*text-align: center;*/
 }
 .page-sidebar .page-sidebar-menu > li > a > .title,
