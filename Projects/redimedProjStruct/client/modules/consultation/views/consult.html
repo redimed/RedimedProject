@@ -3,9 +3,11 @@
         text-decoration: inherit;
     }
 </style>
+<!-- dsfasdf -->
 
 <div class="row">
     <div class="col-md-10 col-sm-10">
+        
         <ul class="un-tabs">
             <li class="active">
                 <a href="index.html#tab_1_1" data-toggle="tab">Information</a>
@@ -438,7 +440,15 @@
                                             <input class="form-control" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
                                         </td>
                                         <td>{{item.ITEM_CODE}}</td>
-                                        <td>{{item.ITEM_NAME}}</td>
+                                        <!-- TANNV.DTS MODIFY
+                                        BEGIN -->
+                                        <td>
+                                            <span popover="{{item.ITEM_NAME}}" popover-trigger="mouseenter">
+                                                {{item.ITEM_NAME| limitTo:70}}{{item.ITEM_NAME.length>70?'...':''}}
+                                            </span>
+                                            
+                                        </td>
+                                        <!-- END -->
                                                 <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                                         <td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT"></td>
                                         <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
@@ -1060,6 +1070,23 @@
         </div>
     </div>
     <div class="col-md-2 col-sm-2">
+        <!-- 
+        TANNV.DTS@GMAIL.COM ADD
+        BEGIN
+         -->
+        <div style="  text-align: center;margin-top:-20;margin-bottom:-1px;margin-left:auto;margin-right:auto;">
+            <button ng-show="apptPatient.appt_status==apptStatus.checkedIn.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
+         
+            <button ng-show="apptPatient.appt_status==apptStatus.workInProgress.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Complete</button>
+
+            <div ng-show="apptPatient.appt_status==apptStatus.completed.value"
+                class="un_tn_txt_notify un_tn_txt_notify_gray">
+                Progress Finished.
+            </div>
+        </div>
+        <!-- 
+        END
+         -->
         <div class="un-background">
             <label class="un-title-label">Contacts</label>
             <div class="row un-div-l-r-15">
@@ -1143,3 +1170,13 @@
     </div>
     <problem-detail options="options" onsuccess="problemAddForm.success" />
 </div>
+
+
+<script type="text/ng-template" id="notifyChooseItem">
+    <div class="modal-body">
+        <p>Please choose items before press Complete button.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="ok()">Ok</button>
+    </div>
+</script>

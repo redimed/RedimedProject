@@ -5,6 +5,12 @@ var mime = require("mime");
 var mkdirp = require('mkdirp');
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
+var kiss=require('./kissUtilsController');
+var errorCode=require('./errorCode');
+var invoiceUtil=require('./invoiceUtilController');
+
+//tannv.dts@gmail.com
+var controllerCode="RED_CONSULT";
 
 module.exports = {
 	getPatientProblem: function(req,res){
@@ -254,7 +260,13 @@ module.exports = {
       })
   },
 
+  /**
+   * create by: unknown
+   * modify by:tannv.dts@gmail.com
+   */
   getPatientCompany: function(req,res){
+    var fHeader="ConsultationController->getPatientCompany";
+    var functionCode="FN002";
     var patient_id = req.body.patient_id;
 
     var info = {
@@ -266,33 +278,179 @@ module.exports = {
 
     db.sequelize.query("SELECT c.`Company_name`, c.`Industry`, c.`Addr` FROM companies c WHERE c.`id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
                         null,{raw:true},[patient_id])
-        .success(function(data){
-            if(data.length > 0)
+    .success(function(data)
+    {
+        if(data.length > 0)
+        {
+            info.Company_name = data[0].Company_name;
+            info.Industry = data[0].Industry;
+            info.Addr = data[0].Addr;
+
+            db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
+                                "FROM  users u "+
+                                "WHERE u.`socket` IS NOT NULL AND u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
+                                null,{raw:true},[patient_id])
+            .success(function(rs)
             {
-                info.Company_name = data[0].Company_name;
-                info.Industry = data[0].Industry;
-                info.Addr = data[0].Addr;
+                info.users = rs;
+                res.json({status:'success', info: info});
+            })
+            .error(function(err)
+            {
+                kiss.exlog(fHeader,"Loi truy van lay cac user trong cung cong ty",err);
+                res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            })
+        }
+        else
+        {
+            kiss.exlog(fHeader,"Patient khong co thong tin company.");
+            res.json({status:'success',info:null});
+        }
+    })
+    .error(function(err)
+    {
+        kiss.exlog(fHeader,"Loi truy van lay thong tin company",err);
+        res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN002')});
+    })
+  },
 
-                db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
-                                    "FROM  users u "+
-                                    "WHERE u.`socket` IS NOT NULL AND u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
-                                    null,{raw:true},[patient_id])
-                    .success(function(rs){
-                        info.users = rs;
-                        res.json({status:'success', info: info});
-                    })
-                    .error(function(err){
-                        res.json({status:'error'});
-                        console.log(err);
-                    })
+    /**
+     * tannv.dts@gmail.com
+     * ----------------------------------------------------------------------
+     * ----------------------------------------------------------------------
+     * ----------------------------------------------------------------------
+     */
+    startSession:function(req,res)
+    {
+        var fHeader="ConsultationController->startSession";
+        var functionCode="FN001";
+        var postData=kiss.checkData(req.body.data)?req.body.data:{};
+        var calId=kiss.checkData(postData.calId)?postData.calId:'';
+        var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
+        if(!kiss.checkListData(calId,patientId))
+        {
+            kiss.exlog(fHeader,"Loi data truyen den");
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+
+        var sql="UPDATE `cln_appt_patients` SET appt_status=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
+        var params=[invoiceUtil.apptStatus.workInProgress.value,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        kiss.executeQuery(req,sql,params,function(result){
+            if(result.affectedRows>0)
+            {
+                res.json({status:'success'});
             }
-        })
-        .error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
-  }
+            else
+            {
+                kiss.exlog(fHeader,"Khong co dong nao duoc update status");
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van cap nhat status",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+        },true)
+    },
 
+    /**
+     * tannv.dts@gmail.com
+     */
+    beforeFinishSession:function(req,res)
+    {
+        fHeader="ConsultationController->beforeFinishSession";
+        var functionCode="FN005";
+        var postData=kiss.checkData(req.body.data)?req.body.data:{};
+        var calId=kiss.checkData(postData.calId)?postData.calId:'';
+        var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
+        if(!kiss.checkListData(calId,patientId))
+        {
+            kiss.exlog(fHeader,"Loi data truyen den");
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+
+        var sql=
+            " SELECT apptItem.* FROM `cln_appt_items` apptItem                                  "+
+            " WHERE apptItem.`cal_id`=? AND apptItem.`Patient_id`=? AND apptItem.`is_enable`=1  ";
+        var params=[calId,patientId];
+        kiss.executeQuery(req,sql,params,function(rows){
+           res.json({status:'success',data:rows})
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van select cac item cua apptPatient",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });
+    },
+
+    /**
+     * tannv.dts@gmail.com
+     */
+    finishSession:function(req,res)
+    {
+        fHeader="ConsultationController->finishSession";
+        var functionCode="FN004";
+        var postData=kiss.checkData(req.body.data)?req.body.data:{};
+        var calId=kiss.checkData(postData.calId)?postData.calId:'';
+        var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
+        if(!kiss.checkListData(calId,patientId))
+        {
+            kiss.exlog(fHeader,"Loi data truyen den");
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+
+        var sql="UPDATE `cln_appt_patients` SET appt_status=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
+        var params=[invoiceUtil.apptStatus.completed.value,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        kiss.executeQuery(req,sql,params,function(result){
+            if(result.affectedRows>0)
+            {
+                res.json({status:'success'});
+            }
+            else
+            {
+                kiss.exlog(fHeader,"Khong co dong nao duoc update status");
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van cap nhat status",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+        },true)
+    },
+
+    /**
+     * Lay thong tin patient tuong ung voi calendar id
+     * tannv.dts@gmail.com
+     */
+    getApptPatient:function(req,res)
+    {
+        var fHeader="PatientConsultController->getApptPatient";
+        var functionCode="FN003";
+        var postData=kiss.checkData(req.body.data)?req.body.data:{};
+        var calId=kiss.checkData(postData.calId)?postData.calId:'';
+        var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
+        if(!kiss.checkListData(calId,patientId))
+        {
+            kiss.exlog(fHeader,"Loi data truyen den");
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql="SELECT * FROM `cln_appt_patients` WHERE `Patient_id`=? AND `CAL_ID`=? AND `appt_status`<>?";
+        var params=[patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        kiss.executeQuery(req,sql,params,function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                kiss.exlog(fHeader,"Thong tin appt patient khong ton tai");
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van lay appt patient.",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+        },true);
+
+    }
 
 }
 
@@ -316,3 +474,4 @@ function base64Image(src) {
             return null;
     }
 }
+

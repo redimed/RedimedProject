@@ -75,11 +75,8 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                         {field: 'appointment', label: 'Appointment time', type:'custom', fn:function(item){
                             return ConfigService.getCommonDatetime(item.appointment.FROM_TIME);
                         }},
-                        {field: 'appt_status', label: 'Is Checked-in?', type:'custom', fn:function(item){
-                            if(item.appt_status==="Checked In" || item.appt_status === "Seen"){
-                                return "Yes";
-                            }
-                            return "No";
+                        {field: 'appt_status', label: 'Appointment Status', type:'custom', fn:function(item){
+                            return ptnConst.apptStatusDisplay[item.appt_status];
                         }},
                         {type:'button', btnlabel:'Check In', 
                             btnfn:function(item){
@@ -92,7 +89,7 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                                 });
                             },
                             disfn: function(item){
-                                if(item.appt_status==="Checked In" || item.appt_status === "Seen"){
+                                if(item.appt_status===ptnConst.apptStatus.checkedIn.value){
                                     return true;
                                 }
                                 return false;
@@ -121,8 +118,8 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                 }
                 $scope.patients.show(searchData);  
             }
-            
         }
+        
         $scope.resetClick = function(){
            $scope.appointments.reset();
            $scope.patients.reset();
