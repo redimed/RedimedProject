@@ -7,6 +7,7 @@ angular.module('starter.bluetooth',[
         $stateProvider
             .state('app.mainBluetooth',{
                 url: "/mainBluetooth",
+                cache: false,
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/bluetooth/views/main.html",
@@ -16,6 +17,7 @@ angular.module('starter.bluetooth',[
             })
             .state('app.detailDeviceBluetooth',{
                 url: "/detailDevice/:deviceType/:address",
+                cache: false,
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/bluetooth/views/detailDevice.html",

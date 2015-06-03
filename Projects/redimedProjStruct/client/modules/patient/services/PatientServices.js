@@ -143,7 +143,7 @@ angular.module("app.loggedIn.patient.services", [])
                 CAL_ID: cal_id,
                 Patient_id: patient_id,
                 data:{
-                    appt_status: "Checked In"
+                    appt_status: ptnConst.apptStatus.checkedIn.value
                 }
             });
         }

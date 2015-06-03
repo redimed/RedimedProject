@@ -500,7 +500,7 @@ module.exports = {
 
 	getPostForShopId: function(req, res){
 		var shop_id = req.body.shop_id;
-		var sql = "SELECT p.`post_id`, p.`job_title`, p.`job_type`, p.`job_description` " +
+		var sql = "SELECT * " +
 				"FROM `ph_shops_post` sp " +
 				"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
 				"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +

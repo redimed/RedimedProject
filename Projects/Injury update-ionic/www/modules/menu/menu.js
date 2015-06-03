@@ -4,6 +4,7 @@ angular.module("starter.menu",["starter.menu.controller"])
             .state('app', {
                 url: "/app",
                 abstract: true,
+                cache: false,
                 views:{
                     'root':{
                         templateUrl: "modules/menu/views/menu.html",

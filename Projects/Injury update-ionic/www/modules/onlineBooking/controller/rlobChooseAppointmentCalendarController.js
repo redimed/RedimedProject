@@ -16,16 +16,14 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
         $scope.backdescInjury = function() {
             localStorageService.set("checkNonemer", true);
-            $state.go('app.injury.desInjury');
+            $state.go('app.injury.desInjury', {reload: true});
         }
 
-        $scope.selectedFilter.date =$filter('date')(new Date(), "yyyy-MM-dd");
+        $scope.selectedFilter.date = new Date();
 
         $scope.$watch("selectedFilter.date", function(newDate, oldDate){
             $scope.updateAppoinmentsList();
         })
-        console.log($scope.selectedFilter.date);
-
 
         $scope.getLocationsFilter=function()
         {

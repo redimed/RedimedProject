@@ -4017,7 +4017,8 @@ module.exports = {
                                             time_in_lieu_used_all       : data[t].time_in_lieu_used_all,
                                             time_in_lieu_remain_all     : data[t].time_in_lieu_remain_all,
                                             time_in_lieu_gan_nhat_all   : data[t].time_in_lieu_gan_nhat_all,
-                                            user_id                     : data[t].user_id
+                                            user_id                     : data[t].user_id,
+                                            create_day                  : moment(d).format('DD/MM/YYYY')
                                         }));
                                     }
                                     chainer.runSerially()
@@ -4628,7 +4629,7 @@ module.exports = {
                                                                                                                                             .success(function(data){
                                                                                                                                                 for(var k=0;k<data.length;k++){
                                                                                                                                                     chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                                        time_charge_Dept_per : ((data[k].time_charge_Dept/data[k].time_charge_Dept_all)*100).toFixed(2)
+                                                                                                                                                        time_charge_Dept_per : ((data[k].time_charge_Dept/data[k].time_charge_Dept_all)*100).toFixed(1)
                                                                                                                                                     },{
                                                                                                                                                         user_id      : data[k].user_id,
                                                                                                                                                         Department_id: data[k].Department_id,

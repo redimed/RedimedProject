@@ -25,8 +25,7 @@ angular.module('starter', ['ionic',
     'starter.phoneCall',
     'ion-google-place',
     'ngAutocomplete',
-    'starter.bluetooth',
-    'starter.model'
+    'starter.bluetooth'
 ])
 
     .factory(("ionPlatform"), function( $q ){
@@ -178,4 +177,10 @@ angular.module('starter', ['ionic',
                 });
             }
         }
-    });
+    })
+
+    .filter('currentDate',['$filter',  function($filter) {
+        return function() {
+            return  $filter('date')(new Date(), 'yyyy-MM-dd');
+        };
+    }])

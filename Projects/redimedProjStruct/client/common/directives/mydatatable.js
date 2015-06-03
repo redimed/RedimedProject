@@ -7,7 +7,8 @@ angular.module("app.directive.mydatatable.common", [])
             options: '=options',
             row_click: '=rowclick',
             row_class: '=rowclass',
-            num_rows: '=numrows'
+            num_rows: '=numrows',
+            col_click:'=colclick'
         },
         controller: function ($scope, $element, $attrs) {
             var options = $scope.options;

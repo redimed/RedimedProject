@@ -282,23 +282,23 @@ module.exports = {
 	updateUser:function(req,res){
 		var userInfo = req.body.userInfo;
 		var flag = req.body.flag;
-	    var targetFolder = '.\\uploadFile\\' + 'Pharmacist\\' + 'userID_' + userInfo.user_id + '\\' + userInfo.user_img;
+		console.log(userInfo.user_img);
+		
 		if (flag) {
-			targetFolder = '.\\uploadFile\\'+'Pharmacist\\'+'userID_'+ userInfo.user_id + '\\' + userInfo.user_id + "_" + new Date().getTime() +".jpg";
+			userInfo.user_img = '.\\uploadFile\\'+'Pharmacist\\'+'userID_'+ userInfo.user_id + '\\' + userInfo.user_id + "_" + new Date().getTime() +".jpg";
 			flag = false;
-		console.log("-------targetFolder", targetFolder);
-
+			console.log("-------targetFolder", userInfo.user_img);
 		}
 		//query update Ph_user
 		var sqlUpdateUser = "UPDATE ph_users SET firstname= ? ,surname= ? , mobile = ? , email = ?, user_img = ? WHERE user_id = ? ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlUpdateUser,[userInfo.firstname,userInfo.surname,userInfo.mobile, userInfo.email, targetFolder, userInfo.user_id],function(err){
+			var query = connection.query(sqlUpdateUser,[userInfo.firstname,userInfo.surname,userInfo.mobile, userInfo.email, userInfo.user_img, userInfo.user_id],function(err){
 				if(err){
 					console.log("-------------",err);
 					res.json({status:'fail'});
 				}
 				else{
-					res.json({status:'success', data:targetFolder});
+					res.json({status:'success', data:userInfo.user_img});
 				}
 			})
 		})

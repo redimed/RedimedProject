@@ -18,14 +18,14 @@
         <a ng-click="logoutApp()" class="button button-clear custom-icon-power button-icon icon ion-log-out">
         </a>
 
-        <h3 id="profile-name" style="color: #fff7eb; font-weight: 200; text-shadow: 0 0 3px #fff7eb;">{{userName}}</h3>
-        <!--<button class="button button-positive" ng-click="readNFC()">Read NFC Tag</button>-->
+        <h3 id="profile-name" style="color: #fff7eb; font-weight: bold;">{{userName}}</h3>
       </div>
 
       <ion-list ng-repeat="menu in Injurymenu">
-        <ion-item class="item-menu item-menu-custom" ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" menu-close ui-sref-active="current">
+        <ion-item class="item-menu"
+                  ng-repeat="submenu in menu.parent.childs" ui-sref="{{submenu.definition}}" menu-close ui-sref-active="current">
           {{submenu.name}}
-          <i class="ion-arrow-right-c" style="float: right; position: absolute; right: 5%"></i>
+          <i class="ion-android-exit" style="float: right; position: absolute; right: 5%; font-size: 25px;"></i>
         </ion-item>
       </ion-list>
     </div>
