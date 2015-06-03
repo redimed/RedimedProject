@@ -201,7 +201,7 @@
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
                     <!-- NOT TIME SHEET -->
-                    <ul ng-if="menu.parent.childs.length > 0" class="sub-menu" ng-if="menu.parent.name!=='E-TimeSheet System'">
+                    <ul ng-if="menu.parent.childs.length > 0 && menu.parent.name!=='E-TimeSheet System'" class="sub-menu">
                         <li ng-repeat="submenu in menu.parent.childs">
                             <a ui-sref="{{submenu.definition}}">
                                 <i class="fa fa-angle-right"></i> {{submenu.name}}

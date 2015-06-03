@@ -82,7 +82,7 @@
                 <tbody>
                     <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index">
                         <td style="text-align:center;width:15px;">
-                            <i ng-if="task.isParent === 1" class="fa fa-plus pointer" ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 13px;margin-top:7px;"></i>
+                            <i ng-if="task.isParent === 1" class="fa fa-plus pointer" ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 13px;margin-top:9px;"></i>
                         </td>
                         <td style="text-align:center;width:15px;">
                             <i ng-hide="task.isParent===1" ng-click="delTask($index,task.order)" class="fa fa-trash pointer" style="font-size: 13px;margin-top:7px;"></i>
